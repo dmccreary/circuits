@@ -11,11 +11,14 @@ nav:
   - Checklist: checklist.md
   - Chapters:
     - Table of Contents: sections/index.md
+    - Introduction: sections/01-intro.md
+    - Circuit Laws: sections/02-laws.md
     - Diodes: sections/50-diode/index.md
   - Code Highlight Test: code-highlight-test.md
   - Glossary: glossary.md
   - How We Built This Site: how-we-built-this-site.md
   - References: references.md
+  - License: license.md
   - Contact: contact.md
  
 # Dan's MicroSite Standards from here down
