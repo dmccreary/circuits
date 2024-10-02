@@ -148,7 +148,25 @@ mkdoc gh-deploy
 This pushes everything up to the GitHub Pages site.
 Note that it does not commit your code to GitHub.
 
+## Generating LaTeX Equations
+
+We can use the LaTeX typesetting systems to render equations
+directly in our markdown pages.  To do this we need
+to first install the Pymdown extension
+
+```sh
+$ pip install pymdown-extensions
+```
+
+Then we need to enable this feature in our mkdocs.yml file:
+
+```yml
+```
+
 ## Mkdocs Material Social Tags
+
+Ideally, we would like to be able to just paste a link to a lesson in any chat dialog or social media site like Slack, LinkedIn, Twitter, Discord, Teams or Facebook.  When we paste the link, a "social card preview" is generated
+that might include an image and description of the page.
 
 We are using the [Material Social](https://squidfunk.github.io/mkdocs-material/setup/setting-up-social-cards/) tags.  This
 is a work in progress!

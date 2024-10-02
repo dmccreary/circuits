@@ -1,10 +1,23 @@
-# Generating Circuit Diagrams With LaTeX and Circuitikz
+# Generating Circuit Diagrams With LaTeX and CircuiTikZ
 
-The CircuiTikz package which provides a set of macros for typesetting electrical and electronic networks.
+The CircuiTikZ is a [LaTeX]() extension package which provides a set of macros for typesetting electrical and electronic networks.  You simply specify a
+component type, a grid placement and some connections and CircuiTikZ
+will transform this into a high-quality circuit diagram.
 
-It was born mainly for writing Massimo Redaelli's exercise book and exams sheets for the Elettrotecnica courses at Politecnico di Milano, Italy. He wanted a tool that was easy to use, with a lean syntax, native to LaTeX, and supporting directly PDF output format.
+CircuiTikZ was originally created by Massimo Redaelli to create and exercise book and exams sheets for his courses at where he was an instructor. He wanted a tool that was easy to use, with a lean syntax, native to LaTeX, and supporting directly PDF output format.  Like LaTeX, CircuiTikZ is a GNU licensed library although
+there are also commercial offerings that allow for web based interactive
+rendering.  One example is the [Overleaf.com](https://www.overleaf.com/learn/latex/TikZ_package) website.
 
-## TikZ Syntax
+## TikZ Vector-Based Drawing Within LaTeX
+
+TikZ is a powerful graphics package for creating vector-based illustrations directly within LaTeX documents. The name "TikZ" is a recursive acronym: "TikZ ist kein Zeichenprogramm," which is German for "TikZ is not a drawing program." TikZ provides a syntax for specifying graphics in a programmatic way, allowing for the creation of complex diagrams, plots, and figures that integrate seamlessly with LaTeX's typesetting.
+
+What is the TikZ Syntax?
+The TikZ syntax consists of a set of LaTeX commands and environments that describe how to draw various shapes, lines, and other graphical elements. The basic structure involves the \begin{tikzpicture} and \end{tikzpicture} environment, within which you can place TikZ commands to create graphics.
+
+Here's a simple example:
+
+
 
 https://www.overleaf.com/learn/latex/TikZ_package
 

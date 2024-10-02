@@ -16,6 +16,16 @@ The range of frequencies over which a circuit or system operates effectively, us
 
 A passive electrical component that stores energy in an electric field, characterized by its capacitance measured in farads (F).
 
+#### CircuiTikZ
+
+A [LaTeX]() extension package which provides a set of macros for typesetting electrical and electronic networks.  You simply specify a
+component type, a grid placement and some connections and CircuiTikZ
+will transform this into a high-quality circuit diagram.
+
+* See also: [LaTeX](#latex)
+* See also: [TicZ](#tikz)
+* See also: [Overleaf](#overleaf)
+
 #### Current
 
 The flow of electric charge through a conductor, measured in amperes (A).
@@ -56,6 +66,17 @@ A principle stating that the algebraic sum of voltages around any closed loop in
 
 A mathematical transformation that converts a time-domain function into a complex frequency-domain function, simplifying the analysis of linear time-invariant systems.
 
+#### LaTeX
+
+A typesetting system and a markup language used for creating documents with a focus on content rather than appearance.
+
+In this course we use the [CircuiTikZ](#circuitikz) library to generate images
+of circuits from generative AI created circuit descriptions.
+
+* See also: [CircuiTikZ](#circuitikz)
+* See also: [TicZ](#tikz)
+* See also: [Overleaf](#overleaf)
+
 #### Mesh Analysis
 
 A circuit analysis technique using Kirchhoff's Voltage Law to determine unknown currents in the meshes (loops) of a planar circuit.
@@ -75,6 +96,13 @@ A fundamental relationship stating that the voltage across a conductor equals th
 #### Operational Amplifier
 
 A high-gain electronic voltage amplifier with differential inputs and usually a single-ended output, used in various signal processing applications.
+
+#### Overleaf
+
+An online LaTeX editor that allows you to write and compile LaTeX documents in a web browser.
+
+In this course, we use Overleaf to convert []
+
 
 #### Parallel Circuit
 
@@ -115,6 +143,14 @@ A principle stating that in a linear circuit with multiple sources, the total re
 #### Thevenin's Theorem
 
 A theorem stating that any linear bilateral circuit can be replaced by an equivalent circuit consisting of a single voltage source and a series resistance connected to a load.
+
+### TikZ
+
+A declarative graphics package for creating vector-based illustrations directly within [LaTeX](#latex) documents.
+
+The 
+
+The name "TikZ" is a recursive acronym: "TikZ ist kein Zeichenprogramm," which is German for "TikZ is not a drawing program." TikZ provides a syntax for specifying graphics in a programmatic way, allowing for the creation of complex diagrams, plots, and figures that integrate seamlessly with LaTeX's typesetting.
 
 #### Transformer
 
