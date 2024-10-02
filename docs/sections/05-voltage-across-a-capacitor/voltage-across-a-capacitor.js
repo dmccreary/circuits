@@ -20,7 +20,6 @@ let voltageData = [];
 let simulationRunning = false;
 
 
-
 let rSlider, cSlider;
 let rLabel, cLabel;
 let chargeButton, dischargeButton, startButton, stopButton;
@@ -187,7 +186,7 @@ function drawAxes() {
   // Horizontal X Axix
   textSize(16);
   textAlign(CENTER, CENTER);
-  text('Time (s)', canvasWidth/2, 485);
+  text('Time (s)', canvasWidth/2, plotHeight - plotMargin/2);
   
   // Vertical Y Axis
   push();
@@ -198,7 +197,7 @@ function drawAxes() {
   
   // Title
   textSize(24);
-  text('Voltage Across Capacitor vs Time', canvasWidth/2, 25);
+  text('Voltage Across Capacitor vs Time', canvasWidth/2, plotMargin/2);
 }
 
 function resetSimulation() {
