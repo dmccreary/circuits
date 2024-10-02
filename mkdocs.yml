@@ -17,10 +17,12 @@ nav:
     - Diodes: sections/50-diode/index.md
   - Sample Prompts:
     - Introduction: prompts/index.md
+    - Learning Via Simulations: prompts/learning-via-interactive-simulations.md
     - Basic IV Plots: prompts/basic-iv-plot.md
     - Generating Circuit Diagrams With LaTeX: prompts/gen-circuit-diagrams-latex.md
     - Generating Circuit Diagrams with Mermaid: prompts/gen-circuit-diagrams-mermaid.md
     - Adding LaTeX Equations: prompts/adding-latex-equations.md
+    - Glossary Terms: prompts/glossary-terms.md
   - Glossary: glossary.md
   - How We Built This Site: how-we-built-this-site.md
   - References: references.md

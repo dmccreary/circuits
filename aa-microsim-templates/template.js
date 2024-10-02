@@ -34,7 +34,7 @@ function draw() {
     rect(0, 0, canvasWidth, canvasWidth);
     // make the background of the controls white
     fill('white')
-    rect(0, drawHeight, canvasWidth, canvasHeight-drawHeight);
+    rect(0, plotHeight, canvasWidth, canvasHeight-controlHeight);
 
     // get the updated slider value
     val = mySlider.value();
