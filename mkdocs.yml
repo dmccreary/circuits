@@ -22,6 +22,7 @@ nav:
     - Generating Circuit Diagrams With LaTeX: prompts/gen-circuit-diagrams-latex.md
     - Generating Circuit Diagrams with Mermaid: prompts/gen-circuit-diagrams-mermaid.md
     - Adding LaTeX Equations: prompts/adding-latex-equations.md
+    - ChatBot: prompts/chatbot/index.md
     - Glossary Terms: prompts/glossary-terms.md
   - Glossary: glossary.md
   - How We Built This Site: how-we-built-this-site.md
