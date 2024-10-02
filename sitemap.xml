@@ -91,6 +91,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://dmccreary.github.io/circuits/sections/10-frequency-response/</loc>
+         <lastmod>2024-10-02</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://dmccreary.github.io/circuits/sections/50-diode/</loc>
          <lastmod>2024-10-02</lastmod>
          <changefreq>daily</changefreq>
