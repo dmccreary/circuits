@@ -51,6 +51,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://dmccreary.github.io/circuits/prompts/frequently-asked-questions/</loc>
+         <lastmod>2024-10-02</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://dmccreary.github.io/circuits/prompts/gen-circuit-diagrams-latex/</loc>
          <lastmod>2024-10-02</lastmod>
          <changefreq>daily</changefreq>
