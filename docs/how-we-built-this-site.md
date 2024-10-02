@@ -198,6 +198,12 @@ Rtotal​1​\=5Ω1​+10Ω1​+15Ω1​\=51​+101​+151​\=306+3+2​\=3011�
 frac{1}{R_{\\text{total}}} = \frac{1}{5\,Ω} + \frac{1}{10\,Ω} + \frac{1}{15\,Ω} = \frac{1}{5} + \frac{1}{10} + \frac{1}{15} = \frac{6 + 3 + 2}{30} = \frac{11}{30}
 ```
 
+### Final Rendering
+
+$$
+frac{1}{R_{\\text{total}}} = \frac{1}{5\,Ω} + \frac{1}{10\,Ω} + \frac{1}{15\,Ω} = \frac{1}{5} + \frac{1}{10} + \frac{1}{15} = \frac{6 + 3 + 2}{30} = \frac{11}{30}
+$$
+
 ## Mkdocs Material Social Tags
 
 Ideally, we would like to be able to just paste a link to a lesson in any chat dialog or social media site like Slack, LinkedIn, Twitter, Discord, Teams or Facebook.  When we paste the link, a "social card preview" is generated
