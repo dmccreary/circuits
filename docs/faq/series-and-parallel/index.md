@@ -105,7 +105,7 @@ Now, connect the same resistors (5 Ω, 10 Ω, and 15 Ω) in parallel to a 12 V b
 
 -->
 
-![](./parallel.png)
+![](./parallel.png){ width="300" }
 
 ### Total Resistance of Parallel Resistors
 
