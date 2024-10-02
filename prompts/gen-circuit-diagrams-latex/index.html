@@ -450,6 +450,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#tikz-syntax" class="md-nav__link">
+    <span class="md-ellipsis">
+      TikZ Syntax
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#basic-format" class="md-nav__link">
     <span class="md-ellipsis">
       Basic Format
@@ -462,6 +471,33 @@
   <a href="#basic-resistor-circuit" class="md-nav__link">
     <span class="md-ellipsis">
       Basic Resistor Circuit
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rlc-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      RLC Example
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#complex-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      Complex Example
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      References
     </span>
   </a>
   
@@ -610,6 +646,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#tikz-syntax" class="md-nav__link">
+    <span class="md-ellipsis">
+      TikZ Syntax
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#basic-format" class="md-nav__link">
     <span class="md-ellipsis">
       Basic Format
@@ -622,6 +667,33 @@
   <a href="#basic-resistor-circuit" class="md-nav__link">
     <span class="md-ellipsis">
       Basic Resistor Circuit
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rlc-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      RLC Example
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#complex-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      Complex Example
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      References
     </span>
   </a>
   
@@ -651,7 +723,10 @@
 
 
 <h1 id="generating-circuit-diagrams-with-latex-and-circuitikz">Generating Circuit Diagrams With LaTeX and Circuitikz</h1>
-<p>LaTeX with the Circuitikz</p>
+<p>The CircuiTikz package which provides a set of macros for typesetting electrical and electronic networks.</p>
+<p>It was born mainly for writing Massimo Redaelli's exercise book and exams sheets for the Elettrotecnica courses at Politecnico di Milano, Italy. He wanted a tool that was easy to use, with a lean syntax, native to LaTeX, and supporting directly PDF output format.</p>
+<h2 id="tikz-syntax">TikZ Syntax</h2>
+<p>https://www.overleaf.com/learn/latex/TikZ_package</p>
 <h2 id="basic-format">Basic Format</h2>
 <p><img alt="" src="../latex-VLR-diagram.png" /></p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
@@ -714,6 +789,57 @@
 <span class="k">\end</span><span class="nb">{</span>circuitikz<span class="nb">}</span>
 <span class="k">\end</span><span class="nb">{</span>document<span class="nb">}</span>
 </code></pre></div></td></tr></table></div>
+<h2 id="rlc-example">RLC Example</h2>
+<div class="highlight"><pre><span></span><code>You are an expert at generating high-quality circuit diagrams using the LaTeX CircuiTikZ
+library.  For the following circuit, generate the corresponding circuit diagram using LaTeX CircuiTikZ format:
+
+Create a diagram of a simple RLC circuit with all components in series.
+Place an AC power signal on the left side.
+Place the components on the top and right side.
+Place a 10 ohm resistor,
+a 100 microfarad capacitor,
+and a 10 millihenry inductor in series in the circuit.
+Label all the components with their values.
+Create an arrow that shows the direction of the current.
+</code></pre></div>
+<p><img alt="RLC Circuit Diagram" src="../rlc-circuit-diagram.png" /></p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">\begin</span><span class="nb">{</span>circuitikz<span class="nb">}</span>[american voltages]
+<span class="k">\draw</span>
+ <span class="c">%  AC Power Source</span>
+  (0,0) to[american voltage source, l=<span class="s">$</span><span class="nv">\sim</span><span class="s">$</span>] (0,2) -- (0,3)
+  <span class="c">% Resistor</span>
+  to [R, l=<span class="s">$</span><span class="m">10</span><span class="nv">\,\Omega</span><span class="s">$</span>] (3,3)
+  <span class="c">% Capacitor</span>
+  to [C, l=<span class="s">$</span><span class="m">100</span><span class="nv">\,\mu\mathrm</span><span class="nb">{F}</span><span class="s">$</span>] (6,3)
+  <span class="c">% Inductor</span>
+  to [L, l=<span class="s">$</span><span class="m">10</span><span class="nv">\,\mathrm</span><span class="nb">{mH}</span><span class="s">$</span>] (6,0) -- (0,0);
+
+<span class="c">% Draw the current arrow</span>
+<span class="k">\draw</span><span class="na">[-&gt;, thick]</span> (0.5,4) -- (5.5,4) node[midway, above] <span class="nb">{</span><span class="s">$</span><span class="nb">I</span><span class="s">$</span><span class="nb">}</span>;
+<span class="k">\end</span><span class="nb">{</span>circuitikz<span class="nb">}</span>
+</code></pre></div></td></tr></table></div>
+<h2 id="complex-example">Complex Example</h2>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><code>
+</code></pre></div></td></tr></table></div>
+<h2 id="references">References</h2>
+<ul>
+<li><a href="https://us.mirrors.cicku.me/ctan/graphics/pgf/contrib/circuitikz/doc/circuitikzmanual.pdf">circuitikz manual</a></li>
+<li><a href="https://github.com/circuitikz/circuitikz">CircuiTikz GitHub Repo</a></li>
+<li><a href="https://www.overleaf.com/learn/latex/CircuiTikz_package#Introduction">Overleaf LaTex CircuiTikz Tutorial Introduction</a></li>
+</ul>
 
 
 
