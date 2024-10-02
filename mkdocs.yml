@@ -15,6 +15,7 @@ nav:
     - Voltage Across a Capacitor: sections/05-voltage-across-a-capacitor/index.md
     - Circuit Laws: sections/02-laws/index.md
     - Diodes: sections/50-diode/index.md
+    - Frequency Response: sections/10-frequency-response/index.md
   - Sample Prompts:
     - Introduction: prompts/index.md
     - Learning Via Simulations: prompts/learning-via-interactive-simulations.md
@@ -22,6 +23,7 @@ nav:
     - Generating Circuit Diagrams With LaTeX: prompts/gen-circuit-diagrams-latex.md
     - Generating Circuit Diagrams with Mermaid: prompts/gen-circuit-diagrams-mermaid.md
     - Adding LaTeX Equations: prompts/adding-latex-equations.md
+    - Frequently Asked Questions: prompts/frequently-asked-questions.md
     - ChatBot: prompts/chatbot/index.md
     - Glossary Terms: prompts/glossary-terms.md
   - Glossary: glossary.md
