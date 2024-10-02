@@ -1,7 +1,22 @@
 # Circuit Generation with Mermaid
 
+Mermaid diagrams are fine for many workflows diagrams, but they
+are not specialized for generating high-quality circuit
+diagrams.  We include this only to show how
+generative AI can generate diagrams.
+
 ## Mermaid Prompt
 
+```linenums="0"
+You are an expert at generating Mermaid diagrams
+to illustrate circuit topology.  Generate a
+circuit diagram that includes the following:
+
+1. A power supply on the left.
+2. A red power rail at the top
+3. A 1K ohm resistor on the right
+4. A ground wire at the bottom
+```
 
 
 ```mermaid
