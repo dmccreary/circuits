@@ -1,4 +1,4 @@
-# Circuit Generation
+# Circuit Generation with Mermaid
 
 ## Mermaid Prompt
 
