@@ -1,5 +1,8 @@
 # Basic Current-Voltage Plot Prompt
 
+This prompt is useful when you are plotting the current vs. voltage
+of a circuit.
+
 ```linenums="0"
 You are an expert at creating interactive educational
 animations using the p5.js javascript library.
