@@ -46,12 +46,12 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://dmccreary.github.io/circuits/prompts/circuit-generation/</loc>
+         <loc>https://dmccreary.github.io/circuits/prompts/gen-circuit-diagrams-latex/</loc>
          <lastmod>2024-10-02</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://dmccreary.github.io/circuits/prompts/gen-circuit-diagrams-latex/</loc>
+         <loc>https://dmccreary.github.io/circuits/prompts/gen-circuit-diagrams-mermaid/</loc>
          <lastmod>2024-10-02</lastmod>
          <changefreq>daily</changefreq>
     </url>
