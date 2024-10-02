@@ -17,6 +17,7 @@ nav:
   - Sample Prompts:
     - Introduction: prompts/index.md
     - Basic IV Plots: prompts/basic-iv-plot.md
+    - Generating Circuit Diagrams With LaTeX: prompts/gen-circuit-diagrams-latex.md
   - Glossary: glossary.md
   - How We Built This Site: how-we-built-this-site.md
   - References: references.md
