@@ -18,7 +18,7 @@
         <link rel="prev" href="../gen-circuit-diagrams-latex/">
       
       
-        <link rel="next" href="../../glossary/">
+        <link rel="next" href="../adding-latex-equations/">
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
@@ -338,6 +338,8 @@
       
         
       
+        
+      
     
     
     
@@ -481,10 +483,64 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#mermaid-ai" class="md-nav__link">
+    <span class="md-ellipsis">
+      Mermaid AI
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Mermaid AI">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#prompt" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prompt
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#adding-images" class="md-nav__link">
+    <span class="md-ellipsis">
+      Adding Images
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../adding-latex-equations/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Adding LaTeX Equations
+  </span>
+  
+
+      </a>
     </li>
   
 
@@ -632,6 +688,39 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#mermaid-ai" class="md-nav__link">
+    <span class="md-ellipsis">
+      Mermaid AI
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Mermaid AI">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#prompt" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prompt
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#adding-images" class="md-nav__link">
+    <span class="md-ellipsis">
+      Adding Images
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -700,6 +789,63 @@ circuit diagram that includes the following:
     linkStyle 1 stroke:black,stroke-width:2px,color:black
     linkStyle 2 stroke:black,stroke-width:2px,color:black
 </code></pre></div></td></tr></table></div>
+<h2 id="mermaid-ai">Mermaid AI</h2>
+<p>The <a href="https://www.mermaidchart.com/">Mermaid Chart</a> has
+a tool that allows you to describe your circuit and
+it will use that prompt to generate a Mermaid diagram.</p>
+<p><img alt="" src="../mermaid-ai-screen-shot.png" /></p>
+<h3 id="prompt">Prompt</h3>
+<p>Here is a sample prompt:</p>
+<div class="highlight"><pre><span></span><code>Create a circuit diagram that has a 5-volt power supply, a 330 ohm resistor and an LED. Use icons for each component.
+</code></pre></div>
+<p>This generated the following diagram:</p>
+<p><img alt="" src="../mermaid-led-circuit-diagram.png" /></p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span></pre></div></td><td class="code"><div><pre><span></span><code>flowchart LR
+    %% Nodes
+    P[(5V Power Supply)]
+    R((330 Ohm Resistor))
+    LED[(LED)]
+    GND[Ground]
+
+    %% Connections
+    P --&gt;|&quot;Positive&quot;| R
+    R --&gt;|&quot;Anode&quot;| LED
+    LED --&gt;|&quot;Cathode&quot;| GND
+
+    %% Edge Styles
+    linkStyle 0 stroke:blue,stroke-width:2px,color:blue
+    linkStyle 1 stroke:green,stroke-width:2px,color:green
+    linkStyle 2 stroke:red,stroke-width:2px,color:red
+</code></pre></div></td></tr></table></div>
+<p>Note that the AI correctly generated the edge names:</p>
+<ol>
+<li>Power Supply Positive</li>
+<li>LED Anode</li>
+<li>LED Cathode</li>
+</ol>
+<h2 id="adding-images">Adding Images</h2>
+<p>Mermaid also allows you to add images to a diagram.</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span></pre></div></td><td class="code"><div><pre><span></span><code>n1[&quot;This is sample label&quot;]
+
+    n1@{ img: &quot;https://images.pexels.com/photos/2280547/pexels-photo-2280547.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1260&amp;h=750&amp;dpr=1&quot;, h: 300, w: 100, pos: &quot;b&quot;}
+</code></pre></div></td></tr></table></div>
 <p><a href="https://www.mermaidchart.com/app/projects/d015ecae-577e-4367-a816-6012421faf7b/diagrams/82ce93f2-5bf1-4727-a943-59d01d5b8476/version/v0.1/edit">Sample</a></p>
 
 
@@ -753,13 +899,13 @@ circuit diagram that includes the following:
         
         
           
-          <a href="../../glossary/" class="md-footer__link md-footer__link--next" aria-label="Next: Glossary">
+          <a href="../adding-latex-equations/" class="md-footer__link md-footer__link--next" aria-label="Next: Adding LaTeX Equations">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Glossary
+                Adding LaTeX Equations
               </div>
             </div>
             <div class="md-footer__button md-icon">
@@ -797,6 +943,10 @@ circuit diagram that includes the following:
     
     
       <script src="../../assets/javascripts/bundle.af256bd8.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
       
     
   </body>

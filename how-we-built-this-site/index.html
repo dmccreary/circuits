@@ -336,6 +336,8 @@
       
         
       
+        
+      
     
     
     
@@ -548,6 +550,15 @@
         
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#generating-latex-equations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Generating LaTeX Equations
+    </span>
+  </a>
   
 </li>
       
@@ -766,6 +777,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#generating-latex-equations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Generating LaTeX Equations
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#mkdocs-material-social-tags" class="md-nav__link">
     <span class="md-ellipsis">
       Mkdocs Material Social Tags
@@ -913,7 +933,18 @@ before you push your code up to the GitHub repo.</p>
 </code></pre></div></td></tr></table></div>
 <p>This pushes everything up to the GitHub Pages site.
 Note that it does not commit your code to GitHub.</p>
+<h2 id="generating-latex-equations">Generating LaTeX Equations</h2>
+<p>We can use the LaTeX typesetting systems to render equations
+directly in our markdown pages.  To do this we need
+to first install the Pymdown extension</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><code>$<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>pymdown-extensions
+</code></pre></div></td></tr></table></div>
+<p>Then we need to enable this feature in our mkdocs.yml file:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><code>
+</code></pre></div></td></tr></table></div>
 <h2 id="mkdocs-material-social-tags">Mkdocs Material Social Tags</h2>
+<p>Ideally, we would like to be able to just paste a link to a lesson in any chat dialog or social media site like Slack, LinkedIn, Twitter, Discord, Teams or Facebook.  When we paste the link, a "social card preview" is generated
+that might include an image and description of the page.</p>
 <p>We are using the <a href="https://squidfunk.github.io/mkdocs-material/setup/setting-up-social-cards/">Material Social</a> tags.  This
 is a work in progress!</p>
 <p>Here is what we have learned.</p>
@@ -1030,6 +1061,10 @@ instruction set.</p>
     
     
       <script src="../assets/javascripts/bundle.af256bd8.min.js"></script>
+      
+        <script src="../javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
       
     
   </body>

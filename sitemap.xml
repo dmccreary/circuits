@@ -41,6 +41,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://dmccreary.github.io/circuits/prompts/adding-latex-equations/</loc>
+         <lastmod>2024-10-02</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://dmccreary.github.io/circuits/prompts/basic-iv-plot/</loc>
          <lastmod>2024-10-02</lastmod>
          <changefreq>daily</changefreq>

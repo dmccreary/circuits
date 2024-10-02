@@ -338,6 +338,8 @@
       
         
       
+        
+      
     
     
     
@@ -452,9 +454,9 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#tikz-syntax" class="md-nav__link">
+  <a href="#tikz-vector-based-drawing-within-latex" class="md-nav__link">
     <span class="md-ellipsis">
-      TikZ Syntax
+      TikZ Vector-Based Drawing Within LaTeX
     </span>
   </a>
   
@@ -526,6 +528,27 @@
   
   <span class="md-ellipsis">
     Generating Circuit Diagrams with Mermaid
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../adding-latex-equations/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Adding LaTeX Equations
   </span>
   
 
@@ -669,9 +692,9 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#tikz-syntax" class="md-nav__link">
+  <a href="#tikz-vector-based-drawing-within-latex" class="md-nav__link">
     <span class="md-ellipsis">
-      TikZ Syntax
+      TikZ Vector-Based Drawing Within LaTeX
     </span>
   </a>
   
@@ -745,10 +768,18 @@
   
 
 
-<h1 id="generating-circuit-diagrams-with-latex-and-circuitikz">Generating Circuit Diagrams With LaTeX and Circuitikz</h1>
-<p>The CircuiTikz package which provides a set of macros for typesetting electrical and electronic networks.</p>
-<p>It was born mainly for writing Massimo Redaelli's exercise book and exams sheets for the Elettrotecnica courses at Politecnico di Milano, Italy. He wanted a tool that was easy to use, with a lean syntax, native to LaTeX, and supporting directly PDF output format.</p>
-<h2 id="tikz-syntax">TikZ Syntax</h2>
+<h1 id="generating-circuit-diagrams-with-latex-and-circuitikz">Generating Circuit Diagrams With LaTeX and CircuiTikZ</h1>
+<p>The CircuiTikZ is a <a href="">LaTeX</a> extension package which provides a set of macros for typesetting electrical and electronic networks.  You simply specify a
+component type, a grid placement and some connections and CircuiTikZ
+will transform this into a high-quality circuit diagram.</p>
+<p>CircuiTikZ was originally created by Massimo Redaelli to create and exercise book and exams sheets for his courses at where he was an instructor. He wanted a tool that was easy to use, with a lean syntax, native to LaTeX, and supporting directly PDF output format.  Like LaTeX, CircuiTikZ is a GNU licensed library although
+there are also commercial offerings that allow for web based interactive
+rendering.  One example is the <a href="https://www.overleaf.com/learn/latex/TikZ_package">Overleaf.com</a> website.</p>
+<h2 id="tikz-vector-based-drawing-within-latex">TikZ Vector-Based Drawing Within LaTeX</h2>
+<p>TikZ is a powerful graphics package for creating vector-based illustrations directly within LaTeX documents. The name "TikZ" is a recursive acronym: "TikZ ist kein Zeichenprogramm," which is German for "TikZ is not a drawing program." TikZ provides a syntax for specifying graphics in a programmatic way, allowing for the creation of complex diagrams, plots, and figures that integrate seamlessly with LaTeX's typesetting.</p>
+<p>What is the TikZ Syntax?
+The TikZ syntax consists of a set of LaTeX commands and environments that describe how to draw various shapes, lines, and other graphical elements. The basic structure involves the \begin{tikzpicture} and \end{tikzpicture} environment, within which you can place TikZ commands to create graphics.</p>
+<p>Here's a simple example:</p>
 <p>https://www.overleaf.com/learn/latex/TikZ_package</p>
 <h2 id="basic-format">Basic Format</h2>
 <p><img alt="" src="../latex-VLR-diagram.png" /></p>
@@ -959,6 +990,10 @@ Create an arrow that shows the direction of the current.
     
     
       <script src="../../assets/javascripts/bundle.af256bd8.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
       
     
   </body>
