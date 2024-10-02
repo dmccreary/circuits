@@ -1,5 +1,5 @@
-site_name: Mkdocs Template Site
-site_description: 'DESCRIPTION All content licensed Creative Commons ShareAlike Attribution Noncommercial'
+site_name: Circuits Course
+site_description: 'Circuits Course Materials. All content licensed Creative Commons ShareAlike Attribution Noncommercial'
 site_author: 'Dan McCreary'
 repo_name: 'GitHub Repo'
 site_url: 'https://dmccreary.github.io/circuits/'
@@ -12,7 +12,7 @@ nav:
   - Chapters:
     - Table of Contents: sections/index.md
     - Introduction: sections/01-intro.md
-    - Circuit Laws: sections/02-laws.md
+    - Circuit Laws: sections/02-laws/index.md
     - Diodes: sections/50-diode/index.md
   - Sample Prompts:
     - Introduction: prompts/index.md

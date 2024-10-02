@@ -26,6 +26,18 @@ what current will flow through the circuit.
 
 By convention, voltage is usually on the lower horizontal axis and current is on the left vertical axis.
 
+Here is a basic circuit with a power supply and a resistor: 
+![Resistor Circuit](./resistor-circuit.png)
+
+When we vary the Input Voltage we get the following plot:
+
+![IV Plot](./iv-plot.png)
+
+Here is an interactive version of this plot:
+
+[Resistor Current-Voltage MicroSim](./resistor-iv-plot.html){ .md-button .md-button--primary }
+
+
 
 
 https://www.electronics-tutorials.ws/blog/i-v-characteristic-curves.html

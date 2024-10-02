@@ -1,5 +1,9 @@
 # Diode
 
+![](./diode-iv.png)
+
+[Link to Demo](./diode-iv.html){ .md-button .md-button--primary }
+
 ## Prompt
 
 ```linenums="0"
