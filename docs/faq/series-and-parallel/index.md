@@ -71,7 +71,7 @@ $$
 V_3=I×R_3=0.4 A×15Ω = 6V
 $$
 
-### Example 2: Parallel Circuit Example
+## Example 2: Parallel Circuit Example
 
 Now, connect the same resistors (5 Ω, 10 Ω, and 15 Ω) in parallel to a 12 V battery.
 
