@@ -26,6 +26,9 @@ nav:
     - Frequently Asked Questions: prompts/frequently-asked-questions.md
     - ChatBot: prompts/chatbot/index.md
     - Glossary Terms: prompts/glossary-terms.md
+  - FAQ:
+    - Intro: faq/index.md
+    - Series and Parallel: faq/series-and-parallel.md
   - Glossary: glossary.md
   - How We Built This Site: how-we-built-this-site.md
   - References: references.md
