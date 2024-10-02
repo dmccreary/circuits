@@ -195,13 +195,13 @@ Rtotal​1​\=5Ω1​+10Ω1​+15Ω1​\=51​+101​+151​\=306+3+2​\=3011�
 
 ### Central Version With UNICODE Omega
 ```
-frac{1}{R_{\\text{total}}} = \frac{1}{5\,Ω} + \frac{1}{10\,Ω} + \frac{1}{15\,Ω} = \frac{1}{5} + \frac{1}{10} + \frac{1}{15} = \frac{6 + 3 + 2}{30} = \frac{11}{30}
+\frac{1}{R_{\text{total}}} = \frac{1}{5\,Ω} + \frac{1}{10\,Ω} + \frac{1}{15\,Ω} = \frac{1}{5} + \frac{1}{10} + \frac{1}{15} = \frac{6 + 3 + 2}{30} = \frac{11}{30}
 ```
 
 ### Final Rendering
 
 $$
-frac{1}{R_{\\text{total}}} = \frac{1}{5\,Ω} + \frac{1}{10\,Ω} + \frac{1}{15\,Ω} = \frac{1}{5} + \frac{1}{10} + \frac{1}{15} = \frac{6 + 3 + 2}{30} = \frac{11}{30}
+\frac{1}{R_{\text{total}}} = \frac{1}{5\,Ω} + \frac{1}{10\,Ω} + \frac{1}{15\,Ω} = \frac{1}{5} + \frac{1}{10} + \frac{1}{15} = \frac{6 + 3 + 2}{30} = \frac{11}{30}
 $$
 
 ## Mkdocs Material Social Tags
