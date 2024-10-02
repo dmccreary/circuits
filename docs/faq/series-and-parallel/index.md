@@ -60,15 +60,15 @@ $$
 ### Voltage Across Each Resistor
 
 $$
-V1=I×R1=0.4 A×5Ω = 2V
+V_1=I×R_1=0.4 A×5Ω = 2V
 $$
 
 $$
-V2=I×R2=0.4 A×10Ω = 4V
+V_2=I×R_2=0.4 A×10Ω = 4V
 $$
 
 $$
-V3=I×R3=0.4 A×15 Ω=6 = 6V
+V_3=I×R_3=0.4 A×15Ω = 6V
 $$
 
 ### Example 2: Parallel Circuit Example
@@ -116,33 +116,33 @@ $$
 
 So,
 $$
-R_{\text{total}} = \frac{30 Ω}{11}≈2.73 Ω\
+R_{\text{total}} = \frac{30 Ω}{11}≈2.73 Ω
 $$
 
 ### Total Current
 
 $$
-I_{\text{total}}=VR_{\text{total}}=12 V2.73 Ω≈4.4 AI\_{\\text{total}} = \\frac{V}{R_{\\text{total}}} = \frac{12\\,V}{2.73\,\Omega} \approx 4.4\,AI_{\text{total}}​=R_{\text{total}}​V​=2.73Ω12V​≈4.4A\
+I_{\text{total}}=V \times R_{\text{total}}=12 V \times 2.73 Ω ≈ 4.4 A
 $$
 
 ### Current Through Each Resistor
 
 $$
-I1=VR1=12 V5 Ω=2.4 AI_1 = \frac{V}{R_1} = \frac{12\,V}{5\,\Omega} = 2.4\\,AI1​=R1​V​=5Ω12V​=2.4A
+I_1 = \frac{V}{R_1} = \frac{12 V}{5Ω} = 2.4A
 $$
 
 $$
-I2=12 V10 Ω=1.2 AI_2 = \\frac{12\,V}{10\,\Omega} = 1.2\,AI2​=10Ω12V​=1.2A
+I_2 = \frac{V}{R_2} = \frac{12 V}{10Ω} = 1.2A
 $$
 
 $$
-I3=12 V15 Ω=0.8 AI_3 = \\frac{12\\,V}{15\,\Omega} = 0.8\,AI3​=15Ω12V​=0.8A
+I_3 = \frac{V}{R_3} = \frac{12 V}{15Ω} = 0.8A
 $$
 
 The sum of branch currents equals the total current: 
 
 $$
-2.4 A+1.2 A+0.8 A=4.4 A2.4\,A + 1.2\,A + 0.8\,A = 4.4\,A2.4A+1.2A+0.8A=4.4A.
+2.4 A + 1.2 A + 0.8 A = 4.4A
 $$
 
 These examples illustrate how series circuits have a single path with shared current and divided voltage, while parallel circuits have multiple paths with shared voltage and divided current.
