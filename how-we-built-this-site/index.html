@@ -632,6 +632,48 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#removing-extra-latex" class="md-nav__link">
+    <span class="md-ellipsis">
+      Removing Extra LaTeX
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Removing Extra LaTeX">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#original" class="md-nav__link">
+    <span class="md-ellipsis">
+      Original
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-formulas" class="md-nav__link">
+    <span class="md-ellipsis">
+      3 Formulas
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#central-version-with-unicode-omega" class="md-nav__link">
+    <span class="md-ellipsis">
+      Central Version With UNICODE Omega
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#mkdocs-material-social-tags" class="md-nav__link">
     <span class="md-ellipsis">
       Mkdocs Material Social Tags
@@ -855,6 +897,48 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#removing-extra-latex" class="md-nav__link">
+    <span class="md-ellipsis">
+      Removing Extra LaTeX
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Removing Extra LaTeX">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#original" class="md-nav__link">
+    <span class="md-ellipsis">
+      Original
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-formulas" class="md-nav__link">
+    <span class="md-ellipsis">
+      3 Formulas
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#central-version-with-unicode-omega" class="md-nav__link">
+    <span class="md-ellipsis">
+      Central Version With UNICODE Omega
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#mkdocs-material-social-tags" class="md-nav__link">
     <span class="md-ellipsis">
       Mkdocs Material Social Tags
@@ -1009,7 +1093,42 @@ to first install the Pymdown extension</p>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><code>$<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>pymdown-extensions
 </code></pre></div></td></tr></table></div>
 <p>Then we need to enable this feature in our mkdocs.yml file:</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><code>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span>
+<span class="normal">7</span></pre></div></td><td class="code"><div><pre><span></span><code>markdown_extensions:
+  - pymdownx.arithmatex:
+      generic: true
+
+extra_javascript:
+  - javascripts/mathjax.js
+  - https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js
+</code></pre></div></td></tr></table></div>
+<h2 id="removing-extra-latex">Removing Extra LaTeX</h2>
+<p>Markdown Paste duplicates LaTex</p>
+<p>replace \ with \
+replace _ with _
+replace \= with =
+replace first and last equation with ''</p>
+<h3 id="original">Original</h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><code>1Rtotal\=15 Ω+110 Ω+115 Ω\=15+110+115\=6+3+230\=1130\\frac{1}{R\_{\\text{total}}} = \\frac{1}{5\\,\\Omega} + \\frac{1}{10\\,\\Omega} + \\frac{1}{15\\,\\Omega} = \\frac{1}{5} + \\frac{1}{10} + \\frac{1}{15} = \\frac{6 + 3 + 2}{30} = \\frac{11}{30}Rtotal​1​\=5Ω1​+10Ω1​+15Ω1​\=51​+101​+151​\=306+3+2​\=3011​\
+</code></pre></div></td></tr></table></div>
+<h3 id="3-formulas">3 Formulas</h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span></pre></div></td><td class="code"><div><pre><span></span><code>1Rtotal\=15 Ω+110 Ω+115 Ω\=15+110+115\=6+3+230\=1130\\
+
+frac{1}{R\_{\\text{total}}} = \\frac{1}{5\\,\\Omega} + \\frac{1}{10\\,\\Omega} + \\frac{1}{15\\,\\Omega} = \\frac{1}{5} + \\frac{1}{10} + \\frac{1}{15} = \\frac{6 + 3 + 2}{30} = \\frac{11}{30}
+
+Rtotal​1​\=5Ω1​+10Ω1​+15Ω1​\=51​+101​+151​\=306+3+2​\=3011​\
+</code></pre></div></td></tr></table></div>
+<h3 id="central-version-with-unicode-omega">Central Version With UNICODE Omega</h3>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><code>frac{1}{R_{\\text{total}}} = \frac{1}{5\,Ω} + \frac{1}{10\,Ω} + \frac{1}{15\,Ω} = \frac{1}{5} + \frac{1}{10} + \frac{1}{15} = \frac{6 + 3 + 2}{30} = \frac{11}{30}
 </code></pre></div></td></tr></table></div>
 <h2 id="mkdocs-material-social-tags">Mkdocs Material Social Tags</h2>
 <p>Ideally, we would like to be able to just paste a link to a lesson in any chat dialog or social media site like Slack, LinkedIn, Twitter, Discord, Teams or Facebook.  When we paste the link, a "social card preview" is generated
