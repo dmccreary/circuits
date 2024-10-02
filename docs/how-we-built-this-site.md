@@ -161,6 +161,41 @@ $ pip install pymdown-extensions
 Then we need to enable this feature in our mkdocs.yml file:
 
 ```yml
+markdown_extensions:
+  - pymdownx.arithmatex:
+      generic: true
+
+extra_javascript:
+  - javascripts/mathjax.js
+  - https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js
+```
+
+## Removing Extra LaTeX
+
+Markdown Paste duplicates LaTex
+
+replace \\ with \
+replace \_ with _
+replace \= with =
+replace first and last equation with ''
+
+### Original
+```
+1Rtotal\=15 Ω+110 Ω+115 Ω\=15+110+115\=6+3+230\=1130\\frac{1}{R\_{\\text{total}}} = \\frac{1}{5\\,\\Omega} + \\frac{1}{10\\,\\Omega} + \\frac{1}{15\\,\\Omega} = \\frac{1}{5} + \\frac{1}{10} + \\frac{1}{15} = \\frac{6 + 3 + 2}{30} = \\frac{11}{30}Rtotal​1​\=5Ω1​+10Ω1​+15Ω1​\=51​+101​+151​\=306+3+2​\=3011​\
+```
+
+### 3 Formulas
+```
+1Rtotal\=15 Ω+110 Ω+115 Ω\=15+110+115\=6+3+230\=1130\\
+
+frac{1}{R\_{\\text{total}}} = \\frac{1}{5\\,\\Omega} + \\frac{1}{10\\,\\Omega} + \\frac{1}{15\\,\\Omega} = \\frac{1}{5} + \\frac{1}{10} + \\frac{1}{15} = \\frac{6 + 3 + 2}{30} = \\frac{11}{30}
+
+Rtotal​1​\=5Ω1​+10Ω1​+15Ω1​\=51​+101​+151​\=306+3+2​\=3011​\
+```
+
+### Central Version With UNICODE Omega
+```
+frac{1}{R_{\\text{total}}} = \frac{1}{5\,Ω} + \frac{1}{10\,Ω} + \frac{1}{15\,Ω} = \frac{1}{5} + \frac{1}{10} + \frac{1}{15} = \frac{6 + 3 + 2}{30} = \frac{11}{30}
 ```
 
 ## Mkdocs Material Social Tags
