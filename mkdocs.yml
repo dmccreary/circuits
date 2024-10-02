@@ -11,7 +11,7 @@ nav:
   - Checklist: checklist.md
   - Chapters:
     - Table of Contents: sections/index.md
-    - Introduction: sections/01-intro.md
+    - Introduction: sections/01-intro/index.md
     - Voltage Across a Capacitor: sections/05-voltage-across-a-capacitor/index.md
     - Circuit Laws: sections/02-laws/index.md
     - Diodes: sections/50-diode/index.md
