@@ -8,7 +8,6 @@ edit_uri: 'blob/master/docs'
 
 nav:
   - Home: index.md
-  - Checklist: checklist.md
   - Chapters:
     - Table of Contents: sections/index.md
     - Introduction: sections/01-intro/index.md
@@ -23,7 +22,7 @@ nav:
   - Sample Prompts:
     - Introduction: prompts/index.md
     - Learning Via Simulations: prompts/learning-via-interactive-simulations.md
-    - Basic IV Plots: prompts/basic-iv-plot.md
+    - Current-Voltage Plots: prompts/current-voltage-plots.md
     - Generating Circuit Diagrams With LaTeX: prompts/gen-circuit-diagrams-latex.md
     - CircuiTikZ Templates: prompts/circuitikz-templates.md
     - Generating Circuit Diagrams with Mermaid: prompts/gen-circuit-diagrams-mermaid.md
@@ -36,6 +35,7 @@ nav:
     - Series and Parallel: faq/series-and-parallel/index.md
   - Glossary: glossary.md
   - How We Built This Site: how-we-built-this-site.md
+  - Checklist: checklist.md
   - References: references.md
   - License: license.md
   - Contact: contact.md

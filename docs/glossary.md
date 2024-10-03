@@ -61,6 +61,14 @@ A mathematical transformation that converts a time-domain function into its freq
 
 The number of cycles per unit time of a periodic waveform, measured in hertz (Hz).
 
+Most alternating current circuits have a fixed frequency.  For example, in the United States, household electrical power is supplied as alternating current (AC) at a frequency of 60 Hertz (Hz). 
+
+#### Ground
+
+A reference point in an electrical circuit with zero voltage potential, serving as the common return path for electric current and the baseline for voltage measurements.
+
+In general, voltage to a point in a circuit is measured relative to the ground.
+
 #### Impedance
 
 The total opposition a circuit presents to alternating current, comprising both resistance and reactance, measured in ohms (Ω).
@@ -112,7 +120,24 @@ A circuit analysis method using Kirchhoff's Current Law to determine the voltage
 
 #### Ohm's Law
 
-A fundamental relationship stating that the voltage across a conductor equals the product of the current flowing through it and its resistance (V = IR).
+A fundamental relationship stating that the voltage across a conductor equals the product of the current flowing through it and its resistance.  The
+formula for Ohm's Law is:
+
+$$
+V = IR
+$$
+
+where:
+
+- $V$ is the voltage measured in volts
+- $I$ is the current measured in amps
+- $R$ is the resistance measured in ohms
+
+#### Operating Point
+
+The steady-state condition of an electronic device or circuit characterized by specific values of voltage, current, or other relevant parameters under normal operating conditions.
+
+The operating point represents the point on the device's characteristic curve where it functions as intended without any input signal or external influence.
 
 #### Operational Amplifier
 
@@ -120,10 +145,13 @@ A high-gain electronic voltage amplifier with differential inputs and usually a 
 
 #### Overleaf
 
-An online LaTeX editor that allows you to write and compile LaTeX documents in a web browser.
+An online LaTeX editor that allows us to write and compile LaTeX documents in a web browser.
 
-In this course, we use Overleaf to convert []
+In this course, we use Overleaf to convert [CircuiTekZ](#circuitikz) formatted text
+to images.
 
+* [Overleaf website](https://www.overleaf.com/)
+* See also: [TekZ](#tikz)
 
 #### Parallel Circuit
 
@@ -167,15 +195,16 @@ A theorem stating that any linear bilateral circuit can be replaced by an equiva
 
 ### TikZ
 
-A declarative graphics package for creating vector-based illustrations directly within [LaTeX](#latex) documents.
+A declarative graphics line-oriented drawing vocabulary for creating vector-based illustrations directly within [LaTeX](#latex) documents.
 
-TikZ provides a syntax for specifying graphics in a programmatic way, allowing for the creation of complex diagrams, plots, and figures that integrate seamlessly with LaTeX's typesetting.
+TikZ (pronounced "tic") provides a syntax for specifying graphics in a programmatic way, allowing for the creation of complex diagrams, plots, and figures that integrate seamlessly with LaTeX's typesetting.
 
 We use the [CircuiTikZ](#circuitikz) package for drawing circuit diagrams in this course.  CircuiTikZ is an extension of the TikZ drawing system that includes
 electronic components.
 
 * See also: [LaTeX](#latex)
 * See also: [CircuiTikZ](#circuitikz)
+* See also: [Overleaf](#overleaf)
 
 #### Transformer
 

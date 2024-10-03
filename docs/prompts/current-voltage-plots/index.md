@@ -1,7 +1,15 @@
 # Basic Current-Voltage Plot Prompt
 
+![](./current-voltage-plot.png)
+
 This prompt is useful when you are plotting the current vs. voltage
-of a circuit.
+of a circuit.  It generates a JavaScript program that can
+be directly embedded into a web page.  The default JavaScript
+library we use is processing version 5.
+
+## Sample Program
+
+## Sample Prompt
 
 ```linenums="0"
 You are an expert at creating interactive educational
@@ -13,7 +21,7 @@ how current changes across a resistor as the input voltage varies.
 Make the title of the animation be "Current vs. Voltage for a Resistor".
 Use realistic values for 0-5 volt voltage source given a 1K ohm resistor.
 
-Plotting Instructions:
+General Plotting Instructions:
 Use a canvasWidth of 600 and canvasHeight of 600.
 The canvas has two regions.
 The top region is the plot region.
