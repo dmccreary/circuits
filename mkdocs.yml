@@ -18,12 +18,14 @@ nav:
     - Transistors:
        - Introduction: sections/60-transistors/index.md
        - LED Driver Circuit: sections/60-transistors/led-circuit.md
+    - sections/70-mosfet/index.md
     - Frequency Response: sections/10-frequency-response/index.md
   - Sample Prompts:
     - Introduction: prompts/index.md
     - Learning Via Simulations: prompts/learning-via-interactive-simulations.md
     - Basic IV Plots: prompts/basic-iv-plot.md
     - Generating Circuit Diagrams With LaTeX: prompts/gen-circuit-diagrams-latex.md
+    - CircuiTikZ Templates: prompts/circuitikz-templates.md
     - Generating Circuit Diagrams with Mermaid: prompts/gen-circuit-diagrams-mermaid.md
     - Adding LaTeX Equations: prompts/adding-latex-equations.md
     - Frequently Asked Questions: prompts/frequently-asked-questions.md
