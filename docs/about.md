@@ -9,7 +9,7 @@ Generative AI make it easy to create a new simulation of a circuit. It also make
 We are entering a new era, where generative AI will be eventually be embedded
 in all our circuit design and simulation tools.  For example, today the Mermaid drawing program can take a description of a circuit and generate a diagram.
 
-The key skill we teach is how is to be able to provide precise [prompts](./glossary.md#llm-prompt) to [large-language models](./glossary.md#large-lang) (LLMs) to quickly customize your learning journey.
+The key skill we teach is how is to be able to provide precise [prompts](./glossary.md#llm-prompt) to [large-language models](./glossary.md#large-language-model) (LLMs) to quickly customize your learning journey.
 
 This course will make a new set of assumptions:
 
