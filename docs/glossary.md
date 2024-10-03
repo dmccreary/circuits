@@ -153,6 +153,12 @@ to images.
 * [Overleaf website](https://www.overleaf.com/)
 * See also: [TekZ](#tikz)
 
+#### Pareto Analysis
+
+Pareto Analysis is a decision-making technique used to prioritize tasks or issues based on the principle that 80% of effects come from 20% of causes. It focuses on identifying the most significant factors in a dataset to optimize resources and efforts.
+
+**Example:** In a circuits course, Pareto Analysis can be applied to FAQs by categorizing the types of questions students frequently ask. For instance, if 80% of the questions come from 20% of the topics---such as Ohm's Law, Kirchhoff's Laws, and Thevenin's Theorem---the instructor could prioritize creating additional resources or tutorials on those key topics to address the majority of student inquiries efficiently.
+
 #### Parallel Circuit
 
 A circuit configuration where components share the same voltage across them but may carry different currents.

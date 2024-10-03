@@ -1,6 +1,8 @@
 # Basic Current-Voltage Plot Prompt
 
-<iframe src="https://editor.p5js.org/dmccreary/full/fiQeW-8ai"></iframe>
+<center>
+<iframe width="600" height="650" style="border:solid 1px black;" src="https://editor.p5js.org/dmccreary/full/fiQeW-8ai"></iframe>
+</center>
 
 ![](./current-voltage-plot.png)
 

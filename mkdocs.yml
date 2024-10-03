@@ -1,5 +1,5 @@
-site_name: Circuits Course
-site_description: 'Circuits Course Materials. All content licensed Creative Commons ShareAlike Attribution Noncommercial'
+site_name: AI Circuits Course
+site_description: 'AI Circuits Course Materials. All content licensed Creative Commons ShareAlike Attribution Noncommercial'
 site_author: 'Dan McCreary'
 repo_name: 'GitHub Repo'
 site_url: 'https://dmccreary.github.io/circuits/'
@@ -8,6 +8,7 @@ edit_uri: 'blob/master/docs'
 
 nav:
   - Home: index.md
+  - About This Course: about.md
   - Chapters:
     - Table of Contents: sections/index.md
     - Introduction: sections/01-intro/index.md
@@ -22,7 +23,7 @@ nav:
   - Sample Prompts:
     - Introduction: prompts/index.md
     - Learning Via Simulations: prompts/learning-via-interactive-simulations.md
-    - Current-Voltage Plots: prompts/current-voltage-plots.md
+    - Current-Voltage Plots: prompts/current-voltage-plots/index.md
     - Generating Circuit Diagrams With LaTeX: prompts/gen-circuit-diagrams-latex.md
     - CircuiTikZ Templates: prompts/circuitikz-templates.md
     - Generating Circuit Diagrams with Mermaid: prompts/gen-circuit-diagrams-mermaid.md
@@ -79,11 +80,8 @@ markdown_extensions:
   # enable LaTeX extensions
   - pymdownx.arithmatex:
       generic: true
-
-
-
-#extra:
-#  analytics:
-#    provider: google
+extra:
+  analytics:
+    provider: google
     # https://analytics.google.com/analytics/web/#/a1420179p349994530/admin/streams/table/4433129821
-#    property: G-XXXX
+    property: G-9J4MVE6LWP
