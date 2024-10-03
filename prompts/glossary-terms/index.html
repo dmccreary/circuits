@@ -604,6 +604,17 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Glossary Terms
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -613,6 +624,79 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#precise" class="md-nav__link">
+    <span class="md-ellipsis">
+      Precise
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#concise" class="md-nav__link">
+    <span class="md-ellipsis">
+      Concise
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#distinct" class="md-nav__link">
+    <span class="md-ellipsis">
+      Distinct
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#non-circular" class="md-nav__link">
+    <span class="md-ellipsis">
+      Non-circular
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#unencumbered-with-business-rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      Unencumbered with business rules
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sample-prompt" class="md-nav__link">
+    <span class="md-ellipsis">
+      Sample Prompt
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -815,6 +899,68 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#precise" class="md-nav__link">
+    <span class="md-ellipsis">
+      Precise
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#concise" class="md-nav__link">
+    <span class="md-ellipsis">
+      Concise
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#distinct" class="md-nav__link">
+    <span class="md-ellipsis">
+      Distinct
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#non-circular" class="md-nav__link">
+    <span class="md-ellipsis">
+      Non-circular
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#unencumbered-with-business-rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      Unencumbered with business rules
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sample-prompt" class="md-nav__link">
+    <span class="md-ellipsis">
+      Sample Prompt
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -837,16 +983,59 @@
 
 
 <h1 id="glossary-terms-prompt">Glossary Terms Prompt</h1>
-<p>You are an expert at creating precise and easy to understand
+<p>We use the <a href="https://en.wikipedia.org/wiki/ISO/IEC_11179">ISO/IEC 11179 metadata registry</a>.  Each term should be:</p>
+<ol>
+<li><strong>Precise</strong> </li>
+<li><strong>Concise</strong></li>
+<li><strong>Distinct</strong></li>
+<li><strong>Non-circular</strong></li>
+<li><strong>Unencumbered with business rules</strong></li>
+</ol>
+<h4 id="precise">Precise</h4>
+<p>Precise refers to the quality of being exact, accurate, and clearly defined, without ambiguity. In a definition, precision ensures that the concept is communicated with clarity and specificity, leaving little room for interpretation.</p>
+<h4 id="concise">Concise</h4>
+<p>Concise refers to the use of the fewest words necessary to convey meaning effectively. A concise definition avoids unnecessary detail or complexity while still fully explaining the concept.</p>
+<h4 id="distinct">Distinct</h4>
+<p>Distinct means clearly different and distinguishable from other related concepts. A distinct definition ensures that the term is uniquely identified and is not easily confused with similar terms.</p>
+<h4 id="non-circular">Non-circular</h4>
+<p>Non-circular refers to a definition that does not use the term being defined as part of its own definition. A non-circular definition explains a concept without relying on the term itself, ensuring clarity and understanding.</p>
+<h4 id="unencumbered-with-business-rules">Unencumbered with business rules</h4>
+<p>Unencumbered with business rules means that the definition is free from specific business-related constraints, assumptions, or operational guidelines. It focuses solely on describing the inherent nature of the concept, independent of how it may be applied in specific business contexts.</p>
+<h2 id="sample-prompt">Sample Prompt</h2>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span></pre></div></td><td class="code"><div><pre><span></span><code>You are an expert at creating precise and easy to understand
 definitions for electrical engineering terms used in
-an undergraduate circuits course.</p>
-<p>Create a glossary of terms for the most common terms
+an undergraduate circuits course.
+
+Create a glossary of terms for the most common terms
 used in an undergraduate circuits course.  For each
 term place the term name in a level four Markdown header.
-Place the definition of the term in the body test.</p>
-<p>For each term, make sure the definition is precise, concise, distinct,
-and non-circular.</p>
-<p>Return the list of terms in alphabetical order.</p>
+Place the definition of the term in the body test.
+
+For each term, make sure the definition is precise, concise, distinct,
+and non-circular.
+
+After the term, generate a new paragraph that has an example of how that term might
+be used in a circuits course.  Start the example with **Example:** but do
+not put a newline after the **Example:**.
+
+Return the list of terms in alphabetical order.
+</code></pre></div></td></tr></table></div>
 
 
 
