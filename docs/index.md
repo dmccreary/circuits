@@ -1,5 +1,7 @@
 # AI Circuits Course
 
+![Cover Image of Colorful Circuits and Graphs](./img/cover.png)
+
 Welcome to the website for an exciting new interactive
 undergraduate course for AI-driven electronic circuits.  
 This course is different from
