@@ -43,3 +43,13 @@ to their background.
 ## Related MicroSites
 
 [Beginning Electronics](https://dmccreary.github.io/beginning-electronics/) - targeting a younger audience with fun but simple hands-on breadboard projects. THis course does not assume any math background.
+
+[Digital Electronics](https://dmccreary.github.io/digital-electronics/) - this site uses the same generative AI approach but it puts a focus on hands-on labs and simulations of digital systems.
+
+[MicroSims](https://dmccreary.github.io/microsims/) - our original site
+that contains generative AI generated simulations.
+
+[Robot Day](https://dmccreary.github.io/robot-day/) - a single day of fun activities for students that want to learn about how robots work.
+
+[MicroPython](https://www.coderdojotc.org/micropython/) - Mostly projects that
+use the Raspberry Pi micro-controller to gather sensor data and update displays.
