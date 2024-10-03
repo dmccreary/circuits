@@ -13,7 +13,7 @@ Use a base resistor of 10K between the V_in and the base of the transistor.
 Use an LED limiting resistor of 220 ohms between the positive rail and the LED.
 ```
 
-![LED Circuit](./led-circuitdiagram.png)
+![LED Circuit](./led-circuit-diagram.png)
 
 <!--
 \begin{circuitikz}[american]
