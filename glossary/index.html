@@ -248,26 +248,6 @@
   
   
   
-    <li class="md-nav__item">
-      <a href="../checklist/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Checklist
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
     
     
       
@@ -618,6 +598,15 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#ground" class="md-nav__link">
+    <span class="md-ellipsis">
+      Ground
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#impedance" class="md-nav__link">
     <span class="md-ellipsis">
       Impedance
@@ -711,6 +700,15 @@
   <a href="#ohms-law" class="md-nav__link">
     <span class="md-ellipsis">
       Ohm's Law
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#operating-point" class="md-nav__link">
+    <span class="md-ellipsis">
+      Operating Point
     </span>
   </a>
   
@@ -924,6 +922,26 @@
   
   
     <li class="md-nav__item">
+      <a href="../checklist/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Checklist
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../references/" class="md-nav__link">
         
   
@@ -1122,6 +1140,15 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#ground" class="md-nav__link">
+    <span class="md-ellipsis">
+      Ground
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#impedance" class="md-nav__link">
     <span class="md-ellipsis">
       Impedance
@@ -1215,6 +1242,15 @@
   <a href="#ohms-law" class="md-nav__link">
     <span class="md-ellipsis">
       Ohm's Law
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#operating-point" class="md-nav__link">
+    <span class="md-ellipsis">
+      Operating Point
     </span>
   </a>
   
@@ -1454,6 +1490,10 @@ will transform this into a high-quality circuit diagram.</p>
 <p>A mathematical transformation that converts a time-domain function into its frequency-domain representation, revealing the frequency components present in a signal.</p>
 <h4 id="frequency">Frequency</h4>
 <p>The number of cycles per unit time of a periodic waveform, measured in hertz (Hz).</p>
+<p>Most alternating current circuits have a fixed frequency.  For example, in the United States, household electrical power is supplied as alternating current (AC) at a frequency of 60 Hertz (Hz). </p>
+<h4 id="ground">Ground</h4>
+<p>A reference point in an electrical circuit with zero voltage potential, serving as the common return path for electric current and the baseline for voltage measurements.</p>
+<p>In general, voltage to a point in a circuit is measured relative to the ground.</p>
 <h4 id="impedance">Impedance</h4>
 <p>The total opposition a circuit presents to alternating current, comprising both resistance and reactance, measured in ohms (Ω).</p>
 <h4 id="inductor">Inductor</h4>
@@ -1483,12 +1523,30 @@ of circuits from generative AI created circuit descriptions.</p>
 <h4 id="nodal-analysis">Nodal Analysis</h4>
 <p>A circuit analysis method using Kirchhoff's Current Law to determine the voltage at various nodes relative to a common reference point.</p>
 <h4 id="ohms-law">Ohm's Law</h4>
-<p>A fundamental relationship stating that the voltage across a conductor equals the product of the current flowing through it and its resistance (V = IR).</p>
+<p>A fundamental relationship stating that the voltage across a conductor equals the product of the current flowing through it and its resistance.  The
+formula for Ohm's Law is:</p>
+<div class="arithmatex">\[
+V = IR
+\]</div>
+<p>where:</p>
+<ul>
+<li><span class="arithmatex">\(V\)</span> is the voltage measured in volts</li>
+<li><span class="arithmatex">\(I\)</span> is the current measured in amps</li>
+<li><span class="arithmatex">\(R\)</span> is the resistance measured in ohms</li>
+</ul>
+<h4 id="operating-point">Operating Point</h4>
+<p>The steady-state condition of an electronic device or circuit characterized by specific values of voltage, current, or other relevant parameters under normal operating conditions.</p>
+<p>The operating point represents the point on the device's characteristic curve where it functions as intended without any input signal or external influence.</p>
 <h4 id="operational-amplifier">Operational Amplifier</h4>
 <p>A high-gain electronic voltage amplifier with differential inputs and usually a single-ended output, used in various signal processing applications.</p>
 <h4 id="overleaf">Overleaf</h4>
-<p>An online LaTeX editor that allows you to write and compile LaTeX documents in a web browser.</p>
-<p>In this course, we use Overleaf to convert []</p>
+<p>An online LaTeX editor that allows us to write and compile LaTeX documents in a web browser.</p>
+<p>In this course, we use Overleaf to convert <a href="#circuitikz">CircuiTekZ</a> formatted text
+to images.</p>
+<ul>
+<li><a href="https://www.overleaf.com/">Overleaf website</a></li>
+<li>See also: <a href="#tikz">TekZ</a></li>
+</ul>
 <h4 id="parallel-circuit">Parallel Circuit</h4>
 <p>A circuit configuration where components share the same voltage across them but may carry different currents.</p>
 <h4 id="phasor">Phasor</h4>
@@ -1510,13 +1568,14 @@ of circuits from generative AI created circuit descriptions.</p>
 <h4 id="thevenins-theorem">Thevenin's Theorem</h4>
 <p>A theorem stating that any linear bilateral circuit can be replaced by an equivalent circuit consisting of a single voltage source and a series resistance connected to a load.</p>
 <h3 id="tikz">TikZ</h3>
-<p>A declarative graphics package for creating vector-based illustrations directly within <a href="#latex">LaTeX</a> documents.</p>
-<p>TikZ provides a syntax for specifying graphics in a programmatic way, allowing for the creation of complex diagrams, plots, and figures that integrate seamlessly with LaTeX's typesetting.</p>
+<p>A declarative graphics line-oriented drawing vocabulary for creating vector-based illustrations directly within <a href="#latex">LaTeX</a> documents.</p>
+<p>TikZ (pronounced "tic") provides a syntax for specifying graphics in a programmatic way, allowing for the creation of complex diagrams, plots, and figures that integrate seamlessly with LaTeX's typesetting.</p>
 <p>We use the <a href="#circuitikz">CircuiTikZ</a> package for drawing circuit diagrams in this course.  CircuiTikZ is an extension of the TikZ drawing system that includes
 electronic components.</p>
 <ul>
 <li>See also: <a href="#latex">LaTeX</a></li>
 <li>See also: <a href="#circuitikz">CircuiTikZ</a></li>
+<li>See also: <a href="#overleaf">Overleaf</a></li>
 </ul>
 <h4 id="transformer">Transformer</h4>
 <p>An electrical device that transfers electrical energy between two or more circuits through electromagnetic induction, typically changing voltage levels.</p>

@@ -56,11 +56,6 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://dmccreary.github.io/circuits/prompts/basic-iv-plot/</loc>
-         <lastmod>2024-10-03</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
          <loc>https://dmccreary.github.io/circuits/prompts/circuitikz-templates/</loc>
          <lastmod>2024-10-03</lastmod>
          <changefreq>daily</changefreq>
@@ -92,6 +87,11 @@
     </url>
     <url>
          <loc>https://dmccreary.github.io/circuits/prompts/chatbot/</loc>
+         <lastmod>2024-10-03</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://dmccreary.github.io/circuits/prompts/current-voltage-plots/</loc>
          <lastmod>2024-10-03</lastmod>
          <changefreq>daily</changefreq>
     </url>

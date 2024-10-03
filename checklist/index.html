@@ -15,10 +15,10 @@
         <link rel="canonical" href="https://dmccreary.github.io/circuits/checklist/">
       
       
-        <link rel="prev" href="..">
+        <link rel="prev" href="../how-we-built-this-site/">
       
       
-        <link rel="next" href="../sections/">
+        <link rel="next" href="../references/">
       
       
       <link rel="icon" href="../assets/images/favicon.png">
@@ -238,36 +238,6 @@
   
 
       </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-    
-  
-  
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
-        
-  
-  <span class="md-ellipsis">
-    Checklist
-  </span>
-  
-
-      </a>
-      
     </li>
   
 
@@ -501,6 +471,36 @@
       
   
   
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Checklist
+  </span>
+  
+
+      </a>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
   
   
     <li class="md-nav__item">
@@ -599,14 +599,25 @@
 
 
 <h1 id="site-checklist">Site Checklist</h1>
+<p>Our GitHub repository is designed to be "forked" so that
+each college, university, school or even student can
+easily create
+their own custom version of this course.  You
+can quickly change the colors, logos and course
+content by simply editing the <a href="https://github.com/dmccreary/circuits/blob/main/mkdocs.yml">mkdocs.yml</a> file.</p>
+<p>Although creating a custom site is easy, we ask that you not resell the
+course and respect our <a href="../license/">creative commons license</a>.</p>
 <ol>
+<li>We recommend using conda to setup your build environment.  This makes sure that the python libraries used to build the site don't conflict with other Python projects.</li>
+<li>Always remember to activate your conda environment before doing a build</li>
 <li>Customize the fields in your mkdocs.yml file using the current dir</li>
-<li>Configure Google Analytics to use the right site ID</li>
-<li>Make sure that your .gitignore file includes the <code>site</code> directory</li>
-<li>Test the build</li>
-<li>Make sure the Edit button appears</li>
-<li>Make sure that code color heightening renders correctly</li>
-<li>run <code>git config advice.addIgnoredFile false</code></li>
+<li>Configure Google Analytics to use the right site ID so you can see how many people are visiting your website</li>
+<li>Make sure that your .gitignore file includes the <code>site</code> directory so that the site is not checked into your main branch.  The site is only checked
+into the gh-pages branch</li>
+<li>Test the build by using the <code>mkdocs build</code> command</li>
+<li>Make sure the Edit button appears on each page so you can make changes directly on the GitHub website without having to clone the entire repo</li>
+<li>Make sure that the LaTex formulas render correctly</li>
+<li>I suggest running <code>git config advice.addIgnoredFile false</code> to get rid of annoying error messages when you type <code>git add *</code> to update all your changes</li>
 </ol>
 
 
@@ -643,7 +654,7 @@
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href=".." class="md-footer__link md-footer__link--prev" aria-label="Previous: Home">
+          <a href="../how-we-built-this-site/" class="md-footer__link md-footer__link--prev" aria-label="Previous: How We Built This Site">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
@@ -653,20 +664,20 @@
                 Previous
               </span>
               <div class="md-ellipsis">
-                Home
+                How We Built This Site
               </div>
             </div>
           </a>
         
         
           
-          <a href="../sections/" class="md-footer__link md-footer__link--next" aria-label="Next: Table of Contents">
+          <a href="../references/" class="md-footer__link md-footer__link--next" aria-label="Next: References">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Table of Contents
+                References
               </div>
             </div>
             <div class="md-footer__button md-icon">
