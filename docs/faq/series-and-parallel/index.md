@@ -1,4 +1,6 @@
-# Series vs Parallel Circuits
+# Series and Parallel Circuits
+
+**Question:** What is the difference between series and parallel circuits
 
 In electrical circuits, **series** and **parallel** refer to two fundamental ways of connecting components, each with distinct characteristics affecting current, voltage, and resistance.
 
@@ -11,7 +13,7 @@ In electrical circuits, **series** and **parallel** refer to two fundamental way
 -   **Voltage:** The total voltage is divided among the components.
 -   **Resistance:** Total resistance is the sum of individual resistances:
 $$
-R\_{\\text{total}} = R\_1 + R\_2 + \\dots + R\_n
+R_{\\text{total}} = R_1 + R_2 + \dots + R_n
 $$
 
 <!--
