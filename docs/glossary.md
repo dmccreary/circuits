@@ -33,6 +33,8 @@ A [LaTeX](#latex) extension package which provides a set of macros for typesetti
 component type, a grid placement and some connections and CircuiTikZ
 will transform this into a high-quality circuit diagram.
 
+CircuiTikZ is pronounced "Circuit Ticks".
+
 * See also: [LaTeX](#latex)
 * See also: [TicZ](#tikz)
 * See also: [Overleaf](#overleaf)
@@ -63,11 +65,25 @@ The number of cycles per unit time of a periodic waveform, measured in hertz (Hz
 
 Most alternating current circuits have a fixed frequency.  For example, in the United States, household electrical power is supplied as alternating current (AC) at a frequency of 60 Hertz (Hz). 
 
+#### Frequently Asked Question
+
+A Frequently Asked Question (FAQ) is a commonly raised inquiry about a specific topic, usually compiled in a list, with the goal of providing clear and accessible answers. FAQs help address recurring concerns or misunderstandings and streamline communication by preemptively answering common questions.
+
+**Example:** In a circuits course, analyzing FAQs can help instructors determine which topics need additional emphasis or clarification. If a majority of FAQs revolve around "How to calculate total resistance in a parallel circuit?", this indicates that students are struggling with that concept, and the instructor might prioritize additional lessons, examples, or tutorials on parallel circuits to improve understanding.
+
+In this course, we use a variety of LLM and statistical tools such as log-file access and search logs to find out what the most frequently asked questions are.
+
 #### Ground
 
 A reference point in an electrical circuit with zero voltage potential, serving as the common return path for electric current and the baseline for voltage measurements.
 
 In general, voltage to a point in a circuit is measured relative to the ground.
+
+#### Hyperpersonalization
+
+Hyperpersonalization is the process of using advanced data analytics and AI technologies to create highly individualized content or experiences by analyzing real-time and historical user data. In the context of educational content generation, hyperpersonalization adapts lessons, materials, and assessments based on the unique needs, performance, and preferences of each student, enhancing the learning process.
+
+**Example:** If a student in a circuits course struggles with questions on "series circuits" in a prior week's quiz, hyperpersonalization can automatically generate a custom lesson plan focusing on this topic. The lesson could include targeted tutorials, interactive simulations, and additional practice problems that address the student's specific areas of difficulty, ensuring more focused and effective learning.
 
 #### Impedance
 
@@ -85,9 +101,21 @@ A principle stating that the algebraic sum of currents entering a node equals ze
 
 A principle stating that the algebraic sum of voltages around any closed loop in a circuit equals zero, reflecting energy conservation.
 
+#### Knowledge Graph Concept
+
+A Knowledge Graph Concept is a distinct, identifiable unit of knowledge represented as a node in a knowledge graph. It denotes a real-world entity, idea, or category and is linked to other concepts through defined relationships, enabling the organization and interconnection of information.
+
+**Example:** In a circuits course, "Ohm's Law" can be a Knowledge Graph Concept, with dependencies on related concepts like "Voltage," "Current," and "Resistance." For instance, understanding Ohm's Law requires knowledge of these three concepts and how they are mathematically related: Voltage = Current × Resistance. Similarly, concepts like "Series Circuit" and "Parallel Circuit" could also depend on understanding Ohm's Law to determine total resistance and current behavior.
+
 #### Laplace Transform
 
 A mathematical transformation that converts a time-domain function into a complex frequency-domain function, simplifying the analysis of linear time-invariant systems.
+
+#### Large-language model
+
+A Large-language model (LLM) is an advanced machine learning model trained on vast amounts of text data to understand, generate, and manipulate natural language. In the context of generative AI, LLMs are capable of producing human-like text, answering questions, summarizing information, and assisting in various search and content creation tasks by leveraging patterns learned from their training data.
+
+**Example:** In a circuits course, an LLM can be used to create personalized learning experiences by generating tailored explanations for students based on their questions. For instance, if a student asks, "How does a capacitor work in an AC circuit?", the LLM can generate a detailed response, offer diagrams, and even suggest further reading based on the student's current understanding. This enhances the learning process by providing real-time, adaptive feedback.
 
 #### LaTeX
 
@@ -99,6 +127,12 @@ of circuits from generative AI created circuit descriptions.
 * See also: [CircuiTikZ](#circuitikz)
 * See also: [TicZ](#tikz)
 * See also: [Overleaf](#overleaf)
+
+#### LLM Prompt
+
+An LLM (Large Language Model) Prompt is a structured input provided to a large language model to guide its output. It typically consists of instructions, questions, or specific context designed to generate a relevant and coherent response from the model.
+
+**Example:** A prompt for a circuits course could be: "Explain Ohm's Law in simple terms and provide a real-world example of its application." This prompt guides the LLM to focus on explaining a fundamental concept in electrical circuits and offering a practical example.
 
 #### Mesh Analysis
 
@@ -223,6 +257,12 @@ The behavior of a circuit immediately after a change in its inputs or conditions
 #### Transfer Function
 
 A mathematical representation of the relationship between the input and output of a system, typically expressed in the frequency domain.
+
+#### Vector Store
+
+A Vector Store is a specialized data structure used to store and manage high-dimensional vector representations of data, typically derived from large language models (LLMs). It allows for efficient similarity searches by comparing the vectors of different items, enabling the retrieval of the most relevant or semantically similar information based on proximity in vector space.
+
+**Example:** In our circuits course, a vector store can be used to store vector representations of key concepts or questions from course materials. When a student searches for "how to solve for voltage in a parallel circuit," the system can retrieve similar items, such as related questions on current, resistance, or Kirchhoff's Laws, even if the exact terms are not matched. This helps students find conceptually similar resources or FAQs that are most relevant to their queries.
 
 #### Voltage
 
