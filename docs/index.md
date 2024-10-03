@@ -1,7 +1,8 @@
-# Circuits Course Materials
+# AI Circuits Course
 
 Welcome to the website for an exciting new interactive
-undergraduate course on electronic circuits.  This course is different from
+undergraduate course for AI-driven electronic circuits.  
+This course is different from
 many traditional circuits courses because it uses generative AI
 and interactive simulations to teach the theory and practice
 of understanding and designing electronics circuits.
