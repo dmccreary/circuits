@@ -18,11 +18,12 @@ nav:
     - Transistors:
        - Introduction: sections/60-transistors/index.md
        - LED Driver Circuit: sections/60-transistors/led-circuit.md
-    - sections/70-mosfet/index.md
+    - MOSFETs: sections/70-mosfet/index.md
     - Frequency Response: sections/10-frequency-response/index.md
   - Sample Prompts:
     - Introduction: prompts/index.md
     - Learning Via Simulations: prompts/learning-via-interactive-simulations.md
+    - Stories and Metaphors: prompts/stories-and-metaphors.md
     - Current-Voltage Plots: prompts/current-voltage-plots/index.md
     - Generating Circuit Diagrams With LaTeX: prompts/gen-circuit-diagrams-latex.md
     - CircuiTikZ Templates: prompts/circuitikz-templates.md
@@ -31,6 +32,7 @@ nav:
     - Frequently Asked Questions: prompts/frequently-asked-questions.md
     - ChatBot: prompts/chatbot/index.md
     - Glossary Terms: prompts/glossary-terms.md
+    - Concept Enumeration: prompts/concept-enumeration.md
   - FAQ:
     - Intro: faq/index.md
     - Series and Parallel: faq/series-and-parallel/index.md

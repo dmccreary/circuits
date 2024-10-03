@@ -138,6 +138,10 @@ An LLM (Large Language Model) Prompt is a structured input provided to a large l
 
 A circuit analysis technique using Kirchhoff's Voltage Law to determine unknown currents in the meshes (loops) of a planar circuit.
 
+#### Metaphors and Stories
+
+An approach to teaching that leverages the storytelling part of our brains.
+
 #### MOSFET
 
 A type of [field-effect transistor](#field-effect-transistor) in which the conductivity of a semiconductor channel is controlled by the voltage applied to a gate electrode that is insulated from the channel by a thin oxide layer.
