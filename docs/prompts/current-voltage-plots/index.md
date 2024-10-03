@@ -1,5 +1,7 @@
 # Basic Current-Voltage Plot Prompt
 
+<iframe src="https://editor.p5js.org/dmccreary/full/fiQeW-8ai"></iframe>
+
 ![](./current-voltage-plot.png)
 
 This prompt is useful when you are plotting the current vs. voltage
