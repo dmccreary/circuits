@@ -1,6 +1,6 @@
 # Circuits Course Concept Dependency Graph
 
-[HTML Page](index.html)
+[HTML Page for Dependency Graph](./dep-graph.html)
 
 ## Adjusting Visualization
 
