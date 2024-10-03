@@ -66,6 +66,16 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://dmccreary.github.io/circuits/prompts/concept-dependency-graph/</loc>
+         <lastmod>2024-10-03</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://dmccreary.github.io/circuits/prompts/concept-enumeration/</loc>
+         <lastmod>2024-10-03</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://dmccreary.github.io/circuits/prompts/frequently-asked-questions/</loc>
          <lastmod>2024-10-03</lastmod>
          <changefreq>daily</changefreq>
@@ -91,12 +101,22 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://dmccreary.github.io/circuits/prompts/metaphors-and-stories/</loc>
+         <lastmod>2024-10-03</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://dmccreary.github.io/circuits/prompts/chatbot/</loc>
          <lastmod>2024-10-03</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://dmccreary.github.io/circuits/prompts/current-voltage-plots/</loc>
+         <lastmod>2024-10-03</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://dmccreary.github.io/circuits/prompts/graph/</loc>
          <lastmod>2024-10-03</lastmod>
          <changefreq>daily</changefreq>
     </url>
