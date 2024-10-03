@@ -33,6 +33,7 @@ nav:
     - ChatBot: prompts/chatbot/index.md
     - Glossary Terms: prompts/glossary-terms.md
     - Concept Enumeration: prompts/concept-enumeration.md
+    - Dependency Graph Application: prompts/graph/index.md
   - FAQ:
     - Intro: faq/index.md
     - Series and Parallel: faq/series-and-parallel/index.md

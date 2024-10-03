@@ -1,5 +1,7 @@
 # Concept Dependency Graph
 
+[Graph App Page](./graph/index.md)
+
 ## Prompt
 
 ```
