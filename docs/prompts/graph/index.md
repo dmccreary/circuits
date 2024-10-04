@@ -89,4 +89,28 @@ https://visjs.github.io/vis-network/examples/network/layout/hierarchicalLayoutUs
         };
 ```
 
-  [Vis.js Network Layout Methods](https://visjs.github.io/vis-network/docs/network/#methodLayout)
+## Category Colors
+
+We can use generative AI to categorize each concept.
+Here are 11 categories of the concepts
+
+| CategoryID | Color  | CategoryLabel                                |
+|------------|--------|----------------------------------------------|
+| 1          | red    | Fundamental Concepts                         |
+| 2          | orange | Passive Components                           |
+| 3          | yellow | Active Components and Semiconductor Devices  |
+| 4          | green  | Circuit Analysis Techniques                  |
+| 5          | cyan   | AC Circuit Concepts                          |
+| 6          | blue   | Transient Analysis                           |
+| 7          | purple | Signal Processing and Filters                |
+| 8          | pink   | Amplifiers and Analog Circuits               |
+| 9          | gray   | Power Electronics                            |
+| 10         | olive  | Control Systems and Stability                |
+| 11         | brown  | Types of Circuits                            |
+
+
+[Category Colors Demo](./category-colors.html)
+
+## Reference
+
+[Vis.js Network Layout Methods](https://visjs.github.io/vis-network/docs/network/#methodLayout)
