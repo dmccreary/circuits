@@ -23,7 +23,6 @@ nav:
   - Sample Prompts:
     - Introduction: prompts/index.md
     - Learning Via Simulations: prompts/learning-via-interactive-simulations.md
-    - Stories and Metaphors: prompts/stories-and-metaphors.md
     - Current-Voltage Plots: prompts/current-voltage-plots/index.md
     - Generating Circuit Diagrams With LaTeX: prompts/gen-circuit-diagrams-latex.md
     - CircuiTikZ Templates: prompts/circuitikz-templates.md
@@ -34,7 +33,7 @@ nav:
     - prompts/add-categories-to-concepts.md
     - prompts/concept-dependency-graph.md
     - prompts/concept-taxonomy.md
-    - prompts/metaphors-and-stories.md
+    - Metaphors and Stories: prompts/metaphors-and-stories.md
     - Glossary Terms: prompts/glossary-terms.md
     - Concept Enumeration: prompts/concept-enumeration.md
     - Dependency Graph Application: prompts/graph/index.md
