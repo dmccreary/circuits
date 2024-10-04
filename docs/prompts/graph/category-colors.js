@@ -20,7 +20,7 @@ function parseCSV(data) {
     var categoryColors = {
         1: 'red',
         2: 'orange',
-        3: 'yellow',
+        3: 'gold',
         4: 'green',
         5: 'cyan',
         6: 'blue',
@@ -73,12 +73,13 @@ loadCSV(function(data) {
         nodes: nodes,
         edges: edges,
     };
+    // dot or circle?
     var options = {
         nodes: {
             shape: 'dot',
             size: 10,
             font: {
-                size: 14,
+                size: 18,
             },
         },
         edges: {
