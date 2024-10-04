@@ -17,7 +17,8 @@ function parseCSV(data) {
     var lines = data.trim().split('\n');
     var nodes = [];
     var edges = [];
-
+    
+    //
     lines.forEach(function(line) {
         var parts = line.split(',');
         var id = parts[0].trim();
