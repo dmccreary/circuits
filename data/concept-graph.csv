@@ -1,4 +1,4 @@
-ConceptID,ConceptName,DependancyList
+ConceptID,ConceptName,DependancyList,Classifier
 1,Ohm's Law,2|3|4
 2,Voltage,7
 3,Current,7
