@@ -1,4 +1,4 @@
-ConceptID,ConceptName,DependancyList,CategoryID,CategoryLabel
+ConceptID,ConceptName,DependencyList,CategoryID,CategoryLabel
 1,Ohm's Law,2|3|4,1,Fundamental Concepts
 2,Voltage,7,1,Fundamental Concepts
 3,Current,7,1,Fundamental Concepts
