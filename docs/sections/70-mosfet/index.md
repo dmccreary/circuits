@@ -1,6 +1,5 @@
 # MOSFET
 
-
 ## Lesson Overview
 
 -   **Subject:** Electrical Engineering / Electronics
@@ -20,7 +19,7 @@ By the end of this lesson, students should be able to:
 
 ## Lesson Structure
 
-### 1. Introduction to MOSFETs (20 minutes)
+### 1. Introduction to MOSFETs
 
 #### What is a MOSFET?
 
@@ -40,7 +39,7 @@ By the end of this lesson, students should be able to:
     -   **Enhancement Mode:** Requires a gate voltage to induce a channel.
     -   **Depletion Mode:** Channel exists naturally; gate voltage can deplete it.
 
-### 2. MOSFET Operation Principles (30 minutes)
+### 2. MOSFET Operation Principles
 
 #### Physical Operation
 
@@ -70,6 +69,7 @@ By the end of this lesson, students should be able to:
 **Equations:**
 
 -  **Cutoff Region:** 
+
 $$
 ID=0I_D = 0ID​=0 when VGS<VTHV_{GS} < V_{TH}VGS​<VTH​.
 $$
@@ -78,6 +78,7 @@ $$
 $$
 ID=μnCoxWL((VGS-VTH)VDS-VDS22)I_D = \mu_n C_{ox} \frac{W}{L} \left( (V_{GS} - V_{TH})V_{DS} - \frac{V_{DS}^2}{2} \right)ID​=μn​Cox​LW​((VGS​-VTH​)VDS​-2VDS2​​)
 $$
+
 -   **Saturation Region:**
 
 $$
@@ -89,7 +90,7 @@ $$
 -   **Gate Capacitance (C_G):** Affects the speed of the MOSFET.
 -   **Miller Effect:** Impacts high-frequency performance.
 
-### 4. Applications of MOSFETs (20 minutes)
+### 4. Applications of MOSFETs
 
 **Switching Applications:**
 
@@ -106,7 +107,7 @@ $$
 -   CMOS technology uses complementary N-channel and P-channel MOSFETs.
 -   Basis for microprocessors and memory devices.
 
-### 5. Sample MOSFET Circuit Experiment (30 minutes)
+### 5. Sample MOSFET Circuit Experiment
 
 **Designing a Common-Source Amplifier:**
 
@@ -146,7 +147,7 @@ $$
 4.  **Analyze Amplification:**
     -   Calculate the voltage gain Av=VoutVinA_v = \frac{V_{out}}{V_{in}}Av​=Vin​Vout​​.
 
-### 6\. Simulation to Understand MOSFET Parameters (20 minutes)
+### 6. Simulation to Understand MOSFET Parameters
 
 **Objective:**
 
@@ -163,18 +164,14 @@ $$
     -   Use a predefined NMOS model or specify parameters like VTHV_{TH}VTH​, μnCox\mu_n C_{ox}μn​Cox​, WWW, and LLL.
 2.  **Create the Test Circuit:**
 
+
     -   **Circuit Diagram:**
 
-        ```
-        plaintext
-        Copy code
-
-        `Drain (D) --- [ Ammeter ] --- [ V_DS ] --- Source (S)
-                     |
-                     Gate (G) --- [ V_GS ]
-        `
-
-        ```
+```
+Drain (D) --- [ Ammeter ] --- [ V_DS ] --- Source (S)
+                |
+                Gate (G) --- [ V_GS ]
+```
 
     -   **Description:**
 
@@ -201,10 +198,8 @@ $$
 -   The impact of threshold voltage on the MOSFET's switching behavior.
 -   The role of transconductance in amplification applications.
 
-* * * *
 
-Assessment
-----------
+## Assessment
 
 -   **Quiz:**
     -   Short questions on MOSFET operation and characteristics.
@@ -213,12 +208,7 @@ Assessment
     -   Analyze the data and provide conclusions.
 
 References
-----------
 
--   **Textbook:** "Microelectronic Circuits" by Sedra and Smith.
--   **Datasheets:** Refer to specific MOSFET datasheets for real-world parameters.
-
-* * * *
 
 Notes for Students
 ==================
@@ -230,3 +220,11 @@ Notes for Students
 o1
 
 requestAnimationFrame((function(){window.__oai_logTTI?window.__oai_logTTI():window.__oai_SSR_TTI=window.__oai_SSR_TTI??Date.now()}))
+
+## References
+
+[How MOSFET Works - Ultimate guide, understand like a PRO](https://www.youtube.com/watch?v=AwRJsze_9m4) The Engineering Mindset
+
+-   **Textbook:** "Microelectronic Circuits" by Sedra and Smith.
+-   **Datasheets:** Refer to specific MOSFET datasheets for real-world parameters.
+
