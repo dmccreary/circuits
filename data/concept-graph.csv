@@ -1,4 +1,4 @@
-ConceptID,ConceptName,DependancyList,Classifier
+ConceptID,ConceptName,DependancyList
 1,Ohm's Law,2|3|4
 2,Voltage,7
 3,Current,7
@@ -119,3 +119,4 @@ ConceptID,ConceptName,DependancyList,Classifier
 118,Mathematics,116
 119,Physics,116
 120,Atomic structure,119
+121,MOSFET,75
