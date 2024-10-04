@@ -75,7 +75,7 @@ ConceptID,ConceptName,DependancyList,CategoryID,CategoryLabel
 74,Bipolar junction transistor,73,3,Active Components and Semiconductor Devices
 75,Field effect transistor,73,3,Active Components and Semiconductor Devices
 76,Switching circuits,73,9,Power Electronics
-77,Amplifiers,73|54,11,Types of Circuits
+77,Amplifiers,73|54,8,Amplifiers and Analog Circuits
 78,Small signal analysis,73|77,8,Amplifiers and Analog Circuits
 79,Gain,77,8,Amplifiers and Analog Circuits
 80,Saturation,73,3,Active Components and Semiconductor Devices
