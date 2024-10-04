@@ -36,20 +36,29 @@ function parseCSV(data) {
         if (index === 0) return;
         
         var parts = line.split(',');
+        // concept id in first column
         var id = parts[0].trim();
+
+        // the concept label is in the second column
         var label = parts[1].trim();
+
+        // a pipe delimited list of dependant IDs is in the third colum
         var dependencies = parts[2] ? parts[2].trim().split('|') : [];
+
+        // the category ID is in the 4th column
         var categoryID = parseInt(parts[3].trim());
 
         // Assign color based on CategoryID
         var color = categoryColors[categoryID] || 'black'; // Default to black if category is not found
 
+        // create a new node with the right ID, label and color
         nodes.push({
             id: id,
             label: label,
             color: color // Set node color
         });
 
+        // now for each dependancy, create an edge between ID and its dependant ID
         dependencies.forEach(function(depId) {
             depId = depId.trim();
             if (depId !== '') {

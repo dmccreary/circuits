@@ -71,4 +71,21 @@ print(f"Updated concept graph saved to {output_path}")
 ## Result of Merge
 
 ```
+ConceptID,ConceptName,DependencyList,CategoryID,CategoryLabel
+1,Ohm's Law,2|3|4,1,Fundamental Concepts
+2,Voltage,7,1,Fundamental Concepts
+3,Current,7,1,Fundamental Concepts
+4,Resistance,101,1,Fundamental Concepts
+5,Power,2|3,1,Fundamental Concepts
+6,Energy,5|102,1,Fundamental Concepts
+7,Electric charge,120,1,Fundamental Concepts
+8,Conductors,7,1,Fundamental Concepts
+9,Insulators,7,1,Fundamental Concepts
+10,Capacitance,2|7,1,Fundamental Concepts
+11,Inductance,3|104,1,Fundamental Concepts
+12,Kirchhoff's Current Law,3,4,Circuit Analysis Techniques
+13,Kirchhoff's Voltage Law,2,4,Circuit Analysis Techniques
+14,Direct current,3,1,Fundamental Concepts
+15,Alternating current,3|32,5,AC Circuit Concepts
+16,Series circuits,1|4|2|3,11,Types of Circuits
 ```
