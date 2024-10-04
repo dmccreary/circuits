@@ -31,6 +31,10 @@ nav:
     - Adding LaTeX Equations: prompts/adding-latex-equations.md
     - Frequently Asked Questions: prompts/frequently-asked-questions.md
     - ChatBot: prompts/chatbot/index.md
+    - prompts/add-categories-to-concepts.md
+    - prompts/concept-dependency-graph.md
+    - prompts/concept-taxonomy.md
+    - prompts/metaphors-and-stories.md
     - Glossary Terms: prompts/glossary-terms.md
     - Concept Enumeration: prompts/concept-enumeration.md
     - Dependency Graph Application: prompts/graph/index.md
