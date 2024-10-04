@@ -720,6 +720,24 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#left-to-right-layout" class="md-nav__link">
+    <span class="md-ellipsis">
+      Left to Right Layout
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#full-layout-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      Full Layout Options
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -940,6 +958,24 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#left-to-right-layout" class="md-nav__link">
+    <span class="md-ellipsis">
+      Left to Right Layout
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#full-layout-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      Full Layout Options
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -966,23 +1002,146 @@
 <h1 id="circuits-course-concept-dependency-graph">Circuits Course Concept Dependency Graph</h1>
 <p><a href="dep-graph.html">HTML Page for Dependency Graph</a></p>
 <h2 id="adjusting-visualization">Adjusting Visualization</h2>
-<p><code>`js
-var options = {
-    nodes: {
-        shape: 'dot',
-        size: 10,
-        font: {
-            size: 14,
-        },
-    },
-    edges: {
-        arrows: 'to',
-        smooth: true,
-    },
-    physics: {
-        stabilization: false,
-    },
-};</code></p>
+<p>In the <a href="script.js">JavaScript</a> file you can change the display options.
+Here is the portion of the JavaScript that changes the options.</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">var</span><span class="w"> </span><span class="nx">options</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">nodes</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">shape</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;dot&#39;</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">size</span><span class="o">:</span><span class="w"> </span><span class="mf">10</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">font</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nx">size</span><span class="o">:</span><span class="w"> </span><span class="mf">14</span><span class="p">,</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nx">edges</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">arrows</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;to&#39;</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">smooth</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nx">physics</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">stabilization</span><span class="o">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="p">};</span>
+</code></pre></div></td></tr></table></div>
+<h2 id="left-to-right-layout">Left to Right Layout</h2>
+<p><a href="lr-layout.html">HTML Page for Dependency Graph</a></p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kd">var</span><span class="w"> </span><span class="nx">options</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="nx">layout</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nx">hierarchical</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="nx">direction</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;LR&#39;</span><span class="p">,</span><span class="w">  </span><span class="c1">// Left to right</span>
+<span class="w">          </span><span class="nx">sortMethod</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;directed&#39;</span><span class="p">,</span><span class="w">  </span><span class="c1">// Sort nodes based on dependencies</span>
+<span class="w">          </span><span class="nx">nodeSpacing</span><span class="o">:</span><span class="w"> </span><span class="mf">200</span><span class="p">,</span><span class="w">  </span><span class="c1">// Adjust spacing if needed</span>
+<span class="w">          </span><span class="nx">levelSeparation</span><span class="o">:</span><span class="w"> </span><span class="mf">150</span><span class="w">  </span><span class="c1">// Adjust for horizontal space between levels</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></td></tr></table></div>
+<h2 id="full-layout-options">Full Layout Options</h2>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nx">layout</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">randomSeed</span><span class="o">:</span><span class="w"> </span><span class="kc">undefined</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">improvedLayout</span><span class="o">:</span><span class="kc">true</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">clusterThreshold</span><span class="o">:</span><span class="w"> </span><span class="mf">150</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">hierarchical</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nx">enabled</span><span class="o">:</span><span class="kc">false</span><span class="p">,</span>
+<span class="w">      </span><span class="nx">levelSeparation</span><span class="o">:</span><span class="w"> </span><span class="mf">150</span><span class="p">,</span>
+<span class="w">      </span><span class="nx">nodeSpacing</span><span class="o">:</span><span class="w"> </span><span class="mf">100</span><span class="p">,</span>
+<span class="w">      </span><span class="nx">treeSpacing</span><span class="o">:</span><span class="w"> </span><span class="mf">200</span><span class="p">,</span>
+<span class="w">      </span><span class="nx">blockShifting</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">      </span><span class="nx">edgeMinimization</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">      </span><span class="nx">parentCentralization</span><span class="o">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">      </span><span class="nx">direction</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;LR&#39;</span><span class="p">,</span><span class="w">        </span><span class="c1">// UD, DU, LR, RL</span>
+<span class="w">      </span><span class="nx">sortMethod</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;hubsize&#39;</span><span class="p">,</span><span class="w">  </span><span class="c1">// hubsize, directed</span>
+<span class="w">      </span><span class="nx">shakeTowards</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;leaves&#39;</span><span class="w">  </span><span class="c1">// roots, leaves</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="w">  </span><span class="sb">```</span>
+
+<span class="sb">## Hierarchical Layout User Defined</span>
+<span class="sb">https://visjs.github.io/vis-network/examples/network/layout/hierarchicalLayoutUserdefined.html</span>
+
+<span class="sb">```</span><span class="nx">js</span>
+<span class="w">  </span><span class="kd">var</span><span class="w"> </span><span class="nx">options</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="nx">edges</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nx">smooth</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">              </span><span class="nx">type</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;cubicBezier&quot;</span><span class="p">,</span>
+<span class="w">              </span><span class="nx">forceDirection</span><span class="o">:</span>
+<span class="w">                </span><span class="nx">directionInput</span><span class="p">.</span><span class="nx">value</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">&quot;UD&quot;</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nx">directionInput</span><span class="p">.</span><span class="nx">value</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">&quot;DU&quot;</span>
+<span class="w">                  </span><span class="o">?</span><span class="w"> </span><span class="s2">&quot;vertical&quot;</span>
+<span class="w">                  </span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;horizontal&quot;</span><span class="p">,</span>
+<span class="w">              </span><span class="nx">roundness</span><span class="o">:</span><span class="w"> </span><span class="mf">0.4</span><span class="p">,</span>
+<span class="w">            </span><span class="p">},</span>
+<span class="w">          </span><span class="p">},</span>
+<span class="w">          </span><span class="nx">layout</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nx">hierarchical</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">              </span><span class="nx">direction</span><span class="o">:</span><span class="w"> </span><span class="nx">directionInput</span><span class="p">.</span><span class="nx">value</span><span class="p">,</span>
+<span class="w">            </span><span class="p">},</span>
+<span class="w">          </span><span class="p">},</span>
+<span class="w">          </span><span class="nx">physics</span><span class="o">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">        </span><span class="p">};</span>
+</code></pre></div></td></tr></table></div>
+<p><a href="https://visjs.github.io/vis-network/docs/network/#methodLayout">Vis.js Network Layout Methods</a></p>
 
 
 
