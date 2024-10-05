@@ -40,6 +40,9 @@ nav:
   - FAQ:
     - Intro: faq/index.md
     - Series and Parallel: faq/series-and-parallel/index.md
+  - MicroSim Templates:
+    - Introduction: sims/index.md
+    - Simple DC Circuit: sims/dccircuit/index.md
   - Glossary: glossary.md
   - How We Built This Site: how-we-built-this-site.md
   - Checklist: checklist.md

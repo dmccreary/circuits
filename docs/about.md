@@ -24,18 +24,37 @@ can quickly customize a lesson, a simulation or a diagram.
 
 With the right prompt templates, these LLM tools can create powerful interactive simulations.  Our assumption is that students that have strong prompt engineering skills will be better positions to work with AI agents to solve complex problems.
 
-### 3. Metaphors and Stories
+### 3. MicroSims
+
+This course leverages the concept of a [MicroSim](https://dmccreary.github.io/microsims/), which
+are small standalone simulations that illustrate specific concepts.  Generative AI is
+not only a great way to create new MicroSims, but given an example microsim template it
+is excellent at customizing MicroSims.  We provide an extensive collection of
+templates that can be quickly customized and added to a our library and
+we encourage others to publish their MicroSims.
+
+An example of a course that created MicroSims for electrical engineering courses can be found [here](https://kenn0727.github.io/ee-microsims/).
+This course was part of the University of Minnesota Senior Seminar in 2024.
+We are grateful to [Sharat Batra](https://www.linkedin.com/in/sharatbatra/)
+for enabling this senior seminar group.
+
+### 4. Metaphors and Stories
 
 Although many students have a strong math background, some students
 have difficulty getting an intuitive sense of a circuit from an equation.
-Fear not!  Generative AI is excellent at finding [metaphors and stores](./glossary.md#metaphors-and-stories)
+Fear not!  Generative AI is excellent at
+finding [metaphors and stores](./glossary.md#metaphors-and-stories)
 to quickly allow all students to gain rapid understanding of complex concepts.
 Using high-quality metaphors and stories makes circuits accessible to a larger
 population of students that are at different stages of their math journey.
 
-Here is a suggested prompt for generating [metaphors and stories](./prompts/metaphors-and-stories.md).  I encourage everyone, both instructors and students to use generative AI to generate non-technical explanations without over dependance on complex mathematical formulas.
+Here is a suggested [prompt for generating metaphors and stories](./prompts/metaphors-and-stories.md).  I encourage everyone, both instructors and students to use generative AI to generate non-technical explanations without over dependance on complex mathematical formulas.
 
-### 4. FAQ Analytics
+This gets to the heart of one the key values of this content: making
+knowledge more accessible to a wider audience regardless of
+location, race, class or income.
+
+### 5. FAQ Analytics
 
 There are some questions that get answered frequently.  Experienced
 instructors know this and have developed great tools to
@@ -58,10 +77,29 @@ is our [Parato Analysis](./glossary.md#pareto-analysis) method.  We can use [Goo
 which pages are being used the most and we can use feedback forms
 to quickly gather feedback when concepts are not clear.
 
-### 5. Concept Graphs
+This reflects the value that a great course is not just the work of
+dedicated instructors.  The use of data and continuous feedback loops
+are essential to continually improving the learning experience.
 
-All circuits courses are based on learning a collection of [Concepts](./glossary.md#knowledge-graph-concept) that have dependencies on other concepts.  This
-concept structure can be stored in a knowledge graph.  We can traverse this knowledge graph to create precise hallucination-free responses to [frequently asked questions](./glossary.md#frequently-asked-question).
+### 5. Concept Knowledge Graphs
+
+![](./img/kg-for-ohms-law.png)
+
+All circuits courses are based on learning a collection of [Concepts](./glossary.md#knowledge-graph-concept) that have dependencies on other concepts.  Learning
+advanced concepts depends on your understanding the prerequisite concepts.
+For example, before you learn about Ohm's Law you should have an understanding of
+the concepts of voltage, current, resistance and how linear equations work.
+
+These concepts and their dependencies can be stored in a directed graph
+database known as a concept knowledge graph were concepts are vertices and
+prerequisites for learning a new concept are directed edges between the concepts.  We can traverse this knowledge graph to create precise hallucination-free responses to [frequently asked questions](./glossary.md#frequently-asked-question).
+
+There are many types of knowledge graphs.  The knowledge graph for an
+entire college course contains around 10,000 concepts.  However, each
+lesson typically only contains a few dozen concepts.
+
+Note that the figure above was created using the [vix.js](https://visjs.github.io/vis-network/docs/network/) JavaScript library and ChatGPT.  A sample
+prompt to create this graph is [here](./prompts/simple-knowledge-graph/index.md)
 
 ### 6. Similarity
 
