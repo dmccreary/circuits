@@ -12,28 +12,24 @@
         <meta name="author" content="Dan McCreary">
       
       
-        <link rel="canonical" href="https://dmccreary.github.io/circuits/sections/10-frequency-response/">
+        <link rel="canonical" href="https://dmccreary.github.io/circuits/sims/dc-circuit/circuits-v2/">
       
       
-        <link rel="prev" href="../70-mosfet/">
       
       
-        <link rel="next" href="../../prompts/">
-      
-      
-      <link rel="icon" href="../../assets/images/favicon.png">
+      <link rel="icon" href="../../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.33">
     
     
       
-        <title>Frequency Response - AI Circuits Course</title>
+        <title>Circuits - AI Circuits Course</title>
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.3cba04c6.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.3cba04c6.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
       
       
 
@@ -52,7 +48,7 @@
       
     
     
-    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
   
@@ -86,7 +82,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#frequency-response-and-bode-plots" class="md-skip">
+        <a href="#circuits" class="md-skip">
           Skip to content
         </a>
       
@@ -102,7 +98,7 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../.." title="AI Circuits Course" class="md-header__button md-logo" aria-label="AI Circuits Course" data-md-component="logo">
+    <a href="../../.." title="AI Circuits Course" class="md-header__button md-logo" aria-label="AI Circuits Course" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
@@ -122,7 +118,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Frequency Response
+              Circuits
             
           </span>
         </div>
@@ -209,7 +205,7 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../.." title="AI Circuits Course" class="md-nav__button md-logo" aria-label="AI Circuits Course" data-md-component="logo">
+    <a href="../../.." title="AI Circuits Course" class="md-nav__button md-logo" aria-label="AI Circuits Course" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
@@ -239,7 +235,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../.." class="md-nav__link">
+      <a href="../../.." class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -259,7 +255,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../about/" class="md-nav__link">
+      <a href="../../../about/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -276,171 +272,6 @@
       
   
   
-    
-  
-  
-  
-    
-    
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-    
-    
-    
-      
-    
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
-        
-          
-          
-          <div class="md-nav__link md-nav__container">
-            <a href="../" class="md-nav__link ">
-              
-  
-  <span class="md-ellipsis">
-    Chapters
-  </span>
-  
-
-            </a>
-            
-              
-              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="0">
-                <span class="md-nav__icon md-icon"></span>
-              </label>
-            
-          </div>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_3">
-            <span class="md-nav__icon md-icon"></span>
-            Chapters
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../01-intro/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Introduction
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../05-voltage-across-a-capacitor/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Voltage Across a Capacitor
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../02-laws/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Circuit Laws
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../50-diode/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Diodes
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
   
   
     
@@ -450,6 +281,30 @@
           
         
       
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
         
       
     
@@ -465,11 +320,11 @@
         
   
   
-    <a href="../60-transistors/" class="md-nav__link">
+    <a href="../../../sections/" class="md-nav__link">
       
   
   <span class="md-ellipsis">
-    Transistors
+    Chapters
   </span>
   
 
@@ -483,66 +338,6 @@
     </li>
   
 
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../70-mosfet/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    MOSFETs
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-    
-  
-  
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
-        
-  
-  <span class="md-ellipsis">
-    Frequency Response
-  </span>
-  
-
-      </a>
-      
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
-    </li>
-  
-
     
       
       
@@ -606,7 +401,7 @@
         
   
   
-    <a href="../../prompts/" class="md-nav__link">
+    <a href="../../../prompts/" class="md-nav__link">
       
   
   <span class="md-ellipsis">
@@ -655,7 +450,7 @@
         
   
   
-    <a href="../../faq/" class="md-nav__link">
+    <a href="../../../faq/" class="md-nav__link">
       
   
   <span class="md-ellipsis">
@@ -702,7 +497,7 @@
         
   
   
-    <a href="../../sims/" class="md-nav__link">
+    <a href="../../" class="md-nav__link">
       
   
   <span class="md-ellipsis">
@@ -728,7 +523,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../glossary/" class="md-nav__link">
+      <a href="../../../glossary/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -748,7 +543,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../how-we-built-this-site/" class="md-nav__link">
+      <a href="../../../how-we-built-this-site/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -768,7 +563,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../checklist/" class="md-nav__link">
+      <a href="../../../checklist/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -788,7 +583,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../references/" class="md-nav__link">
+      <a href="../../../references/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -808,7 +603,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../license/" class="md-nav__link">
+      <a href="../../../license/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -828,7 +623,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../contact/" class="md-nav__link">
+      <a href="../../../contact/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -861,6 +656,59 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#background" class="md-nav__link">
+    <span class="md-ellipsis">
+      Background
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#classroom-implementation-ideas" class="md-nav__link">
+    <span class="md-ellipsis">
+      Classroom Implementation Ideas
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#further-extensions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Further Extensions
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#demos-of-circuits" class="md-nav__link">
+    <span class="md-ellipsis">
+      Demos of Circuits
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sample-prompt" class="md-nav__link">
+    <span class="md-ellipsis">
+      Sample Prompt
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -874,7 +722,7 @@
                   
 
   
-    <a href="https://github.com/dmccreary/circuits/blob/master/docs/sections/10-frequency-response/index.md" title="Edit this page" class="md-content__button md-icon">
+    <a href="https://github.com/dmccreary/circuits/blob/master/docs/sims/dc-circuit/circuits-v2.md" title="Edit this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4v-2m10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1 2.1 2.1Z"/></svg>
     </a>
@@ -882,8 +730,205 @@
   
 
 
-<h1 id="frequency-response-and-bode-plots">Frequency Response and Bode Plots</h1>
-<p><a href="https://kenn0727.github.io/ee-microsims/sims/rc-lowpass-filter/">RC Lowpass Filter</a></p>
+<h1 id="circuits">Circuits</h1>
+<h2 id="background">Background</h2>
+<p>Creating a simulation of a basic electrical circuit with an on/off switch, a battery, and a light bulb is a great way to teach students about electricity and circuits. We'll use p5.js to create this interactive simulation. In this simulation, students can toggle the switch to turn the light bulb on and off, visually seeing how closing and opening a circuit works.</p>
+<p>Here's a basic outline of the p5.js code for this simulation:</p>
+<ol>
+<li><strong>Setup:</strong> Define the canvas and initial state of the switch (on or off).</li>
+<li><strong>Draw:</strong> Render the battery, switch, and light bulb. The light bulb's brightness changes based on the switch's state.</li>
+<li><strong>Mouse Interaction:</strong> Allow the switch to be toggled on and off with a mouse click.</li>
+</ol>
+<h2 id="classroom-implementation-ideas">Classroom Implementation Ideas</h2>
+<p><strong>Concept Visualization:</strong> Use this simulation to help students visualize how a simple circuit works, emphasizing the role of each component.
+<strong>Interactive Learning:</strong> Encourage students to toggle the switch and observe changes, fostering understanding through interaction.
+<strong>Critical Thinking:</strong> Pose questions like "What happens if the battery is reversed?" or "What changes if we add another light bulb?"</p>
+<h2 id="further-extensions">Further Extensions</h2>
+<p><strong>Additional Components:</strong> Introduce resistors or variable resistors (like a potentiometer) to the circuit.
+<strong>Circuit Diagrams:</strong> Have students draw the circuit diagram based on the simulation, then build the actual circuit using physical components.
+<strong>Exploring Variables:</strong> Modify the code to represent different battery voltages or bulb wattages.</p>
+<h2 id="demos-of-circuits">Demos of Circuits</h2>
+<ol>
+<li><a href="../circuits.html">Simple Circuit</a></li>
+<li><a href="./switch.md">Switch</a></li>
+<li><a href="./battery-circuit.md">Battery With LED Circuit</a></li>
+<li><a href="./wire-animate.md">Wire Animate</a></li>
+<li><a href="./motor.md">Motor Circuit</a></li>
+<li><a href="./h-bridge.md">H-Bridge</a></li>
+</ol>
+<h2 id="sample-prompt">Sample Prompt</h2>
+<p>```linenubs="0"
+Create a single file p5.js sketch on a 300x200 canvas.
+Subject: simple electrical circiuts.
+Create a simulation of an electrical circuit with a batter, an on/off switch, a light bulb and the connecting wires.
+Make the default text size be 16.
+Add the title "Click Anywhere to Toggle The Switch" to the top of the canvas.
+Place the battery standing vertically on the left with the positive side up and the negative side down.
+Draw the top of the battery as a gold rectangle on the top with a "+" on it.
+Draw the bottom of the battery as a black rectangle "-" near the bottom.
+The top row of connection points are at y=50.
+The bottom row of connection points are at y=150.
+Make the wires toogle from black (circuit off) to red (circuit on).
+Make all the wires width 3.
+Make the switch be a rectangle that is horizontal and 50px wide when on.
+Make the swtich rectangle rotate up 45 degrees when the switch is off.
+Complete the circuit with the light going to the negative battery terminal in a column at x=250.
+Make sure to reset the stroke width to 0 after drawing wires.
+Allow the user to click anywhere on the canvas to toggle the switch.</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span>
+<span class="normal">48</span>
+<span class="normal">49</span>
+<span class="normal">50</span>
+<span class="normal">51</span>
+<span class="normal">52</span>
+<span class="normal">53</span>
+<span class="normal">54</span>
+<span class="normal">55</span>
+<span class="normal">56</span>
+<span class="normal">57</span>
+<span class="normal">58</span>
+<span class="normal">59</span>
+<span class="normal">60</span>
+<span class="normal">61</span>
+<span class="normal">62</span>
+<span class="normal">63</span>
+<span class="normal">64</span>
+<span class="normal">65</span>
+<span class="normal">66</span>
+<span class="normal">67</span>
+<span class="normal">68</span>
+<span class="normal">69</span>
+<span class="normal">70</span>
+<span class="normal">71</span>
+<span class="normal">72</span>
+<span class="normal">73</span>
+<span class="normal">74</span>
+<span class="normal">75</span>
+<span class="normal">76</span>
+<span class="normal">77</span></pre></div></td><td class="code"><div><pre><span></span><code>## Sample Code
+
+```js
+let switchOn = false; // Initial state of the switch
+let switchAngle = 45; // Angle of the switch when off
+
+function setup() {
+  createCanvas(300, 200);
+  textSize(16);
+}
+
+function draw() {
+  background(220);
+
+  // Draw title
+  fill(0);
+  strokeWeight(0);
+  text(&quot;Click Anywhere to Toggle The Switch&quot;, 10, 20);
+
+  // Draw the battery
+  drawBattery();
+
+  // Draw the switch
+  drawSwitch();
+
+  // Draw the light bulb
+  drawLightBulb();
+
+  // Draw wires
+  drawWires();
+}
+
+function drawBattery() {
+  fill(&#39;grey&#39;);
+  rect(20, 100, 20, 50); // battery body
+  rect(20, 95, 20, 5); // positive terminal
+  rect(20, 150, 20, 5); // negative terminal
+}
+
+function drawSwitch() {
+  push();
+    translate(80, 50); // Move origin to switch pivot
+    rotate(radians(switchOn ? 0 : switchAngle)); // Rotate when off
+    fill(&#39;black&#39;);
+    rect(0, 0, 50, 10); // switch
+  pop();
+}
+
+function drawLightBulb() {
+  if (switchOn) {
+    fill(&#39;yellow&#39;);
+  } else {
+    fill(&#39;white&#39;);
+  }
+  ellipse(250, 50, 30, 30); // light bulb
+}
+
+function drawWires() {
+  stroke(switchOn ? &#39;red&#39; : &#39;black&#39;);
+  strokeWeight(3);
+
+  // Wire from battery top to switch
+  line(40, 100, 40, 50);
+  line(40, 50, 80, 50);
+
+  // Wire from switch to light bulb
+  line(130, 50, 250, 50);
+
+  // Wire from light bulb to battery bottom
+  line(250, 50, 250, 150);
+  line(250, 150, 40, 150);
+}
+
+function mousePressed() {
+  switchOn = !switchOn; // Toggle the switch
+  switchAngle = switchOn ? 0 : 45; // Adjust switch angle
+}
+</code></pre></div></td></tr></table></div>
 
 
 
@@ -917,44 +962,6 @@
         <footer class="md-footer">
   
     
-      
-      <nav class="md-footer__inner md-grid" aria-label="Footer" >
-        
-          
-          <a href="../70-mosfet/" class="md-footer__link md-footer__link--prev" aria-label="Previous: MOSFETs">
-            <div class="md-footer__button md-icon">
-              
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
-            </div>
-            <div class="md-footer__title">
-              <span class="md-footer__direction">
-                Previous
-              </span>
-              <div class="md-ellipsis">
-                MOSFETs
-              </div>
-            </div>
-          </a>
-        
-        
-          
-          <a href="../../prompts/" class="md-footer__link md-footer__link--next" aria-label="Next: Introduction">
-            <div class="md-footer__title">
-              <span class="md-footer__direction">
-                Next
-              </span>
-              <div class="md-ellipsis">
-                Introduction
-              </div>
-            </div>
-            <div class="md-footer__button md-icon">
-              
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
-            </div>
-          </a>
-        
-      </nav>
-    
   
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">
@@ -978,12 +985,12 @@
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.copy", "navigation.expand", "navigation.path", "navigation.prune", "navigation.indexes", "toc.follow", "navigation.top", "navigation.footer", "content.action.edit"], "search": "../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["content.code.copy", "navigation.expand", "navigation.path", "navigation.prune", "navigation.indexes", "toc.follow", "navigation.top", "navigation.footer", "content.action.edit"], "search": "../../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.af256bd8.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.af256bd8.min.js"></script>
       
-        <script src="../../javascripts/mathjax.js"></script>
+        <script src="../../../javascripts/mathjax.js"></script>
       
         <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
       
