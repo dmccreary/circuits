@@ -1,6 +1,6 @@
 # Concept Dependency Graph
 
-[SampleConcept Dependency Graph for Ohm's Law](./concept-dependency-graph.html)
+[SampleConcept Dependency Graph for Ohm's Law](./graph/ohms-law-concept-graph.html)
 
 A Concept Dependency Graph is a specific type of graph that has the following properties.
 

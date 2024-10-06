@@ -2,7 +2,7 @@
 
 ## Generating Circuit Diagrams
 
-[Introduction to Using GenAI to Generate Circuit Diagrams](./circuit-diagrams.md)
+[Introduction to Using GenAI to Generate Circuit Diagrams](./circuit-diagrams/index.md)
 
 ## Generating Equations
 
@@ -11,8 +11,6 @@
 ## Generating Current-Voltage Plots
 
 [Basic IV Prompt](./current-voltage-plots/index.md)
-
-[Gen Circuit Diagrams with LateX and Circuitikz](gen-circuit-diagrams-latex.md)
 
 ## Generating Concept Knowledge Graphs
 

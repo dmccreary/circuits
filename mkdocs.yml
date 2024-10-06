@@ -46,6 +46,8 @@ nav:
     - Series and Parallel: faq/series-and-parallel/index.md
   - MicroSim Templates:
     - Introduction: sims/index.md
+    - Background Grid: sims/background-grid/index.md
+    - Animated Wire: sims/animated-wire/index.md
     - Simple DC Circuit: sims/dc-circuit/index.md
     - DC Circuit V2: sims/dc-circuit/circuits-v2.md
   - Glossary: glossary.md

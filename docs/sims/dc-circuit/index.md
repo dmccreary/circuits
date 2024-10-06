@@ -16,7 +16,7 @@ In this lesson, we will create an animation of a circuit that includes:
 4. An LED
 5. Wires that connect the components in a series loop
 
-We will use the [Animated Wire](./wire-animate.md) demo that we did in a prior lab.
+We will use the [Animated Wire](../animated-wire/index.md) demo that we did in a prior lab.
 
 We will break the problem down into ChatGPT prompts that animate and test individual components.
 We will then concatenate the components into a main animation file.
