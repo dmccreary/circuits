@@ -56,47 +56,12 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://dmccreary.github.io/circuits/prompts/add-categories-to-concepts/</loc>
-         <lastmod>2024-10-06</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
          <loc>https://dmccreary.github.io/circuits/prompts/adding-latex-equations/</loc>
          <lastmod>2024-10-06</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://dmccreary.github.io/circuits/prompts/circuitikz-templates/</loc>
-         <lastmod>2024-10-06</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
-         <loc>https://dmccreary.github.io/circuits/prompts/concept-dependency-graph/</loc>
-         <lastmod>2024-10-06</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
-         <loc>https://dmccreary.github.io/circuits/prompts/concept-enumeration/</loc>
-         <lastmod>2024-10-06</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
-         <loc>https://dmccreary.github.io/circuits/prompts/concept-taxonomy/</loc>
-         <lastmod>2024-10-06</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
          <loc>https://dmccreary.github.io/circuits/prompts/frequently-asked-questions/</loc>
-         <lastmod>2024-10-06</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
-         <loc>https://dmccreary.github.io/circuits/prompts/gen-circuit-diagrams-latex/</loc>
-         <lastmod>2024-10-06</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
-         <loc>https://dmccreary.github.io/circuits/prompts/gen-circuit-diagrams-mermaid/</loc>
          <lastmod>2024-10-06</lastmod>
          <changefreq>daily</changefreq>
     </url>
@@ -121,22 +86,57 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://dmccreary.github.io/circuits/prompts/circuit-diagrams/</loc>
+         <lastmod>2024-10-06</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://dmccreary.github.io/circuits/prompts/circuit-diagrams/circuitikz-templates/</loc>
+         <lastmod>2024-10-06</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://dmccreary.github.io/circuits/prompts/circuit-diagrams/gen-circuit-diagrams-mermaid/</loc>
+         <lastmod>2024-10-06</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://dmccreary.github.io/circuits/prompts/current-voltage-plots/</loc>
          <lastmod>2024-10-06</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://dmccreary.github.io/circuits/prompts/graph/</loc>
+         <loc>https://dmccreary.github.io/circuits/prompts/knowledge-graph/</loc>
+         <lastmod>2024-10-06</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://dmccreary.github.io/circuits/prompts/knowledge-graph/add-categories-to-concepts/</loc>
+         <lastmod>2024-10-06</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://dmccreary.github.io/circuits/prompts/knowledge-graph/concept-dependency-graph/</loc>
+         <lastmod>2024-10-06</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://dmccreary.github.io/circuits/prompts/knowledge-graph/concept-enumeration/</loc>
+         <lastmod>2024-10-06</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://dmccreary.github.io/circuits/prompts/knowledge-graph/concept-taxonomy/</loc>
+         <lastmod>2024-10-06</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://dmccreary.github.io/circuits/prompts/knowledge-graph/graph/</loc>
          <lastmod>2024-10-06</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://dmccreary.github.io/circuits/prompts/similarity-plot/</loc>
-         <lastmod>2024-10-06</lastmod>
-         <changefreq>daily</changefreq>
-    </url>
-    <url>
-         <loc>https://dmccreary.github.io/circuits/prompts/simple-knowledge-graph/</loc>
          <lastmod>2024-10-06</lastmod>
          <changefreq>daily</changefreq>
     </url>
