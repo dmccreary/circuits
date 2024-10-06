@@ -56,8 +56,8 @@ theme:
   name: material
   extra_css:
     - styles/custom.css
-  # logo: img/my-icon.png
-  # favicon: img/my-icon.png
+  logo: img/course-logo.png
+  favicon: img/favicon.ico
   palette:
     primary: 'blue'
     accent: 'orange'
