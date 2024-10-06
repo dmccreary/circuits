@@ -950,8 +950,12 @@ in all our circuit design and simulation tools.  For example, today the Mermaid 
 <h2 id="our-new-assumptions">Our New Assumptions</h2>
 <p>This course will make a new set of assumptions:</p>
 <h3 id="1-universal-access">1. Universal Access</h3>
-<p>All teachers and students have access to LLM tools like ChatGPT so they
-can quickly customize a lesson, a simulation or a diagram.</p>
+<p>All teachers and students should have access to LLM tools like ChatGPT or Llama so they
+can quickly customize a lesson, a simulation or a diagram.  Our goal is to make
+it easy for all stakeholders to leverage even small LLMs that run on
+local commodity GPUs.</p>
+<p>We also provide suggestions on leveraging small models that have been optimized to run on older GPUs with as little as 12GB RAM.  A good example of this is creating embeddings using <a href="https://ollama.com/blog/embedding-models">Ollama Embeddings</a> that run in under 1 GB of RAM.</p>
+<p>The trick to making smaller models work well is to provide ultra-high quality prompts that traverse graphs to include the appropriate contextual knowledge in the prompts.  We call this approach [The GraphRAG Approach]</p>
 <h3 id="2-prompt-engineering">2. Prompt Engineering</h3>
 <p>With the right prompt templates, these LLM tools can create powerful interactive simulations.  Our assumption is that students that have strong prompt engineering skills will be better positions to work with AI agents to solve complex problems.</p>
 <h3 id="3-microsims">3. MicroSims</h3>
