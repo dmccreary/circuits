@@ -2,11 +2,7 @@
 
 ## Generating Circuit Diagrams
 
-[LateX](./gen-circuit-diagrams-latex.md)
-
-[Mermaid](./gen-circuit-diagrams-mermaid.md)
-
-[Using CircuitTicK Templates](./circuitikz-templates.md)
+[Introduction to Using GenAI to Generate Circuit Diagrams](./circuit-diagrams.md)
 
 ## Generating Equations
 
@@ -17,6 +13,10 @@
 [Basic IV Prompt](./current-voltage-plots/index.md)
 
 [Gen Circuit Diagrams with LateX and Circuitikz](gen-circuit-diagrams-latex.md)
+
+## Generating Concept Knowledge Graphs
+
+[Introduction to Generating Knowledge Graphs](./knowledge-graph/index.md)
 
 ## Generating FAQs
 

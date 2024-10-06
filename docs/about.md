@@ -104,8 +104,8 @@ There are many types of knowledge graphs.  The knowledge graph for an
 entire college course contains around 10,000 concepts.  However, each
 lesson typically only contains a few dozen concepts.
 
-Note that the figure above was created using the [vix.js](https://visjs.github.io/vis-network/docs/network/) JavaScript library and ChatGPT.  A sample
-prompt to create this graph is [here](./prompts/simple-knowledge-graph/index.md)
+Note that the figure above was created using the [vis.js](https://visjs.github.io/vis-network/docs/network/) JavaScript library and ChatGPT.  You can find sample
+prompts to create this knowledge graphs [here](./prompts/knowledge-graph/index.md)
 
 ### 6. Similarity
 

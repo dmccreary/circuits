@@ -23,26 +23,31 @@ nav:
   - Sample Prompts:
     - Introduction: prompts/index.md
     - Learning Via Simulations: prompts/learning-via-interactive-simulations.md
+    - Generating Circuit Diagrams:
+      - Introduction: prompts/circuit-diagrams/index.md
+      - CircuiTekZ Templates: prompts/circuit-diagrams/circuitikz-templates.md
+      - Generating Circuit Diagrams with Mermaid: prompts/circuit-diagrams/gen-circuit-diagrams-mermaid.md
     - Current-Voltage Plots: prompts/current-voltage-plots/index.md
-    - Generating Circuit Diagrams With LaTeX: prompts/gen-circuit-diagrams-latex.md
-    - CircuiTikZ Templates: prompts/circuitikz-templates.md
-    - Generating Circuit Diagrams with Mermaid: prompts/gen-circuit-diagrams-mermaid.md
     - Adding LaTeX Equations: prompts/adding-latex-equations.md
     - Frequently Asked Questions: prompts/frequently-asked-questions.md
     - ChatBot: prompts/chatbot/index.md
-    - prompts/add-categories-to-concepts.md
-    - prompts/concept-dependency-graph.md
-    - prompts/concept-taxonomy.md
+    - Generating Knowledge Graphs:
+      - Introduction: prompts/knowledge-graph/index.md
+      - Concept Enumeration: prompts/knowledge-graph/concept-enumeration.md
+      - Concept Dependency Graph: prompts//knowledge-graph/concept-dependency-graph.md
+      - Concept Taxonomy: prompts/knowledge-graph/concept-taxonomy.md
+      - Adding Categories to Concepts: prompts/knowledge-graph/add-categories-to-concepts.md
+      - Dependency Graph Application: prompts/knowledge-graph/graph/index.md
     - Metaphors and Stories: prompts/metaphors-and-stories.md
     - Glossary Terms: prompts/glossary-terms.md
-    - Concept Enumeration: prompts/concept-enumeration.md
-    - Dependency Graph Application: prompts/graph/index.md
+    - Similarity Plot: prompts/similarity-plot/index.md
   - FAQ:
     - Intro: faq/index.md
     - Series and Parallel: faq/series-and-parallel/index.md
   - MicroSim Templates:
     - Introduction: sims/index.md
-    - Simple DC Circuit: sims/dccircuit/index.md
+    - Simple DC Circuit: sims/dc-circuit/index.md
+    - DC Circuit V2: sims/dc-circuit/circuits-v2.md
   - Glossary: glossary.md
   - How We Built This Site: how-we-built-this-site.md
   - Checklist: checklist.md
