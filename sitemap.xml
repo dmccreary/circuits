@@ -191,6 +191,16 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://dmccreary.github.io/circuits/sims/animated-wire/</loc>
+         <lastmod>2024-10-06</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://dmccreary.github.io/circuits/sims/background-grid/</loc>
+         <lastmod>2024-10-06</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://dmccreary.github.io/circuits/sims/dc-circuit/</loc>
          <lastmod>2024-10-06</lastmod>
          <changefreq>daily</changefreq>
