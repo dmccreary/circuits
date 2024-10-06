@@ -17,8 +17,14 @@ This course will make a new set of assumptions:
 
 ### 1. Universal Access
 
-All teachers and students have access to LLM tools like ChatGPT so they
-can quickly customize a lesson, a simulation or a diagram.
+All teachers and students should have access to LLM tools like ChatGPT or Llama so they
+can quickly customize a lesson, a simulation or a diagram.  Our goal is to make
+it easy for all stakeholders to leverage even small LLMs that run on
+local commodity GPUs.
+
+We also provide suggestions on leveraging small models that have been optimized to run on older GPUs with as little as 12GB RAM.  A good example of this is creating embeddings using [Ollama Embeddings](https://ollama.com/blog/embedding-models) that run in under 1 GB of RAM.
+
+The trick to making smaller models work well is to provide ultra-high quality prompts that traverse graphs to include the appropriate contextual knowledge in the prompts.  We call this approach [The GraphRAG Approach]
 
 ### 2. Prompt Engineering
 
