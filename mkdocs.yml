@@ -30,6 +30,10 @@ nav:
     - Current-Voltage Plots: prompts/current-voltage-plots/index.md
     - Adding LaTeX Equations: prompts/adding-latex-equations.md
     - Frequently Asked Questions: prompts/frequently-asked-questions.md
+    - Lesson Plans:
+      - Introduction: prompts/lesson-plan/index.md
+      - prompts/lesson-plan/circuit-lesson-plan-template.md
+      - prompts/lesson-plan/spoiler-test.md
     - ChatBot: prompts/chatbot/index.md
     - Generating Knowledge Graphs:
       - Introduction: prompts/knowledge-graph/index.md

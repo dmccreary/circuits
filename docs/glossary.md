@@ -23,6 +23,29 @@ A measure of how easily a circuit or component allows current to flow, equal to 
 
 The range of frequencies over which a circuit or system operates effectively, usually defined by the frequencies at which performance drops below a certain level.
 
+#### Blooms Taxonomy
+
+A hierarchical model used to classify educational learning objectives into levels of complexity and specificity.
+
+We use Blooms Taxonomy to encourage generative AI to create high-quality lesson plans.
+
+It is divided into three domains:
+
+1. cognitive (knowledge-based)
+2. affective (emotion-based)
+3. and psychomotor (action-based)
+
+In the cognitive domain, the taxonomy is often depicted as a pyramid with six levels, ranging from basic knowledge recall to higher-order skills such as evaluation and creation. These levels, in ascending order, are:
+
+1. Remember
+2. Understand
+3. Apply
+4. Analyze
+5. Evaluate
+6. Create
+
+**Example:** A teacher designing a lesson plan on circuits might use Bloom's Taxonomy to structure activities, starting with "Remember" (e.g., recalling Ohm's Law) and progressing to "Create" (e.g., designing a complex circuit).
+
 #### Capacitor
 
 A passive electrical component that stores energy in an electric field, characterized by its capacitance measured in farads (F).
