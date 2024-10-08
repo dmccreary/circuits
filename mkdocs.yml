@@ -37,6 +37,7 @@ nav:
     - ChatBot: prompts/chatbot/index.md
     - Generating Knowledge Graphs:
       - Introduction: prompts/knowledge-graph/index.md
+      - Three Educational Graphs: prompts/knowledge-graph/three-graphs.md
       - Concept Enumeration: prompts/knowledge-graph/concept-enumeration.md
       - Concept Dependency Graph: prompts//knowledge-graph/concept-dependency-graph.md
       - Concept Taxonomy: prompts/knowledge-graph/concept-taxonomy.md
