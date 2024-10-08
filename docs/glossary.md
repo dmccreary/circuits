@@ -70,6 +70,12 @@ The flow of electric charge through a conductor, measured in amperes (A).
 
 An electric current flowing in one constant direction, without periodic reversal.
 
+#### Dependency Graph
+
+A directed graph representing dependencies of several objects towards each other. Items such as Concepts are represented as nodes and the items they depend upon are represented by arcs between the nodes.
+
+By convention, foundational 
+
 #### Diode
 
 A semiconductor device that allows current to flow in one direction only, exhibiting low resistance in one direction and high resistance in the opposite.
