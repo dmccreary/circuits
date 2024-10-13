@@ -5,14 +5,18 @@
 ## Prompt
 
 ```
-Our next step is to create a fully connected dependency graph.
-In this step, for each concept on this list, create a new
+Our next step is to create a fully connected dependency graph
+for learning these Concepts.
+In this step, for each Concept on this list, create a new
 list of other concepts on which it depends.  If a concept
 depends on a specific concept that is not listed,
 then we will need to add it as a new concept.
-This will help us determine the teaching order of the concepts.
+This will help us determine the teaching order of the Concepts.
 
-Return the new list as a CSV file using the following format. The first column is a numeric concept ID you assign,  the second column is the concept name, and the third column is a pipe-delimited list of the concept IDs that the concept depends upon.
+Return the new list as a CSV file using the following format:
+
+The first column in the CSV file is a numeric concept ID you assigned in the list above.  The second column is the concept name.
+The third column is a pipe-delimited list of the Concept IDs that the concept depends upon.
 
 Check your results to make sure that all concepts are connected to at least one other concept.
 ```

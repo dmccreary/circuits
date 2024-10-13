@@ -41,3 +41,7 @@ letter being the component letter.  We can guess the following key:
 1. r - resistor x1, y1, x2, y2, ?, resistance-in-ohms
 2. w - wire
 3. g - ground
+
+## Electronics Tutorials
+
+[Electronics Tutorials Website](https://www.electronics-tutorials.ws/
