@@ -1,0 +1,2090 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="AI Circuits Course Materials. All content licensed Creative Commons ShareAlike Attribution Noncommercial">
+      
+      
+        <meta name="author" content="Dan McCreary">
+      
+      
+        <link rel="canonical" href="https://dmccreary.github.io/circuits/glossary/">
+      
+      
+        <link rel="prev" href="../sims/dc-circuit/circuits-v2/">
+      
+      
+        <link rel="next" href="../how-we-built-this-site/">
+      
+      
+      <link rel="icon" href="../img/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.45">
+    
+    
+      
+        <title>Glossary - AI Circuits Course</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.0253249f.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+<script id="__analytics">function __md_analytics(){function e(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],e("js",new Date),e("config","G-9J4MVE6LWP"),document.addEventListener("DOMContentLoaded",(function(){document.forms.search&&document.forms.search.query.addEventListener("blur",(function(){this.value&&e("event","search",{search_term:this.value})}));document$.subscribe((function(){var t=document.forms.feedback;if(void 0!==t)for(var a of t.querySelectorAll("[type=submit]"))a.addEventListener("click",(function(a){a.preventDefault();var n=document.location.pathname,d=this.getAttribute("data-md-value");e("event","feedback",{page:n,data:d}),t.firstElementChild.disabled=!0;var r=t.querySelector(".md-feedback__note [data-md-value='"+d+"']");r&&(r.hidden=!1)})),t.hidden=!1})),location$.subscribe((function(t){e("config","G-9J4MVE6LWP",{page_path:t.pathname})}))}));var t=document.createElement("script");t.async=!0,t.src="https://www.googletagmanager.com/gtag/js?id=G-9J4MVE6LWP",document.getElementById("__analytics").insertAdjacentElement("afterEnd",t)}</script>
+  
+    <script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
+  
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="orange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#glossary-of-terms" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="AI Circuits Course" class="md-header__button md-logo" aria-label="AI Circuits Course" data-md-component="logo">
+      
+  <img src="../img/course-logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            AI Circuits Course
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Glossary
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/dmccreary/circuits" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub Repo
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="AI Circuits Course" class="md-nav__button md-logo" aria-label="AI Circuits Course" data-md-component="logo">
+      
+  <img src="../img/course-logo.png" alt="logo">
+
+    </a>
+    AI Circuits Course
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/dmccreary/circuits" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub Repo
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../about/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    About This Course
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../sections/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Chapters
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+          
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../prompts/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Sample Prompts
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+          
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../faq/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    FAQ
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../sims/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    MicroSim Templates
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Glossary
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Glossary
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#about-the-glossary" class="md-nav__link">
+    <span class="md-ellipsis">
+      About the Glossary
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#list-of-terms-used-in-circuit-course" class="md-nav__link">
+    <span class="md-ellipsis">
+      List of Terms Used in Circuit Course
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="List of Terms Used in Circuit Course">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#alternating-current" class="md-nav__link">
+    <span class="md-ellipsis">
+      Alternating Current
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#admittance" class="md-nav__link">
+    <span class="md-ellipsis">
+      Admittance
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bandwidth" class="md-nav__link">
+    <span class="md-ellipsis">
+      Bandwidth
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#blooms-taxonomy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Blooms Taxonomy
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#capacitor" class="md-nav__link">
+    <span class="md-ellipsis">
+      Capacitor
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#circuitikz" class="md-nav__link">
+    <span class="md-ellipsis">
+      CircuiTikZ
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#current" class="md-nav__link">
+    <span class="md-ellipsis">
+      Current
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dc-direct-current" class="md-nav__link">
+    <span class="md-ellipsis">
+      DC (Direct Current)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dependency-graph" class="md-nav__link">
+    <span class="md-ellipsis">
+      Dependency Graph
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#diode" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diode
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#falstad" class="md-nav__link">
+    <span class="md-ellipsis">
+      Falstad
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#field-effect-transistor" class="md-nav__link">
+    <span class="md-ellipsis">
+      Field Effect Transistor
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fourier-transform" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fourier Transform
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#frequency" class="md-nav__link">
+    <span class="md-ellipsis">
+      Frequency
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#frequently-asked-question" class="md-nav__link">
+    <span class="md-ellipsis">
+      Frequently Asked Question
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#graphrag" class="md-nav__link">
+    <span class="md-ellipsis">
+      GraphRAG
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ground" class="md-nav__link">
+    <span class="md-ellipsis">
+      Ground
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hyperpersonalization" class="md-nav__link">
+    <span class="md-ellipsis">
+      Hyperpersonalization
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#impedance" class="md-nav__link">
+    <span class="md-ellipsis">
+      Impedance
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inductor" class="md-nav__link">
+    <span class="md-ellipsis">
+      Inductor
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kirchhoffs-current-law" class="md-nav__link">
+    <span class="md-ellipsis">
+      Kirchhoff's Current Law
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kirchhoffs-voltage-law" class="md-nav__link">
+    <span class="md-ellipsis">
+      Kirchhoff's Voltage Law
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#knowledge-graph-concept" class="md-nav__link">
+    <span class="md-ellipsis">
+      Knowledge Graph Concept
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#laplace-transform" class="md-nav__link">
+    <span class="md-ellipsis">
+      Laplace Transform
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#large-language-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      Large-language model
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#latex" class="md-nav__link">
+    <span class="md-ellipsis">
+      LaTeX
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#llm-prompt" class="md-nav__link">
+    <span class="md-ellipsis">
+      LLM Prompt
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mesh-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      Mesh Analysis
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#metaphors-and-stories" class="md-nav__link">
+    <span class="md-ellipsis">
+      Metaphors and Stories
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mosfet" class="md-nav__link">
+    <span class="md-ellipsis">
+      MOSFET
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#node" class="md-nav__link">
+    <span class="md-ellipsis">
+      Node
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nodal-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      Nodal Analysis
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ohms-law" class="md-nav__link">
+    <span class="md-ellipsis">
+      Ohm's Law
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#operating-point" class="md-nav__link">
+    <span class="md-ellipsis">
+      Operating Point
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#operational-amplifier" class="md-nav__link">
+    <span class="md-ellipsis">
+      Operational Amplifier
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#overleaf" class="md-nav__link">
+    <span class="md-ellipsis">
+      Overleaf
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pareto-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pareto Analysis
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#parallel-circuit" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parallel Circuit
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phasor" class="md-nav__link">
+    <span class="md-ellipsis">
+      Phasor
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#power" class="md-nav__link">
+    <span class="md-ellipsis">
+      Power
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reactance" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reactance
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#resistor" class="md-nav__link">
+    <span class="md-ellipsis">
+      Resistor
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#retrieval-augmented-generation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Retrieval-Augmented Generation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#series-circuit" class="md-nav__link">
+    <span class="md-ellipsis">
+      Series Circuit
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#signal" class="md-nav__link">
+    <span class="md-ellipsis">
+      Signal
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#steady-state-response" class="md-nav__link">
+    <span class="md-ellipsis">
+      Steady-State Response
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#superposition" class="md-nav__link">
+    <span class="md-ellipsis">
+      Superposition
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#thevenins-theorem" class="md-nav__link">
+    <span class="md-ellipsis">
+      Thevenin's Theorem
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tikz" class="md-nav__link">
+    <span class="md-ellipsis">
+      TikZ
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="TikZ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#transformer" class="md-nav__link">
+    <span class="md-ellipsis">
+      Transformer
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#transient-response" class="md-nav__link">
+    <span class="md-ellipsis">
+      Transient Response
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#transfer-function" class="md-nav__link">
+    <span class="md-ellipsis">
+      Transfer Function
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vector-store" class="md-nav__link">
+    <span class="md-ellipsis">
+      Vector Store
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#voltage" class="md-nav__link">
+    <span class="md-ellipsis">
+      Voltage
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#watt" class="md-nav__link">
+    <span class="md-ellipsis">
+      Watt
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../how-we-built-this-site/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    How We Built This Site
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../checklist/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Checklist
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../references/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    References
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../license/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    License
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../contact/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Contact
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#about-the-glossary" class="md-nav__link">
+    <span class="md-ellipsis">
+      About the Glossary
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#list-of-terms-used-in-circuit-course" class="md-nav__link">
+    <span class="md-ellipsis">
+      List of Terms Used in Circuit Course
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="List of Terms Used in Circuit Course">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#alternating-current" class="md-nav__link">
+    <span class="md-ellipsis">
+      Alternating Current
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#admittance" class="md-nav__link">
+    <span class="md-ellipsis">
+      Admittance
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bandwidth" class="md-nav__link">
+    <span class="md-ellipsis">
+      Bandwidth
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#blooms-taxonomy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Blooms Taxonomy
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#capacitor" class="md-nav__link">
+    <span class="md-ellipsis">
+      Capacitor
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#circuitikz" class="md-nav__link">
+    <span class="md-ellipsis">
+      CircuiTikZ
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#current" class="md-nav__link">
+    <span class="md-ellipsis">
+      Current
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dc-direct-current" class="md-nav__link">
+    <span class="md-ellipsis">
+      DC (Direct Current)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dependency-graph" class="md-nav__link">
+    <span class="md-ellipsis">
+      Dependency Graph
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#diode" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diode
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#falstad" class="md-nav__link">
+    <span class="md-ellipsis">
+      Falstad
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#field-effect-transistor" class="md-nav__link">
+    <span class="md-ellipsis">
+      Field Effect Transistor
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fourier-transform" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fourier Transform
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#frequency" class="md-nav__link">
+    <span class="md-ellipsis">
+      Frequency
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#frequently-asked-question" class="md-nav__link">
+    <span class="md-ellipsis">
+      Frequently Asked Question
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#graphrag" class="md-nav__link">
+    <span class="md-ellipsis">
+      GraphRAG
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ground" class="md-nav__link">
+    <span class="md-ellipsis">
+      Ground
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hyperpersonalization" class="md-nav__link">
+    <span class="md-ellipsis">
+      Hyperpersonalization
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#impedance" class="md-nav__link">
+    <span class="md-ellipsis">
+      Impedance
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inductor" class="md-nav__link">
+    <span class="md-ellipsis">
+      Inductor
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kirchhoffs-current-law" class="md-nav__link">
+    <span class="md-ellipsis">
+      Kirchhoff's Current Law
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kirchhoffs-voltage-law" class="md-nav__link">
+    <span class="md-ellipsis">
+      Kirchhoff's Voltage Law
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#knowledge-graph-concept" class="md-nav__link">
+    <span class="md-ellipsis">
+      Knowledge Graph Concept
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#laplace-transform" class="md-nav__link">
+    <span class="md-ellipsis">
+      Laplace Transform
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#large-language-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      Large-language model
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#latex" class="md-nav__link">
+    <span class="md-ellipsis">
+      LaTeX
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#llm-prompt" class="md-nav__link">
+    <span class="md-ellipsis">
+      LLM Prompt
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mesh-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      Mesh Analysis
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#metaphors-and-stories" class="md-nav__link">
+    <span class="md-ellipsis">
+      Metaphors and Stories
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mosfet" class="md-nav__link">
+    <span class="md-ellipsis">
+      MOSFET
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#node" class="md-nav__link">
+    <span class="md-ellipsis">
+      Node
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nodal-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      Nodal Analysis
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ohms-law" class="md-nav__link">
+    <span class="md-ellipsis">
+      Ohm's Law
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#operating-point" class="md-nav__link">
+    <span class="md-ellipsis">
+      Operating Point
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#operational-amplifier" class="md-nav__link">
+    <span class="md-ellipsis">
+      Operational Amplifier
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#overleaf" class="md-nav__link">
+    <span class="md-ellipsis">
+      Overleaf
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pareto-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pareto Analysis
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#parallel-circuit" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parallel Circuit
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phasor" class="md-nav__link">
+    <span class="md-ellipsis">
+      Phasor
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#power" class="md-nav__link">
+    <span class="md-ellipsis">
+      Power
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reactance" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reactance
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#resistor" class="md-nav__link">
+    <span class="md-ellipsis">
+      Resistor
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#retrieval-augmented-generation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Retrieval-Augmented Generation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#series-circuit" class="md-nav__link">
+    <span class="md-ellipsis">
+      Series Circuit
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#signal" class="md-nav__link">
+    <span class="md-ellipsis">
+      Signal
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#steady-state-response" class="md-nav__link">
+    <span class="md-ellipsis">
+      Steady-State Response
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#superposition" class="md-nav__link">
+    <span class="md-ellipsis">
+      Superposition
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#thevenins-theorem" class="md-nav__link">
+    <span class="md-ellipsis">
+      Thevenin's Theorem
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tikz" class="md-nav__link">
+    <span class="md-ellipsis">
+      TikZ
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="TikZ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#transformer" class="md-nav__link">
+    <span class="md-ellipsis">
+      Transformer
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#transient-response" class="md-nav__link">
+    <span class="md-ellipsis">
+      Transient Response
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#transfer-function" class="md-nav__link">
+    <span class="md-ellipsis">
+      Transfer Function
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vector-store" class="md-nav__link">
+    <span class="md-ellipsis">
+      Vector Store
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#voltage" class="md-nav__link">
+    <span class="md-ellipsis">
+      Voltage
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#watt" class="md-nav__link">
+    <span class="md-ellipsis">
+      Watt
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+    <a href="https://github.com/dmccreary/circuits/blob/master/docs/glossary.md" title="Edit this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+
+
+<h1 id="glossary-of-terms">Glossary of Terms</h1>
+<h2 id="about-the-glossary">About the Glossary</h2>
+<p>This glossary of terms is formatted to allow easy linking when a new term is used in a Markdown document.  By typing <code>[Term Name](../glossary/#term)</code> the
+term will autocomplete in the VSCode editor.</p>
+<p>We follow the ISO/IEC 11179 guidelines for creating terms and definitions</p>
+<h2 id="list-of-terms-used-in-circuit-course">List of Terms Used in Circuit Course</h2>
+<h4 id="alternating-current">Alternating Current</h4>
+<p>An electric current that periodically reverses direction, typically in a sinusoidal waveform.</p>
+<ul>
+<li>Abbreviation: AC</li>
+</ul>
+<h4 id="admittance">Admittance</h4>
+<p>A measure of how easily a circuit or component allows current to flow, equal to the inverse of impedance.</p>
+<h4 id="bandwidth">Bandwidth</h4>
+<p>The range of frequencies over which a circuit or system operates effectively, usually defined by the frequencies at which performance drops below a certain level.</p>
+<h4 id="blooms-taxonomy">Blooms Taxonomy</h4>
+<p>A hierarchical model used to classify educational learning objectives into levels of complexity and specificity.</p>
+<p>We use Blooms Taxonomy to encourage generative AI to create high-quality lesson plans.</p>
+<p>It is divided into three domains:</p>
+<ol>
+<li>cognitive (knowledge-based)</li>
+<li>affective (emotion-based)</li>
+<li>and psychomotor (action-based)</li>
+</ol>
+<p>In the cognitive domain, the taxonomy is often depicted as a pyramid with six levels, ranging from basic knowledge recall to higher-order skills such as evaluation and creation. These levels, in ascending order, are:</p>
+<ol>
+<li>Remember</li>
+<li>Understand</li>
+<li>Apply</li>
+<li>Analyze</li>
+<li>Evaluate</li>
+<li>Create</li>
+</ol>
+<p><strong>Example:</strong> A teacher designing a lesson plan on circuits might use Bloom's Taxonomy to structure activities, starting with "Remember" (e.g., recalling Ohm's Law) and progressing to "Create" (e.g., designing a complex circuit).</p>
+<h4 id="capacitor">Capacitor</h4>
+<p>A passive electrical component that stores energy in an electric field, characterized by its capacitance measured in farads (F).</p>
+<h4 id="circuitikz">CircuiTikZ</h4>
+<p>A <a href="#latex">LaTeX</a> extension package which provides a set of macros for typesetting electrical and electronic networks.  You simply specify a
+component type, a grid placement and some connections and CircuiTikZ
+will transform this into a high-quality circuit diagram.</p>
+<p>CircuiTikZ is pronounced "Circuit Ticks".</p>
+<ul>
+<li>See also: <a href="#latex">LaTeX</a></li>
+<li>See also: <a href="#tikz">TicZ</a></li>
+<li>See also: <a href="#overleaf">Overleaf</a></li>
+</ul>
+<h4 id="current">Current</h4>
+<p>The flow of electric charge through a conductor, measured in amperes (A).</p>
+<h4 id="dc-direct-current">DC (Direct Current)</h4>
+<p>An electric current flowing in one constant direction, without periodic reversal.</p>
+<h4 id="dependency-graph">Dependency Graph</h4>
+<p>A directed graph representing dependencies of several objects towards each other. Items such as Concepts are represented as nodes and the items they depend upon are represented by arcs between the nodes.</p>
+<p>By convention, foundational </p>
+<h4 id="diode">Diode</h4>
+<p>A semiconductor device that allows current to flow in one direction only, exhibiting low resistance in one direction and high resistance in the opposite.</p>
+<h4 id="falstad">Falstad</h4>
+<p>An open-source circuit editor and simulator that runs within a web browser.</p>
+<p>Falstad was originally written in Java and converted to run in JavaScript.
+Although Falstad has a rich functionality, it is a large and complex system
+that can be difficult to integrate with our prompt enrichment architecture.</p>
+<ul>
+<li><a href="https://falstad.com/circuit/circuitjs.html">Falstad CircuitJS Website</a></li>
+<li><a href="https://github.com/sharpie7/circuitjs1">Sharpie 7 CircuitJS1 Github Repo</a> - current GitHub rep</li>
+</ul>
+<h4 id="field-effect-transistor">Field Effect Transistor</h4>
+<p>A transistor that controls the flow of current through a semiconductor channel between source and drain terminals by using an electric field generated by a voltage applied to a gate terminal.</p>
+<h4 id="fourier-transform">Fourier Transform</h4>
+<p>A mathematical transformation that converts a time-domain function into its frequency-domain representation, revealing the frequency components present in a signal.</p>
+<h4 id="frequency">Frequency</h4>
+<p>The number of cycles per unit time of a periodic waveform, measured in hertz (Hz).</p>
+<p>Most alternating current circuits have a fixed frequency.  For example, in the United States, household electrical power is supplied as alternating current (AC) at a frequency of 60 Hertz (Hz). </p>
+<h4 id="frequently-asked-question">Frequently Asked Question</h4>
+<p>A Frequently Asked Question (FAQ) is a commonly raised inquiry about a specific topic, usually compiled in a list, with the goal of providing clear and accessible answers. FAQs help address recurring concerns or misunderstandings and streamline communication by preemptively answering common questions.</p>
+<p><strong>Example:</strong> In a circuits course, analyzing FAQs can help instructors determine which topics need additional emphasis or clarification. If a majority of FAQs revolve around "How to calculate total resistance in a parallel circuit?", this indicates that students are struggling with that concept, and the instructor might prioritize additional lessons, examples, or tutorials on parallel circuits to improve understanding.</p>
+<p>In this course, we use a variety of LLM and statistical tools such as log-file access and search logs to find out what the most frequently asked questions are.</p>
+<h4 id="graphrag">GraphRAG</h4>
+<p>A knowledge management architecture that combines graph-based data structures such as knowledge graphs and <a href="#retrieval-augmented-generation">Retrieval-Augmented Generation</a> (RAG) techniques to enhance information retrieval and content generation tasks and minimize hallucination errors.</p>
+<p>GraphRAG is particularly effective in applications requiring the synthesis of complex, interconnected information, such as knowledge graphs, semantic networks, and relational databases. GraphRAG facilitates more nuanced and informed generation by utilizing the underlying graph-structured information during the retrieval process, enabling more sophisticated and contextually appropriate outcomes in areas like natural language processing, data analysis, and artificial intelligence-driven applications.</p>
+<p>In our circuits course, we combine retrieval of similar concepts from our circuits knowledge graph with generative AI to create customized artifacts such as lesson plans and custom circuits.</p>
+<h4 id="ground">Ground</h4>
+<p>A reference point in an electrical circuit with zero voltage potential, serving as the common return path for electric current and the baseline for voltage measurements.</p>
+<p>In general, voltage to a point in a circuit is measured relative to the ground.</p>
+<h4 id="hyperpersonalization">Hyperpersonalization</h4>
+<p>Hyperpersonalization is the process of using advanced data analytics and AI technologies to create highly individualized content or experiences by analyzing real-time and historical user data. In the context of educational content generation, hyperpersonalization adapts lessons, materials, and assessments based on the unique needs, performance, and preferences of each student, enhancing the learning process.</p>
+<p><strong>Example:</strong> If a student in a circuits course struggles with questions on "series circuits" in a prior week's quiz, hyperpersonalization can automatically generate a custom lesson plan focusing on this topic. The lesson could include targeted tutorials, interactive simulations, and additional practice problems that address the student's specific areas of difficulty, ensuring more focused and effective learning.</p>
+<h4 id="impedance">Impedance</h4>
+<p>The total opposition a circuit presents to alternating current, comprising both resistance and reactance, measured in ohms (Ω).</p>
+<h4 id="inductor">Inductor</h4>
+<p>A passive electrical component that stores energy in a magnetic field when current flows through it, characterized by its inductance measured in henrys (H).</p>
+<h4 id="kirchhoffs-current-law">Kirchhoff's Current Law</h4>
+<p>A principle stating that the algebraic sum of currents entering a node equals zero, implying conservation of electric charge at a junction.</p>
+<h4 id="kirchhoffs-voltage-law">Kirchhoff's Voltage Law</h4>
+<p>A principle stating that the algebraic sum of voltages around any closed loop in a circuit equals zero, reflecting energy conservation.</p>
+<h4 id="knowledge-graph-concept">Knowledge Graph Concept</h4>
+<p>A Knowledge Graph Concept is a distinct, identifiable unit of knowledge represented as a node in a knowledge graph. It denotes a real-world entity, idea, or category and is linked to other concepts through defined relationships, enabling the organization and interconnection of information.</p>
+<p><strong>Example:</strong> In a circuits course, "Ohm's Law" can be a Knowledge Graph Concept, with dependencies on related concepts like "Voltage," "Current," and "Resistance." For instance, understanding Ohm's Law requires knowledge of these three concepts and how they are mathematically related: Voltage = Current × Resistance. Similarly, concepts like "Series Circuit" and "Parallel Circuit" could also depend on understanding Ohm's Law to determine total resistance and current behavior.</p>
+<h4 id="laplace-transform">Laplace Transform</h4>
+<p>A mathematical transformation that converts a time-domain function into a complex frequency-domain function, simplifying the analysis of linear time-invariant systems.</p>
+<h4 id="large-language-model">Large-language model</h4>
+<p>A Large-language model (LLM) is an advanced machine learning model trained on vast amounts of text data to understand, generate, and manipulate natural language. In the context of generative AI, LLMs are capable of producing human-like text, answering questions, summarizing information, and assisting in various search and content creation tasks by leveraging patterns learned from their training data.</p>
+<p><strong>Example:</strong> In a circuits course, an LLM can be used to create personalized learning experiences by generating tailored explanations for students based on their questions. For instance, if a student asks, "How does a capacitor work in an AC circuit?", the LLM can generate a detailed response, offer diagrams, and even suggest further reading based on the student's current understanding. This enhances the learning process by providing real-time, adaptive feedback.</p>
+<h4 id="latex">LaTeX</h4>
+<p>A typesetting system and a markup language used for creating documents with a focus on content rather than appearance.</p>
+<p>In this course we use the <a href="#circuitikz">CircuiTikZ</a> library to generate images
+of circuits from generative AI created circuit descriptions.</p>
+<ul>
+<li>See also: <a href="#circuitikz">CircuiTikZ</a></li>
+<li>See also: <a href="#tikz">TicZ</a></li>
+<li>See also: <a href="#overleaf">Overleaf</a></li>
+</ul>
+<h4 id="llm-prompt">LLM Prompt</h4>
+<p>An LLM (Large Language Model) Prompt is a structured input provided to a large language model to guide its output. It typically consists of instructions, questions, or specific context designed to generate a relevant and coherent response from the model.</p>
+<p><strong>Example:</strong> A prompt for a circuits course could be: "Explain Ohm's Law in simple terms and provide a real-world example of its application." This prompt guides the LLM to focus on explaining a fundamental concept in electrical circuits and offering a practical example.</p>
+<h4 id="mesh-analysis">Mesh Analysis</h4>
+<p>A circuit analysis technique using Kirchhoff's Voltage Law to determine unknown currents in the meshes (loops) of a planar circuit.</p>
+<h4 id="metaphors-and-stories">Metaphors and Stories</h4>
+<p>An approach to teaching that leverages the storytelling part of our brains.</p>
+<h4 id="mosfet">MOSFET</h4>
+<p>A type of <a href="#field-effect-transistor">field-effect transistor</a> in which the conductivity of a semiconductor channel is controlled by the voltage applied to a gate electrode that is insulated from the channel by a thin oxide layer.</p>
+<p>MOSFET is an abbreviation for a Metal Oxide Semiconductor Field Effect Transistor.</p>
+<h4 id="node">Node</h4>
+<p>A point in a circuit where two or more components are connected.</p>
+<h4 id="nodal-analysis">Nodal Analysis</h4>
+<p>A circuit analysis method using Kirchhoff's Current Law to determine the voltage at various nodes relative to a common reference point.</p>
+<h4 id="ohms-law">Ohm's Law</h4>
+<p>A fundamental relationship stating that the voltage across a conductor equals the product of the current flowing through it and its resistance.  The
+formula for Ohm's Law is:</p>
+<div class="arithmatex">\[
+V = IR
+\]</div>
+<p>where:</p>
+<ul>
+<li><span class="arithmatex">\(V\)</span> is the voltage measured in volts</li>
+<li><span class="arithmatex">\(I\)</span> is the current measured in amps</li>
+<li><span class="arithmatex">\(R\)</span> is the resistance measured in ohms</li>
+</ul>
+<h4 id="operating-point">Operating Point</h4>
+<p>The steady-state condition of an electronic device or circuit characterized by specific values of voltage, current, or other relevant parameters under normal operating conditions.</p>
+<p>The operating point represents the point on the device's characteristic curve where it functions as intended without any input signal or external influence.</p>
+<h4 id="operational-amplifier">Operational Amplifier</h4>
+<p>A high-gain electronic voltage amplifier with differential inputs and usually a single-ended output, used in various signal processing applications.</p>
+<h4 id="overleaf">Overleaf</h4>
+<p>An online LaTeX editor that allows us to write and compile LaTeX documents in a web browser.</p>
+<p>In this course, we use Overleaf to convert <a href="#circuitikz">CircuiTekZ</a> formatted text
+to images.</p>
+<ul>
+<li><a href="https://www.overleaf.com/">Overleaf website</a></li>
+<li>See also: <a href="#tikz">TekZ</a></li>
+</ul>
+<h4 id="pareto-analysis">Pareto Analysis</h4>
+<p>Pareto Analysis is a decision-making technique used to prioritize tasks or issues based on the principle that 80% of effects come from 20% of causes. It focuses on identifying the most significant factors in a dataset to optimize resources and efforts.</p>
+<p><strong>Example:</strong> In a circuits course, Pareto Analysis can be applied to FAQs by categorizing the types of questions students frequently ask. For instance, if 80% of the questions come from 20% of the topics---such as Ohm's Law, Kirchhoff's Laws, and Thevenin's Theorem---the instructor could prioritize creating additional resources or tutorials on those key topics to address the majority of student inquiries efficiently.</p>
+<h4 id="parallel-circuit">Parallel Circuit</h4>
+<p>A circuit configuration where components share the same voltage across them but may carry different currents.</p>
+<h4 id="phasor">Phasor</h4>
+<p>A complex number representing the magnitude and phase angle of a sinusoidal function, used to simplify calculations in AC circuit analysis.</p>
+<h4 id="power">Power</h4>
+<p>The rate at which electrical energy is transferred or converted, measured in watts (W).</p>
+<h4 id="reactance">Reactance</h4>
+<p>The opposition a circuit element offers to alternating current due to its capacitance or inductance, causing a phase shift between voltage and current.</p>
+<h4 id="resistor">Resistor</h4>
+<p>A passive electrical component that opposes the flow of electric current, characterized by its resistance measured in ohms (Ω).</p>
+<h4 id="retrieval-augmented-generation">Retrieval-Augmented Generation</h4>
+<p>Retrieval-Augmented Generation (RAG) is a computational methodology that integrates information retrieval mechanisms with generative models to produce content by dynamically accessing and incorporating relevant external data from designated knowledge sources during the generation process.</p>
+<p>RAG is an application of the Content Enrichment enterprise integration pattern.</p>
+<p>This approach enhances the accuracy, relevance, and contextual appropriateness of the generated output by leveraging retrieved information to inform and guide the generation process.</p>
+<h4 id="series-circuit">Series Circuit</h4>
+<p>A circuit configuration where components are connected end-to-end, so the same current flows sequentially through each component.</p>
+<h4 id="signal">Signal</h4>
+<p>A function representing the variation of a physical quantity over time or space, conveying information.</p>
+<h4 id="steady-state-response">Steady-State Response</h4>
+<p>The behavior of a circuit long after an input has been applied, when transient effects have subsided and the response becomes constant or periodic.</p>
+<h4 id="superposition">Superposition</h4>
+<p>A principle stating that in a linear circuit with multiple sources, the total response equals the sum of the responses caused by each source acting independently.</p>
+<h4 id="thevenins-theorem">Thevenin's Theorem</h4>
+<p>A theorem stating that any linear bilateral circuit can be replaced by an equivalent circuit consisting of a single voltage source and a series resistance connected to a load.</p>
+<h3 id="tikz">TikZ</h3>
+<p>A declarative graphics line-oriented drawing vocabulary for creating vector-based illustrations directly within <a href="#latex">LaTeX</a> documents.</p>
+<p>TikZ (pronounced "tic") provides a syntax for specifying graphics in a programmatic way, allowing for the creation of complex diagrams, plots, and figures that integrate seamlessly with LaTeX's typesetting.</p>
+<p>We use the <a href="#circuitikz">CircuiTikZ</a> package for drawing circuit diagrams in this course.  CircuiTikZ is an extension of the TikZ drawing system that includes
+electronic components.</p>
+<ul>
+<li>See also: <a href="#latex">LaTeX</a></li>
+<li>See also: <a href="#circuitikz">CircuiTikZ</a></li>
+<li>See also: <a href="#overleaf">Overleaf</a></li>
+</ul>
+<h4 id="transformer">Transformer</h4>
+<p>An electrical device that transfers electrical energy between two or more circuits through electromagnetic induction, typically changing voltage levels.</p>
+<h4 id="transient-response">Transient Response</h4>
+<p>The behavior of a circuit immediately after a change in its inputs or conditions, before reaching steady-state.</p>
+<h4 id="transfer-function">Transfer Function</h4>
+<p>A mathematical representation of the relationship between the input and output of a system, typically expressed in the frequency domain.</p>
+<h4 id="vector-store">Vector Store</h4>
+<p>A Vector Store is a specialized data structure used to store and manage high-dimensional vector representations of data, typically derived from large language models (LLMs). It allows for efficient similarity searches by comparing the vectors of different items, enabling the retrieval of the most relevant or semantically similar information based on proximity in vector space.</p>
+<p><strong>Example:</strong> In our circuits course, a vector store can be used to store vector representations of key concepts or questions from course materials. When a student searches for "how to solve for voltage in a parallel circuit," the system can retrieve similar items, such as related questions on current, resistance, or Kirchhoff's Laws, even if the exact terms are not matched. This helps students find conceptually similar resources or FAQs that are most relevant to their queries.</p>
+<h4 id="voltage">Voltage</h4>
+<p>The electric potential difference between two points, driving current through a circuit, measured in volts (V).</p>
+<h4 id="watt">Watt</h4>
+<p>The unit of power in the International System of Units, equal to one joule per second (1 W = 1 J/s).</p>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../sims/dc-circuit/circuits-v2/" class="md-footer__link md-footer__link--prev" aria-label="Previous: DC Circuit V2">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                DC Circuit V2
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../how-we-built-this-site/" class="md-footer__link md-footer__link--next" aria-label="Next: How We Built This Site">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                How We Built This Site
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["content.code.copy", "navigation.expand", "navigation.path", "navigation.prune", "navigation.indexes", "toc.follow", "navigation.top", "navigation.footer", "content.action.edit"], "search": "../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.83f73b43.min.js"></script>
+      
+        <script src="../javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
