@@ -533,7 +533,7 @@ where:
 
 #### Differential Mode Gain
 
-$A_d = \frac{V_{out}}{V_{in+} - V_{in-}}}$
+$A_d = \frac{V_{out}}{V_{in+} - V_{in-}}$
 
 where:
 
