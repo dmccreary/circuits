@@ -29,6 +29,9 @@ nav:
       - Generating Circuit Diagrams with Mermaid: prompts/circuit-diagrams/gen-circuit-diagrams-mermaid.md
     - Current-Voltage Plots: prompts/current-voltage-plots/index.md
     - Adding LaTeX Equations: prompts/adding-latex-equations.md
+    - Common Formulas: 
+      - Introduction: prompts/forumlas/index.md
+      - Full List: prompts/formulas/full.md
     - Frequently Asked Questions: prompts/frequently-asked-questions.md
     - Lesson Plans:
       - Introduction: prompts/lesson-plan/index.md
