@@ -30,7 +30,7 @@ nav:
     - Current-Voltage Plots: prompts/current-voltage-plots/index.md
     - Adding LaTeX Equations: prompts/adding-latex-equations.md
     - Common Formulas: 
-      - Introduction: prompts/forumlas/index.md
+      - Introduction: prompts/formulas/index.md
       - Full List: prompts/formulas/full.md
     - Frequently Asked Questions: prompts/frequently-asked-questions.md
     - Lesson Plans:
