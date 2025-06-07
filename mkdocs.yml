@@ -23,6 +23,10 @@ nav:
   - Sample Prompts:
     - Introduction: prompts/index.md
     - Learning Via Simulations: prompts/learning-via-interactive-simulations.md
+    - Top 100 Circuits:
+      - Introduction: prompts/top-100-circuits/index.md
+      - Open AI Deep Research Response: prompts/top-100-circuits/open-ai-deep-research.md
+      - Claude Response: prompts/top-100-circuits/top-100-claude.md
     - Generating Circuit Diagrams:
       - Introduction: prompts/circuit-diagrams/index.md
       - CircuiTekZ Templates: prompts/circuit-diagrams/circuitikz-templates.md
