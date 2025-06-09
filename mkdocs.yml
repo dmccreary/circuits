@@ -62,6 +62,10 @@ nav:
     - Animated Wire: sims/animated-wire/index.md
     - Simple DC Circuit: sims/dc-circuit/index.md
     - DC Circuit V2: sims/dc-circuit/circuits-v2.md
+    - prompts/circuit-similarity/index.md
+    - prompts/top-100-circuits/top-100-circuits.md
+    - sims/circuit-similarity/index.md
+    - sims/templates/index.md
   - Glossary: glossary.md
   - How We Built This Site: how-we-built-this-site.md
   - Checklist: checklist.md
@@ -73,8 +77,6 @@ nav:
 
 theme:
   name: material
-  extra_css:
-    - styles/custom.css
   logo: img/course-logo.png
   favicon: img/favicon.ico
   palette:
@@ -99,6 +101,7 @@ extra_javascript:
   - https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js
 #  - social
 markdown_extensions:
+  - meta
   - admonition
   - pymdownx.details
   - pymdownx.superfences
@@ -108,6 +111,10 @@ markdown_extensions:
   # enable LaTeX extensions
   - pymdownx.arithmatex:
       generic: true
+extra_css:
+    - css/extra.css
+extra_javascript:
+    - js/extra.js
 extra:
   analytics:
     provider: google
