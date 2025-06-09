@@ -1,106 +1,190 @@
-let canvasWidth = 500;
-let canvasHeight = 500;
+// Animated Wire Circuit Simulation
+// This simulation draws a square wire circuit with animated circles moving along 
+// the wires simulating the flow of electric current by representing electron flow.
+// The speed and spacing of the circles can be controlled with sliders, 
+// and the animation can be toggled on and off with a button.
 
-// the top region for drawing animations
-let plotAreaWidth = canvasWidth;
-let plotAreaHeight = 400;
-let plotAreaMargin = 50;
+// Canvas dimensions following standard MicroSim layout
+let canvasWidth = 400;                      // Initial width that will be updated responsively
+let drawHeight = 400;                       // Height of simulation/drawing area
+let controlHeight = 80;                     // Height of controls region
+let canvasHeight = drawHeight + controlHeight; // Total canvas height
+let margin = 25;                            // Margin for visual elements
+let sliderLeftMargin = 115;                 // Left margin for slider positioning
+let defaultTextSize = 16;                   // Base text size for readability
 
-// the lower region for placing controls like sliders
-let controlAreaWidth = canvasWidth;
-let controlHeight = 100;
+// Global variables for responsive design
+let containerWidth;                         // Calculated from container upon resize
+let containerHeight = canvasHeight;         // Usually fixed height on page
 
-let state = false;
-let button;
+// Simulation variables
+let isRunning = false;
 let speedSlider;
-// margin for the wire
+let spacingSlider;
+let startButton;
+let resetButton;
+
+// Wire drawing parameters
 let wireMargin = 50;
-let lineWidth = 10;
+let lineWidth = 8;
 
 function setup() {
-    createCanvas(canvasWidth, canvasHeight);  // Set the canvas size
-    frameRate(30);
-    textSize(16);
-
-    // Create the slider that controls the speed of the current dots
-    speedSlider = createSlider(0.02, .5, .25, 0.03);
-    speedSlider.position(120, plotAreaHeight+20);
-    speedSlider.size(200);
+  updateCanvasSize();
+  const canvas = createCanvas(containerWidth, containerHeight);
+  canvas.parent(document.querySelector('main'));
   
-    // Create the slider that controls the spacing of the current dots
-    spacingSlider = createSlider(0.15, 1.5, 1, 0.05);
-    spacingSlider.position(120, plotAreaHeight+50);
-    spacingSlider.size(200);
-    
-  // Create the on/off button
-    button = createButton('ON/OFF');
-    button.position(350, plotAreaHeight+20);
-    button.mousePressed(toggleState);
+  // Create speed control slider
+  speedSlider = createSlider(0.02, 0.5, 0.25, 0.03);
+  speedSlider.position(sliderLeftMargin, drawHeight + 35);
+  speedSlider.size(containerWidth - sliderLeftMargin - 25);
+  
+  // Create spacing control slider  
+  spacingSlider = createSlider(0.15, 1.5, 1.0, 0.05);
+  spacingSlider.position(sliderLeftMargin, drawHeight + 55);
+  spacingSlider.size(containerWidth - sliderLeftMargin - 25);
+  
+  // Create start/pause button
+  startButton = createButton('Start');
+  startButton.position(10, drawHeight + 10);
+  startButton.mousePressed(toggleSimulation);
+  
+  // Create reset button
+  resetButton = createButton('Reset');
+  resetButton.position(60, drawHeight + 10);
+  resetButton.mousePressed(resetSimulation);
+
+  describe('Wire circuit simulation showing electron flow through a square wire loop with controllable speed and spacing.', LABEL);
 }
 
 function draw() {
-  // draw the background for the plot area in very light blue color
-  noStroke();
-  fill("aliceblue");  // DodgerBlue background
-  rect(0,0,canvasWidth, plotAreaHeight)
-  
-  // Draw the background in a light tan color
-  fill('cornsilk')
-  stroke(1);
+  // Draw simulation area background
+  fill('aliceblue');
+  stroke('silver');
   strokeWeight(1);
-  rect(0,plotAreaHeight,canvasWidth,controlHeight)
-
-  // get any updates from the slider values
-  let currentSeed = speedSlider.value();
-  let currentSpacing = spacingSlider.value();
+  rect(0, 0, containerWidth, drawHeight);
   
-  // Draw the four wires in a square
-  rightEdge = plotAreaWidth - wireMargin;
-  bottomEdge = plotAreaHeight - wireMargin;
+  // Draw controls area background
+  fill('white');
+  stroke('silver');
+  strokeWeight(1);
+  rect(0, drawHeight, containerWidth, controlHeight);
   
-  // top wire
-  drawAnimatedWire(wireMargin, wireMargin, rightEdge, wireMargin, currentSeed, currentSpacing, "black", state);
-  
-  // right wire
-  drawAnimatedWire(rightEdge, wireMargin, rightEdge, bottomEdge, currentSeed, currentSpacing, "black", state);
-  
-  // lower wire
-  drawAnimatedWire(rightEdge, bottomEdge, wireMargin, bottomEdge, currentSeed, currentSpacing, "black", state);
-  
-  // left wire from bottom to top
-  drawAnimatedWire(wireMargin, bottomEdge, wireMargin, wireMargin, currentSeed, currentSpacing, "black", state);
-  
+  // Draw title
   fill('black');
   noStroke();
-  text('Speed:' + currentSeed, 10, plotAreaHeight+33);
-  text('Spacing:' + currentSpacing, 10, plotAreaHeight + 66);
+  textSize(24);
+  textAlign(CENTER, TOP);
+  text("Wire Circuit Simulation", containerWidth/2, margin/2);
+  
+  // Reset text properties for other elements
+  textSize(defaultTextSize);
+  textAlign(LEFT, CENTER);
+  
+  // Get current slider values
+  let currentSpeed = speedSlider.value();
+  let currentSpacing = spacingSlider.value();
+  
+  // Calculate wire boundaries with responsive margins
+  let circuitMargin = margin*2; // margin does not scale with width
+  let rightEdge = containerWidth - circuitMargin;
+  let bottomEdge = drawHeight - circuitMargin;
+  
+  // Draw the four wires forming a square circuit
+  // Top wire (left to right)
+  drawAnimatedWire(circuitMargin, circuitMargin, rightEdge, circuitMargin, currentSpeed, currentSpacing);
+  
+  // Right wire (top to bottom)  
+  drawAnimatedWire(rightEdge, circuitMargin, rightEdge, bottomEdge, currentSpeed, currentSpacing);
+  
+  // Bottom wire (right to left)
+  drawAnimatedWire(rightEdge, bottomEdge, circuitMargin, bottomEdge, currentSpeed, currentSpacing);
+  
+  // Left wire (bottom to top)
+  drawAnimatedWire(circuitMargin, bottomEdge, circuitMargin, circuitMargin, currentSpeed, currentSpacing);
+  
+  // Draw control labels
+  drawControlLabels();
 }
 
-// Function for drawing an animated wire with adjustable circle spacing
-function drawAnimatedWire(x1, y1, x2, y2, speed, spacing, color, state) {
-    let distance = dist(x1, y1, x2, y2);
-    let numCircles = Math.floor(distance / (spacing * 50));  // Spacing scale factor for better visual control
+// draw a black line with red circles as current from (x1,y1) to (y1,y2) 
+function drawAnimatedWire(x1, y1, x2, y2, speed, spacing) {
+  // Calculate wire properties
+  let distance = dist(x1, y1, x2, y2);
+  let spacingPixels = spacing * 50; // Convert spacing to pixels
+  let numElectrons = Math.floor(distance / spacingPixels);
+  
+  // Draw the wire
+  stroke('black');
+  strokeWeight(lineWidth);
+  line(x1, y1, x2, y2);
+  
+  // Draw moving electrons if simulation is running
+  if (isRunning && numElectrons > 0) {
+    fill('red');
+    noStroke();
     
-    stroke(0);
-    strokeWeight(lineWidth);
-    line(x1, y1, x2, y2); // Draw the wire
-
-    if (state) {
-        for (let i = 0; i <= numCircles; i++) {
-            // Calculate the position of each circle
-            let circlePos = (millis() * speed + i * spacing * 50) % distance; // Space circles along the wire
-
-            let x = lerp(x1, x2, circlePos / distance);
-            let y = lerp(y1, y2, circlePos / distance);
-
-            fill(255, 0, 0);
-            noStroke();
-            circle(x, y, 9); // Draw each circle (electron)
-        }
+    for (let i = 0; i <= numElectrons; i++) {
+      // Calculate electron position along wire
+      let electronPos = (millis() * speed + i * spacingPixels) % distance;
+      let x = lerp(x1, x2, electronPos / distance);
+      let y = lerp(y1, y2, electronPos / distance);
+      
+      // Draw electron as red circle
+      // let electronSize = 8 * (containerWidth / 600); // Scale electron size
+      let electronSize = 8; // Fixed size for simplicity
+      circle(x, y, electronSize);
     }
+  }
 }
 
-// Function to toggle state
-function toggleState() {
-    state = !state;
+function drawControlLabels() {
+  push();
+    // move both down
+    translate(0, 30);
+    fill('black');
+    noStroke();
+    textSize(defaultTextSize);
+    textAlign(LEFT, CENTER);
+
+    // Speed label and value
+    text('Speed: ' + speedSlider.value().toFixed(3), 10, drawHeight + 15);
+
+    // Spacing label and value  
+    text('Spacing: ' + spacingSlider.value().toFixed(2), 10, drawHeight + 35);
+  pop();
+}
+
+function toggleSimulation() {
+  isRunning = !isRunning;
+  startButton.html(isRunning ? 'Pause' : 'Start');
+}
+
+function resetSimulation() {
+  // Reset sliders to default values
+  speedSlider.value(0.25);
+  spacingSlider.value(1.0);
+  
+  // Stop simulation
+  isRunning = false;
+  startButton.html('Start');
+  
+  // Redraw to show reset state
+  redraw();
+}
+
+// Required functions for responsive design
+function windowResized() {
+  updateCanvasSize();
+  resizeCanvas(containerWidth, containerHeight);
+  redraw();
+  
+  // Resize sliders to match new width
+  speedSlider.size(containerWidth - sliderLeftMargin - 15);
+  spacingSlider.size(containerWidth - sliderLeftMargin - 15);
+}
+
+function updateCanvasSize() {
+  const container = document.querySelector('main').getBoundingClientRect();
+  containerWidth = Math.floor(container.width);
+  canvasWidth = containerWidth;
 }

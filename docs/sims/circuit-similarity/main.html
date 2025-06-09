@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Circuit Similarity Map - 2D Interactive Visualization</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+        }
+        
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #7f8c8d;
+            margin-bottom: 30px;
+            font-size: 1.2em;
+        }
+        
+        .controls-panel {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(248, 249, 250, 0.8);
+            border-radius: 10px;
+            border: 1px solid rgba(52, 152, 219, 0.2);
+        }
+        
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .control-group label {
+            font-weight: 600;
+            color: #2c3e50;
+            font-size: 14px;
+        }
+        
+        select, input[type="range"] {
+            padding: 10px;
+            border: 2px solid #e1e8ed;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+        
+        select:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+        }
+        
+        .visualization-container {
+            position: relative;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            overflow: hidden;
+        }
+        
+        .chart-controls {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            z-index: 100;
+        }
+        
+        .zoom-controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .zoom-btn {
+            padding: 8px 12px;
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .zoom-btn:hover {
+            background: #2980b9;
+        }
+        
+        .tooltip {
+            position: fixed;
+            background: rgba(0, 0, 0, 0.95);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 13px;
+            max-width: 400px;
+            z-index: 1000;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s;
+            line-height: 1.5;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+        }
+        
+        .tooltip.visible {
+            opacity: 1;
+        }
+        
+        .tooltip h3 {
+            margin: 0 0 10px 0;
+            color: #3498db;
+            font-size: 15px;
+            border-bottom: 1px solid #34495e;
+            padding-bottom: 5px;
+        }
+        
+        .tooltip .complexity {
+            font-weight: bold;
+            color: #e74c3c;
+            font-size: 16px;
+        }
+        
+        .tooltip .cluster-info {
+            background: rgba(52, 152, 219, 0.2);
+            padding: 5px 8px;
+            border-radius: 4px;
+            margin-top: 8px;
+            font-size: 12px;
+        }
+        
+        .legend {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin: 25px 0;
+            flex-wrap: wrap;
+        }
+        
+        .legend-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .legend-title {
+            font-weight: bold;
+            color: #2c3e50;
+            font-size: 14px;
+        }
+        
+        .legend-items {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            background: rgba(248, 249, 250, 0.8);
+            padding: 5px 10px;
+            border-radius: 6px;
+        }
+        
+        .legend-color {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        
+        .cluster-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 25px 0;
+        }
+        
+        .cluster-card {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 4px solid #3498db;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .cluster-card h4 {
+            margin: 0 0 8px 0;
+            color: #2c3e50;
+        }
+        
+        .circuit-dot {
+            cursor: pointer;
+            transition: all 0.3s ease;
+            stroke: rgba(255, 255, 255, 0.8);
+            stroke-width: 0.5px;
+        }
+        
+        .circuit-dot:hover {
+            stroke-width: 2px;
+            stroke: #2c3e50;
+            r: 8;
+        }
+        
+        .cluster-highlight {
+            stroke-width: 2px !important;
+            stroke: #2c3e50 !important;
+        }
+        
+        #loadingMessage {
+            text-align: center;
+            font-size: 18px;
+            color: #7f8c8d;
+            padding: 50px;
+        }
+        
+        .demo-note {
+            background: rgba(255, 193, 7, 0.1);
+            border: 1px solid rgba(255, 193, 7, 0.5);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            color: #856404;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Circuit Similarity Map</h1>
+        <p class="subtitle">2D visualization of electrical circuits based on content similarity</p>
+        
+        <div class="demo-note">
+            <strong>Demo Mode:</strong> This visualization uses simulated circuit data with 2D coordinates. 
+            In practice, you would generate these coordinates using dimensionality reduction techniques 
+            (t-SNE, UMAP) on your circuit embeddings.
+        </div>
+        
+        <div id="loadingMessage">Loading circuit embeddings...</div>
+        
+        <div id="mainContent" style="display: none;">
+            <div class="controls-panel">
+                <div class="control-group">
+                    <label for="colorBy">Color By:</label>
+                    <select id="colorBy">
+                        <option value="category">Circuit Category</option>
+                        <option value="complexity">Complexity Score</option>
+                        <option value="type">Circuit Type</option>
+                        <option value="components">Component Count</option>
+                    </select>
+                </div>
+                
+                <div class="control-group">
+                    <label for="sizeBy">Size By:</label>
+                    <select id="sizeBy">
+                        <option value="complexity">Complexity Score</option>
+                        <option value="components">Component Count</option>
+                        <option value="uniform">Uniform Size</option>
+                    </select>
+                </div>
+                
+                <div class="control-group">
+                    <label for="filterCategory">Filter Category:</label>
+                    <select id="filterCategory">
+                        <option value="all">All Categories</option>
+                    </select>
+                </div>
+                
+                <div class="control-group">
+                    <label for="minComponents">Min Components: <span id="minComponentsValue">1</span></label>
+                    <input type="range" id="minComponents" min="1" max="12" value="1">
+                </div>
+            </div>
+            
+            <div class="visualization-container">
+                <div class="chart-controls">
+                    <div class="zoom-controls">
+                        <button class="zoom-btn" onclick="zoomIn()">Zoom In</button>
+                        <button class="zoom-btn" onclick="zoomOut()">Zoom Out</button>
+                        <button class="zoom-btn" onclick="resetZoom()">Reset</button>
+                    </div>
+                    <div style="font-size: 12px; color: #7f8c8d;">
+                        Drag to pan • Scroll to zoom • Click for details
+                    </div>
+                </div>
+                <svg id="chart"></svg>
+            </div>
+            
+            <div class="legend" id="legend"></div>
+            <div class="cluster-stats" id="clusterStats"></div>
+        </div>
+    </div>
+    
+    <div class="tooltip" id="tooltip"></div>
+
+    <script>
+        class CircuitSimilarityVisualization {
+            constructor() {
+                this.data = [];
+                this.filteredData = [];
+                this.clusters = {};
+                this.width = 1200;
+                this.height = 700;
+                this.margin = { top: 20, right: 20, bottom: 20, left: 20 };
+                
+                this.currentTransform = d3.zoomIdentity;
+                
+                this.categoryColors = d3.scaleOrdinal(d3.schemeSet3);
+                this.complexityColorScale = d3.scaleSequential(d3.interpolateViridis).domain([1, 10]);
+                
+                this.initializeChart();
+                this.loadData();
+            }
+            
+            initializeChart() {
+                const svg = d3.select('#chart')
+                    .attr('width', this.width)
+                    .attr('height', this.height);
+                
+                // Add zoom behavior
+                this.zoom = d3.zoom()
+                    .scaleExtent([0.1, 10])
+                    .on('zoom', (event) => {
+                        this.currentTransform = event.transform;
+                        this.chartGroup.attr('transform', event.transform);
+                    });
+                
+                svg.call(this.zoom);
+                
+                this.chartGroup = svg.append('g');
+                this.innerWidth = this.width - this.margin.left - this.margin.right;
+                this.innerHeight = this.height - this.margin.top - this.margin.bottom;
+            }
+            
+            async loadData() {
+                try {
+                    // For demo purposes, generate simulated circuit data
+                    // In practice, you would load from circuit-embeddings.json
+                    this.data = this.generateDemoData();
+                    this.clusters = this.generateDemoClusters();
+                    this.bounds = {
+                        x_min: -3,
+                        x_max: 3,
+                        y_min: -3,
+                        y_max: 3
+                    };
+                    
+                    console.log(`Loaded ${this.data.length} circuits`);
+                    
+                    document.getElementById('loadingMessage').style.display = 'none';
+                    document.getElementById('mainContent').style.display = 'block';
+                    
+                    this.updateScales();
+                    this.initializeControls();
+                    this.updateVisualization();
+                    this.createClusterStats();
+                    
+                } catch (error) {
+                    console.error('Error loading data:', error);
+                    document.getElementById('loadingMessage').innerHTML = 
+                        `<h2 style="color: red;">Error loading circuit data</h2>
+                         <p>In production, this would load from circuit-embeddings.json</p>
+                         <p>Error: ${error.message}</p>`;
+                }
+            }
+            
+            generateDemoData() {
+                // Sample circuit data from the JSON
+                const sampleCircuits = [
+                    { id: 1, name: "Voltage Divider Circuit", category: "Fundamental DC Analysis", components: 2, type: "Passive linear resistive network" },
+                    { id: 2, name: "LED Circuit", category: "Semiconductor and Transistor", components: 3, type: "Light emitting circuit" },
+                    { id: 3, name: "Inverting Amplifier", category: "Operational Amplifier", components: 3, type: "Active analog amplifier" },
+                    { id: 4, name: "555 Timer Astable", category: "Oscillator and Timer", components: 4, type: "Oscillator/timing circuit" },
+                    { id: 5, name: "Bridge Rectifier", category: "Power Supply and Rectifier", components: 6, type: "AC-to-DC converter" },
+                    { id: 6, name: "H-Bridge Motor Driver", category: "Motor Control and Power", components: 8, type: "Motor control circuit" },
+                    { id: 7, name: "RC Low-Pass Filter", category: "Filter Circuits", components: 2, type: "Passive low-pass filter" },
+                    { id: 8, name: "Common Emitter Amplifier", category: "Semiconductor and Transistor", components: 7, type: "BJT amplifier" },
+                    { id: 9, name: "Wien Bridge Oscillator", category: "Oscillator and Timer", components: 6, type: "Sinusoidal oscillator" },
+                    { id: 10, name: "Instrumentation Amplifier", category: "Operational Amplifier", components: 7, type: "Precision measurement amplifier" }
+                ];
+                
+                return sampleCircuits.map((circuit, i) => ({
+                    ...circuit,
+                    x: (Math.random() - 0.5) * 5 + Math.cos(i * 0.8) * 2,
+                    y: (Math.random() - 0.5) * 5 + Math.sin(i * 0.8) * 2,
+                    complexity: Math.floor(Math.random() * 8) + 2,
+                    cluster: Math.floor(i / 3),
+                    applications: [`Application ${i + 1}A`, `Application ${i + 1}B`]
+                }));
+            }
+            
+            generateDemoClusters() {
+                return {
+                    "0": { size: 3, top_terms: ["voltage", "resistor", "basic"], avg_complexity: 3.2 },
+                    "1": { size: 3, top_terms: ["amplifier", "operational", "signal"], avg_complexity: 5.8 },
+                    "2": { size: 3, top_terms: ["oscillator", "timing", "frequency"], avg_complexity: 6.5 },
+                    "3": { size: 1, top_terms: ["motor", "power", "control"], avg_complexity: 7.2 }
+                };
+            }
+            
+            initializeControls() {
+                // Populate category filter
+                const categories = [...new Set(this.data.map(d => d.category))];
+                const categorySelect = document.getElementById('filterCategory');
+                categories.forEach(category => {
+                    const option = document.createElement('option');
+                    option.value = category;
+                    option.textContent = category;
+                    categorySelect.appendChild(option);
+                });
+                
+                // Add event listeners
+                document.getElementById('colorBy').addEventListener('change', () => this.updateVisualization());
+                document.getElementById('sizeBy').addEventListener('change', () => this.updateVisualization());
+                document.getElementById('filterCategory').addEventListener('change', () => this.filterData());
+                
+                const minComponentsSlider = document.getElementById('minComponents');
+                minComponentsSlider.addEventListener('input', (e) => {
+                    document.getElementById('minComponentsValue').textContent = e.target.value;
+                    this.filterData();
+                });
+                
+                // Initialize filtered data
+                this.filteredData = this.data.slice();
+            }
+            
+            filterData() {
+                const categoryFilter = document.getElementById('filterCategory').value;
+                const minComponents = parseInt(document.getElementById('minComponents').value);
+                
+                this.filteredData = this.data.filter(d => {
+                    return (categoryFilter === 'all' || d.category === categoryFilter) &&
+                           d.components >= minComponents;
+                });
+                
+                this.updateVisualization();
+            }
+            
+            updateScales() {
+                if (!this.bounds) {
+                    console.error('No bounds data available');
+                    return;
+                }
+                
+                const xPadding = (this.bounds.x_max - this.bounds.x_min) * 0.05;
+                const yPadding = (this.bounds.y_max - this.bounds.y_min) * 0.05;
+                
+                this.xScale = d3.scaleLinear()
+                    .domain([this.bounds.x_min - xPadding, this.bounds.x_max + xPadding])
+                    .range([this.margin.left, this.width - this.margin.right]);
+                
+                this.yScale = d3.scaleLinear()
+                    .domain([this.bounds.y_min - yPadding, this.bounds.y_max + yPadding])
+                    .range([this.height - this.margin.bottom, this.margin.top]);
+            }
+            
+            updateVisualization() {
+                if (!this.xScale || !this.yScale) {
+                    console.error('Scales not initialized yet');
+                    return;
+                }
+                
+                const colorBy = document.getElementById('colorBy').value;
+                const sizeBy = document.getElementById('sizeBy').value;
+                
+                console.log(`Updating visualization: ${this.filteredData.length} circuits`);
+                
+                // Update color scale based on selection
+                let colorScale;
+                if (colorBy === 'category') {
+                    colorScale = (d) => this.categoryColors(d.category);
+                } else if (colorBy === 'complexity') {
+                    colorScale = (d) => this.complexityColorScale(d.complexity);
+                } else if (colorBy === 'type') {
+                    const types = [...new Set(this.data.map(d => d.type))];
+                    const typeScale = d3.scaleOrdinal(d3.schemeCategory10).domain(types);
+                    colorScale = (d) => typeScale(d.type);
+                } else if (colorBy === 'components') {
+                    const componentScale = d3.scaleSequential(d3.interpolateBlues)
+                        .domain(d3.extent(this.data, d => d.components));
+                    colorScale = (d) => componentScale(d.components);
+                }
+                
+                // Update size scale
+                let sizeScale;
+                if (sizeBy === 'complexity') {
+                    sizeScale = d3.scaleSqrt().domain([1, 10]).range([4, 10]);
+                } else if (sizeBy === 'components') {
+                    sizeScale = d3.scaleSqrt().domain([1, 12]).range([4, 10]);
+                } else {
+                    sizeScale = () => 6;
+                }
+                
+                // Bind data to circles
+                const circles = this.chartGroup.selectAll('.circuit-dot')
+                    .data(this.filteredData, d => d.id);
+                
+                // Remove old circles
+                circles.exit().remove();
+                
+                // Add new circles
+                const circlesEnter = circles.enter()
+                    .append('circle')
+                    .attr('class', 'circuit-dot')
+                    .attr('r', 0)
+                    .attr('opacity', 0);
+                
+                // Update all circles
+                circles.merge(circlesEnter)
+                    .transition()
+                    .duration(500)
+                    .attr('cx', d => this.xScale(d.x))
+                    .attr('cy', d => this.yScale(d.y))
+                    .attr('r', d => sizeScale(sizeBy === 'complexity' ? d.complexity : d.components))
+                    .attr('fill', d => colorScale(d))
+                    .attr('opacity', 0.7);
+                
+                // Add hover effects
+                this.chartGroup.selectAll('.circuit-dot')
+                    .on('mouseover', (event, d) => this.showTooltip(event, d))
+                    .on('mouseout', () => this.hideTooltip())
+                    .on('click', (event, d) => this.showCircuitDetails(d));
+                
+                this.updateLegend(colorBy);
+            }
+            
+            showTooltip(event, d) {
+                const tooltip = document.getElementById('tooltip');
+                
+                const clusterInfo = this.clusters[d.cluster] || {};
+                
+                tooltip.innerHTML = `
+                    <h3>${d.name}</h3>
+                    <div class="complexity">Complexity: ${d.complexity}/10</div>
+                    <div><strong>Category:</strong> ${d.category}</div>
+                    <div><strong>Type:</strong> ${d.type}</div>
+                    <div><strong>Components:</strong> ${d.components}</div>
+                    <div><strong>Applications:</strong> ${d.applications ? d.applications.join(', ') : 'Various'}</div>
+                    <div class="cluster-info">
+                        <strong>Circuit Group ${d.cluster}:</strong> ${clusterInfo.top_terms ? clusterInfo.top_terms.join(', ') : 'Related circuits'}
+                        <br>Group size: ${clusterInfo.size || 0} circuits, Avg complexity: ${(clusterInfo.avg_complexity || 0).toFixed(1)}
+                    </div>
+                    <div style="margin-top: 8px; font-size: 11px; color: #bdc3c7;">
+                        Circuit ID: ${d.id} | Click for detailed analysis
+                    </div>
+                `;
+                
+                tooltip.classList.add('visible');
+                
+                // Position tooltip
+                const rect = tooltip.getBoundingClientRect();
+                tooltip.style.left = Math.min(event.pageX + 15, window.innerWidth - rect.width - 20) + 'px';
+                tooltip.style.top = Math.max(event.pageY - 10, 10) + 'px';
+            }
+            
+            hideTooltip() {
+                document.getElementById('tooltip').classList.remove('visible');
+            }
+            
+            showCircuitDetails(circuit) {
+                alert(`Circuit Details:\n\nName: ${circuit.name}\nCategory: ${circuit.category}\nComplexity: ${circuit.complexity}/10\nComponents: ${circuit.components}\n\nIn a full implementation, this would show detailed circuit analysis, schematic, and design parameters.`);
+            }
+            
+            updateLegend(colorBy) {
+                const legend = document.getElementById('legend');
+                
+                if (colorBy === 'category') {
+                    const categories = [...new Set(this.data.map(d => d.category))];
+                    const categoryItems = categories.map(category => {
+                        const count = this.data.filter(d => d.category === category).length;
+                        return `
+                            <div class="legend-item">
+                                <div class="legend-color" style="background-color: ${this.categoryColors(category)}"></div>
+                                <span>${category} (${count})</span>
+                            </div>
+                        `;
+                    }).join('');
+                    
+                    legend.innerHTML = `
+                        <div class="legend-section">
+                            <div class="legend-title">Circuit Categories</div>
+                            <div class="legend-items">${categoryItems}</div>
+                        </div>
+                    `;
+                } else if (colorBy === 'complexity') {
+                    legend.innerHTML = `
+                        <div class="legend-section">
+                            <div class="legend-title">Complexity Score</div>
+                            <div class="legend-items">
+                                <div class="legend-item">
+                                    <div class="legend-color" style="background: linear-gradient(to right, #440154, #21908c, #fde725); width: 100px; height: 14px;"></div>
+                                    <span>Simple (1) → Complex (10)</span>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                } else if (colorBy === 'type') {
+                    const types = [...new Set(this.data.map(d => d.type))];
+                    const typeScale = d3.scaleOrdinal(d3.schemeCategory10).domain(types);
+                    const typeItems = types.slice(0, 6).map(type => `
+                        <div class="legend-item">
+                            <div class="legend-color" style="background-color: ${typeScale(type)}"></div>
+                            <span>${type.substring(0, 25)}${type.length > 25 ? '...' : ''}</span>
+                        </div>
+                    `).join('');
+                    
+                    legend.innerHTML = `
+                        <div class="legend-section">
+                            <div class="legend-title">Circuit Types</div>
+                            <div class="legend-items">${typeItems}</div>
+                        </div>
+                    `;
+                } else if (colorBy === 'components') {
+                    legend.innerHTML = `
+                        <div class="legend-section">
+                            <div class="legend-title">Component Count</div>
+                            <div class="legend-items">
+                                <div class="legend-item">
+                                    <div class="legend-color" style="background: linear-gradient(to right, #08306b, #6baed6, #c6dbef); width: 100px; height: 14px;"></div>
+                                    <span>Few → Many Components</span>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }
+            }
+            
+            createClusterStats() {
+                const clusterStats = document.getElementById('clusterStats');
+                
+                const clusterCards = Object.entries(this.clusters).map(([clusterId, cluster]) => `
+                    <div class="cluster-card">
+                        <h4>Circuit Group ${clusterId}</h4>
+                        <div><strong>Size:</strong> ${cluster.size} circuits</div>
+                        <div><strong>Avg Complexity:</strong> ${cluster.avg_complexity.toFixed(1)}/10</div>
+                        <div><strong>Key Concepts:</strong> ${cluster.top_terms ? cluster.top_terms.join(', ') : 'Various'}</div>
+                        <div><strong>Focus Area:</strong> ${cluster.top_terms ? cluster.top_terms[0] + ' circuits' : 'Mixed'}</div>
+                    </div>
+                `).join('');
+                
+                clusterStats.innerHTML = clusterCards;
+            }
+        }
+        
+        // Global zoom functions
+        let visualization;
+        
+        function zoomIn() {
+            d3.select('#chart').transition().call(
+                visualization.zoom.scaleBy, 1.5
+            );
+        }
+        
+        function zoomOut() {
+            d3.select('#chart').transition().call(
+                visualization.zoom.scaleBy, 1 / 1.5
+            );
+        }
+        
+        function resetZoom() {
+            d3.select('#chart').transition().call(
+                visualization.zoom.transform,
+                d3.zoomIdentity
+            );
+        }
+        
+        // Initialize visualization when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            visualization = new CircuitSimilarityVisualization();
+        });
+    </script>
+</body>
+</html>
