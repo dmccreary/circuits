@@ -14,8 +14,9 @@
 
 */
 
-const HORIZONTAL = "HORIZONTAL";
-const VERTICAL = "VERTICAL";
+// Circuit orientation constants
+const HORIZONTAL = 'horizontal';
+const VERTICAL = 'vertical';
 
 // draw a black line with red circles as current from (x1,y1) to (y1,y2) 
 function drawAnimatedWire(x1, y1, x2, y2, speed, spacing) {
