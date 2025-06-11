@@ -9,7 +9,7 @@ const VERTICAL = "vertical";
 // Canvas dimensions following standard MicroSim layout
 let canvasWidth = 400;                      // Initial width that will be updated responsively
 let drawHeight = 400;                       // Height of simulation/drawing area
-let controlHeight = 100;                     // Height of controls region
+let controlHeight = 110;                     // Height of controls region
 let canvasHeight = drawHeight + controlHeight; // Total canvas height
 let margin = 25;                            // Margin for visual elements
 let defaultTextSize = 16;                   // Base text size for readability
@@ -54,7 +54,7 @@ function setup() {
   
   // Create line width slider
   lineWidthSlider = createSlider(1, 5, 2);
-  lineWidthSlider.position(leftSliderMargin, drawHeight + 60);
+  lineWidthSlider.position(leftSliderMargin, drawHeight + 55);
   lineWidthSlider.size(containerWidth - 140);
 
   describe('Resistor drawing test showing resistors in different orientations with customizable line width and labels.', LABEL);
@@ -219,7 +219,7 @@ function drawControlLabels() {
   textAlign(LEFT, CENTER);
   
   // Current orientation
-  text(`Orientation: ${currentOrientation.toUpperCase()}`, 10, drawHeight + 50);
+  text(`Orientation: ${currentOrientation.toUpperCase()}`, 10, drawHeight + 45);
   
   // Line width
   text(`Line Width: ${lineWidthSlider.value()}`, 10, drawHeight + 65);
