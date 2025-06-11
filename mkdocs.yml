@@ -53,13 +53,18 @@ nav:
     - Metaphors and Stories: prompts/metaphors-and-stories.md
     - Glossary Terms: prompts/glossary-terms.md
     - Similarity Plot: prompts/similarity-plot/index.md
+  
   - FAQ:
     - Intro: faq/index.md
     - Series and Parallel: faq/series-and-parallel/index.md
+  
   - MicroSims:
     - Introduction: sims/index.md
     - Background Grid: sims/background-grid/index.md
     - Animated Wire: sims/animated-wire/index.md
+    - Switch: sims/switch/index.md
+    - Animated Switches: sims/animated-switches/index.md
+    - Light Bulb: sims/light-bulb/index.md
     - Simple DC Circuit: sims/dc-circuit/index.md
     - DC Circuit V2: sims/dc-circuit/circuits-v2.md
     - prompts/circuit-similarity/index.md

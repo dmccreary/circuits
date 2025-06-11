@@ -22,7 +22,7 @@ You can include this MicroSim in your course by pasting the following HTML direc
 ```
 
 [Run the Animated Wire MicroSim](./main.html){ .md-button .md-button--primary }
-
+[Edit the Animated Wire MicroSim](https://editor.p5js.org/dmccreary/sketches/gZgpvo2zS)
 ## Sample Animate Wire Function
 
 ```js
