@@ -383,6 +383,8 @@
       
         
       
+        
+      
     
     
     
@@ -823,6 +825,29 @@
   
   
     <li class="md-nav__item">
+      <a href="../circuit-similarity/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Circuit Similarity
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../metaphors-and-stories/" class="md-nav__link">
         
   
@@ -919,13 +944,13 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#intall-and-test-ollama" class="md-nav__link">
+  <a href="#install-and-test-ollama" class="md-nav__link">
     <span class="md-ellipsis">
-      Intall and Test Ollama
+      Install and Test Ollama
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Intall and Test Ollama">
+    <nav class="md-nav" aria-label="Install and Test Ollama">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1302,13 +1327,13 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#intall-and-test-ollama" class="md-nav__link">
+  <a href="#install-and-test-ollama" class="md-nav__link">
     <span class="md-ellipsis">
-      Intall and Test Ollama
+      Install and Test Ollama
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Intall and Test Ollama">
+    <nav class="md-nav" aria-label="Install and Test Ollama">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1421,18 +1446,20 @@
 <h1 id="creating-a-similarity-plot">Creating a Similarity Plot</h1>
 <p>This example assumes you have a local GPU with Ollama or you can get access
 to a service that creates embeddings.</p>
-<h2 id="intall-and-test-ollama">Intall and Test Ollama</h2>
+<h2 id="install-and-test-ollama">Install and Test Ollama</h2>
 <h3 id="install-ollama">Install Ollama</h3>
 <p><img alt="" src="../../img/oolama-model-install.png" /></p>
-<div class="highlight"><pre><span></span><code>I have a list of 100 questions frequently asked in an
+<div class="admonition prompt">
+<p class="admonition-title">Prompt</p>
+<p>I have a list of 100 questions frequently asked in an
 undergraduate course on circuits. I want to create a
 2-D plot that groups similar questions by creating
 embeddings for each question. I also have access to a
 GPU that is running ollama and has the llama 3.2 model
 available. Can you suggest a Python program that will
 take the input file of questions separated by newlines
-and outputs a 2D plot grouping similar questions together?
-</code></pre></div>
+and outputs a 2D plot grouping similar questions together?</p>
+</div>
 <h3 id="test-ollama-embeddings-service">Test Ollama Embeddings Service</h3>
 <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
 <span class="normal">2</span>
