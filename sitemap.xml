@@ -197,6 +197,10 @@
          <lastmod>2025-06-11</lastmod>
     </url>
     <url>
+         <loc>https://dmccreary.github.io/circuits/sims/components/</loc>
+         <lastmod>2025-06-11</lastmod>
+    </url>
+    <url>
          <loc>https://dmccreary.github.io/circuits/sims/animated-switches/</loc>
          <lastmod>2025-06-11</lastmod>
     </url>
@@ -206,6 +210,14 @@
     </url>
     <url>
          <loc>https://dmccreary.github.io/circuits/sims/background-grid/</loc>
+         <lastmod>2025-06-11</lastmod>
+    </url>
+    <url>
+         <loc>https://dmccreary.github.io/circuits/sims/battery/</loc>
+         <lastmod>2025-06-11</lastmod>
+    </url>
+    <url>
+         <loc>https://dmccreary.github.io/circuits/sims/capacitor/</loc>
          <lastmod>2025-06-11</lastmod>
     </url>
     <url>
@@ -221,7 +233,19 @@
          <lastmod>2025-06-11</lastmod>
     </url>
     <url>
+         <loc>https://dmccreary.github.io/circuits/sims/diode/</loc>
+         <lastmod>2025-06-11</lastmod>
+    </url>
+    <url>
+         <loc>https://dmccreary.github.io/circuits/sims/inductor/</loc>
+         <lastmod>2025-06-11</lastmod>
+    </url>
+    <url>
          <loc>https://dmccreary.github.io/circuits/sims/light-bulb/</loc>
+         <lastmod>2025-06-11</lastmod>
+    </url>
+    <url>
+         <loc>https://dmccreary.github.io/circuits/sims/resistor/</loc>
          <lastmod>2025-06-11</lastmod>
     </url>
     <url>

@@ -17,6 +17,10 @@ let topLine = 50;
 // x offsent of the vertical line to test vertical switches
 let leftLine = 100;
 
+// constance for the strings
+const HORIZONTAL = "horizontal";
+const VERTICAL = "vertical";
+
 function setup() {
   updateCanvasSize();
   const canvas = createCanvas(canvasWidth, canvasHeight);
@@ -44,10 +48,10 @@ function vline(x,y,w) {
 }
 
 // draw an on/off switch at (x,y) of length l
-// Orientation parameter "HORIZ" or "VERT"
+// Orientation parameter HORIZONTAL or VERTICAL
 function drawSwitch(x, y, len, isClosed, orientation) {
   circle(x, y, 4);
-  if (orientation == HORIZONTAL) {
+  if (orientation === HORIZONTAL) {
     circle(x+len, y, 4)
     stroke(0);
     strokeWeight(3);
