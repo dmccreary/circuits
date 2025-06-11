@@ -3,6 +3,7 @@
 // the wires simulating the flow of electric current by representing electron flow.
 // The speed and spacing of the circles can be controlled with sliders, 
 // and the animation can be toggled on and off with a button.
+// Modified to keep electrons visible when paused.
 
 // Canvas dimensions following standard MicroSim layout
 let canvasWidth = 400;                      // Initial width that will be updated responsively
@@ -19,6 +20,7 @@ let containerHeight = canvasHeight;         // Usually fixed height on page
 
 // Simulation variables
 let isRunning = false;
+let animationTime = 0;                      // Track animation time independently
 let speedSlider;
 let spacingSlider;
 let startButton;
@@ -50,7 +52,7 @@ function setup() {
   
   // Create reset button
   resetButton = createButton('Reset');
-  resetButton.position(60, drawHeight + 10);
+  resetButton.position(70, drawHeight + 10);
   resetButton.mousePressed(resetSimulation);
 
   describe('Wire circuit simulation showing electron flow through a square wire loop with controllable speed and spacing.', LABEL);
@@ -83,6 +85,11 @@ function draw() {
   // Get current slider values
   let currentSpeed = speedSlider.value();
   let currentSpacing = spacingSlider.value();
+  
+  // Update animation time only when running
+  if (isRunning) {
+    animationTime += deltaTime;
+  }
   
   // Calculate wire boundaries with responsive margins
   let circuitMargin = margin*2; // margin does not scale with width
@@ -118,19 +125,18 @@ function drawAnimatedWire(x1, y1, x2, y2, speed, spacing) {
   strokeWeight(lineWidth);
   line(x1, y1, x2, y2);
   
-  // Draw moving electrons if simulation is running
-  if (isRunning && numElectrons > 0) {
+  // Draw moving electrons (always draw them, but only move when running)
+  if (numElectrons > 0) {
     fill('red');
     noStroke();
     
     for (let i = 0; i <= numElectrons; i++) {
-      // Calculate electron position along wire
-      let electronPos = (millis() * speed + i * spacingPixels) % distance;
+      // Calculate electron position using animationTime instead of millis()
+      let electronPos = (animationTime * speed + i * spacingPixels) % distance;
       let x = lerp(x1, x2, electronPos / distance);
       let y = lerp(y1, y2, electronPos / distance);
       
       // Draw electron as red circle
-      // let electronSize = 8 * (containerWidth / 600); // Scale electron size
       let electronSize = 8; // Fixed size for simplicity
       circle(x, y, electronSize);
     }
@@ -163,6 +169,9 @@ function resetSimulation() {
   // Reset sliders to default values
   speedSlider.value(0.25);
   spacingSlider.value(1.0);
+  
+  // Reset animation time
+  animationTime = 0;
   
   // Stop simulation
   isRunning = false;
