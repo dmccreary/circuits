@@ -6,19 +6,19 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="AI Circuits Course Materials. All content licensed Creative Commons ShareAlike Attribution Noncommercial">
+        <meta name="description" content="A description under 110 characters.">
       
       
         <meta name="author" content="Dan McCreary">
       
       
-        <link rel="canonical" href="https://dmccreary.github.io/circuits/prompts/knowledge-graph/">
+        <link rel="canonical" href="https://dmccreary.github.io/circuits/sims/switch/">
       
       
-        <link rel="prev" href="../chatbot/">
+        <link rel="prev" href="../animated-wire/">
       
       
-        <link rel="next" href="three-graphs/">
+        <link rel="next" href="../animated-switches/">
       
       
       <link rel="icon" href="../../img/favicon.ico">
@@ -26,7 +26,7 @@
     
     
       
-        <title>Introduction - AI Circuits Course</title>
+        <title>A toggle switch in P5.js - AI Circuits Course</title>
       
     
     
@@ -88,7 +88,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#concept-dependency-graph" class="md-skip">
+        <a href="#switch-microsim" class="md-skip">
           Skip to content
         </a>
       
@@ -123,7 +123,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Introduction
+              A toggle switch in P5.js
             
           </span>
         </div>
@@ -203,6 +203,8 @@
         <div class="md-main__inner md-grid">
           
             
+              
+                
               
               <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
                 <div class="md-sidebar__scrollwrap">
@@ -346,8 +348,6 @@
       
   
   
-    
-  
   
   
     
@@ -388,17 +388,18 @@
     
     
       
+        
+        
+      
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
       
         
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
-        
-          
-          <div class="md-nav__link md-nav__container">
-            <a href="../" class="md-nav__link ">
-              
+  
+  
+  
+    <a href="../../prompts/" class="md-nav__link">
+      
   
   
   <span class="md-ellipsis">
@@ -407,639 +408,12 @@
   </span>
   
 
-            </a>
-            
-              
-              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="0">
-                <span class="md-nav__icon md-icon"></span>
-              </label>
-            
-          </div>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_4">
-            <span class="md-nav__icon md-icon"></span>
-            Sample Prompts
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../learning-via-interactive-simulations/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Learning Via Simulations
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    
-    
-      
-        
-          
-        
-      
-        
-      
-        
-      
-    
-    
-    
-    
-      
-        
-        
-      
-    
-    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
-      
-        
-  
-  
-  
-    <a href="../top-100-circuits/" class="md-nav__link">
-      
-  
-  
-  <span class="md-ellipsis">
-    Top 100 Circuits
-    
-  </span>
-  
-
       
         <span class="md-nav__icon md-icon"></span>
       
     </a>
   
 
-      
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    
-    
-      
-        
-          
-        
-      
-        
-      
-        
-      
-    
-    
-    
-    
-      
-        
-        
-      
-    
-    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
-      
-        
-  
-  
-  
-    <a href="../circuit-diagrams/" class="md-nav__link">
-      
-  
-  
-  <span class="md-ellipsis">
-    Generating Circuit Diagrams
-    
-  </span>
-  
-
-      
-        <span class="md-nav__icon md-icon"></span>
-      
-    </a>
-  
-
-      
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../current-voltage-plots/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Current-Voltage Plots
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../adding-latex-equations/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Adding LaTeX Equations
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    
-    
-      
-        
-          
-        
-      
-        
-      
-    
-    
-    
-    
-      
-        
-        
-      
-    
-    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
-      
-        
-  
-  
-  
-    <a href="../formulas/" class="md-nav__link">
-      
-  
-  
-  <span class="md-ellipsis">
-    Common Formulas
-    
-  </span>
-  
-
-      
-        <span class="md-nav__icon md-icon"></span>
-      
-    </a>
-  
-
-      
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../frequently-asked-questions/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Frequently Asked Questions
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    
-    
-      
-        
-          
-        
-      
-        
-      
-        
-      
-    
-    
-    
-    
-      
-        
-        
-      
-    
-    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
-      
-        
-  
-  
-  
-    <a href="../lesson-plan/" class="md-nav__link">
-      
-  
-  
-  <span class="md-ellipsis">
-    Lesson Plans
-    
-  </span>
-  
-
-      
-        <span class="md-nav__icon md-icon"></span>
-      
-    </a>
-  
-
-      
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../chatbot/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    ChatBot
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-    
-  
-  
-  
-    
-    
-      
-        
-          
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-    
-    
-    
-    
-      
-    
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_11" checked>
-        
-          
-          <div class="md-nav__link md-nav__container">
-            <a href="./" class="md-nav__link md-nav__link--active">
-              
-  
-  
-  <span class="md-ellipsis">
-    Generating Knowledge Graphs
-    
-  </span>
-  
-
-            </a>
-            
-              
-              <label class="md-nav__link md-nav__link--active" for="__nav_4_11" id="__nav_4_11_label" tabindex="0">
-                <span class="md-nav__icon md-icon"></span>
-              </label>
-            
-          </div>
-        
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_11_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_4_11">
-            <span class="md-nav__icon md-icon"></span>
-            Generating Knowledge Graphs
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="three-graphs/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Three Educational Graphs
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="concept-enumeration/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Concept Enumeration
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="concept-dependency-graph/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Concept Dependency Graph
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="concept-taxonomy/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Concept Taxonomy
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="add-categories-to-concepts/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Adding Categories to Concepts
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="graph/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Dependency Graph Application
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../metaphors-and-stories/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Metaphors and Stories
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../glossary-terms/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Glossary Terms
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../similarity-plot/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Similarity Plot
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
       
     </li>
   
@@ -1100,6 +474,8 @@
       
   
   
+    
+  
   
   
     
@@ -1136,18 +512,17 @@
     
     
       
-        
-        
-      
     
-    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
-  
-  
-  
-    <a href="../../sims/" class="md-nav__link">
-      
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
   
   
   <span class="md-ellipsis">
@@ -1156,12 +531,330 @@
   </span>
   
 
-      
-        <span class="md-nav__icon md-icon"></span>
-      
-    </a>
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6" id="__nav_6_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            MicroSims
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../background-grid/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Background Grid
+    
+  </span>
   
 
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../animated-wire/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Animated Wire
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Switch
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    Switch
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#microsim-description" class="md-nav__link">
+    <span class="md-ellipsis">
+      MicroSim Description
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../animated-switches/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Animated Switches
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../light-bulb/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Light Bulb
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dc-circuit/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Simple DC Circuit
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dc-circuit/circuits-v2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    DC Circuit V2
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../prompts/circuit-similarity/index.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    None
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../prompts/top-100-circuits/top-100-circuits/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Top 100 Circuits
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../circuit-similarity/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Index
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../templates/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    A title under 60 characters.
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
       
     </li>
   
@@ -1307,7 +1000,9 @@
             
             
               
-              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" hidden>
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
                     
@@ -1326,9 +1021,9 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#sample-prompt" class="md-nav__link">
+  <a href="#microsim-description" class="md-nav__link">
     <span class="md-ellipsis">
-      Sample Prompt
+      MicroSim Description
     </span>
   </a>
   
@@ -1347,10 +1042,12 @@
               <article class="md-content__inner md-typeset">
                 
                   
+  
+
 
 
   
-    <a href="https://github.com/dmccreary/circuits/blob/master/docs/prompts/knowledge-graph/index.md" title="Edit this page" class="md-content__button md-icon">
+    <a href="https://github.com/dmccreary/circuits/blob/master/docs/sims/switch/index.md" title="Edit this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
     </a>
@@ -1358,28 +1055,19 @@
   
 
 
-<h1 id="concept-dependency-graph">Concept Dependency Graph</h1>
-<p><a href="graph/ohms-law-concept-graph.html">SampleConcept Dependency Graph for Ohm's Law</a></p>
-<p>A Concept Dependency Graph is a specific type of graph that has the following properties.</p>
-<ol>
-<li>Each Concept is represented by a vertex and all concepts have a short name called the "label".</li>
-<li>By default circles are used to represent concepts in a graph.</li>
-<li>To learn a new Concept, you must understand the prerequisite concepts called the dependant concepts.</li>
-<li>Concepts each have a DEPENDS_ON directed link that points to what other Concepts any concept depends on.  To keep the chart ink smaller, the abbreviation "dep" is often used.</li>
-<li>A course is a collection of Concepts that must be learned in an approximate order.</li>
-<li>Every course has a collection of background foundational concepts that
-should be mastered before the student takes the course.</li>
-<li>Concepts that are prerequisites for the course often appear on the left
-edge of the concept graph at a location of x=-300.</li>
-<li>Advanced concepts often appear on the right at x=300</li>
-<li>By convention, concrete physical concepts are lower in the graph and more abstract mathematical concepts are initially located toward the top of the graph.</li>
-<li>When we want to focus on a concept, that concept is displayed in a larger font.</li>
-</ol>
-<h2 id="sample-prompt">Sample Prompt</h2>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><code>
+<h1 id="switch-microsim">Switch MicroSim</h1>
+<iframe src="./main.html" height="480px" scrolling="no"
+  style="overflow: hidden;"></iframe>
+
+<p>You can include this MicroSim in your course by pasting the following HTML directly into your web page.</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="p">&lt;</span><span class="nt">iframe</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;https://dmccreary.github.io/signal-processing/sims/SIM_NAME/main.html&quot;</span> <span class="na">height</span><span class="o">=</span><span class="s">&quot;480px&quot;</span> <span class="na">scrolling</span><span class="o">=</span><span class="s">&quot;no&quot;</span>
+  <span class="na">style</span><span class="o">=</span><span class="s">&quot;overflow: hidden;&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">iframe</span><span class="p">&gt;</span>
 </code></pre></div></td></tr></table></div>
-
-
+<p><a class="md-button md-button--primary" href="main.html">Run the Switch MicroSim</a></p>
+<p><a href="https://editor.p5js.org/dmccreary/sketches/CKM0ubrMi">Edit the Switch MicroSim</a></p>
+<h2 id="microsim-description">MicroSim Description</h2>
+<p>In this demo, we </p>
 
 
 
@@ -1388,7 +1076,14 @@ edge of the concept graph at a location of x=-300.</li>
 
 
   
+  
 
+
+
+  
+
+
+  
 
 
 
@@ -1412,10 +1107,12 @@ edge of the concept graph at a location of x=-300.</li>
   
     
       
+        
+      
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../chatbot/" class="md-footer__link md-footer__link--prev" aria-label="Previous: ChatBot">
+          <a href="../animated-wire/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Animated Wire">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
@@ -1425,20 +1122,20 @@ edge of the concept graph at a location of x=-300.</li>
                 Previous
               </span>
               <div class="md-ellipsis">
-                ChatBot
+                Animated Wire
               </div>
             </div>
           </a>
         
         
           
-          <a href="three-graphs/" class="md-footer__link md-footer__link--next" aria-label="Next: Three Educational Graphs">
+          <a href="../animated-switches/" class="md-footer__link md-footer__link--next" aria-label="Next: Animated Switches">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Three Educational Graphs
+                Animated Switches
               </div>
             </div>
             <div class="md-footer__button md-icon">
