@@ -9,6 +9,7 @@ edit_uri: 'blob/master/docs'
 nav:
   - Home: index.md
   - About This Course: about.md
+
   - Chapters:
     - Table of Contents: sections/index.md
     - Introduction: sections/01-intro/index.md
@@ -20,6 +21,7 @@ nav:
        - LED Driver Circuit: sections/60-transistors/led-circuit.md
     - MOSFETs: sections/70-mosfet/index.md
     - Frequency Response: sections/10-frequency-response/index.md
+  
   - Sample Prompts:
     - Introduction: prompts/index.md
     - Learning Via Simulations: prompts/learning-via-interactive-simulations.md
@@ -50,6 +52,7 @@ nav:
       - Concept Taxonomy: prompts/knowledge-graph/concept-taxonomy.md
       - Adding Categories to Concepts: prompts/knowledge-graph/add-categories-to-concepts.md
       - Dependency Graph Application: prompts/knowledge-graph/graph/index.md
+    - Circuit Similarity: prompts/circuit-similarity/index.md
     - Metaphors and Stories: prompts/metaphors-and-stories.md
     - Glossary Terms: prompts/glossary-terms.md
     - Similarity Plot: prompts/similarity-plot/index.md
@@ -61,14 +64,13 @@ nav:
   - MicroSims:
     - Introduction: sims/index.md
     - Background Grid: sims/background-grid/index.md
-    
-
     - Simple DC Circuit: sims/dc-circuit/index.md
     - DC Circuit V2: sims/dc-circuit/circuits-v2.md
     - prompts/circuit-similarity/index.md
     - prompts/top-100-circuits/top-100-circuits.md
     - sims/circuit-similarity/index.md
     - sims/templates/index.md
+
     - Component Tests:
       - Introduction: sims/components.md
       - Animated Wire: sims/animated-wire/index.md
@@ -80,6 +82,7 @@ nav:
       - Capacitor: sims/capacitor/index.md
       - Inductor: sims/inductor/index.md
       - Diode: sims/diode/index.md
+  
   - Glossary: glossary.md
   - How We Built This Site: how-we-built-this-site.md
   - Checklist: checklist.md

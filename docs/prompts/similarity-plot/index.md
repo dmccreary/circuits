@@ -3,21 +3,21 @@
 This example assumes you have a local GPU with Ollama or you can get access
 to a service that creates embeddings.
 
-## Intall and Test Ollama
+## Install and Test Ollama
+
 ### Install Ollama
 
 ![](../../img/oolama-model-install.png)
 
-```linenums="0"
-I have a list of 100 questions frequently asked in an
-undergraduate course on circuits. I want to create a
-2-D plot that groups similar questions by creating
-embeddings for each question. I also have access to a
-GPU that is running ollama and has the llama 3.2 model
-available. Can you suggest a Python program that will
-take the input file of questions separated by newlines
-and outputs a 2D plot grouping similar questions together?
-```
+!!! prompt
+    I have a list of 100 questions frequently asked in an
+    undergraduate course on circuits. I want to create a
+    2-D plot that groups similar questions by creating
+    embeddings for each question. I also have access to a
+    GPU that is running ollama and has the llama 3.2 model
+    available. Can you suggest a Python program that will
+    take the input file of questions separated by newlines
+    and outputs a 2D plot grouping similar questions together?
 
 ### Test Ollama Embeddings Service
 
