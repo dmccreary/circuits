@@ -1,24 +1,25 @@
-# Circut Formulas
+# Rendering Equations in Mkdocs
 
 ## Prompt
 
-```linenums="0"
-Create a list of the 25 most commonly used
-equations in an undergraduate circuits course
-taught within a department of electrical engineering.
+!!! prompt
+    Create a list of the 25 most commonly used
+    equations in an undergraduate circuits course
+    taught within a department of electrical engineering.
 
-For each equation, return the following:
+    For each equation, return the following:
 
-1. The name of the equation in markdown level 4.
-2. Within the body, return the equation in LaTeX format
-3. Surround the equation with dollar signs in front and in back
-4. For each variable in the equation, add a "where:" that defines each variable
-5. Put blank lines around the word "where:" and list of variables
-6. Wrap the variables names in dollar signs
+    1. The name of the equation in markdown level 4.  This allows us to send a link to each equation in a chat or email.
+    2. Within the body text, render equation in LaTeX format on a line with blank lines before and after the LaTeX equation.
+    3. Surround the equation with single dollar signs in front and in back
+    4. For each variable in the equation, add a "where:" that defines each variable
+    5. Put blank lines around the word "where:" and list of variables
+    6. Wrap the variables names in single dollar signs
 
 Here are two examples of the format I want.
 
 #### Slope and Intercept
+
 $y = m * x + b$
 
 where:
@@ -29,13 +30,13 @@ where:
 - $b$ is the intercept
 
 #### Area of a Circle
+
 $A = 2\pi r^2$
 
 where:
 
 - $A$ is the area of the circle
 - $r$ is the radius
-```
 
 ## ChatGPT o1-preview Response
 

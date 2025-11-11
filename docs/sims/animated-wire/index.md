@@ -1,5 +1,5 @@
 ---
-title: A title under 60 characters.
+title: Wire MicroSim
 description: A description under 110 characters.
 image: /img/cover-preview.png
 og:image: /img/cover-preview.png
