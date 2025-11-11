@@ -1,5 +1,5 @@
 ---
-title: Capacitor Drawing Test
+title: Test of Circuit Drawing Library
 description: A description under 110 characters.
 image: /img/cover-preview.png
 og:image: /img/cover-preview.png
@@ -9,7 +9,7 @@ social:
 hide:
   - toc
 ---
-# Capacitor Drawing Test
+# Test of Circuit Drawing Library
 
 <iframe src="./main.html" height="480px" scrolling="no"
   style="overflow: hidden;"></iframe>

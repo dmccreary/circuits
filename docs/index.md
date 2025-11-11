@@ -1,4 +1,18 @@
-# AI Circuits Course
+---
+title: Circuits
+description: A college-level course on circuits with extensive MicroSims.
+image: /img/cover.png
+og:image: /img/cover.png
+twitter:image: /img/cover.png
+social:
+   cards: false
+hide:
+  - toc
+---
+<style>
+.md-content__inner h1 {display: none !important;}
+</style>
+# Circuits
 
 ![Cover Image of Colorful Circuits and Graphs](./img/cover.png)
 

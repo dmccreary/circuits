@@ -1,19 +1,9 @@
----
-title: Capacitor Drawing Test
-description: A description under 110 characters.
-image: /img/cover-preview.png
-og:image: /img/cover-preview.png
-twitter:image: /img/cover-preview.png
-social:
-   cards: false
-hide:
-  - toc
----
-# Capacitor Drawing Test
+# Current Meter
 
 <iframe src="./main.html" height="480px" scrolling="no"
   style="overflow: hidden;"></iframe>
 
+[Edit](https://editor.p5js.org/dmccreary/sketches/84GD5QO86)
 You can include this MicroSim in your course by pasting the following HTML directly into your web page.
 
 ```html

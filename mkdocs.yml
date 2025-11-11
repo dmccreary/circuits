@@ -74,7 +74,7 @@ nav:
 
     - Component Tests:
       - Introduction: sims/components.md
-      - Animated Wire: sims/animated-wire/index.md
+      - Circuit Library Test: sims/circuit-lib/index.md
       - Switch: sims/switch/index.md
       - Animated Switches: sims/animated-switches/index.md
       - Light Bulb: sims/light-bulb/index.md
@@ -83,7 +83,9 @@ nav:
       - Capacitor: sims/capacitor/index.md
       - Inductor: sims/inductor/index.md
       - Diode: sims/diode/index.md
-  
+      - Animated Wire: sims/animated-wire/index.md
+      - Wire: sims/wire/index.md
+
   - Glossary: glossary.md
   - How We Built This Site: how-we-built-this-site.md
   - Checklist: checklist.md
