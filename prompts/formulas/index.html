@@ -22,7 +22,7 @@
       
       
       <link rel="icon" href="../../img/favicon.ico">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.14">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.12">
     
     
       
@@ -30,7 +30,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.342714a4.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.2afb09e1.min.css">
       
         
         <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
@@ -88,7 +88,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#circut-formulas" class="md-skip">
+        <a href="#rendering-equations-in-mkdocs" class="md-skip">
           Skip to content
         </a>
       
@@ -1236,6 +1236,30 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Prompt">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#slope-and-intercept" class="md-nav__link">
+    <span class="md-ellipsis">
+      Slope and Intercept
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#area-of-a-circle" class="md-nav__link">
+    <span class="md-ellipsis">
+      Area of a Circle
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1520,41 +1544,40 @@
   
 
 
-<h1 id="circut-formulas">Circut Formulas</h1>
+<h1 id="rendering-equations-in-mkdocs">Rendering Equations in Mkdocs</h1>
 <h2 id="prompt">Prompt</h2>
-<div class="highlight"><pre><span></span><code>Create a list of the 25 most commonly used
+<div class="admonition prompt">
+<p class="admonition-title">Prompt</p>
+<p>Create a list of the 25 most commonly used
 equations in an undergraduate circuits course
-taught within a department of electrical engineering.
-
-For each equation, return the following:
-
-1. The name of the equation in markdown level 4.
-2. Within the body, return the equation in LaTeX format
-3. Surround the equation with dollar signs in front and in back
-4. For each variable in the equation, add a &quot;where:&quot; that defines each variable
-5. Put blank lines around the word &quot;where:&quot; and list of variables
-6. Wrap the variables names in dollar signs
-
-Here are two examples of the format I want.
-
-#### Slope and Intercept
-$y = m * x + b$
-
-where:
-
-- $y$ is the vertical axis
-- $x$ is the horizontal axis
-- $m$ is the slope
-- $b$ is the intercept
-
-#### Area of a Circle
-$A = 2\pi r^2$
-
-where:
-
-- $A$ is the area of the circle
-- $r$ is the radius
-</code></pre></div>
+taught within a department of electrical engineering.</p>
+<p>For each equation, return the following:</p>
+<ol>
+<li>The name of the equation in markdown level 4.  This allows us to send a link to each equation in a chat or email.</li>
+<li>Within the body text, render equation in LaTeX format on a line with blank lines before and after the LaTeX equation.</li>
+<li>Surround the equation with single dollar signs in front and in back</li>
+<li>For each variable in the equation, add a "where:" that defines each variable</li>
+<li>Put blank lines around the word "where:" and list of variables</li>
+<li>Wrap the variables names in single dollar signs</li>
+</ol>
+</div>
+<p>Here are two examples of the format I want.</p>
+<h4 id="slope-and-intercept">Slope and Intercept</h4>
+<p><span class="arithmatex">\(y = m * x + b\)</span></p>
+<p>where:</p>
+<ul>
+<li><span class="arithmatex">\(y\)</span> is the vertical axis</li>
+<li><span class="arithmatex">\(x\)</span> is the horizontal axis</li>
+<li><span class="arithmatex">\(m\)</span> is the slope</li>
+<li><span class="arithmatex">\(b\)</span> is the intercept</li>
+</ul>
+<h4 id="area-of-a-circle">Area of a Circle</h4>
+<p><span class="arithmatex">\(A = 2\pi r^2\)</span></p>
+<p>where:</p>
+<ul>
+<li><span class="arithmatex">\(A\)</span> is the area of the circle</li>
+<li><span class="arithmatex">\(r\)</span> is the radius</li>
+</ul>
 <h2 id="chatgpt-o1-preview-response">ChatGPT o1-preview Response</h2>
 <p>Note I had to run the following regular expressions fixes.</p>
 <ul>
@@ -1881,10 +1904,10 @@ where:
     
     
       
-      <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.copy", "navigation.expand", "navigation.path", "navigation.prune", "navigation.indexes", "toc.follow", "navigation.top", "navigation.footer", "content.action.edit"], "search": "../../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.copy", "navigation.expand", "navigation.path", "navigation.prune", "navigation.indexes", "toc.follow", "navigation.top", "navigation.footer", "content.action.edit"], "search": "../../assets/javascripts/workers/search.f8cc74c7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../assets/javascripts/bundle.13a4f30d.min.js"></script>
+      <script src="../../assets/javascripts/bundle.c8b220af.min.js"></script>
       
         <script src="../../js/extra.js"></script>
       

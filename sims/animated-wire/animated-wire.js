@@ -87,6 +87,8 @@ function draw() {
   let currentSpacing = spacingSlider.value();
   
   // Update animation time only when running
+  // deltaTime is a p5.js builtin glogal that contains the amount of time 
+  // it took draw() to execute during the previous frame.
   if (isRunning) {
     animationTime += deltaTime;
   }
