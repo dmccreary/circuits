@@ -1,0 +1,40 @@
+{
+  "title": "Animated Switches MicroSim",
+  "description": "Interactive circuit simulation demonstrating how horizontal and vertical switches control the flow of electric current in a series circuit, with animated electron visualization",
+  "creator": "Dan McCreary",
+  "date": "2025-01-01",
+  "subject": [
+    "Electric Circuits",
+    "Switches",
+    "Current Flow",
+    "Series Circuits",
+    "Electron Animation"
+  ],
+  "type": "Interactive Simulation",
+  "format": "text/html",
+  "language": "en-US",
+  "rights": "CC BY 4.0",
+  "publisher": "AI Circuits Course",
+  "identifier": "https://dmccreary.github.io/circuits/sims/animated-switches/",
+  "educationalLevel": "Middle School to High School",
+  "learningResourceType": "simulation",
+  "audience": "Students, Educators",
+  "version": "1.0.0",
+  "bloomLevel": [
+    "Understand",
+    "Apply",
+    "Analyze"
+  ],
+  "concepts": [
+    "Electric Current",
+    "Switches",
+    "Series Circuits",
+    "Electron Flow",
+    "Circuit Control"
+  ],
+  "prerequisites": [
+    "Basic Circuit Components",
+    "Conductors and Insulators"
+  ],
+  "library": "p5.js"
+}

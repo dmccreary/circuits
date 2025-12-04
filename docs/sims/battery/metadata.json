@@ -1,0 +1,38 @@
+{
+  "title": "Battery Drawing MicroSim",
+  "description": "Interactive simulation demonstrating battery circuit symbols with positive and negative terminal markings in horizontal and vertical orientations",
+  "creator": "Dan McCreary",
+  "date": "2025-01-01",
+  "subject": [
+    "Battery Symbols",
+    "Circuit Diagrams",
+    "Electrical Components",
+    "Positive Terminal",
+    "Negative Terminal"
+  ],
+  "type": "Interactive Simulation",
+  "format": "text/html",
+  "language": "en-US",
+  "rights": "CC BY 4.0",
+  "publisher": "AI Circuits Course",
+  "identifier": "https://dmccreary.github.io/circuits/sims/battery/",
+  "educationalLevel": "Elementary to Middle School",
+  "learningResourceType": "simulation",
+  "audience": "Students, Educators",
+  "version": "1.0.0",
+  "bloomLevel": [
+    "Remember",
+    "Understand"
+  ],
+  "concepts": [
+    "Battery Symbols",
+    "Positive Terminal",
+    "Negative Terminal",
+    "Circuit Diagrams",
+    "Electrical Energy Source"
+  ],
+  "prerequisites": [
+    "Basic Electricity Concepts"
+  ],
+  "library": "p5.js"
+}

@@ -1,0 +1,40 @@
+{
+  "title": "Inductor Drawing MicroSim",
+  "description": "Interactive simulation demonstrating inductor circuit symbols with different inductance values in horizontal and vertical orientations",
+  "creator": "Dan McCreary",
+  "date": "2025-01-01",
+  "subject": [
+    "Inductor Symbols",
+    "Circuit Diagrams",
+    "Electrical Components",
+    "Inductance",
+    "Magnetic Energy Storage"
+  ],
+  "type": "Interactive Simulation",
+  "format": "text/html",
+  "language": "en-US",
+  "rights": "CC BY 4.0",
+  "publisher": "AI Circuits Course",
+  "identifier": "https://dmccreary.github.io/circuits/sims/inductor/",
+  "educationalLevel": "High School",
+  "learningResourceType": "simulation",
+  "audience": "Students, Educators",
+  "version": "1.0.0",
+  "bloomLevel": [
+    "Remember",
+    "Understand",
+    "Apply"
+  ],
+  "concepts": [
+    "Inductor Symbols",
+    "Inductance Values",
+    "Magnetic Fields",
+    "Energy Storage",
+    "Circuit Diagrams"
+  ],
+  "prerequisites": [
+    "Basic Magnetism",
+    "Electrical Components"
+  ],
+  "library": "p5.js"
+}

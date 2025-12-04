@@ -1,0 +1,40 @@
+{
+  "title": "Animated Wire MicroSim",
+  "description": "Interactive simulation visualizing electron flow through a wire circuit with controllable speed and spacing parameters",
+  "creator": "Dan McCreary",
+  "date": "2025-01-01",
+  "subject": [
+    "Electric Current",
+    "Electron Flow",
+    "Wire Conductors",
+    "Circuit Animation",
+    "Current Visualization"
+  ],
+  "type": "Interactive Simulation",
+  "format": "text/html",
+  "language": "en-US",
+  "rights": "CC BY 4.0",
+  "publisher": "AI Circuits Course",
+  "identifier": "https://dmccreary.github.io/circuits/sims/animated-wire/",
+  "educationalLevel": "Middle School",
+  "learningResourceType": "simulation",
+  "audience": "Students, Educators",
+  "version": "1.0.0",
+  "bloomLevel": [
+    "Remember",
+    "Understand",
+    "Apply"
+  ],
+  "concepts": [
+    "Electric Current",
+    "Electron Movement",
+    "Closed Circuits",
+    "Drift Velocity",
+    "Conductors"
+  ],
+  "prerequisites": [
+    "Atomic Structure",
+    "Basic Electricity"
+  ],
+  "library": "p5.js"
+}
