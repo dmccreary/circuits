@@ -1,0 +1,40 @@
+{
+  "title": "Circuit Similarity Map",
+  "description": "Interactive 2D visualization showing electrical circuits organized by content similarity using dimensionality reduction on circuit embeddings",
+  "creator": "Dan McCreary",
+  "date": "2025-01-01",
+  "subject": [
+    "Circuit Analysis",
+    "Data Visualization",
+    "Machine Learning",
+    "Dimensionality Reduction",
+    "Circuit Classification"
+  ],
+  "type": "Interactive Simulation",
+  "format": "text/html",
+  "language": "en-US",
+  "rights": "CC BY 4.0",
+  "publisher": "AI Circuits Course",
+  "identifier": "https://dmccreary.github.io/circuits/sims/circuit-similarity/",
+  "educationalLevel": "High School to College",
+  "learningResourceType": "simulation",
+  "audience": "Students, Educators, Data Scientists",
+  "version": "1.0.0",
+  "bloomLevel": [
+    "Understand",
+    "Analyze",
+    "Evaluate"
+  ],
+  "concepts": [
+    "Circuit Embeddings",
+    "Similarity Mapping",
+    "Circuit Categories",
+    "Complexity Analysis",
+    "Data Visualization"
+  ],
+  "prerequisites": [
+    "Basic Circuit Knowledge",
+    "Understanding of Circuit Types"
+  ],
+  "library": "D3.js"
+}

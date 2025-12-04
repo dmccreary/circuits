@@ -1,0 +1,39 @@
+{
+  "title": "Capacitor Drawing MicroSim",
+  "description": "Interactive simulation demonstrating capacitor circuit symbols with different capacitance values in horizontal and vertical orientations",
+  "creator": "Dan McCreary",
+  "date": "2025-01-01",
+  "subject": [
+    "Capacitor Symbols",
+    "Circuit Diagrams",
+    "Electrical Components",
+    "Capacitance",
+    "Energy Storage"
+  ],
+  "type": "Interactive Simulation",
+  "format": "text/html",
+  "language": "en-US",
+  "rights": "CC BY 4.0",
+  "publisher": "AI Circuits Course",
+  "identifier": "https://dmccreary.github.io/circuits/sims/capacitor/",
+  "educationalLevel": "Middle School to High School",
+  "learningResourceType": "simulation",
+  "audience": "Students, Educators",
+  "version": "1.0.0",
+  "bloomLevel": [
+    "Remember",
+    "Understand",
+    "Apply"
+  ],
+  "concepts": [
+    "Capacitor Symbols",
+    "Capacitance Values",
+    "Parallel Plates",
+    "Energy Storage",
+    "Circuit Diagrams"
+  ],
+  "prerequisites": [
+    "Basic Electrical Components"
+  ],
+  "library": "p5.js"
+}

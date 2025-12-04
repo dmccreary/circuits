@@ -1,0 +1,40 @@
+{
+  "title": "Resistor Drawing MicroSim",
+  "description": "Interactive simulation demonstrating resistor circuit symbols with different resistance values in horizontal and vertical orientations",
+  "creator": "Dan McCreary",
+  "date": "2025-01-01",
+  "subject": [
+    "Resistor Symbols",
+    "Circuit Diagrams",
+    "Electrical Components",
+    "Resistance",
+    "Ohm's Law"
+  ],
+  "type": "Interactive Simulation",
+  "format": "text/html",
+  "language": "en-US",
+  "rights": "CC BY 4.0",
+  "publisher": "AI Circuits Course",
+  "identifier": "https://dmccreary.github.io/circuits/sims/resistor/",
+  "educationalLevel": "Middle School to High School",
+  "learningResourceType": "simulation",
+  "audience": "Students, Educators",
+  "version": "1.0.0",
+  "bloomLevel": [
+    "Remember",
+    "Understand",
+    "Apply"
+  ],
+  "concepts": [
+    "Resistor Symbols",
+    "Resistance Values",
+    "Current Limiting",
+    "Ohm's Law",
+    "Circuit Diagrams"
+  ],
+  "prerequisites": [
+    "Basic Electricity",
+    "Ohm's Law Concepts"
+  ],
+  "library": "p5.js"
+}
