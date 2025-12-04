@@ -1,0 +1,42 @@
+{
+  "title": "Circuit Component Library Test",
+  "description": "Test demonstration of the p5.js circuit component drawing library with functions for resistors, capacitors, inductors, batteries, and switches",
+  "creator": "Dan McCreary",
+  "date": "2025-06-01",
+  "subject": [
+    "Circuit Components",
+    "Drawing Library",
+    "p5.js",
+    "Electronic Symbols",
+    "Circuit Diagrams"
+  ],
+  "type": "Interactive Simulation",
+  "format": "text/html",
+  "language": "en-US",
+  "rights": "CC BY 4.0",
+  "publisher": "AI Circuits Course",
+  "identifier": "https://dmccreary.github.io/circuits/sims/circuit-lib/",
+  "educationalLevel": "High School",
+  "learningResourceType": "simulation",
+  "audience": "Students, Educators, Developers",
+  "version": "1.0.0",
+  "bloomLevel": [
+    "Understand",
+    "Apply",
+    "Create"
+  ],
+  "concepts": [
+    "Circuit Symbols",
+    "Component Library",
+    "Resistors",
+    "Capacitors",
+    "Inductors",
+    "Batteries",
+    "Switches"
+  ],
+  "prerequisites": [
+    "Basic Circuit Concepts",
+    "JavaScript Basics"
+  ],
+  "library": "p5.js"
+}

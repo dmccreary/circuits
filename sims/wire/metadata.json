@@ -1,0 +1,35 @@
+{
+  "title": "Wire MicroSim",
+  "description": "Basic wire visualization demonstration for circuit simulations showing how wires connect components",
+  "creator": "Dan McCreary",
+  "date": "2025-01-01",
+  "subject": [
+    "Electrical Wires",
+    "Circuit Connections",
+    "Conductors",
+    "Circuit Diagrams",
+    "Basic Electricity"
+  ],
+  "type": "Interactive Simulation",
+  "format": "text/html",
+  "language": "en-US",
+  "rights": "CC BY 4.0",
+  "publisher": "AI Circuits Course",
+  "identifier": "https://dmccreary.github.io/circuits/sims/wire/",
+  "educationalLevel": "Elementary to Middle School",
+  "learningResourceType": "simulation",
+  "audience": "Students, Educators",
+  "version": "1.0.0",
+  "bloomLevel": [
+    "Remember",
+    "Understand"
+  ],
+  "concepts": [
+    "Electrical Wires",
+    "Conductors",
+    "Circuit Connections",
+    "Current Path"
+  ],
+  "prerequisites": [],
+  "library": "p5.js"
+}

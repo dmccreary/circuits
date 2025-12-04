@@ -1,0 +1,39 @@
+{
+  "title": "Light Bulb Circuit MicroSim",
+  "description": "Interactive circuit simulation demonstrating a switch-controlled light bulb with animated current flow visualization",
+  "creator": "Dan McCreary",
+  "date": "2025-06-01",
+  "subject": [
+    "Electric Circuits",
+    "Light Bulbs",
+    "Switches",
+    "Current Flow",
+    "Energy Conversion"
+  ],
+  "type": "Interactive Simulation",
+  "format": "text/html",
+  "language": "en-US",
+  "rights": "CC BY 4.0",
+  "publisher": "AI Circuits Course",
+  "identifier": "https://dmccreary.github.io/circuits/sims/light-bulb/",
+  "educationalLevel": "Elementary to Middle School",
+  "learningResourceType": "simulation",
+  "audience": "Students, Educators",
+  "version": "1.0.0",
+  "bloomLevel": [
+    "Remember",
+    "Understand",
+    "Apply"
+  ],
+  "concepts": [
+    "Electric Current",
+    "Switches",
+    "Light Bulbs",
+    "Circuit Control",
+    "Energy Transformation"
+  ],
+  "prerequisites": [
+    "Basic Circuit Concepts"
+  ],
+  "library": "p5.js"
+}

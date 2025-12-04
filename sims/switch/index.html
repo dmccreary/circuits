@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="A description under 110 characters.">
+        <meta name="description" content="Interactive simulation demonstrating on/off switch symbols in horizontal and vertical orientations.">
       
       
         <meta name="author" content="Dan McCreary">
@@ -22,15 +22,15 @@
       
       
       <link rel="icon" href="../../img/favicon.ico">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.12">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.43">
     
     
       
-        <title>A toggle switch in P5.js - AI Circuits Course</title>
+        <title>Switch Drawing MicroSim - AI Circuits Course</title>
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.2afb09e1.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.0253249f.min.css">
       
         
         <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
@@ -88,7 +88,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#switch-microsim" class="md-skip">
+        <a href="#switch-drawing-microsim" class="md-skip">
           Skip to content
         </a>
       
@@ -123,7 +123,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              A toggle switch in P5.js
+              Switch Drawing MicroSim
             
           </span>
         </div>
@@ -135,13 +135,11 @@
     
     
     
-      
-      
-        <label class="md-header__button md-icon" for="__search">
-          
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
-        </label>
-        <div class="md-search" data-md-component="search" role="dialog">
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
   <label class="md-search__overlay" for="__search"></label>
   <div class="md-search__inner" role="search">
     <form class="md-search__form" name="search">
@@ -173,14 +171,13 @@
     </div>
   </div>
 </div>
-      
     
     
       <div class="md-header__source">
         <a href="https://github.com/dmccreary/circuits" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
   </div>
   <div class="md-source__repository">
     GitHub Repo
@@ -204,8 +201,6 @@
           
             
               
-                
-              
               <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
@@ -227,7 +222,7 @@
       <a href="https://github.com/dmccreary/circuits" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
   </div>
   <div class="md-source__repository">
     GitHub Repo
@@ -247,10 +242,8 @@
       <a href="../.." class="md-nav__link">
         
   
-  
   <span class="md-ellipsis">
     Home
-    
   </span>
   
 
@@ -269,10 +262,8 @@
       <a href="../../about/" class="md-nav__link">
         
   
-  
   <span class="md-ellipsis">
     About This Course
-    
   </span>
   
 
@@ -295,20 +286,31 @@
         
       
         
+          
+        
       
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
         
       
         
       
         
-      
+          
         
       
         
-      
+          
         
       
-    
     
     
     
@@ -320,16 +322,13 @@
     <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
       
         
-  
   
   
     <a href="../../sections/" class="md-nav__link">
       
   
-  
   <span class="md-ellipsis">
     Chapters
-    
   </span>
   
 
@@ -364,7 +363,7 @@
         
       
         
-      
+          
         
       
         
@@ -376,7 +375,13 @@
         
       
         
+          
+        
       
+        
+      
+        
+          
         
       
         
@@ -384,8 +389,9 @@
         
       
         
+          
+        
       
-    
     
     
     
@@ -397,16 +403,13 @@
     <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
       
         
-  
   
   
     <a href="../../prompts/" class="md-nav__link">
       
   
-  
   <span class="md-ellipsis">
     Sample Prompts
-    
   </span>
   
 
@@ -435,8 +438,9 @@
         
       
         
+          
+        
       
-    
     
     
     
@@ -450,14 +454,11 @@
         
   
   
-  
     <a href="../../faq/" class="md-nav__link">
       
   
-  
   <span class="md-ellipsis">
     FAQ
-    
   </span>
   
 
@@ -488,22 +489,35 @@
         
       
         
+          
+        
       
+        
+          
+        
+      
+        
+          
         
       
         
       
         
-      
+          
         
       
         
       
         
+          
+        
+      
+        
+          
+        
       
         
       
-    
     
     
     
@@ -516,14 +530,13 @@
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
         
           
+          
           <div class="md-nav__link md-nav__container">
             <a href="../" class="md-nav__link ">
               
   
-  
   <span class="md-ellipsis">
     MicroSims
-    
   </span>
   
 
@@ -552,13 +565,32 @@
   
   
     <li class="md-nav__item">
+      <a href="../learning-graph/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Learning Graph
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../background-grid/" class="md-nav__link">
         
   
-  
   <span class="md-ellipsis">
     Background Grid
-    
   </span>
   
 
@@ -578,10 +610,8 @@
       <a href="../dc-circuit/" class="md-nav__link">
         
   
-  
   <span class="md-ellipsis">
     Simple DC Circuit
-    
   </span>
   
 
@@ -601,10 +631,8 @@
       <a href="../dc-circuit/circuits-v2/" class="md-nav__link">
         
   
-  
   <span class="md-ellipsis">
     DC Circuit V2
-    
   </span>
   
 
@@ -624,10 +652,8 @@
       <a href="../../prompts/circuit-similarity/" class="md-nav__link">
         
   
-  
   <span class="md-ellipsis">
     Circuit Similarity
-    
   </span>
   
 
@@ -647,10 +673,8 @@
       <a href="../../prompts/top-100-circuits/top-100-circuits/" class="md-nav__link">
         
   
-  
   <span class="md-ellipsis">
     Top 100 Circuits
-    
   </span>
   
 
@@ -670,10 +694,8 @@
       <a href="../circuit-similarity/" class="md-nav__link">
         
   
-  
   <span class="md-ellipsis">
-    Index
-    
+    Circuit Similarity Map
   </span>
   
 
@@ -693,10 +715,8 @@
       <a href="../templates/" class="md-nav__link">
         
   
-  
   <span class="md-ellipsis">
     A title under 60 characters.
-    
   </span>
   
 
@@ -724,26 +744,45 @@
         
       
         
-      
+          
         
       
         
-      
+          
         
       
         
-      
+          
         
       
         
-      
+          
         
       
         
-      
+          
         
       
-    
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
     
     
     
@@ -753,31 +792,30 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_9" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_10" checked>
         
+          
           
           <div class="md-nav__link md-nav__container">
             <a href="../circuit-lib/" class="md-nav__link ">
               
   
-  
   <span class="md-ellipsis">
     Component Tests
-    
   </span>
   
 
             </a>
             
               
-              <label class="md-nav__link " for="__nav_6_9" id="__nav_6_9_label" tabindex="0">
+              <label class="md-nav__link " for="__nav_6_10" id="__nav_6_10_label" tabindex="0">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_9_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_6_9">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_10_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6_10">
             <span class="md-nav__icon md-icon"></span>
             Component Tests
           </label>
@@ -793,10 +831,8 @@
       <a href="../components/" class="md-nav__link">
         
   
-  
   <span class="md-ellipsis">
     Introduction
-    
   </span>
   
 
@@ -827,10 +863,8 @@
         <label class="md-nav__link md-nav__link--active" for="__toc">
           
   
-  
   <span class="md-ellipsis">
     Switch
-    
   </span>
   
 
@@ -840,10 +874,8 @@
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
-  
   <span class="md-ellipsis">
     Switch
-    
   </span>
   
 
@@ -865,9 +897,84 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#microsim-description" class="md-nav__link">
+  <a href="#description" class="md-nav__link">
     <span class="md-ellipsis">
-      MicroSim Description
+      Description
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Description">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#how-to-use" class="md-nav__link">
+    <span class="md-ellipsis">
+      How to Use
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lesson-plan" class="md-nav__link">
+    <span class="md-ellipsis">
+      Lesson Plan
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Lesson Plan">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#learning-objectives" class="md-nav__link">
+    <span class="md-ellipsis">
+      Learning Objectives
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#target-audience" class="md-nav__link">
+    <span class="md-ellipsis">
+      Target Audience
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#activities" class="md-nav__link">
+    <span class="md-ellipsis">
+      Activities
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#assessment" class="md-nav__link">
+    <span class="md-ellipsis">
+      Assessment
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      References
     </span>
   </a>
   
@@ -892,10 +999,8 @@
       <a href="../animated-switches/" class="md-nav__link">
         
   
-  
   <span class="md-ellipsis">
     Animated Switches
-    
   </span>
   
 
@@ -915,10 +1020,8 @@
       <a href="../light-bulb/" class="md-nav__link">
         
   
-  
   <span class="md-ellipsis">
     Light Bulb
-    
   </span>
   
 
@@ -938,10 +1041,8 @@
       <a href="../battery/" class="md-nav__link">
         
   
-  
   <span class="md-ellipsis">
     Battery
-    
   </span>
   
 
@@ -961,10 +1062,8 @@
       <a href="../resistor/" class="md-nav__link">
         
   
-  
   <span class="md-ellipsis">
     Resistor
-    
   </span>
   
 
@@ -984,10 +1083,8 @@
       <a href="../capacitor/" class="md-nav__link">
         
   
-  
   <span class="md-ellipsis">
     Capacitor
-    
   </span>
   
 
@@ -1007,10 +1104,8 @@
       <a href="../inductor/" class="md-nav__link">
         
   
-  
   <span class="md-ellipsis">
     Inductor
-    
   </span>
   
 
@@ -1030,10 +1125,8 @@
       <a href="../diode/" class="md-nav__link">
         
   
-  
   <span class="md-ellipsis">
     Diode
-    
   </span>
   
 
@@ -1053,10 +1146,8 @@
       <a href="../animated-wire/" class="md-nav__link">
         
   
-  
   <span class="md-ellipsis">
     Animated Wire
-    
   </span>
   
 
@@ -1076,10 +1167,8 @@
       <a href="../wire/" class="md-nav__link">
         
   
-  
   <span class="md-ellipsis">
     Wire
-    
   </span>
   
 
@@ -1114,10 +1203,8 @@
       <a href="../../glossary/" class="md-nav__link">
         
   
-  
   <span class="md-ellipsis">
     Glossary
-    
   </span>
   
 
@@ -1136,10 +1223,8 @@
       <a href="../../how-we-built-this-site/" class="md-nav__link">
         
   
-  
   <span class="md-ellipsis">
     How We Built This Site
-    
   </span>
   
 
@@ -1158,10 +1243,8 @@
       <a href="../../checklist/" class="md-nav__link">
         
   
-  
   <span class="md-ellipsis">
     Checklist
-    
   </span>
   
 
@@ -1180,10 +1263,8 @@
       <a href="../../references/" class="md-nav__link">
         
   
-  
   <span class="md-ellipsis">
     References
-    
   </span>
   
 
@@ -1202,10 +1283,8 @@
       <a href="../../license/" class="md-nav__link">
         
   
-  
   <span class="md-ellipsis">
     License
-    
   </span>
   
 
@@ -1224,10 +1303,8 @@
       <a href="../../contact/" class="md-nav__link">
         
   
-  
   <span class="md-ellipsis">
     Contact
-    
   </span>
   
 
@@ -1244,9 +1321,7 @@
             
             
               
-                
-              
-              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" hidden>
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
                     
@@ -1265,9 +1340,84 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#microsim-description" class="md-nav__link">
+  <a href="#description" class="md-nav__link">
     <span class="md-ellipsis">
-      MicroSim Description
+      Description
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Description">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#how-to-use" class="md-nav__link">
+    <span class="md-ellipsis">
+      How to Use
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lesson-plan" class="md-nav__link">
+    <span class="md-ellipsis">
+      Lesson Plan
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Lesson Plan">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#learning-objectives" class="md-nav__link">
+    <span class="md-ellipsis">
+      Learning Objectives
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#target-audience" class="md-nav__link">
+    <span class="md-ellipsis">
+      Target Audience
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#activities" class="md-nav__link">
+    <span class="md-ellipsis">
+      Activities
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#assessment" class="md-nav__link">
+    <span class="md-ellipsis">
+      Assessment
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      References
     </span>
   </a>
   
@@ -1286,9 +1436,6 @@
               <article class="md-content__inner md-typeset">
                 
                   
-  
-
-
 
   
     <a href="https://github.com/dmccreary/circuits/blob/master/docs/sims/switch/index.md" title="Edit this page" class="md-content__button md-icon">
@@ -1299,19 +1446,68 @@
   
 
 
-<h1 id="switch-microsim">Switch MicroSim</h1>
-<iframe src="./main.html" height="480px" scrolling="no"
-  style="overflow: hidden;"></iframe>
+<h1 id="switch-drawing-microsim">Switch Drawing MicroSim</h1>
+<iframe src="main.html" width="100%" height="480px" scrolling="no"></iframe>
 
-<p>You can include this MicroSim in your course by pasting the following HTML directly into your web page.</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
-<span class="normal">2</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="p">&lt;</span><span class="nt">iframe</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;https://dmccreary.github.io/signal-processing/sims/SIM_NAME/main.html&quot;</span> <span class="na">height</span><span class="o">=</span><span class="s">&quot;480px&quot;</span> <span class="na">scrolling</span><span class="o">=</span><span class="s">&quot;no&quot;</span>
-  <span class="na">style</span><span class="o">=</span><span class="s">&quot;overflow: hidden;&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">iframe</span><span class="p">&gt;</span>
+<p><strong>Copy this iframe to your website:</strong></p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="p">&lt;</span><span class="nt">iframe</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;https://dmccreary.github.io/circuits/sims/switch/main.html&quot;</span> <span class="na">width</span><span class="o">=</span><span class="s">&quot;100%&quot;</span> <span class="na">height</span><span class="o">=</span><span class="s">&quot;480px&quot;</span> <span class="na">scrolling</span><span class="o">=</span><span class="s">&quot;no&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">iframe</span><span class="p">&gt;</span>
 </code></pre></div></td></tr></table></div>
-<p><a class="md-button md-button--primary" href="main.html">Run the Switch MicroSim</a></p>
-<p><a href="https://editor.p5js.org/dmccreary/sketches/CKM0ubrMi">Edit the Switch MicroSim</a></p>
-<h2 id="microsim-description">MicroSim Description</h2>
-<p>In this demo, we </p>
+<p><a class="md-button md-button--primary" href="main.html">Run the Switch MicroSim in fullscreen</a></p>
+<p><a class="md-button" href="https://editor.p5js.org/dmccreary/sketches/CKM0ubrMi">Edit in the p5.js Editor</a></p>
+<h2 id="description">Description</h2>
+<p>This MicroSim demonstrates how to draw electrical switch symbols in circuit diagrams. The simulation shows switches in both horizontal and vertical orientations, with clear ON and OFF states. When ON (closed), the switch completes the circuit; when OFF (open), the circuit is broken.</p>
+<p>Key features:</p>
+<ul>
+<li>Toggle all switches between ON and OFF states</li>
+<li>Both horizontal and vertical switch orientations</li>
+<li>Pairs of switches showing opposite states for comparison</li>
+<li>Clear visual distinction between open and closed positions</li>
+</ul>
+<h3 id="how-to-use">How to Use</h3>
+<ol>
+<li>Click the <strong>Toggle All Switches</strong> button to flip all switches between ON and OFF states</li>
+<li>Observe the horizontal switches at the top of the canvas</li>
+<li>Observe the vertical switches on the left side</li>
+<li>Notice how each pair shows opposite states (when one is ON, the other is OFF)</li>
+</ol>
+<h2 id="lesson-plan">Lesson Plan</h2>
+<h3 id="learning-objectives">Learning Objectives</h3>
+<p>After completing this lesson, students will be able to:</p>
+<ul>
+<li>Recognize switch symbols in circuit diagrams</li>
+<li>Distinguish between open (OFF) and closed (ON) switch positions</li>
+<li>Understand how switches control circuit completion</li>
+<li>Draw proper switch symbols in both orientations</li>
+</ul>
+<h3 id="target-audience">Target Audience</h3>
+<ul>
+<li>Grade level: Elementary to middle school (grades 4-8)</li>
+<li>Prerequisites: Basic understanding of circuits and current flow</li>
+</ul>
+<h3 id="activities">Activities</h3>
+<ol>
+<li>
+<p><strong>Exploration Activity</strong>: Click the toggle button multiple times and observe how the switch positions change. Note the visual difference between open and closed switches.</p>
+</li>
+<li>
+<p><strong>Guided Investigation</strong>: Ask: "When is the circuit complete? When can current flow through?" Relate switch position to circuit completion.</p>
+</li>
+<li>
+<p><strong>Extension Activity</strong>: Find examples of switches in everyday life (light switches, power buttons) and discuss their circuit diagrams.</p>
+</li>
+</ol>
+<h3 id="assessment">Assessment</h3>
+<ul>
+<li>Discussion question: What happens to current flow when a switch is opened vs. closed?</li>
+<li>Reflection prompt: Why are switches essential in most electrical devices?</li>
+<li>Demonstrate understanding by drawing a simple circuit with a switch in both ON and OFF positions</li>
+</ul>
+<h2 id="references">References</h2>
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/Switch#Electronic_symbols">Electronic Switch Symbols</a> - Wikipedia reference</li>
+<li><a href="https://www.electrical4u.com/types-of-switches/">Types of Electrical Switches</a> - Educational resource</li>
+<li><a href="https://p5js.org/reference/">p5.js Reference</a> - Documentation for the JavaScript library used</li>
+</ul>
 
 
 
@@ -1326,8 +1522,6 @@
 
   
 
-
-  
 
 
 
@@ -1350,8 +1544,6 @@
         <footer class="md-footer">
   
     
-      
-        
       
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
@@ -1413,12 +1605,10 @@
     </div>
     
     
-    
-      
-      <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.copy", "navigation.expand", "navigation.path", "navigation.prune", "navigation.indexes", "toc.follow", "navigation.top", "navigation.footer", "content.action.edit"], "search": "../../assets/javascripts/workers/search.f8cc74c7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.copy", "navigation.expand", "navigation.path", "navigation.prune", "navigation.indexes", "toc.follow", "navigation.top", "navigation.footer", "content.action.edit"], "search": "../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.c8b220af.min.js"></script>
+      <script src="../../assets/javascripts/bundle.83f73b43.min.js"></script>
       
         <script src="../../js/extra.js"></script>
       
