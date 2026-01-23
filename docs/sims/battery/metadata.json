@@ -34,5 +34,24 @@
   "prerequisites": [
     "Basic Electricity Concepts"
   ],
-  "library": "p5.js"
+  "library": "p5.js",
+  "visualizationType": [
+    "diagram",
+    "graph",
+    "interactive-demo",
+    "simulation"
+  ],
+  "learningObjectives": [
+    "Understand the key concepts of battery drawing",
+    "Explore battery drawing through interactive visualization",
+    "Apply knowledge of battery drawing to solve problems",
+    "Experiment with parameters to observe their effects on battery drawing"
+  ],
+  "bloomsTaxonomy": [
+    "Remember",
+    "Understand",
+    "Apply",
+    "Evaluate",
+    "Create"
+  ]
 }

@@ -36,5 +36,29 @@
     "Basic Circuit Knowledge",
     "Understanding of Circuit Types"
   ],
-  "library": "D3.js"
+  "library": "D3.js",
+  "visualizationType": [
+    "chart",
+    "data-visualization",
+    "diagram",
+    "graph",
+    "interactive-demo",
+    "map",
+    "network",
+    "simulation"
+  ],
+  "learningObjectives": [
+    "Understand the key concepts of circuit similarity map",
+    "Explore circuit similarity map through interactive visualization",
+    "Apply knowledge of circuit similarity map to solve problems",
+    "Experiment with parameters to observe their effects on circuit similarity map"
+  ],
+  "bloomsTaxonomy": [
+    "Remember",
+    "Understand",
+    "Apply",
+    "Analyze",
+    "Evaluate",
+    "Create"
+  ]
 }
