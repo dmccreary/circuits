@@ -38,5 +38,27 @@
     "Basic Circuit Concepts",
     "JavaScript Basics"
   ],
-  "library": "p5.js"
+  "library": "p5.js",
+  "visualizationType": [
+    "animation",
+    "diagram",
+    "graph",
+    "interactive-demo",
+    "network",
+    "simulation"
+  ],
+  "learningObjectives": [
+    "Understand the key concepts of circuit component library test",
+    "Explore circuit component library test through interactive visualization",
+    "Apply knowledge of circuit component library test to solve problems",
+    "Experiment with parameters to observe their effects on circuit component library test"
+  ],
+  "bloomsTaxonomy": [
+    "Remember",
+    "Understand",
+    "Apply",
+    "Analyze",
+    "Evaluate",
+    "Create"
+  ]
 }
