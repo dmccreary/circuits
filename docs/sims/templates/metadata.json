@@ -37,5 +37,23 @@
     "Understand the mathematical concept of a title under 60 characters.",
     "Apply a title under 60 characters. to solve problems",
     "Visualize and interpret a title under 60 characters. relationships"
-  ]
+  ],
+  "pedagogical": {
+    "pattern": "exploration",
+    "bloomAlignment": [
+      "understand",
+      "apply"
+    ],
+    "bloomVerbs": [
+      "explain",
+      "use"
+    ],
+    "pacing": "self-paced",
+    "supportsPrediction": false,
+    "dataVisibility": "medium",
+    "feedbackType": [
+      "none"
+    ],
+    "interactionStyle": "observe"
+  }
 }
