@@ -138,8 +138,35 @@ drawSliderTicks(sliderX, sliderY + 8, sliderWidth, ["Narrow", "Medium", "Wide"])
 ### Configuration
 - `mkdocs.yml` - Main site configuration with navigation, theme, and plugin settings
 - Material theme with custom CSS/JS in `docs/css/` and `docs/js/`
-- LaTeX/MathJax support for equations
+- KaTeX for equation rendering (see Math Equations section below)
 - Google Analytics integration
+
+### Math Equations
+
+This site uses **KaTeX** for rendering mathematical equations. Use the standard LaTeX delimiters:
+
+**Inline math:** Use `\(...\)` delimiters
+```markdown
+The equation \(E = mc^2\) shows the relationship between energy and mass.
+```
+
+**Display math:** Use `\[...\]` delimiters
+```markdown
+Ohm's Law can be written as:
+
+\[V = IR\]
+```
+
+**Examples:**
+```markdown
+Inline: The current \(I\) through a resistor is \(I = \frac{V}{R}\).
+
+Display (centered on its own line):
+
+\[P = I^2 R = \frac{V^2}{R}\]
+```
+
+**Note:** The legacy `$...$` and `$$...$$` delimiters also work for backwards compatibility, but prefer `\(...\)` and `\[...\]` for new content.
 
 ## Development Notes
 
