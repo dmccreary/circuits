@@ -1,0 +1,2828 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="An intelligent interactive Circuits textbook for EE and CS students with AI-generated content and simulations.">
+      
+      
+        <meta name="author" content="Dan McCreary">
+      
+      
+        <link rel="canonical" href="https://dmccreary.github.io/circuits/chapters/11-frequency-response-bode/">
+      
+      
+        <link rel="prev" href="../10-ac-power-analysis/">
+      
+      
+        <link rel="next" href="../12-filters-resonance/">
+      
+      
+      <link rel="icon" href="../../img/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.43">
+    
+    
+      
+        <title>11. Frequency Response and Bode - Circuits 1</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.0253249f.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../css/extra.css">
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+<script id="__analytics">function __md_analytics(){function e(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],e("js",new Date),e("config","G-9J4MVE6LWP"),document.addEventListener("DOMContentLoaded",(function(){document.forms.search&&document.forms.search.query.addEventListener("blur",(function(){this.value&&e("event","search",{search_term:this.value})}));document$.subscribe((function(){var t=document.forms.feedback;if(void 0!==t)for(var a of t.querySelectorAll("[type=submit]"))a.addEventListener("click",(function(a){a.preventDefault();var n=document.location.pathname,d=this.getAttribute("data-md-value");e("event","feedback",{page:n,data:d}),t.firstElementChild.disabled=!0;var r=t.querySelector(".md-feedback__note [data-md-value='"+d+"']");r&&(r.hidden=!1)})),t.hidden=!1})),location$.subscribe((function(t){e("config","G-9J4MVE6LWP",{page_path:t.pathname})}))}));var t=document.createElement("script");t.async=!0,t.src="https://www.googletagmanager.com/gtag/js?id=G-9J4MVE6LWP",document.getElementById("__analytics").insertAdjacentElement("afterEnd",t)}</script>
+  
+    <script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
+  
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="orange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#frequency-response-and-bode-plots" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Circuits 1" class="md-header__button md-logo" aria-label="Circuits 1" data-md-component="logo">
+      
+  <img src="../../img/course-logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Circuits 1
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              11. Frequency Response and Bode
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/dmccreary/circuits" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub Repo
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Circuits 1" class="md-nav__button md-logo" aria-label="Circuits 1" data-md-component="logo">
+      
+  <img src="../../img/course-logo.png" alt="logo">
+
+    </a>
+    Circuits 1
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/dmccreary/circuits" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub Repo
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../about/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    About This Course
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+    
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Chapters
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Chapters
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-electric-charge-basic-quantities/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1. Electric Charge and Quantities
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-ohms-law-basic-configurations/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2. Ohm's Law and Configurations
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-kirchhoffs-laws-topology/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3. Kirchhoff's Laws and Topology
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-dc-circuit-analysis/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4. DC Circuit Analysis
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-passive-components/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5. Passive Components
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-transient-analysis-rc-rl/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    6. Transient Analysis RC/RL
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-second-order-rlc-circuits/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    7. Second-Order RLC Circuits
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-ac-signals-sinusoidal/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    8. AC Signals and Sinusoids
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../09-phasors-complex-impedance/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    9. Phasors and Impedance
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10-ac-power-analysis/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    10. AC Power Analysis
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    11. Frequency Response and Bode
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    11. Frequency Response and Bode
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      Summary
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#concepts-covered" class="md-nav__link">
+    <span class="md-ellipsis">
+      Concepts Covered
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prerequisites
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#introduction-how-circuits-hear-the-world" class="md-nav__link">
+    <span class="md-ellipsis">
+      Introduction: How Circuits Hear the World
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#frequency-response-the-big-picture" class="md-nav__link">
+    <span class="md-ellipsis">
+      Frequency Response: The Big Picture
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#transfer-function-the-mathematical-description" class="md-nav__link">
+    <span class="md-ellipsis">
+      Transfer Function: The Mathematical Description
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#magnitude-and-phase-response" class="md-nav__link">
+    <span class="md-ellipsis">
+      Magnitude and Phase Response
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Magnitude and Phase Response">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#magnitude-response" class="md-nav__link">
+    <span class="md-ellipsis">
+      Magnitude Response
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-response" class="md-nav__link">
+    <span class="md-ellipsis">
+      Phase Response
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Phase Response">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-magnitude-and-phase-response-viewer" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Magnitude and Phase Response Viewer
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bode-plots-the-engineers-shorthand" class="md-nav__link">
+    <span class="md-ellipsis">
+      Bode Plots: The Engineer's Shorthand
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Bode Plots: The Engineer's Shorthand">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#decades-and-octaves" class="md-nav__link">
+    <span class="md-ellipsis">
+      Decades and Octaves
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cutoff-frequency-and-half-power-point" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cutoff Frequency and Half-Power Point
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#roll-off-rate-how-fast-filters-attenuate" class="md-nav__link">
+    <span class="md-ellipsis">
+      Roll-Off Rate: How Fast Filters Attenuate
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#asymptotic-approximation-straight-lines-for-curves" class="md-nav__link">
+    <span class="md-ellipsis">
+      Asymptotic Approximation: Straight Lines for Curves
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Asymptotic Approximation: Straight Lines for Curves">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-bode-plot-sketcher" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Bode Plot Sketcher
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#poles-and-zeros-the-dna-of-transfer-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Poles and Zeros: The DNA of Transfer Functions
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#filter-types-shaping-the-frequency-spectrum" class="md-nav__link">
+    <span class="md-ellipsis">
+      Filter Types: Shaping the Frequency Spectrum
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Filter Types: Shaping the Frequency Spectrum">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#low-pass-filter" class="md-nav__link">
+    <span class="md-ellipsis">
+      Low-Pass Filter
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#high-pass-filter" class="md-nav__link">
+    <span class="md-ellipsis">
+      High-Pass Filter
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#band-pass-filter" class="md-nav__link">
+    <span class="md-ellipsis">
+      Band-Pass Filter
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#band-reject-filter-notch-filter" class="md-nav__link">
+    <span class="md-ellipsis">
+      Band-Reject Filter (Notch Filter)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Band-Reject Filter (Notch Filter)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-filter-type-comparison" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Filter Type Comparison
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#filter-order-sharper-is-better-usually" class="md-nav__link">
+    <span class="md-ellipsis">
+      Filter Order: Sharper is Better (Usually)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#building-bode-plots-step-by-step" class="md-nav__link">
+    <span class="md-ellipsis">
+      Building Bode Plots: Step-by-Step
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Building Bode Plots: Step-by-Step">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#worked-example-second-order-low-pass" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked Example: Second-Order Low-Pass
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#practical-filter-circuits" class="md-nav__link">
+    <span class="md-ellipsis">
+      Practical Filter Circuits
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Practical Filter Circuits">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#simple-rc-low-pass" class="md-nav__link">
+    <span class="md-ellipsis">
+      Simple RC Low-Pass
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#simple-rc-high-pass" class="md-nav__link">
+    <span class="md-ellipsis">
+      Simple RC High-Pass
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#series-rlc-band-pass" class="md-nav__link">
+    <span class="md-ellipsis">
+      Series RLC Band-Pass
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Series RLC Band-Pass">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-filter-design-calculator" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Filter Design Calculator
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#self-check-questions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Self-Check Questions
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Summary
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../12-filters-resonance/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    12. Filters and Resonance
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../13-operational-amplifiers/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    13. Operational Amplifiers
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../14-signals-audio-lab/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    14. Signal Analysis and Fourier
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../15-audio-applications/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    15. Audio Applications
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../16-laboratory-techniques/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    16. Laboratory Techniques
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../sims/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    MicroSims
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../sections/index.md" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Supplementary Sections
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../learning-graph/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Learning Graph
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../prompts/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Sample Prompts
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+          
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../faq/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    FAQ
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../glossary/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Glossary
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how-we-built-this-site/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    How We Built This Site
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../references/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    References
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../license/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    License
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contact/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Contact
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      Summary
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#concepts-covered" class="md-nav__link">
+    <span class="md-ellipsis">
+      Concepts Covered
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prerequisites
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#introduction-how-circuits-hear-the-world" class="md-nav__link">
+    <span class="md-ellipsis">
+      Introduction: How Circuits Hear the World
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#frequency-response-the-big-picture" class="md-nav__link">
+    <span class="md-ellipsis">
+      Frequency Response: The Big Picture
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#transfer-function-the-mathematical-description" class="md-nav__link">
+    <span class="md-ellipsis">
+      Transfer Function: The Mathematical Description
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#magnitude-and-phase-response" class="md-nav__link">
+    <span class="md-ellipsis">
+      Magnitude and Phase Response
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Magnitude and Phase Response">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#magnitude-response" class="md-nav__link">
+    <span class="md-ellipsis">
+      Magnitude Response
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-response" class="md-nav__link">
+    <span class="md-ellipsis">
+      Phase Response
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Phase Response">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-magnitude-and-phase-response-viewer" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Magnitude and Phase Response Viewer
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bode-plots-the-engineers-shorthand" class="md-nav__link">
+    <span class="md-ellipsis">
+      Bode Plots: The Engineer's Shorthand
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Bode Plots: The Engineer's Shorthand">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#decades-and-octaves" class="md-nav__link">
+    <span class="md-ellipsis">
+      Decades and Octaves
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cutoff-frequency-and-half-power-point" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cutoff Frequency and Half-Power Point
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#roll-off-rate-how-fast-filters-attenuate" class="md-nav__link">
+    <span class="md-ellipsis">
+      Roll-Off Rate: How Fast Filters Attenuate
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#asymptotic-approximation-straight-lines-for-curves" class="md-nav__link">
+    <span class="md-ellipsis">
+      Asymptotic Approximation: Straight Lines for Curves
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Asymptotic Approximation: Straight Lines for Curves">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-bode-plot-sketcher" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Bode Plot Sketcher
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#poles-and-zeros-the-dna-of-transfer-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Poles and Zeros: The DNA of Transfer Functions
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#filter-types-shaping-the-frequency-spectrum" class="md-nav__link">
+    <span class="md-ellipsis">
+      Filter Types: Shaping the Frequency Spectrum
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Filter Types: Shaping the Frequency Spectrum">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#low-pass-filter" class="md-nav__link">
+    <span class="md-ellipsis">
+      Low-Pass Filter
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#high-pass-filter" class="md-nav__link">
+    <span class="md-ellipsis">
+      High-Pass Filter
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#band-pass-filter" class="md-nav__link">
+    <span class="md-ellipsis">
+      Band-Pass Filter
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#band-reject-filter-notch-filter" class="md-nav__link">
+    <span class="md-ellipsis">
+      Band-Reject Filter (Notch Filter)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Band-Reject Filter (Notch Filter)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-filter-type-comparison" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Filter Type Comparison
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#filter-order-sharper-is-better-usually" class="md-nav__link">
+    <span class="md-ellipsis">
+      Filter Order: Sharper is Better (Usually)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#building-bode-plots-step-by-step" class="md-nav__link">
+    <span class="md-ellipsis">
+      Building Bode Plots: Step-by-Step
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Building Bode Plots: Step-by-Step">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#worked-example-second-order-low-pass" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked Example: Second-Order Low-Pass
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#practical-filter-circuits" class="md-nav__link">
+    <span class="md-ellipsis">
+      Practical Filter Circuits
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Practical Filter Circuits">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#simple-rc-low-pass" class="md-nav__link">
+    <span class="md-ellipsis">
+      Simple RC Low-Pass
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#simple-rc-high-pass" class="md-nav__link">
+    <span class="md-ellipsis">
+      Simple RC High-Pass
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#series-rlc-band-pass" class="md-nav__link">
+    <span class="md-ellipsis">
+      Series RLC Band-Pass
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Series RLC Band-Pass">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-filter-design-calculator" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Filter Design Calculator
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#self-check-questions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Self-Check Questions
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Summary
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+    <a href="https://github.com/dmccreary/circuits/blob/master/docs/chapters/11-frequency-response-bode/index.md" title="Edit this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+
+
+<h1 id="frequency-response-and-bode-plots">Frequency Response and Bode Plots</h1>
+<h2 id="summary">Summary</h2>
+<p>This chapter introduces frequency response analysis, which characterizes how circuits behave across different frequencies. Students will learn to create and interpret Bode plots showing magnitude and phase response, understand cutoff frequencies and bandwidth, and use asymptotic approximations for rapid analysis. The chapter covers transfer functions and the poles and zeros that determine circuit behavior. Frequency response analysis is essential for designing filters and understanding amplifier bandwidth limitations.</p>
+<h2 id="concepts-covered">Concepts Covered</h2>
+<p>This chapter covers the following 22 concepts from the learning graph:</p>
+<ol>
+<li>Frequency Response</li>
+<li>Transfer Function</li>
+<li>Magnitude Response</li>
+<li>Phase Response</li>
+<li>Bode Plot</li>
+<li>Bode Magnitude Plot</li>
+<li>Bode Phase Plot</li>
+<li>Decade</li>
+<li>Octave</li>
+<li>Cutoff Frequency</li>
+<li>Corner Frequency</li>
+<li>Half-Power Point</li>
+<li>Roll-Off Rate</li>
+<li>Asymptotic Approximation</li>
+<li>Poles and Zeros</li>
+<li>Filter</li>
+<li>Low-Pass Filter</li>
+<li>High-Pass Filter</li>
+<li>Band-Pass Filter</li>
+<li>Band-Reject Filter</li>
+<li>Notch Filter</li>
+<li>Filter Order</li>
+</ol>
+<h2 id="prerequisites">Prerequisites</h2>
+<p>This chapter builds on concepts from:</p>
+<ul>
+<li><a href="../05-passive-components/">Chapter 5: Passive Components: Resistors, Capacitors, and Inductors</a></li>
+<li><a href="../09-phasors-complex-impedance/">Chapter 9: Phasors and Complex Impedance</a></li>
+<li><a href="../10-ac-power-analysis/">Chapter 10: AC Power Analysis</a></li>
+</ul>
+<hr />
+<p>title: Frequency Response and Bode Plots
+description: Analyze how circuits respond to different frequencies using transfer functions and Bode plots
+generated_by: chapter-content-generator v0.03
+date: 2026-01-30</p>
+<hr />
+<h2 id="introduction-how-circuits-hear-the-world">Introduction: How Circuits Hear the World</h2>
+<p>Different musical instruments sound different even when playing the same note. A piano, a violin, and a synthesizer playing middle C all have the same fundamental frequency, but they sound completely different because of their harmonic content—the mix of frequencies above that fundamental.</p>
+<p>Circuits are the same way. They don't treat all frequencies equally. Some circuits amplify low frequencies and attenuate high ones (like a bass boost). Others pass high frequencies while blocking low ones (like a treble filter). Understanding <em>how</em> a circuit responds to different frequencies is the key to designing audio equalizers, radio receivers, noise filters, and countless other applications.</p>
+<p>Welcome to <strong>frequency response analysis</strong>, where we stop asking "What does this circuit do to a single sinusoid?" and start asking "What does this circuit do to <em>all</em> frequencies?" The answer comes in the form of beautiful curves called <strong>Bode plots</strong>—named after Hendrik Bode, a Bell Labs engineer who developed these techniques in the 1930s for telephone network analysis.</p>
+<p>By the end of this chapter, you'll be able to look at a circuit and sketch its frequency response without solving a single differential equation. That's the power of poles, zeros, and asymptotic thinking.</p>
+<h2 id="frequency-response-the-big-picture">Frequency Response: The Big Picture</h2>
+<p><strong>Frequency response</strong> describes how a circuit's output magnitude and phase vary as a function of input frequency. It answers: "If I put in a sinusoid at frequency f, what amplitude and phase shift comes out?"</p>
+<p><strong>Key insight:</strong> For linear circuits, the output is always a sinusoid at the same frequency as the input—only the amplitude and phase change. This is why frequency response is so powerful: it completely characterizes the circuit's behavior for any frequency.</p>
+<p><strong>Measuring frequency response:</strong></p>
+<ol>
+<li>Apply sinusoidal input at frequency f</li>
+<li>Measure output amplitude and phase relative to input</li>
+<li>Repeat for many frequencies</li>
+<li>Plot the results</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>Frequency Range</th>
+<th>Typical Applications</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DC (0 Hz)</td>
+<td>Bias circuits, power supplies</td>
+</tr>
+<tr>
+<td>Sub-audio (&lt; 20 Hz)</td>
+<td>Seismic sensors, medical EKG</td>
+</tr>
+<tr>
+<td>Audio (20 Hz - 20 kHz)</td>
+<td>Music, speech, microphones</td>
+</tr>
+<tr>
+<td>RF (20 kHz - 300 GHz)</td>
+<td>Radio, TV, wireless</td>
+</tr>
+</tbody>
+</table>
+<h2 id="transfer-function-the-mathematical-description">Transfer Function: The Mathematical Description</h2>
+<p>The <strong>transfer function</strong> <span class="arithmatex">\(H(j\omega)\)</span> is the ratio of output phasor to input phasor:</p>
+<div class="arithmatex">\[H(j\omega) = \frac{\mathbf{V}_{out}}{\mathbf{V}_{in}} = \frac{V_{out}}{V_{in}} \angle (\theta_{out} - \theta_{in})\]</div>
+<p>It's a complex function of frequency that captures both magnitude and phase information:</p>
+<div class="arithmatex">\[H(j\omega) = |H(j\omega)| \angle \phi(\omega)\]</div>
+<p>Where:</p>
+<ul>
+<li><span class="arithmatex">\(|H(j\omega)|\)</span> = Magnitude response (gain)</li>
+<li><span class="arithmatex">\(\phi(\omega)\)</span> = Phase response (shift)</li>
+</ul>
+<p><strong>For RC low-pass filter:</strong></p>
+<div class="arithmatex">\[H(j\omega) = \frac{1}{1 + j\omega RC} = \frac{1}{1 + j\omega/\omega_c}\]</div>
+<p>Where <span class="arithmatex">\(\omega_c = 1/RC\)</span> is the cutoff frequency.</p>
+<p><strong>Properties of transfer functions:</strong></p>
+<ul>
+<li>Can be computed using voltage divider formulas</li>
+<li>Complex impedances replace resistances</li>
+<li>Magnitude: <span class="arithmatex">\(|H| = \sqrt{(\text{Re})^2 + (\text{Im})^2}\)</span></li>
+<li>Phase: <span class="arithmatex">\(\phi = \tan^{-1}(\text{Im}/\text{Re})\)</span></li>
+</ul>
+<h2 id="magnitude-and-phase-response">Magnitude and Phase Response</h2>
+<h3 id="magnitude-response">Magnitude Response</h3>
+<p>The <strong>magnitude response</strong> <span class="arithmatex">\(|H(j\omega)|\)</span> tells us the gain (or attenuation) at each frequency:</p>
+<div class="arithmatex">\[|H(j\omega)| = \frac{|V_{out}|}{|V_{in}|}\]</div>
+<p>Often expressed in decibels:</p>
+<div class="arithmatex">\[|H(j\omega)|_{dB} = 20\log_{10}|H(j\omega)|\]</div>
+<p><strong>Key values:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Linear</th>
+<th>Decibels</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>0 dB</td>
+<td>Unity gain</td>
+</tr>
+<tr>
+<td>0.707</td>
+<td>-3 dB</td>
+<td>Half power (cutoff)</td>
+</tr>
+<tr>
+<td>0.1</td>
+<td>-20 dB</td>
+<td>10× attenuation</td>
+</tr>
+<tr>
+<td>0.01</td>
+<td>-40 dB</td>
+<td>100× attenuation</td>
+</tr>
+<tr>
+<td>10</td>
+<td>+20 dB</td>
+<td>10× gain</td>
+</tr>
+<tr>
+<td>100</td>
+<td>+40 dB</td>
+<td>100× gain</td>
+</tr>
+</tbody>
+</table>
+<h3 id="phase-response">Phase Response</h3>
+<p>The <strong>phase response</strong> <span class="arithmatex">\(\phi(\omega)\)</span> tells us the phase shift at each frequency:</p>
+<div class="arithmatex">\[\phi(\omega) = \angle H(j\omega) = \theta_{out} - \theta_{in}\]</div>
+<p><strong>Phase conventions:</strong></p>
+<ul>
+<li>Negative phase: Output lags input</li>
+<li>Positive phase: Output leads input</li>
+<li>At cutoff frequency: Typically ±45° for first-order filters</li>
+</ul>
+<h4 id="diagram-magnitude-and-phase-response-viewer">Diagram: Magnitude and Phase Response Viewer</h4>
+<iframe src="../../sims/frequency-response-viewer/main.html" width="100%" height="550px" scrolling="no" style="overflow: hidden;"></iframe>
+
+<details markdown="1">
+<summary>Magnitude and Phase Response Viewer</summary>
+Type: microsim
+
+Bloom Level: Understand (L2)
+Bloom Verb: explain
+
+Learning Objective: Students will explain how magnitude and phase responses describe circuit behavior across frequency by observing low-pass and high-pass filter responses.
+
+Visual elements:
+- Top plot: Magnitude response |H| vs frequency (log scale)
+- Bottom plot: Phase response φ vs frequency (log scale)
+- Cutoff frequency marked with vertical line
+- -3dB and -45° points highlighted
+- Filter type indicator (low-pass, high-pass)
+
+Interactive controls:
+- Dropdown: Filter type (RC low-pass, RC high-pass, CR high-pass)
+- Slider: R (100Ω to 100kΩ, log scale)
+- Slider: C (1nF to 100μF, log scale)
+- Display: Cutoff frequency f_c = 1/(2πRC)
+- Toggle: Linear vs dB scale for magnitude
+
+Annotations:
+- "Passband" region shaded
+- "Stopband" region indicated
+- "-3dB = 0.707" at cutoff
+
+Default parameters:
+- RC low-pass filter
+- R = 10kΩ, C = 10nF
+- f_c ≈ 1.6 kHz
+
+Canvas layout:
+- Dual stacked plots: 600 × 200 pixels each
+- Control area: 100 pixels below
+
+Implementation: p5.js
+</details>
+
+<h2 id="bode-plots-the-engineers-shorthand">Bode Plots: The Engineer's Shorthand</h2>
+<p><strong>Bode plots</strong> are logarithmic frequency response graphs that reveal circuit behavior at a glance. Named after Hendrik Bode, they use clever scaling to turn curved responses into straight-line approximations.</p>
+<p><strong>The two Bode plots:</strong></p>
+<ol>
+<li><strong>Bode magnitude plot:</strong> |H| in dB vs. log(frequency)</li>
+<li><strong>Bode phase plot:</strong> Phase in degrees vs. log(frequency)</li>
+</ol>
+<p><strong>Why logarithmic scales?</strong></p>
+<ul>
+<li>Frequency often spans many orders of magnitude (Hz to MHz)</li>
+<li>Decibels already use logarithms</li>
+<li>Multiplication becomes addition on log scales</li>
+<li>Transfer function factors become separate additive contributions</li>
+</ul>
+<h3 id="decades-and-octaves">Decades and Octaves</h3>
+<p>A <strong>decade</strong> is a 10× change in frequency:
+- From 100 Hz to 1 kHz is one decade
+- From 1 kHz to 10 kHz is one decade</p>
+<p>An <strong>octave</strong> is a 2× change in frequency:
+- From 100 Hz to 200 Hz is one octave
+- From 1 kHz to 2 kHz is one octave</p>
+<p><strong>Conversions:</strong>
+- 1 decade ≈ 3.32 octaves
+- 1 octave ≈ 0.301 decades</p>
+<table>
+<thead>
+<tr>
+<th>Frequency Change</th>
+<th>In Decades</th>
+<th>In Octaves</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2×</td>
+<td>0.301</td>
+<td>1</td>
+</tr>
+<tr>
+<td>10×</td>
+<td>1</td>
+<td>3.32</td>
+</tr>
+<tr>
+<td>100×</td>
+<td>2</td>
+<td>6.64</td>
+</tr>
+<tr>
+<td>1000×</td>
+<td>3</td>
+<td>9.97</td>
+</tr>
+</tbody>
+</table>
+<h2 id="cutoff-frequency-and-half-power-point">Cutoff Frequency and Half-Power Point</h2>
+<p>The <strong>cutoff frequency</strong> <span class="arithmatex">\(f_c\)</span> (also called corner frequency or break frequency) is where the magnitude response drops to <span class="arithmatex">\(1/\sqrt{2}\)</span> (≈ 0.707) of its maximum value, which is -3dB.</p>
+<div class="arithmatex">\[|H(j\omega_c)| = \frac{|H|_{max}}{\sqrt{2}}\]</div>
+<p><strong>Why -3dB is significant:</strong></p>
+<p>At the cutoff frequency, power is cut in half:
+[P = V^2/R \propto |H|^2]</p>
+<p>When <span class="arithmatex">\(|H|\)</span> drops to <span class="arithmatex">\(0.707\)</span>, power drops to <span class="arithmatex">\((0.707)^2 = 0.5\)</span> = half power.</p>
+<p>This is why it's also called the <strong>half-power point</strong> or <strong>-3dB point</strong>.</p>
+<p><strong>For a simple RC low-pass filter:</strong></p>
+<p>[f_c = \frac{1}{2\pi RC}]
+[\omega_c = \frac{1}{RC}]</p>
+<div class="admonition tip">
+<p class="admonition-title">The 70.7% Rule</p>
+<p>At the cutoff frequency, voltage (or current) is 70.7% of maximum, but power is 50% of maximum. Both statements are correct—it's just the difference between amplitude and power. Always clarify whether you're talking about amplitude (-3dB in voltage) or power (-3dB in power).</p>
+</div>
+<h2 id="roll-off-rate-how-fast-filters-attenuate">Roll-Off Rate: How Fast Filters Attenuate</h2>
+<p>The <strong>roll-off rate</strong> describes how quickly the magnitude response decreases in the stopband. It's measured in dB per decade (dB/decade) or dB per octave (dB/octave).</p>
+<p><strong>For first-order filters (one reactive element):</strong>
+- Roll-off: -20 dB/decade = -6 dB/octave</p>
+<p><strong>For second-order filters (two reactive elements):</strong>
+- Roll-off: -40 dB/decade = -12 dB/octave</p>
+<p><strong>For nth-order filters:</strong>
+- Roll-off: -20n dB/decade = -6n dB/octave</p>
+<table>
+<thead>
+<tr>
+<th>Filter Order</th>
+<th>Roll-off (dB/decade)</th>
+<th>Roll-off (dB/octave)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1st</td>
+<td>-20</td>
+<td>-6</td>
+</tr>
+<tr>
+<td>2nd</td>
+<td>-40</td>
+<td>-12</td>
+</tr>
+<tr>
+<td>3rd</td>
+<td>-60</td>
+<td>-18</td>
+</tr>
+<tr>
+<td>4th</td>
+<td>-80</td>
+<td>-24</td>
+</tr>
+</tbody>
+</table>
+<p>Higher order means sharper cutoff, but also more phase shift and potential for overshoot/ringing.</p>
+<h2 id="asymptotic-approximation-straight-lines-for-curves">Asymptotic Approximation: Straight Lines for Curves</h2>
+<p><strong>Asymptotic approximation</strong> is the technique of representing smooth curves with straight-line segments. This makes Bode plots easy to sketch by hand and reveals key behavior quickly.</p>
+<p><strong>For a first-order low-pass filter:</strong></p>
+<div class="arithmatex">\[H(j\omega) = \frac{1}{1 + j\omega/\omega_c}\]</div>
+<p><strong>Magnitude asymptotes:</strong></p>
+<ul>
+<li>Far below cutoff (<span class="arithmatex">\(\omega &lt;&lt; \omega_c\)</span>): <span class="arithmatex">\(|H| \approx 1\)</span> → 0 dB (flat)</li>
+<li>Far above cutoff (<span class="arithmatex">\(\omega &gt;&gt; \omega_c\)</span>): <span class="arithmatex">\(|H| \approx \omega_c/\omega\)</span> → -20 dB/decade slope</li>
+</ul>
+<p><strong>Phase asymptotes:</strong></p>
+<ul>
+<li>Far below cutoff: <span class="arithmatex">\(\phi \approx 0°\)</span></li>
+<li>At cutoff: <span class="arithmatex">\(\phi = -45°\)</span></li>
+<li>Far above cutoff: <span class="arithmatex">\(\phi \approx -90°\)</span></li>
+</ul>
+<p><strong>The three-line approximation:</strong></p>
+<ol>
+<li>Horizontal line at 0° for <span class="arithmatex">\(\omega &lt; 0.1\omega_c\)</span></li>
+<li>Slope of -45°/decade through the cutoff</li>
+<li>Horizontal line at -90° for <span class="arithmatex">\(\omega &gt; 10\omega_c\)</span></li>
+</ol>
+<h4 id="diagram-bode-plot-sketcher">Diagram: Bode Plot Sketcher</h4>
+<iframe src="../../sims/bode-plot-sketcher/main.html" width="100%" height="550px" scrolling="no" style="overflow: hidden;"></iframe>
+
+<details markdown="1">
+<summary>Bode Plot Sketcher</summary>
+Type: microsim
+
+Bloom Level: Apply (L3)
+Bloom Verb: construct
+
+Learning Objective: Students will construct Bode plot asymptotic approximations and compare them to exact curves.
+
+Visual elements:
+- Bode magnitude plot with asymptotes (dashed) and exact curve (solid)
+- Bode phase plot with asymptotes (dashed) and exact curve (solid)
+- Cutoff frequency marker
+- Asymptote breakpoint highlighted
+- Maximum error annotation (≈3dB at cutoff for magnitude)
+
+Interactive controls:
+- Dropdown: Filter type (LP, HP, BP)
+- Slider: Cutoff frequency f_c
+- Toggle: Show/hide exact curve
+- Toggle: Show/hide asymptotes
+- Toggle: Show/hide error
+- Display: Asymptote equations
+
+Step-through mode for learning:
+- Step 1: "Draw low-frequency asymptote"
+- Step 2: "Draw high-frequency asymptote (slope = -20 dB/dec)"
+- Step 3: "Connect at corner frequency"
+- Step 4: "Compare to exact curve"
+
+Default parameters:
+- First-order low-pass
+- f_c = 1 kHz
+
+Canvas layout:
+- Dual plots: 600 × 200 pixels each
+- Control area: 100 pixels below
+
+Instructional Rationale: Step-through teaches the construction process before revealing the final result.
+
+Implementation: p5.js
+</details>
+
+<h2 id="poles-and-zeros-the-dna-of-transfer-functions">Poles and Zeros: The DNA of Transfer Functions</h2>
+<p><strong>Poles and zeros</strong> are the characteristic frequencies that shape the transfer function. They come from factoring the transfer function into standard forms.</p>
+<p><strong>General transfer function:</strong></p>
+<div class="arithmatex">\[H(s) = K \frac{(s - z_1)(s - z_2)...}{(s - p_1)(s - p_2)...}\]</div>
+<p>Where:</p>
+<ul>
+<li><span class="arithmatex">\(z_1, z_2, ...\)</span> are <strong>zeros</strong> (roots of numerator)</li>
+<li><span class="arithmatex">\(p_1, p_2, ...\)</span> are <strong>poles</strong> (roots of denominator)</li>
+<li><span class="arithmatex">\(K\)</span> is a constant gain</li>
+</ul>
+<p><strong>For frequency response, substitute <span class="arithmatex">\(s = j\omega\)</span>.</strong></p>
+<p><strong>Effects of poles and zeros:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Element</th>
+<th>Effect on Magnitude</th>
+<th>Effect on Phase</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Zero at origin</td>
+<td>+20 dB/decade slope</td>
+<td>+90°</td>
+</tr>
+<tr>
+<td>Pole at origin</td>
+<td>-20 dB/decade slope</td>
+<td>-90°</td>
+</tr>
+<tr>
+<td>Zero at <span class="arithmatex">\(\omega_z\)</span></td>
+<td>Slope increases by +20 dB/dec</td>
+<td>Phase increases toward +90°</td>
+</tr>
+<tr>
+<td>Pole at <span class="arithmatex">\(\omega_p\)</span></td>
+<td>Slope decreases by -20 dB/dec</td>
+<td>Phase decreases toward -90°</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Simple RC low-pass has:</strong>
+- One pole at <span class="arithmatex">\(\omega_p = 1/RC\)</span>
+- No zeros</p>
+<p><strong>Simple RC high-pass has:</strong>
+- One pole at <span class="arithmatex">\(\omega_p = 1/RC\)</span>
+- One zero at <span class="arithmatex">\(\omega = 0\)</span></p>
+<div class="admonition note">
+<p class="admonition-title">Poles Mean Roll-Off</p>
+<p>Each pole adds -20 dB/decade roll-off and -90° phase shift (at high frequencies for left-half-plane poles). Count the poles to know the filter order. A second-order filter has two poles and -40 dB/decade roll-off.</p>
+</div>
+<h2 id="filter-types-shaping-the-frequency-spectrum">Filter Types: Shaping the Frequency Spectrum</h2>
+<p>Filters are circuits designed to pass certain frequencies while attenuating others. The four basic filter types are defined by their passband:</p>
+<h3 id="low-pass-filter">Low-Pass Filter</h3>
+<p><strong>Passes:</strong> Frequencies below cutoff
+<strong>Blocks:</strong> Frequencies above cutoff</p>
+<p>[|H| \approx 1 \text{ for } f &lt; f_c]
+[|H| \text{ decreases for } f &gt; f_c]</p>
+<p><strong>Applications:</strong> Anti-aliasing, noise reduction, audio bass boost</p>
+<h3 id="high-pass-filter">High-Pass Filter</h3>
+<p><strong>Passes:</strong> Frequencies above cutoff
+<strong>Blocks:</strong> Frequencies below cutoff</p>
+<p>[|H| \approx 1 \text{ for } f &gt; f_c]
+[|H| \text{ decreases for } f &lt; f_c]</p>
+<p><strong>Applications:</strong> DC blocking, rumble filter, audio treble boost</p>
+<h3 id="band-pass-filter">Band-Pass Filter</h3>
+<p><strong>Passes:</strong> Frequencies within a band (between <span class="arithmatex">\(f_L\)</span> and <span class="arithmatex">\(f_H\)</span>)
+<strong>Blocks:</strong> Frequencies below <span class="arithmatex">\(f_L\)</span> and above <span class="arithmatex">\(f_H\)</span></p>
+<p><strong>Bandwidth:</strong> <span class="arithmatex">\(BW = f_H - f_L\)</span>
+<strong>Center frequency:</strong> <span class="arithmatex">\(f_0 = \sqrt{f_L \cdot f_H}\)</span></p>
+<p><strong>Applications:</strong> Radio tuning, audio equalizer bands, signal selection</p>
+<h3 id="band-reject-filter-notch-filter">Band-Reject Filter (Notch Filter)</h3>
+<p><strong>Blocks:</strong> Frequencies within a narrow band around <span class="arithmatex">\(f_0\)</span>
+<strong>Passes:</strong> All other frequencies</p>
+<p>Also called <strong>notch filter</strong> when the rejected band is very narrow.</p>
+<p><strong>Applications:</strong> 60 Hz hum removal, interference rejection, feedback suppression</p>
+<table>
+<thead>
+<tr>
+<th>Filter Type</th>
+<th>Passband</th>
+<th>Stopband</th>
+<th>Typical Application</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Low-pass</td>
+<td>DC to f_c</td>
+<td>Above f_c</td>
+<td>Smoothing, anti-aliasing</td>
+</tr>
+<tr>
+<td>High-pass</td>
+<td>Above f_c</td>
+<td>DC to f_c</td>
+<td>DC blocking, subsonic removal</td>
+</tr>
+<tr>
+<td>Band-pass</td>
+<td>f_L to f_H</td>
+<td>Below f_L, above f_H</td>
+<td>Radio tuning, equalizer</td>
+</tr>
+<tr>
+<td>Band-reject</td>
+<td>Below f_L, above f_H</td>
+<td>f_L to f_H</td>
+<td>Notch (60 Hz hum removal)</td>
+</tr>
+</tbody>
+</table>
+<h4 id="diagram-filter-type-comparison">Diagram: Filter Type Comparison</h4>
+<iframe src="../../sims/filter-type-comparison/main.html" width="100%" height="550px" scrolling="no" style="overflow: hidden;"></iframe>
+
+<details markdown="1">
+<summary>Filter Type Comparison</summary>
+Type: microsim
+
+Bloom Level: Understand (L2)
+Bloom Verb: classify
+
+Learning Objective: Students will classify filters by their frequency response characteristics and identify appropriate applications.
+
+Visual elements:
+- Four-panel display showing ideal responses:
+  - Low-pass: flat then drops
+  - High-pass: rises then flat
+  - Band-pass: peak at center
+  - Band-reject: notch at center
+- Passband shaded green, stopband shaded red
+- Cutoff/center frequencies labeled
+- Realistic (non-ideal) curves overlaid
+
+Interactive controls:
+- Dropdown: Select filter to highlight
+- Slider: Cutoff frequency (for LP/HP)
+- Slider: Center frequency (for BP/BR)
+- Slider: Bandwidth (for BP/BR)
+- Slider: Filter order (affects transition steepness)
+- Toggle: Show ideal vs realistic
+
+Annotations for each filter:
+- Typical application example
+- Passband/stopband labels
+- Roll-off slope indication
+
+Default parameters:
+- All four filters displayed
+- f_c = 1 kHz for LP/HP
+- f_0 = 1 kHz, BW = 200 Hz for BP/BR
+
+Canvas layout:
+- 2×2 grid of plots: 300 × 200 pixels each
+- Control area: 100 pixels below
+
+Implementation: p5.js
+</details>
+
+<h2 id="filter-order-sharper-is-better-usually">Filter Order: Sharper is Better (Usually)</h2>
+<p><strong>Filter order</strong> determines how sharply a filter transitions from passband to stopband. It equals the number of reactive elements (L's and C's) in the filter.</p>
+<p><strong>First-order (one pole):</strong>
+- Single RC or RL section
+- 20 dB/decade roll-off
+- 90° maximum phase shift
+- Gentle transition</p>
+<p><strong>Second-order (two poles):</strong>
+- LC or RLC section, or cascaded RC
+- 40 dB/decade roll-off
+- 180° maximum phase shift
+- Can have resonant peak (underdamped)</p>
+<p><strong>Higher orders:</strong>
+- More stages, sharper cutoff
+- Trade-offs: complexity, cost, phase distortion, potential instability</p>
+<p><strong>Design philosophies:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Approach</th>
+<th>Characteristics</th>
+<th>Application</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Butterworth</td>
+<td>Maximally flat passband</td>
+<td>General purpose</td>
+</tr>
+<tr>
+<td>Chebyshev</td>
+<td>Steeper roll-off, ripple in passband</td>
+<td>Where sharp cutoff matters</td>
+</tr>
+<tr>
+<td>Bessel</td>
+<td>Linear phase (no distortion)</td>
+<td>Pulse/data transmission</td>
+</tr>
+<tr>
+<td>Elliptic</td>
+<td>Steepest roll-off, ripple in both bands</td>
+<td>Maximum selectivity</td>
+</tr>
+</tbody>
+</table>
+<h2 id="building-bode-plots-step-by-step">Building Bode Plots: Step-by-Step</h2>
+<p><strong>To construct a Bode plot from a transfer function:</strong></p>
+<p><strong>Step 1:</strong> Factor the transfer function into standard forms
+[H(j\omega) = K \frac{(1 + j\omega/\omega_{z1})(1 + j\omega/\omega_{z2})...}{(1 + j\omega/\omega_{p1})(1 + j\omega/\omega_{p2})...}]</p>
+<p><strong>Step 2:</strong> Identify corner frequencies (poles and zeros)</p>
+<p><strong>Step 3:</strong> For magnitude plot:
+- Start with the DC gain (20 log|K|)
+- At each pole frequency, slope decreases by 20 dB/decade
+- At each zero frequency, slope increases by 20 dB/decade</p>
+<p><strong>Step 4:</strong> For phase plot:
+- Start at 0° (or 180° if K is negative)
+- Each pole contributes -90° transition centered at its frequency
+- Each zero contributes +90° transition centered at its frequency</p>
+<p><strong>Step 5:</strong> Sketch asymptotes, then round corners at ±3dB points</p>
+<h3 id="worked-example-second-order-low-pass">Worked Example: Second-Order Low-Pass</h3>
+<p><strong>Transfer function:</strong>
+[H(j\omega) = \frac{1}{1 + j\omega/\omega_1 + (j\omega/\omega_0)^2}]</p>
+<p>With <span class="arithmatex">\(\omega_0 = 1000\)</span> rad/s and damping ratio <span class="arithmatex">\(\zeta = 0.5\)</span>:</p>
+<p><strong>Characteristics:</strong>
+- DC gain: 0 dB
+- Two poles at complex frequencies
+- -40 dB/decade roll-off above <span class="arithmatex">\(\omega_0\)</span>
+- Phase: 0° at DC, -90° at <span class="arithmatex">\(\omega_0\)</span>, -180° at high frequency
+- Slight peak near <span class="arithmatex">\(\omega_0\)</span> due to underdamping</p>
+<h2 id="practical-filter-circuits">Practical Filter Circuits</h2>
+<h3 id="simple-rc-low-pass">Simple RC Low-Pass</h3>
+<div class="arithmatex">\[H(j\omega) = \frac{1}{1 + j\omega RC}\]</div>
+<p><strong>Cutoff:</strong> <span class="arithmatex">\(f_c = \frac{1}{2\pi RC}\)</span></p>
+<p><strong>Roll-off:</strong> -20 dB/decade</p>
+<h3 id="simple-rc-high-pass">Simple RC High-Pass</h3>
+<div class="arithmatex">\[H(j\omega) = \frac{j\omega RC}{1 + j\omega RC}\]</div>
+<p><strong>Cutoff:</strong> <span class="arithmatex">\(f_c = \frac{1}{2\pi RC}\)</span></p>
+<p><strong>Roll-off:</strong> +20 dB/decade below cutoff, flat above</p>
+<h3 id="series-rlc-band-pass">Series RLC Band-Pass</h3>
+<div class="arithmatex">\[H(j\omega) = \frac{R}{R + j(\omega L - 1/\omega C)}\]</div>
+<p><strong>Center frequency:</strong> <span class="arithmatex">\(f_0 = \frac{1}{2\pi\sqrt{LC}}\)</span></p>
+<p><strong>Bandwidth:</strong> <span class="arithmatex">\(BW = \frac{R}{2\pi L}\)</span></p>
+<p><strong>Q factor:</strong> <span class="arithmatex">\(Q = \frac{f_0}{BW}\)</span></p>
+<h4 id="diagram-filter-design-calculator">Diagram: Filter Design Calculator</h4>
+<iframe src="../../sims/filter-design-calc/main.html" width="100%" height="500px" scrolling="no" style="overflow: hidden;"></iframe>
+
+<details markdown="1">
+<summary>Filter Design Calculator</summary>
+Type: microsim
+
+Bloom Level: Apply (L3)
+Bloom Verb: calculate
+
+Learning Objective: Students will calculate component values for desired filter specifications (cutoff frequency, Q).
+
+Visual elements:
+- Circuit schematic for selected filter type
+- Bode magnitude plot showing resulting response
+- Component value displays
+- Frequency specifications highlighted
+
+Interactive controls:
+- Dropdown: Filter type (RC LP, RC HP, RLC BP, RLC notch)
+- Input: Desired cutoff frequency
+- Input: Desired Q (for second-order)
+- Button: Calculate components
+- Display: Calculated R, L, C values
+
+Design mode:
+- Enter specifications → Calculate components
+- Or enter components → See resulting response
+
+Practical considerations displayed:
+- Standard component values (E12 series)
+- Component tolerance effects
+- "Nearest standard value" suggestions
+
+Default parameters:
+- RC low-pass
+- f_c = 1 kHz target
+- Calculated: R = 15.9 kΩ, C = 10 nF
+
+Canvas layout:
+- Circuit/plot: 400 × 350 pixels
+- Calculator panel: 200 × 350 pixels
+- Control area: 100 pixels below
+
+Implementation: p5.js
+</details>
+
+<h2 id="self-check-questions">Self-Check Questions</h2>
+<details class="question">
+<summary>1. An RC low-pass filter has R = 10kΩ and C = 100nF. What is the cutoff frequency, and what is the magnitude at 1 kHz, 10 kHz, and 100 kHz?</summary>
+<p><strong>Cutoff frequency:</strong>
+[f_c = \frac{1}{2\pi RC} = \frac{1}{2\pi(10000)(100 \times 10^{-9})} = 159.2 \text{ Hz}]</p>
+<p><strong>At each frequency:</strong></p>
+<p><span class="arithmatex">\(f = 1\)</span> kHz = 6.28× cutoff:
+[|H| = \frac{1}{\sqrt{1 + (f/f_c)^2}} = \frac{1}{\sqrt{1 + 6.28^2}} = 0.157 = -16 \text{ dB}]</p>
+<p><span class="arithmatex">\(f = 10\)</span> kHz = 62.8× cutoff:
+[|H| = \frac{1}{\sqrt{1 + 62.8^2}} = 0.0159 = -36 \text{ dB}]</p>
+<p><span class="arithmatex">\(f = 100\)</span> kHz = 628× cutoff:
+[|H| = \frac{1}{\sqrt{1 + 628^2}} = 0.00159 = -56 \text{ dB}]</p>
+<p>Note: Each decade above cutoff adds about -20 dB (asymptotic approximation).</p>
+</details>
+<details class="question">
+<summary>2. How many poles does a filter need for -60 dB/decade roll-off?</summary>
+<p>Each pole contributes -20 dB/decade of roll-off.</p>
+<p>For -60 dB/decade:
+[\text{Number of poles} = \frac{60}{20} = 3]</p>
+<p>A third-order filter (three reactive elements) is needed.</p>
+<p>This could be implemented as:
+- Three cascaded RC sections
+- An LCL or CLC ladder network
+- Active filter with three op-amp stages</p>
+</details>
+<details class="question">
+<summary>3. A band-pass filter has center frequency 1 MHz and Q = 50. What is the bandwidth, and what are the approximate lower and upper cutoff frequencies?</summary>
+<p><strong>Bandwidth:</strong>
+[BW = \frac{f_0}{Q} = \frac{1\text{ MHz}}{50} = 20 \text{ kHz}]</p>
+<p><strong>Cutoff frequencies (approximate for high Q):</strong>
+[f_L \approx f_0 - \frac{BW}{2} = 1000 - 10 = 990 \text{ kHz}]
+[f_H \approx f_0 + \frac{BW}{2} = 1000 + 10 = 1010 \text{ kHz}]</p>
+<p>The filter passes frequencies from about 990 kHz to 1010 kHz, a 20 kHz window centered on 1 MHz.</p>
+</details>
+<details class="question">
+<summary>4. At what frequency does a first-order high-pass filter have -45° phase shift?</summary>
+<p>For a first-order high-pass filter:
+[H(j\omega) = \frac{j\omega/\omega_c}{1 + j\omega/\omega_c}]</p>
+<p>The phase is:
+[\phi = 90° - \tan^{-1}(\omega/\omega_c)]</p>
+<p>At low frequency: <span class="arithmatex">\(\phi \to 90°\)</span>
+At cutoff: <span class="arithmatex">\(\phi = 90° - 45° = 45°\)</span>
+At high frequency: <span class="arithmatex">\(\phi \to 0°\)</span></p>
+<p>The -45° phase (measured from 0°) doesn't occur for a high-pass filter—the phase goes from +90° down to 0°.</p>
+<p>If the question means 45° phase (halfway between 90° and 0°), that's at the cutoff frequency <span class="arithmatex">\(f_c\)</span>.</p>
+</details>
+<h2 id="summary_1">Summary</h2>
+<p>Frequency response analysis unlocks the ability to understand and design circuits for specific frequency behaviors:</p>
+<ol>
+<li>
+<p><strong>Transfer function H(jω) captures complete frequency behavior</strong> - Magnitude and phase at every frequency</p>
+</li>
+<li>
+<p><strong>Bode plots use logarithmic scales</strong> - Decades and dB make wide frequency ranges manageable</p>
+</li>
+<li>
+<p><strong>Cutoff frequency is the -3dB (half-power) point</strong> - Where magnitude drops to 0.707</p>
+</li>
+<li>
+<p><strong>Roll-off rate indicates filter sharpness</strong> - -20n dB/decade for nth-order filters</p>
+</li>
+<li>
+<p><strong>Asymptotic approximation makes sketching easy</strong> - Straight lines with corners at pole/zero frequencies</p>
+</li>
+<li>
+<p><strong>Poles add roll-off; zeros reduce it</strong> - Count poles to know the order</p>
+</li>
+<li>
+<p><strong>Four basic filter types serve different needs</strong> - Low-pass, high-pass, band-pass, band-reject</p>
+</li>
+<li>
+<p><strong>Filter order trades sharpness for complexity</strong> - Higher order = sharper cutoff but more components</p>
+</li>
+<li>
+<p><strong>Design involves choosing components for desired specs</strong> - f_c, Q, and bandwidth are key parameters</p>
+</li>
+<li>
+<p><strong>Bode analysis is fundamental to amplifier and filter design</strong> - These techniques appear everywhere in electronics</p>
+</li>
+</ol>
+<p>With frequency response analysis, you can predict how any circuit will behave across the entire frequency spectrum. This is essential for designing audio systems, communication circuits, control systems, and anywhere signals of different frequencies need to be treated differently. The Bode plot is your roadmap to understanding circuit behavior—learn to read it fluently, and you'll have a superpower that serves you throughout your engineering career.</p>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../10-ac-power-analysis/" class="md-footer__link md-footer__link--prev" aria-label="Previous: 10. AC Power Analysis">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                10. AC Power Analysis
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../12-filters-resonance/" class="md-footer__link md-footer__link--next" aria-label="Next: 12. Filters and Resonance">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                12. Filters and Resonance
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.copy", "navigation.expand", "navigation.path", "navigation.prune", "navigation.indexes", "toc.follow", "navigation.top", "navigation.footer", "content.action.edit"], "search": "../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.83f73b43.min.js"></script>
+      
+        <script src="../../js/extra.js"></script>
+      
+        <script src="../../js/katex.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+      
+    
+  </body>
+</html>

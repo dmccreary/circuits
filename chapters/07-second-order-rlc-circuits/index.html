@@ -1,0 +1,3443 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="An intelligent interactive Circuits textbook for EE and CS students with AI-generated content and simulations.">
+      
+      
+        <meta name="author" content="Dan McCreary">
+      
+      
+        <link rel="canonical" href="https://dmccreary.github.io/circuits/chapters/07-second-order-rlc-circuits/">
+      
+      
+        <link rel="prev" href="../06-transient-analysis-rc-rl/">
+      
+      
+        <link rel="next" href="../08-ac-signals-sinusoidal/">
+      
+      
+      <link rel="icon" href="../../img/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.43">
+    
+    
+      
+        <title>7. Second-Order RLC Circuits - Circuits 1</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.0253249f.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../css/extra.css">
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+<script id="__analytics">function __md_analytics(){function e(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],e("js",new Date),e("config","G-9J4MVE6LWP"),document.addEventListener("DOMContentLoaded",(function(){document.forms.search&&document.forms.search.query.addEventListener("blur",(function(){this.value&&e("event","search",{search_term:this.value})}));document$.subscribe((function(){var t=document.forms.feedback;if(void 0!==t)for(var a of t.querySelectorAll("[type=submit]"))a.addEventListener("click",(function(a){a.preventDefault();var n=document.location.pathname,d=this.getAttribute("data-md-value");e("event","feedback",{page:n,data:d}),t.firstElementChild.disabled=!0;var r=t.querySelector(".md-feedback__note [data-md-value='"+d+"']");r&&(r.hidden=!1)})),t.hidden=!1})),location$.subscribe((function(t){e("config","G-9J4MVE6LWP",{page_path:t.pathname})}))}));var t=document.createElement("script");t.async=!0,t.src="https://www.googletagmanager.com/gtag/js?id=G-9J4MVE6LWP",document.getElementById("__analytics").insertAdjacentElement("afterEnd",t)}</script>
+  
+    <script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
+  
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="orange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#second-order-circuits-and-rlc-behavior" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Circuits 1" class="md-header__button md-logo" aria-label="Circuits 1" data-md-component="logo">
+      
+  <img src="../../img/course-logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Circuits 1
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              7. Second-Order RLC Circuits
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/dmccreary/circuits" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub Repo
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Circuits 1" class="md-nav__button md-logo" aria-label="Circuits 1" data-md-component="logo">
+      
+  <img src="../../img/course-logo.png" alt="logo">
+
+    </a>
+    Circuits 1
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/dmccreary/circuits" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub Repo
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../about/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    About This Course
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+    
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Chapters
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Chapters
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-electric-charge-basic-quantities/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1. Electric Charge and Quantities
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-ohms-law-basic-configurations/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2. Ohm's Law and Configurations
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-kirchhoffs-laws-topology/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3. Kirchhoff's Laws and Topology
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-dc-circuit-analysis/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4. DC Circuit Analysis
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-passive-components/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5. Passive Components
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-transient-analysis-rc-rl/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    6. Transient Analysis RC/RL
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    7. Second-Order RLC Circuits
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    7. Second-Order RLC Circuits
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      Summary
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#concepts-covered" class="md-nav__link">
+    <span class="md-ellipsis">
+      Concepts Covered
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prerequisites
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#introduction-when-circuits-get-dramatic" class="md-nav__link">
+    <span class="md-ellipsis">
+      Introduction: When Circuits Get Dramatic
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#second-order-circuits-the-mathematical-upgrade" class="md-nav__link">
+    <span class="md-ellipsis">
+      Second-Order Circuits: The Mathematical Upgrade
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rlc-circuits-the-dynamic-trio" class="md-nav__link">
+    <span class="md-ellipsis">
+      RLC Circuits: The Dynamic Trio
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="RLC Circuits: The Dynamic Trio">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#series-rlc-circuit" class="md-nav__link">
+    <span class="md-ellipsis">
+      Series RLC Circuit
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#parallel-rlc-circuit" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parallel RLC Circuit
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parallel RLC Circuit">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-series-vs-parallel-rlc-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Series vs Parallel RLC Configuration
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-characteristic-equation-finding-the-roots" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Characteristic Equation: Finding the Roots
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#natural-frequency-the-circuits-heartbeat" class="md-nav__link">
+    <span class="md-ellipsis">
+      Natural Frequency: The Circuit's Heartbeat
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Natural Frequency: The Circuit's Heartbeat">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-natural-frequency-calculator" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Natural Frequency Calculator
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#damping-ratio-how-quickly-the-drama-fades" class="md-nav__link">
+    <span class="md-ellipsis">
+      Damping Ratio: How Quickly the Drama Fades
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#overdamped-response-the-cautious-approach" class="md-nav__link">
+    <span class="md-ellipsis">
+      Overdamped Response: The Cautious Approach
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Overdamped Response: The Cautious Approach">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-overdamped-step-response" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Overdamped Step Response
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#underdamped-response-the-exciting-one" class="md-nav__link">
+    <span class="md-ellipsis">
+      Underdamped Response: The Exciting One
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Underdamped Response: The Exciting One">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-underdamped-oscillation-anatomy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Underdamped Oscillation Anatomy
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#overshoot-and-settling-time" class="md-nav__link">
+    <span class="md-ellipsis">
+      Overshoot and Settling Time
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#critically-damped-response-the-goldilocks-zone" class="md-nav__link">
+    <span class="md-ellipsis">
+      Critically Damped Response: The Goldilocks Zone
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Critically Damped Response: The Goldilocks Zone">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-three-damping-regimes-comparison" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Three Damping Regimes Comparison
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#resonant-frequency-when-circuits-sing" class="md-nav__link">
+    <span class="md-ellipsis">
+      Resonant Frequency: When Circuits Sing
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Resonant Frequency: When Circuits Sing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-series-rlc-resonance-explorer" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Series RLC Resonance Explorer
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quality-factor-how-sharp-is-the-resonance" class="md-nav__link">
+    <span class="md-ellipsis">
+      Quality Factor: How Sharp is the Resonance?
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Quality Factor: How Sharp is the Resonance?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-quality-factor-and-bandwidth" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Quality Factor and Bandwidth
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pulse-response-ringing-and-transients" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pulse Response: Ringing and Transients
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Pulse Response: Ringing and Transients">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-pulse-response-and-ringing" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Pulse Response and Ringing
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#energy-exchange-in-rlc-circuits" class="md-nav__link">
+    <span class="md-ellipsis">
+      Energy Exchange in RLC Circuits
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Energy Exchange in RLC Circuits">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-energy-exchange-animation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Energy Exchange Animation
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#design-applications" class="md-nav__link">
+    <span class="md-ellipsis">
+      Design Applications
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Design Applications">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#radio-tuning" class="md-nav__link">
+    <span class="md-ellipsis">
+      Radio Tuning
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shock-absorbers-and-mechanical-analogy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Shock Absorbers and Mechanical Analogy
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#audio-crossover-networks" class="md-nav__link">
+    <span class="md-ellipsis">
+      Audio Crossover Networks
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bandpass-filters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Bandpass Filters
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#practical-considerations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Practical Considerations
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Practical Considerations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#real-component-limitations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Real Component Limitations
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#initial-conditions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Initial Conditions
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-formulas-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      Key Formulas Summary
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#self-check-questions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Self-Check Questions
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Summary
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-ac-signals-sinusoidal/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    8. AC Signals and Sinusoids
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../09-phasors-complex-impedance/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    9. Phasors and Impedance
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10-ac-power-analysis/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    10. AC Power Analysis
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../11-frequency-response-bode/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    11. Frequency Response and Bode
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../12-filters-resonance/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    12. Filters and Resonance
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../13-operational-amplifiers/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    13. Operational Amplifiers
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../14-signals-audio-lab/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    14. Signal Analysis and Fourier
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../15-audio-applications/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    15. Audio Applications
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../16-laboratory-techniques/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    16. Laboratory Techniques
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../sims/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    MicroSims
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../sections/index.md" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Supplementary Sections
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../learning-graph/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Learning Graph
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../prompts/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Sample Prompts
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+          
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../faq/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    FAQ
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../glossary/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Glossary
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how-we-built-this-site/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    How We Built This Site
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../references/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    References
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../license/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    License
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contact/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Contact
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      Summary
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#concepts-covered" class="md-nav__link">
+    <span class="md-ellipsis">
+      Concepts Covered
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prerequisites
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#introduction-when-circuits-get-dramatic" class="md-nav__link">
+    <span class="md-ellipsis">
+      Introduction: When Circuits Get Dramatic
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#second-order-circuits-the-mathematical-upgrade" class="md-nav__link">
+    <span class="md-ellipsis">
+      Second-Order Circuits: The Mathematical Upgrade
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rlc-circuits-the-dynamic-trio" class="md-nav__link">
+    <span class="md-ellipsis">
+      RLC Circuits: The Dynamic Trio
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="RLC Circuits: The Dynamic Trio">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#series-rlc-circuit" class="md-nav__link">
+    <span class="md-ellipsis">
+      Series RLC Circuit
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#parallel-rlc-circuit" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parallel RLC Circuit
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parallel RLC Circuit">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-series-vs-parallel-rlc-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Series vs Parallel RLC Configuration
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-characteristic-equation-finding-the-roots" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Characteristic Equation: Finding the Roots
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#natural-frequency-the-circuits-heartbeat" class="md-nav__link">
+    <span class="md-ellipsis">
+      Natural Frequency: The Circuit's Heartbeat
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Natural Frequency: The Circuit's Heartbeat">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-natural-frequency-calculator" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Natural Frequency Calculator
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#damping-ratio-how-quickly-the-drama-fades" class="md-nav__link">
+    <span class="md-ellipsis">
+      Damping Ratio: How Quickly the Drama Fades
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#overdamped-response-the-cautious-approach" class="md-nav__link">
+    <span class="md-ellipsis">
+      Overdamped Response: The Cautious Approach
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Overdamped Response: The Cautious Approach">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-overdamped-step-response" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Overdamped Step Response
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#underdamped-response-the-exciting-one" class="md-nav__link">
+    <span class="md-ellipsis">
+      Underdamped Response: The Exciting One
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Underdamped Response: The Exciting One">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-underdamped-oscillation-anatomy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Underdamped Oscillation Anatomy
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#overshoot-and-settling-time" class="md-nav__link">
+    <span class="md-ellipsis">
+      Overshoot and Settling Time
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#critically-damped-response-the-goldilocks-zone" class="md-nav__link">
+    <span class="md-ellipsis">
+      Critically Damped Response: The Goldilocks Zone
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Critically Damped Response: The Goldilocks Zone">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-three-damping-regimes-comparison" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Three Damping Regimes Comparison
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#resonant-frequency-when-circuits-sing" class="md-nav__link">
+    <span class="md-ellipsis">
+      Resonant Frequency: When Circuits Sing
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Resonant Frequency: When Circuits Sing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-series-rlc-resonance-explorer" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Series RLC Resonance Explorer
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quality-factor-how-sharp-is-the-resonance" class="md-nav__link">
+    <span class="md-ellipsis">
+      Quality Factor: How Sharp is the Resonance?
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Quality Factor: How Sharp is the Resonance?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-quality-factor-and-bandwidth" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Quality Factor and Bandwidth
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pulse-response-ringing-and-transients" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pulse Response: Ringing and Transients
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Pulse Response: Ringing and Transients">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-pulse-response-and-ringing" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Pulse Response and Ringing
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#energy-exchange-in-rlc-circuits" class="md-nav__link">
+    <span class="md-ellipsis">
+      Energy Exchange in RLC Circuits
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Energy Exchange in RLC Circuits">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-energy-exchange-animation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Energy Exchange Animation
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#design-applications" class="md-nav__link">
+    <span class="md-ellipsis">
+      Design Applications
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Design Applications">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#radio-tuning" class="md-nav__link">
+    <span class="md-ellipsis">
+      Radio Tuning
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shock-absorbers-and-mechanical-analogy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Shock Absorbers and Mechanical Analogy
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#audio-crossover-networks" class="md-nav__link">
+    <span class="md-ellipsis">
+      Audio Crossover Networks
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bandpass-filters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Bandpass Filters
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#practical-considerations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Practical Considerations
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Practical Considerations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#real-component-limitations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Real Component Limitations
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#initial-conditions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Initial Conditions
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-formulas-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      Key Formulas Summary
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#self-check-questions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Self-Check Questions
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Summary
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+    <a href="https://github.com/dmccreary/circuits/blob/master/docs/chapters/07-second-order-rlc-circuits/index.md" title="Edit this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+
+
+<h1 id="second-order-circuits-and-rlc-behavior">Second-Order Circuits and RLC Behavior</h1>
+<h2 id="summary">Summary</h2>
+<p>This chapter extends transient analysis to second-order circuits containing resistors, inductors, and capacitors (RLC). Students will learn how these circuits can exhibit oscillatory behavior and how the damping ratio determines whether the response is overdamped, underdamped, or critically damped. The chapter introduces the natural frequency concept and analyzes both series and parallel RLC configurations. Understanding second-order systems prepares students for analyzing resonant circuits and filters.</p>
+<h2 id="concepts-covered">Concepts Covered</h2>
+<p>This chapter covers the following 10 concepts from the learning graph:</p>
+<ol>
+<li>Second-Order Circuits</li>
+<li>RLC Circuit</li>
+<li>Overdamped Response</li>
+<li>Underdamped Response</li>
+<li>Critically Damped Response</li>
+<li>Damping Ratio</li>
+<li>Natural Frequency</li>
+<li>Pulse Response</li>
+<li>Resonant Frequency</li>
+<li>Quality Factor</li>
+</ol>
+<h2 id="prerequisites">Prerequisites</h2>
+<p>This chapter builds on concepts from:</p>
+<ul>
+<li><a href="../05-passive-components/">Chapter 5: Passive Components: Resistors, Capacitors, and Inductors</a></li>
+<li><a href="../06-transient-analysis-rc-rl/">Chapter 6: Transient Analysis of RC and RL Circuits</a></li>
+</ul>
+<hr />
+<p>title: Second-Order Circuits and RLC Behavior
+description: Explore oscillatory circuits with resistors, inductors, and capacitors including damping, resonance, and quality factor
+generated_by: chapter-content-generator v0.03
+date: 2026-01-30</p>
+<hr />
+<h2 id="introduction-when-circuits-get-dramatic">Introduction: When Circuits Get Dramatic</h2>
+<p>If first-order RC and RL circuits are like a polite conversation—one thing leads smoothly to another—then second-order RLC circuits are like a heated debate. Things can swing back and forth, overshoot their targets, or even oscillate indefinitely. Welcome to the world where circuits get <em>dramatic</em>.</p>
+<p>In Chapter 6, you learned how capacitors and inductors store and release energy exponentially. But what happens when you put <em>both</em> energy storage elements in the same circuit? The energy sloshes back and forth between the electric field of the capacitor and the magnetic field of the inductor, like two friends tossing a ball between them. Add some resistance, and the ball gradually loses energy with each toss until everyone gets tired.</p>
+<p>This energy exchange creates behaviors you won't see in simpler circuits:</p>
+<ul>
+<li><strong>Oscillations</strong> that ring like a bell</li>
+<li><strong>Overshoot</strong> that rockets past the target before settling back</li>
+<li><strong>Resonance</strong> that amplifies signals at specific frequencies</li>
+</ul>
+<p>Understanding these behaviors unlocks your ability to design everything from radio tuners to shock absorbers to audio equalizers. It's the physics of musical instruments, earthquake dampers, and your car's suspension—all described by the same beautiful mathematics.</p>
+<h2 id="second-order-circuits-the-mathematical-upgrade">Second-Order Circuits: The Mathematical Upgrade</h2>
+<p>A <strong>second-order circuit</strong> is any circuit whose behavior is described by a second-order differential equation. This happens whenever a circuit contains two independent energy storage elements—typically an inductor and a capacitor. (Two capacitors in series/parallel still act as one equivalent capacitor, so they count as one energy storage element.)</p>
+<p>The general form of a second-order differential equation is:</p>
+<div class="arithmatex">\[\frac{d^2x}{dt^2} + 2\alpha\frac{dx}{dt} + \omega_0^2 x = f(t)\]</div>
+<p>Where:</p>
+<ul>
+<li><span class="arithmatex">\(x\)</span> is the response variable (voltage or current)</li>
+<li><span class="arithmatex">\(\alpha\)</span> is the damping coefficient (also written as <span class="arithmatex">\(\zeta\omega_0\)</span>)</li>
+<li><span class="arithmatex">\(\omega_0\)</span> is the undamped natural frequency</li>
+<li><span class="arithmatex">\(f(t)\)</span> is the forcing function (source input)</li>
+</ul>
+<p>Don't let this equation intimidate you. It's just saying: "The acceleration of the response, plus some friction times the velocity, plus a spring force times position, equals the external push."</p>
+<table>
+<thead>
+<tr>
+<th>Order</th>
+<th>Energy Storage Elements</th>
+<th>Equation Type</th>
+<th>Example Response</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>First</td>
+<td>1 (C or L)</td>
+<td>First-order ODE</td>
+<td>Exponential decay/rise</td>
+</tr>
+<tr>
+<td>Second</td>
+<td>2 (C and L)</td>
+<td>Second-order ODE</td>
+<td>Oscillatory, damped</td>
+</tr>
+<tr>
+<td>Higher</td>
+<td>3+</td>
+<td>Higher-order ODE</td>
+<td>Complex multi-frequency</td>
+</tr>
+</tbody>
+</table>
+<h2 id="rlc-circuits-the-dynamic-trio">RLC Circuits: The Dynamic Trio</h2>
+<p>An <strong>RLC circuit</strong> contains all three passive components: a <strong>R</strong>esistor, an indu<strong>L</strong>tor, and a <strong>C</strong>apacitor. These components can be connected in series or parallel, and each configuration has its own personality.</p>
+<h3 id="series-rlc-circuit">Series RLC Circuit</h3>
+<p>In a series RLC circuit, all components share the same current. The voltage equation around the loop is:</p>
+<div class="arithmatex">\[V_R + V_L + V_C = V_S\]</div>
+<div class="arithmatex">\[iR + L\frac{di}{dt} + \frac{1}{C}\int i \, dt = V_S\]</div>
+<p>Taking the derivative and rearranging:</p>
+<div class="arithmatex">\[\frac{d^2i}{dt^2} + \frac{R}{L}\frac{di}{dt} + \frac{1}{LC}i = \frac{1}{L}\frac{dV_S}{dt}\]</div>
+<p>For a series RLC circuit:</p>
+<ul>
+<li><strong>Damping coefficient:</strong> <span class="arithmatex">\(\alpha = \frac{R}{2L}\)</span></li>
+<li><strong>Undamped natural frequency:</strong> <span class="arithmatex">\(\omega_0 = \frac{1}{\sqrt{LC}}\)</span></li>
+<li><strong>Resonant frequency:</strong> <span class="arithmatex">\(\omega_r = \omega_0\)</span> (for series)</li>
+</ul>
+<h3 id="parallel-rlc-circuit">Parallel RLC Circuit</h3>
+<p>In a parallel RLC circuit, all components share the same voltage. The current equation at a node is:</p>
+<div class="arithmatex">\[i_R + i_L + i_C = I_S\]</div>
+<div class="arithmatex">\[\frac{v}{R} + \frac{1}{L}\int v \, dt + C\frac{dv}{dt} = I_S\]</div>
+<p>For a parallel RLC circuit:</p>
+<ul>
+<li><strong>Damping coefficient:</strong> <span class="arithmatex">\(\alpha = \frac{1}{2RC}\)</span></li>
+<li><strong>Undamped natural frequency:</strong> <span class="arithmatex">\(\omega_0 = \frac{1}{\sqrt{LC}}\)</span></li>
+</ul>
+<p>Notice that the undamped natural frequency <span class="arithmatex">\(\omega_0\)</span> is the same for both configurations—it only depends on L and C.</p>
+<h4 id="diagram-series-vs-parallel-rlc-configuration">Diagram: Series vs Parallel RLC Configuration</h4>
+<iframe src="../../sims/series-parallel-rlc/main.html" width="100%" height="450px" scrolling="no" style="overflow: hidden;"></iframe>
+
+<details markdown="1">
+<summary>Series vs Parallel RLC Configuration</summary>
+Type: microsim
+
+Bloom Level: Understand (L2)
+Bloom Verb: compare
+
+Learning Objective: Students will compare the mathematical differences between series and parallel RLC circuits by observing how component arrangement affects damping and impedance.
+
+Visual elements:
+- Split canvas showing series RLC (left) and parallel RLC (right)
+- Animated current flow in series circuit
+- Animated voltage indication in parallel circuit
+- Real-time equations displayed below each circuit
+- Parameter values shown for R, L, and C
+
+Interactive controls:
+- Slider: Resistance R (10Ω to 1000Ω)
+- Slider: Inductance L (1mH to 100mH)
+- Slider: Capacitance C (0.1μF to 10μF)
+- Toggle: Show/hide damping coefficient calculation
+- Toggle: Show/hide natural frequency calculation
+
+Display panels:
+- Series circuit: α = R/2L, ω₀ = 1/√(LC)
+- Parallel circuit: α = 1/2RC, ω₀ = 1/√(LC)
+- Comparison: "Same ω₀, different damping!"
+
+Default parameters:
+- R = 100Ω
+- L = 10mH
+- C = 1μF
+
+Canvas layout:
+- Drawing area: 600 × 350 pixels
+- Control area: 100 pixels below
+
+Implementation: p5.js with circuit component library
+</details>
+
+<h2 id="the-characteristic-equation-finding-the-roots">The Characteristic Equation: Finding the Roots</h2>
+<p>To solve the homogeneous second-order equation (no forcing function), we assume a solution of the form <span class="arithmatex">\(x = Ae^{st}\)</span>. Substituting this into the differential equation gives us the <strong>characteristic equation</strong>:</p>
+<div class="arithmatex">\[s^2 + 2\alpha s + \omega_0^2 = 0\]</div>
+<p>Using the quadratic formula:</p>
+<div class="arithmatex">\[s_{1,2} = -\alpha \pm \sqrt{\alpha^2 - \omega_0^2}\]</div>
+<p>The nature of these roots—real, repeated, or complex—determines everything about how the circuit responds. This is where the magic happens!</p>
+<table>
+<thead>
+<tr>
+<th>Condition</th>
+<th>Root Type</th>
+<th>Response Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="arithmatex">\(\alpha &gt; \omega_0\)</span></td>
+<td>Two distinct real roots</td>
+<td>Overdamped</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(\alpha = \omega_0\)</span></td>
+<td>Repeated real root</td>
+<td>Critically damped</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(\alpha &lt; \omega_0\)</span></td>
+<td>Complex conjugate roots</td>
+<td>Underdamped</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition tip">
+<p class="admonition-title">The Damping Sweet Spot</p>
+<p>The relationship between α and ω₀ is the single most important factor in determining circuit behavior. It's like the Goldilocks problem of circuit design—too much damping is sluggish, too little is bouncy, and just right is critically damped.</p>
+</div>
+<h2 id="natural-frequency-the-circuits-heartbeat">Natural Frequency: The Circuit's Heartbeat</h2>
+<p>The <strong>natural frequency</strong> <span class="arithmatex">\(\omega_0\)</span> is the frequency at which an undamped circuit would oscillate forever. Think of it as the circuit's preferred rhythm—the tempo it naturally wants to follow when left to its own devices.</p>
+<div class="arithmatex">\[\omega_0 = \frac{1}{\sqrt{LC}} \text{ rad/s}\]</div>
+<p>Or in Hertz:</p>
+<div class="arithmatex">\[f_0 = \frac{1}{2\pi\sqrt{LC}} \text{ Hz}\]</div>
+<p>The natural frequency depends only on the energy storage elements (L and C), not on resistance. This makes physical sense: L and C determine how fast energy can slosh between the magnetic and electric fields, while R only determines how quickly that sloshing dies out.</p>
+<p><strong>Physical intuition:</strong></p>
+<ul>
+<li><strong>Larger L</strong> → More "inertia" in current changes → Lower frequency</li>
+<li><strong>Larger C</strong> → More charge storage capacity → Lower frequency</li>
+<li>Think of a heavy pendulum (large L) swinging slowly, or a deep swimming pool (large C) with slow waves</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>L (mH)</th>
+<th>C (μF)</th>
+<th>f₀ (Hz)</th>
+<th>Audio Equivalent</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>100</td>
+<td>100</td>
+<td>50.3</td>
+<td>Low bass hum</td>
+</tr>
+<tr>
+<td>10</td>
+<td>10</td>
+<td>503</td>
+<td>Mid-range tone</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>5,033</td>
+<td>High-pitched whistle</td>
+</tr>
+<tr>
+<td>0.1</td>
+<td>0.1</td>
+<td>50,330</td>
+<td>Ultrasonic</td>
+</tr>
+</tbody>
+</table>
+<h4 id="diagram-natural-frequency-calculator">Diagram: Natural Frequency Calculator</h4>
+<iframe src="../../sims/natural-frequency-calc/main.html" width="100%" height="400px" scrolling="no" style="overflow: hidden;"></iframe>
+
+<details markdown="1">
+<summary>Natural Frequency Calculator</summary>
+Type: microsim
+
+Bloom Level: Apply (L3)
+Bloom Verb: calculate
+
+Learning Objective: Students will calculate natural frequency from inductance and capacitance values and observe the inverse square root relationship.
+
+Visual elements:
+- Large display showing f₀ in Hz and ω₀ in rad/s
+- Graphical representation of L and C as physical components
+- Log-log plot showing f₀ vs LC product
+- Current point highlighted on curve
+
+Interactive controls:
+- Slider: Inductance L (0.1mH to 100mH, logarithmic)
+- Slider: Capacitance C (0.01μF to 100μF, logarithmic)
+- Display: LC product value
+- Display: Period T = 1/f₀
+
+Calculation display:
+- Show step-by-step: ω₀ = 1/√(LC) = 1/√(value) = result
+- Convert to Hz: f₀ = ω₀/2π = result
+
+Default parameters:
+- L = 10mH
+- C = 1μF
+- Expected f₀ ≈ 1,592 Hz
+
+Canvas layout:
+- Calculator display: 300 × 200 pixels (top)
+- Log-log plot: 300 × 150 pixels (bottom)
+- Control area: 100 pixels below
+
+Implementation: p5.js
+</details>
+
+<h2 id="damping-ratio-how-quickly-the-drama-fades">Damping Ratio: How Quickly the Drama Fades</h2>
+<p>The <strong>damping ratio</strong> <span class="arithmatex">\(\zeta\)</span> (Greek letter "zeta") is the dimensionless quantity that tells you how heavily damped a circuit is. It's defined as:</p>
+<div class="arithmatex">\[\zeta = \frac{\alpha}{\omega_0}\]</div>
+<p>For a series RLC circuit:</p>
+<div class="arithmatex">\[\zeta = \frac{R}{2}\sqrt{\frac{C}{L}}\]</div>
+<p>For a parallel RLC circuit:</p>
+<div class="arithmatex">\[\zeta = \frac{1}{2R}\sqrt{\frac{L}{C}}\]</div>
+<p>The damping ratio is the single number that classifies circuit response:</p>
+<table>
+<thead>
+<tr>
+<th>Damping Ratio</th>
+<th>Condition</th>
+<th>Response Type</th>
+<th>Behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="arithmatex">\(\zeta &gt; 1\)</span></td>
+<td><span class="arithmatex">\(\alpha &gt; \omega_0\)</span></td>
+<td>Overdamped</td>
+<td>Slow, no oscillation</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(\zeta = 1\)</span></td>
+<td><span class="arithmatex">\(\alpha = \omega_0\)</span></td>
+<td>Critically damped</td>
+<td>Fastest without overshoot</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(0 &lt; \zeta &lt; 1\)</span></td>
+<td><span class="arithmatex">\(\alpha &lt; \omega_0\)</span></td>
+<td>Underdamped</td>
+<td>Oscillation with decay</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(\zeta = 0\)</span></td>
+<td><span class="arithmatex">\(\alpha = 0\)</span></td>
+<td>Undamped</td>
+<td>Endless oscillation</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">Why Dimensionless Ratios Matter</p>
+<p>The damping ratio ζ is powerful because it's dimensionless—it works the same whether you're analyzing tiny MEMS devices or massive power systems. A ζ of 0.5 means the same relative behavior regardless of the actual frequency or component values.</p>
+</div>
+<h2 id="overdamped-response-the-cautious-approach">Overdamped Response: The Cautious Approach</h2>
+<p>When <span class="arithmatex">\(\zeta &gt; 1\)</span> (or <span class="arithmatex">\(\alpha &gt; \omega_0\)</span>), the circuit is <strong>overdamped</strong>. The characteristic equation has two distinct negative real roots:</p>
+<div class="arithmatex">\[s_{1,2} = -\alpha \pm \sqrt{\alpha^2 - \omega_0^2}\]</div>
+<p>Both roots are negative (ensuring stability), but they're different values. The general solution is:</p>
+<div class="arithmatex">\[x(t) = A_1 e^{s_1 t} + A_2 e^{s_2 t}\]</div>
+<p><strong>Characteristics of overdamped response:</strong></p>
+<ul>
+<li>No oscillation occurs</li>
+<li>Returns to equilibrium slowly</li>
+<li>The response "crawls" toward its final value</li>
+<li>One exponential dominates at first, then the slower one takes over</li>
+</ul>
+<p>Think of overdamped response like a door closer that's been adjusted too tight—the door closes slowly without bouncing, but it takes forever to fully close.</p>
+<p><strong>When overdamping is desirable:</strong></p>
+<ul>
+<li>Precision instruments that shouldn't overshoot</li>
+<li>Safety systems where oscillation could be dangerous</li>
+<li>Damping mechanical vibrations in sensitive equipment</li>
+</ul>
+<h4 id="diagram-overdamped-step-response">Diagram: Overdamped Step Response</h4>
+<iframe src="../../sims/overdamped-response/main.html" width="100%" height="450px" scrolling="no" style="overflow: hidden;"></iframe>
+
+<details markdown="1">
+<summary>Overdamped Step Response</summary>
+Type: microsim
+
+Bloom Level: Understand (L2)
+Bloom Verb: explain
+
+Learning Objective: Students will explain how overdamped circuits return to equilibrium without oscillation by observing the sum of two exponential decays.
+
+Visual elements:
+- Main plot: Response x(t) vs time
+- Two separate exponential components shown as dashed lines
+- Sum shown as solid line
+- Final value shown as horizontal dashed line
+- Annotations showing s₁ and s₂ values
+
+Step-through mode:
+- Stage 1: Show the two roots s₁ and s₂ on number line
+- Stage 2: Show first exponential e^(s₁t) - fast decay
+- Stage 3: Show second exponential e^(s₂t) - slow decay
+- Stage 4: Show sum forming the total response
+- Stage 5: Highlight that no zero crossings occur
+
+Interactive controls:
+- Slider: Damping ratio ζ (1.1 to 3.0)
+- Button: Next Step / Previous Step
+- Button: Animate continuous
+- Display: Root values s₁ and s₂
+- Display: Settling time estimate
+
+Default parameters:
+- ζ = 1.5
+- ω₀ = 1000 rad/s (for visualization scaling)
+
+Canvas layout:
+- Plot area: 600 × 300 pixels
+- Control area: 100 pixels below
+
+Instructional Rationale: Step-through reveals how the two exponential components combine to create the overdamped response, making the mathematics visible.
+
+Implementation: p5.js
+</details>
+
+<h2 id="underdamped-response-the-exciting-one">Underdamped Response: The Exciting One</h2>
+<p>When <span class="arithmatex">\(0 &lt; \zeta &lt; 1\)</span> (or <span class="arithmatex">\(\alpha &lt; \omega_0\)</span>), the circuit is <strong>underdamped</strong>. Now the characteristic equation has complex conjugate roots:</p>
+<div class="arithmatex">\[s_{1,2} = -\alpha \pm j\omega_d\]</div>
+<p>Where <span class="arithmatex">\(\omega_d\)</span> is the <strong>damped natural frequency</strong>:</p>
+<div class="arithmatex">\[\omega_d = \omega_0\sqrt{1 - \zeta^2} = \sqrt{\omega_0^2 - \alpha^2}\]</div>
+<p>The general solution is:</p>
+<div class="arithmatex">\[x(t) = e^{-\alpha t}(A\cos\omega_d t + B\sin\omega_d t)\]</div>
+<p>Or equivalently:</p>
+<div class="arithmatex">\[x(t) = Ce^{-\alpha t}\cos(\omega_d t + \phi)\]</div>
+<p><strong>Characteristics of underdamped response:</strong></p>
+<ul>
+<li>Oscillates around the final value</li>
+<li>Amplitude decays exponentially with time constant <span class="arithmatex">\(1/\alpha\)</span></li>
+<li>Frequency of oscillation is <span class="arithmatex">\(\omega_d\)</span>, not <span class="arithmatex">\(\omega_0\)</span></li>
+<li>Overshoots the target before settling</li>
+</ul>
+<p>The underdamped response is what gives RLC circuits their musical quality. It's the reason bells ring, guitar strings vibrate, and radio tuners can select stations. This is where circuits get <em>interesting</em>.</p>
+<p><strong>The damped frequency relationship:</strong></p>
+<div class="arithmatex">\[\omega_d = \omega_0\sqrt{1 - \zeta^2}\]</div>
+<table>
+<thead>
+<tr>
+<th>Damping Ratio ζ</th>
+<th>ω_d / ω₀</th>
+<th>Percent of Natural Frequency</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0.1</td>
+<td>0.995</td>
+<td>99.5%</td>
+</tr>
+<tr>
+<td>0.3</td>
+<td>0.954</td>
+<td>95.4%</td>
+</tr>
+<tr>
+<td>0.5</td>
+<td>0.866</td>
+<td>86.6%</td>
+</tr>
+<tr>
+<td>0.7</td>
+<td>0.714</td>
+<td>71.4%</td>
+</tr>
+<tr>
+<td>0.9</td>
+<td>0.436</td>
+<td>43.6%</td>
+</tr>
+</tbody>
+</table>
+<p>Notice that light damping barely affects the frequency, but heavy damping significantly reduces it.</p>
+<h4 id="diagram-underdamped-oscillation-anatomy">Diagram: Underdamped Oscillation Anatomy</h4>
+<iframe src="../../sims/underdamped-oscillation/main.html" width="100%" height="500px" scrolling="no" style="overflow: hidden;"></iframe>
+
+<details markdown="1">
+<summary>Underdamped Oscillation Anatomy</summary>
+Type: microsim
+
+Bloom Level: Analyze (L4)
+Bloom Verb: examine
+
+Learning Objective: Students will examine the components of underdamped response including the envelope, oscillation frequency, and overshoot.
+
+Visual elements:
+- Main plot: Response x(t) vs time with oscillations
+- Upper envelope: +Ce^(-αt) shown as dashed line
+- Lower envelope: -Ce^(-αt) shown as dashed line
+- Period markers showing T_d = 2π/ω_d
+- First peak (overshoot) highlighted and labeled
+- Settling band (±2% of final value) shown as shaded region
+
+Interactive controls:
+- Slider: Damping ratio ζ (0.05 to 0.95)
+- Slider: Natural frequency ω₀ (100 to 10,000 rad/s)
+- Toggle: Show/hide envelope
+- Toggle: Show/hide period markers
+- Display: Calculated values (ω_d, T_d, overshoot %)
+
+Calculations displayed:
+- ω_d = ω₀√(1-ζ²)
+- T_d = 2π/ω_d
+- Overshoot = e^(-πζ/√(1-ζ²)) × 100%
+- Settling time ≈ 4/α
+
+Default parameters:
+- ζ = 0.3
+- ω₀ = 1000 rad/s
+
+Canvas layout:
+- Plot area: 600 × 350 pixels
+- Control area: 100 pixels below
+
+Implementation: p5.js
+</details>
+
+<h3 id="overshoot-and-settling-time">Overshoot and Settling Time</h3>
+<p>Two key performance metrics for underdamped systems:</p>
+<p><strong>Percent Overshoot (PO):</strong></p>
+<div class="arithmatex">\[PO = e^{-\pi\zeta/\sqrt{1-\zeta^2}} \times 100\%\]</div>
+<table>
+<thead>
+<tr>
+<th>ζ</th>
+<th>Percent Overshoot</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0.1</td>
+<td>72.9%</td>
+</tr>
+<tr>
+<td>0.3</td>
+<td>37.2%</td>
+</tr>
+<tr>
+<td>0.5</td>
+<td>16.3%</td>
+</tr>
+<tr>
+<td>0.7</td>
+<td>4.6%</td>
+</tr>
+<tr>
+<td>0.9</td>
+<td>0.2%</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Settling Time</strong> (to within 2% of final value):</p>
+<div class="arithmatex">\[t_s \approx \frac{4}{\alpha} = \frac{4}{\zeta\omega_0}\]</div>
+<p>This creates a design trade-off: lower damping gives faster response but more overshoot; higher damping reduces overshoot but slows things down.</p>
+<h2 id="critically-damped-response-the-goldilocks-zone">Critically Damped Response: The Goldilocks Zone</h2>
+<p>When <span class="arithmatex">\(\zeta = 1\)</span> (or <span class="arithmatex">\(\alpha = \omega_0\)</span>), the circuit is <strong>critically damped</strong>. This is the boundary case with a repeated root:</p>
+<div class="arithmatex">\[s_1 = s_2 = -\alpha = -\omega_0\]</div>
+<p>The general solution is:</p>
+<div class="arithmatex">\[x(t) = (A + Bt)e^{-\omega_0 t}\]</div>
+<p><strong>Why critical damping is special:</strong></p>
+<ul>
+<li>Fastest possible return to equilibrium <em>without</em> overshoot</li>
+<li>Just barely on the edge of oscillation</li>
+<li>Optimal for many applications where overshoot is unacceptable</li>
+<li>The "perfect" door closer</li>
+</ul>
+<p><strong>Characteristics:</strong></p>
+<ul>
+<li>No oscillation</li>
+<li>May appear to overshoot very slightly due to initial conditions, but mathematically returns to equilibrium faster than overdamped</li>
+<li>Response rises quickly then smoothly approaches final value</li>
+</ul>
+<p>Critical damping is often the design target for:</p>
+<ul>
+<li>Automotive suspension systems</li>
+<li>Galvanometers and analog meters</li>
+<li>Camera stabilization systems</li>
+<li>Precision positioning systems</li>
+</ul>
+<h4 id="diagram-three-damping-regimes-comparison">Diagram: Three Damping Regimes Comparison</h4>
+<iframe src="../../sims/damping-comparison/main.html" width="100%" height="500px" scrolling="no" style="overflow: hidden;"></iframe>
+
+<details markdown="1">
+<summary>Three Damping Regimes Comparison</summary>
+Type: microsim
+
+Bloom Level: Analyze (L4)
+Bloom Verb: compare
+
+Learning Objective: Students will compare overdamped, critically damped, and underdamped responses to understand the trade-offs in damping selection.
+
+Visual elements:
+- Single plot showing three response curves simultaneously
+- Underdamped: Blue curve with oscillations
+- Critically damped: Green curve (optimal path)
+- Overdamped: Red curve (slow approach)
+- Target/final value shown as horizontal line
+- Time axis with settling time markers for each
+- Settling band (±2%) shown as shaded region
+
+Interactive controls:
+- Master slider: Natural frequency ω₀ (sets timescale)
+- Slider: Underdamped ζ (0.1 to 0.9)
+- Slider: Overdamped ζ (1.1 to 3.0)
+- Button: Reset to defaults
+- Toggle: Show/hide settling times
+- Toggle: Show/hide overshoot measurement
+
+Annotations:
+- "Fastest to settle" arrow pointing to critically damped curve
+- "Overshoot" measurement on underdamped curve
+- "Sluggish" label on overdamped curve
+
+Default parameters:
+- ω₀ = 1000 rad/s
+- Underdamped ζ = 0.3
+- Overdamped ζ = 2.0
+- Critically damped ζ = 1.0 (fixed reference)
+
+Canvas layout:
+- Plot area: 600 × 350 pixels
+- Control area: 100 pixels below
+
+Implementation: p5.js
+</details>
+
+<h2 id="resonant-frequency-when-circuits-sing">Resonant Frequency: When Circuits Sing</h2>
+<p><strong>Resonant frequency</strong> <span class="arithmatex">\(\omega_r\)</span> is the frequency at which a circuit's response is maximum. For a series RLC circuit driven by a sinusoidal source, resonance occurs when the inductive reactance equals the capacitive reactance:</p>
+<p>[X_L = X_C]
+[\omega_r L = \frac{1}{\omega_r C}]
+[\omega_r = \frac{1}{\sqrt{LC}} = \omega_0]</p>
+<p>At resonance in a series RLC circuit:</p>
+<ul>
+<li>Impedance is minimum (equals R)</li>
+<li>Current is maximum</li>
+<li>Voltage across L and C can exceed source voltage!</li>
+<li>Phase angle is zero (current in phase with voltage)</li>
+</ul>
+<p>For a parallel RLC circuit at resonance:</p>
+<ul>
+<li>Impedance is maximum</li>
+<li>Current from source is minimum</li>
+<li>Circulating current between L and C can exceed source current</li>
+</ul>
+<p><strong>The resonance phenomenon:</strong></p>
+<p>At resonance, energy continuously sloshes between the inductor and capacitor. In each half-cycle:
+1. C releases energy → L absorbs energy (as magnetic field)
+2. L releases energy → C absorbs energy (as electric field)</p>
+<p>With no losses (R = 0), this would continue forever. With resistance, some energy is dissipated each cycle, and the source replenishes it.</p>
+<table>
+<thead>
+<tr>
+<th>Circuit Type</th>
+<th>At Resonance</th>
+<th>Impedance</th>
+<th>Current</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Series RLC</td>
+<td>Z = R (minimum)</td>
+<td>I = V/R (maximum)</td>
+<td>V_L = V_C (cancel)</td>
+</tr>
+<tr>
+<td>Parallel RLC</td>
+<td>Z → ∞ (maximum)</td>
+<td>I → 0 (minimum)</td>
+<td>I_L = I_C (cancel)</td>
+</tr>
+</tbody>
+</table>
+<h4 id="diagram-series-rlc-resonance-explorer">Diagram: Series RLC Resonance Explorer</h4>
+<iframe src="../../sims/series-resonance/main.html" width="100%" height="500px" scrolling="no" style="overflow: hidden;"></iframe>
+
+<details markdown="1">
+<summary>Series RLC Resonance Explorer</summary>
+Type: microsim
+
+Bloom Level: Apply (L3)
+Bloom Verb: demonstrate
+
+Learning Objective: Students will demonstrate resonance in a series RLC circuit by finding the frequency where current is maximized and impedance is minimized.
+
+Visual elements:
+- Left panel: Circuit diagram with animated current flow
+- Center panel: Impedance magnitude |Z| vs frequency plot
+- Right panel: Current magnitude |I| vs frequency plot
+- Vertical line showing current frequency position
+- Resonance peak clearly marked
+- Phase angle display
+
+Interactive controls:
+- Slider: Driving frequency f (0.1× to 10× resonant frequency)
+- Slider: Resistance R (10Ω to 1000Ω)
+- Slider: Inductance L (1mH to 100mH)
+- Slider: Capacitance C (0.1μF to 10μF)
+- Button: "Jump to Resonance"
+- Display: f₀, current frequency, |Z|, |I|
+
+Calculations shown:
+- f₀ = 1/(2π√(LC))
+- At current frequency: X_L = ωL, X_C = 1/ωC
+- |Z| = √(R² + (X_L - X_C)²)
+- |I| = V/|Z|
+
+Observations highlighted:
+- At resonance: X_L = X_C, so Z = R
+- Below resonance: Capacitive (X_C > X_L)
+- Above resonance: Inductive (X_L > X_C)
+
+Default parameters:
+- R = 100Ω
+- L = 10mH
+- C = 1μF
+- f₀ ≈ 1592 Hz
+
+Canvas layout:
+- Drawing area: 600 × 350 pixels
+- Control area: 100 pixels below
+
+Implementation: p5.js
+</details>
+
+<h2 id="quality-factor-how-sharp-is-the-resonance">Quality Factor: How Sharp is the Resonance?</h2>
+<p>The <strong>quality factor</strong> Q is a dimensionless parameter that characterizes the sharpness of resonance and the efficiency of energy storage. Higher Q means sharper resonance peaks and lower energy loss per cycle.</p>
+<p><strong>Definition for series RLC:</strong></p>
+<div class="arithmatex">\[Q = \frac{\omega_0 L}{R} = \frac{1}{\omega_0 CR} = \frac{1}{R}\sqrt{\frac{L}{C}}\]</div>
+<p><strong>Definition for parallel RLC:</strong></p>
+<div class="arithmatex">\[Q = \omega_0 CR = \frac{R}{\omega_0 L} = R\sqrt{\frac{C}{L}}\]</div>
+<p>Notice that Q has opposite relationships with R for series vs. parallel circuits!</p>
+<p><strong>Relationships with damping:</strong></p>
+<div class="arithmatex">\[Q = \frac{1}{2\zeta}\]</div>
+<div class="arithmatex">\[\zeta = \frac{1}{2Q}\]</div>
+<table>
+<thead>
+<tr>
+<th>Damping Ratio ζ</th>
+<th>Quality Factor Q</th>
+<th>Response Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0.05</td>
+<td>10</td>
+<td>Highly underdamped</td>
+</tr>
+<tr>
+<td>0.1</td>
+<td>5</td>
+<td>Underdamped</td>
+</tr>
+<tr>
+<td>0.25</td>
+<td>2</td>
+<td>Moderately underdamped</td>
+</tr>
+<tr>
+<td>0.5</td>
+<td>1</td>
+<td>Boundary</td>
+</tr>
+<tr>
+<td>1.0</td>
+<td>0.5</td>
+<td>Critically damped</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Physical interpretations of Q:</strong></p>
+<ol>
+<li>
+<p><strong>Energy ratio:</strong>
+   [Q = 2\pi \times \frac{\text{Energy stored}}{\text{Energy dissipated per cycle}}]</p>
+</li>
+<li>
+<p><strong>Bandwidth relationship:</strong>
+   [Q = \frac{f_0}{BW}]
+   Where BW is the 3dB bandwidth (the frequency range where response is above 70.7% of peak)</p>
+</li>
+<li>
+<p><strong>Number of oscillations:</strong>
+   A high-Q circuit oscillates many times before its amplitude decays significantly</p>
+</li>
+</ol>
+<p><strong>Bandwidth and selectivity:</strong></p>
+<div class="arithmatex">\[BW = \frac{f_0}{Q} = \frac{\omega_0}{Q} \text{ (rad/s)}\]</div>
+<table>
+<thead>
+<tr>
+<th>Q</th>
+<th>f₀ = 1 MHz</th>
+<th>Bandwidth</th>
+<th>Application</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>10</td>
+<td>100 kHz</td>
+<td>Wide, poor selectivity</td>
+<td>Audio filter</td>
+</tr>
+<tr>
+<td>100</td>
+<td>10 kHz</td>
+<td>Moderate selectivity</td>
+<td>IF stage</td>
+</tr>
+<tr>
+<td>1000</td>
+<td>1 kHz</td>
+<td>Sharp selectivity</td>
+<td>Crystal oscillator</td>
+</tr>
+<tr>
+<td>10000</td>
+<td>100 Hz</td>
+<td>Very sharp</td>
+<td>Atomic clock</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition warning">
+<p class="admonition-title">Q and Practical Limits</p>
+<p>Very high Q values are difficult to achieve with real components because all inductors have some resistance and all capacitors have some leakage. Practical Q factors for discrete L-C circuits rarely exceed 100-200. For higher Q, engineers use quartz crystals or mechanical resonators.</p>
+</div>
+<h4 id="diagram-quality-factor-and-bandwidth">Diagram: Quality Factor and Bandwidth</h4>
+<iframe src="../../sims/quality-factor/main.html" width="100%" height="500px" scrolling="no" style="overflow: hidden;"></iframe>
+
+<details markdown="1">
+<summary>Quality Factor and Bandwidth</summary>
+Type: microsim
+
+Bloom Level: Analyze (L4)
+Bloom Verb: examine
+
+Learning Objective: Students will examine how quality factor affects resonance sharpness and bandwidth by observing frequency response curves.
+
+Visual elements:
+- Main plot: Normalized magnitude response vs frequency (log scale)
+- Multiple curves showing different Q values (5, 10, 20, 50)
+- 3dB points marked on each curve
+- Bandwidth arrows connecting 3dB points
+- Peak labeled with Q value
+
+Interactive controls:
+- Slider: Quality factor Q (1 to 100)
+- Slider: Resonant frequency f₀ (100 Hz to 10 kHz)
+- Toggle: Show/hide multiple Q curves for comparison
+- Toggle: Linear/Log frequency scale
+- Display: Calculated bandwidth BW = f₀/Q
+
+Calculations displayed:
+- BW = f₀/Q
+- Lower 3dB frequency: f₁ = f₀/√(1 + 1/4Q²) - f₀/2Q
+- Upper 3dB frequency: f₂ = f₀/√(1 + 1/4Q²) + f₀/2Q
+- Damping ratio: ζ = 1/2Q
+
+Visual annotations:
+- "Sharper peak = Higher Q"
+- "Narrower bandwidth = Better selectivity"
+- 3dB = 0.707 of peak value shown
+
+Default parameters:
+- Q = 10
+- f₀ = 1 kHz
+
+Canvas layout:
+- Plot area: 600 × 350 pixels
+- Control area: 100 pixels below
+
+Implementation: p5.js
+</details>
+
+<h2 id="pulse-response-ringing-and-transients">Pulse Response: Ringing and Transients</h2>
+<p>The <strong>pulse response</strong> is how a circuit responds to a sudden rectangular pulse input rather than a step. This is crucial for digital circuits where signals switch between 0 and 1.</p>
+<p>When an underdamped RLC circuit receives a pulse:</p>
+<ol>
+<li><strong>Leading edge:</strong> Circuit begins oscillating in response to the step-up</li>
+<li><strong>Pulse duration:</strong> Oscillations continue, possibly settling partially</li>
+<li><strong>Trailing edge:</strong> Second disturbance adds to (or cancels) existing oscillation</li>
+<li><strong>Ring-out:</strong> Damped oscillations continue after pulse ends</li>
+</ol>
+<p><strong>Why ringing matters:</strong></p>
+<ul>
+<li>In digital circuits, ringing can cause false triggers</li>
+<li>Oscillations might be interpreted as additional pulses</li>
+<li>High-speed digital buses require careful impedance matching to minimize ringing</li>
+</ul>
+<p><strong>Pulse width effects:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Pulse Width vs Period</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Much shorter than T_d</td>
+<td>Minimal energy transfer, weak response</td>
+</tr>
+<tr>
+<td>Equal to T_d/2</td>
+<td>Maximum energy transfer, strongest ringing</td>
+</tr>
+<tr>
+<td>Much longer than T_d</td>
+<td>Settles during pulse, two separate step responses</td>
+</tr>
+</tbody>
+</table>
+<h4 id="diagram-pulse-response-and-ringing">Diagram: Pulse Response and Ringing</h4>
+<iframe src="../../sims/pulse-ringing/main.html" width="100%" height="450px" scrolling="no" style="overflow: hidden;"></iframe>
+
+<details markdown="1">
+<summary>Pulse Response and Ringing</summary>
+Type: microsim
+
+Bloom Level: Apply (L3)
+Bloom Verb: demonstrate
+
+Learning Objective: Students will demonstrate how pulse width and damping affect ringing in RLC circuits.
+
+Visual elements:
+- Top plot: Input pulse signal
+- Bottom plot: Circuit response with ringing
+- Overlay showing damped oscillations
+- Pulse edges aligned between plots
+- Ringing peaks counted and labeled
+
+Interactive controls:
+- Slider: Pulse width (0.1× to 5× natural period)
+- Slider: Damping ratio ζ (0.05 to 0.9)
+- Slider: Natural frequency ω₀
+- Button: Send single pulse
+- Button: Continuous pulses
+- Display: Number of ringing cycles visible
+
+Observations highlighted:
+- Pulse width = T_d/2: "Maximum ringing - resonant excitation"
+- High ζ: "Quick settling, minimal overshoot"
+- Low ζ: "Extended ringing, many oscillations"
+
+Default parameters:
+- ζ = 0.2
+- Pulse width = T_d (one natural period)
+- ω₀ = 1000 rad/s
+
+Canvas layout:
+- Two plot areas: 600 × 175 pixels each
+- Control area: 100 pixels below
+
+Implementation: p5.js
+</details>
+
+<h2 id="energy-exchange-in-rlc-circuits">Energy Exchange in RLC Circuits</h2>
+<p>The oscillatory behavior of RLC circuits comes from energy continuously exchanging between the electric field of the capacitor and the magnetic field of the inductor.</p>
+<p><strong>Energy expressions:</strong></p>
+<ul>
+<li>Capacitor energy: <span class="arithmatex">\(W_C = \frac{1}{2}Cv^2\)</span></li>
+<li>Inductor energy: <span class="arithmatex">\(W_L = \frac{1}{2}Li^2\)</span></li>
+<li>Total energy: <span class="arithmatex">\(W_{total} = W_C + W_L\)</span></li>
+</ul>
+<p>In an ideal LC circuit (no resistance):</p>
+<ul>
+<li>Total energy remains constant</li>
+<li>Energy oscillates completely between L and C</li>
+<li>When all energy is in C: maximum voltage, zero current</li>
+<li>When all energy is in L: maximum current, zero voltage</li>
+</ul>
+<p>With resistance:</p>
+<ul>
+<li>Total energy decreases exponentially</li>
+<li>Energy is dissipated as heat in R</li>
+<li>Rate of energy loss: <span class="arithmatex">\(P_R = i^2R\)</span></li>
+</ul>
+<h4 id="diagram-energy-exchange-animation">Diagram: Energy Exchange Animation</h4>
+<iframe src="../../sims/energy-exchange/main.html" width="100%" height="500px" scrolling="no" style="overflow: hidden;"></iframe>
+
+<details markdown="1">
+<summary>Energy Exchange Animation</summary>
+Type: microsim
+
+Bloom Level: Understand (L2)
+Bloom Verb: explain
+
+Learning Objective: Students will explain how energy oscillates between the capacitor's electric field and the inductor's magnetic field in an RLC circuit.
+
+Visual elements:
+- Circuit diagram showing RLC with animated current
+- Capacitor energy bar (blue) - electric field representation
+- Inductor energy bar (red) - magnetic field representation
+- Total energy bar (gray) - decreasing over time
+- Phase indicator showing voltage and current relationship
+- Energy vs time plot showing oscillation
+
+Step-through mode for conceptual understanding:
+- Stage 1: "Capacitor fully charged" - all energy in E-field
+- Stage 2: "Current rising" - energy transferring to L
+- Stage 3: "Inductor at max current" - all energy in B-field
+- Stage 4: "Current falling" - energy returning to C (opposite polarity)
+- Stage 5: "Cycle completes" - back to initial state (with losses)
+
+Interactive controls:
+- Button: Step / Auto-animate
+- Slider: Damping (0 for ideal LC, up to 0.5)
+- Slider: Animation speed
+- Toggle: Show/hide energy plot
+- Display: Current W_C, W_L, W_total values
+
+Default parameters:
+- Light damping (ζ = 0.1) to show both oscillation and decay
+- Initial condition: Capacitor fully charged
+
+Canvas layout:
+- Circuit and energy bars: 400 × 300 pixels
+- Energy plot: 200 × 300 pixels (side)
+- Control area: 100 pixels below
+
+Instructional Rationale: Step-through mode helps students understand energy conservation and transfer without the distraction of continuous animation.
+
+Implementation: p5.js
+</details>
+
+<h2 id="design-applications">Design Applications</h2>
+<p>Understanding second-order systems empowers you to design circuits for specific behaviors:</p>
+<h3 id="radio-tuning">Radio Tuning</h3>
+<p>Radio receivers use LC resonance to select stations. The resonant frequency determines which radio frequency passes through:</p>
+<div class="arithmatex">\[f_0 = \frac{1}{2\pi\sqrt{LC}}\]</div>
+<p>By varying C (using a variable capacitor), you "tune" to different frequencies. Higher Q gives better selectivity between adjacent stations.</p>
+<h3 id="shock-absorbers-and-mechanical-analogy">Shock Absorbers and Mechanical Analogy</h3>
+<p>Mechanical systems follow the same mathematics! A mass-spring-damper system is described by:</p>
+<div class="arithmatex">\[m\frac{d^2x}{dt^2} + b\frac{dx}{dt} + kx = F(t)\]</div>
+<p>Comparing to the electrical equation:</p>
+<table>
+<thead>
+<tr>
+<th>Electrical</th>
+<th>Mechanical</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>L (inductance)</td>
+<td>m (mass)</td>
+</tr>
+<tr>
+<td>R (resistance)</td>
+<td>b (damping coefficient)</td>
+</tr>
+<tr>
+<td>1/C (elastance)</td>
+<td>k (spring constant)</td>
+</tr>
+<tr>
+<td>Voltage V</td>
+<td>Force F</td>
+</tr>
+<tr>
+<td>Current i</td>
+<td>Velocity v</td>
+</tr>
+<tr>
+<td>Charge q</td>
+<td>Displacement x</td>
+</tr>
+</tbody>
+</table>
+<p>Car suspension is designed for critical damping (ζ ≈ 1) so the car returns to level quickly after hitting a bump without bouncing.</p>
+<h3 id="audio-crossover-networks">Audio Crossover Networks</h3>
+<p>Speaker crossover networks use RLC filters to direct different frequencies to appropriate drivers:</p>
+<ul>
+<li>Low frequencies → Woofer (large speaker)</li>
+<li>High frequencies → Tweeter (small speaker)</li>
+</ul>
+<p>The Q factor determines how sharply the crossover separates frequencies.</p>
+<h3 id="bandpass-filters">Bandpass Filters</h3>
+<p>A series RLC circuit naturally acts as a bandpass filter, passing frequencies near resonance while attenuating others. The bandwidth and center frequency are controlled by component selection.</p>
+<table>
+<thead>
+<tr>
+<th>Application</th>
+<th>Typical Q</th>
+<th>Bandwidth</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Audio tone control</td>
+<td>1-5</td>
+<td>Wide</td>
+</tr>
+<tr>
+<td>Radio IF stage</td>
+<td>20-50</td>
+<td>Moderate</td>
+</tr>
+<tr>
+<td>Frequency reference</td>
+<td>100-1000</td>
+<td>Narrow</td>
+</tr>
+</tbody>
+</table>
+<h2 id="practical-considerations">Practical Considerations</h2>
+<h3 id="real-component-limitations">Real Component Limitations</h3>
+<p>Ideal RLC analysis assumes perfect components, but real parts have limitations:</p>
+<p><strong>Inductors:</strong>
+- Series resistance (wire resistance)
+- Self-capacitance (between windings)
+- Saturation at high currents</p>
+<p><strong>Capacitors:</strong>
+- Equivalent series resistance (ESR)
+- Equivalent series inductance (ESL)
+- Leakage current
+- Voltage rating limits</p>
+<p><strong>Resistors:</strong>
+- Temperature coefficient
+- Parasitic inductance at high frequencies</p>
+<p>These parasitics can cause unexpected resonances or damping in high-frequency circuits.</p>
+<h3 id="initial-conditions">Initial Conditions</h3>
+<p>The complete solution to a second-order equation requires two initial conditions (because it's second-order). Typically:</p>
+<ul>
+<li>Initial voltage: <span class="arithmatex">\(v(0)\)</span> or <span class="arithmatex">\(v_C(0)\)</span></li>
+<li>Initial current: <span class="arithmatex">\(i(0)\)</span> or <span class="arithmatex">\(i_L(0)\)</span></li>
+</ul>
+<p>These determine the constants in the general solution and can dramatically affect the transient response.</p>
+<h2 id="key-formulas-summary">Key Formulas Summary</h2>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Series RLC</th>
+<th>Parallel RLC</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Damping coefficient α</td>
+<td>R/2L</td>
+<td>1/2RC</td>
+</tr>
+<tr>
+<td>Natural frequency ω₀</td>
+<td>1/√(LC)</td>
+<td>1/√(LC)</td>
+</tr>
+<tr>
+<td>Damping ratio ζ</td>
+<td>(R/2)√(C/L)</td>
+<td>(1/2R)√(L/C)</td>
+</tr>
+<tr>
+<td>Quality factor Q</td>
+<td>(1/R)√(L/C)</td>
+<td>R√(C/L)</td>
+</tr>
+<tr>
+<td>Resonant frequency ω_r</td>
+<td>1/√(LC)</td>
+<td>1/√(LC)</td>
+</tr>
+<tr>
+<td>Bandwidth BW</td>
+<td>R/L</td>
+<td>1/RC</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Response classification:</strong></p>
+<ul>
+<li>Overdamped: <span class="arithmatex">\(\zeta &gt; 1\)</span>, roots = <span class="arithmatex">\(-\alpha \pm \sqrt{\alpha^2 - \omega_0^2}\)</span></li>
+<li>Critically damped: <span class="arithmatex">\(\zeta = 1\)</span>, root = <span class="arithmatex">\(-\omega_0\)</span> (repeated)</li>
+<li>Underdamped: <span class="arithmatex">\(\zeta &lt; 1\)</span>, roots = <span class="arithmatex">\(-\alpha \pm j\omega_d\)</span>, where <span class="arithmatex">\(\omega_d = \omega_0\sqrt{1-\zeta^2}\)</span></li>
+</ul>
+<h2 id="self-check-questions">Self-Check Questions</h2>
+<details class="question">
+<summary>1. What determines whether a circuit is overdamped, underdamped, or critically damped?</summary>
+<p>The relationship between the damping coefficient α and the natural frequency ω₀ determines the damping type:</p>
+<ul>
+<li><strong>Overdamped:</strong> α &gt; ω₀ (or ζ &gt; 1)</li>
+<li><strong>Critically damped:</strong> α = ω₀ (or ζ = 1)</li>
+<li><strong>Underdamped:</strong> α &lt; ω₀ (or ζ &lt; 1)</li>
+</ul>
+<p>For a series RLC circuit, α = R/2L and ω₀ = 1/√(LC). So increasing R increases damping, while increasing L or C changes both α and ω₀.</p>
+</details>
+<details class="question">
+<summary>2. A series RLC circuit has R = 100Ω, L = 10mH, and C = 1μF. Calculate ω₀, α, and ζ. What type of response will it have?</summary>
+<p>Given: R = 100Ω, L = 10mH = 0.01H, C = 1μF = 10⁻⁶F</p>
+<p>Natural frequency:
+ω₀ = 1/√(LC) = 1/√(0.01 × 10⁻⁶) = 1/√(10⁻⁸) = 10,000 rad/s</p>
+<p>Damping coefficient:
+α = R/2L = 100/(2 × 0.01) = 5,000 rad/s</p>
+<p>Damping ratio:
+ζ = α/ω₀ = 5,000/10,000 = 0.5</p>
+<p>Since ζ = 0.5 &lt; 1, the circuit is <strong>underdamped</strong> and will oscillate.</p>
+<p>The damped frequency will be:
+ω_d = ω₀√(1-ζ²) = 10,000√(1-0.25) = 10,000 × 0.866 = 8,660 rad/s</p>
+</details>
+<details class="question">
+<summary>3. Why is critical damping often preferred in practical applications despite not being the 'fastest' in all senses?</summary>
+<p>Critical damping provides the fastest return to equilibrium <strong>without overshoot</strong>. While an underdamped system might initially reach the target faster, it then overshoots and oscillates before settling.</p>
+<p>Critical damping is preferred when:
+- Overshoot could cause damage (mechanical systems hitting limits)
+- False readings are unacceptable (measuring instruments)
+- Oscillation could trigger unwanted events (digital circuits)
+- Smooth motion is required (camera stabilization)</p>
+<p>The "fastest" actually depends on what you're optimizing. If you need to reach 90% of the target quickly and can tolerate overshoot, underdamped is faster. If you need to stay within ±2% of the target, critical damping usually wins.</p>
+</details>
+<details class="question">
+<summary>4. How does the quality factor Q relate to both the damping ratio and the bandwidth of a resonant circuit?</summary>
+<p>Q is inversely related to damping ratio:
+Q = 1/(2ζ)  or  ζ = 1/(2Q)</p>
+<p>Q is also related to bandwidth:
+Q = f₀/BW  or  BW = f₀/Q</p>
+<p>This means:
+- High Q → Low damping → Narrow bandwidth → Sharp resonance
+- Low Q → High damping → Wide bandwidth → Broad resonance</p>
+<p>For example, a circuit with Q = 100 at f₀ = 1 MHz has:
+- ζ = 1/(2×100) = 0.005 (very underdamped)
+- BW = 1 MHz/100 = 10 kHz (very selective)</p>
+<p>A circuit with Q = 2 at f₀ = 1 MHz has:
+- ζ = 1/(2×2) = 0.25 (moderately underdamped)
+- BW = 1 MHz/2 = 500 kHz (not selective at all)</p>
+</details>
+<h2 id="summary_1">Summary</h2>
+<p>Second-order RLC circuits introduce the rich dynamics of oscillation and resonance that first-order circuits can't produce. The key insights from this chapter:</p>
+<ol>
+<li>
+<p><strong>Second-order means two energy storage elements</strong> - The interplay between L and C creates oscillatory behavior</p>
+</li>
+<li>
+<p><strong>The damping ratio ζ controls everything</strong> - It determines whether the response is overdamped (sluggish), critically damped (optimal), or underdamped (oscillatory)</p>
+</li>
+<li>
+<p><strong>Natural frequency depends only on L and C</strong> - Resistance affects damping but not the fundamental frequency of oscillation</p>
+</li>
+<li>
+<p><strong>Resonance is powerful</strong> - At the resonant frequency, series circuits maximize current and parallel circuits maximize impedance</p>
+</li>
+<li>
+<p><strong>Quality factor Q indicates selectivity</strong> - High Q means sharp resonance and narrow bandwidth; Q and ζ are inversely related</p>
+</li>
+<li>
+<p><strong>Energy sloshes between L and C</strong> - The electric field and magnetic field continuously exchange energy, with R dissipating some each cycle</p>
+</li>
+<li>
+<p><strong>The same math describes mechanical systems</strong> - Mass-spring-dampers follow identical equations, making RLC circuit analysis a universal skill</p>
+</li>
+</ol>
+<p>These concepts prepare you for AC analysis, where sinusoidal signals interact with resonant circuits to create the filters, tuners, and oscillators that make modern electronics possible. The dramatic behavior of second-order circuits—the ringing, the resonance, the critical balance between too much and too little damping—is where circuit analysis becomes genuinely exciting.</p>
+<p>Next chapter, we'll see how AC signals and sinusoidal analysis build on these foundations to analyze circuits in the frequency domain.</p>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../06-transient-analysis-rc-rl/" class="md-footer__link md-footer__link--prev" aria-label="Previous: 6. Transient Analysis RC/RL">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                6. Transient Analysis RC/RL
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../08-ac-signals-sinusoidal/" class="md-footer__link md-footer__link--next" aria-label="Next: 8. AC Signals and Sinusoids">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                8. AC Signals and Sinusoids
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.copy", "navigation.expand", "navigation.path", "navigation.prune", "navigation.indexes", "toc.follow", "navigation.top", "navigation.footer", "content.action.edit"], "search": "../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.83f73b43.min.js"></script>
+      
+        <script src="../../js/extra.js"></script>
+      
+        <script src="../../js/katex.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+      
+    
+  </body>
+</html>

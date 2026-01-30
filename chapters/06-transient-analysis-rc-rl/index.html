@@ -1,0 +1,3281 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Master time constants and exponential responses in first-order circuits">
+      
+      
+        <meta name="author" content="Dan McCreary">
+      
+      
+        <link rel="canonical" href="https://dmccreary.github.io/circuits/chapters/06-transient-analysis-rc-rl/">
+      
+      
+        <link rel="prev" href="../05-passive-components/">
+      
+      
+        <link rel="next" href="../07-second-order-rlc-circuits/">
+      
+      
+      <link rel="icon" href="../../img/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.43">
+    
+    
+      
+        <title>Transient Analysis of RC and RL Circuits - Circuits 1</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.0253249f.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../css/extra.css">
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+<script id="__analytics">function __md_analytics(){function e(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],e("js",new Date),e("config","G-9J4MVE6LWP"),document.addEventListener("DOMContentLoaded",(function(){document.forms.search&&document.forms.search.query.addEventListener("blur",(function(){this.value&&e("event","search",{search_term:this.value})}));document$.subscribe((function(){var t=document.forms.feedback;if(void 0!==t)for(var a of t.querySelectorAll("[type=submit]"))a.addEventListener("click",(function(a){a.preventDefault();var n=document.location.pathname,d=this.getAttribute("data-md-value");e("event","feedback",{page:n,data:d}),t.firstElementChild.disabled=!0;var r=t.querySelector(".md-feedback__note [data-md-value='"+d+"']");r&&(r.hidden=!1)})),t.hidden=!1})),location$.subscribe((function(t){e("config","G-9J4MVE6LWP",{page_path:t.pathname})}))}));var t=document.createElement("script");t.async=!0,t.src="https://www.googletagmanager.com/gtag/js?id=G-9J4MVE6LWP",document.getElementById("__analytics").insertAdjacentElement("afterEnd",t)}</script>
+  
+    <script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
+  
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="orange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#transient-analysis-of-rc-and-rl-circuits" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Circuits 1" class="md-header__button md-logo" aria-label="Circuits 1" data-md-component="logo">
+      
+  <img src="../../img/course-logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Circuits 1
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Transient Analysis of RC and RL Circuits
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/dmccreary/circuits" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub Repo
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Circuits 1" class="md-nav__button md-logo" aria-label="Circuits 1" data-md-component="logo">
+      
+  <img src="../../img/course-logo.png" alt="logo">
+
+    </a>
+    Circuits 1
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/dmccreary/circuits" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub Repo
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../about/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    About This Course
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+    
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Chapters
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Chapters
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-electric-charge-basic-quantities/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1. Electric Charge and Quantities
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-ohms-law-basic-configurations/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2. Ohm's Law and Configurations
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-kirchhoffs-laws-topology/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3. Kirchhoff's Laws and Topology
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-dc-circuit-analysis/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4. DC Circuit Analysis
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-passive-components/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5. Passive Components
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    6. Transient Analysis RC/RL
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    6. Transient Analysis RC/RL
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      Summary
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#concepts-covered" class="md-nav__link">
+    <span class="md-ellipsis">
+      Concepts Covered
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prerequisites
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#introduction-when-circuits-remember" class="md-nav__link">
+    <span class="md-ellipsis">
+      Introduction: When Circuits Remember
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#first-order-circuits-one-storage-element-at-a-time" class="md-nav__link">
+    <span class="md-ellipsis">
+      First-Order Circuits: One Storage Element at a Time
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-time-constant-your-circuits-personality" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Time Constant: Your Circuit's Personality
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Time Constant: Your Circuit's Personality">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rc-time-constant" class="md-nav__link">
+    <span class="md-ellipsis">
+      RC Time Constant
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rl-time-constant" class="md-nav__link">
+    <span class="md-ellipsis">
+      RL Time Constant
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-the-time-constant-means" class="md-nav__link">
+    <span class="md-ellipsis">
+      What the Time Constant Means
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="What the Time Constant Means">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-time-constant-visualization" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Time Constant Visualization
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rc-charging-building-up-the-electric-field" class="md-nav__link">
+    <span class="md-ellipsis">
+      RC Charging: Building Up the Electric Field
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="RC Charging: Building Up the Electric Field">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Setup
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-solution" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Solution
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Solution">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rc-charging-voltage" class="md-nav__link">
+    <span class="md-ellipsis">
+      RC Charging Voltage
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rc-charging-current" class="md-nav__link">
+    <span class="md-ellipsis">
+      RC Charging Current
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#diagram-rc-charging-circuit" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: RC Charging Circuit
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rc-discharging-releasing-the-energy" class="md-nav__link">
+    <span class="md-ellipsis">
+      RC Discharging: Releasing the Energy
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="RC Discharging: Releasing the Energy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-solution_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Solution
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Solution">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rc-discharging-voltage" class="md-nav__link">
+    <span class="md-ellipsis">
+      RC Discharging Voltage
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rc-discharging-current" class="md-nav__link">
+    <span class="md-ellipsis">
+      RC Discharging Current
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#diagram-rc-discharging" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: RC Discharging
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-universal-form-step-response" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Universal Form: Step Response
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Universal Form: Step Response">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#general-step-response-formula" class="md-nav__link">
+    <span class="md-ellipsis">
+      General Step Response Formula
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rl-circuits-magnetic-energy-storage" class="md-nav__link">
+    <span class="md-ellipsis">
+      RL Circuits: Magnetic Energy Storage
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="RL Circuits: Magnetic Energy Storage">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rl-energizing" class="md-nav__link">
+    <span class="md-ellipsis">
+      RL Energizing
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="RL Energizing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rl-energizing-current" class="md-nav__link">
+    <span class="md-ellipsis">
+      RL Energizing Current
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rl-energizing-voltage" class="md-nav__link">
+    <span class="md-ellipsis">
+      RL Energizing Voltage
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rl-de-energizing" class="md-nav__link">
+    <span class="md-ellipsis">
+      RL De-energizing
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="RL De-energizing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rl-de-energizing-current" class="md-nav__link">
+    <span class="md-ellipsis">
+      RL De-energizing Current
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#diagram-rl-circuit-response" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: RL Circuit Response
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#initial-and-final-conditions-the-key-to-every-problem" class="md-nav__link">
+    <span class="md-ellipsis">
+      Initial and Final Conditions: The Key to Every Problem
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Initial and Final Conditions: The Key to Every Problem">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#finding-initial-conditions-t-0" class="md-nav__link">
+    <span class="md-ellipsis">
+      Finding Initial Conditions (\(t = 0^+\))
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#finding-final-conditions-t-infty" class="md-nav__link">
+    <span class="md-ellipsis">
+      Finding Final Conditions (\(t = \infty\))
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-step-by-step-method" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Step-by-Step Method
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Step-by-Step Method">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-initial-and-final-conditions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Initial and Final Conditions
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#natural-and-forced-response" class="md-nav__link">
+    <span class="md-ellipsis">
+      Natural and Forced Response
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Natural and Forced Response">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#natural-response" class="md-nav__link">
+    <span class="md-ellipsis">
+      Natural Response
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#forced-response" class="md-nav__link">
+    <span class="md-ellipsis">
+      Forced Response
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#complete-response" class="md-nav__link">
+    <span class="md-ellipsis">
+      Complete Response
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Complete Response">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#complete-response_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Complete Response
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#practical-examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      Practical Examples
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Practical Examples">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#example-1-camera-flash-charging" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example 1: Camera Flash Charging
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-2-rc-timing-circuit" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example 2: RC Timing Circuit
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-3-relay-protection" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example 3: Relay Protection
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-4-audio-coupling-capacitor" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example 4: Audio Coupling Capacitor
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Example 4: Audio Coupling Capacitor">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-practical-rcrl-applications" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Practical RC/RL Applications
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-exponential-response-a-deeper-look" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Exponential Response: A Deeper Look
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Exponential Response: A Deeper Look">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-differential-equation" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Differential Equation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#graphical-interpretation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Graphical Interpretation
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Graphical Interpretation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-exponential-properties" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Exponential Properties
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary-and-key-takeaways" class="md-nav__link">
+    <span class="md-ellipsis">
+      Summary and Key Takeaways
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-second-order-rlc-circuits/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    7. Second-Order RLC Circuits
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-ac-signals-sinusoidal/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    8. AC Signals and Sinusoids
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../09-phasors-complex-impedance/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    9. Phasors and Impedance
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10-ac-power-analysis/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    10. AC Power Analysis
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../11-frequency-response-bode/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    11. Frequency Response and Bode
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../12-filters-resonance/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    12. Filters and Resonance
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../13-operational-amplifiers/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    13. Operational Amplifiers
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../14-signals-audio-lab/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    14. Signal Analysis and Fourier
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../15-audio-applications/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    15. Audio Applications
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../16-laboratory-techniques/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    16. Laboratory Techniques
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../sims/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    MicroSims
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../sections/index.md" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Supplementary Sections
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../learning-graph/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Learning Graph
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../prompts/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Sample Prompts
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+          
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../faq/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    FAQ
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../glossary/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Glossary
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how-we-built-this-site/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    How We Built This Site
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../references/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    References
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../license/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    License
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contact/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Contact
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      Summary
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#concepts-covered" class="md-nav__link">
+    <span class="md-ellipsis">
+      Concepts Covered
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prerequisites
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#introduction-when-circuits-remember" class="md-nav__link">
+    <span class="md-ellipsis">
+      Introduction: When Circuits Remember
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#first-order-circuits-one-storage-element-at-a-time" class="md-nav__link">
+    <span class="md-ellipsis">
+      First-Order Circuits: One Storage Element at a Time
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-time-constant-your-circuits-personality" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Time Constant: Your Circuit's Personality
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Time Constant: Your Circuit's Personality">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rc-time-constant" class="md-nav__link">
+    <span class="md-ellipsis">
+      RC Time Constant
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rl-time-constant" class="md-nav__link">
+    <span class="md-ellipsis">
+      RL Time Constant
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-the-time-constant-means" class="md-nav__link">
+    <span class="md-ellipsis">
+      What the Time Constant Means
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="What the Time Constant Means">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-time-constant-visualization" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Time Constant Visualization
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rc-charging-building-up-the-electric-field" class="md-nav__link">
+    <span class="md-ellipsis">
+      RC Charging: Building Up the Electric Field
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="RC Charging: Building Up the Electric Field">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Setup
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-solution" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Solution
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Solution">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rc-charging-voltage" class="md-nav__link">
+    <span class="md-ellipsis">
+      RC Charging Voltage
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rc-charging-current" class="md-nav__link">
+    <span class="md-ellipsis">
+      RC Charging Current
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#diagram-rc-charging-circuit" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: RC Charging Circuit
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rc-discharging-releasing-the-energy" class="md-nav__link">
+    <span class="md-ellipsis">
+      RC Discharging: Releasing the Energy
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="RC Discharging: Releasing the Energy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-solution_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Solution
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Solution">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rc-discharging-voltage" class="md-nav__link">
+    <span class="md-ellipsis">
+      RC Discharging Voltage
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rc-discharging-current" class="md-nav__link">
+    <span class="md-ellipsis">
+      RC Discharging Current
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#diagram-rc-discharging" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: RC Discharging
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-universal-form-step-response" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Universal Form: Step Response
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Universal Form: Step Response">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#general-step-response-formula" class="md-nav__link">
+    <span class="md-ellipsis">
+      General Step Response Formula
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rl-circuits-magnetic-energy-storage" class="md-nav__link">
+    <span class="md-ellipsis">
+      RL Circuits: Magnetic Energy Storage
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="RL Circuits: Magnetic Energy Storage">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rl-energizing" class="md-nav__link">
+    <span class="md-ellipsis">
+      RL Energizing
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="RL Energizing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rl-energizing-current" class="md-nav__link">
+    <span class="md-ellipsis">
+      RL Energizing Current
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rl-energizing-voltage" class="md-nav__link">
+    <span class="md-ellipsis">
+      RL Energizing Voltage
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rl-de-energizing" class="md-nav__link">
+    <span class="md-ellipsis">
+      RL De-energizing
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="RL De-energizing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rl-de-energizing-current" class="md-nav__link">
+    <span class="md-ellipsis">
+      RL De-energizing Current
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#diagram-rl-circuit-response" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: RL Circuit Response
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#initial-and-final-conditions-the-key-to-every-problem" class="md-nav__link">
+    <span class="md-ellipsis">
+      Initial and Final Conditions: The Key to Every Problem
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Initial and Final Conditions: The Key to Every Problem">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#finding-initial-conditions-t-0" class="md-nav__link">
+    <span class="md-ellipsis">
+      Finding Initial Conditions (\(t = 0^+\))
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#finding-final-conditions-t-infty" class="md-nav__link">
+    <span class="md-ellipsis">
+      Finding Final Conditions (\(t = \infty\))
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-step-by-step-method" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Step-by-Step Method
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Step-by-Step Method">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-initial-and-final-conditions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Initial and Final Conditions
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#natural-and-forced-response" class="md-nav__link">
+    <span class="md-ellipsis">
+      Natural and Forced Response
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Natural and Forced Response">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#natural-response" class="md-nav__link">
+    <span class="md-ellipsis">
+      Natural Response
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#forced-response" class="md-nav__link">
+    <span class="md-ellipsis">
+      Forced Response
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#complete-response" class="md-nav__link">
+    <span class="md-ellipsis">
+      Complete Response
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Complete Response">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#complete-response_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Complete Response
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#practical-examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      Practical Examples
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Practical Examples">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#example-1-camera-flash-charging" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example 1: Camera Flash Charging
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-2-rc-timing-circuit" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example 2: RC Timing Circuit
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-3-relay-protection" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example 3: Relay Protection
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-4-audio-coupling-capacitor" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example 4: Audio Coupling Capacitor
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Example 4: Audio Coupling Capacitor">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-practical-rcrl-applications" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Practical RC/RL Applications
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-exponential-response-a-deeper-look" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Exponential Response: A Deeper Look
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Exponential Response: A Deeper Look">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-differential-equation" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Differential Equation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#graphical-interpretation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Graphical Interpretation
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Graphical Interpretation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-exponential-properties" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Exponential Properties
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary-and-key-takeaways" class="md-nav__link">
+    <span class="md-ellipsis">
+      Summary and Key Takeaways
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+    <a href="https://github.com/dmccreary/circuits/blob/master/docs/chapters/06-transient-analysis-rc-rl/index.md" title="Edit this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+
+
+<h1 id="transient-analysis-of-rc-and-rl-circuits">Transient Analysis of RC and RL Circuits</h1>
+<h2 id="summary">Summary</h2>
+<p>This chapter analyzes the time-domain behavior of first-order circuits containing resistors with either capacitors (RC) or inductors (RL). Students will learn how these circuits respond to sudden changes like switching events, developing intuition for time constants and exponential responses. The chapter covers charging and discharging behavior, initial and final conditions, and the concepts of natural and forced response. Understanding transient analysis is crucial for analyzing real-world circuits where signals change over time.</p>
+<h2 id="concepts-covered">Concepts Covered</h2>
+<p>This chapter covers the following 17 concepts from the learning graph:</p>
+<ol>
+<li>Transient Response</li>
+<li>Steady-State Response</li>
+<li>Time Constant</li>
+<li>RC Circuit</li>
+<li>RC Charging</li>
+<li>RC Discharging</li>
+<li>RL Circuit</li>
+<li>RL Energizing</li>
+<li>RL De-energizing</li>
+<li>Exponential Response</li>
+<li>Initial Conditions</li>
+<li>Final Conditions</li>
+<li>Natural Response</li>
+<li>Forced Response</li>
+<li>Complete Response</li>
+<li>First-Order Circuits</li>
+<li>Step Response</li>
+</ol>
+<h2 id="prerequisites">Prerequisites</h2>
+<p>This chapter builds on concepts from:</p>
+<ul>
+<li><a href="../02-ohms-law-basic-configurations/">Chapter 2: Ohm's Law and Basic Circuit Configurations</a></li>
+<li><a href="../04-dc-circuit-analysis/">Chapter 4: DC Circuit Analysis Methods</a></li>
+<li><a href="../05-passive-components/">Chapter 5: Passive Components: Resistors, Capacitors, and Inductors</a></li>
+</ul>
+<hr />
+<h2 id="introduction-when-circuits-remember">Introduction: When Circuits Remember</h2>
+<p>Up until now, we've analyzed circuits in the comfortable world of <strong>steady state</strong>—where nothing changes with time. Flip a switch, and we assumed everything instantly reached its final value. But reality doesn't work that way.</p>
+<p>When you flip a switch, circuits don't instantly jump to their new state. They <strong>transition</strong>, following smooth curves that take time to reach their destination. This transition period is the <strong>transient response</strong>, and understanding it unlocks your ability to design timing circuits, filters, and anything that responds to changing signals.</p>
+<p>Here's the magical part: despite the seemingly complex behavior of capacitors and inductors, first-order circuits (one energy storage element) always follow a single pattern—the <strong>exponential</strong>. Once you recognize this pattern, you can analyze an enormous variety of circuits with the same basic approach.</p>
+<p>Think of transient analysis as learning to read a circuit's "body language." The circuit tells you exactly where it's going and how fast it's getting there. You just need to know what to look for.</p>
+<p>Ready to watch circuits in motion? Let's flip some switches.</p>
+<h2 id="first-order-circuits-one-storage-element-at-a-time">First-Order Circuits: One Storage Element at a Time</h2>
+<p>A <strong>first-order circuit</strong> contains exactly one energy storage element (either a capacitor or an inductor) along with resistors and sources. The "first-order" name comes from the first-order differential equation that describes the circuit's behavior.</p>
+<p>Why start here? Because first-order circuits are mathematically tractable and appear everywhere in practical applications:</p>
+<ul>
+<li>Power supply filtering (RC)</li>
+<li>Relay drivers (RL)</li>
+<li>Audio coupling circuits (RC)</li>
+<li>Timing circuits (RC)</li>
+<li>Motor driver protection (RL)</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Circuit Type</th>
+<th>Energy Storage</th>
+<th>Stores</th>
+<th>Key Variable</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RC Circuit</td>
+<td>Capacitor</td>
+<td>Electric field energy</td>
+<td>Voltage</td>
+</tr>
+<tr>
+<td>RL Circuit</td>
+<td>Inductor</td>
+<td>Magnetic field energy</td>
+<td>Current</td>
+</tr>
+</tbody>
+</table>
+<h2 id="the-time-constant-your-circuits-personality">The Time Constant: Your Circuit's Personality</h2>
+<p>The <strong>time constant</strong> (<span class="arithmatex">\(\tau\)</span>, Greek letter tau) is the single most important parameter in transient analysis. It tells you how fast a circuit responds to changes.</p>
+<h4 id="rc-time-constant">RC Time Constant</h4>
+<p><span class="arithmatex">\(\tau = RC\)</span></p>
+<p>where:</p>
+<ul>
+<li><span class="arithmatex">\(\tau\)</span> is the time constant in seconds (s)</li>
+<li><span class="arithmatex">\(R\)</span> is resistance in ohms (Ω)</li>
+<li><span class="arithmatex">\(C\)</span> is capacitance in farads (F)</li>
+</ul>
+<h4 id="rl-time-constant">RL Time Constant</h4>
+<p><span class="arithmatex">\(\tau = \frac{L}{R}\)</span></p>
+<p>where:</p>
+<ul>
+<li><span class="arithmatex">\(\tau\)</span> is the time constant in seconds (s)</li>
+<li><span class="arithmatex">\(L\)</span> is inductance in henrys (H)</li>
+<li><span class="arithmatex">\(R\)</span> is resistance in ohms (Ω)</li>
+</ul>
+<p>Notice the difference: RC multiplies, RL divides. This makes physical sense:</p>
+<ul>
+<li><strong>RC</strong>: More capacitance means more charge to move; more resistance means slower charging. Both increase <span class="arithmatex">\(\tau\)</span>.</li>
+<li><strong>RL</strong>: More inductance means more "magnetic inertia"; more resistance means faster energy dissipation. L increases <span class="arithmatex">\(\tau\)</span>, R decreases it.</li>
+</ul>
+<h3 id="what-the-time-constant-means">What the Time Constant Means</h3>
+<p>After one time constant (<span class="arithmatex">\(t = \tau\)</span>), the circuit has completed approximately <strong>63.2%</strong> of its transition. After five time constants (<span class="arithmatex">\(t = 5\tau\)</span>), it's essentially complete at <strong>99.3%</strong>.</p>
+<table>
+<thead>
+<tr>
+<th>Time</th>
+<th>Percent Complete</th>
+<th>Percent Remaining</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="arithmatex">\(0\tau\)</span></td>
+<td>0%</td>
+<td>100%</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(1\tau\)</span></td>
+<td>63.2%</td>
+<td>36.8%</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(2\tau\)</span></td>
+<td>86.5%</td>
+<td>13.5%</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(3\tau\)</span></td>
+<td>95.0%</td>
+<td>5.0%</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(4\tau\)</span></td>
+<td>98.2%</td>
+<td>1.8%</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(5\tau\)</span></td>
+<td>99.3%</td>
+<td>0.7%</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition tip">
+<p class="admonition-title">The 5τ Rule</p>
+<p>Engineers commonly use <strong>5τ</strong> as the practical "settling time"—the time needed for a circuit to reach its final value. Technically it never quite gets there, but after 5τ, it's close enough for government work.</p>
+</div>
+<h4 id="diagram-time-constant-visualization">Diagram: Time Constant Visualization</h4>
+<iframe src="../../sims/time-constant/main.html" width="100%" height="450px" scrolling="no"></iframe>
+
+<details markdown="1">
+<summary>Time Constant Visualization MicroSim</summary>
+Type: microsim
+
+Purpose: Demonstrate how the time constant affects the speed of transient response
+
+Bloom Level: Understand (L2)
+Bloom Verb: explain
+
+Learning Objective: Students will explain how changing R and C (or L and R) affects the circuit's response speed and relate the time constant to the percentage completion at different times.
+
+Instructional Rationale: Interactive adjustment of R and C with real-time waveform updates builds intuition for how component values control response speed.
+
+Canvas layout:
+- Left (400px): Exponential response curve with time markers
+- Right (200px): Component value controls and calculations
+
+Visual elements:
+- Exponential curve rising from 0 to final value
+- Vertical dashed lines at τ, 2τ, 3τ, 4τ, 5τ
+- Horizontal lines at 63.2%, 86.5%, 95%, 98.2%, 99.3%
+- Current time marker that can be dragged
+- Percent complete display
+
+Interactive controls:
+- Slider: Resistance (100Ω to 100kΩ)
+- Slider: Capacitance (1µF to 1000µF)
+- Display: Calculated τ value
+- Display: Settling time (5τ)
+- Draggable time marker shows instantaneous value
+
+Default parameters:
+- R = 1kΩ, C = 100µF
+- τ = 100ms
+- 5τ = 500ms
+
+Behavior:
+- Changing R or C recalculates τ and rescales time axis
+- Curve shape stays the same, time scale changes
+- Dragging marker shows value and % complete at that time
+- Highlights the "shape is constant, scale changes" insight
+
+Implementation: p5.js with interactive curve and markers
+</details>
+
+<h2 id="rc-charging-building-up-the-electric-field">RC Charging: Building Up the Electric Field</h2>
+<p>When you connect a capacitor to a voltage source through a resistor, the capacitor charges exponentially.</p>
+<h3 id="the-setup">The Setup</h3>
+<p>Consider a simple circuit: voltage source <span class="arithmatex">\(V_s\)</span>, resistor <span class="arithmatex">\(R\)</span>, and capacitor <span class="arithmatex">\(C\)</span> (initially uncharged). At <span class="arithmatex">\(t = 0\)</span>, a switch closes.</p>
+<p><strong>Initial condition</strong>: <span class="arithmatex">\(V_C(0) = 0\)</span> (capacitor starts uncharged)</p>
+<p><strong>Final condition</strong>: <span class="arithmatex">\(V_C(\infty) = V_s\)</span> (capacitor charges to source voltage)</p>
+<h3 id="the-solution">The Solution</h3>
+<h4 id="rc-charging-voltage">RC Charging Voltage</h4>
+<p><span class="arithmatex">\(V_C(t) = V_s(1 - e^{-t/\tau})\)</span></p>
+<p>where:</p>
+<ul>
+<li><span class="arithmatex">\(V_C(t)\)</span> is the capacitor voltage at time <span class="arithmatex">\(t\)</span></li>
+<li><span class="arithmatex">\(V_s\)</span> is the source voltage</li>
+<li><span class="arithmatex">\(\tau = RC\)</span> is the time constant</li>
+<li><span class="arithmatex">\(e\)</span> is Euler's number (≈ 2.718)</li>
+</ul>
+<h4 id="rc-charging-current">RC Charging Current</h4>
+<p><span class="arithmatex">\(I(t) = \frac{V_s}{R}e^{-t/\tau}\)</span></p>
+<p>where:</p>
+<ul>
+<li><span class="arithmatex">\(I(t)\)</span> is the current at time <span class="arithmatex">\(t\)</span></li>
+<li><span class="arithmatex">\(V_s/R\)</span> is the initial current (maximum)</li>
+<li>The current decays exponentially as the capacitor charges</li>
+</ul>
+<p>Let's trace the physics:</p>
+<ol>
+<li><strong>At <span class="arithmatex">\(t = 0\)</span></strong>: Capacitor is uncharged (<span class="arithmatex">\(V_C = 0\)</span>), so full source voltage appears across R. Maximum current flows: <span class="arithmatex">\(I_0 = V_s/R\)</span></li>
+<li><strong>As time passes</strong>: Capacitor voltage rises, reducing voltage across R, reducing current</li>
+<li><strong>At <span class="arithmatex">\(t = \infty\)</span></strong>: Capacitor fully charged (<span class="arithmatex">\(V_C = V_s\)</span>), no voltage across R, zero current</li>
+</ol>
+<p>The current creates the charging—but the more the capacitor charges, the less current flows. This self-limiting behavior creates the characteristic exponential curve.</p>
+<h4 id="diagram-rc-charging-circuit">Diagram: RC Charging Circuit</h4>
+<iframe src="../../sims/rc-charging/main.html" width="100%" height="500px" scrolling="no"></iframe>
+
+<details markdown="1">
+<summary>RC Charging MicroSim</summary>
+Type: microsim
+
+Purpose: Visualize RC charging with simultaneous voltage and current waveforms
+
+Bloom Level: Understand (L2)
+Bloom Verb: explain
+
+Learning Objective: Students will explain the complementary relationship between capacitor voltage (rising) and circuit current (falling) during charging, and relate both to the time constant.
+
+Instructional Rationale: Animated charge flow synchronized with voltage/current graphs connects the abstract exponential math to physical electron movement.
+
+Data Visibility Requirements:
+- Stage 1: Show circuit with switch open, initial conditions
+- Stage 2: Close switch, show initial current surge
+- Stage 3: Display voltage rising, current falling exponentially
+- Stage 4: Mark τ points on both curves
+- Stage 5: Show final steady state (V=Vs, I=0)
+
+Canvas layout:
+- Top (250px): Circuit schematic with animated current flow
+- Bottom (250px): Dual graphs (Vc and I vs time)
+
+Visual elements:
+- Battery, switch, resistor, capacitor in loop
+- Animated electrons flowing (speed proportional to current)
+- Capacitor with charge level indicator
+- Two synchronized graphs: Vc rising, I falling
+- Time markers at τ intervals
+
+Interactive controls:
+- Slider: Source voltage (1V to 20V)
+- Slider: Resistance (1kΩ to 100kΩ)
+- Slider: Capacitance (1µF to 100µF)
+- Button: "Close Switch" starts animation
+- Button: "Reset" returns to initial state
+- Display: τ, I_initial, current values
+
+Default parameters:
+- Vs = 10V, R = 10kΩ, C = 10µF
+- τ = 100ms
+
+Behavior:
+- Switch closure triggers animation
+- Electron animation slows as current decreases
+- Graphs build in real-time
+- Pausing shows instantaneous values
+- Can restart with different parameters
+
+Implementation: p5.js with particle animation and synchronized graphing
+</details>
+
+<h2 id="rc-discharging-releasing-the-energy">RC Discharging: Releasing the Energy</h2>
+<p>Now consider a charged capacitor (initial voltage <span class="arithmatex">\(V_0\)</span>) connected across a resistor. The capacitor discharges through the resistor.</p>
+<p><strong>Initial condition</strong>: <span class="arithmatex">\(V_C(0) = V_0\)</span> (capacitor starts charged)</p>
+<p><strong>Final condition</strong>: <span class="arithmatex">\(V_C(\infty) = 0\)</span> (capacitor fully discharged)</p>
+<h3 id="the-solution_1">The Solution</h3>
+<h4 id="rc-discharging-voltage">RC Discharging Voltage</h4>
+<p><span class="arithmatex">\(V_C(t) = V_0 \cdot e^{-t/\tau}\)</span></p>
+<p>where:</p>
+<ul>
+<li><span class="arithmatex">\(V_C(t)\)</span> is the capacitor voltage at time <span class="arithmatex">\(t\)</span></li>
+<li><span class="arithmatex">\(V_0\)</span> is the initial voltage</li>
+<li><span class="arithmatex">\(\tau = RC\)</span> is the time constant</li>
+</ul>
+<h4 id="rc-discharging-current">RC Discharging Current</h4>
+<p><span class="arithmatex">\(I(t) = -\frac{V_0}{R}e^{-t/\tau}\)</span></p>
+<p>where:</p>
+<ul>
+<li>The negative sign indicates current flows opposite to charging direction</li>
+<li>Magnitude decays exponentially</li>
+</ul>
+<p>The discharging curve is a pure exponential decay—the simplest transient response. The capacitor's stored energy dissipates as heat in the resistor.</p>
+<div class="admonition note">
+<p class="admonition-title">Energy Accounting</p>
+<p>During discharge, the capacitor's initial energy (<span class="arithmatex">\(\frac{1}{2}CV_0^2\)</span>) is entirely converted to heat in the resistor. You can verify this by integrating <span class="arithmatex">\(I^2R\)</span> over time. The universe's energy bookkeeping always balances.</p>
+</div>
+<h4 id="diagram-rc-discharging">Diagram: RC Discharging</h4>
+<iframe src="../../sims/rc-discharging/main.html" width="100%" height="450px" scrolling="no"></iframe>
+
+<details markdown="1">
+<summary>RC Discharging MicroSim</summary>
+Type: microsim
+
+Purpose: Visualize RC discharge and energy dissipation
+
+Bloom Level: Apply (L3)
+Bloom Verb: calculate
+
+Learning Objective: Students will calculate the voltage at any time during discharge and determine how long it takes to reach a specified voltage level.
+
+Canvas layout:
+- Top: Circuit with discharging capacitor
+- Bottom: Voltage decay curve with energy calculation
+
+Visual elements:
+- Capacitor with decreasing charge indicator
+- Resistor with heat glow (intensity = power)
+- Exponential decay curve
+- Energy remaining vs energy dissipated bar chart
+
+Interactive controls:
+- Slider: Initial voltage (1V to 20V)
+- Slider: Resistance (1kΩ to 100kΩ)
+- Slider: Capacitance (1µF to 100µF)
+- Button: "Start Discharge"
+- Input: Target voltage, calculates time to reach
+- Display: Current V, I, E_remaining, E_dissipated
+
+Default parameters:
+- V0 = 10V, R = 10kΩ, C = 10µF
+- τ = 100ms
+
+Behavior:
+- Real-time discharge animation
+- Heat glow on resistor fades as current decreases
+- Energy bar chart shows transfer from C to R (heat)
+- Can input target voltage and get time
+
+Implementation: p5.js with energy visualization
+</details>
+
+<h2 id="the-universal-form-step-response">The Universal Form: Step Response</h2>
+<p>Both charging and discharging (and indeed all first-order transients) follow a universal pattern. The <strong>step response</strong> describes how any first-order circuit responds to a sudden change in input.</p>
+<h4 id="general-step-response-formula">General Step Response Formula</h4>
+<p><span class="arithmatex">\(x(t) = x(\infty) + [x(0) - x(\infty)]e^{-t/\tau}\)</span></p>
+<p>where:</p>
+<ul>
+<li><span class="arithmatex">\(x(t)\)</span> is the variable of interest (voltage or current) at time <span class="arithmatex">\(t\)</span></li>
+<li><span class="arithmatex">\(x(0)\)</span> is the initial value (at <span class="arithmatex">\(t = 0^+\)</span>, just after the switch)</li>
+<li><span class="arithmatex">\(x(\infty)\)</span> is the final value (steady state)</li>
+<li><span class="arithmatex">\(\tau\)</span> is the time constant</li>
+</ul>
+<p>This single formula handles <strong>any</strong> first-order transient. Just plug in:</p>
+<ol>
+<li><strong>Initial value</strong>: What is <span class="arithmatex">\(x\)</span> just after the switch event?</li>
+<li><strong>Final value</strong>: What will <span class="arithmatex">\(x\)</span> be after a long time?</li>
+<li><strong>Time constant</strong>: What is <span class="arithmatex">\(\tau\)</span> for this circuit?</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>Scenario</th>
+<th><span class="arithmatex">\(x(0)\)</span></th>
+<th><span class="arithmatex">\(x(\infty)\)</span></th>
+<th>Response Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RC Charging</td>
+<td>0</td>
+<td><span class="arithmatex">\(V_s\)</span></td>
+<td>Rising exponential</td>
+</tr>
+<tr>
+<td>RC Discharging</td>
+<td><span class="arithmatex">\(V_0\)</span></td>
+<td>0</td>
+<td>Decaying exponential</td>
+</tr>
+<tr>
+<td>Partial charge</td>
+<td><span class="arithmatex">\(V_1\)</span></td>
+<td><span class="arithmatex">\(V_2\)</span></td>
+<td>Rising (if <span class="arithmatex">\(V_2 &gt; V_1\)</span>) or falling</td>
+</tr>
+</tbody>
+</table>
+<h2 id="rl-circuits-magnetic-energy-storage">RL Circuits: Magnetic Energy Storage</h2>
+<p>RL circuits follow the same exponential pattern, but with current as the key variable (since inductors store energy in current, not voltage).</p>
+<h3 id="rl-energizing">RL Energizing</h3>
+<p>Connect a voltage source through a resistor to an inductor (initially with zero current). At <span class="arithmatex">\(t = 0\)</span>, close the switch.</p>
+<p><strong>Initial condition</strong>: <span class="arithmatex">\(I_L(0) = 0\)</span> (no initial current)</p>
+<p><strong>Final condition</strong>: <span class="arithmatex">\(I_L(\infty) = V_s/R\)</span> (determined by Ohm's Law—inductor becomes a short circuit at DC)</p>
+<h4 id="rl-energizing-current">RL Energizing Current</h4>
+<p><span class="arithmatex">\(I_L(t) = \frac{V_s}{R}(1 - e^{-t/\tau})\)</span></p>
+<p>where:</p>
+<ul>
+<li><span class="arithmatex">\(I_L(t)\)</span> is the inductor current at time <span class="arithmatex">\(t\)</span></li>
+<li><span class="arithmatex">\(V_s/R\)</span> is the final current</li>
+<li><span class="arithmatex">\(\tau = L/R\)</span> is the time constant</li>
+</ul>
+<h4 id="rl-energizing-voltage">RL Energizing Voltage</h4>
+<p><span class="arithmatex">\(V_L(t) = V_s \cdot e^{-t/\tau}\)</span></p>
+<p>where:</p>
+<ul>
+<li><span class="arithmatex">\(V_L(t)\)</span> is the voltage across the inductor</li>
+<li><span class="arithmatex">\(V_s\)</span> is the initial inductor voltage (full source voltage at <span class="arithmatex">\(t = 0\)</span>)</li>
+</ul>
+<p>The physics:</p>
+<ol>
+<li><strong>At <span class="arithmatex">\(t = 0\)</span></strong>: Inductor current is zero (can't change instantaneously), so inductor appears as an open circuit. Full source voltage appears across L.</li>
+<li><strong>As time passes</strong>: Current builds up, inductor voltage drops, more voltage appears across R</li>
+<li><strong>At <span class="arithmatex">\(t = \infty\)</span></strong>: Inductor carries full current (<span class="arithmatex">\(V_s/R\)</span>), inductor voltage is zero (just a wire)</li>
+</ol>
+<h3 id="rl-de-energizing">RL De-energizing</h3>
+<p>An inductor carrying current <span class="arithmatex">\(I_0\)</span> is suddenly disconnected from its source and allowed to discharge through a resistor.</p>
+<div class="admonition warning">
+<p class="admonition-title">The Kickback Problem</p>
+<p>Unlike capacitors, inductors resist changes in current. If you try to suddenly interrupt inductor current (like opening a switch), the inductor will generate whatever voltage is needed to maintain current flow. This can be hundreds or thousands of volts from a small battery! This "inductive kick" can arc across switch contacts, damage semiconductors, and cause serious harm. Always provide a current path for inductors.</p>
+</div>
+<h4 id="rl-de-energizing-current">RL De-energizing Current</h4>
+<p><span class="arithmatex">\(I_L(t) = I_0 \cdot e^{-t/\tau}\)</span></p>
+<p>where:</p>
+<ul>
+<li><span class="arithmatex">\(I_L(t)\)</span> is the inductor current at time <span class="arithmatex">\(t\)</span></li>
+<li><span class="arithmatex">\(I_0\)</span> is the initial current</li>
+<li><span class="arithmatex">\(\tau = L/R\)</span> is the time constant</li>
+</ul>
+<h4 id="diagram-rl-circuit-response">Diagram: RL Circuit Response</h4>
+<iframe src="../../sims/rl-circuit/main.html" width="100%" height="500px" scrolling="no"></iframe>
+
+<details markdown="1">
+<summary>RL Circuit Response MicroSim</summary>
+Type: microsim
+
+Purpose: Compare RL energizing and de-energizing transients
+
+Bloom Level: Understand (L2)
+Bloom Verb: compare
+
+Learning Objective: Students will compare RL and RC circuit behavior, recognizing that RL current behaves like RC voltage (and vice versa).
+
+Instructional Rationale: Side-by-side RL and RC comparison highlights the duality between the circuit types.
+
+Canvas layout:
+- Top (250px): RL circuit with magnetic field visualization
+- Bottom (250px): Current and voltage waveforms
+
+Visual elements:
+- Inductor with animated magnetic field lines
+- Field intensity proportional to current
+- Dual graphs: IL and VL vs time
+- Flyback diode option for de-energizing
+
+Interactive controls:
+- Slider: Source voltage (1V to 20V)
+- Slider: Resistance (10Ω to 1kΩ)
+- Slider: Inductance (1mH to 100mH)
+- Button: "Energize" / "De-energize"
+- Toggle: Include flyback diode
+- Display: τ, I_final, current values
+
+Default parameters:
+- Vs = 12V, R = 100Ω, L = 10mH
+- τ = 100µs
+
+Behavior:
+- Magnetic field animation strengthens with current
+- Energizing: current rises, voltage falls
+- De-energizing: current falls, shows voltage spike without diode
+- With flyback diode, spike is clamped
+
+Implementation: p5.js with magnetic field visualization
+</details>
+
+<h2 id="initial-and-final-conditions-the-key-to-every-problem">Initial and Final Conditions: The Key to Every Problem</h2>
+<p>The secret to transient analysis is finding the <strong>initial conditions</strong> (values at <span class="arithmatex">\(t = 0^+\)</span>) and <strong>final conditions</strong> (values at <span class="arithmatex">\(t = \infty\)</span>). Once you have these, the exponential formula does the rest.</p>
+<h3 id="finding-initial-conditions-t-0">Finding Initial Conditions (<span class="arithmatex">\(t = 0^+\)</span>)</h3>
+<p>At the instant just after a switching event:</p>
+<ul>
+<li><strong>Capacitor voltage cannot change instantaneously</strong>: <span class="arithmatex">\(V_C(0^+) = V_C(0^-)\)</span></li>
+<li><strong>Inductor current cannot change instantaneously</strong>: <span class="arithmatex">\(I_L(0^+) = I_L(0^-)\)</span></li>
+</ul>
+<p>These are the "memory" of the circuit—the energy stored just before the switch.</p>
+<h3 id="finding-final-conditions-t-infty">Finding Final Conditions (<span class="arithmatex">\(t = \infty\)</span>)</h3>
+<p>After a long time (steady state):</p>
+<ul>
+<li><strong>Capacitor acts as an open circuit</strong>: No current through it</li>
+<li><strong>Inductor acts as a short circuit</strong>: No voltage across it (just a wire with resistance)</li>
+</ul>
+<p>Analyze the circuit with these replacements to find final values.</p>
+<h3 id="the-step-by-step-method">The Step-by-Step Method</h3>
+<ol>
+<li><strong>Find initial conditions</strong>: Analyze circuit just before switch (capacitor = some voltage, inductor = some current)</li>
+<li><strong>Apply continuity</strong>: These values persist at <span class="arithmatex">\(t = 0^+\)</span></li>
+<li><strong>Find final conditions</strong>: Analyze circuit at <span class="arithmatex">\(t = \infty\)</span> (capacitor = open, inductor = short)</li>
+<li><strong>Calculate time constant</strong>: <span class="arithmatex">\(\tau = RC\)</span> or <span class="arithmatex">\(\tau = L/R\)</span> for the circuit after switching</li>
+<li><strong>Apply the formula</strong>: <span class="arithmatex">\(x(t) = x(\infty) + [x(0) - x(\infty)]e^{-t/\tau}\)</span></li>
+</ol>
+<h4 id="diagram-initial-and-final-conditions">Diagram: Initial and Final Conditions</h4>
+<iframe src="../../sims/initial-final-conditions/main.html" width="100%" height="500px" scrolling="no"></iframe>
+
+<details markdown="1">
+<summary>Initial and Final Conditions MicroSim</summary>
+Type: microsim
+
+Purpose: Practice finding initial and final conditions for various switching scenarios
+
+Bloom Level: Apply (L3)
+Bloom Verb: solve
+
+Learning Objective: Students will solve for initial and final conditions given a circuit with a switch, then predict the transient response.
+
+Instructional Rationale: Step-by-step guided analysis with visual circuit transformation (C→open, L→short) builds systematic problem-solving skills.
+
+Data Visibility Requirements:
+- Stage 1: Show original circuit with switch position
+- Stage 2: Analyze circuit for t < 0 to find pre-switch values
+- Stage 3: Apply continuity rules to get t = 0+ values
+- Stage 4: Show equivalent circuit at t = ∞
+- Stage 5: Display complete solution with formula
+
+Canvas layout:
+- Left (350px): Circuit that transforms to show analysis steps
+- Right (250px): Solution panel
+
+Visual elements:
+- Circuit with switch (toggleable)
+- Capacitor/inductor highlighted for condition analysis
+- Equivalent circuits at t=0+ and t=∞
+- Formula with calculated values filled in
+
+Interactive controls:
+- Button: "Step Through Analysis"
+- Multiple circuit presets to practice
+- Display: Initial value, final value, τ
+- Show/hide solution option
+
+Example circuits:
+1. Simple RC charging from zero
+2. RC with initial charge
+3. RL energizing
+4. Thevenin equivalent with RC
+
+Behavior:
+- Each step highlights relevant circuit portion
+- Shows capacitor becoming open / inductor becoming short
+- Formula populates with specific values
+- Final curve displayed
+
+Implementation: p5.js with step-through circuit analysis
+</details>
+
+<h2 id="natural-and-forced-response">Natural and Forced Response</h2>
+<p>The complete response of a first-order circuit can be viewed as the sum of two components:</p>
+<h3 id="natural-response">Natural Response</h3>
+<p>The <strong>natural response</strong> (also called homogeneous or transient response) is what the circuit does on its own, without any input. It's the exponential decay determined by the circuit's time constant:</p>
+<p><span class="arithmatex">\(x_n(t) = Ae^{-t/\tau}\)</span></p>
+<p>The natural response always decays to zero. It represents the circuit "forgetting" its initial condition.</p>
+<h3 id="forced-response">Forced Response</h3>
+<p>The <strong>forced response</strong> (also called particular or steady-state response) is what the circuit does due to the input forcing function. For a DC source, it's just the final DC value:</p>
+<p><span class="arithmatex">\(x_f(t) = x(\infty)\)</span></p>
+<h3 id="complete-response">Complete Response</h3>
+<p>The <strong>complete response</strong> is the sum:</p>
+<h4 id="complete-response_1">Complete Response</h4>
+<p><span class="arithmatex">\(x(t) = x_n(t) + x_f(t) = Ae^{-t/\tau} + x(\infty)\)</span></p>
+<p>where:</p>
+<ul>
+<li><span class="arithmatex">\(A\)</span> is determined by initial conditions</li>
+<li>The natural response decays away</li>
+<li>The forced response is what remains</li>
+</ul>
+<p>Using initial conditions: <span class="arithmatex">\(x(0) = A + x(\infty)\)</span>, so <span class="arithmatex">\(A = x(0) - x(\infty)\)</span>.</p>
+<p>This gives us back our universal formula:</p>
+<p><span class="arithmatex">\(x(t) = x(\infty) + [x(0) - x(\infty)]e^{-t/\tau}\)</span></p>
+<div class="admonition note">
+<p class="admonition-title">Why This Matters</p>
+<p>The natural/forced decomposition becomes essential when inputs are sinusoidal (AC analysis). The forced response to a sinusoid is another sinusoid at the same frequency—that's the AC steady state we'll study soon.</p>
+</div>
+<h2 id="practical-examples">Practical Examples</h2>
+<h3 id="example-1-camera-flash-charging">Example 1: Camera Flash Charging</h3>
+<p>A camera flash uses a 100 µF capacitor charged to 300V. The charging circuit has 10 kΩ effective resistance.</p>
+<p><strong>Time constant</strong>: <span class="arithmatex">\(\tau = RC = (10 \times 10^3)(100 \times 10^{-6}) = 1\)</span> second</p>
+<p><strong>Time to 99% charge</strong>: <span class="arithmatex">\(5\tau = 5\)</span> seconds</p>
+<p>This explains why camera flashes take several seconds to recharge between shots. Want faster recycling? Use lower R (more expensive charger circuit) or smaller C (weaker flash).</p>
+<h3 id="example-2-rc-timing-circuit">Example 2: RC Timing Circuit</h3>
+<p>You need a time delay of 2 seconds. You have a 10 µF capacitor and want to trigger when voltage reaches 63.2% of final value.</p>
+<p><strong>Required τ</strong>: 2 seconds (since 63.2% occurs at <span class="arithmatex">\(t = \tau\)</span>)</p>
+<p><strong>Required R</strong>: <span class="arithmatex">\(R = \tau/C = 2/(10 \times 10^{-6}) = 200\)</span> kΩ</p>
+<h3 id="example-3-relay-protection">Example 3: Relay Protection</h3>
+<p>A relay coil has L = 50 mH and R = 100 Ω (coil resistance). When carrying 100 mA, the switch opens.</p>
+<p><strong>Without protection</strong>: The inductor tries to maintain 100 mA. With nowhere to go, voltage spikes to whatever breaks down first—potentially hundreds of volts.</p>
+<p><strong>With flyback diode</strong>: Current freewheels through the diode. Time constant: <span class="arithmatex">\(\tau = L/R = 50 \times 10^{-3}/100 = 0.5\)</span> ms. Current decays exponentially, dissipating energy safely.</p>
+<h3 id="example-4-audio-coupling-capacitor">Example 4: Audio Coupling Capacitor</h3>
+<p>An audio signal must pass through a 0.1 µF coupling capacitor into a 10 kΩ load. What's the low-frequency cutoff?</p>
+<p><strong>Time constant</strong>: <span class="arithmatex">\(\tau = RC = (10 \times 10^3)(0.1 \times 10^{-6}) = 1\)</span> ms</p>
+<p><strong>Cutoff frequency</strong>: <span class="arithmatex">\(f_c = \frac{1}{2\pi\tau} = \frac{1}{2\pi(0.001)} = 159\)</span> Hz</p>
+<p>Frequencies below 159 Hz will be attenuated—this might cut into the bass range. For better bass response, increase C or use a higher impedance load.</p>
+<h4 id="diagram-practical-rcrl-applications">Diagram: Practical RC/RL Applications</h4>
+<iframe src="../../sims/rc-rl-applications/main.html" width="100%" height="450px" scrolling="no"></iframe>
+
+<details markdown="1">
+<summary>RC/RL Applications MicroSim</summary>
+Type: microsim
+
+Purpose: Explore practical applications of RC and RL timing
+
+Bloom Level: Apply (L3)
+Bloom Verb: design
+
+Learning Objective: Students will design RC or RL circuits to achieve specific timing requirements.
+
+Canvas layout:
+- Top: Application selector with circuit schematic
+- Bottom: Parameter adjustment and timing verification
+
+Applications included:
+1. Camera flash charging time
+2. Simple timer circuit
+3. Relay protection
+4. Audio coupling capacitor
+
+Interactive controls:
+- Dropdown: Select application
+- Sliders: Adjust R, C, or L values
+- Display: Calculated timing parameters
+- Target input: Enter desired time/frequency
+
+Behavior:
+- Each application shows relevant circuit
+- Adjusting components shows effect on timing
+- Can input target and calculate required values
+- Shows practical component value ranges
+
+Implementation: p5.js with application-specific visualizations
+</details>
+
+<h2 id="the-exponential-response-a-deeper-look">The Exponential Response: A Deeper Look</h2>
+<p>The exponential function <span class="arithmatex">\(e^{-t/\tau}\)</span> appears throughout physics and engineering. Here's why it's natural for circuits:</p>
+<h3 id="the-differential-equation">The Differential Equation</h3>
+<p>For an RC circuit, Kirchhoff's Voltage Law gives:</p>
+<p><span class="arithmatex">\(V_s = V_R + V_C = RC\frac{dV_C}{dt} + V_C\)</span></p>
+<p>Rearranging: <span class="arithmatex">\(\frac{dV_C}{dt} + \frac{V_C}{\tau} = \frac{V_s}{\tau}\)</span></p>
+<p>This is a first-order linear differential equation. Its solution is exponential because <strong>the rate of change is proportional to how far the variable is from its final value</strong>.</p>
+<p>Think about it: when the capacitor is far from fully charged, current (and thus charging rate) is high. As it approaches full charge, the rate slows. This "rate proportional to remaining distance" relationship always produces exponentials.</p>
+<h3 id="graphical-interpretation">Graphical Interpretation</h3>
+<p>The exponential has a beautiful geometric property: if you draw a tangent line at any point on the curve, it intercepts the final value at exactly one time constant later.</p>
+<p>This means:</p>
+<ul>
+<li>The initial slope, if maintained, would reach the final value at <span class="arithmatex">\(t = \tau\)</span></li>
+<li>At any point, the current rate of change would complete the remaining change in one more τ</li>
+</ul>
+<h4 id="diagram-exponential-properties">Diagram: Exponential Properties</h4>
+<iframe src="../../sims/exponential-properties/main.html" width="100%" height="400px" scrolling="no"></iframe>
+
+<details markdown="1">
+<summary>Exponential Properties MicroSim</summary>
+Type: microsim
+
+Purpose: Visualize mathematical properties of the exponential response
+
+Bloom Level: Analyze (L4)
+Bloom Verb: examine
+
+Learning Objective: Students will examine the exponential function's properties, including the tangent-line interpretation and the constant-ratio property.
+
+Canvas layout:
+- Main area: Exponential curve with interactive tangent line
+
+Visual elements:
+- Rising or falling exponential curve
+- Draggable point on curve
+- Tangent line at that point
+- Shows intercept at t + τ
+- Annotations of mathematical properties
+
+Interactive controls:
+- Drag point along curve
+- Toggle: Rising vs falling exponential
+- Display: Slope at current point
+- Display: Value, time to final
+
+Behavior:
+- Tangent line always intercepts final value at t + τ
+- Moving point shows this property holds everywhere
+- Displays the derivative relationship
+
+Implementation: p5.js with draggable curve analysis
+</details>
+
+<h2 id="summary-and-key-takeaways">Summary and Key Takeaways</h2>
+<p>You've mastered the fundamentals of transient analysis. Here's what you now understand:</p>
+<p><strong>The Big Picture:</strong></p>
+<ul>
+<li>First-order circuits have one energy storage element (C or L)</li>
+<li>They respond to changes with exponential transients</li>
+<li>The time constant τ determines response speed</li>
+</ul>
+<p><strong>Key Formulas:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Formula</th>
+<th>Application</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="arithmatex">\(\tau = RC\)</span></td>
+<td>RC time constant</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(\tau = L/R\)</span></td>
+<td>RL time constant</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(x(t) = x(\infty) + [x(0) - x(\infty)]e^{-t/\tau}\)</span></td>
+<td>Universal step response</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(V_C(t) = V_s(1 - e^{-t/\tau})\)</span></td>
+<td>RC charging</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(V_C(t) = V_0 e^{-t/\tau}\)</span></td>
+<td>RC discharging</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Problem-Solving Method:</strong></p>
+<ol>
+<li>Find initial conditions (use continuity: <span class="arithmatex">\(V_C\)</span> and <span class="arithmatex">\(I_L\)</span> can't jump)</li>
+<li>Find final conditions (C → open, L → short at DC)</li>
+<li>Calculate time constant</li>
+<li>Apply the universal formula</li>
+</ol>
+<p><strong>Practical Wisdom:</strong></p>
+<ul>
+<li>After 5τ, the transient is essentially complete</li>
+<li>Larger τ means slower response</li>
+<li>Inductors resist current changes (dangerous voltage spikes!)</li>
+<li>Always provide current paths for inductors</li>
+</ul>
+<p><strong>What's Coming:</strong></p>
+<p>In the next chapter, we'll add a second energy storage element and discover something remarkable: circuits that oscillate, ring, and resonate. The world gets more interesting with two components.</p>
+<details class="question">
+<summary>Self-Check: Can You Answer These?</summary>
+<ol>
+<li>
+<p>An RC circuit has R = 47 kΩ and C = 10 µF. Calculate the time constant. How long until the circuit reaches 95% of its final value?</p>
+</li>
+<li>
+<p>A capacitor charged to 12V discharges through a 100 kΩ resistor. If C = 1 µF, what is the voltage after 50 ms?</p>
+</li>
+<li>
+<p>An RL circuit has L = 20 mH and R = 40 Ω. Calculate the time constant. If the final current is 300 mA, what is the current after 0.5 ms?</p>
+</li>
+<li>
+<p>A circuit switches at t = 0. Before the switch, the capacitor has 8V across it. After a long time, it will have 2V. If τ = 5 ms, write the complete expression for Vc(t).</p>
+</li>
+<li>
+<p>You need a timing circuit with a 3-second delay (to 63.2%). If you have a 100 µF capacitor, what resistance do you need?</p>
+</li>
+</ol>
+</details>
+
+
+
+
+
+
+
+  
+  
+
+
+
+  
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../05-passive-components/" class="md-footer__link md-footer__link--prev" aria-label="Previous: 5. Passive Components">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                5. Passive Components
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../07-second-order-rlc-circuits/" class="md-footer__link md-footer__link--next" aria-label="Next: 7. Second-Order RLC Circuits">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                7. Second-Order RLC Circuits
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.copy", "navigation.expand", "navigation.path", "navigation.prune", "navigation.indexes", "toc.follow", "navigation.top", "navigation.footer", "content.action.edit"], "search": "../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.83f73b43.min.js"></script>
+      
+        <script src="../../js/extra.js"></script>
+      
+        <script src="../../js/katex.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+      
+    
+  </body>
+</html>

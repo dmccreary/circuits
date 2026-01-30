@@ -1,0 +1,86 @@
+{
+    "$schema": "https://github.com/dmccreary/microsims/blob/main/src/microsim-schema/microsim-schema.json",
+    "title": "Circuit Symbol Flashcards",
+    "description": "Interactive flashcard trainer for learning circuit schematic symbols with flip animation, category filtering, and quiz mode. Covers 16 essential symbols including resistors, capacitors, inductors, voltage/current sources, and connection symbols.",
+    "creator": "Dan McCreary",
+    "date": "2026-01-30",
+    "subject": [
+        "Electrical Engineering",
+        "Circuit Analysis",
+        "Electronics"
+    ],
+    "type": "Interactive Simulation",
+    "format": "text/html",
+    "language": "en",
+    "rights": "CC BY 4.0",
+    "gradeLevel": "College",
+    "subjectArea": "Electrical Engineering",
+    "topic": "Circuit Schematic Symbols",
+    "learningObjectives": [
+        "Recall the names of common circuit schematic symbols",
+        "Identify circuit components by their schematic symbols",
+        "Explain the basic function of each component type"
+    ],
+    "bloomLevel": ["Remember", "Understand"],
+    "duration": "10-15 minutes",
+    "prerequisites": [
+        "Basic understanding of electrical circuits",
+        "Familiarity with voltage, current, and resistance"
+    ],
+    "framework": "p5.js",
+    "canvasDimensions": "responsive x 480",
+    "responsive": "Width-responsive",
+    "dependencies": ["p5.js CDN"],
+    "accessibility": [
+        "Keyboard navigation (arrow keys, spacebar)",
+        "High contrast symbols",
+        "Screen reader description"
+    ],
+    "controls": [
+        {
+            "type": "button",
+            "name": "Prev",
+            "description": "Navigate to previous flashcard"
+        },
+        {
+            "type": "button",
+            "name": "Flip",
+            "description": "Flip card to show/hide answer"
+        },
+        {
+            "type": "button",
+            "name": "Next",
+            "description": "Navigate to next flashcard"
+        },
+        {
+            "type": "button",
+            "name": "Shuffle",
+            "description": "Randomize card order"
+        },
+        {
+            "type": "button",
+            "name": "Quiz",
+            "description": "Toggle quiz mode for self-assessment"
+        },
+        {
+            "type": "selector",
+            "name": "Category",
+            "description": "Filter symbols by category (All, Passive, Sources, Connections, Active)"
+        }
+    ],
+    "modelType": "Flashcard trainer",
+    "variables": [
+        "currentCard",
+        "isFlipped",
+        "quizMode",
+        "currentCategory"
+    ],
+    "assumptions": [
+        "US-style resistor symbols are primarily shown, with EU variant included",
+        "Symbols follow IEEE/IEC standards"
+    ],
+    "limitations": [
+        "Does not include all possible circuit symbols",
+        "Simplified representations for educational purposes"
+    ]
+}

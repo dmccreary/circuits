@@ -35,5 +35,47 @@
   "prerequisites": [
     "Basic Electrical Components"
   ],
-  "library": "p5.js"
+  "library": "p5.js",
+  "visualizationType": [
+    "diagram",
+    "interactive-demo",
+    "simulation"
+  ],
+  "learningObjectives": [
+    "Understand the key concepts of capacitor drawing",
+    "Explore capacitor drawing through interactive visualization",
+    "Apply knowledge of capacitor drawing to solve problems",
+    "Experiment with parameters to observe their effects on capacitor drawing"
+  ],
+  "bloomsTaxonomy": [
+    "Remember",
+    "Understand",
+    "Apply",
+    "Evaluate",
+    "Create"
+  ],
+  "pedagogical": {
+    "pattern": "assessment",
+    "bloomAlignment": [
+      "understand",
+      "apply",
+      "analyze"
+    ],
+    "bloomVerbs": [
+      "describe",
+      "explain",
+      "calculate",
+      "demonstrate",
+      "illustrate"
+    ],
+    "pacing": "self-paced",
+    "supportsPrediction": false,
+    "dataVisibility": "high",
+    "feedbackType": [
+      "immediate",
+      "corrective",
+      "explanatory"
+    ],
+    "interactionStyle": "construct"
+  }
 }

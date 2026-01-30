@@ -1,0 +1,2707 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="An intelligent interactive Circuits textbook for EE and CS students with AI-generated content and simulations.">
+      
+      
+        <meta name="author" content="Dan McCreary">
+      
+      
+        <link rel="canonical" href="https://dmccreary.github.io/circuits/chapters/16-laboratory-techniques/">
+      
+      
+        <link rel="prev" href="../15-audio-applications/">
+      
+      
+        <link rel="next" href="../../sims/">
+      
+      
+      <link rel="icon" href="../../img/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.43">
+    
+    
+      
+        <title>16. Laboratory Techniques - Circuits 1</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.0253249f.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../css/extra.css">
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+<script id="__analytics">function __md_analytics(){function e(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],e("js",new Date),e("config","G-9J4MVE6LWP"),document.addEventListener("DOMContentLoaded",(function(){document.forms.search&&document.forms.search.query.addEventListener("blur",(function(){this.value&&e("event","search",{search_term:this.value})}));document$.subscribe((function(){var t=document.forms.feedback;if(void 0!==t)for(var a of t.querySelectorAll("[type=submit]"))a.addEventListener("click",(function(a){a.preventDefault();var n=document.location.pathname,d=this.getAttribute("data-md-value");e("event","feedback",{page:n,data:d}),t.firstElementChild.disabled=!0;var r=t.querySelector(".md-feedback__note [data-md-value='"+d+"']");r&&(r.hidden=!1)})),t.hidden=!1})),location$.subscribe((function(t){e("config","G-9J4MVE6LWP",{page_path:t.pathname})}))}));var t=document.createElement("script");t.async=!0,t.src="https://www.googletagmanager.com/gtag/js?id=G-9J4MVE6LWP",document.getElementById("__analytics").insertAdjacentElement("afterEnd",t)}</script>
+  
+    <script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
+  
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="orange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#laboratory-measurement-techniques" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Circuits 1" class="md-header__button md-logo" aria-label="Circuits 1" data-md-component="logo">
+      
+  <img src="../../img/course-logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Circuits 1
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              16. Laboratory Techniques
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/dmccreary/circuits" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub Repo
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Circuits 1" class="md-nav__button md-logo" aria-label="Circuits 1" data-md-component="logo">
+      
+  <img src="../../img/course-logo.png" alt="logo">
+
+    </a>
+    Circuits 1
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/dmccreary/circuits" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub Repo
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../about/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    About This Course
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+    
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Chapters
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Chapters
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-electric-charge-basic-quantities/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1. Electric Charge and Quantities
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-ohms-law-basic-configurations/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2. Ohm's Law and Configurations
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-kirchhoffs-laws-topology/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3. Kirchhoff's Laws and Topology
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-dc-circuit-analysis/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4. DC Circuit Analysis
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-passive-components/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5. Passive Components
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-transient-analysis-rc-rl/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    6. Transient Analysis RC/RL
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-second-order-rlc-circuits/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    7. Second-Order RLC Circuits
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-ac-signals-sinusoidal/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    8. AC Signals and Sinusoids
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../09-phasors-complex-impedance/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    9. Phasors and Impedance
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10-ac-power-analysis/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    10. AC Power Analysis
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../11-frequency-response-bode/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    11. Frequency Response and Bode
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../12-filters-resonance/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    12. Filters and Resonance
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../13-operational-amplifiers/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    13. Operational Amplifiers
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../14-signals-audio-lab/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    14. Signal Analysis and Fourier
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../15-audio-applications/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    15. Audio Applications
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    16. Laboratory Techniques
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    16. Laboratory Techniques
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      Summary
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#concepts-covered" class="md-nav__link">
+    <span class="md-ellipsis">
+      Concepts Covered
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prerequisites
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#introduction-where-theory-meets-reality" class="md-nav__link">
+    <span class="md-ellipsis">
+      Introduction: Where Theory Meets Reality
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-essential-lab-instruments" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Essential Lab Instruments
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Essential Lab Instruments">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#multimeter" class="md-nav__link">
+    <span class="md-ellipsis">
+      Multimeter
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#oscilloscope" class="md-nav__link">
+    <span class="md-ellipsis">
+      Oscilloscope
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Oscilloscope">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-oscilloscope-interface-guide" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Oscilloscope Interface Guide
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#function-generator" class="md-nav__link">
+    <span class="md-ellipsis">
+      Function Generator
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dc-power-supply" class="md-nav__link">
+    <span class="md-ellipsis">
+      DC Power Supply
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#spectrum-analyzer" class="md-nav__link">
+    <span class="md-ellipsis">
+      Spectrum Analyzer
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#measurement-techniques" class="md-nav__link">
+    <span class="md-ellipsis">
+      Measurement Techniques
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Measurement Techniques">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#voltage-measurement" class="md-nav__link">
+    <span class="md-ellipsis">
+      Voltage Measurement
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#current-measurement" class="md-nav__link">
+    <span class="md-ellipsis">
+      Current Measurement
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#resistance-measurement" class="md-nav__link">
+    <span class="md-ellipsis">
+      Resistance Measurement
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#frequency-measurement" class="md-nav__link">
+    <span class="md-ellipsis">
+      Frequency Measurement
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-measurement" class="md-nav__link">
+    <span class="md-ellipsis">
+      Phase Measurement
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#oscilloscope-probes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Oscilloscope Probes
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Oscilloscope Probes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#probe-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      Probe Types
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#probe-compensation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Probe Compensation
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#triggering-capturing-the-right-moment" class="md-nav__link">
+    <span class="md-ellipsis">
+      Triggering: Capturing the Right Moment
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#coupling-ac-vs-dc" class="md-nav__link">
+    <span class="md-ellipsis">
+      Coupling: AC vs DC
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#building-circuits-breadboards-and-prototyping" class="md-nav__link">
+    <span class="md-ellipsis">
+      Building Circuits: Breadboards and Prototyping
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Building Circuits: Breadboards and Prototyping">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#breadboard" class="md-nav__link">
+    <span class="md-ellipsis">
+      Breadboard
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#soldering" class="md-nav__link">
+    <span class="md-ellipsis">
+      Soldering
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#circuit-debugging" class="md-nav__link">
+    <span class="md-ellipsis">
+      Circuit Debugging
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#measurement-errors" class="md-nav__link">
+    <span class="md-ellipsis">
+      Measurement Errors
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Measurement Errors">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#loading-error" class="md-nav__link">
+    <span class="md-ellipsis">
+      Loading Error
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#other-error-sources" class="md-nav__link">
+    <span class="md-ellipsis">
+      Other Error Sources
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#calibration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Calibration
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#safety-practices" class="md-nav__link">
+    <span class="md-ellipsis">
+      Safety Practices
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#self-check-questions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Self-Check Questions
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Summary
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../sims/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    MicroSims
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../sections/index.md" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Supplementary Sections
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../learning-graph/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Learning Graph
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../prompts/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Sample Prompts
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+          
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../faq/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    FAQ
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../glossary/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Glossary
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how-we-built-this-site/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    How We Built This Site
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../references/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    References
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../license/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    License
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contact/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Contact
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      Summary
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#concepts-covered" class="md-nav__link">
+    <span class="md-ellipsis">
+      Concepts Covered
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prerequisites
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#introduction-where-theory-meets-reality" class="md-nav__link">
+    <span class="md-ellipsis">
+      Introduction: Where Theory Meets Reality
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-essential-lab-instruments" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Essential Lab Instruments
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Essential Lab Instruments">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#multimeter" class="md-nav__link">
+    <span class="md-ellipsis">
+      Multimeter
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#oscilloscope" class="md-nav__link">
+    <span class="md-ellipsis">
+      Oscilloscope
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Oscilloscope">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-oscilloscope-interface-guide" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Oscilloscope Interface Guide
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#function-generator" class="md-nav__link">
+    <span class="md-ellipsis">
+      Function Generator
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dc-power-supply" class="md-nav__link">
+    <span class="md-ellipsis">
+      DC Power Supply
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#spectrum-analyzer" class="md-nav__link">
+    <span class="md-ellipsis">
+      Spectrum Analyzer
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#measurement-techniques" class="md-nav__link">
+    <span class="md-ellipsis">
+      Measurement Techniques
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Measurement Techniques">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#voltage-measurement" class="md-nav__link">
+    <span class="md-ellipsis">
+      Voltage Measurement
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#current-measurement" class="md-nav__link">
+    <span class="md-ellipsis">
+      Current Measurement
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#resistance-measurement" class="md-nav__link">
+    <span class="md-ellipsis">
+      Resistance Measurement
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#frequency-measurement" class="md-nav__link">
+    <span class="md-ellipsis">
+      Frequency Measurement
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-measurement" class="md-nav__link">
+    <span class="md-ellipsis">
+      Phase Measurement
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#oscilloscope-probes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Oscilloscope Probes
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Oscilloscope Probes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#probe-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      Probe Types
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#probe-compensation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Probe Compensation
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#triggering-capturing-the-right-moment" class="md-nav__link">
+    <span class="md-ellipsis">
+      Triggering: Capturing the Right Moment
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#coupling-ac-vs-dc" class="md-nav__link">
+    <span class="md-ellipsis">
+      Coupling: AC vs DC
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#building-circuits-breadboards-and-prototyping" class="md-nav__link">
+    <span class="md-ellipsis">
+      Building Circuits: Breadboards and Prototyping
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Building Circuits: Breadboards and Prototyping">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#breadboard" class="md-nav__link">
+    <span class="md-ellipsis">
+      Breadboard
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#soldering" class="md-nav__link">
+    <span class="md-ellipsis">
+      Soldering
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#circuit-debugging" class="md-nav__link">
+    <span class="md-ellipsis">
+      Circuit Debugging
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#measurement-errors" class="md-nav__link">
+    <span class="md-ellipsis">
+      Measurement Errors
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Measurement Errors">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#loading-error" class="md-nav__link">
+    <span class="md-ellipsis">
+      Loading Error
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#other-error-sources" class="md-nav__link">
+    <span class="md-ellipsis">
+      Other Error Sources
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#calibration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Calibration
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#safety-practices" class="md-nav__link">
+    <span class="md-ellipsis">
+      Safety Practices
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#self-check-questions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Self-Check Questions
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Summary
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+    <a href="https://github.com/dmccreary/circuits/blob/master/docs/chapters/16-laboratory-techniques/index.md" title="Edit this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+
+
+<h1 id="laboratory-measurement-techniques">Laboratory Measurement Techniques</h1>
+<h2 id="summary">Summary</h2>
+<p>This chapter covers the essential laboratory skills and equipment used throughout the course. Students will learn to operate oscilloscopes, function generators, multimeters, and spectrum analyzers to measure and characterize circuit behavior. The chapter addresses practical skills including proper probe techniques, triggering methods, and circuit prototyping on breadboards. Understanding measurement errors, loading effects, and calibration ensures accurate and reliable experimental results. Safety practices for working with electrical circuits are also emphasized.</p>
+<h2 id="concepts-covered">Concepts Covered</h2>
+<p>This chapter covers the following 25 concepts from the learning graph:</p>
+<ol>
+<li>Multimeter</li>
+<li>Oscilloscope</li>
+<li>Function Generator</li>
+<li>DC Power Supply</li>
+<li>Spectrum Analyzer</li>
+<li>Voltage Measurement</li>
+<li>Current Measurement</li>
+<li>Resistance Measurement</li>
+<li>Frequency Measurement</li>
+<li>Phase Measurement</li>
+<li>Oscilloscope Probe</li>
+<li>Probe Compensation</li>
+<li>Triggering</li>
+<li>Time Base</li>
+<li>Vertical Sensitivity</li>
+<li>AC Coupling</li>
+<li>DC Coupling</li>
+<li>Breadboard</li>
+<li>Prototyping</li>
+<li>Soldering</li>
+<li>Circuit Debugging</li>
+<li>Measurement Error</li>
+<li>Loading Error</li>
+<li>Calibration</li>
+<li>Safety Practices</li>
+</ol>
+<h2 id="prerequisites">Prerequisites</h2>
+<p>This chapter builds on concepts from:</p>
+<ul>
+<li><a href="../01-electric-charge-basic-quantities/">Chapter 1: Electric Charge and Basic Circuit Quantities</a></li>
+<li><a href="../05-passive-components/">Chapter 5: Passive Components: Resistors, Capacitors, and Inductors</a></li>
+<li><a href="../08-ac-signals-sinusoidal/">Chapter 8: AC Signals and Sinusoidal Waveforms</a></li>
+<li><a href="../14-signals-audio-lab/">Chapter 14: Signal Analysis and Fourier Series</a></li>
+</ul>
+<hr />
+<p>title: Laboratory Measurement Techniques
+description: Master the essential equipment and skills for measuring, building, and debugging circuits
+generated_by: chapter-content-generator v0.03
+date: 2026-01-30</p>
+<hr />
+<h2 id="introduction-where-theory-meets-reality">Introduction: Where Theory Meets Reality</h2>
+<p>You can analyze circuits on paper all day, but circuits only become real when electrons start flowing through actual components. The laboratory is where you discover whether your calculations match reality—and when they don't, you learn the most.</p>
+<p>This chapter covers the practical skills that separate paper engineers from real ones: how to use the essential instruments (oscilloscopes, multimeters, function generators), how to build reliable prototype circuits, and how to debug when things inevitably go wrong. We'll also discuss measurement accuracy, loading effects, and the safety practices that keep you and your equipment intact.</p>
+<p>These skills aren't glamorous, but they're invaluable. The engineer who can quickly diagnose a misbehaving circuit is worth far more than one who can only calculate theoretical behavior. Master your instruments, and you'll have confidence to tackle any circuit challenge.</p>
+<h2 id="the-essential-lab-instruments">The Essential Lab Instruments</h2>
+<h3 id="multimeter">Multimeter</h3>
+<p>The <strong>multimeter</strong> (or DMM—Digital MultiMeter) is the most basic and frequently used instrument. It measures:</p>
+<p><strong>Voltage (DC and AC):</strong></p>
+<ul>
+<li>High input impedance (10 MΩ typical)</li>
+<li>Measure in parallel with the component</li>
+<li>DC readings: set to DC mode</li>
+<li>AC readings: True RMS for accurate non-sinusoidal measurements</li>
+</ul>
+<p><strong>Current (DC and AC):</strong></p>
+<ul>
+<li>Measure in series with the circuit (break the circuit)</li>
+<li>Low input impedance (burden voltage affects circuit)</li>
+<li>Use appropriate range to avoid blowing the fuse!</li>
+</ul>
+<p><strong>Resistance:</strong></p>
+<ul>
+<li>Apply test current and measure voltage drop</li>
+<li>Disconnect component from circuit (or power off)</li>
+<li>Cannot measure accurately while circuit is powered</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Measurement</th>
+<th>Connection</th>
+<th>Multimeter Mode</th>
+<th>Considerations</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Voltage</td>
+<td>Parallel</td>
+<td>V (DC or AC)</td>
+<td>High Z input</td>
+</tr>
+<tr>
+<td>Current</td>
+<td>Series</td>
+<td>A (DC or AC)</td>
+<td>Break circuit</td>
+</tr>
+<tr>
+<td>Resistance</td>
+<td>Across component</td>
+<td>Ω</td>
+<td>Power OFF</td>
+</tr>
+<tr>
+<td>Continuity</td>
+<td>Across path</td>
+<td>Beep mode</td>
+<td>Quick test</td>
+</tr>
+</tbody>
+</table>
+<h3 id="oscilloscope">Oscilloscope</h3>
+<p>The <strong>oscilloscope</strong> displays voltage as a function of time—the single most important instrument for understanding circuit behavior.</p>
+<p><strong>Key capabilities:</strong></p>
+<ul>
+<li>Visualize waveform shape</li>
+<li>Measure frequency, period, rise time</li>
+<li>Observe multiple channels simultaneously</li>
+<li>Capture transient events</li>
+<li>Perform frequency analysis (FFT on digital scopes)</li>
+</ul>
+<p><strong>Controls you must understand:</strong></p>
+<ol>
+<li><strong>Time base</strong> - Horizontal scale (time/division)</li>
+<li><strong>Vertical sensitivity</strong> - Volts/division</li>
+<li><strong>Triggering</strong> - When to start drawing</li>
+<li><strong>Coupling</strong> - AC/DC input selection</li>
+<li><strong>Probe attenuation</strong> - 1X vs 10X</li>
+</ol>
+<h4 id="diagram-oscilloscope-interface-guide">Diagram: Oscilloscope Interface Guide</h4>
+<iframe src="../../sims/oscilloscope-guide/main.html" width="100%" height="550px" scrolling="no" style="overflow: hidden;"></iframe>
+
+<details markdown="1">
+<summary>Oscilloscope Interface Guide</summary>
+Type: microsim
+
+Bloom Level: Apply (L3)
+Bloom Verb: use
+
+Learning Objective: Students will use oscilloscope controls to properly display and measure a waveform.
+
+Visual elements:
+- Simulated oscilloscope display with graticule
+- Waveform that responds to control changes
+- Control panel mimicking real oscilloscope
+- Measurement readouts (frequency, Vpp, Vavg)
+- Trigger level indicator
+
+Interactive controls:
+- Slider: Time/div (1μs to 1s, decades)
+- Slider: Volts/div (10mV to 10V, 1-2-5 sequence)
+- Slider: Trigger level
+- Radio: Trigger source (CH1, CH2, External)
+- Radio: Trigger edge (Rising, Falling)
+- Toggle: AC/DC coupling
+- Slider: Vertical position
+
+Input signal controls:
+- Dropdown: Waveform (sine, square, triangle)
+- Slider: Frequency (10Hz to 100kHz)
+- Slider: Amplitude
+- Slider: DC offset
+
+Goals/exercises:
+- "Display exactly 2 cycles"
+- "Measure the peak-to-peak voltage"
+- "Find the frequency using cursors"
+
+Default parameters:
+- 1 kHz sine wave, 2 Vpp
+- Time/div: 500 μs
+- Volts/div: 1 V
+
+Canvas layout:
+- Scope display: 500 × 400 pixels
+- Controls panel: 200 × 400 pixels (side)
+- Control area: 100 pixels below
+
+Implementation: p5.js
+</details>
+
+<h3 id="function-generator">Function Generator</h3>
+<p>The <strong>function generator</strong> produces standard waveforms for testing circuits:</p>
+<p><strong>Output waveforms:</strong></p>
+<ul>
+<li>Sine wave</li>
+<li>Square wave</li>
+<li>Triangle/ramp wave</li>
+<li>Pulse (adjustable duty cycle)</li>
+<li>Arbitrary (advanced generators)</li>
+</ul>
+<p><strong>Key settings:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Typical Range</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Frequency</td>
+<td>1 Hz - 10 MHz</td>
+<td>Set test frequency</td>
+</tr>
+<tr>
+<td>Amplitude</td>
+<td>0 - 10 Vpp</td>
+<td>Set signal level</td>
+</tr>
+<tr>
+<td>DC offset</td>
+<td>±5V</td>
+<td>Add DC bias</td>
+</tr>
+<tr>
+<td>Output impedance</td>
+<td>50Ω</td>
+<td>Affects loaded voltage</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Important:</strong> Most generators have 50Ω output impedance. Into a high-impedance load, you get the displayed voltage. Into a 50Ω load (matched), you get half the displayed voltage.</p>
+<h3 id="dc-power-supply">DC Power Supply</h3>
+<p>The <strong>DC power supply</strong> provides controlled voltage and current for powering circuits.</p>
+<p><strong>Features to understand:</strong></p>
+<ul>
+<li><strong>Voltage setting:</strong> Adjustable output voltage</li>
+<li><strong>Current limit:</strong> Maximum current (protects circuit and supply)</li>
+<li><strong>Constant voltage (CV) mode:</strong> Maintains set voltage regardless of load</li>
+<li><strong>Constant current (CC) mode:</strong> Limits current when load demands more than limit</li>
+</ul>
+<p><strong>Dual/triple supplies:</strong> Provide multiple independent or tracking outputs (useful for ±15V op-amp supplies).</p>
+<h3 id="spectrum-analyzer">Spectrum Analyzer</h3>
+<p>The <strong>spectrum analyzer</strong> displays amplitude vs. frequency—the frequency domain view of a signal.</p>
+<p><strong>Uses:</strong></p>
+<ul>
+<li>Identify harmonic content</li>
+<li>Measure THD (Total Harmonic Distortion)</li>
+<li>Find interference sources</li>
+<li>Verify filter response</li>
+</ul>
+<p><strong>Key settings:</strong></p>
+<ul>
+<li><strong>Center frequency:</strong> Middle of display</li>
+<li><strong>Span:</strong> Frequency range displayed</li>
+<li><strong>Resolution bandwidth (RBW):</strong> Frequency resolution</li>
+<li><strong>Reference level:</strong> Top of display (dBm or dBV)</li>
+</ul>
+<h2 id="measurement-techniques">Measurement Techniques</h2>
+<h3 id="voltage-measurement">Voltage Measurement</h3>
+<p><strong>DC voltage:</strong></p>
+<ol>
+<li>Set multimeter to DC voltage range</li>
+<li>Connect probes in parallel with component</li>
+<li>Black to reference (ground), red to test point</li>
+<li>Read voltage (positive or negative)</li>
+</ol>
+<p><strong>AC voltage with oscilloscope:</strong></p>
+<ol>
+<li>Connect probe ground to circuit ground</li>
+<li>Touch probe tip to test point</li>
+<li>Adjust volts/div for readable display</li>
+<li>Set time/div to show a few cycles</li>
+<li>Read Vpp or use automatic measurement</li>
+</ol>
+<h3 id="current-measurement">Current Measurement</h3>
+<p>Current measurement requires breaking the circuit:</p>
+<ol>
+<li><strong>With multimeter:</strong></li>
+<li>Set to current range (A or mA)</li>
+<li>Open the circuit where you want to measure</li>
+<li>Insert meter in series</li>
+<li>
+<p>Current flows <em>through</em> the meter</p>
+</li>
+<li>
+<p><strong>With oscilloscope (indirect):</strong></p>
+</li>
+<li>Measure voltage across a known resistor</li>
+<li>Calculate: I = V/R</li>
+<li>Or use a current probe</li>
+</ol>
+<div class="admonition warning">
+<p class="admonition-title">Current Measurement Caution</p>
+<p>Never connect a current meter in parallel with a component! The meter's low resistance will create a short circuit, potentially damaging the meter, circuit, or both.</p>
+</div>
+<h3 id="resistance-measurement">Resistance Measurement</h3>
+<ol>
+<li>Power off the circuit completely</li>
+<li>Disconnect at least one lead of the component (to avoid parallel paths)</li>
+<li>Set meter to Ω range</li>
+<li>Touch probes to component leads</li>
+<li>Read resistance</li>
+</ol>
+<p><strong>Troubleshooting tip:</strong> If reading seems wrong, check for parallel paths in the circuit that could affect the measurement.</p>
+<h3 id="frequency-measurement">Frequency Measurement</h3>
+<p><strong>With oscilloscope:</strong></p>
+<div class="arithmatex">\[f = \frac{1}{T}\]</div>
+<p>Measure period T from the display, or use automatic frequency measurement.</p>
+<p><strong>With frequency counter:</strong> Connect signal, read frequency directly (more accurate than scope).</p>
+<h3 id="phase-measurement">Phase Measurement</h3>
+<p><strong>With dual-channel oscilloscope:</strong></p>
+<ol>
+<li>Connect reference signal to CH1</li>
+<li>Connect signal to measure to CH2</li>
+<li>Measure time delay Δt between corresponding points (zero crossings)</li>
+<li>Calculate phase:</li>
+</ol>
+<div class="arithmatex">\[\phi = \frac{\Delta t}{T} \times 360°\]</div>
+<p><strong>With Lissajous patterns:</strong> X-Y mode shows phase relationship as an ellipse shape.</p>
+<h2 id="oscilloscope-probes">Oscilloscope Probes</h2>
+<h3 id="probe-types">Probe Types</h3>
+<p><strong>Passive 10X probe:</strong></p>
+<ul>
+<li>Most common type</li>
+<li>Divides signal by 10 (scope compensates)</li>
+<li>Higher input impedance (10 MΩ)</li>
+<li>Lower capacitance loading</li>
+<li>Wider bandwidth</li>
+</ul>
+<p><strong>1X probe (direct):</strong></p>
+<ul>
+<li>No attenuation</li>
+<li>Lower input impedance</li>
+<li>More capacitance loading</li>
+<li>Limited bandwidth</li>
+<li>Good for very small signals</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>1X Probe</th>
+<th>10X Probe</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Input impedance</td>
+<td>1 MΩ</td>
+<td>10 MΩ</td>
+</tr>
+<tr>
+<td>Capacitance</td>
+<td>~100 pF</td>
+<td>~10 pF</td>
+</tr>
+<tr>
+<td>Bandwidth</td>
+<td>Limited</td>
+<td>Higher</td>
+</tr>
+<tr>
+<td>Minimum signal</td>
+<td>~1 mV</td>
+<td>~10 mV</td>
+</tr>
+</tbody>
+</table>
+<h3 id="probe-compensation">Probe Compensation</h3>
+<p><strong>10X probes must be compensated</strong> to match the oscilloscope input. An uncompensated probe distorts square waves:</p>
+<ul>
+<li><strong>Under-compensated:</strong> Rounded corners</li>
+<li><strong>Over-compensated:</strong> Overshoot at corners</li>
+<li><strong>Correct:</strong> Flat tops and sharp corners</li>
+</ul>
+<p><strong>Compensation procedure:</strong></p>
+<ol>
+<li>Connect probe to calibration output (square wave)</li>
+<li>Observe waveform</li>
+<li>Adjust trimmer screw on probe</li>
+<li>Repeat until square wave is flat</li>
+</ol>
+<h2 id="triggering-capturing-the-right-moment">Triggering: Capturing the Right Moment</h2>
+<p><strong>Triggering</strong> tells the oscilloscope when to start displaying a waveform. Without proper triggering, the display rolls or appears unstable.</p>
+<p><strong>Trigger parameters:</strong></p>
+<ul>
+<li><strong>Source:</strong> Which signal to trigger on (CH1, CH2, External, Line)</li>
+<li><strong>Level:</strong> Voltage threshold for trigger</li>
+<li><strong>Edge:</strong> Rising or falling edge</li>
+<li><strong>Mode:</strong> Auto (always runs), Normal (waits for trigger)</li>
+</ul>
+<p><strong>Triggering tips:</strong></p>
+<ul>
+<li>For repetitive signals: Trigger on the signal itself</li>
+<li>For non-repetitive events: Use Normal mode and wait</li>
+<li>For signals synchronized to power line: Use Line trigger</li>
+<li>For multiple signals: Trigger on the reference channel</li>
+</ul>
+<h2 id="coupling-ac-vs-dc">Coupling: AC vs DC</h2>
+<p><strong>DC coupling</strong> passes the complete signal including any DC offset.</p>
+<p><strong>AC coupling</strong> blocks the DC component, showing only the AC variation.</p>
+<p><strong>When to use each:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Use DC Coupling</th>
+<th>Use AC Coupling</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Measuring DC levels</td>
+<td>Small AC on large DC</td>
+</tr>
+<tr>
+<td>Viewing full waveform</td>
+<td>Ignoring DC bias</td>
+</tr>
+<tr>
+<td>Accurate DC measurements</td>
+<td>Noise on power supply</td>
+</tr>
+<tr>
+<td>Default for most work</td>
+<td>Examining ripple</td>
+</tr>
+</tbody>
+</table>
+<h2 id="building-circuits-breadboards-and-prototyping">Building Circuits: Breadboards and Prototyping</h2>
+<h3 id="breadboard">Breadboard</h3>
+<p>A <strong>breadboard</strong> allows rapid circuit construction without soldering.</p>
+<p><strong>Layout:</strong></p>
+<ul>
+<li><strong>Terminal strips:</strong> Rows of 5 connected holes</li>
+<li><strong>Bus strips:</strong> Long connected rows for power/ground</li>
+<li><strong>Center gap:</strong> Spans between IC pins</li>
+</ul>
+<p><strong>Best practices:</strong></p>
+<ul>
+<li>Keep wires short and flat</li>
+<li>Use consistent colors (red = +V, black = ground)</li>
+<li>Place ICs across the center gap</li>
+<li>Use multiple grounds (avoid ground bounce)</li>
+<li>Don't exceed current limits (typically 1A per strip)</li>
+</ul>
+<p><strong>Limitations:</strong></p>
+<ul>
+<li>High capacitance between strips (~2 pF)</li>
+<li>Limited to low frequencies (&lt; 10 MHz practical)</li>
+<li>Connection reliability varies</li>
+<li>Not suitable for high-current or high-voltage</li>
+</ul>
+<h3 id="soldering">Soldering</h3>
+<p><strong>Soldering</strong> creates permanent electrical connections.</p>
+<p><strong>Good solder joint characteristics:</strong></p>
+<ul>
+<li>Shiny appearance (not dull)</li>
+<li>Flows smoothly onto both surfaces</li>
+<li>Concave fillet shape</li>
+<li>Component lead visible through solder</li>
+</ul>
+<p><strong>Common defects:</strong></p>
+<ul>
+<li><strong>Cold joint:</strong> Dull, grainy appearance (insufficient heat)</li>
+<li><strong>Insufficient solder:</strong> Weak connection</li>
+<li><strong>Solder bridge:</strong> Unintended connection between pads</li>
+<li><strong>Overheated:</strong> Damaged component or lifted pad</li>
+</ul>
+<h2 id="circuit-debugging">Circuit Debugging</h2>
+<p><strong>Debugging strategy:</strong></p>
+<ol>
+<li><strong>Verify power:</strong> Is supply voltage correct at IC pins?</li>
+<li><strong>Check connections:</strong> Follow schematic, verify each wire</li>
+<li><strong>Divide and conquer:</strong> Isolate sections, test independently</li>
+<li><strong>Signal trace:</strong> Follow signal path, find where it fails</li>
+<li><strong>Compare to theory:</strong> Does behavior match expectations?</li>
+</ol>
+<p><strong>Common problems:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Symptom</th>
+<th>Possible Cause</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>No output</td>
+<td>No power, broken connection</td>
+</tr>
+<tr>
+<td>DC offset wrong</td>
+<td>Bias resistor error, loading</td>
+</tr>
+<tr>
+<td>Gain incorrect</td>
+<td>Wrong resistor value</td>
+</tr>
+<tr>
+<td>Oscillation</td>
+<td>Positive feedback, layout issue</td>
+</tr>
+<tr>
+<td>Noise/hum</td>
+<td>Ground loop, pickup</td>
+</tr>
+<tr>
+<td>Distortion</td>
+<td>Clipping, nonlinearity</td>
+</tr>
+</tbody>
+</table>
+<h2 id="measurement-errors">Measurement Errors</h2>
+<h3 id="loading-error">Loading Error</h3>
+<p><strong>Loading error</strong> occurs when the measurement instrument affects the circuit being measured.</p>
+<p><strong>Voltage measurement loading:</strong></p>
+<div class="arithmatex">\[V_{measured} = V_{actual} \times \frac{R_{meter}}{R_{meter} + R_{source}}\]</div>
+<p>With high-impedance meters (10 MΩ), loading is usually negligible unless the source impedance is also high.</p>
+<p><strong>Example:</strong> Measuring across a 1 MΩ resistor with a 10 MΩ meter:
+[V_{measured} = V_{actual} \times \frac{10M}{10M + 1M} = 0.91 V_{actual}]</p>
+<p>That's a 9% error!</p>
+<h3 id="other-error-sources">Other Error Sources</h3>
+<ul>
+<li><strong>Calibration error:</strong> Instrument reads wrong</li>
+<li><strong>Resolution error:</strong> Limited digits/divisions</li>
+<li><strong>Temperature drift:</strong> Readings change with temperature</li>
+<li><strong>Noise:</strong> Random fluctuations in reading</li>
+</ul>
+<h3 id="calibration">Calibration</h3>
+<p><strong>Calibration</strong> verifies and adjusts instrument accuracy against known standards.</p>
+<p><strong>Checks you can perform:</strong></p>
+<ul>
+<li>Zero offset: Does meter read 0 with leads shorted?</li>
+<li>1 kHz test: Does scope show correct frequency?</li>
+<li>Probe compensation: Is square wave flat?</li>
+</ul>
+<p>Professional calibration uses certified references and should be done periodically for critical measurements.</p>
+<h2 id="safety-practices">Safety Practices</h2>
+<p><strong>Electrical safety rules:</strong></p>
+<ol>
+<li><strong>Power off before making connections</strong></li>
+<li><strong>One hand rule:</strong> Keep one hand in pocket when probing live circuits</li>
+<li><strong>Current limits:</strong> Use power supply current limiting</li>
+<li><strong>Fuse protection:</strong> Ensure fuses are appropriate rating</li>
+<li><strong>Capacitor discharge:</strong> Large capacitors hold charge—discharge before handling</li>
+<li><strong>No jewelry:</strong> Remove rings, watches when working</li>
+<li><strong>Inspect equipment:</strong> Don't use damaged cables or probes</li>
+</ol>
+<p><strong>Voltage limits:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Voltage</th>
+<th>Risk Level</th>
+<th>Precautions</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>&lt; 50V DC</td>
+<td>Generally safe</td>
+<td>Basic precautions</td>
+</tr>
+<tr>
+<td>50-500V</td>
+<td>Can be lethal</td>
+<td>Extreme care</td>
+</tr>
+<tr>
+<td>&gt; 500V</td>
+<td>Dangerous</td>
+<td>Special training required</td>
+</tr>
+<tr>
+<td>Line voltage (120/240V)</td>
+<td>Serious hazard</td>
+<td>Isolation, GFCI</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition danger">
+<p class="admonition-title">Respect Electricity</p>
+<p>Even low voltages can be dangerous under the right conditions (wet skin, direct heart path). Always assume circuits are live until verified otherwise, and never work alone on high-voltage equipment.</p>
+</div>
+<h2 id="self-check-questions">Self-Check Questions</h2>
+<details class="question">
+<summary>1. Why should you use a 10X probe instead of 1X for most oscilloscope measurements?</summary>
+<p>The 10X probe has several advantages:</p>
+<ol>
+<li>
+<p><strong>Higher input impedance (10 MΩ vs 1 MΩ):</strong> Less loading on the circuit</p>
+</li>
+<li>
+<p><strong>Lower input capacitance (~10 pF vs ~100 pF):</strong> Less distortion of fast edges</p>
+</li>
+<li>
+<p><strong>Higher bandwidth:</strong> Typically 200-500 MHz vs 10-20 MHz</p>
+</li>
+<li>
+<p><strong>Better noise immunity:</strong> Higher impedance reduces pickup</p>
+</li>
+</ol>
+<p>The only disadvantage is a 10× reduction in displayed signal, making very small signals harder to see. For signals above ~10 mV, the 10X probe is almost always the better choice.</p>
+</details>
+<details class="question">
+<summary>2. Your oscilloscope shows a slowly drifting waveform instead of a stable display. What control should you adjust?</summary>
+<p>The <strong>trigger level</strong> needs adjustment.</p>
+<p>The trigger level must cross the waveform consistently for stable display. If it's set too high or too low (outside the waveform range), the scope won't find valid trigger points and the display will drift.</p>
+<p>Also check:
+- Trigger <strong>source</strong> is correct channel
+- Trigger <strong>mode</strong> is Auto or Normal
+- Trigger <strong>edge</strong> matches the waveform transition you want</p>
+</details>
+<details class="question">
+<summary>3. When measuring the output voltage of a sensor with 100 kΩ source impedance, your 10 MΩ multimeter reads 4.95V. What is the actual sensor voltage?</summary>
+<p>The measured voltage is reduced by the voltage divider formed by source and meter impedance:</p>
+<div class="arithmatex">\[V_{measured} = V_{actual} \times \frac{R_{meter}}{R_{meter} + R_{source}}\]</div>
+<div class="arithmatex">\[4.95 = V_{actual} \times \frac{10M}{10M + 0.1M}\]</div>
+<div class="arithmatex">\[4.95 = V_{actual} \times 0.99\]</div>
+<div class="arithmatex">\[V_{actual} = \frac{4.95}{0.99} = 5.00 \text{ V}\]</div>
+<p>The loading error is only 1% in this case because the meter impedance is 100× the source impedance.</p>
+</details>
+<details class="question">
+<summary>4. Your breadboard circuit oscillates unexpectedly. What might be causing this and how would you fix it?</summary>
+<p>Common causes of unexpected oscillation:</p>
+<ol>
+<li>
+<p><strong>Positive feedback:</strong> Check for wiring errors that create feedback paths</p>
+</li>
+<li>
+<p><strong>Parasitic capacitance:</strong> Breadboard capacitance can cause high-frequency instability. Add small capacitors (0.1 μF) across IC power pins.</p>
+</li>
+<li>
+<p><strong>Long leads:</strong> Create inductance that can oscillate with circuit capacitance. Shorten leads and keep wires flat.</p>
+</li>
+<li>
+<p><strong>Ground bounce:</strong> Insufficient grounding causes voltage fluctuations. Use multiple ground connections.</p>
+</li>
+<li>
+<p><strong>Power supply instability:</strong> Ripple or noise on supply can cause oscillation. Add bypass capacitors.</p>
+</li>
+</ol>
+<p><strong>Fixes:</strong> Add bypass caps, shorten leads, improve grounding, reduce stray coupling between input and output.</p>
+</details>
+<h2 id="summary_1">Summary</h2>
+<p>Laboratory skills transform theoretical knowledge into practical ability:</p>
+<ol>
+<li>
+<p><strong>Master your multimeter</strong> - Voltage in parallel, current in series, resistance with power off</p>
+</li>
+<li>
+<p><strong>The oscilloscope is your eyes</strong> - Learn time base, vertical sensitivity, and triggering</p>
+</li>
+<li>
+<p><strong>Function generators have 50Ω output</strong> - Account for this when connecting to circuits</p>
+</li>
+<li>
+<p><strong>Use 10X probes by default</strong> - Higher impedance, lower capacitance, wider bandwidth</p>
+</li>
+<li>
+<p><strong>Compensate your probes</strong> - Uncompensated probes distort square waves</p>
+</li>
+<li>
+<p><strong>Triggering stabilizes the display</strong> - Set level, source, and edge correctly</p>
+</li>
+<li>
+<p><strong>AC coupling removes DC</strong> - Useful for small AC on large DC levels</p>
+</li>
+<li>
+<p><strong>Breadboards have limitations</strong> - High frequency and high current don't work well</p>
+</li>
+<li>
+<p><strong>Loading affects measurements</strong> - High-impedance sources require high-impedance meters</p>
+</li>
+<li>
+<p><strong>Safety first, always</strong> - Power off before connecting, respect voltage hazards</p>
+</li>
+</ol>
+<p>These practical skills take time to develop, but they're what separate theoretical understanding from real engineering capability. Every debugging session teaches something new, every measurement builds confidence, and every successful circuit build reinforces your knowledge. The lab is where you truly learn circuits—embrace the hands-on experience.</p>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../15-audio-applications/" class="md-footer__link md-footer__link--prev" aria-label="Previous: 15. Audio Applications">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                15. Audio Applications
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../../sims/" class="md-footer__link md-footer__link--next" aria-label="Next: Introduction">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Introduction
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.copy", "navigation.expand", "navigation.path", "navigation.prune", "navigation.indexes", "toc.follow", "navigation.top", "navigation.footer", "content.action.edit"], "search": "../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.83f73b43.min.js"></script>
+      
+        <script src="../../js/extra.js"></script>
+      
+        <script src="../../js/katex.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+      
+    
+  </body>
+</html>

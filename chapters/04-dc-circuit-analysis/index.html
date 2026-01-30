@@ -1,0 +1,3875 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Master Thevenin, Norton, and systematic analysis techniques for simplifying complex circuits">
+      
+      
+        <meta name="author" content="Dan McCreary">
+      
+      
+        <link rel="canonical" href="https://dmccreary.github.io/circuits/chapters/04-dc-circuit-analysis/">
+      
+      
+        <link rel="prev" href="../03-kirchhoffs-laws-topology/">
+      
+      
+        <link rel="next" href="../05-passive-components/">
+      
+      
+      <link rel="icon" href="../../img/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.43">
+    
+    
+      
+        <title>DC Circuit Analysis Methods - Circuits 1</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.0253249f.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../css/extra.css">
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+<script id="__analytics">function __md_analytics(){function e(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],e("js",new Date),e("config","G-9J4MVE6LWP"),document.addEventListener("DOMContentLoaded",(function(){document.forms.search&&document.forms.search.query.addEventListener("blur",(function(){this.value&&e("event","search",{search_term:this.value})}));document$.subscribe((function(){var t=document.forms.feedback;if(void 0!==t)for(var a of t.querySelectorAll("[type=submit]"))a.addEventListener("click",(function(a){a.preventDefault();var n=document.location.pathname,d=this.getAttribute("data-md-value");e("event","feedback",{page:n,data:d}),t.firstElementChild.disabled=!0;var r=t.querySelector(".md-feedback__note [data-md-value='"+d+"']");r&&(r.hidden=!1)})),t.hidden=!1})),location$.subscribe((function(t){e("config","G-9J4MVE6LWP",{page_path:t.pathname})}))}));var t=document.createElement("script");t.async=!0,t.src="https://www.googletagmanager.com/gtag/js?id=G-9J4MVE6LWP",document.getElementById("__analytics").insertAdjacentElement("afterEnd",t)}</script>
+  
+    <script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
+  
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="orange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#dc-circuit-analysis-methods" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Circuits 1" class="md-header__button md-logo" aria-label="Circuits 1" data-md-component="logo">
+      
+  <img src="../../img/course-logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Circuits 1
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              DC Circuit Analysis Methods
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/dmccreary/circuits" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub Repo
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Circuits 1" class="md-nav__button md-logo" aria-label="Circuits 1" data-md-component="logo">
+      
+  <img src="../../img/course-logo.png" alt="logo">
+
+    </a>
+    Circuits 1
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/dmccreary/circuits" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub Repo
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../about/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    About This Course
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+    
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Chapters
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Chapters
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-electric-charge-basic-quantities/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1. Electric Charge and Quantities
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-ohms-law-basic-configurations/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2. Ohm's Law and Configurations
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-kirchhoffs-laws-topology/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3. Kirchhoff's Laws and Topology
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    4. DC Circuit Analysis
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    4. DC Circuit Analysis
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      Summary
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#concepts-covered" class="md-nav__link">
+    <span class="md-ellipsis">
+      Concepts Covered
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prerequisites
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#introduction-the-circuit-whisperers-toolkit" class="md-nav__link">
+    <span class="md-ellipsis">
+      Introduction: The Circuit Whisperer's Toolkit
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nodal-analysis-every-node-tells-a-story" class="md-nav__link">
+    <span class="md-ellipsis">
+      Nodal Analysis: Every Node Tells a Story
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Nodal Analysis: Every Node Tells a Story">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-nodal-analysis-recipe" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Nodal Analysis Recipe
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Nodal Analysis Recipe">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-nodal-analysis-step-by-step" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Nodal Analysis Step-by-Step
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#setting-up-the-kcl-equations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Setting Up the KCL Equations
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Setting Up the KCL Equations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#kcl-at-a-node" class="md-nav__link">
+    <span class="md-ellipsis">
+      KCL at a Node
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nodal-analysis-with-voltage-sources" class="md-nav__link">
+    <span class="md-ellipsis">
+      Nodal Analysis with Voltage Sources
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mesh-analysis-going-around-in-circles-on-purpose" class="md-nav__link">
+    <span class="md-ellipsis">
+      Mesh Analysis: Going Around in Circles (On Purpose)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Mesh Analysis: Going Around in Circles (On Purpose)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-mesh-analysis-recipe" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Mesh Analysis Recipe
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Mesh Analysis Recipe">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-mesh-analysis-visualization" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Mesh Analysis Visualization
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nodal-vs-mesh-when-to-use-which" class="md-nav__link">
+    <span class="md-ellipsis">
+      Nodal vs. Mesh: When to Use Which?
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#thevenins-theorem-the-great-simplifier" class="md-nav__link">
+    <span class="md-ellipsis">
+      Thevenin's Theorem: The Great Simplifier
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Thevenin's Theorem: The Great Simplifier">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#thevenin-equivalent-circuit" class="md-nav__link">
+    <span class="md-ellipsis">
+      Thevenin Equivalent Circuit
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#diagram-thevenin-equivalent-concept" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Thevenin Equivalent Concept
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#finding-the-thevenin-equivalent" class="md-nav__link">
+    <span class="md-ellipsis">
+      Finding the Thevenin Equivalent
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Finding the Thevenin Equivalent">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-thevenin-step-by-step-solver" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Thevenin Step-by-Step Solver
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nortons-theorem-thevenins-alter-ego" class="md-nav__link">
+    <span class="md-ellipsis">
+      Norton's Theorem: Thevenin's Alter Ego
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Norton's Theorem: Thevenin's Alter Ego">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#norton-equivalent-circuit" class="md-nav__link">
+    <span class="md-ellipsis">
+      Norton Equivalent Circuit
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#thevenin-norton-relationship" class="md-nav__link">
+    <span class="md-ellipsis">
+      Thevenin-Norton Relationship
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#diagram-thevenin-norton-duality" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Thevenin-Norton Duality
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#source-transformation-the-quick-conversion" class="md-nav__link">
+    <span class="md-ellipsis">
+      Source Transformation: The Quick Conversion
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Source Transformation: The Quick Conversion">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-source-transformation-practice" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Source Transformation Practice
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#maximum-power-transfer-getting-the-most-bang-for-your-buck" class="md-nav__link">
+    <span class="md-ellipsis">
+      Maximum Power Transfer: Getting the Most Bang for Your Buck
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Maximum Power Transfer: Getting the Most Bang for Your Buck">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#maximum-power-transfer-theorem" class="md-nav__link">
+    <span class="md-ellipsis">
+      Maximum Power Transfer Theorem
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#maximum-power-formula" class="md-nav__link">
+    <span class="md-ellipsis">
+      Maximum Power Formula
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#diagram-maximum-power-transfer-curve" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Maximum Power Transfer Curve
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#when-maximum-power-transfer-matters" class="md-nav__link">
+    <span class="md-ellipsis">
+      When Maximum Power Transfer Matters
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#input-and-output-resistance-what-the-world-sees" class="md-nav__link">
+    <span class="md-ellipsis">
+      Input and Output Resistance: What the World Sees
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Input and Output Resistance: What the World Sees">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#output-resistance" class="md-nav__link">
+    <span class="md-ellipsis">
+      Output Resistance
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Output Resistance">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#output-resistance_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Output Resistance
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#input-resistance" class="md-nav__link">
+    <span class="md-ellipsis">
+      Input Resistance
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Input Resistance">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#input-resistance_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Input Resistance
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#diagram-input-and-output-resistance" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Input and Output Resistance
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-loading-effect-when-circuits-misbehave" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Loading Effect: When Circuits Misbehave
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Loading Effect: When Circuits Misbehave">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#minimizing-loading" class="md-nav__link">
+    <span class="md-ellipsis">
+      Minimizing Loading
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Minimizing Loading">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-loading-effect-demonstration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Loading Effect Demonstration
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#two-port-networks-the-black-box-view" class="md-nav__link">
+    <span class="md-ellipsis">
+      Two-Port Networks: The Black Box View
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Two-Port Networks: The Black Box View">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#two-port-parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Two-Port Parameters
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Two-Port Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#two-port-impedance-parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Two-Port Impedance Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#diagram-two-port-network-concept" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Two-Port Network Concept
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#introduction-to-reactive-components" class="md-nav__link">
+    <span class="md-ellipsis">
+      Introduction to Reactive Components
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Introduction to Reactive Components">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-capacitor-storing-charge" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Capacitor: Storing Charge
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Capacitor: Storing Charge">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#capacitance" class="md-nav__link">
+    <span class="md-ellipsis">
+      Capacitance
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#diagram-capacitor-construction-and-symbol" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Capacitor Construction and Symbol
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-inductor-storing-current" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Inductor: Storing Current
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Inductor: Storing Current">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#inductance" class="md-nav__link">
+    <span class="md-ellipsis">
+      Inductance
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#diagram-inductor-construction-and-symbol" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Inductor Construction and Symbol
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#capacitors-vs-inductors-a-comparison" class="md-nav__link">
+    <span class="md-ellipsis">
+      Capacitors vs. Inductors: A Comparison
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#practical-applications" class="md-nav__link">
+    <span class="md-ellipsis">
+      Practical Applications
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Practical Applications">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#application-1-audio-amplifier-output-matching" class="md-nav__link">
+    <span class="md-ellipsis">
+      Application 1: Audio Amplifier Output Matching
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#application-2-sensor-signal-conditioning" class="md-nav__link">
+    <span class="md-ellipsis">
+      Application 2: Sensor Signal Conditioning
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#application-3-battery-characterization" class="md-nav__link">
+    <span class="md-ellipsis">
+      Application 3: Battery Characterization
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary-and-key-takeaways" class="md-nav__link">
+    <span class="md-ellipsis">
+      Summary and Key Takeaways
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-passive-components/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5. Passive Components
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-transient-analysis-rc-rl/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    6. Transient Analysis RC/RL
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-second-order-rlc-circuits/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    7. Second-Order RLC Circuits
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-ac-signals-sinusoidal/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    8. AC Signals and Sinusoids
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../09-phasors-complex-impedance/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    9. Phasors and Impedance
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10-ac-power-analysis/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    10. AC Power Analysis
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../11-frequency-response-bode/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    11. Frequency Response and Bode
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../12-filters-resonance/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    12. Filters and Resonance
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../13-operational-amplifiers/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    13. Operational Amplifiers
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../14-signals-audio-lab/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    14. Signal Analysis and Fourier
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../15-audio-applications/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    15. Audio Applications
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../16-laboratory-techniques/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    16. Laboratory Techniques
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../sims/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    MicroSims
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../sections/index.md" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Supplementary Sections
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../learning-graph/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Learning Graph
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../prompts/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Sample Prompts
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+          
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../faq/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    FAQ
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../glossary/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Glossary
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how-we-built-this-site/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    How We Built This Site
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../references/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    References
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../license/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    License
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contact/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Contact
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      Summary
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#concepts-covered" class="md-nav__link">
+    <span class="md-ellipsis">
+      Concepts Covered
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prerequisites
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#introduction-the-circuit-whisperers-toolkit" class="md-nav__link">
+    <span class="md-ellipsis">
+      Introduction: The Circuit Whisperer's Toolkit
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nodal-analysis-every-node-tells-a-story" class="md-nav__link">
+    <span class="md-ellipsis">
+      Nodal Analysis: Every Node Tells a Story
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Nodal Analysis: Every Node Tells a Story">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-nodal-analysis-recipe" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Nodal Analysis Recipe
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Nodal Analysis Recipe">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-nodal-analysis-step-by-step" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Nodal Analysis Step-by-Step
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#setting-up-the-kcl-equations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Setting Up the KCL Equations
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Setting Up the KCL Equations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#kcl-at-a-node" class="md-nav__link">
+    <span class="md-ellipsis">
+      KCL at a Node
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nodal-analysis-with-voltage-sources" class="md-nav__link">
+    <span class="md-ellipsis">
+      Nodal Analysis with Voltage Sources
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mesh-analysis-going-around-in-circles-on-purpose" class="md-nav__link">
+    <span class="md-ellipsis">
+      Mesh Analysis: Going Around in Circles (On Purpose)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Mesh Analysis: Going Around in Circles (On Purpose)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-mesh-analysis-recipe" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Mesh Analysis Recipe
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Mesh Analysis Recipe">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-mesh-analysis-visualization" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Mesh Analysis Visualization
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nodal-vs-mesh-when-to-use-which" class="md-nav__link">
+    <span class="md-ellipsis">
+      Nodal vs. Mesh: When to Use Which?
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#thevenins-theorem-the-great-simplifier" class="md-nav__link">
+    <span class="md-ellipsis">
+      Thevenin's Theorem: The Great Simplifier
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Thevenin's Theorem: The Great Simplifier">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#thevenin-equivalent-circuit" class="md-nav__link">
+    <span class="md-ellipsis">
+      Thevenin Equivalent Circuit
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#diagram-thevenin-equivalent-concept" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Thevenin Equivalent Concept
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#finding-the-thevenin-equivalent" class="md-nav__link">
+    <span class="md-ellipsis">
+      Finding the Thevenin Equivalent
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Finding the Thevenin Equivalent">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-thevenin-step-by-step-solver" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Thevenin Step-by-Step Solver
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nortons-theorem-thevenins-alter-ego" class="md-nav__link">
+    <span class="md-ellipsis">
+      Norton's Theorem: Thevenin's Alter Ego
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Norton's Theorem: Thevenin's Alter Ego">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#norton-equivalent-circuit" class="md-nav__link">
+    <span class="md-ellipsis">
+      Norton Equivalent Circuit
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#thevenin-norton-relationship" class="md-nav__link">
+    <span class="md-ellipsis">
+      Thevenin-Norton Relationship
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#diagram-thevenin-norton-duality" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Thevenin-Norton Duality
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#source-transformation-the-quick-conversion" class="md-nav__link">
+    <span class="md-ellipsis">
+      Source Transformation: The Quick Conversion
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Source Transformation: The Quick Conversion">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-source-transformation-practice" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Source Transformation Practice
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#maximum-power-transfer-getting-the-most-bang-for-your-buck" class="md-nav__link">
+    <span class="md-ellipsis">
+      Maximum Power Transfer: Getting the Most Bang for Your Buck
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Maximum Power Transfer: Getting the Most Bang for Your Buck">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#maximum-power-transfer-theorem" class="md-nav__link">
+    <span class="md-ellipsis">
+      Maximum Power Transfer Theorem
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#maximum-power-formula" class="md-nav__link">
+    <span class="md-ellipsis">
+      Maximum Power Formula
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#diagram-maximum-power-transfer-curve" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Maximum Power Transfer Curve
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#when-maximum-power-transfer-matters" class="md-nav__link">
+    <span class="md-ellipsis">
+      When Maximum Power Transfer Matters
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#input-and-output-resistance-what-the-world-sees" class="md-nav__link">
+    <span class="md-ellipsis">
+      Input and Output Resistance: What the World Sees
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Input and Output Resistance: What the World Sees">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#output-resistance" class="md-nav__link">
+    <span class="md-ellipsis">
+      Output Resistance
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Output Resistance">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#output-resistance_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Output Resistance
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#input-resistance" class="md-nav__link">
+    <span class="md-ellipsis">
+      Input Resistance
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Input Resistance">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#input-resistance_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Input Resistance
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#diagram-input-and-output-resistance" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Input and Output Resistance
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-loading-effect-when-circuits-misbehave" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Loading Effect: When Circuits Misbehave
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Loading Effect: When Circuits Misbehave">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#minimizing-loading" class="md-nav__link">
+    <span class="md-ellipsis">
+      Minimizing Loading
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Minimizing Loading">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-loading-effect-demonstration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Loading Effect Demonstration
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#two-port-networks-the-black-box-view" class="md-nav__link">
+    <span class="md-ellipsis">
+      Two-Port Networks: The Black Box View
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Two-Port Networks: The Black Box View">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#two-port-parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Two-Port Parameters
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Two-Port Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#two-port-impedance-parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Two-Port Impedance Parameters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#diagram-two-port-network-concept" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Two-Port Network Concept
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#introduction-to-reactive-components" class="md-nav__link">
+    <span class="md-ellipsis">
+      Introduction to Reactive Components
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Introduction to Reactive Components">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-capacitor-storing-charge" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Capacitor: Storing Charge
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Capacitor: Storing Charge">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#capacitance" class="md-nav__link">
+    <span class="md-ellipsis">
+      Capacitance
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#diagram-capacitor-construction-and-symbol" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Capacitor Construction and Symbol
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-inductor-storing-current" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Inductor: Storing Current
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Inductor: Storing Current">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#inductance" class="md-nav__link">
+    <span class="md-ellipsis">
+      Inductance
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#diagram-inductor-construction-and-symbol" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Inductor Construction and Symbol
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#capacitors-vs-inductors-a-comparison" class="md-nav__link">
+    <span class="md-ellipsis">
+      Capacitors vs. Inductors: A Comparison
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#practical-applications" class="md-nav__link">
+    <span class="md-ellipsis">
+      Practical Applications
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Practical Applications">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#application-1-audio-amplifier-output-matching" class="md-nav__link">
+    <span class="md-ellipsis">
+      Application 1: Audio Amplifier Output Matching
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#application-2-sensor-signal-conditioning" class="md-nav__link">
+    <span class="md-ellipsis">
+      Application 2: Sensor Signal Conditioning
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#application-3-battery-characterization" class="md-nav__link">
+    <span class="md-ellipsis">
+      Application 3: Battery Characterization
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary-and-key-takeaways" class="md-nav__link">
+    <span class="md-ellipsis">
+      Summary and Key Takeaways
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+    <a href="https://github.com/dmccreary/circuits/blob/master/docs/chapters/04-dc-circuit-analysis/index.md" title="Edit this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+
+
+<h1 id="dc-circuit-analysis-methods">DC Circuit Analysis Methods</h1>
+<h2 id="summary">Summary</h2>
+<p>This chapter covers advanced circuit analysis techniques including Thevenin's and Norton's theorems, which allow complex circuits to be simplified to equivalent forms. Students will learn source transformation, the maximum power transfer theorem, and how to analyze two-port networks. The chapter also addresses practical considerations like input and output resistance and the loading effect. After completing this chapter, students will be able to simplify complex circuits, design for maximum power transfer, and understand how connecting circuits together affects their behavior.</p>
+<h2 id="concepts-covered">Concepts Covered</h2>
+<p>This chapter covers the following 18 concepts from the learning graph:</p>
+<ol>
+<li>Source Transformation</li>
+<li>Thevenin's Theorem</li>
+<li>Thevenin Equivalent</li>
+<li>Norton's Theorem</li>
+<li>Norton Equivalent</li>
+<li>Maximum Power Transfer</li>
+<li>Nodal Analysis</li>
+<li>Mesh Analysis</li>
+<li>Two-Port Networks</li>
+<li>Input Resistance</li>
+<li>Output Resistance</li>
+<li>Loading Effect</li>
+<li>Capacitor</li>
+<li>Capacitance</li>
+<li>Dielectric Material</li>
+<li>Inductor</li>
+<li>Inductance</li>
+<li>Magnetic Field</li>
+</ol>
+<h2 id="prerequisites">Prerequisites</h2>
+<p>This chapter builds on concepts from:</p>
+<ul>
+<li><a href="../01-electric-charge-basic-quantities/">Chapter 1: Electric Charge and Basic Circuit Quantities</a></li>
+<li><a href="../02-ohms-law-basic-configurations/">Chapter 2: Ohm's Law and Basic Circuit Configurations</a></li>
+<li><a href="../03-kirchhoffs-laws-topology/">Chapter 3: Kirchhoff's Laws and Circuit Topology</a></li>
+</ul>
+<hr />
+<h2 id="introduction-the-circuit-whisperers-toolkit">Introduction: The Circuit Whisperer's Toolkit</h2>
+<p>Welcome to the chapter where you level up from "person who can solve circuits" to "person who can make circuits <em>behave</em>." If previous chapters gave you the vocabulary of circuit analysis, this chapter teaches you the rhetorical flourishes—the elegant shortcuts that practicing engineers use to tame even the most intimidating schematics.</p>
+<p>Here's a confession from the engineering world: nobody actually wants to write down 47 equations and solve them simultaneously. Life's too short, and coffee only keeps you awake for so long. That's why clever engineers developed <strong>Thevenin's theorem</strong>, <strong>Norton's theorem</strong>, and systematic analysis methods like <strong>nodal</strong> and <strong>mesh analysis</strong>. These techniques are the intellectual equivalent of a "skip to the good part" button.</p>
+<p>Think of this chapter as learning the cheat codes for circuit analysis. Except they're not cheating—they're mathematically rigorous shortcuts that will make you look like a wizard to anyone watching you work.</p>
+<p>Ready to simplify complexity? Let's dive in. (Don't worry, there will be puns. Current events demand it.)</p>
+<h2 id="nodal-analysis-every-node-tells-a-story">Nodal Analysis: Every Node Tells a Story</h2>
+<p>Before we get to the glamorous theorems, let's master <strong>nodal analysis</strong>—a systematic method that works on any circuit, every time, no exceptions. It's not flashy, but it's reliable. Think of it as the sensible sedan of circuit analysis: it won't turn heads, but it'll always get you there.</p>
+<p>Nodal analysis is based on <strong>Kirchhoff's Current Law (KCL)</strong>: the sum of currents entering any node equals the sum of currents leaving. We use this to write equations at each node, solving for unknown node voltages.</p>
+<h3 id="the-nodal-analysis-recipe">The Nodal Analysis Recipe</h3>
+<p>Here's the step-by-step procedure:</p>
+<ol>
+<li><strong>Choose a reference node</strong> (ground)—typically the node with the most connections</li>
+<li><strong>Label remaining node voltages</strong> (<span class="arithmatex">\(V_1\)</span>, <span class="arithmatex">\(V_2\)</span>, etc.) relative to ground</li>
+<li><strong>Write KCL equations</strong> at each non-reference node</li>
+<li><strong>Express currents using Ohm's Law</strong>: <span class="arithmatex">\(I = \frac{V_{across}}{R}\)</span></li>
+<li><strong>Solve the system of equations</strong> for node voltages</li>
+<li><strong>Calculate any desired branch currents</strong> using Ohm's Law</li>
+</ol>
+<p>Let's see why this works with a concrete example.</p>
+<h4 id="diagram-nodal-analysis-step-by-step">Diagram: Nodal Analysis Step-by-Step</h4>
+<iframe src="../../sims/nodal-analysis-steps/main.html" width="100%" height="550px" scrolling="no"></iframe>
+
+<details markdown="1">
+<summary>Nodal Analysis Step-by-Step MicroSim</summary>
+Type: microsim
+
+Purpose: Guide students through the nodal analysis process with a three-node circuit
+
+Bloom Level: Apply (L3)
+Bloom Verb: execute
+
+Learning Objective: Students will execute the nodal analysis procedure to solve for unknown node voltages in a multi-node circuit.
+
+Instructional Rationale: Step-through with concrete worked examples shows students the complete process. Seeing equations form and solve builds confidence in the systematic method.
+
+Data Visibility Requirements:
+- Stage 1: Show circuit with labeled nodes and ground
+- Stage 2: Write KCL equation for Node 1 (show current directions)
+- Stage 3: Write KCL equation for Node 2
+- Stage 4: Show system of equations in matrix form
+- Stage 5: Solve and display node voltages
+- Stage 6: Calculate branch currents from node voltages
+
+Canvas layout:
+- Left section (450px): Circuit diagram with highlighting
+- Right section (200px): Equation panel showing current step
+
+Visual elements:
+- Circuit with voltage source, three nodes, four resistors
+- Node labels (V1, V2) with ground reference
+- Current direction arrows that appear as equations are written
+- Highlighting to show which node is being analyzed
+
+Interactive controls:
+- Button: "Next Step" advances through analysis
+- Button: "Previous Step" goes back
+- Button: "Reset" returns to beginning
+- Checkbox: "Show all currents"
+- Display: Running equation development
+
+Default circuit:
+- 10V voltage source
+- R1 = 2kΩ, R2 = 4kΩ, R3 = 4kΩ, R4 = 2kΩ
+- Three-node configuration
+
+Behavior:
+- Each step highlights relevant circuit portion
+- Equations build incrementally
+- Matrix form shows after individual equations
+- Solution shows substitution process
+- Final currents calculated and displayed
+
+Implementation: p5.js with step-based visualization and equation rendering
+</details>
+
+<h3 id="setting-up-the-kcl-equations">Setting Up the KCL Equations</h3>
+<p>For each node, we write: <strong>sum of currents leaving = 0</strong> (treating entering currents as negative). Using Ohm's Law to express each current:</p>
+<h4 id="kcl-at-a-node">KCL at a Node</h4>
+<p>For node with voltage <span class="arithmatex">\(V_n\)</span> connected to nodes <span class="arithmatex">\(V_1, V_2, ...\)</span> through resistors <span class="arithmatex">\(R_1, R_2, ...\)</span>:</p>
+<p><span class="arithmatex">\(\frac{V_n - V_1}{R_1} + \frac{V_n - V_2}{R_2} + ... = 0\)</span></p>
+<p>where:</p>
+<ul>
+<li><span class="arithmatex">\(V_n\)</span> is the voltage at node n (what we're solving for)</li>
+<li><span class="arithmatex">\(V_1, V_2, ...\)</span> are voltages at connected nodes</li>
+<li><span class="arithmatex">\(R_1, R_2, ...\)</span> are resistances connecting to those nodes</li>
+</ul>
+<div class="admonition tip">
+<p class="admonition-title">Sign Convention Consistency</p>
+<p>Always be consistent with your sign convention. If you define currents as "leaving the node" being positive, stick with that throughout. Mixing conventions is the #1 source of errors in nodal analysis.</p>
+</div>
+<h3 id="nodal-analysis-with-voltage-sources">Nodal Analysis with Voltage Sources</h3>
+<p>Here's a twist: what if there's a voltage source between two nodes? You can't write a simple KCL equation because you don't know the current through a voltage source from Ohm's Law (it's whatever the circuit requires).</p>
+<p>The solution: create a <strong>supernode</strong> by drawing a boundary around both nodes connected by the voltage source. Write KCL for the supernode boundary, and add the constraint equation from the voltage source.</p>
+<table>
+<thead>
+<tr>
+<th>Situation</th>
+<th>Approach</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Voltage source to ground</td>
+<td>That node voltage is known!</td>
+</tr>
+<tr>
+<td>Voltage source between nodes</td>
+<td>Create supernode</td>
+</tr>
+<tr>
+<td>Current source</td>
+<td>Current is known; include directly in KCL</td>
+</tr>
+</tbody>
+</table>
+<h2 id="mesh-analysis-going-around-in-circles-on-purpose">Mesh Analysis: Going Around in Circles (On Purpose)</h2>
+<p>While nodal analysis focuses on nodes and voltages, <strong>mesh analysis</strong> focuses on loops and currents. It's based on <strong>Kirchhoff's Voltage Law (KVL)</strong>: the sum of voltages around any closed loop equals zero.</p>
+<p>A <strong>mesh</strong> is a loop that contains no other loops inside it—the "smallest" possible loops in a planar circuit.</p>
+<h3 id="the-mesh-analysis-recipe">The Mesh Analysis Recipe</h3>
+<ol>
+<li><strong>Assign mesh currents</strong> (<span class="arithmatex">\(I_1\)</span>, <span class="arithmatex">\(I_2\)</span>, etc.) to each mesh, all in the same direction (usually clockwise)</li>
+<li><strong>Write KVL equations</strong> around each mesh</li>
+<li><strong>Express voltages using Ohm's Law</strong>: <span class="arithmatex">\(V = I \cdot R\)</span></li>
+<li><strong>Handle shared elements</strong>: if a resistor is shared by two meshes, the current through it is the difference of mesh currents</li>
+<li><strong>Solve the system of equations</strong> for mesh currents</li>
+<li><strong>Calculate any desired voltages</strong> using Ohm's Law</li>
+</ol>
+<h4 id="diagram-mesh-analysis-visualization">Diagram: Mesh Analysis Visualization</h4>
+<iframe src="../../sims/mesh-analysis/main.html" width="100%" height="550px" scrolling="no"></iframe>
+
+<details markdown="1">
+<summary>Mesh Analysis Step-by-Step MicroSim</summary>
+Type: microsim
+
+Purpose: Demonstrate mesh analysis on a two-mesh circuit with shared resistor
+
+Bloom Level: Apply (L3)
+Bloom Verb: solve
+
+Learning Objective: Students will solve for mesh currents using KVL equations and determine actual branch currents from mesh current differences.
+
+Instructional Rationale: Visual representation of mesh currents as circulating loops helps students understand the concept. Highlighting shared resistors shows why current subtraction is needed.
+
+Data Visibility Requirements:
+- Stage 1: Show circuit with mesh current assignments (I1, I2)
+- Stage 2: Write KVL equation for Mesh 1, showing each voltage term
+- Stage 3: Write KVL equation for Mesh 2
+- Stage 4: Show system of equations
+- Stage 5: Solve for mesh currents
+- Stage 6: Calculate actual branch currents (especially shared resistor: I1 - I2)
+
+Canvas layout:
+- Main area (500px): Circuit with mesh current loops visualized
+- Side panel (150px): Equation development
+
+Visual elements:
+- Two adjacent meshes sharing one resistor
+- Circular arrows showing mesh current direction
+- Shared resistor highlighted to show both currents
+- Voltage drops labeled with polarity
+- Different colors for each mesh
+
+Interactive controls:
+- Button: "Next Step"
+- Button: "Previous Step"
+- Sliders for voltage source and resistor values
+- Display: Mesh current values
+- Display: Actual branch currents
+
+Default circuit:
+- Vs1 = 10V, Vs2 = 5V
+- R1 = 1kΩ, R2 = 2kΩ (shared), R3 = 1kΩ
+- Two meshes sharing R2
+
+Behavior:
+- Mesh currents shown as animated loops
+- Shared resistor shows both currents with subtraction
+- Step through builds equations incrementally
+- Final branch currents clearly labeled
+
+Implementation: p5.js with animated mesh current visualization
+</details>
+
+<h3 id="nodal-vs-mesh-when-to-use-which">Nodal vs. Mesh: When to Use Which?</h3>
+<p>Both methods always work, but one may be easier depending on the circuit:</p>
+<table>
+<thead>
+<tr>
+<th>Circuit Characteristic</th>
+<th>Better Method</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>More nodes than meshes</td>
+<td>Mesh analysis</td>
+</tr>
+<tr>
+<td>More meshes than nodes</td>
+<td>Nodal analysis</td>
+</tr>
+<tr>
+<td>Voltage sources</td>
+<td>Nodal (except between nodes)</td>
+</tr>
+<tr>
+<td>Current sources</td>
+<td>Mesh analysis</td>
+</tr>
+<tr>
+<td>Need to find voltages</td>
+<td>Nodal analysis</td>
+</tr>
+<tr>
+<td>Need to find currents</td>
+<td>Mesh analysis</td>
+</tr>
+</tbody>
+</table>
+<p>Pro tip: if a circuit has both current and voltage sources scattered around, pick the method that results in fewer equations. Your future self (at 2 AM before the exam) will thank you.</p>
+<h2 id="thevenins-theorem-the-great-simplifier">Thevenin's Theorem: The Great Simplifier</h2>
+<p>Now we arrive at one of the most powerful tools in circuit analysis: <strong>Thevenin's theorem</strong>. It says something almost magical:</p>
+<blockquote>
+<p>Any linear circuit with voltage sources, current sources, and resistors can be replaced by a single voltage source in series with a single resistor.</p>
+</blockquote>
+<p>Read that again. <em>Any</em> linear circuit. Two components. That's it.</p>
+<p>This is the circuit equivalent of reducing a complex recipe to "add water." The resulting <strong>Thevenin equivalent circuit</strong> behaves identically to the original from the perspective of anything connected to its terminals.</p>
+<h4 id="thevenin-equivalent-circuit">Thevenin Equivalent Circuit</h4>
+<p>The Thevenin equivalent consists of:</p>
+<p><span class="arithmatex">\(V_{Th}\)</span> = Thevenin voltage (open-circuit voltage at the terminals)</p>
+<p><span class="arithmatex">\(R_{Th}\)</span> = Thevenin resistance (equivalent resistance seen from terminals with sources zeroed)</p>
+<p>where:</p>
+<ul>
+<li><span class="arithmatex">\(V_{Th}\)</span> is the voltage measured at the terminals with nothing connected (open circuit)</li>
+<li><span class="arithmatex">\(R_{Th}\)</span> is the resistance "looking into" the terminals with independent voltage sources replaced by short circuits and independent current sources replaced by open circuits</li>
+</ul>
+<h4 id="diagram-thevenin-equivalent-concept">Diagram: Thevenin Equivalent Concept</h4>
+<iframe src="../../sims/thevenin-concept/main.html" width="100%" height="450px" scrolling="no"></iframe>
+
+<details markdown="1">
+<summary>Thevenin Equivalent Concept MicroSim</summary>
+Type: microsim
+
+Purpose: Visualize the concept of replacing a complex circuit with its Thevenin equivalent
+
+Bloom Level: Understand (L2)
+Bloom Verb: explain
+
+Learning Objective: Students will explain how a complex circuit can be represented by a simple voltage source and series resistance that behaves identically at the terminals.
+
+Instructional Rationale: Side-by-side comparison of original and equivalent circuit with matching I-V characteristics demonstrates equivalence visually.
+
+Data Visibility Requirements:
+- Stage 1: Show original complex circuit with load terminals highlighted
+- Stage 2: Show measurement of open-circuit voltage (Vth)
+- Stage 3: Show calculation of Thevenin resistance
+- Stage 4: Show Thevenin equivalent circuit
+- Stage 5: Connect same load to both; show identical currents and voltages
+
+Canvas layout:
+- Top half (250px): Original circuit and Thevenin equivalent side by side
+- Bottom half (200px): I-V characteristic curves overlaid (should match perfectly)
+
+Visual elements:
+- Original circuit with internal components
+- Thevenin equivalent: simple Vth in series with Rth
+- Terminal points clearly marked
+- Load resistor that can be connected to either
+- I-V plot showing both circuits trace the same line
+
+Interactive controls:
+- Button: "Find Vth" (animates open-circuit measurement)
+- Button: "Find Rth" (animates resistance calculation)
+- Button: "Connect Load" (attaches test load to both circuits)
+- Slider: Load resistance value
+- Display: Current through load, voltage across load (both circuits)
+
+Behavior:
+- When load connected, both circuits show identical readings
+- Varying load resistance shows same I-V relationship
+- I-V plot builds point by point as load varies
+- Both curves overlap perfectly
+
+Implementation: p5.js with dual circuit visualization and synchronized I-V plotting
+</details>
+
+<h3 id="finding-the-thevenin-equivalent">Finding the Thevenin Equivalent</h3>
+<p>There are several methods to find <span class="arithmatex">\(V_{Th}\)</span> and <span class="arithmatex">\(R_{Th}\)</span>:</p>
+<p><strong>Method 1: Direct Calculation</strong></p>
+<ol>
+<li><strong>Find <span class="arithmatex">\(V_{Th}\)</span></strong>: Remove the load and calculate the open-circuit voltage at the terminals</li>
+<li><strong>Find <span class="arithmatex">\(R_{Th}\)</span></strong>: Turn off all independent sources (voltage sources → short circuit, current sources → open circuit) and find the equivalent resistance from the terminals</li>
+</ol>
+<p><strong>Method 2: Using Short-Circuit Current</strong></p>
+<ol>
+<li>Find the open-circuit voltage <span class="arithmatex">\(V_{oc} = V_{Th}\)</span></li>
+<li>Find the short-circuit current <span class="arithmatex">\(I_{sc}\)</span> (short the terminals and calculate current)</li>
+<li>Calculate <span class="arithmatex">\(R_{Th} = V_{oc} / I_{sc}\)</span></li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Procedure</th>
+<th>What You Get</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Open-circuit terminals</td>
+<td><span class="arithmatex">\(V_{Th}\)</span></td>
+</tr>
+<tr>
+<td>2a</td>
+<td>Zero sources, find resistance</td>
+<td><span class="arithmatex">\(R_{Th}\)</span> (Method 1)</td>
+</tr>
+<tr>
+<td>2b</td>
+<td>Short terminals, find current</td>
+<td><span class="arithmatex">\(I_{sc}\)</span>, then <span class="arithmatex">\(R_{Th} = V_{Th}/I_{sc}\)</span></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">Why This Matters</p>
+<p>Thevenin's theorem isn't just a mathematical curiosity—it's how engineers think about connecting circuits together. When you plug your phone into a charger, the charger "sees" your phone as a load. When your phone's charging circuit analyzes the charger, it "sees" a Thevenin equivalent. Everyone's modeling everyone else!</p>
+</div>
+<h4 id="diagram-thevenin-step-by-step-solver">Diagram: Thevenin Step-by-Step Solver</h4>
+<iframe src="../../sims/thevenin-solver/main.html" width="100%" height="550px" scrolling="no"></iframe>
+
+<details markdown="1">
+<summary>Thevenin Equivalent Solver MicroSim</summary>
+Type: microsim
+
+Purpose: Guide students through finding Thevenin equivalent step-by-step
+
+Bloom Level: Apply (L3)
+Bloom Verb: calculate
+
+Learning Objective: Students will calculate Thevenin voltage and resistance for a given circuit using the systematic zeroing-and-measuring approach.
+
+Instructional Rationale: Interactive step-through with circuit transformation visualization shows what "zeroing sources" looks like and how resistance is measured.
+
+Data Visibility Requirements:
+- Stage 1: Show original circuit with load marked
+- Stage 2: Remove load, show open-circuit voltage measurement
+- Stage 3: Show voltage sources replaced by short circuits
+- Stage 4: Show current sources replaced by open circuits
+- Stage 5: Calculate Rth from resulting resistor network
+- Stage 6: Display complete Thevenin equivalent
+
+Canvas layout:
+- Main area (500px): Circuit that transforms at each step
+- Side panel (150px): Calculation summary
+
+Visual elements:
+- Original circuit with highlighted load terminals
+- Visual transformation: voltage source becoming wire, current source becoming gap
+- Resistance combination shown step by step
+- Final Thevenin equivalent highlighted
+
+Interactive controls:
+- Button: "Next Step"
+- Button: "Previous Step"
+- Adjustable source and resistor values
+- Display: Vth and Rth values
+- Button: "Verify" connects test load to compare
+
+Default circuit:
+- 12V voltage source
+- 4 resistors in bridge-like configuration
+- Two output terminals
+
+Behavior:
+- Each step shows transformation with explanation
+- Sources visually change (voltage source dims and shows short, current source shows gap)
+- Equivalent resistance calculation walks through series/parallel
+- Final answer verified by comparing original and equivalent with test load
+
+Implementation: p5.js with animated circuit transformation
+</details>
+
+<h2 id="nortons-theorem-thevenins-alter-ego">Norton's Theorem: Thevenin's Alter Ego</h2>
+<p>If Thevenin's theorem gives you a voltage source with a series resistor, <strong>Norton's theorem</strong> gives you the dual: a current source with a parallel resistor. Same idea, different flavor.</p>
+<blockquote>
+<p>Any linear circuit with voltage sources, current sources, and resistors can be replaced by a single current source in parallel with a single resistor.</p>
+</blockquote>
+<p>The <strong>Norton equivalent</strong> consists of:</p>
+<h4 id="norton-equivalent-circuit">Norton Equivalent Circuit</h4>
+<p><span class="arithmatex">\(I_N\)</span> = Norton current (short-circuit current at the terminals)</p>
+<p><span class="arithmatex">\(R_N\)</span> = Norton resistance (same as Thevenin resistance!)</p>
+<p>where:</p>
+<ul>
+<li><span class="arithmatex">\(I_N\)</span> is the current that flows when the terminals are shorted</li>
+<li><span class="arithmatex">\(R_N\)</span> is the equivalent resistance seen from terminals (identical to <span class="arithmatex">\(R_{Th}\)</span>)</li>
+</ul>
+<p>Here's the beautiful part: <strong><span class="arithmatex">\(R_N = R_{Th}\)</span></strong>, and Thevenin and Norton equivalents are related by:</p>
+<h4 id="thevenin-norton-relationship">Thevenin-Norton Relationship</h4>
+<p><span class="arithmatex">\(I_N = \frac{V_{Th}}{R_{Th}}\)</span></p>
+<p>and</p>
+<p><span class="arithmatex">\(V_{Th} = I_N \cdot R_N\)</span></p>
+<p>where:</p>
+<ul>
+<li><span class="arithmatex">\(I_N\)</span> is the Norton current</li>
+<li><span class="arithmatex">\(V_{Th}\)</span> is the Thevenin voltage</li>
+<li><span class="arithmatex">\(R_{Th} = R_N\)</span> is the equivalent resistance</li>
+</ul>
+<p>This means you can convert between them instantly. Find one, get the other free!</p>
+<h4 id="diagram-thevenin-norton-duality">Diagram: Thevenin-Norton Duality</h4>
+<iframe src="../../sims/thevenin-norton-duality/main.html" width="100%" height="400px" scrolling="no"></iframe>
+
+<details markdown="1">
+<summary>Thevenin-Norton Conversion MicroSim</summary>
+Type: microsim
+
+Purpose: Demonstrate equivalence between Thevenin and Norton representations
+
+Bloom Level: Understand (L2)
+Bloom Verb: compare
+
+Learning Objective: Students will compare Thevenin and Norton equivalent circuits and convert between them using the relationship In = Vth/Rth.
+
+Instructional Rationale: Side-by-side display with conversion animation helps students see that these are two representations of the same thing.
+
+Canvas layout:
+- Left (275px): Thevenin equivalent circuit
+- Center (50px): Conversion arrows
+- Right (275px): Norton equivalent circuit
+- Bottom (100px): Shared I-V characteristic plot
+
+Visual elements:
+- Thevenin: Vth voltage source in series with Rth
+- Norton: In current source in parallel with Rn
+- Animated conversion showing relationship
+- I-V plot that's identical for both
+
+Interactive controls:
+- Slider: Vth value (1V to 20V)
+- Slider: Rth/Rn value (100Ω to 10kΩ)
+- Display: In calculated automatically
+- Button: "Animate Conversion"
+- Display: Both circuits' behavior with same test load
+
+Default parameters:
+- Vth = 10V
+- Rth = Rn = 1kΩ
+- In = 10mA
+
+Behavior:
+- Changing Vth updates In = Vth/Rth
+- Changing R updates In
+- Animation shows conceptual transformation
+- Test load shows identical behavior
+- I-V plots overlap perfectly
+
+Implementation: p5.js with dual circuit display and synchronized parameters
+</details>
+
+<h2 id="source-transformation-the-quick-conversion">Source Transformation: The Quick Conversion</h2>
+<p>We can extend the Thevenin-Norton relationship to any voltage or current source with a resistor. <strong>Source transformation</strong> is the ability to convert:</p>
+<ul>
+<li>A voltage source <span class="arithmatex">\(V_s\)</span> in series with resistor <span class="arithmatex">\(R\)</span> → Current source <span class="arithmatex">\(I_s = V_s/R\)</span> in parallel with same <span class="arithmatex">\(R\)</span></li>
+<li>A current source <span class="arithmatex">\(I_s\)</span> in parallel with resistor <span class="arithmatex">\(R\)</span> → Voltage source <span class="arithmatex">\(V_s = I_s \cdot R\)</span> in series with same <span class="arithmatex">\(R\)</span></li>
+</ul>
+<p>This is incredibly useful for simplifying circuits before analysis. Got a mix of voltage and current sources? Transform them all to the same type, and combining them becomes easy.</p>
+<table>
+<thead>
+<tr>
+<th>Original</th>
+<th>Transformed</th>
+<th>Relationship</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="arithmatex">\(V_s\)</span> in series with R</td>
+<td><span class="arithmatex">\(I_s\)</span> in parallel with R</td>
+<td><span class="arithmatex">\(I_s = V_s/R\)</span></td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(I_s\)</span> in parallel with R</td>
+<td><span class="arithmatex">\(V_s\)</span> in series with R</td>
+<td><span class="arithmatex">\(V_s = I_s \cdot R\)</span></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition warning">
+<p class="admonition-title">What You Can't Transform</p>
+<ul>
+<li>An ideal voltage source without a series resistor (infinite current capability)</li>
+<li>An ideal current source without a parallel resistor (infinite voltage capability)</li>
+</ul>
+<p>The resistor is essential for the transformation. No resistor, no transformation.</p>
+</div>
+<h4 id="diagram-source-transformation-practice">Diagram: Source Transformation Practice</h4>
+<iframe src="../../sims/source-transformation/main.html" width="100%" height="450px" scrolling="no"></iframe>
+
+<details markdown="1">
+<summary>Source Transformation MicroSim</summary>
+Type: microsim
+
+Purpose: Practice converting between voltage and current source representations
+
+Bloom Level: Apply (L3)
+Bloom Verb: use
+
+Learning Objective: Students will use source transformation to convert circuits between voltage-source and current-source representations while maintaining equivalent behavior.
+
+Instructional Rationale: Interactive transformation with immediate visual feedback reinforces that these are equivalent representations.
+
+Canvas layout:
+- Top (250px): Original and transformed circuits side by side
+- Bottom (150px): Verification showing both drive same load identically
+
+Visual elements:
+- Original circuit: Either Vs with series R, or Is with parallel R
+- Transformed circuit: The equivalent
+- Animated transformation showing relationship
+- Load connection showing identical behavior
+
+Interactive controls:
+- Radio buttons: Start with voltage source or current source
+- Slider: Source value (voltage or current)
+- Slider: Resistance value
+- Button: "Transform!"
+- Display: Calculated equivalent values
+- Load slider to verify equivalence
+
+Default parameters:
+- Voltage source: 12V with 3kΩ series resistor
+- Equivalent: 4mA current source with 3kΩ parallel resistor
+
+Behavior:
+- Transform button triggers animated conversion
+- Values update automatically
+- Load verification shows identical IL and VL for both
+- Can transform back and forth
+
+Implementation: p5.js with animated circuit transformation
+</details>
+
+<h2 id="maximum-power-transfer-getting-the-most-bang-for-your-buck">Maximum Power Transfer: Getting the Most Bang for Your Buck</h2>
+<p>Here's a question with practical implications: given a source (with internal resistance), what load resistance extracts the maximum possible power?</p>
+<p>The answer, derived from calculus but intuitive once you see it:</p>
+<h4 id="maximum-power-transfer-theorem">Maximum Power Transfer Theorem</h4>
+<p>For maximum power transfer from source to load:</p>
+<p><span class="arithmatex">\(R_{Load} = R_{Th}\)</span></p>
+<p>The load resistance should equal the Thevenin resistance of the source.</p>
+<p>where:</p>
+<ul>
+<li><span class="arithmatex">\(R_{Load}\)</span> is the load resistance</li>
+<li><span class="arithmatex">\(R_{Th}\)</span> is the Thevenin resistance of the source network</li>
+</ul>
+<p>At this condition, exactly half the total power is delivered to the load. The other half? Dissipated in the source resistance. This 50% efficiency might seem wasteful, but for low-power signal applications (like audio amplifiers driving speakers), extracting maximum power often matters more than efficiency.</p>
+<h4 id="maximum-power-formula">Maximum Power Formula</h4>
+<p><span class="arithmatex">\(P_{max} = \frac{V_{Th}^2}{4R_{Th}}\)</span></p>
+<p>where:</p>
+<ul>
+<li><span class="arithmatex">\(P_{max}\)</span> is the maximum power delivered to the load</li>
+<li><span class="arithmatex">\(V_{Th}\)</span> is the Thevenin voltage</li>
+<li><span class="arithmatex">\(R_{Th}\)</span> is the Thevenin resistance</li>
+</ul>
+<h4 id="diagram-maximum-power-transfer-curve">Diagram: Maximum Power Transfer Curve</h4>
+<iframe src="../../sims/max-power-transfer/main.html" width="100%" height="500px" scrolling="no"></iframe>
+
+<details markdown="1">
+<summary>Maximum Power Transfer MicroSim</summary>
+Type: microsim
+
+Purpose: Visualize how load power varies with load resistance, peaking when RL = Rth
+
+Bloom Level: Analyze (L4)
+Bloom Verb: examine
+
+Learning Objective: Students will examine how power delivered to a load varies with load resistance and verify that maximum power occurs when RL equals Rth.
+
+Instructional Rationale: Interactive graph with movable load resistance shows the power curve and confirms the maximum point. Students can explore "what if" scenarios.
+
+Data Visibility Requirements:
+- Stage 1: Show source (Vth, Rth) and variable load
+- Stage 2: Plot power vs load resistance curve
+- Stage 3: Show current calculation for given RL
+- Stage 4: Show power calculation: P = I²RL
+- Stage 5: Highlight maximum at RL = Rth
+
+Canvas layout:
+- Left (300px): Circuit diagram with Thevenin source and load
+- Right (300px): Power vs resistance curve
+
+Visual elements:
+- Thevenin equivalent with load resistor
+- Graph: P_load vs R_load (curve with peak)
+- Vertical line at current RL value
+- Dot showing operating point on curve
+- Horizontal line at Rth showing optimal point
+
+Interactive controls:
+- Slider: Vth (5V to 20V)
+- Slider: Rth (100Ω to 10kΩ)
+- Slider: RL (10Ω to 100kΩ, log scale)
+- Display: Current I
+- Display: Power to load
+- Display: Power to Rth
+- Display: Efficiency (%)
+- Button: "Jump to Maximum" sets RL = Rth
+
+Default parameters:
+- Vth = 12V
+- Rth = 1kΩ
+- RL = 1kΩ (at maximum)
+
+Behavior:
+- Moving RL slider updates operating point on curve
+- Power curve updates if Vth or Rth change
+- Display shows power, efficiency, and comparison
+- Maximum clearly marked on curve
+- Numerical readout confirms PL = Vth²/(4Rth) at maximum
+
+Implementation: p5.js with interactive graph and circuit display
+</details>
+
+<h3 id="when-maximum-power-transfer-matters">When Maximum Power Transfer Matters</h3>
+<p>Maximum power transfer is crucial in:</p>
+<ul>
+<li><strong>Audio systems</strong>: Matching amplifier output to speaker impedance</li>
+<li><strong>RF systems</strong>: Antenna matching for maximum signal transmission</li>
+<li><strong>Sensor interfaces</strong>: Extracting maximum signal from transducers</li>
+</ul>
+<p>But it's NOT the goal when:</p>
+<ul>
+<li><strong>Power efficiency matters</strong>: Power supplies want high efficiency, not maximum power to load</li>
+<li><strong>Voltage regulation matters</strong>: Loads often need constant voltage regardless of current</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Application</th>
+<th>Goal</th>
+<th>Optimal Condition</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Audio amplifier → Speaker</td>
+<td>Maximum power</td>
+<td>RL = Rth</td>
+</tr>
+<tr>
+<td>Power supply → Device</td>
+<td>High efficiency</td>
+<td>RL &gt;&gt; Rth</td>
+</tr>
+<tr>
+<td>Signal source → Measurement</td>
+<td>Maximum signal</td>
+<td>RL = Rth</td>
+</tr>
+<tr>
+<td>Battery → Motor</td>
+<td>Depends on application</td>
+<td>Varies</td>
+</tr>
+</tbody>
+</table>
+<h2 id="input-and-output-resistance-what-the-world-sees">Input and Output Resistance: What the World Sees</h2>
+<p>When you connect two circuits together, they interact. Each circuit "sees" the other as a resistance—and these resistances determine how signals transfer between them.</p>
+<h3 id="output-resistance">Output Resistance</h3>
+<p>The <strong>output resistance</strong> (<span class="arithmatex">\(R_{out}\)</span>) of a circuit is the Thevenin resistance seen looking back into its output terminals. It tells you how much the output voltage drops when you draw current.</p>
+<h4 id="output-resistance_1">Output Resistance</h4>
+<p><span class="arithmatex">\(R_{out} = R_{Th}\)</span> (of the source circuit)</p>
+<p>An ideal voltage source has <span class="arithmatex">\(R_{out} = 0\)</span> (output voltage doesn't change with load). Real circuits have finite output resistance, causing voltage drop under load.</p>
+<h3 id="input-resistance">Input Resistance</h3>
+<p>The <strong>input resistance</strong> (<span class="arithmatex">\(R_{in}\)</span>) of a circuit is the equivalent resistance seen looking into its input terminals. It tells you how much current the circuit draws from whatever drives it.</p>
+<h4 id="input-resistance_1">Input Resistance</h4>
+<p><span class="arithmatex">\(R_{in}\)</span> = equivalent resistance at input terminals</p>
+<p>An ideal voltmeter has <span class="arithmatex">\(R_{in} = \infty\)</span> (draws no current). Real circuits have finite input resistance, loading the source they're connected to.</p>
+<h4 id="diagram-input-and-output-resistance">Diagram: Input and Output Resistance</h4>
+<iframe src="../../sims/input-output-resistance/main.html" width="100%" height="450px" scrolling="no"></iframe>
+
+<details markdown="1">
+<summary>Input/Output Resistance MicroSim</summary>
+Type: microsim
+
+Purpose: Demonstrate how input and output resistance affect signal transfer between stages
+
+Bloom Level: Analyze (L4)
+Bloom Verb: examine
+
+Learning Objective: Students will examine how input and output resistance of connected circuits form a voltage divider that affects signal transfer.
+
+Instructional Rationale: Visual representation of two stages connected shows the inherent voltage divider formed by Rout and Rin, making loading effect intuitive.
+
+Canvas layout:
+- Main area (500px): Two circuit blocks connected, showing internal structure
+- Bottom (100px): Calculations and display
+
+Visual elements:
+- Source stage: Thevenin equivalent (Vth, Rout)
+- Load stage: Input represented as Rin
+- Connection showing voltage divider formed
+- Voltage labels: Vsource, Vat-input
+
+Interactive controls:
+- Slider: Source Vth
+- Slider: Source Rout (100Ω to 10kΩ)
+- Slider: Load Rin (1kΩ to 1MΩ)
+- Display: Voltage division ratio
+- Display: Input voltage as percentage of source
+- Display: Voltage "loss" due to loading
+
+Default parameters:
+- Vth = 10V
+- Rout = 1kΩ
+- Rin = 10kΩ
+- Voltage ratio = 10/(1+10) = 90.9%
+
+Behavior:
+- Shows voltage divider calculation: Vin = Vth × Rin/(Rout + Rin)
+- High Rin/Rout ratio approaches 100% transfer
+- Low ratio shows significant loading
+- Rule of thumb highlight: Rin should be >10× Rout for <10% loss
+
+Implementation: p5.js with two-stage circuit visualization
+</details>
+
+<h2 id="the-loading-effect-when-circuits-misbehave">The Loading Effect: When Circuits Misbehave</h2>
+<p>The <strong>loading effect</strong> is what happens when connecting a circuit disturbs what it's supposed to measure or receive. It's the circuit equivalent of the observer effect in quantum mechanics—except entirely classical and much more annoying.</p>
+<p>Remember the voltage divider from Chapter 2? It works perfectly with no load. Connect a load, and suddenly the output voltage drops. Why? The load resistance appears in parallel with R2, reducing the effective lower resistance.</p>
+<h3 id="minimizing-loading">Minimizing Loading</h3>
+<p>To minimize loading:</p>
+<ol>
+<li><strong>Source side</strong>: Design for low output resistance</li>
+<li><strong>Load side</strong>: Design for high input resistance</li>
+<li><strong>Rule of thumb</strong>: <span class="arithmatex">\(R_{in} &gt; 10 \times R_{out}\)</span> keeps loading under 10%</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>Ratio Rin/Rout</th>
+<th>Signal Transfer</th>
+<th>Loading Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>10:1</td>
+<td>91%</td>
+<td>Minor</td>
+</tr>
+<tr>
+<td>100:1</td>
+<td>99%</td>
+<td>Negligible</td>
+</tr>
+<tr>
+<td>1:1</td>
+<td>50%</td>
+<td>Severe</td>
+</tr>
+<tr>
+<td>1:10</td>
+<td>9%</td>
+<td>Don't do this</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition tip">
+<p class="admonition-title">Buffer Amplifiers</p>
+<p>When you need to connect a high-output-resistance source to a low-input-resistance load, use a <strong>buffer amplifier</strong> (unity-gain amplifier). It has high Rin (doesn't load the source) and low Rout (drives the load well). We'll study these in the operational amplifier chapter.</p>
+</div>
+<h4 id="diagram-loading-effect-demonstration">Diagram: Loading Effect Demonstration</h4>
+<iframe src="../../sims/loading-effect/main.html" width="100%" height="500px" scrolling="no"></iframe>
+
+<details markdown="1">
+<summary>Loading Effect MicroSim</summary>
+Type: microsim
+
+Purpose: Show how connecting a load changes voltage divider output
+
+Bloom Level: Understand (L2)
+Bloom Verb: explain
+
+Learning Objective: Students will explain how connecting a load to a voltage divider changes the output voltage due to the parallel resistance combination.
+
+Instructional Rationale: Before/after comparison with clear calculation shows why loading happens and when it matters.
+
+Data Visibility Requirements:
+- Stage 1: Show unloaded voltage divider with calculated Vout
+- Stage 2: Connect load resistor
+- Stage 3: Show R2 || Rload calculation
+- Stage 4: Show new Vout with loaded calculation
+- Stage 5: Calculate percentage change in output
+
+Canvas layout:
+- Top (300px): Circuit with/without load (toggle)
+- Bottom (150px): Calculations and comparison
+
+Visual elements:
+- Voltage divider R1, R2 with voltage source
+- Load resistor that can connect/disconnect
+- Parallel resistance visualization when loaded
+- Output voltage reading that changes
+
+Interactive controls:
+- Slider: R1 (1kΩ to 100kΩ)
+- Slider: R2 (1kΩ to 100kΩ)
+- Slider: Rload (1kΩ to 1MΩ)
+- Toggle: Load connected/disconnected
+- Display: Vout unloaded
+- Display: Vout loaded
+- Display: Percentage change
+
+Default parameters:
+- Vin = 10V
+- R1 = 10kΩ
+- R2 = 10kΩ
+- Vout (unloaded) = 5V
+- Rload = 10kΩ
+- Vout (loaded) = 3.33V (33% drop!)
+
+Behavior:
+- Toggle shows before/after comparison
+- Calculations update in real time
+- Warning when loading exceeds 10%
+- Shows R2 || Rload parallel calculation
+
+Implementation: p5.js with before/after comparison
+</details>
+
+<h2 id="two-port-networks-the-black-box-view">Two-Port Networks: The Black Box View</h2>
+<p>A <strong>two-port network</strong> is a circuit viewed as a black box with two pairs of terminals: an input port and an output port. We don't care what's inside—we only care about the relationships between voltages and currents at the ports.</p>
+<p>This abstraction is powerful for analyzing cascaded stages, filters, and amplifiers.</p>
+<h3 id="two-port-parameters">Two-Port Parameters</h3>
+<p>There are several ways to characterize a two-port:</p>
+<table>
+<thead>
+<tr>
+<th>Parameter Set</th>
+<th>Matrix</th>
+<th>Relates</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Z-parameters (impedance)</td>
+<td><span class="arithmatex">\([Z]\)</span></td>
+<td>V = Z × I</td>
+</tr>
+<tr>
+<td>Y-parameters (admittance)</td>
+<td><span class="arithmatex">\([Y]\)</span></td>
+<td>I = Y × V</td>
+</tr>
+<tr>
+<td>h-parameters (hybrid)</td>
+<td><span class="arithmatex">\([h]\)</span></td>
+<td>Mixed V and I</td>
+</tr>
+<tr>
+<td>ABCD (transmission)</td>
+<td><span class="arithmatex">\([T]\)</span></td>
+<td>Input to output</td>
+</tr>
+</tbody>
+</table>
+<p>For cascaded networks, ABCD parameters are especially nice: just multiply the matrices!</p>
+<h4 id="two-port-impedance-parameters">Two-Port Impedance Parameters</h4>
+<p><span class="arithmatex">\(V_1 = Z_{11}I_1 + Z_{12}I_2\)</span></p>
+<p><span class="arithmatex">\(V_2 = Z_{21}I_1 + Z_{22}I_2\)</span></p>
+<p>where:</p>
+<ul>
+<li><span class="arithmatex">\(Z_{11}\)</span> is input impedance with output open</li>
+<li><span class="arithmatex">\(Z_{12}\)</span> is reverse transfer impedance</li>
+<li><span class="arithmatex">\(Z_{21}\)</span> is forward transfer impedance</li>
+<li><span class="arithmatex">\(Z_{22}\)</span> is output impedance with input open</li>
+</ul>
+<h4 id="diagram-two-port-network-concept">Diagram: Two-Port Network Concept</h4>
+<iframe src="../../sims/two-port-network/main.html" width="100%" height="400px" scrolling="no"></iframe>
+
+<details markdown="1">
+<summary>Two-Port Network Parameters MicroSim</summary>
+Type: microsim
+
+Purpose: Introduce two-port network concept and parameter measurement
+
+Bloom Level: Understand (L2)
+Bloom Verb: describe
+
+Learning Objective: Students will describe how two-port parameters characterize the input-output relationships of a circuit without requiring knowledge of internal components.
+
+Instructional Rationale: Black-box visualization with measurement procedures shows how parameters are determined experimentally.
+
+Canvas layout:
+- Center (400px): Black box with input and output ports
+- Left (100px): Input port (V1, I1)
+- Right (100px): Output port (V2, I2)
+- Bottom (80px): Parameter display
+
+Visual elements:
+- Rectangular black box labeled "Two-Port Network"
+- Input port with V1, I1 labels and arrows
+- Output port with V2, I2 labels and arrows
+- Parameter matrix display
+- Measurement setup showing how each parameter is found
+
+Interactive controls:
+- Button: "Measure Z11" (open output, apply V1, measure I1)
+- Button: "Measure Z22" (open input, apply V2, measure I2)
+- Button: "Measure Z21" (open output, measure V2 per I1)
+- Button: "Show internal circuit" (reveals what's inside)
+- Display: Z-parameter matrix
+
+Default parameters:
+- Simple T-network inside (two series R, one shunt R)
+- Z-parameters calculated from component values
+
+Behavior:
+- Each measurement button animates the procedure
+- Shows what ports are open/short during measurement
+- Calculated parameters displayed in matrix form
+- Internal circuit reveal shows specific component arrangement
+
+Implementation: p5.js with animated measurement procedures
+</details>
+
+<h2 id="introduction-to-reactive-components">Introduction to Reactive Components</h2>
+<p>Before we leave this chapter, let's preview two components that will become central in AC analysis: capacitors and inductors. Unlike resistors, these components store energy rather than dissipate it.</p>
+<h3 id="the-capacitor-storing-charge">The Capacitor: Storing Charge</h3>
+<p>A <strong>capacitor</strong> stores energy in an electric field between two conductive plates separated by an insulating material called a <strong>dielectric</strong>.</p>
+<h4 id="capacitance">Capacitance</h4>
+<p><span class="arithmatex">\(C = \frac{Q}{V} = \varepsilon \frac{A}{d}\)</span></p>
+<p>where:</p>
+<ul>
+<li><span class="arithmatex">\(C\)</span> is capacitance in farads (F)</li>
+<li><span class="arithmatex">\(Q\)</span> is charge in coulombs (C)</li>
+<li><span class="arithmatex">\(V\)</span> is voltage across the capacitor in volts (V)</li>
+<li><span class="arithmatex">\(\varepsilon\)</span> is the permittivity of the dielectric material</li>
+<li><span class="arithmatex">\(A\)</span> is the plate area</li>
+<li><span class="arithmatex">\(d\)</span> is the plate separation</li>
+</ul>
+<p>The <strong>dielectric material</strong> between the plates increases capacitance and prevents direct conduction. Common dielectrics include ceramic, polyester film, and electrolytic paste.</p>
+<p>Key capacitor behaviors:</p>
+<ul>
+<li><strong>Opposes changes in voltage</strong> (voltage can't change instantaneously)</li>
+<li><strong>Current flows when voltage changes</strong>: <span class="arithmatex">\(I = C \frac{dV}{dt}\)</span></li>
+<li><strong>Stores energy</strong>: <span class="arithmatex">\(E = \frac{1}{2}CV^2\)</span></li>
+<li><strong>In DC steady state</strong>: acts as an open circuit (no current through it)</li>
+</ul>
+<h4 id="diagram-capacitor-construction-and-symbol">Diagram: Capacitor Construction and Symbol</h4>
+<iframe src="../../sims/capacitor-basics/main.html" width="100%" height="400px" scrolling="no"></iframe>
+
+<details markdown="1">
+<summary>Capacitor Basics MicroSim</summary>
+Type: microsim
+
+Purpose: Introduce capacitor construction, symbol, and basic behavior
+
+Bloom Level: Understand (L2)
+Bloom Verb: explain
+
+Learning Objective: Students will explain how a capacitor stores energy in an electric field and describe the relationship between charge, voltage, and capacitance.
+
+Canvas layout:
+- Left (300px): Physical construction cross-section
+- Right (300px): Schematic symbol and I-V relationship
+
+Visual elements:
+- Two parallel plates with dielectric between
+- Electric field lines between plates
+- Charges accumulating on plates as voltage applied
+- Schematic symbol (two parallel lines)
+- Graph showing Q vs V (linear for ideal capacitor)
+
+Interactive controls:
+- Slider: Applied voltage (0 to 10V)
+- Slider: Plate area (visualization scales)
+- Slider: Plate separation (affects capacitance)
+- Display: Capacitance value
+- Display: Stored charge
+- Display: Stored energy
+
+Default parameters:
+- Parallel plate visualization
+- C = 10µF
+- V = 5V initially
+
+Behavior:
+- Charge visualization increases with voltage
+- Field lines become denser with higher charge
+- Capacitance updates with geometry changes
+- Energy calculation: E = ½CV²
+
+Implementation: p5.js with animated charge visualization
+</details>
+
+<h3 id="the-inductor-storing-current">The Inductor: Storing Current</h3>
+<p>An <strong>inductor</strong> stores energy in a magnetic field created by current flowing through a coil of wire.</p>
+<h4 id="inductance">Inductance</h4>
+<p><span class="arithmatex">\(L = \frac{\Phi}{I} = \frac{N^2 \mu A}{l}\)</span></p>
+<p>where:</p>
+<ul>
+<li><span class="arithmatex">\(L\)</span> is inductance in henrys (H)</li>
+<li><span class="arithmatex">\(\Phi\)</span> is magnetic flux in webers (Wb)</li>
+<li><span class="arithmatex">\(I\)</span> is current through the inductor in amperes (A)</li>
+<li><span class="arithmatex">\(N\)</span> is the number of turns</li>
+<li><span class="arithmatex">\(\mu\)</span> is the permeability of the core material</li>
+<li><span class="arithmatex">\(A\)</span> is the cross-sectional area</li>
+<li><span class="arithmatex">\(l\)</span> is the length of the coil</li>
+</ul>
+<p>The <strong>magnetic field</strong> forms inside and around the coil, storing energy proportional to the square of the current.</p>
+<p>Key inductor behaviors:</p>
+<ul>
+<li><strong>Opposes changes in current</strong> (current can't change instantaneously)</li>
+<li><strong>Voltage appears when current changes</strong>: <span class="arithmatex">\(V = L \frac{dI}{dt}\)</span></li>
+<li><strong>Stores energy</strong>: <span class="arithmatex">\(E = \frac{1}{2}LI^2\)</span></li>
+<li><strong>In DC steady state</strong>: acts as a short circuit (just wire resistance)</li>
+</ul>
+<h4 id="diagram-inductor-construction-and-symbol">Diagram: Inductor Construction and Symbol</h4>
+<iframe src="../../sims/inductor-basics/main.html" width="100%" height="400px" scrolling="no"></iframe>
+
+<details markdown="1">
+<summary>Inductor Basics MicroSim</summary>
+Type: microsim
+
+Purpose: Introduce inductor construction, symbol, and basic behavior
+
+Bloom Level: Understand (L2)
+Bloom Verb: explain
+
+Learning Objective: Students will explain how an inductor stores energy in a magnetic field and describe the relationship between flux, current, and inductance.
+
+Canvas layout:
+- Left (300px): Physical coil with magnetic field visualization
+- Right (300px): Schematic symbol and Φ-I relationship
+
+Visual elements:
+- Wire coil around core
+- Magnetic field lines through and around coil
+- Current flowing through wire (animated)
+- Schematic symbol (humps representing coil)
+- Graph showing Φ vs I (linear for ideal inductor)
+
+Interactive controls:
+- Slider: Current through inductor (0 to 1A)
+- Slider: Number of turns (visualization changes)
+- Slider: Core material (air vs iron, affects L)
+- Display: Inductance value
+- Display: Magnetic flux
+- Display: Stored energy
+
+Default parameters:
+- Air-core inductor visualization
+- L = 10mH
+- I = 0.5A initially
+
+Behavior:
+- Magnetic field lines appear and strengthen with current
+- More turns = more flux lines
+- Iron core significantly increases field strength
+- Energy calculation: E = ½LI²
+
+Implementation: p5.js with animated magnetic field visualization
+</details>
+
+<h3 id="capacitors-vs-inductors-a-comparison">Capacitors vs. Inductors: A Comparison</h3>
+<p>These components are duals of each other in many ways:</p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Capacitor</th>
+<th>Inductor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Stores energy in</td>
+<td>Electric field</td>
+<td>Magnetic field</td>
+</tr>
+<tr>
+<td>Opposes changes in</td>
+<td>Voltage</td>
+<td>Current</td>
+</tr>
+<tr>
+<td>V-I relationship</td>
+<td><span class="arithmatex">\(I = C \frac{dV}{dt}\)</span></td>
+<td><span class="arithmatex">\(V = L \frac{dI}{dt}\)</span></td>
+</tr>
+<tr>
+<td>Energy stored</td>
+<td><span class="arithmatex">\(\frac{1}{2}CV^2\)</span></td>
+<td><span class="arithmatex">\(\frac{1}{2}LI^2\)</span></td>
+</tr>
+<tr>
+<td>DC steady state</td>
+<td>Open circuit</td>
+<td>Short circuit</td>
+</tr>
+<tr>
+<td>Units</td>
+<td>Farad (F)</td>
+<td>Henry (H)</td>
+</tr>
+<tr>
+<td>Typical values</td>
+<td>pF to mF</td>
+<td>µH to H</td>
+</tr>
+</tbody>
+</table>
+<p>We'll explore these components deeply in coming chapters on transient analysis and AC circuits. For now, recognize that they introduce time-dependent behavior that pure resistor circuits don't have.</p>
+<h2 id="practical-applications">Practical Applications</h2>
+<p>Let's see how these concepts combine in real engineering scenarios.</p>
+<h3 id="application-1-audio-amplifier-output-matching">Application 1: Audio Amplifier Output Matching</h3>
+<p>Your audio amplifier has an output stage with <span class="arithmatex">\(R_{out} = 8Ω\)</span>, and you're connecting an 8Ω speaker. This is maximum power transfer configuration—the speaker extracts maximum power from the amplifier.</p>
+<p>With <span class="arithmatex">\(V_{Th} = 10V_{peak}\)</span> and <span class="arithmatex">\(R_{Th} = 8Ω\)</span>:</p>
+<p><span class="arithmatex">\(P_{max} = \frac{V_{Th}^2}{4R_{Th}} = \frac{100}{32} = 3.125W\)</span></p>
+<p>At 50% efficiency, the amplifier also dissipates 3.125W internally.</p>
+<h3 id="application-2-sensor-signal-conditioning">Application 2: Sensor Signal Conditioning</h3>
+<p>A temperature sensor has <span class="arithmatex">\(R_{out} = 10kΩ\)</span> and produces a small voltage signal. You need to connect it to an ADC with <span class="arithmatex">\(R_{in} = 1MΩ\)</span>. What's the loading?</p>
+<p>Ratio: <span class="arithmatex">\(R_{in}/R_{out} = 100:1\)</span></p>
+<p>Signal transfer: <span class="arithmatex">\(\frac{R_{in}}{R_{in} + R_{out}} = \frac{1M}{1M + 10k} = 99\%\)</span></p>
+<p>Excellent! Only 1% signal loss. If the ADC had <span class="arithmatex">\(R_{in} = 10kΩ\)</span> (same as sensor output), transfer would be only 50%—you'd lose half your signal.</p>
+<h3 id="application-3-battery-characterization">Application 3: Battery Characterization</h3>
+<p>A 9V battery isn't really a perfect 9V source. It has internal resistance. To characterize it:</p>
+<ol>
+<li>Measure open-circuit voltage: <span class="arithmatex">\(V_{oc} = 9.2V\)</span></li>
+<li>Connect 100Ω load, measure: <span class="arithmatex">\(V_{load} = 8.7V\)</span>, so <span class="arithmatex">\(I = 87mA\)</span></li>
+<li>Calculate: <span class="arithmatex">\(R_{int} = \frac{V_{oc} - V_{load}}{I} = \frac{0.5V}{87mA} ≈ 5.7Ω\)</span></li>
+</ol>
+<p>Now you have the Thevenin equivalent: <span class="arithmatex">\(V_{Th} = 9.2V\)</span>, <span class="arithmatex">\(R_{Th} = 5.7Ω\)</span>. This predicts performance for any load.</p>
+<h2 id="summary-and-key-takeaways">Summary and Key Takeaways</h2>
+<p>You've just acquired some serious analytical superpowers. Let's recap:</p>
+<p><strong>Systematic Analysis Methods:</strong></p>
+<ul>
+<li><strong>Nodal analysis</strong>: Write KCL at each node, solve for node voltages</li>
+<li><strong>Mesh analysis</strong>: Write KVL around each mesh, solve for mesh currents</li>
+<li>Choose the method that gives fewer equations</li>
+</ul>
+<p><strong>The Great Simplifiers:</strong></p>
+<ul>
+<li><strong>Thevenin's theorem</strong>: Any linear circuit → voltage source + series resistor</li>
+<li><strong>Norton's theorem</strong>: Any linear circuit → current source + parallel resistor</li>
+<li><strong>Source transformation</strong>: Convert between voltage and current source representations</li>
+</ul>
+<p><strong>Key Relationships:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Formula</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="arithmatex">\(V_{Th} = V_{open-circuit}\)</span></td>
+<td>Thevenin voltage</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(R_{Th} = R_{with-sources-zeroed}\)</span></td>
+<td>Thevenin resistance</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(I_N = V_{Th}/R_{Th}\)</span></td>
+<td>Norton current</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(R_{Load} = R_{Th}\)</span></td>
+<td>Maximum power transfer condition</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(P_{max} = V_{Th}^2/4R_{Th}\)</span></td>
+<td>Maximum power to load</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Practical Wisdom:</strong></p>
+<ul>
+<li>Loading effect: <span class="arithmatex">\(R_{in} &gt; 10 \times R_{out}\)</span> for minimal signal loss</li>
+<li>Maximum power transfer is for signals, not power supplies</li>
+<li>Capacitors oppose voltage changes; inductors oppose current changes</li>
+<li>Two-port parameters characterize black-box circuits</li>
+</ul>
+<p><strong>What's Coming Next:</strong></p>
+<p>In the next chapter, we'll introduce capacitors and inductors as time-domain circuit elements and analyze how circuits respond to sudden changes—the transient response. You'll see why these "reactive" components make circuits so much more interesting (and occasionally frustrating).</p>
+<p>Until then, keep simplifying. Thevenin would be proud.</p>
+<details class="question">
+<summary>Self-Check: Can You Answer These?</summary>
+<ol>
+<li>
+<p>A circuit has nodes A, B, and ground. Node A connects to ground through 2kΩ and to node B through 4kΩ. Node B connects to ground through 2kΩ and to a 10V source through a wire. Set up the nodal equations.</p>
+</li>
+<li>
+<p>Find the Thevenin equivalent looking into terminals a-b for: 12V source in series with 3kΩ, connected to a parallel combination of 6kΩ and terminals a-b.</p>
+</li>
+<li>
+<p>A Thevenin equivalent has <span class="arithmatex">\(V_{Th} = 15V\)</span> and <span class="arithmatex">\(R_{Th} = 5kΩ\)</span>. What's the Norton equivalent? What load resistance maximizes power transfer? What's that maximum power?</p>
+</li>
+<li>
+<p>Your sensor has <span class="arithmatex">\(R_{out} = 50kΩ\)</span>. Your measurement circuit has <span class="arithmatex">\(R_{in} = 100kΩ\)</span>. What percentage of the sensor signal actually reaches the measurement circuit? Is this acceptable?</p>
+</li>
+</ol>
+</details>
+
+
+
+
+
+
+
+  
+  
+
+
+
+  
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../03-kirchhoffs-laws-topology/" class="md-footer__link md-footer__link--prev" aria-label="Previous: 3. Kirchhoff&#39;s Laws and Topology">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                3. Kirchhoff's Laws and Topology
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../05-passive-components/" class="md-footer__link md-footer__link--next" aria-label="Next: 5. Passive Components">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                5. Passive Components
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.copy", "navigation.expand", "navigation.path", "navigation.prune", "navigation.indexes", "toc.follow", "navigation.top", "navigation.footer", "content.action.edit"], "search": "../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.83f73b43.min.js"></script>
+      
+        <script src="../../js/extra.js"></script>
+      
+        <script src="../../js/katex.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+      
+    
+  </body>
+</html>

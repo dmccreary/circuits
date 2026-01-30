@@ -1,0 +1,4009 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Master energy storage elements and signal fundamentals for dynamic circuit analysis">
+      
+      
+        <meta name="author" content="Dan McCreary">
+      
+      
+        <link rel="canonical" href="https://dmccreary.github.io/circuits/chapters/05-passive-components/">
+      
+      
+        <link rel="prev" href="../04-dc-circuit-analysis/">
+      
+      
+        <link rel="next" href="../06-transient-analysis-rc-rl/">
+      
+      
+      <link rel="icon" href="../../img/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.43">
+    
+    
+      
+        <title>Passive Components - Resistors, Capacitors, and Inductors - Circuits 1</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.0253249f.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../css/extra.css">
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+<script id="__analytics">function __md_analytics(){function e(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],e("js",new Date),e("config","G-9J4MVE6LWP"),document.addEventListener("DOMContentLoaded",(function(){document.forms.search&&document.forms.search.query.addEventListener("blur",(function(){this.value&&e("event","search",{search_term:this.value})}));document$.subscribe((function(){var t=document.forms.feedback;if(void 0!==t)for(var a of t.querySelectorAll("[type=submit]"))a.addEventListener("click",(function(a){a.preventDefault();var n=document.location.pathname,d=this.getAttribute("data-md-value");e("event","feedback",{page:n,data:d}),t.firstElementChild.disabled=!0;var r=t.querySelector(".md-feedback__note [data-md-value='"+d+"']");r&&(r.hidden=!1)})),t.hidden=!1})),location$.subscribe((function(t){e("config","G-9J4MVE6LWP",{page_path:t.pathname})}))}));var t=document.createElement("script");t.async=!0,t.src="https://www.googletagmanager.com/gtag/js?id=G-9J4MVE6LWP",document.getElementById("__analytics").insertAdjacentElement("afterEnd",t)}</script>
+  
+    <script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
+  
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="orange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#passive-components-resistors-capacitors-and-inductors" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Circuits 1" class="md-header__button md-logo" aria-label="Circuits 1" data-md-component="logo">
+      
+  <img src="../../img/course-logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Circuits 1
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Passive Components - Resistors, Capacitors, and Inductors
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/dmccreary/circuits" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub Repo
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Circuits 1" class="md-nav__button md-logo" aria-label="Circuits 1" data-md-component="logo">
+      
+  <img src="../../img/course-logo.png" alt="logo">
+
+    </a>
+    Circuits 1
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/dmccreary/circuits" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub Repo
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../about/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    About This Course
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+    
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Chapters
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Chapters
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-electric-charge-basic-quantities/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1. Electric Charge and Quantities
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-ohms-law-basic-configurations/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2. Ohm's Law and Configurations
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-kirchhoffs-laws-topology/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3. Kirchhoff's Laws and Topology
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-dc-circuit-analysis/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4. DC Circuit Analysis
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    5. Passive Components
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    5. Passive Components
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      Summary
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#concepts-covered" class="md-nav__link">
+    <span class="md-ellipsis">
+      Concepts Covered
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prerequisites
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#introduction-the-dynamic-duo-plus-their-resistor-friend" class="md-nav__link">
+    <span class="md-ellipsis">
+      Introduction: The Dynamic Duo (Plus Their Resistor Friend)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-parallel-plate-capacitor-where-the-magic-happens" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Parallel Plate Capacitor: Where the Magic Happens
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Parallel Plate Capacitor: Where the Magic Happens">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#capacitance-of-a-parallel-plate-capacitor" class="md-nav__link">
+    <span class="md-ellipsis">
+      Capacitance of a Parallel Plate Capacitor
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#diagram-parallel-plate-capacitor-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Parallel Plate Capacitor Structure
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#capacitor-energy-storage" class="md-nav__link">
+    <span class="md-ellipsis">
+      Capacitor Energy Storage
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Capacitor Energy Storage">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#capacitor-energy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Capacitor Energy
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-capacitors-time-domain-behavior" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Capacitor's Time-Domain Behavior
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Capacitor's Time-Domain Behavior">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#capacitor-i-v-relationship" class="md-nav__link">
+    <span class="md-ellipsis">
+      Capacitor I-V Relationship
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#diagram-capacitor-charging-visualization" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Capacitor Charging Visualization
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#capacitors-in-series-and-parallel" class="md-nav__link">
+    <span class="md-ellipsis">
+      Capacitors in Series and Parallel
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Capacitors in Series and Parallel">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#capacitors-in-series" class="md-nav__link">
+    <span class="md-ellipsis">
+      Capacitors in Series
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Capacitors in Series">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#capacitors-in-series-formula" class="md-nav__link">
+    <span class="md-ellipsis">
+      Capacitors in Series Formula
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#capacitors-in-parallel" class="md-nav__link">
+    <span class="md-ellipsis">
+      Capacitors in Parallel
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Capacitors in Parallel">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#capacitors-in-parallel-formula" class="md-nav__link">
+    <span class="md-ellipsis">
+      Capacitors in Parallel Formula
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#diagram-series-and-parallel-capacitors" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Series and Parallel Capacitors
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#inductor-energy-storage" class="md-nav__link">
+    <span class="md-ellipsis">
+      Inductor Energy Storage
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Inductor Energy Storage">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#inductor-energy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Inductor Energy
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-inductors-time-domain-behavior" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Inductor's Time-Domain Behavior
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Inductor's Time-Domain Behavior">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#inductor-v-i-relationship" class="md-nav__link">
+    <span class="md-ellipsis">
+      Inductor V-I Relationship
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#inductors-in-series-and-parallel" class="md-nav__link">
+    <span class="md-ellipsis">
+      Inductors in Series and Parallel
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Inductors in Series and Parallel">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#inductors-in-series" class="md-nav__link">
+    <span class="md-ellipsis">
+      Inductors in Series
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Inductors in Series">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#inductors-in-series-formula" class="md-nav__link">
+    <span class="md-ellipsis">
+      Inductors in Series Formula
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inductors-in-parallel" class="md-nav__link">
+    <span class="md-ellipsis">
+      Inductors in Parallel
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Inductors in Parallel">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#inductors-in-parallel-formula" class="md-nav__link">
+    <span class="md-ellipsis">
+      Inductors in Parallel Formula
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mutual-inductance-when-coils-talk-to-each-other" class="md-nav__link">
+    <span class="md-ellipsis">
+      Mutual Inductance: When Coils Talk to Each Other
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Mutual Inductance: When Coils Talk to Each Other">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mutual-inductance" class="md-nav__link">
+    <span class="md-ellipsis">
+      Mutual Inductance
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#coupling-coefficient" class="md-nav__link">
+    <span class="md-ellipsis">
+      Coupling Coefficient
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Coupling Coefficient">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#coupling-coefficient_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Coupling Coefficient
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#diagram-mutual-inductance-visualization" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Mutual Inductance Visualization
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#real-vs-ideal-components" class="md-nav__link">
+    <span class="md-ellipsis">
+      Real vs. Ideal Components
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Real vs. Ideal Components">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#parasitic-elements" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parasitic Elements
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#real-capacitor-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      Real Capacitor Model
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Real Capacitor Model">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-real-vs-ideal-capacitor" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Real vs Ideal Capacitor
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#real-inductor-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      Real Inductor Model
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#signal-fundamentals-the-language-of-waveforms" class="md-nav__link">
+    <span class="md-ellipsis">
+      Signal Fundamentals: The Language of Waveforms
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Signal Fundamentals: The Language of Waveforms">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#amplitude" class="md-nav__link">
+    <span class="md-ellipsis">
+      Amplitude
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Amplitude">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#amplitude-definition" class="md-nav__link">
+    <span class="md-ellipsis">
+      Amplitude Definition
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#period-and-frequency" class="md-nav__link">
+    <span class="md-ellipsis">
+      Period and Frequency
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Period and Frequency">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#period" class="md-nav__link">
+    <span class="md-ellipsis">
+      Period
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#frequency" class="md-nav__link">
+    <span class="md-ellipsis">
+      Frequency
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#angular-frequency" class="md-nav__link">
+    <span class="md-ellipsis">
+      Angular Frequency
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-angle-and-phase-shift" class="md-nav__link">
+    <span class="md-ellipsis">
+      Phase Angle and Phase Shift
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Phase Angle and Phase Shift">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#phase-relationship" class="md-nav__link">
+    <span class="md-ellipsis">
+      Phase Relationship
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#diagram-signal-parameters-visualization" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Signal Parameters Visualization
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#peak-peak-to-peak-and-average-values" class="md-nav__link">
+    <span class="md-ellipsis">
+      Peak, Peak-to-Peak, and Average Values
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Peak, Peak-to-Peak, and Average Values">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#peak-value" class="md-nav__link">
+    <span class="md-ellipsis">
+      Peak Value
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#peak-to-peak-value" class="md-nav__link">
+    <span class="md-ellipsis">
+      Peak-to-Peak Value
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#average-value" class="md-nav__link">
+    <span class="md-ellipsis">
+      Average Value
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rms-value-the-most-useful-measurement" class="md-nav__link">
+    <span class="md-ellipsis">
+      RMS Value: The Most Useful Measurement
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="RMS Value: The Most Useful Measurement">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rms-value" class="md-nav__link">
+    <span class="md-ellipsis">
+      RMS Value
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#diagram-rms-explanation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: RMS Explanation
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#audio-frequency-fundamentals" class="md-nav__link">
+    <span class="md-ellipsis">
+      Audio Frequency Fundamentals
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Audio Frequency Fundamentals">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#human-hearing-range" class="md-nav__link">
+    <span class="md-ellipsis">
+      Human Hearing Range
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#audio-frequency-range" class="md-nav__link">
+    <span class="md-ellipsis">
+      Audio Frequency Range
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-decibel-a-logarithmic-scale" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Decibel: A Logarithmic Scale
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Decibel: A Logarithmic Scale">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#decibel-definitions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Decibel Definitions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#diagram-decibel-scale-interactive" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Decibel Scale Interactive
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#practical-applications" class="md-nav__link">
+    <span class="md-ellipsis">
+      Practical Applications
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Practical Applications">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#application-1-bypass-capacitor-selection" class="md-nav__link">
+    <span class="md-ellipsis">
+      Application 1: Bypass Capacitor Selection
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#application-2-audio-signal-levels" class="md-nav__link">
+    <span class="md-ellipsis">
+      Application 2: Audio Signal Levels
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#application-3-inductor-energy-storage" class="md-nav__link">
+    <span class="md-ellipsis">
+      Application 3: Inductor Energy Storage
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary-and-key-takeaways" class="md-nav__link">
+    <span class="md-ellipsis">
+      Summary and Key Takeaways
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-transient-analysis-rc-rl/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    6. Transient Analysis RC/RL
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-second-order-rlc-circuits/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    7. Second-Order RLC Circuits
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-ac-signals-sinusoidal/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    8. AC Signals and Sinusoids
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../09-phasors-complex-impedance/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    9. Phasors and Impedance
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10-ac-power-analysis/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    10. AC Power Analysis
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../11-frequency-response-bode/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    11. Frequency Response and Bode
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../12-filters-resonance/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    12. Filters and Resonance
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../13-operational-amplifiers/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    13. Operational Amplifiers
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../14-signals-audio-lab/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    14. Signal Analysis and Fourier
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../15-audio-applications/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    15. Audio Applications
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../16-laboratory-techniques/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    16. Laboratory Techniques
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../sims/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    MicroSims
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../sections/index.md" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Supplementary Sections
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../learning-graph/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Learning Graph
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../prompts/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Sample Prompts
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+          
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../faq/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    FAQ
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../glossary/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Glossary
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how-we-built-this-site/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    How We Built This Site
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../references/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    References
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../license/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    License
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contact/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Contact
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      Summary
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#concepts-covered" class="md-nav__link">
+    <span class="md-ellipsis">
+      Concepts Covered
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prerequisites
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#introduction-the-dynamic-duo-plus-their-resistor-friend" class="md-nav__link">
+    <span class="md-ellipsis">
+      Introduction: The Dynamic Duo (Plus Their Resistor Friend)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-parallel-plate-capacitor-where-the-magic-happens" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Parallel Plate Capacitor: Where the Magic Happens
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Parallel Plate Capacitor: Where the Magic Happens">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#capacitance-of-a-parallel-plate-capacitor" class="md-nav__link">
+    <span class="md-ellipsis">
+      Capacitance of a Parallel Plate Capacitor
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#diagram-parallel-plate-capacitor-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Parallel Plate Capacitor Structure
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#capacitor-energy-storage" class="md-nav__link">
+    <span class="md-ellipsis">
+      Capacitor Energy Storage
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Capacitor Energy Storage">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#capacitor-energy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Capacitor Energy
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-capacitors-time-domain-behavior" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Capacitor's Time-Domain Behavior
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Capacitor's Time-Domain Behavior">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#capacitor-i-v-relationship" class="md-nav__link">
+    <span class="md-ellipsis">
+      Capacitor I-V Relationship
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#diagram-capacitor-charging-visualization" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Capacitor Charging Visualization
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#capacitors-in-series-and-parallel" class="md-nav__link">
+    <span class="md-ellipsis">
+      Capacitors in Series and Parallel
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Capacitors in Series and Parallel">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#capacitors-in-series" class="md-nav__link">
+    <span class="md-ellipsis">
+      Capacitors in Series
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Capacitors in Series">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#capacitors-in-series-formula" class="md-nav__link">
+    <span class="md-ellipsis">
+      Capacitors in Series Formula
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#capacitors-in-parallel" class="md-nav__link">
+    <span class="md-ellipsis">
+      Capacitors in Parallel
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Capacitors in Parallel">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#capacitors-in-parallel-formula" class="md-nav__link">
+    <span class="md-ellipsis">
+      Capacitors in Parallel Formula
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#diagram-series-and-parallel-capacitors" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Series and Parallel Capacitors
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#inductor-energy-storage" class="md-nav__link">
+    <span class="md-ellipsis">
+      Inductor Energy Storage
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Inductor Energy Storage">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#inductor-energy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Inductor Energy
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-inductors-time-domain-behavior" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Inductor's Time-Domain Behavior
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Inductor's Time-Domain Behavior">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#inductor-v-i-relationship" class="md-nav__link">
+    <span class="md-ellipsis">
+      Inductor V-I Relationship
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#inductors-in-series-and-parallel" class="md-nav__link">
+    <span class="md-ellipsis">
+      Inductors in Series and Parallel
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Inductors in Series and Parallel">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#inductors-in-series" class="md-nav__link">
+    <span class="md-ellipsis">
+      Inductors in Series
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Inductors in Series">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#inductors-in-series-formula" class="md-nav__link">
+    <span class="md-ellipsis">
+      Inductors in Series Formula
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inductors-in-parallel" class="md-nav__link">
+    <span class="md-ellipsis">
+      Inductors in Parallel
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Inductors in Parallel">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#inductors-in-parallel-formula" class="md-nav__link">
+    <span class="md-ellipsis">
+      Inductors in Parallel Formula
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mutual-inductance-when-coils-talk-to-each-other" class="md-nav__link">
+    <span class="md-ellipsis">
+      Mutual Inductance: When Coils Talk to Each Other
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Mutual Inductance: When Coils Talk to Each Other">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mutual-inductance" class="md-nav__link">
+    <span class="md-ellipsis">
+      Mutual Inductance
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#coupling-coefficient" class="md-nav__link">
+    <span class="md-ellipsis">
+      Coupling Coefficient
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Coupling Coefficient">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#coupling-coefficient_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Coupling Coefficient
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#diagram-mutual-inductance-visualization" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Mutual Inductance Visualization
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#real-vs-ideal-components" class="md-nav__link">
+    <span class="md-ellipsis">
+      Real vs. Ideal Components
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Real vs. Ideal Components">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#parasitic-elements" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parasitic Elements
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#real-capacitor-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      Real Capacitor Model
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Real Capacitor Model">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-real-vs-ideal-capacitor" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Real vs Ideal Capacitor
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#real-inductor-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      Real Inductor Model
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#signal-fundamentals-the-language-of-waveforms" class="md-nav__link">
+    <span class="md-ellipsis">
+      Signal Fundamentals: The Language of Waveforms
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Signal Fundamentals: The Language of Waveforms">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#amplitude" class="md-nav__link">
+    <span class="md-ellipsis">
+      Amplitude
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Amplitude">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#amplitude-definition" class="md-nav__link">
+    <span class="md-ellipsis">
+      Amplitude Definition
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#period-and-frequency" class="md-nav__link">
+    <span class="md-ellipsis">
+      Period and Frequency
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Period and Frequency">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#period" class="md-nav__link">
+    <span class="md-ellipsis">
+      Period
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#frequency" class="md-nav__link">
+    <span class="md-ellipsis">
+      Frequency
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#angular-frequency" class="md-nav__link">
+    <span class="md-ellipsis">
+      Angular Frequency
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-angle-and-phase-shift" class="md-nav__link">
+    <span class="md-ellipsis">
+      Phase Angle and Phase Shift
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Phase Angle and Phase Shift">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#phase-relationship" class="md-nav__link">
+    <span class="md-ellipsis">
+      Phase Relationship
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#diagram-signal-parameters-visualization" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Signal Parameters Visualization
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#peak-peak-to-peak-and-average-values" class="md-nav__link">
+    <span class="md-ellipsis">
+      Peak, Peak-to-Peak, and Average Values
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Peak, Peak-to-Peak, and Average Values">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#peak-value" class="md-nav__link">
+    <span class="md-ellipsis">
+      Peak Value
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#peak-to-peak-value" class="md-nav__link">
+    <span class="md-ellipsis">
+      Peak-to-Peak Value
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#average-value" class="md-nav__link">
+    <span class="md-ellipsis">
+      Average Value
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rms-value-the-most-useful-measurement" class="md-nav__link">
+    <span class="md-ellipsis">
+      RMS Value: The Most Useful Measurement
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="RMS Value: The Most Useful Measurement">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rms-value" class="md-nav__link">
+    <span class="md-ellipsis">
+      RMS Value
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#diagram-rms-explanation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: RMS Explanation
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#audio-frequency-fundamentals" class="md-nav__link">
+    <span class="md-ellipsis">
+      Audio Frequency Fundamentals
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Audio Frequency Fundamentals">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#human-hearing-range" class="md-nav__link">
+    <span class="md-ellipsis">
+      Human Hearing Range
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#audio-frequency-range" class="md-nav__link">
+    <span class="md-ellipsis">
+      Audio Frequency Range
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-decibel-a-logarithmic-scale" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Decibel: A Logarithmic Scale
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Decibel: A Logarithmic Scale">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#decibel-definitions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Decibel Definitions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#diagram-decibel-scale-interactive" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Decibel Scale Interactive
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#practical-applications" class="md-nav__link">
+    <span class="md-ellipsis">
+      Practical Applications
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Practical Applications">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#application-1-bypass-capacitor-selection" class="md-nav__link">
+    <span class="md-ellipsis">
+      Application 1: Bypass Capacitor Selection
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#application-2-audio-signal-levels" class="md-nav__link">
+    <span class="md-ellipsis">
+      Application 2: Audio Signal Levels
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#application-3-inductor-energy-storage" class="md-nav__link">
+    <span class="md-ellipsis">
+      Application 3: Inductor Energy Storage
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary-and-key-takeaways" class="md-nav__link">
+    <span class="md-ellipsis">
+      Summary and Key Takeaways
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+    <a href="https://github.com/dmccreary/circuits/blob/master/docs/chapters/05-passive-components/index.md" title="Edit this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+
+
+<h1 id="passive-components-resistors-capacitors-and-inductors">Passive Components: Resistors, Capacitors, and Inductors</h1>
+<h2 id="summary">Summary</h2>
+<p>This chapter provides an in-depth examination of passive electronic components beyond basic resistors. Students will learn how capacitors store energy in electric fields and how inductors store energy in magnetic fields. The chapter covers series and parallel combinations of capacitors and inductors, mutual inductance between inductors, and the practical considerations of real versus ideal components. Understanding these energy storage elements is essential for analyzing dynamic circuits and filters in subsequent chapters.</p>
+<h2 id="concepts-covered">Concepts Covered</h2>
+<p>This chapter covers the following 25 concepts from the learning graph:</p>
+<ol>
+<li>Parallel Plate Capacitor</li>
+<li>Capacitor Energy Storage</li>
+<li>Capacitors in Series</li>
+<li>Capacitors in Parallel</li>
+<li>Inductor Energy Storage</li>
+<li>Inductors in Series</li>
+<li>Inductors in Parallel</li>
+<li>Mutual Inductance</li>
+<li>Coupling Coefficient</li>
+<li>Parasitic Capacitance</li>
+<li>Parasitic Inductance</li>
+<li>Real vs Ideal Components</li>
+<li>Amplitude</li>
+<li>Period</li>
+<li>Frequency</li>
+<li>Angular Frequency</li>
+<li>Phase Angle</li>
+<li>Phase Shift</li>
+<li>Peak Value</li>
+<li>Peak-to-Peak Value</li>
+<li>RMS Value</li>
+<li>Average Value</li>
+<li>Human Hearing Range</li>
+<li>Audio Frequency Range</li>
+<li>Decibel</li>
+</ol>
+<h2 id="prerequisites">Prerequisites</h2>
+<p>This chapter builds on concepts from:</p>
+<ul>
+<li><a href="../01-electric-charge-basic-quantities/">Chapter 1: Electric Charge and Basic Circuit Quantities</a></li>
+<li><a href="../02-ohms-law-basic-configurations/">Chapter 2: Ohm's Law and Basic Circuit Configurations</a></li>
+<li><a href="../04-dc-circuit-analysis/">Chapter 4: DC Circuit Analysis Methods</a></li>
+</ul>
+<hr />
+<h2 id="introduction-the-dynamic-duo-plus-their-resistor-friend">Introduction: The Dynamic Duo (Plus Their Resistor Friend)</h2>
+<p>Welcome to the chapter where circuits get interesting. Up until now, we've been dealing with resistors—components that do one thing: resist. They're the bouncers of the circuit world, limiting current and dissipating energy as heat. Useful, but let's be honest: a little one-dimensional.</p>
+<p>Now we meet the <strong>capacitor</strong> and the <strong>inductor</strong>—components that <em>store</em> energy rather than waste it. These are the circuit equivalents of batteries, except they charge and discharge in fascinating ways that give circuits memory, timing, and the ability to filter signals. If resistors are the bouncers, capacitors and inductors are the DJs who shape the music.</p>
+<p>This chapter also introduces <strong>signal fundamentals</strong>: amplitude, frequency, phase, and the mysterious decibel. These concepts form the vocabulary you'll need to discuss audio, radio, and any signal that changes over time.</p>
+<p>Here's why this matters: every filter, every amplifier, every audio circuit you'll ever design relies on the interplay between resistance, capacitance, and inductance. Master these components, and you've got the building blocks for everything from your phone's speaker crossover to the power supply in your laptop.</p>
+<p>Let's store some energy. (Unlike your coffee, these components actually return it.)</p>
+<h2 id="the-parallel-plate-capacitor-where-the-magic-happens">The Parallel Plate Capacitor: Where the Magic Happens</h2>
+<p>We introduced capacitors briefly in Chapter 4. Now let's understand them properly.</p>
+<p>A <strong>parallel plate capacitor</strong> is the simplest capacitor design: two conducting plates separated by an insulating material (the dielectric). Apply a voltage, and charges accumulate on the plates—positive on one side, negative on the other. The electric field between the plates stores energy.</p>
+<h4 id="capacitance-of-a-parallel-plate-capacitor">Capacitance of a Parallel Plate Capacitor</h4>
+<p><span class="arithmatex">\(C = \varepsilon_0 \varepsilon_r \frac{A}{d}\)</span></p>
+<p>where:</p>
+<ul>
+<li><span class="arithmatex">\(C\)</span> is the capacitance in farads (F)</li>
+<li><span class="arithmatex">\(\varepsilon_0\)</span> is the permittivity of free space (<span class="arithmatex">\(8.854 \times 10^{-12}\)</span> F/m)</li>
+<li><span class="arithmatex">\(\varepsilon_r\)</span> is the relative permittivity (dielectric constant) of the material</li>
+<li><span class="arithmatex">\(A\)</span> is the plate area in square meters</li>
+<li><span class="arithmatex">\(d\)</span> is the separation between plates in meters</li>
+</ul>
+<p>This formula reveals three ways to increase capacitance:</p>
+<ul>
+<li><strong>Increase plate area</strong>: More surface = more charge storage</li>
+<li><strong>Decrease plate separation</strong>: Closer plates = stronger field</li>
+<li><strong>Use a better dielectric</strong>: Higher <span class="arithmatex">\(\varepsilon_r\)</span> = more energy per volt</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Dielectric Material</th>
+<th>Relative Permittivity (<span class="arithmatex">\(\varepsilon_r\)</span>)</th>
+<th>Typical Use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Air/Vacuum</td>
+<td>1.0</td>
+<td>Variable capacitors</td>
+</tr>
+<tr>
+<td>Paper</td>
+<td>2-4</td>
+<td>Older capacitors</td>
+</tr>
+<tr>
+<td>Polyester film</td>
+<td>3.2</td>
+<td>General purpose</td>
+</tr>
+<tr>
+<td>Ceramic (Class 1)</td>
+<td>10-100</td>
+<td>Precision circuits</td>
+</tr>
+<tr>
+<td>Ceramic (Class 2)</td>
+<td>1000-20000</td>
+<td>Bypass, coupling</td>
+</tr>
+<tr>
+<td>Electrolytic</td>
+<td>~10</td>
+<td>High capacitance</td>
+</tr>
+</tbody>
+</table>
+<h4 id="diagram-parallel-plate-capacitor-structure">Diagram: Parallel Plate Capacitor Structure</h4>
+<iframe src="../../sims/parallel-plate-capacitor/main.html" width="100%" height="450px" scrolling="no"></iframe>
+
+<details markdown="1">
+<summary>Parallel Plate Capacitor MicroSim</summary>
+Type: microsim
+
+Purpose: Visualize how plate area, separation, and dielectric affect capacitance
+
+Bloom Level: Understand (L2)
+Bloom Verb: explain
+
+Learning Objective: Students will explain how changing physical parameters affects capacitance value and understand the role of the dielectric material.
+
+Instructional Rationale: Interactive manipulation of physical parameters with real-time capacitance calculation builds intuition for the C = εA/d relationship.
+
+Canvas layout:
+- Left (350px): Visual representation of parallel plates with dielectric
+- Right (250px): Parameter controls and calculations
+
+Visual elements:
+- Two parallel plates shown in perspective
+- Electric field lines between plates
+- Dielectric material (colored region) between plates
+- Charge symbols (+ and -) on plate surfaces
+- Dimension labels for area and separation
+
+Interactive controls:
+- Slider: Plate area (1 cm² to 100 cm²)
+- Slider: Plate separation (0.1 mm to 10 mm)
+- Dropdown: Dielectric material (air, paper, ceramic, etc.)
+- Display: Calculated capacitance
+- Display: Electric field strength
+- Display: Stored energy at given voltage
+
+Default parameters:
+- Area = 10 cm²
+- Separation = 1 mm
+- Dielectric = Air (εr = 1)
+- Applied voltage = 10V
+
+Behavior:
+- Plate visualization scales with area
+- Separation shown visually
+- Field line density changes with charge
+- Capacitance updates in real-time
+- Energy calculation: E = ½CV²
+
+Implementation: p5.js with 3D perspective drawing
+</details>
+
+<h2 id="capacitor-energy-storage">Capacitor Energy Storage</h2>
+<p>Unlike resistors that dissipate energy as heat, capacitors <strong>store</strong> energy in their electric field. This energy can be recovered—which is why capacitors are used in camera flashes, defibrillators, and power supply filtering.</p>
+<h4 id="capacitor-energy">Capacitor Energy</h4>
+<p><span class="arithmatex">\(E = \frac{1}{2}CV^2 = \frac{1}{2}\frac{Q^2}{C} = \frac{1}{2}QV\)</span></p>
+<p>where:</p>
+<ul>
+<li><span class="arithmatex">\(E\)</span> is stored energy in joules (J)</li>
+<li><span class="arithmatex">\(C\)</span> is capacitance in farads (F)</li>
+<li><span class="arithmatex">\(V\)</span> is voltage across the capacitor in volts (V)</li>
+<li><span class="arithmatex">\(Q\)</span> is stored charge in coulombs (C)</li>
+</ul>
+<p>Notice the voltage-squared relationship: double the voltage, quadruple the energy. This is why high-voltage capacitors store serious energy and demand respect in the lab.</p>
+<div class="admonition warning">
+<p class="admonition-title">Capacitor Safety</p>
+<p>Large capacitors can hold their charge for hours or even days after power is removed. Always discharge capacitors before working on circuits. A capacitor charged to 400V doesn't care that the power supply is off—it's still ready to ruin your day (or worse).</p>
+</div>
+<h3 id="the-capacitors-time-domain-behavior">The Capacitor's Time-Domain Behavior</h3>
+<p>The fundamental relationship between current and voltage in a capacitor:</p>
+<h4 id="capacitor-i-v-relationship">Capacitor I-V Relationship</h4>
+<p><span class="arithmatex">\(I = C \frac{dV}{dt}\)</span></p>
+<p>where:</p>
+<ul>
+<li><span class="arithmatex">\(I\)</span> is current through the capacitor in amperes (A)</li>
+<li><span class="arithmatex">\(C\)</span> is capacitance in farads (F)</li>
+<li><span class="arithmatex">\(\frac{dV}{dt}\)</span> is the rate of voltage change in volts per second (V/s)</li>
+</ul>
+<p>This equation says: <strong>current flows through a capacitor only when voltage is changing</strong>. Constant voltage? Zero current. This is why capacitors block DC but pass AC—the voltage must be changing for current to flow.</p>
+<p>Key implications:</p>
+<ul>
+<li>Sudden voltage changes require infinite current (impossible)</li>
+<li>Therefore, <strong>capacitor voltage cannot change instantaneously</strong></li>
+<li>Capacitors oppose changes in voltage</li>
+<li>At DC steady state, capacitors act as open circuits</li>
+</ul>
+<h4 id="diagram-capacitor-charging-visualization">Diagram: Capacitor Charging Visualization</h4>
+<iframe src="../../sims/capacitor-charging/main.html" width="100%" height="450px" scrolling="no"></iframe>
+
+<details markdown="1">
+<summary>Capacitor Charging Animation MicroSim</summary>
+Type: microsim
+
+Purpose: Visualize charge accumulation and energy storage during capacitor charging
+
+Bloom Level: Understand (L2)
+Bloom Verb: describe
+
+Learning Objective: Students will describe how charge accumulates on capacitor plates during charging and explain the relationship between voltage, charge, and stored energy.
+
+Instructional Rationale: Animated charge flow and accumulation makes the abstract concept of energy storage concrete and visual.
+
+Canvas layout:
+- Main area (400px): Capacitor with animated charge flow
+- Right panel (200px): Real-time graphs of V, I, E
+
+Visual elements:
+- Capacitor plates with accumulating + and - charges
+- Wire connecting to voltage source
+- Animated charge carriers (electrons) flowing
+- Growing electric field lines between plates
+- Three stacked graphs: voltage, current, energy vs time
+
+Interactive controls:
+- Slider: Applied voltage (1V to 20V)
+- Slider: Capacitance (1µF to 1000µF)
+- Slider: Series resistance (100Ω to 10kΩ)
+- Button: "Charge" starts charging animation
+- Button: "Discharge" reverses process
+- Button: "Reset" clears charge
+
+Default parameters:
+- V = 10V
+- C = 100µF
+- R = 1kΩ
+- τ = RC = 100ms
+
+Behavior:
+- Charges animate flowing onto plates
+- Plate charge symbols increase over time
+- Voltage rises exponentially toward applied voltage
+- Current starts high, decays exponentially
+- Energy grows as ½CV²
+- Time constant τ = RC shown on graphs
+
+Implementation: p5.js with particle animation and real-time graphing
+</details>
+
+<h2 id="capacitors-in-series-and-parallel">Capacitors in Series and Parallel</h2>
+<p>Just like resistors, capacitors can be combined. But here's the twist: <strong>the formulas are backwards</strong> compared to resistors.</p>
+<h3 id="capacitors-in-series">Capacitors in Series</h3>
+<p>When capacitors connect in series, the total capacitance is <em>less</em> than any individual capacitor.</p>
+<h4 id="capacitors-in-series-formula">Capacitors in Series Formula</h4>
+<p><span class="arithmatex">\(\frac{1}{C_{total}} = \frac{1}{C_1} + \frac{1}{C_2} + \frac{1}{C_3} + ...\)</span></p>
+<p>where:</p>
+<ul>
+<li><span class="arithmatex">\(C_{total}\)</span> is the equivalent total capacitance</li>
+<li><span class="arithmatex">\(C_1, C_2, C_3, ...\)</span> are individual capacitor values</li>
+</ul>
+<p>For two capacitors, the "product over sum" formula works:</p>
+<p><span class="arithmatex">\(C_{total} = \frac{C_1 \cdot C_2}{C_1 + C_2}\)</span></p>
+<p>Why does series combination reduce capacitance? Think of it as increasing the effective plate separation—the charges must spread across multiple gaps.</p>
+<h3 id="capacitors-in-parallel">Capacitors in Parallel</h3>
+<p>When capacitors connect in parallel, capacitances add directly:</p>
+<h4 id="capacitors-in-parallel-formula">Capacitors in Parallel Formula</h4>
+<p><span class="arithmatex">\(C_{total} = C_1 + C_2 + C_3 + ...\)</span></p>
+<p>where:</p>
+<ul>
+<li><span class="arithmatex">\(C_{total}\)</span> is the equivalent total capacitance</li>
+<li><span class="arithmatex">\(C_1, C_2, C_3, ...\)</span> are individual capacitor values</li>
+</ul>
+<p>This makes intuitive sense: parallel capacitors effectively increase the plate area.</p>
+<table>
+<thead>
+<tr>
+<th>Configuration</th>
+<th>Formula</th>
+<th>Total C</th>
+<th>Voltage Handling</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Series</td>
+<td><span class="arithmatex">\(1/C_T = 1/C_1 + 1/C_2\)</span></td>
+<td>Decreases</td>
+<td>Increases</td>
+</tr>
+<tr>
+<td>Parallel</td>
+<td><span class="arithmatex">\(C_T = C_1 + C_2\)</span></td>
+<td>Increases</td>
+<td>Same as lowest</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition tip">
+<p class="admonition-title">Memory Trick</p>
+<p>Capacitor formulas are the <strong>opposite</strong> of resistor formulas:</p>
+<ul>
+<li>Resistors in series: add directly</li>
+<li>
+<p>Capacitors in series: add reciprocally</p>
+</li>
+<li>
+<p>Resistors in parallel: add reciprocally</p>
+</li>
+<li>Capacitors in parallel: add directly</li>
+</ul>
+</div>
+<h4 id="diagram-series-and-parallel-capacitors">Diagram: Series and Parallel Capacitors</h4>
+<iframe src="../../sims/capacitor-combinations/main.html" width="100%" height="450px" scrolling="no"></iframe>
+
+<details markdown="1">
+<summary>Capacitor Combinations MicroSim</summary>
+Type: microsim
+
+Purpose: Compare series and parallel capacitor combinations with interactive calculation
+
+Bloom Level: Apply (L3)
+Bloom Verb: calculate
+
+Learning Objective: Students will calculate equivalent capacitance for series and parallel combinations and predict how total capacitance changes when adding capacitors.
+
+Instructional Rationale: Side-by-side comparison with the same capacitor values in series vs parallel makes the "opposite of resistors" relationship clear.
+
+Canvas layout:
+- Top half: Series configuration with calculation
+- Bottom half: Parallel configuration with calculation
+- Side panel: Comparison summary
+
+Visual elements:
+- Schematic symbols for capacitors
+- Value labels on each capacitor
+- Equivalent single capacitor representation
+- Calculation steps shown
+
+Interactive controls:
+- Slider: C1 value (1µF to 100µF)
+- Slider: C2 value (1µF to 100µF)
+- Slider: C3 value (1µF to 100µF)
+- Toggle: Show/hide C3 (two vs three capacitors)
+- Display: Series equivalent
+- Display: Parallel equivalent
+
+Default parameters:
+- C1 = 10µF, C2 = 20µF, C3 = 30µF
+
+Behavior:
+- Real-time calculation updates
+- Visual comparison of equivalent size
+- Shows step-by-step calculation
+- Highlights that series < smallest, parallel = sum
+
+Implementation: p5.js with dual circuit display
+</details>
+
+<h2 id="inductor-energy-storage">Inductor Energy Storage</h2>
+<p>While capacitors store energy in electric fields, <strong>inductors</strong> store energy in magnetic fields. An inductor is typically a coil of wire—current flowing through creates a magnetic field that stores energy.</p>
+<h4 id="inductor-energy">Inductor Energy</h4>
+<p><span class="arithmatex">\(E = \frac{1}{2}LI^2\)</span></p>
+<p>where:</p>
+<ul>
+<li><span class="arithmatex">\(E\)</span> is stored energy in joules (J)</li>
+<li><span class="arithmatex">\(L\)</span> is inductance in henrys (H)</li>
+<li><span class="arithmatex">\(I\)</span> is current through the inductor in amperes (A)</li>
+</ul>
+<p>Notice the current-squared relationship (parallel to capacitors with voltage-squared). More current means more magnetic field means more stored energy.</p>
+<h3 id="the-inductors-time-domain-behavior">The Inductor's Time-Domain Behavior</h3>
+<p>The fundamental relationship between voltage and current in an inductor:</p>
+<h4 id="inductor-v-i-relationship">Inductor V-I Relationship</h4>
+<p><span class="arithmatex">\(V = L \frac{dI}{dt}\)</span></p>
+<p>where:</p>
+<ul>
+<li><span class="arithmatex">\(V\)</span> is voltage across the inductor in volts (V)</li>
+<li><span class="arithmatex">\(L\)</span> is inductance in henrys (H)</li>
+<li><span class="arithmatex">\(\frac{dI}{dt}\)</span> is the rate of current change in amperes per second (A/s)</li>
+</ul>
+<p>This equation says: <strong>voltage appears across an inductor only when current is changing</strong>. Constant current? Zero voltage. This is why inductors pass DC freely but impede AC—only changing currents create opposing voltages.</p>
+<p>Key implications:</p>
+<ul>
+<li>Sudden current changes require infinite voltage (impossible)</li>
+<li>Therefore, <strong>inductor current cannot change instantaneously</strong></li>
+<li>Inductors oppose changes in current</li>
+<li>At DC steady state, inductors act as short circuits (just wire resistance)</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Capacitor</th>
+<th>Inductor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Stores energy in</td>
+<td>Electric field</td>
+<td>Magnetic field</td>
+</tr>
+<tr>
+<td>Energy formula</td>
+<td><span class="arithmatex">\(\frac{1}{2}CV^2\)</span></td>
+<td><span class="arithmatex">\(\frac{1}{2}LI^2\)</span></td>
+</tr>
+<tr>
+<td>Opposes changes in</td>
+<td>Voltage</td>
+<td>Current</td>
+</tr>
+<tr>
+<td>At DC steady state</td>
+<td>Open circuit</td>
+<td>Short circuit</td>
+</tr>
+<tr>
+<td>I-V relationship</td>
+<td><span class="arithmatex">\(I = C \frac{dV}{dt}\)</span></td>
+<td><span class="arithmatex">\(V = L \frac{dI}{dt}\)</span></td>
+</tr>
+</tbody>
+</table>
+<h2 id="inductors-in-series-and-parallel">Inductors in Series and Parallel</h2>
+<p>Inductors combine like resistors (thankfully—we needed something to be normal):</p>
+<h3 id="inductors-in-series">Inductors in Series</h3>
+<h4 id="inductors-in-series-formula">Inductors in Series Formula</h4>
+<p><span class="arithmatex">\(L_{total} = L_1 + L_2 + L_3 + ...\)</span></p>
+<p>where:</p>
+<ul>
+<li><span class="arithmatex">\(L_{total}\)</span> is the equivalent total inductance</li>
+<li><span class="arithmatex">\(L_1, L_2, L_3, ...\)</span> are individual inductor values</li>
+</ul>
+<p>Series inductors add directly because the magnetic fields add.</p>
+<h3 id="inductors-in-parallel">Inductors in Parallel</h3>
+<h4 id="inductors-in-parallel-formula">Inductors in Parallel Formula</h4>
+<p><span class="arithmatex">\(\frac{1}{L_{total}} = \frac{1}{L_1} + \frac{1}{L_2} + \frac{1}{L_3} + ...\)</span></p>
+<p>where:</p>
+<ul>
+<li><span class="arithmatex">\(L_{total}\)</span> is the equivalent total inductance</li>
+<li><span class="arithmatex">\(L_1, L_2, L_3, ...\)</span> are individual inductor values</li>
+</ul>
+<p>For two inductors in parallel:</p>
+<p><span class="arithmatex">\(L_{total} = \frac{L_1 \cdot L_2}{L_1 + L_2}\)</span></p>
+<div class="admonition note">
+<p class="admonition-title">Component Combination Summary</p>
+<ul>
+<li><strong>Resistors</strong>: Series adds, parallel uses reciprocals</li>
+<li><strong>Inductors</strong>: Same as resistors</li>
+<li><strong>Capacitors</strong>: Opposite of resistors</li>
+</ul>
+</div>
+<h2 id="mutual-inductance-when-coils-talk-to-each-other">Mutual Inductance: When Coils Talk to Each Other</h2>
+<p>When two inductors are placed near each other, their magnetic fields can interact. The magnetic field from one coil can induce voltage in the other—this is <strong>mutual inductance</strong>, the principle behind transformers.</p>
+<h4 id="mutual-inductance">Mutual Inductance</h4>
+<p><span class="arithmatex">\(V_2 = M \frac{dI_1}{dt}\)</span></p>
+<p>where:</p>
+<ul>
+<li><span class="arithmatex">\(V_2\)</span> is induced voltage in coil 2 (volts)</li>
+<li><span class="arithmatex">\(M\)</span> is the mutual inductance between coils (henrys)</li>
+<li><span class="arithmatex">\(\frac{dI_1}{dt}\)</span> is the rate of current change in coil 1 (A/s)</li>
+</ul>
+<p>The mutual inductance <span class="arithmatex">\(M\)</span> depends on how much magnetic flux from coil 1 actually links with coil 2.</p>
+<h3 id="coupling-coefficient">Coupling Coefficient</h3>
+<p>The <strong>coupling coefficient</strong> (<span class="arithmatex">\(k\)</span>) describes how well two inductors are magnetically coupled:</p>
+<h4 id="coupling-coefficient_1">Coupling Coefficient</h4>
+<p><span class="arithmatex">\(M = k\sqrt{L_1 \cdot L_2}\)</span></p>
+<p>where:</p>
+<ul>
+<li><span class="arithmatex">\(M\)</span> is mutual inductance in henrys (H)</li>
+<li><span class="arithmatex">\(k\)</span> is coupling coefficient (0 ≤ k ≤ 1)</li>
+<li><span class="arithmatex">\(L_1, L_2\)</span> are the self-inductances of each coil (H)</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Coupling Coefficient</th>
+<th>Description</th>
+<th>Typical Application</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>k ≈ 0</td>
+<td>No coupling</td>
+<td>Separated inductors</td>
+</tr>
+<tr>
+<td>k ≈ 0.01-0.1</td>
+<td>Loose coupling</td>
+<td>Some wireless power</td>
+</tr>
+<tr>
+<td>k ≈ 0.3-0.7</td>
+<td>Medium coupling</td>
+<td>Air-core transformers</td>
+</tr>
+<tr>
+<td>k ≈ 0.95-0.99</td>
+<td>Tight coupling</td>
+<td>Iron-core transformers</td>
+</tr>
+<tr>
+<td>k = 1</td>
+<td>Perfect coupling</td>
+<td>Ideal (theoretical only)</td>
+</tr>
+</tbody>
+</table>
+<h4 id="diagram-mutual-inductance-visualization">Diagram: Mutual Inductance Visualization</h4>
+<iframe src="../../sims/mutual-inductance/main.html" width="100%" height="450px" scrolling="no"></iframe>
+
+<details markdown="1">
+<summary>Mutual Inductance MicroSim</summary>
+Type: microsim
+
+Purpose: Visualize magnetic field coupling between two inductors
+
+Bloom Level: Understand (L2)
+Bloom Verb: explain
+
+Learning Objective: Students will explain how changing current in one coil induces voltage in a nearby coil through magnetic coupling.
+
+Instructional Rationale: Animated magnetic field lines linking two coils makes the abstract concept of mutual inductance visible.
+
+Canvas layout:
+- Main area (450px): Two coils with animated magnetic field
+- Side panel (150px): Voltage and current displays
+
+Visual elements:
+- Two coils shown in cross-section
+- Animated magnetic field lines
+- Field lines that link both coils highlighted differently
+- Current direction arrows
+- Induced voltage indicator on second coil
+
+Interactive controls:
+- Slider: Current in coil 1 (0 to 1A, with time variation)
+- Slider: Coil separation (affects coupling)
+- Slider: Coil alignment (affects coupling)
+- Toggle: Iron core vs air core
+- Display: Coupling coefficient k
+- Display: Mutual inductance M
+- Display: Induced voltage V2
+
+Default parameters:
+- L1 = L2 = 10mH
+- Separation: medium
+- Air core initially
+
+Behavior:
+- Changing I1 creates animated field line changes
+- V2 spikes when I1 changes rapidly
+- Coupling coefficient updates with geometry
+- Iron core dramatically increases coupling
+
+Implementation: p5.js with animated field line visualization
+</details>
+
+<h2 id="real-vs-ideal-components">Real vs. Ideal Components</h2>
+<p>So far we've treated components as ideal: perfect capacitors, perfect inductors, lossless resistors. Reality is messier.</p>
+<h3 id="parasitic-elements">Parasitic Elements</h3>
+<p><strong>Parasitic capacitance</strong> and <strong>parasitic inductance</strong> are unwanted capacitance and inductance that appear in real components due to their physical construction.</p>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Main Function</th>
+<th>Parasitic Elements</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Resistor</td>
+<td>Resistance</td>
+<td>Series inductance, parallel capacitance</td>
+</tr>
+<tr>
+<td>Capacitor</td>
+<td>Capacitance</td>
+<td>Series inductance (ESL), series resistance (ESR)</td>
+</tr>
+<tr>
+<td>Inductor</td>
+<td>Inductance</td>
+<td>Parallel capacitance, series resistance</td>
+</tr>
+<tr>
+<td>Wire</td>
+<td>Connection</td>
+<td>Inductance (~1 nH/mm), capacitance to nearby conductors</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Parasitic inductance</strong> matters at high frequencies. Every wire has inductance—at MHz frequencies, a few centimeters of wire can have significant inductive reactance. This is why high-frequency circuits use short, direct connections.</p>
+<p><strong>Parasitic capacitance</strong> also matters at high frequencies. Conductors near each other form unintended capacitors. A wire over a ground plane has capacitance to ground.</p>
+<h3 id="real-capacitor-model">Real Capacitor Model</h3>
+<p>A real capacitor isn't just a capacitance—it has:</p>
+<ul>
+<li><strong>ESR (Equivalent Series Resistance)</strong>: Energy lost as heat during charging/discharging</li>
+<li><strong>ESL (Equivalent Series Inductance)</strong>: Inductance of leads and internal structure</li>
+<li><strong>Leakage resistance</strong>: Imperfect insulation allows tiny DC current</li>
+</ul>
+<h4 id="diagram-real-vs-ideal-capacitor">Diagram: Real vs Ideal Capacitor</h4>
+<iframe src="../../sims/real-capacitor-model/main.html" width="100%" height="400px" scrolling="no"></iframe>
+
+<details markdown="1">
+<summary>Real Capacitor Model MicroSim</summary>
+Type: microsim
+
+Purpose: Show how ESR and ESL affect capacitor behavior at different frequencies
+
+Bloom Level: Analyze (L4)
+Bloom Verb: compare
+
+Learning Objective: Students will compare ideal and real capacitor behavior, identifying the frequency ranges where parasitic elements dominate.
+
+Canvas layout:
+- Left (300px): Ideal vs real equivalent circuit
+- Right (300px): Impedance vs frequency plot
+
+Visual elements:
+- Ideal capacitor: single C symbol
+- Real capacitor: C with series ESR and ESL
+- Bode-style impedance magnitude plot
+- Frequency markers for different regions
+
+Interactive controls:
+- Slider: Capacitance value
+- Slider: ESR value (1mΩ to 1Ω)
+- Slider: ESL value (1nH to 100nH)
+- Display: Self-resonant frequency
+- Display: Impedance at selected frequency
+
+Default parameters:
+- C = 10µF
+- ESR = 50mΩ
+- ESL = 10nH
+
+Behavior:
+- Impedance plot shows V-shape (capacitive, minimum at SRF, then inductive)
+- Self-resonant frequency calculated: f = 1/(2π√(LC))
+- ESR sets minimum impedance at resonance
+- Above SRF, capacitor acts like inductor!
+
+Implementation: p5.js with frequency response plotting
+</details>
+
+<h3 id="real-inductor-model">Real Inductor Model</h3>
+<p>Real inductors have:</p>
+<ul>
+<li><strong>DCR (DC Resistance)</strong>: Resistance of the wire</li>
+<li><strong>Parallel capacitance</strong>: Between windings</li>
+<li><strong>Core losses</strong>: Energy lost in magnetic core material</li>
+</ul>
+<p>At the <strong>self-resonant frequency</strong>, the parasitic capacitance resonates with the inductance, and the inductor stops acting like an inductor!</p>
+<div class="admonition tip">
+<p class="admonition-title">Component Selection</p>
+<p>When choosing components:</p>
+<ul>
+<li>For low frequencies: Almost any component works</li>
+<li>For high frequencies: Check the self-resonant frequency (SRF)</li>
+<li>For power applications: Check ESR (affects efficiency and heating)</li>
+<li>For precision: Check tolerance and temperature coefficient</li>
+</ul>
+</div>
+<h2 id="signal-fundamentals-the-language-of-waveforms">Signal Fundamentals: The Language of Waveforms</h2>
+<p>Now we shift to describing signals—voltages and currents that change over time. Understanding these parameters is essential for audio and AC circuit work.</p>
+<h3 id="amplitude">Amplitude</h3>
+<p>The <strong>amplitude</strong> of a signal is its maximum excursion from zero (or from its average value). For a sinusoid:</p>
+<h4 id="amplitude-definition">Amplitude Definition</h4>
+<p><span class="arithmatex">\(v(t) = A \sin(\omega t + \phi)\)</span></p>
+<p>where:</p>
+<ul>
+<li><span class="arithmatex">\(A\)</span> is the amplitude (peak value)</li>
+<li><span class="arithmatex">\(\omega\)</span> is angular frequency</li>
+<li><span class="arithmatex">\(\phi\)</span> is phase angle</li>
+<li><span class="arithmatex">\(t\)</span> is time</li>
+</ul>
+<h3 id="period-and-frequency">Period and Frequency</h3>
+<p>For a periodic signal that repeats:</p>
+<h4 id="period">Period</h4>
+<p><span class="arithmatex">\(T\)</span> = time for one complete cycle (seconds)</p>
+<h4 id="frequency">Frequency</h4>
+<p><span class="arithmatex">\(f = \frac{1}{T}\)</span></p>
+<p>where:</p>
+<ul>
+<li><span class="arithmatex">\(f\)</span> is frequency in hertz (Hz)</li>
+<li><span class="arithmatex">\(T\)</span> is period in seconds (s)</li>
+</ul>
+<p>Frequency tells you how many complete cycles occur per second. A 1 kHz signal completes 1000 cycles every second.</p>
+<h4 id="angular-frequency">Angular Frequency</h4>
+<p><span class="arithmatex">\(\omega = 2\pi f = \frac{2\pi}{T}\)</span></p>
+<p>where:</p>
+<ul>
+<li><span class="arithmatex">\(\omega\)</span> is angular frequency in radians per second (rad/s)</li>
+<li><span class="arithmatex">\(f\)</span> is frequency in hertz (Hz)</li>
+<li><span class="arithmatex">\(T\)</span> is period in seconds (s)</li>
+</ul>
+<p>Angular frequency (<span class="arithmatex">\(\omega\)</span>) is convenient for mathematics because it relates directly to the argument of sine and cosine functions.</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Symbol</th>
+<th>Unit</th>
+<th>Relationship</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Period</td>
+<td><span class="arithmatex">\(T\)</span></td>
+<td>seconds (s)</td>
+<td>-</td>
+</tr>
+<tr>
+<td>Frequency</td>
+<td><span class="arithmatex">\(f\)</span></td>
+<td>hertz (Hz)</td>
+<td><span class="arithmatex">\(f = 1/T\)</span></td>
+</tr>
+<tr>
+<td>Angular frequency</td>
+<td><span class="arithmatex">\(\omega\)</span></td>
+<td>rad/s</td>
+<td><span class="arithmatex">\(\omega = 2\pi f\)</span></td>
+</tr>
+</tbody>
+</table>
+<h3 id="phase-angle-and-phase-shift">Phase Angle and Phase Shift</h3>
+<p>The <strong>phase angle</strong> (<span class="arithmatex">\(\phi\)</span>) tells you where in its cycle a signal starts at <span class="arithmatex">\(t = 0\)</span>.</p>
+<h4 id="phase-relationship">Phase Relationship</h4>
+<p><span class="arithmatex">\(v(t) = A \sin(\omega t + \phi)\)</span></p>
+<p>where:</p>
+<ul>
+<li><span class="arithmatex">\(\phi\)</span> is phase angle in radians (or degrees)</li>
+<li>Positive <span class="arithmatex">\(\phi\)</span> means the signal is "ahead" (shifted left in time)</li>
+<li>Negative <span class="arithmatex">\(\phi\)</span> means the signal is "behind" (shifted right in time)</li>
+</ul>
+<p><strong>Phase shift</strong> describes the phase difference between two signals:</p>
+<p><span class="arithmatex">\(\Delta\phi = \phi_2 - \phi_1\)</span></p>
+<p>In AC circuits, the voltage and current often have different phases due to reactive components. This phase relationship is crucial for power calculations.</p>
+<h4 id="diagram-signal-parameters-visualization">Diagram: Signal Parameters Visualization</h4>
+<iframe src="../../sims/signal-parameters/main.html" width="100%" height="500px" scrolling="no"></iframe>
+
+<details markdown="1">
+<summary>Signal Parameters Interactive MicroSim</summary>
+Type: microsim
+
+Purpose: Visualize amplitude, frequency, period, and phase on a sinusoidal waveform
+
+Bloom Level: Remember (L1)
+Bloom Verb: identify
+
+Learning Objective: Students will identify amplitude, period, frequency, and phase angle on a sinusoidal waveform display.
+
+Instructional Rationale: Interactive manipulation of each parameter with immediate visual feedback builds familiarity with signal terminology.
+
+Canvas layout:
+- Main area (500px): Waveform display with labeled measurements
+- Bottom (100px): Parameter controls
+
+Visual elements:
+- Sinusoidal waveform
+- Amplitude marked with vertical arrows
+- Period marked with horizontal bracket
+- Phase shown by position relative to reference
+- Reference sinusoid (dotted) for phase comparison
+- Grid with time and voltage markings
+
+Interactive controls:
+- Slider: Amplitude (0.1 to 10V)
+- Slider: Frequency (1Hz to 1000Hz, log scale)
+- Slider: Phase angle (-180° to +180°)
+- Checkbox: Show reference signal (zero phase)
+- Display: Period (calculated)
+- Display: Angular frequency (calculated)
+
+Default parameters:
+- Amplitude = 5V
+- Frequency = 100Hz
+- Phase = 0°
+
+Behavior:
+- Waveform updates in real-time
+- Measurement labels update automatically
+- Reference signal enables phase comparison
+- Zooms to show 2-3 complete cycles regardless of frequency
+
+Implementation: p5.js with annotated waveform display
+</details>
+
+<h3 id="peak-peak-to-peak-and-average-values">Peak, Peak-to-Peak, and Average Values</h3>
+<p>Different applications need different ways to describe signal magnitude:</p>
+<h4 id="peak-value">Peak Value</h4>
+<p><span class="arithmatex">\(V_{peak} = A\)</span> (maximum excursion from zero)</p>
+<h4 id="peak-to-peak-value">Peak-to-Peak Value</h4>
+<p><span class="arithmatex">\(V_{p-p} = 2A\)</span> (total excursion from minimum to maximum)</p>
+<h4 id="average-value">Average Value</h4>
+<p>For a sinusoid:</p>
+<p><span class="arithmatex">\(V_{avg} = \frac{1}{T}\int_0^T v(t) \, dt\)</span></p>
+<p>For a pure sinusoid over a complete cycle: <span class="arithmatex">\(V_{avg} = 0\)</span> (positive and negative halves cancel).</p>
+<p>For a half-wave rectified sinusoid: <span class="arithmatex">\(V_{avg} = \frac{V_{peak}}{\pi} \approx 0.318 \cdot V_{peak}\)</span></p>
+<p>For a full-wave rectified sinusoid: <span class="arithmatex">\(V_{avg} = \frac{2V_{peak}}{\pi} \approx 0.637 \cdot V_{peak}\)</span></p>
+<h3 id="rms-value-the-most-useful-measurement">RMS Value: The Most Useful Measurement</h3>
+<p>The <strong>RMS (Root Mean Square)</strong> value is the most important AC measurement because it relates directly to power.</p>
+<h4 id="rms-value">RMS Value</h4>
+<p><span class="arithmatex">\(V_{RMS} = \sqrt{\frac{1}{T}\int_0^T v^2(t) \, dt}\)</span></p>
+<p>For a sinusoid:</p>
+<p><span class="arithmatex">\(V_{RMS} = \frac{V_{peak}}{\sqrt{2}} \approx 0.707 \cdot V_{peak}\)</span></p>
+<p>where:</p>
+<ul>
+<li><span class="arithmatex">\(V_{RMS}\)</span> is the RMS voltage</li>
+<li><span class="arithmatex">\(V_{peak}\)</span> is the peak (amplitude) voltage</li>
+</ul>
+<p>Why RMS? Because an AC voltage with <span class="arithmatex">\(V_{RMS}\)</span> delivers the same power to a resistor as a DC voltage of the same value. When someone says "120V AC," they mean 120V RMS. The peak voltage is actually <span class="arithmatex">\(120 \times \sqrt{2} \approx 170V\)</span>.</p>
+<table>
+<thead>
+<tr>
+<th>Measurement</th>
+<th>Formula (for sinusoid)</th>
+<th>Relation to Peak</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Peak</td>
+<td><span class="arithmatex">\(V_{peak}\)</span></td>
+<td>1.000</td>
+</tr>
+<tr>
+<td>RMS</td>
+<td><span class="arithmatex">\(V_{peak}/\sqrt{2}\)</span></td>
+<td>0.707</td>
+</tr>
+<tr>
+<td>Average (rectified)</td>
+<td><span class="arithmatex">\(2V_{peak}/\pi\)</span></td>
+<td>0.637</td>
+</tr>
+<tr>
+<td>Peak-to-Peak</td>
+<td><span class="arithmatex">\(2V_{peak}\)</span></td>
+<td>2.000</td>
+</tr>
+</tbody>
+</table>
+<h4 id="diagram-rms-explanation">Diagram: RMS Explanation</h4>
+<iframe src="../../sims/rms-calculation/main.html" width="100%" height="450px" scrolling="no"></iframe>
+
+<details markdown="1">
+<summary>RMS Value Demonstration MicroSim</summary>
+Type: microsim
+
+Purpose: Show why RMS relates to equivalent DC power dissipation
+
+Bloom Level: Understand (L2)
+Bloom Verb: explain
+
+Learning Objective: Students will explain why RMS voltage determines power delivery in AC circuits and calculate RMS from peak values.
+
+Instructional Rationale: Side-by-side AC and DC circuits showing equal power delivery makes the RMS concept tangible.
+
+Canvas layout:
+- Top left: AC circuit with sinusoidal source
+- Top right: DC circuit with RMS-equivalent source
+- Bottom: Power waveforms comparison
+
+Visual elements:
+- AC circuit: sinusoidal source, resistor, power waveform (always positive, double frequency)
+- DC circuit: DC source at Vrms, resistor, constant power line
+- Average power lines on both showing equality
+- Instantaneous and average power displayed
+
+Interactive controls:
+- Slider: Peak voltage (1V to 20V)
+- Slider: Resistance (100Ω to 10kΩ)
+- Display: Vrms calculated
+- Display: Average power (should match for both circuits)
+- Animation: Time-varying waveforms
+
+Default parameters:
+- Vpeak = 10V (Vrms = 7.07V)
+- R = 1kΩ
+
+Behavior:
+- AC power oscillates between 0 and Vpeak²/R
+- DC power is constant at Vrms²/R
+- Average AC power equals DC power (proof of RMS concept)
+- Shows P = V²/R calculation for both
+
+Implementation: p5.js with dual circuit animation
+</details>
+
+<h2 id="audio-frequency-fundamentals">Audio Frequency Fundamentals</h2>
+<p>Since this is a circuits course with audio emphasis, let's establish the frequency ranges we care about.</p>
+<h3 id="human-hearing-range">Human Hearing Range</h3>
+<p>The typical <strong>human hearing range</strong> is <strong>20 Hz to 20,000 Hz (20 kHz)</strong>. However:</p>
+<ul>
+<li>Young people may hear up to 22 kHz</li>
+<li>Hearing sensitivity decreases with age, especially at high frequencies</li>
+<li>A 50-year-old might have effective hearing only to 12-15 kHz</li>
+<li>We're most sensitive around 2-4 kHz (where speech information concentrates)</li>
+</ul>
+<h3 id="audio-frequency-range">Audio Frequency Range</h3>
+<p>The <strong>audio frequency range</strong> for professional audio extends slightly beyond human hearing:</p>
+<table>
+<thead>
+<tr>
+<th>Band</th>
+<th>Frequency Range</th>
+<th>Characteristics</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Sub-bass</td>
+<td>20-60 Hz</td>
+<td>Felt more than heard</td>
+</tr>
+<tr>
+<td>Bass</td>
+<td>60-250 Hz</td>
+<td>Kick drum, bass guitar fundamentals</td>
+</tr>
+<tr>
+<td>Low-mids</td>
+<td>250-500 Hz</td>
+<td>Body of instruments</td>
+</tr>
+<tr>
+<td>Mids</td>
+<td>500 Hz - 2 kHz</td>
+<td>Presence, clarity</td>
+</tr>
+<tr>
+<td>High-mids</td>
+<td>2-4 kHz</td>
+<td>Brilliance, speech clarity</td>
+</tr>
+<tr>
+<td>Highs</td>
+<td>4-10 kHz</td>
+<td>Sibilance, air</td>
+</tr>
+<tr>
+<td>Ultra-highs</td>
+<td>10-20 kHz</td>
+<td>Sparkle, harmonics</td>
+</tr>
+</tbody>
+</table>
+<h3 id="the-decibel-a-logarithmic-scale">The Decibel: A Logarithmic Scale</h3>
+<p>Audio engineers use <strong>decibels (dB)</strong> because:</p>
+<ol>
+<li>Human perception is roughly logarithmic</li>
+<li>The dynamic range of hearing spans about 120 dB (trillion-to-one power ratio)</li>
+<li>Cascaded gains and losses simply add in dB</li>
+</ol>
+<h4 id="decibel-definitions">Decibel Definitions</h4>
+<p>For power:</p>
+<p><span class="arithmatex">\(dB = 10 \log_{10}\left(\frac{P_2}{P_1}\right)\)</span></p>
+<p>For voltage (with equal impedances):</p>
+<p><span class="arithmatex">\(dB = 20 \log_{10}\left(\frac{V_2}{V_1}\right)\)</span></p>
+<p>where:</p>
+<ul>
+<li><span class="arithmatex">\(P_1, P_2\)</span> are power values</li>
+<li><span class="arithmatex">\(V_1, V_2\)</span> are voltage values</li>
+<li>The reference (<span class="arithmatex">\(P_1\)</span> or <span class="arithmatex">\(V_1\)</span>) depends on context</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>dB Change</th>
+<th>Power Ratio</th>
+<th>Voltage Ratio</th>
+<th>Perception</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>+3 dB</td>
+<td>2×</td>
+<td>1.41×</td>
+<td>Barely noticeable</td>
+</tr>
+<tr>
+<td>+6 dB</td>
+<td>4×</td>
+<td>2×</td>
+<td>Noticeable</td>
+</tr>
+<tr>
+<td>+10 dB</td>
+<td>10×</td>
+<td>3.16×</td>
+<td>Twice as loud</td>
+</tr>
+<tr>
+<td>+20 dB</td>
+<td>100×</td>
+<td>10×</td>
+<td>Much louder</td>
+</tr>
+<tr>
+<td>-3 dB</td>
+<td>0.5×</td>
+<td>0.71×</td>
+<td>Half power</td>
+</tr>
+<tr>
+<td>-6 dB</td>
+<td>0.25×</td>
+<td>0.5×</td>
+<td>Half voltage</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition tip">
+<p class="admonition-title">Quick dB Math</p>
+<p>Remember these:</p>
+<ul>
+<li><strong>+3 dB ≈ double power</strong> (or +1.41× voltage)</li>
+<li><strong>+6 dB = double voltage</strong> (or 4× power)</li>
+<li><strong>+10 dB ≈ double perceived loudness</strong></li>
+<li><strong>+20 dB = 10× voltage</strong> (or 100× power)</li>
+</ul>
+<p>You can combine these: +26 dB = +20 + 6 = 10× × 2× = 20× voltage</p>
+</div>
+<h4 id="diagram-decibel-scale-interactive">Diagram: Decibel Scale Interactive</h4>
+<iframe src="../../sims/decibel-scale/main.html" width="100%" height="400px" scrolling="no"></iframe>
+
+<details markdown="1">
+<summary>Decibel Scale Calculator MicroSim</summary>
+Type: microsim
+
+Purpose: Convert between linear ratios and decibels, with audio examples
+
+Bloom Level: Apply (L3)
+Bloom Verb: calculate
+
+Learning Objective: Students will calculate decibel values from voltage and power ratios and interpret common dB levels in audio contexts.
+
+Canvas layout:
+- Left (300px): Ratio to dB converter
+- Right (300px): dB scale with audio reference levels
+
+Visual elements:
+- Slider for linear ratio input
+- dB calculation display
+- Vertical dB scale with labeled reference points
+- Audio examples at each level (whisper, conversation, concert, etc.)
+
+Interactive controls:
+- Slider: Linear ratio (0.001 to 1000, log scale)
+- Radio: Voltage ratio or Power ratio
+- Display: Calculated dB value
+- Reverse calculator: Input dB, get ratio
+- Display: Audio SPL reference examples
+
+Default parameters:
+- Ratio = 2
+- Mode = voltage ratio
+- Result = +6 dB
+
+Behavior:
+- Real-time calculation both directions
+- Shows 10log vs 20log difference
+- Reference scale shows common audio levels
+- Color coding for dangerous SPL levels
+
+Implementation: p5.js with interactive calculator
+</details>
+
+<h2 id="practical-applications">Practical Applications</h2>
+<h3 id="application-1-bypass-capacitor-selection">Application 1: Bypass Capacitor Selection</h3>
+<p>Your microcontroller needs bypass capacitors to filter power supply noise. You need to filter frequencies from 1 MHz to 100 MHz.</p>
+<p><strong>Analysis</strong>: A single capacitor has a self-resonant frequency (SRF). Above SRF, it acts like an inductor! The solution: use multiple capacitors with different values:</p>
+<ul>
+<li>10 µF electrolytic: Good below 1 MHz</li>
+<li>100 nF ceramic: Good from 1-50 MHz</li>
+<li>10 nF ceramic: Good from 10-100 MHz</li>
+</ul>
+<p>The parallel combination covers the full frequency range.</p>
+<h3 id="application-2-audio-signal-levels">Application 2: Audio Signal Levels</h3>
+<p>You're connecting a microphone (output: -50 dBV) to an amplifier input that expects -10 dBV line level.</p>
+<p><strong>Needed gain</strong>: -10 dBV - (-50 dBV) = 40 dB</p>
+<p><strong>In voltage ratio</strong>: <span class="arithmatex">\(10^{40/20} = 100×\)</span></p>
+<p>Your preamplifier needs to provide 100× voltage gain to bring the microphone signal to line level.</p>
+<h3 id="application-3-inductor-energy-storage">Application 3: Inductor Energy Storage</h3>
+<p>A relay coil has L = 100 mH and carries 200 mA when energized. When the switch opens, where does the energy go?</p>
+<p><strong>Stored energy</strong>: <span class="arithmatex">\(E = \frac{1}{2}LI^2 = \frac{1}{2}(0.1)(0.2)^2 = 2 mJ\)</span></p>
+<p>Without protection, this energy creates a voltage spike as the current tries to maintain itself (<span class="arithmatex">\(V = L \frac{dI}{dt}\)</span>). Fast current collapse means high voltage—potentially hundreds of volts from a 12V supply! This is why relay drivers use flyback diodes.</p>
+<h2 id="summary-and-key-takeaways">Summary and Key Takeaways</h2>
+<p>You've now mastered the dynamic duo of energy storage components. Here's what you can do:</p>
+<p><strong>Capacitor Skills:</strong></p>
+<ul>
+<li>Calculate capacitance from physical parameters</li>
+<li>Combine capacitors in series (reciprocals) and parallel (direct sum)</li>
+<li>Determine stored energy from voltage</li>
+<li>Understand that capacitors block DC and oppose voltage changes</li>
+</ul>
+<p><strong>Inductor Skills:</strong></p>
+<ul>
+<li>Calculate stored energy from current</li>
+<li>Combine inductors in series (direct sum) and parallel (reciprocals)</li>
+<li>Understand mutual inductance and coupling coefficient</li>
+<li>Recognize that inductors block high-frequency AC and oppose current changes</li>
+</ul>
+<p><strong>Component Reality:</strong></p>
+<ul>
+<li>Real components have parasitic elements (ESR, ESL, etc.)</li>
+<li>Self-resonant frequency limits high-frequency performance</li>
+<li>Choose components based on application frequency and power requirements</li>
+</ul>
+<p><strong>Signal Parameters:</strong></p>
+<ul>
+<li>Amplitude, frequency, period, and phase describe sinusoids</li>
+<li>RMS relates to power (Vrms = Vpeak/√2 for sinusoids)</li>
+<li>Decibels are logarithmic (+6 dB = 2× voltage, +3 dB ≈ 2× power)</li>
+</ul>
+<p><strong>Key Formulas:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Formula</th>
+<th>Application</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="arithmatex">\(C = \varepsilon A/d\)</span></td>
+<td>Parallel plate capacitance</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(E_C = \frac{1}{2}CV^2\)</span></td>
+<td>Capacitor energy</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(E_L = \frac{1}{2}LI^2\)</span></td>
+<td>Inductor energy</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(I = C \frac{dV}{dt}\)</span></td>
+<td>Capacitor I-V relationship</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(V = L \frac{dI}{dt}\)</span></td>
+<td>Inductor V-I relationship</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(V_{RMS} = V_{peak}/\sqrt{2}\)</span></td>
+<td>RMS for sinusoids</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(dB = 20\log(V_2/V_1)\)</span></td>
+<td>Voltage ratio in decibels</td>
+</tr>
+</tbody>
+</table>
+<p>In the next chapter, we'll put these components to work and watch circuits evolve over time with transient analysis. Get ready to see exponentials everywhere!</p>
+<details class="question">
+<summary>Self-Check: Can You Answer These?</summary>
+<ol>
+<li>
+<p>A parallel plate capacitor has plates of 5 cm² separated by 0.5 mm with a polyester dielectric (εr = 3.2). Calculate the capacitance.</p>
+</li>
+<li>
+<p>Three capacitors (10 µF, 20 µF, 30 µF) are connected in series. What's the equivalent capacitance? Now connect them in parallel—what's the new equivalent?</p>
+</li>
+<li>
+<p>An inductor stores 50 mJ when carrying 500 mA. What is its inductance? How much energy would it store at 1A?</p>
+</li>
+<li>
+<p>A sinusoidal voltage has Vpeak = 170V and frequency = 60 Hz. Calculate: Vrms, period, and angular frequency.</p>
+</li>
+<li>
+<p>Your amplifier has a voltage gain of 35 dB. If the input is 10 mV, what's the output voltage?</p>
+</li>
+</ol>
+</details>
+
+
+
+
+
+
+
+  
+  
+
+
+
+  
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../04-dc-circuit-analysis/" class="md-footer__link md-footer__link--prev" aria-label="Previous: 4. DC Circuit Analysis">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                4. DC Circuit Analysis
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../06-transient-analysis-rc-rl/" class="md-footer__link md-footer__link--next" aria-label="Next: 6. Transient Analysis RC/RL">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                6. Transient Analysis RC/RL
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.copy", "navigation.expand", "navigation.path", "navigation.prune", "navigation.indexes", "toc.follow", "navigation.top", "navigation.footer", "content.action.edit"], "search": "../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.83f73b43.min.js"></script>
+      
+        <script src="../../js/extra.js"></script>
+      
+        <script src="../../js/katex.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+      
+    
+  </body>
+</html>

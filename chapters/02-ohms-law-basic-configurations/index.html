@@ -1,0 +1,3589 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Master Ohm's Law and learn to analyze series, parallel, and combined circuits">
+      
+      
+        <meta name="author" content="Dan McCreary">
+      
+      
+        <link rel="canonical" href="https://dmccreary.github.io/circuits/chapters/02-ohms-law-basic-configurations/">
+      
+      
+        <link rel="prev" href="../01-electric-charge-basic-quantities/">
+      
+      
+        <link rel="next" href="../03-kirchhoffs-laws-topology/">
+      
+      
+      <link rel="icon" href="../../img/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.43">
+    
+    
+      
+        <title>Ohm's Law and Basic Circuit Configurations - Circuits 1</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.0253249f.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../css/extra.css">
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+<script id="__analytics">function __md_analytics(){function e(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],e("js",new Date),e("config","G-9J4MVE6LWP"),document.addEventListener("DOMContentLoaded",(function(){document.forms.search&&document.forms.search.query.addEventListener("blur",(function(){this.value&&e("event","search",{search_term:this.value})}));document$.subscribe((function(){var t=document.forms.feedback;if(void 0!==t)for(var a of t.querySelectorAll("[type=submit]"))a.addEventListener("click",(function(a){a.preventDefault();var n=document.location.pathname,d=this.getAttribute("data-md-value");e("event","feedback",{page:n,data:d}),t.firstElementChild.disabled=!0;var r=t.querySelector(".md-feedback__note [data-md-value='"+d+"']");r&&(r.hidden=!1)})),t.hidden=!1})),location$.subscribe((function(t){e("config","G-9J4MVE6LWP",{page_path:t.pathname})}))}));var t=document.createElement("script");t.async=!0,t.src="https://www.googletagmanager.com/gtag/js?id=G-9J4MVE6LWP",document.getElementById("__analytics").insertAdjacentElement("afterEnd",t)}</script>
+  
+    <script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
+  
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="orange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#ohms-law-and-basic-circuit-configurations" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Circuits 1" class="md-header__button md-logo" aria-label="Circuits 1" data-md-component="logo">
+      
+  <img src="../../img/course-logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Circuits 1
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Ohm's Law and Basic Circuit Configurations
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/dmccreary/circuits" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub Repo
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Circuits 1" class="md-nav__button md-logo" aria-label="Circuits 1" data-md-component="logo">
+      
+  <img src="../../img/course-logo.png" alt="logo">
+
+    </a>
+    Circuits 1
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/dmccreary/circuits" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub Repo
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../about/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    About This Course
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+    
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Chapters
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Chapters
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-electric-charge-basic-quantities/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1. Electric Charge and Quantities
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    2. Ohm's Law and Configurations
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    2. Ohm's Law and Configurations
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      Summary
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#concepts-covered" class="md-nav__link">
+    <span class="md-ellipsis">
+      Concepts Covered
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prerequisites
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#introduction-the-secret-language-of-circuits" class="md-nav__link">
+    <span class="md-ellipsis">
+      Introduction: The Secret Language of Circuits
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-resistor-your-first-real-component" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Resistor: Your First Real Component
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Resistor: Your First Real Component">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#physical-construction" class="md-nav__link">
+    <span class="md-ellipsis">
+      Physical Construction
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Physical Construction">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-resistor-physical-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Resistor Physical Structure
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ohms-law-the-e-mc2-of-circuits" class="md-nav__link">
+    <span class="md-ellipsis">
+      Ohm's Law: The E = mc² of Circuits
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Ohm's Law: The E = mc² of Circuits">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ohms-law" class="md-nav__link">
+    <span class="md-ellipsis">
+      Ohm's Law
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-ohms-law-triangle" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Ohm's Law Triangle
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Ohm's Law Triangle">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-ohms-law-triangle" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Ohm's Law Triangle
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#applying-ohms-law-a-simple-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      Applying Ohm's Law: A Simple Example
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Applying Ohm's Law: A Simple Example">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-ohms-law-calculator" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Ohm's Law Calculator
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#power-in-resistive-circuits" class="md-nav__link">
+    <span class="md-ellipsis">
+      Power in Resistive Circuits
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Power in Resistive Circuits">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#power-equation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Power Equation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#power-in-terms-of-resistance" class="md-nav__link">
+    <span class="md-ellipsis">
+      Power in Terms of Resistance
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#component-power-rating" class="md-nav__link">
+    <span class="md-ellipsis">
+      Component Power Rating
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#component-derating" class="md-nav__link">
+    <span class="md-ellipsis">
+      Component Derating
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#resistor-color-codes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Resistor Color Codes
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Resistor Color Codes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-resistor-color-code-reader" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Resistor Color Code Reader
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#resistor-tolerance" class="md-nav__link">
+    <span class="md-ellipsis">
+      Resistor Tolerance
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#voltage-and-current-sources" class="md-nav__link">
+    <span class="md-ellipsis">
+      Voltage and Current Sources
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Voltage and Current Sources">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#voltage-source" class="md-nav__link">
+    <span class="md-ellipsis">
+      Voltage Source
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#current-source" class="md-nav__link">
+    <span class="md-ellipsis">
+      Current Source
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dependent-sources" class="md-nav__link">
+    <span class="md-ellipsis">
+      Dependent Sources
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#series-circuits-the-single-file-line" class="md-nav__link">
+    <span class="md-ellipsis">
+      Series Circuits: The Single-File Line
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Series Circuits: The Single-File Line">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#series-resistance-formula" class="md-nav__link">
+    <span class="md-ellipsis">
+      Series Resistance Formula
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#diagram-series-circuit-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Series Circuit Analysis
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#parallel-circuits-multiple-paths" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parallel Circuits: Multiple Paths
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parallel Circuits: Multiple Paths">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#parallel-resistance-formula" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parallel Resistance Formula
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#two-resistors-in-parallel" class="md-nav__link">
+    <span class="md-ellipsis">
+      Two Resistors in Parallel
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#diagram-parallel-circuit-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Parallel Circuit Analysis
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#series-parallel-circuits-the-real-world" class="md-nav__link">
+    <span class="md-ellipsis">
+      Series-Parallel Circuits: The Real World
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Series-Parallel Circuits: The Real World">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-series-parallel-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Series-Parallel Analysis
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-voltage-divider-a-circuit-youll-build-a-thousand-times" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Voltage Divider: A Circuit You'll Build a Thousand Times
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Voltage Divider: A Circuit You'll Build a Thousand Times">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#voltage-divider-formula" class="md-nav__link">
+    <span class="md-ellipsis">
+      Voltage Divider Formula
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#diagram-voltage-divider-calculator" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Voltage Divider Calculator
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#voltage-divider-loading-effect" class="md-nav__link">
+    <span class="md-ellipsis">
+      Voltage Divider Loading Effect
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-current-divider-sharing-the-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Current Divider: Sharing the Flow
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Current Divider: Sharing the Flow">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#current-divider-formula" class="md-nav__link">
+    <span class="md-ellipsis">
+      Current Divider Formula
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#energy-conservation-and-kirchhoffs-laws" class="md-nav__link">
+    <span class="md-ellipsis">
+      Energy Conservation and Kirchhoff's Laws
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Energy Conservation and Kirchhoff's Laws">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#kirchhoffs-voltage-law" class="md-nav__link">
+    <span class="md-ellipsis">
+      Kirchhoff's Voltage Law
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#linearity-the-gift-that-keeps-on-giving" class="md-nav__link">
+    <span class="md-ellipsis">
+      Linearity: The Gift That Keeps on Giving
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Linearity: The Gift That Keeps on Giving">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-linear-vs-nonlinear-behavior" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Linear vs Nonlinear Behavior
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#potentiometers-variable-resistance" class="md-nav__link">
+    <span class="md-ellipsis">
+      Potentiometers: Variable Resistance
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Potentiometers: Variable Resistance">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-potentiometer-as-voltage-divider" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Potentiometer as Voltage Divider
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#wire-resistance-the-overlooked-reality" class="md-nav__link">
+    <span class="md-ellipsis">
+      Wire Resistance: The Overlooked Reality
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Wire Resistance: The Overlooked Reality">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#wire-resistance-formula" class="md-nav__link">
+    <span class="md-ellipsis">
+      Wire Resistance Formula
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#putting-it-all-together-analysis-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      Putting It All Together: Analysis Example
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary-and-key-takeaways" class="md-nav__link">
+    <span class="md-ellipsis">
+      Summary and Key Takeaways
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-kirchhoffs-laws-topology/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3. Kirchhoff's Laws and Topology
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-dc-circuit-analysis/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4. DC Circuit Analysis
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-passive-components/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5. Passive Components
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-transient-analysis-rc-rl/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    6. Transient Analysis RC/RL
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-second-order-rlc-circuits/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    7. Second-Order RLC Circuits
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-ac-signals-sinusoidal/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    8. AC Signals and Sinusoids
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../09-phasors-complex-impedance/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    9. Phasors and Impedance
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10-ac-power-analysis/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    10. AC Power Analysis
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../11-frequency-response-bode/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    11. Frequency Response and Bode
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../12-filters-resonance/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    12. Filters and Resonance
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../13-operational-amplifiers/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    13. Operational Amplifiers
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../14-signals-audio-lab/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    14. Signal Analysis and Fourier
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../15-audio-applications/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    15. Audio Applications
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../16-laboratory-techniques/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    16. Laboratory Techniques
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../sims/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    MicroSims
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../sections/index.md" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Supplementary Sections
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../learning-graph/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Learning Graph
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../prompts/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Sample Prompts
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+          
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../faq/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    FAQ
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../glossary/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Glossary
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how-we-built-this-site/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    How We Built This Site
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../references/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    References
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../license/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    License
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contact/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Contact
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      Summary
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#concepts-covered" class="md-nav__link">
+    <span class="md-ellipsis">
+      Concepts Covered
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prerequisites
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#introduction-the-secret-language-of-circuits" class="md-nav__link">
+    <span class="md-ellipsis">
+      Introduction: The Secret Language of Circuits
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-resistor-your-first-real-component" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Resistor: Your First Real Component
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Resistor: Your First Real Component">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#physical-construction" class="md-nav__link">
+    <span class="md-ellipsis">
+      Physical Construction
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Physical Construction">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-resistor-physical-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Resistor Physical Structure
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ohms-law-the-e-mc2-of-circuits" class="md-nav__link">
+    <span class="md-ellipsis">
+      Ohm's Law: The E = mc² of Circuits
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Ohm's Law: The E = mc² of Circuits">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ohms-law" class="md-nav__link">
+    <span class="md-ellipsis">
+      Ohm's Law
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-ohms-law-triangle" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Ohm's Law Triangle
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Ohm's Law Triangle">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-ohms-law-triangle" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Ohm's Law Triangle
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#applying-ohms-law-a-simple-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      Applying Ohm's Law: A Simple Example
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Applying Ohm's Law: A Simple Example">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-ohms-law-calculator" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Ohm's Law Calculator
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#power-in-resistive-circuits" class="md-nav__link">
+    <span class="md-ellipsis">
+      Power in Resistive Circuits
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Power in Resistive Circuits">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#power-equation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Power Equation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#power-in-terms-of-resistance" class="md-nav__link">
+    <span class="md-ellipsis">
+      Power in Terms of Resistance
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#component-power-rating" class="md-nav__link">
+    <span class="md-ellipsis">
+      Component Power Rating
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#component-derating" class="md-nav__link">
+    <span class="md-ellipsis">
+      Component Derating
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#resistor-color-codes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Resistor Color Codes
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Resistor Color Codes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-resistor-color-code-reader" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Resistor Color Code Reader
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#resistor-tolerance" class="md-nav__link">
+    <span class="md-ellipsis">
+      Resistor Tolerance
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#voltage-and-current-sources" class="md-nav__link">
+    <span class="md-ellipsis">
+      Voltage and Current Sources
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Voltage and Current Sources">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#voltage-source" class="md-nav__link">
+    <span class="md-ellipsis">
+      Voltage Source
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#current-source" class="md-nav__link">
+    <span class="md-ellipsis">
+      Current Source
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dependent-sources" class="md-nav__link">
+    <span class="md-ellipsis">
+      Dependent Sources
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#series-circuits-the-single-file-line" class="md-nav__link">
+    <span class="md-ellipsis">
+      Series Circuits: The Single-File Line
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Series Circuits: The Single-File Line">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#series-resistance-formula" class="md-nav__link">
+    <span class="md-ellipsis">
+      Series Resistance Formula
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#diagram-series-circuit-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Series Circuit Analysis
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#parallel-circuits-multiple-paths" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parallel Circuits: Multiple Paths
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Parallel Circuits: Multiple Paths">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#parallel-resistance-formula" class="md-nav__link">
+    <span class="md-ellipsis">
+      Parallel Resistance Formula
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#two-resistors-in-parallel" class="md-nav__link">
+    <span class="md-ellipsis">
+      Two Resistors in Parallel
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#diagram-parallel-circuit-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Parallel Circuit Analysis
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#series-parallel-circuits-the-real-world" class="md-nav__link">
+    <span class="md-ellipsis">
+      Series-Parallel Circuits: The Real World
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Series-Parallel Circuits: The Real World">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-series-parallel-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Series-Parallel Analysis
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-voltage-divider-a-circuit-youll-build-a-thousand-times" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Voltage Divider: A Circuit You'll Build a Thousand Times
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Voltage Divider: A Circuit You'll Build a Thousand Times">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#voltage-divider-formula" class="md-nav__link">
+    <span class="md-ellipsis">
+      Voltage Divider Formula
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#diagram-voltage-divider-calculator" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Voltage Divider Calculator
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#voltage-divider-loading-effect" class="md-nav__link">
+    <span class="md-ellipsis">
+      Voltage Divider Loading Effect
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-current-divider-sharing-the-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Current Divider: Sharing the Flow
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Current Divider: Sharing the Flow">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#current-divider-formula" class="md-nav__link">
+    <span class="md-ellipsis">
+      Current Divider Formula
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#energy-conservation-and-kirchhoffs-laws" class="md-nav__link">
+    <span class="md-ellipsis">
+      Energy Conservation and Kirchhoff's Laws
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Energy Conservation and Kirchhoff's Laws">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#kirchhoffs-voltage-law" class="md-nav__link">
+    <span class="md-ellipsis">
+      Kirchhoff's Voltage Law
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#linearity-the-gift-that-keeps-on-giving" class="md-nav__link">
+    <span class="md-ellipsis">
+      Linearity: The Gift That Keeps on Giving
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Linearity: The Gift That Keeps on Giving">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-linear-vs-nonlinear-behavior" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Linear vs Nonlinear Behavior
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#potentiometers-variable-resistance" class="md-nav__link">
+    <span class="md-ellipsis">
+      Potentiometers: Variable Resistance
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Potentiometers: Variable Resistance">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-potentiometer-as-voltage-divider" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Potentiometer as Voltage Divider
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#wire-resistance-the-overlooked-reality" class="md-nav__link">
+    <span class="md-ellipsis">
+      Wire Resistance: The Overlooked Reality
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Wire Resistance: The Overlooked Reality">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#wire-resistance-formula" class="md-nav__link">
+    <span class="md-ellipsis">
+      Wire Resistance Formula
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#putting-it-all-together-analysis-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      Putting It All Together: Analysis Example
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary-and-key-takeaways" class="md-nav__link">
+    <span class="md-ellipsis">
+      Summary and Key Takeaways
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+    <a href="https://github.com/dmccreary/circuits/blob/master/docs/chapters/02-ohms-law-basic-configurations/index.md" title="Edit this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+
+
+<h1 id="ohms-law-and-basic-circuit-configurations">Ohm's Law and Basic Circuit Configurations</h1>
+<h2 id="summary">Summary</h2>
+<p>This chapter covers Ohm's Law, the fundamental relationship between voltage, current, and resistance, and introduces the basic circuit configurations used throughout electrical engineering. Students will learn about voltage and current sources, series and parallel circuit arrangements, and how to use voltage and current dividers to analyze circuits. The chapter also introduces resistor properties including color codes, tolerance, and power ratings. After completing this chapter, students will be able to analyze simple resistive circuits and select appropriate components for basic applications.</p>
+<h2 id="concepts-covered">Concepts Covered</h2>
+<p>This chapter covers the following 18 concepts from the learning graph:</p>
+<ol>
+<li>Ohm's Law</li>
+<li>Voltage Source</li>
+<li>Current Source</li>
+<li>Dependent Sources</li>
+<li>Series Circuits</li>
+<li>Parallel Circuits</li>
+<li>Series-Parallel Circuits</li>
+<li>Voltage Divider</li>
+<li>Current Divider</li>
+<li>Energy Conservation</li>
+<li>Linearity</li>
+<li>Resistor</li>
+<li>Resistor Color Code</li>
+<li>Resistor Tolerance</li>
+<li>Potentiometer</li>
+<li>Wire Resistance</li>
+<li>Component Power Rating</li>
+<li>Component Derating</li>
+</ol>
+<h2 id="prerequisites">Prerequisites</h2>
+<p>This chapter builds on concepts from:</p>
+<ul>
+<li><a href="../01-electric-charge-basic-quantities/">Chapter 1: Electric Charge and Basic Circuit Quantities</a></li>
+</ul>
+<hr />
+<h2 id="introduction-the-secret-language-of-circuits">Introduction: The Secret Language of Circuits</h2>
+<p>Welcome to the chapter that unlocks your first real superpower in electrical engineering. If Chapter 1 was about learning the alphabet—voltage, current, charge—then this chapter teaches you to speak in complete sentences. And the most important sentence you'll ever learn? <strong>Ohm's Law</strong>.</p>
+<p>Here's a secret that practicing engineers won't always admit: about 80% of circuit analysis boils down to applying Ohm's Law creatively. Master this chapter, and you'll suddenly be able to look at a circuit schematic and <em>understand</em> what it's doing. That's not just useful—it's genuinely cool. You'll start seeing circuits everywhere: in your phone charger, your headphones, even in the humble LED indicator light on your laptop.</p>
+<p>Let's dive in. Fair warning: there will be puns. Resistance is futile.</p>
+<h2 id="the-resistor-your-first-real-component">The Resistor: Your First Real Component</h2>
+<p>Before we can talk about Ohm's Law, we need to understand the humble <strong>resistor</strong>—the most common component in electronics. Every circuit you'll ever build will probably have at least one.</p>
+<p>A resistor is a component that opposes the flow of electric current. Think of it like a narrow section in a water pipe: water (current) can still flow through, but the narrow section (resistance) limits how much can pass for a given pressure (voltage).</p>
+<p>Resistors serve several critical functions:</p>
+<ul>
+<li>Limiting current to protect sensitive components</li>
+<li>Dividing voltage to create reference levels</li>
+<li>Converting electrical energy to heat (sometimes intentionally!)</li>
+<li>Setting operating points in amplifier circuits</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Symbol</th>
+<th>Unit</th>
+<th>Typical Range</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Resistance</td>
+<td>R</td>
+<td>Ohms (Ω)</td>
+<td>0.1Ω to 10MΩ</td>
+</tr>
+<tr>
+<td>Power Rating</td>
+<td>P</td>
+<td>Watts (W)</td>
+<td>0.125W to 2W (common)</td>
+</tr>
+<tr>
+<td>Tolerance</td>
+<td>-</td>
+<td>Percent (%)</td>
+<td>±1% to ±10%</td>
+</tr>
+<tr>
+<td>Temperature Coefficient</td>
+<td>TC</td>
+<td>ppm/°C</td>
+<td>±50 to ±200</td>
+</tr>
+</tbody>
+</table>
+<h3 id="physical-construction">Physical Construction</h3>
+<p>Real resistors come in various forms, but the most common type you'll encounter in lab is the <strong>carbon film</strong> or <strong>metal film</strong> resistor. These cylindrical components have colored bands that encode their resistance value—a system we'll decode shortly.</p>
+<h4 id="diagram-resistor-physical-structure">Diagram: Resistor Physical Structure</h4>
+<iframe src="../../sims/resistor-physical-structure/main.html" width="100%" height="400px" scrolling="no"></iframe>
+
+<details markdown="1">
+<summary>Resistor Physical Structure Diagram</summary>
+Type: diagram
+
+Purpose: Show the internal construction of a through-hole resistor
+
+Bloom Level: Remember (L1)
+Bloom Verb: identify
+
+Learning Objective: Students will identify the physical parts of a resistor and understand how construction affects performance.
+
+Components to show:
+- Ceramic or fiberglass core (cylindrical, center)
+- Resistive element layer (carbon or metal film wrapped around core)
+- End caps with leads (metal connections at each end)
+- Protective coating (outer epoxy layer)
+- Color bands (4-5 bands showing value encoding)
+
+Visual style: Cross-section cutaway view showing internal layers
+
+Labels:
+- "Ceramic Core" pointing to center
+- "Resistive Film" pointing to the wrapped layer
+- "End Caps" pointing to metal connections
+- "Color Bands" pointing to surface markings
+- "Leads" pointing to wire extensions
+
+Color scheme:
+- Tan/beige for ceramic core
+- Dark gray for resistive film
+- Silver for end caps
+- Various colors for bands
+
+Interactive features:
+- Hover over each layer to see description and function
+
+Implementation: p5.js with layered drawing and hover detection
+</details>
+
+<h2 id="ohms-law-the-e-mc2-of-circuits">Ohm's Law: The E = mc² of Circuits</h2>
+<p>If physics has <span class="arithmatex">\(E = mc^2\)</span>, then electrical engineering has Ohm's Law. It's equally fundamental, considerably more practical for everyday use, and thankfully much easier to derive.</p>
+<p>Georg Simon Ohm discovered this relationship in 1827, and engineers have been grateful ever since. (Students taking their first circuits exam, perhaps less so.)</p>
+<h4 id="ohms-law">Ohm's Law</h4>
+<p><span class="arithmatex">\(V = I \cdot R\)</span></p>
+<p>where:</p>
+<ul>
+<li><span class="arithmatex">\(V\)</span> is the voltage across the resistor (in volts, V)</li>
+<li><span class="arithmatex">\(I\)</span> is the current through the resistor (in amperes, A)</li>
+<li><span class="arithmatex">\(R\)</span> is the resistance (in ohms, Ω)</li>
+</ul>
+<p>This deceptively simple equation tells us that voltage and current are directly proportional when resistance is constant. Double the voltage? Double the current. It's beautifully linear—and that linearity is a gift that keeps on giving throughout circuit analysis.</p>
+<div class="admonition tip">
+<p class="admonition-title">The Three Forms of Ohm's Law</p>
+<p>Ohm's Law can be rearranged to solve for any variable:</p>
+<ul>
+<li><span class="arithmatex">\(V = I \cdot R\)</span> (find voltage)</li>
+<li><span class="arithmatex">\(I = V / R\)</span> (find current)</li>
+<li><span class="arithmatex">\(R = V / I\)</span> (find resistance)</li>
+</ul>
+<p>Memorize all three forms. You'll use them constantly.</p>
+</div>
+<h3 id="the-ohms-law-triangle">The Ohm's Law Triangle</h3>
+<p>Many students find the "Ohm's Law Triangle" helpful for remembering the three forms. Cover the variable you want to find, and the remaining two show you the formula.</p>
+<h4 id="diagram-ohms-law-triangle">Diagram: Ohm's Law Triangle</h4>
+<iframe src="../../sims/ohms-law-triangle/main.html" width="100%" height="350px" scrolling="no"></iframe>
+
+<details markdown="1">
+<summary>Ohm's Law Triangle Interactive</summary>
+Type: microsim
+
+Purpose: Help students quickly recall all three forms of Ohm's Law
+
+Bloom Level: Remember (L1)
+Bloom Verb: recall
+
+Learning Objective: Students will recall all three forms of Ohm's Law and use the triangle as a mnemonic device.
+
+Instructional Rationale: The triangle mnemonic provides a visual memory aid. Clicking to "cover" variables reinforces the relationship between the three forms through active recall practice.
+
+Canvas layout:
+- Drawing area: 400x250 for triangle visualization
+- Control area: 100px height for instructions
+
+Visual elements:
+- Large triangle divided into top section (V) and bottom two sections (I and R)
+- V in top section
+- I and R in bottom sections, separated by multiplication symbol
+- Horizontal line separates V from I×R (represents division)
+
+Interactive controls:
+- Click on V: highlights V, shows formula V = I × R
+- Click on I: highlights I, shows formula I = V / R
+- Click on R: highlights R, shows formula R = V / I
+- Each click displays the corresponding formula prominently
+
+Default state: All three visible, no formula displayed
+
+Behavior:
+- Clicking a variable "covers" it visually (dims or hides)
+- The resulting formula appears below the triangle
+- Reset after 3 seconds or when another variable is clicked
+
+Implementation: p5.js with click detection on triangle regions
+</details>
+
+<h3 id="applying-ohms-law-a-simple-example">Applying Ohm's Law: A Simple Example</h3>
+<p>Let's put this to work immediately. Suppose you have a 9V battery connected to a 1000Ω (1kΩ) resistor. How much current flows?</p>
+<p>Using Ohm's Law:</p>
+<p><span class="arithmatex">\(I = \frac{V}{R} = \frac{9V}{1000Ω} = 0.009A = 9mA\)</span></p>
+<p>Nine milliamps. That's enough current to light an LED, run a small sensor, or give you a really disappointing shock if you touched both terminals (don't do that—it's bad practice and won't even be exciting).</p>
+<h4 id="diagram-ohms-law-calculator">Diagram: Ohm's Law Calculator</h4>
+<iframe src="../../sims/ohms-law-calculator/main.html" width="100%" height="450px" scrolling="no"></iframe>
+
+<details markdown="1">
+<summary>Ohm's Law Calculator MicroSim</summary>
+Type: microsim
+
+Purpose: Allow students to experiment with different voltage and resistance values to see resulting current
+
+Bloom Level: Apply (L3)
+Bloom Verb: calculate
+
+Learning Objective: Students will apply Ohm's Law to calculate current, voltage, or resistance given the other two quantities.
+
+Instructional Rationale: Parameter exploration with immediate visual feedback helps students develop intuition for the relationships between V, I, and R. Seeing the formula update in real-time reinforces the mathematical relationship.
+
+Canvas layout:
+- Top section (300px): Circuit diagram with battery, resistor, and ammeter
+- Middle section (100px): Calculation display showing V = I × R with current values
+- Bottom section (100px): Slider controls
+
+Visual elements:
+- Simple circuit schematic with battery (left), resistor (top), ammeter (right)
+- Animated current flow (small dots moving through circuit)
+- Digital displays showing V, I, and R values
+- Speed of animated dots proportional to current
+
+Interactive controls:
+- Slider: Voltage (1V to 24V, default 9V)
+- Slider: Resistance (100Ω to 10kΩ, logarithmic scale, default 1kΩ)
+- Display: Calculated current with appropriate units (mA or A)
+
+Default parameters:
+- Voltage: 9V
+- Resistance: 1000Ω
+- Initial state: Animation stopped
+
+Behavior:
+- Current updates instantly as sliders change
+- Animation speed reflects relative current magnitude
+- Formula display shows actual calculation: "9V ÷ 1000Ω = 9mA"
+- Warning indicator if current exceeds 1A (getting into power territory)
+
+Implementation: p5.js with sliders and animated circuit visualization
+</details>
+
+<h2 id="power-in-resistive-circuits">Power in Resistive Circuits</h2>
+<p>Current flowing through a resistor converts electrical energy into heat. The rate of this energy conversion is <strong>power</strong>, measured in watts (W). This matters because resistors have power ratings—exceed them, and you'll get a dramatic (and smoky) demonstration of why specifications exist.</p>
+<h4 id="power-equation">Power Equation</h4>
+<p><span class="arithmatex">\(P = V \cdot I\)</span></p>
+<p>where:</p>
+<ul>
+<li><span class="arithmatex">\(P\)</span> is the power dissipated (in watts, W)</li>
+<li><span class="arithmatex">\(V\)</span> is the voltage across the resistor (in volts, V)</li>
+<li><span class="arithmatex">\(I\)</span> is the current through the resistor (in amperes, A)</li>
+</ul>
+<p>By combining this with Ohm's Law, we get two more useful forms:</p>
+<h4 id="power-in-terms-of-resistance">Power in Terms of Resistance</h4>
+<p><span class="arithmatex">\(P = I^2 \cdot R = \frac{V^2}{R}\)</span></p>
+<p>where:</p>
+<ul>
+<li><span class="arithmatex">\(P\)</span> is power in watts</li>
+<li><span class="arithmatex">\(I\)</span> is current in amperes</li>
+<li><span class="arithmatex">\(V\)</span> is voltage in volts</li>
+<li><span class="arithmatex">\(R\)</span> is resistance in ohms</li>
+</ul>
+<p>These three power formulas are your friends. The form you choose depends on what quantities you know.</p>
+<table>
+<thead>
+<tr>
+<th>Known Quantities</th>
+<th>Formula to Use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>V and I</td>
+<td><span class="arithmatex">\(P = V \cdot I\)</span></td>
+</tr>
+<tr>
+<td>I and R</td>
+<td><span class="arithmatex">\(P = I^2 \cdot R\)</span></td>
+</tr>
+<tr>
+<td>V and R</td>
+<td><span class="arithmatex">\(P = V^2 / R\)</span></td>
+</tr>
+</tbody>
+</table>
+<h3 id="component-power-rating">Component Power Rating</h3>
+<p>Every resistor has a <strong>power rating</strong>—the maximum power it can safely dissipate without damage. Common values are 1/8W, 1/4W, 1/2W, and 1W for through-hole resistors.</p>
+<p>Here's the thing: a resistor doesn't "know" its power rating. It will happily try to dissipate whatever power you throw at it. Exceed the rating, and the resistor heats up. Keep exceeding it, and you'll see discoloration, smell burning, and eventually witness component failure. (In lab, this is embarrassing. In a product, it's a lawsuit.)</p>
+<h3 id="component-derating">Component Derating</h3>
+<p>Smart engineers don't run components at their maximum ratings. <strong>Derating</strong> means operating a component below its maximum specifications to improve reliability and lifespan.</p>
+<p>A common rule of thumb: derate power components to 50-70% of their rated maximum. If your calculation shows 0.4W dissipation, use a 1W resistor, not a 1/2W unit that's right at the edge.</p>
+<p>Why bother?</p>
+<ul>
+<li>Temperature affects resistance (more on this in later chapters)</li>
+<li>Components age faster under stress</li>
+<li>Manufacturing tolerances mean your "1/2W" resistor might actually be slightly less capable</li>
+<li>Ambient temperature in your enclosure may be higher than bench conditions</li>
+</ul>
+<h2 id="resistor-color-codes">Resistor Color Codes</h2>
+<p>Those colored bands on resistors aren't decorative—they encode the resistance value. Learning to read them is like learning a secret language, except the secret is just "how many ohms."</p>
+<p>The standard color code uses position and color to represent digits and multipliers:</p>
+<table>
+<thead>
+<tr>
+<th>Color</th>
+<th>Digit</th>
+<th>Multiplier</th>
+<th>Tolerance</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Black</td>
+<td>0</td>
+<td>×1</td>
+<td>-</td>
+</tr>
+<tr>
+<td>Brown</td>
+<td>1</td>
+<td>×10</td>
+<td>±1%</td>
+</tr>
+<tr>
+<td>Red</td>
+<td>2</td>
+<td>×100</td>
+<td>±2%</td>
+</tr>
+<tr>
+<td>Orange</td>
+<td>3</td>
+<td>×1k</td>
+<td>-</td>
+</tr>
+<tr>
+<td>Yellow</td>
+<td>4</td>
+<td>×10k</td>
+<td>-</td>
+</tr>
+<tr>
+<td>Green</td>
+<td>5</td>
+<td>×100k</td>
+<td>±0.5%</td>
+</tr>
+<tr>
+<td>Blue</td>
+<td>6</td>
+<td>×1M</td>
+<td>±0.25%</td>
+</tr>
+<tr>
+<td>Violet</td>
+<td>7</td>
+<td>×10M</td>
+<td>±0.1%</td>
+</tr>
+<tr>
+<td>Gray</td>
+<td>8</td>
+<td>-</td>
+<td>±0.05%</td>
+</tr>
+<tr>
+<td>White</td>
+<td>9</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>Gold</td>
+<td>-</td>
+<td>×0.1</td>
+<td>±5%</td>
+</tr>
+<tr>
+<td>Silver</td>
+<td>-</td>
+<td>×0.01</td>
+<td>±10%</td>
+</tr>
+</tbody>
+</table>
+<p><strong>For a 4-band resistor:</strong>
+- Band 1: First digit
+- Band 2: Second digit
+- Band 3: Multiplier
+- Band 4: Tolerance</p>
+<div class="admonition note">
+<p class="admonition-title">Mnemonic Alert</p>
+<p>Need to remember the color order? "<strong>B</strong>ad <strong>B</strong>eer <strong>R</strong>ots <strong>O</strong>ur <strong>Y</strong>oung <strong>G</strong>uts <strong>B</strong>ut <strong>V</strong>odka <strong>G</strong>oes <strong>W</strong>ell" gives you Black, Brown, Red, Orange, Yellow, Green, Blue, Violet, Gray, White. Yes, it's a bit dark. That's engineering humor for you.</p>
+</div>
+<h4 id="diagram-resistor-color-code-reader">Diagram: Resistor Color Code Reader</h4>
+<iframe src="../../sims/resistor-color-code/main.html" width="100%" height="500px" scrolling="no"></iframe>
+
+<details markdown="1">
+<summary>Resistor Color Code Interactive</summary>
+Type: microsim
+
+Purpose: Teach students to read and decode resistor color bands
+
+Bloom Level: Apply (L3)
+Bloom Verb: use
+
+Learning Objective: Students will use the resistor color code to determine resistance values from band colors, and select appropriate band colors for a desired resistance.
+
+Instructional Rationale: Interactive practice with immediate feedback is more effective than memorization tables. The bidirectional nature (colors→value and value→colors) reinforces understanding.
+
+Canvas layout:
+- Top section (200px): Large resistor image with selectable color bands
+- Middle section (100px): Decoded value display and calculation breakdown
+- Bottom section (150px): Color selection palette and mode toggle
+
+Visual elements:
+- Large horizontal resistor body (beige/tan)
+- Four or five clickable color band regions
+- Color palette showing all possible band colors
+- Formula breakdown: "X Y × 10^Z = Value"
+
+Interactive controls:
+- Click on band position to select it
+- Click on color in palette to apply to selected band
+- Toggle: 4-band vs 5-band mode
+- Display: Calculated resistance with tolerance range
+- Button: "Random" generates a random valid resistor for practice
+- Button: "Quiz Mode" hides the calculated value until user submits answer
+
+Default parameters:
+- 4-band mode
+- Brown-Black-Red-Gold (1kΩ ±5%)
+
+Behavior:
+- Clicking a band highlights it
+- Selecting a color updates that band
+- Resistance value updates in real-time
+- Invalid combinations (like gold as digit 1) are prevented
+- Shows tolerance range: "1kΩ ±5% (950Ω to 1050Ω)"
+
+Implementation: p5.js with click regions and color selection
+</details>
+
+<h3 id="resistor-tolerance">Resistor Tolerance</h3>
+<p>No resistor is perfect. Manufacturing processes introduce small variations, so a "1kΩ resistor" might actually measure 980Ω or 1015Ω. The <strong>tolerance</strong> specification tells you the expected range.</p>
+<p>A 1kΩ resistor with ±5% tolerance (gold band) will be somewhere between 950Ω and 1050Ω. For most applications, this is fine. For precision circuits (like measurement equipment or audio filters), you'll want ±1% (brown band) or better.</p>
+<p>Here's the practical impact: if you're designing a circuit where the exact resistance matters, either specify tight-tolerance resistors or design your circuit to be insensitive to component variations. The second approach is often wiser—and cheaper.</p>
+<h2 id="voltage-and-current-sources">Voltage and Current Sources</h2>
+<p>Circuits need something to drive current flow. That's where <strong>sources</strong> come in. We have two ideal types: voltage sources and current sources.</p>
+<h3 id="voltage-source">Voltage Source</h3>
+<p>An ideal <strong>voltage source</strong> maintains a constant voltage across its terminals regardless of the current drawn. Real-world examples include batteries (approximately) and regulated power supplies.</p>
+<p>Schematic symbols for voltage sources:</p>
+<ul>
+<li><strong>Battery</strong>: Long and short parallel lines (long line is positive)</li>
+<li><strong>DC source</strong>: Circle with + and - labels</li>
+<li><strong>AC source</strong>: Circle with sine wave inside</li>
+</ul>
+<p>The ideal voltage source is a mathematical convenience—real batteries have internal resistance that causes their terminal voltage to drop under load. But for many calculations, treating a battery as ideal is close enough.</p>
+<h3 id="current-source">Current Source</h3>
+<p>An ideal <strong>current source</strong> maintains a constant current through itself regardless of the voltage across it. These are less intuitive than voltage sources because we don't encounter obvious examples in daily life.</p>
+<p>Real current sources exist in electronics—certain transistor configurations behave as current sources—and they're essential for understanding amplifier biasing and many other circuits.</p>
+<p>The schematic symbol is a circle with an arrow indicating current direction.</p>
+<table>
+<thead>
+<tr>
+<th>Source Type</th>
+<th>Symbol</th>
+<th>Maintains Constant</th>
+<th>Varies With Load</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Ideal Voltage Source</td>
+<td>Circle with +/-</td>
+<td>Voltage</td>
+<td>Current</td>
+</tr>
+<tr>
+<td>Ideal Current Source</td>
+<td>Circle with arrow</td>
+<td>Current</td>
+<td>Voltage</td>
+</tr>
+</tbody>
+</table>
+<h3 id="dependent-sources">Dependent Sources</h3>
+<p><strong>Dependent sources</strong> (also called controlled sources) have their output determined by a voltage or current elsewhere in the circuit. These become critical when we study amplifiers and transistors later.</p>
+<p>There are four types:</p>
+<ul>
+<li><strong>VCVS</strong>: Voltage-Controlled Voltage Source</li>
+<li><strong>VCCS</strong>: Voltage-Controlled Current Source</li>
+<li><strong>CCVS</strong>: Current-Controlled Voltage Source</li>
+<li><strong>CCCS</strong>: Current-Controlled Current Source</li>
+</ul>
+<p>Dependent sources are drawn as diamond shapes to distinguish them from independent sources. For now, just know they exist—we'll explore them deeply when we hit transistor chapters.</p>
+<h2 id="series-circuits-the-single-file-line">Series Circuits: The Single-File Line</h2>
+<p>When components are connected end-to-end, forming a single path for current, we call it a <strong>series circuit</strong>. Think of it like a single-lane road: all the cars (charges) must pass through every toll booth (component) along the way.</p>
+<p>Key properties of series circuits:</p>
+<ul>
+<li><strong>Same current</strong> flows through every component</li>
+<li><strong>Voltages add up</strong> to equal the source voltage</li>
+<li><strong>Resistances add directly</strong></li>
+</ul>
+<h4 id="series-resistance-formula">Series Resistance Formula</h4>
+<p><span class="arithmatex">\(R_{total} = R_1 + R_2 + R_3 + ... + R_n\)</span></p>
+<p>where:</p>
+<ul>
+<li><span class="arithmatex">\(R_{total}\)</span> is the equivalent total resistance</li>
+<li><span class="arithmatex">\(R_1, R_2, ... R_n\)</span> are individual resistor values</li>
+</ul>
+<p>This makes intuitive sense: put two equal resistors in series, and you've doubled the obstacle course for current. The total resistance is always larger than any individual resistor.</p>
+<h4 id="diagram-series-circuit-analysis">Diagram: Series Circuit Analysis</h4>
+<iframe src="../../sims/series-circuit/main.html" width="100%" height="500px" scrolling="no"></iframe>
+
+<details markdown="1">
+<summary>Series Circuit MicroSim</summary>
+Type: microsim
+
+Purpose: Demonstrate current continuity and voltage division in series circuits
+
+Bloom Level: Understand (L2)
+Bloom Verb: explain
+
+Learning Objective: Students will explain how current remains constant throughout a series circuit while voltage divides across components proportionally to their resistance.
+
+Instructional Rationale: Step-through analysis with concrete values helps students trace current and voltage through each component, building understanding of series circuit behavior before abstract formula manipulation.
+
+Data Visibility Requirements:
+- Stage 1: Show source voltage and resistor values
+- Stage 2: Show total resistance calculation
+- Stage 3: Show current calculation using Ohm's Law
+- Stage 4: Show voltage across each resistor
+- Stage 5: Verify KVL (voltages sum to source)
+
+Canvas layout:
+- Left section (400px): Circuit schematic with three series resistors
+- Right section (200px): Calculation panel showing values
+
+Visual elements:
+- Battery/voltage source at left
+- Three resistors in series loop (R1, R2, R3)
+- Animated current flow (dots moving through circuit)
+- Voltage labels across each component
+- Ammeter symbol showing current value
+
+Interactive controls:
+- Slider: Source voltage (1V to 20V, default 12V)
+- Slider: R1 value (100Ω to 2kΩ, default 1kΩ)
+- Slider: R2 value (100Ω to 2kΩ, default 2kΩ)
+- Slider: R3 value (100Ω to 2kΩ, default 1kΩ)
+- Button: Step through analysis
+- Checkbox: Show current animation
+
+Default parameters:
+- Vs = 12V
+- R1 = 1kΩ, R2 = 2kΩ, R3 = 1kΩ
+- Animation off initially
+
+Behavior:
+- Total resistance updates: R_total = R1 + R2 + R3
+- Current calculates: I = Vs / R_total
+- Individual voltages calculate: V1 = I×R1, V2 = I×R2, V3 = I×R3
+- KVL verification shows V1 + V2 + V3 = Vs
+- Animation speed proportional to current magnitude
+
+Implementation: p5.js with animated circuit and step-through controls
+</details>
+
+<h2 id="parallel-circuits-multiple-paths">Parallel Circuits: Multiple Paths</h2>
+<p>When components connect across the same two nodes, sharing the same voltage, they're in <strong>parallel</strong>. Think of parallel lanes on a highway: traffic (current) divides among them, but they all connect the same two points.</p>
+<p>Key properties of parallel circuits:</p>
+<ul>
+<li><strong>Same voltage</strong> appears across every component</li>
+<li><strong>Currents add up</strong> to equal the total current from the source</li>
+<li><strong>Resistances combine reciprocally</strong> (the formula looks weird but makes sense)</li>
+</ul>
+<h4 id="parallel-resistance-formula">Parallel Resistance Formula</h4>
+<p><span class="arithmatex">\(\frac{1}{R_{total}} = \frac{1}{R_1} + \frac{1}{R_2} + \frac{1}{R_3} + ... + \frac{1}{R_n}\)</span></p>
+<p>where:</p>
+<ul>
+<li><span class="arithmatex">\(R_{total}\)</span> is the equivalent total resistance</li>
+<li><span class="arithmatex">\(R_1, R_2, ... R_n\)</span> are individual resistor values</li>
+</ul>
+<p>For two resistors in parallel, there's a simpler formula:</p>
+<h4 id="two-resistors-in-parallel">Two Resistors in Parallel</h4>
+<p><span class="arithmatex">\(R_{total} = \frac{R_1 \cdot R_2}{R_1 + R_2}\)</span></p>
+<p>This is often called the "product over sum" formula. Memorize it—you'll use it constantly.</p>
+<p>A key insight: <strong>the total resistance of a parallel combination is always less than the smallest individual resistor</strong>. Adding more parallel paths makes it easier for current to flow, reducing the overall resistance.</p>
+<h4 id="diagram-parallel-circuit-analysis">Diagram: Parallel Circuit Analysis</h4>
+<iframe src="../../sims/parallel-circuit/main.html" width="100%" height="500px" scrolling="no"></iframe>
+
+<details markdown="1">
+<summary>Parallel Circuit MicroSim</summary>
+Type: microsim
+
+Purpose: Demonstrate voltage equality and current division in parallel circuits
+
+Bloom Level: Understand (L2)
+Bloom Verb: explain
+
+Learning Objective: Students will explain how voltage remains equal across all branches of a parallel circuit while current divides inversely proportional to resistance.
+
+Instructional Rationale: Visualization of current splitting at nodes helps students understand why more current flows through lower resistance paths, connecting to physical intuition about "easier paths."
+
+Data Visibility Requirements:
+- Stage 1: Show source voltage and resistor values
+- Stage 2: Show each branch current calculation
+- Stage 3: Show total current (sum of branches)
+- Stage 4: Show equivalent resistance calculation
+- Stage 5: Verify total current = Vs / R_eq
+
+Canvas layout:
+- Left section (400px): Circuit schematic with three parallel resistors
+- Right section (200px): Calculation panel
+
+Visual elements:
+- Battery/voltage source on left
+- Three parallel resistor branches
+- Animated current flow showing branching at nodes
+- Current labels on each branch
+- Common voltage labeled across each resistor
+
+Interactive controls:
+- Slider: Source voltage (1V to 20V, default 12V)
+- Slider: R1 value (500Ω to 5kΩ, default 1kΩ)
+- Slider: R2 value (500Ω to 5kΩ, default 2kΩ)
+- Slider: R3 value (500Ω to 5kΩ, default 3kΩ)
+- Checkbox: Show current animation
+- Display: Equivalent resistance
+
+Default parameters:
+- Vs = 12V
+- R1 = 1kΩ, R2 = 2kΩ, R3 = 3kΩ
+
+Behavior:
+- Branch currents: I1 = Vs/R1, I2 = Vs/R2, I3 = Vs/R3
+- Total current: I_total = I1 + I2 + I3
+- Equivalent resistance calculated and displayed
+- Animation shows current splitting proportionally at nodes
+- Thicker animated paths for higher current branches
+
+Implementation: p5.js with branching current animation
+</details>
+
+<h2 id="series-parallel-circuits-the-real-world">Series-Parallel Circuits: The Real World</h2>
+<p>Most practical circuits aren't purely series or purely parallel—they're combinations. Analyzing these <strong>series-parallel circuits</strong> requires breaking them down systematically.</p>
+<p>The strategy:</p>
+<ol>
+<li>Identify groups of resistors that are purely in series or purely in parallel</li>
+<li>Replace each group with its equivalent resistance</li>
+<li>Repeat until you have a single equivalent resistance</li>
+<li>Work backward to find individual voltages and currents</li>
+</ol>
+<p>This is like simplifying a complex fraction: you work from the inside out, reducing the complexity step by step.</p>
+<h4 id="diagram-series-parallel-analysis">Diagram: Series-Parallel Analysis</h4>
+<iframe src="../../sims/series-parallel-circuit/main.html" width="100%" height="550px" scrolling="no"></iframe>
+
+<details markdown="1">
+<summary>Series-Parallel Circuit Analysis MicroSim</summary>
+Type: microsim
+
+Purpose: Guide students through systematic analysis of combined series-parallel circuits
+
+Bloom Level: Analyze (L4)
+Bloom Verb: examine
+
+Learning Objective: Students will analyze series-parallel circuits by systematically identifying and reducing series and parallel combinations to find equivalent resistance.
+
+Instructional Rationale: Step-by-step reduction with visual circuit transformation shows students the process of simplification. Each step maintains circuit equivalence while reducing complexity.
+
+Data Visibility Requirements:
+- Stage 1: Original circuit with all resistor values
+- Stage 2: Identify first reducible group (highlight)
+- Stage 3: Show calculation for that group
+- Stage 4: Redraw circuit with equivalent resistor
+- Stage 5-N: Repeat until single equivalent
+- Final: Calculate total current, then work backward for individual values
+
+Canvas layout:
+- Main area (500px): Circuit diagram that transforms at each step
+- Side panel (150px): Step-by-step calculation log
+- Bottom (80px): Navigation controls
+
+Visual elements:
+- Circuit with R1 in series with parallel combination of (R2 || R3)
+- Additional R4 in series after the parallel section
+- Highlighting to show current reduction step
+- Intermediate equivalent resistor replaces reduced section
+
+Interactive controls:
+- Button: "Next Step" advances the reduction
+- Button: "Previous Step" goes back
+- Button: "Reset" returns to original circuit
+- Slider: Each resistor value adjustable
+- Display: Running calculation log
+
+Default circuit:
+- Vs = 24V
+- R1 = 2kΩ (in series)
+- R2 = 6kΩ, R3 = 3kΩ (in parallel with each other)
+- R4 = 1kΩ (in series)
+
+Solution steps:
+1. Identify R2 || R3 parallel combination
+2. Calculate: R23 = (6k × 3k)/(6k + 3k) = 2kΩ
+3. Redraw with R23 replacing R2,R3
+4. Add series resistances: R_total = 2k + 2k + 1k = 5kΩ
+5. Total current: I = 24V / 5kΩ = 4.8mA
+6. Work backward for individual voltages
+
+Implementation: p5.js with step-based circuit redrawing
+</details>
+
+<h2 id="the-voltage-divider-a-circuit-youll-build-a-thousand-times">The Voltage Divider: A Circuit You'll Build a Thousand Times</h2>
+<p>Take two resistors in series, connect them to a voltage source, and tap the middle point. Congratulations—you've built a <strong>voltage divider</strong>, one of the most useful circuits in electronics.</p>
+<p>The voltage at the middle point is a fraction of the source voltage, determined by the resistance ratio.</p>
+<h4 id="voltage-divider-formula">Voltage Divider Formula</h4>
+<p><span class="arithmatex">\(V_{out} = V_{in} \cdot \frac{R_2}{R_1 + R_2}\)</span></p>
+<p>where:</p>
+<ul>
+<li><span class="arithmatex">\(V_{out}\)</span> is the output voltage (at the junction of R1 and R2)</li>
+<li><span class="arithmatex">\(V_{in}\)</span> is the input voltage</li>
+<li><span class="arithmatex">\(R_1\)</span> is the resistor connected to the positive input</li>
+<li><span class="arithmatex">\(R_2\)</span> is the resistor connected to ground</li>
+</ul>
+<div class="admonition tip">
+<p class="admonition-title">Quick Check</p>
+<p>Notice that if <span class="arithmatex">\(R_1 = R_2\)</span>, then <span class="arithmatex">\(V_{out} = V_{in}/2\)</span>. Equal resistors give you half the input voltage. This is handy for quick mental calculations.</p>
+</div>
+<p>Voltage dividers are everywhere:</p>
+<ul>
+<li>Creating reference voltages for comparators</li>
+<li>Scaling signals to fit ADC input ranges</li>
+<li>Biasing transistor circuits</li>
+<li>Reading resistive sensors (thermistors, photoresistors)</li>
+</ul>
+<h4 id="diagram-voltage-divider-calculator">Diagram: Voltage Divider Calculator</h4>
+<iframe src="../../sims/voltage-divider/main.html" width="100%" height="450px" scrolling="no"></iframe>
+
+<details markdown="1">
+<summary>Voltage Divider MicroSim</summary>
+Type: microsim
+
+Purpose: Allow students to design voltage dividers for specific output voltages
+
+Bloom Level: Apply (L3)
+Bloom Verb: implement
+
+Learning Objective: Students will implement voltage divider circuits to produce specific output voltages and understand the effect of resistor ratio on output.
+
+Instructional Rationale: Bidirectional interaction (adjust resistors to see output, or specify output to see required resistors) builds deeper understanding than one-way calculation.
+
+Canvas layout:
+- Left (350px): Circuit schematic
+- Right (250px): Calculator interface
+
+Visual elements:
+- Voltage source connected to series R1-R2
+- Output tap between R1 and R2 (to ground)
+- Voltage labels at input and output
+- Visual representation of voltage "dropping" across R1
+
+Interactive controls:
+- Slider: Input voltage (1V to 24V, default 12V)
+- Slider: R1 value (100Ω to 100kΩ, log scale)
+- Slider: R2 value (100Ω to 100kΩ, log scale)
+- Display: Output voltage calculated
+- Display: Ratio R2/(R1+R2) as percentage
+- Mode toggle: "Find Vout" vs "Find R2 for target Vout"
+- Target Vout slider (active in second mode)
+
+Default parameters:
+- Vin = 12V
+- R1 = 10kΩ
+- R2 = 10kΩ
+- Vout = 6V (calculated)
+
+Behavior:
+- Real-time Vout calculation as sliders move
+- In "Find R2" mode, calculates required R2 for target Vout given Vin and R1
+- Warning if required R2 is impractical (<10Ω or >10MΩ)
+- Shows loading effect warning if connected load resistance mentioned
+
+Implementation: p5.js with dual-mode calculator
+</details>
+
+<h3 id="voltage-divider-loading-effect">Voltage Divider Loading Effect</h3>
+<p>Here's a trap that catches beginners: voltage dividers work perfectly when nothing is connected to the output. Connect a load (which has its own resistance), and the output voltage drops.</p>
+<p>The load resistance appears in parallel with R2, reducing the effective lower resistance. For a voltage divider to work well, the load resistance must be much larger than R2—typically 10× larger or more.</p>
+<p>This is why high-impedance inputs are valuable: they don't disturb the circuits they measure.</p>
+<h2 id="the-current-divider-sharing-the-flow">The Current Divider: Sharing the Flow</h2>
+<p>Just as voltage divides in series circuits, current divides in parallel circuits. A <strong>current divider</strong> lets you calculate how current splits between parallel branches.</p>
+<h4 id="current-divider-formula">Current Divider Formula</h4>
+<p>For two parallel resistors:</p>
+<p><span class="arithmatex">\(I_1 = I_{total} \cdot \frac{R_2}{R_1 + R_2}\)</span></p>
+<p>where:</p>
+<ul>
+<li><span class="arithmatex">\(I_1\)</span> is the current through R1</li>
+<li><span class="arithmatex">\(I_{total}\)</span> is the total current entering the parallel combination</li>
+<li><span class="arithmatex">\(R_1\)</span> and <span class="arithmatex">\(R_2\)</span> are the parallel resistors</li>
+</ul>
+<p>Notice something counterintuitive? The current through R1 depends on R2 (and vice versa). More current flows through the <strong>smaller</strong> resistance—the path of least resistance, literally.</p>
+<div class="admonition warning">
+<p class="admonition-title">Don't Mix Them Up</p>
+<p>In a voltage divider, output voltage increases with R2 (the bottom resistor).
+In a current divider, current through a branch increases when the <em>other</em> branch has higher resistance.</p>
+<p>When in doubt, use Ohm's Law directly rather than memorizing formulas you might misapply.</p>
+</div>
+<h2 id="energy-conservation-and-kirchhoffs-laws">Energy Conservation and Kirchhoff's Laws</h2>
+<p>Everything we've discussed obeys a fundamental principle: <strong>energy conservation</strong>. Charge moving through a circuit gains energy from sources and loses energy in resistors (and other components). The total energy gained must equal the total energy lost.</p>
+<p>This principle gives us <strong>Kirchhoff's Voltage Law (KVL)</strong>: the sum of all voltages around any closed loop equals zero.</p>
+<h4 id="kirchhoffs-voltage-law">Kirchhoff's Voltage Law</h4>
+<p><span class="arithmatex">\(\sum_{k=1}^{n} V_k = 0\)</span></p>
+<p>where:</p>
+<ul>
+<li><span class="arithmatex">\(V_k\)</span> is the voltage across the <span class="arithmatex">\(k\)</span>th element</li>
+<li>The sum is taken around a closed loop</li>
+</ul>
+<p>In practice: as you go around a loop, voltage rises through sources and drops across resistors. Add them up (with proper signs), and you get zero.</p>
+<p>Similarly, <strong>Kirchhoff's Current Law (KCL)</strong> states that current is conserved at any node: what flows in must flow out.</p>
+<p>These laws are the foundation of systematic circuit analysis. We'll explore them deeply in the next chapter when we tackle more complex circuits.</p>
+<h2 id="linearity-the-gift-that-keeps-on-giving">Linearity: The Gift That Keeps on Giving</h2>
+<p>Ohm's Law describes a <strong>linear</strong> relationship. If you double the voltage, you double the current. If you halve the voltage, you halve the current. No surprises, no complications.</p>
+<p>This <strong>linearity</strong> property enables powerful analysis techniques:</p>
+<ul>
+<li><strong>Superposition</strong>: Analyze each source separately and add the results</li>
+<li><strong>Thevenin/Norton equivalents</strong>: Reduce complex circuits to simple models</li>
+<li><strong>Linear algebra methods</strong>: Solve circuit equations using matrices</li>
+</ul>
+<p>Not all components are linear (diodes and transistors aren't), but resistive circuits are, and that makes them beautifully predictable.</p>
+<h4 id="diagram-linear-vs-nonlinear-behavior">Diagram: Linear vs Nonlinear Behavior</h4>
+<iframe src="../../sims/linear-vs-nonlinear/main.html" width="100%" height="400px" scrolling="no"></iframe>
+
+<details markdown="1">
+<summary>Linear vs Nonlinear I-V Characteristics</summary>
+Type: chart
+
+Purpose: Contrast linear (resistor) and nonlinear (diode) current-voltage relationships
+
+Bloom Level: Understand (L2)
+Bloom Verb: compare
+
+Learning Objective: Students will compare the linear I-V characteristic of a resistor with the nonlinear characteristic of a diode to understand why linearity simplifies analysis.
+
+Chart type: Line chart with two curves
+
+X-axis: Voltage (-2V to +2V)
+Y-axis: Current (-20mA to +20mA)
+
+Data series:
+1. Resistor (R = 100Ω): Straight line through origin, slope = 1/R
+   - Points: (-2V, -20mA), (-1V, -10mA), (0V, 0mA), (1V, 10mA), (2V, 20mA)
+
+2. Diode (ideal exponential): Curved line showing exponential behavior
+   - Minimal current for negative voltage
+   - Sharp rise above ~0.6V
+   - Points follow I = Is(e^(V/Vt) - 1) approximation
+
+Title: "I-V Characteristics: Resistor vs Diode"
+
+Annotations:
+- Label on resistor line: "Linear: I = V/R"
+- Label on diode curve: "Nonlinear: exponential relationship"
+- Highlight the 0.6V "knee" of the diode curve
+
+Interactive features:
+- Slider to change resistor value and see slope change
+- Toggle to show/hide diode curve
+- Hover to see exact values
+
+Color scheme:
+- Blue for resistor (linear)
+- Orange for diode (nonlinear)
+
+Implementation: p5.js or Chart.js with interactive elements
+</details>
+
+<h2 id="potentiometers-variable-resistance">Potentiometers: Variable Resistance</h2>
+<p>A <strong>potentiometer</strong> (or "pot") is a three-terminal resistor with an adjustable center tap. Turn the knob (or slide the lever), and you change the resistance ratio—and therefore the voltage at the wiper terminal.</p>
+<p>Potentiometers are essentially adjustable voltage dividers. They're used for:</p>
+<ul>
+<li>Volume controls in audio equipment</li>
+<li>User-adjustable settings (brightness, contrast)</li>
+<li>Calibration adjustments</li>
+<li>Position sensing (linear or rotary)</li>
+</ul>
+<p>The three terminals are:</p>
+<ul>
+<li>End terminal 1 (one end of the resistive element)</li>
+<li>Wiper (the moving contact)</li>
+<li>End terminal 2 (other end of the resistive element)</li>
+</ul>
+<p>Common potentiometer values range from 1kΩ to 1MΩ. Types include linear taper (linear relationship between rotation and resistance) and logarithmic/audio taper (designed to match human perception of loudness).</p>
+<h4 id="diagram-potentiometer-as-voltage-divider">Diagram: Potentiometer as Voltage Divider</h4>
+<iframe src="../../sims/potentiometer/main.html" width="100%" height="400px" scrolling="no"></iframe>
+
+<details markdown="1">
+<summary>Potentiometer MicroSim</summary>
+Type: microsim
+
+Purpose: Demonstrate how potentiometer position creates a variable voltage divider
+
+Bloom Level: Apply (L3)
+Bloom Verb: demonstrate
+
+Learning Objective: Students will demonstrate how adjusting a potentiometer changes the voltage divider ratio and output voltage.
+
+Instructional Rationale: Direct manipulation of a virtual potentiometer with immediate voltage feedback builds intuition for this common component.
+
+Canvas layout:
+- Left (300px): Physical potentiometer representation with rotating knob
+- Right (300px): Equivalent circuit schematic showing variable R1 and R2
+
+Visual elements:
+- Circular potentiometer body with knob indicator
+- Three terminals labeled
+- Equivalent circuit showing two resistors with moving tap
+- Output voltage display
+- Resistance values for "upper" and "lower" portions
+
+Interactive controls:
+- Draggable knob (0° to 300° rotation)
+- Slider alternative for precise control
+- Display: Position as percentage (0% to 100%)
+- Display: Upper resistance, lower resistance, output voltage
+- Input voltage slider (1V to 12V)
+- Total potentiometer value selector (1kΩ, 10kΩ, 100kΩ)
+
+Default parameters:
+- Total resistance: 10kΩ
+- Position: 50%
+- Input voltage: 5V
+- Output: 2.5V
+
+Behavior:
+- Knob rotation changes position percentage
+- Upper R = Total × (1 - position)
+- Lower R = Total × position
+- Output voltage = Vin × position (for unloaded divider)
+- Real-time update of all values
+
+Implementation: p5.js with rotational input and circuit visualization
+</details>
+
+<h2 id="wire-resistance-the-overlooked-reality">Wire Resistance: The Overlooked Reality</h2>
+<p>In ideal circuit analysis, we assume wires have zero resistance. In reality, every wire has some resistance, determined by:</p>
+<h4 id="wire-resistance-formula">Wire Resistance Formula</h4>
+<p><span class="arithmatex">\(R_{wire} = \rho \cdot \frac{L}{A}\)</span></p>
+<p>where:</p>
+<ul>
+<li><span class="arithmatex">\(R_{wire}\)</span> is the wire resistance in ohms</li>
+<li><span class="arithmatex">\(\rho\)</span> (rho) is the resistivity of the material (Ω·m)</li>
+<li><span class="arithmatex">\(L\)</span> is the wire length (m)</li>
+<li><span class="arithmatex">\(A\)</span> is the cross-sectional area (m²)</li>
+</ul>
+<p>For most bench circuits with short wires, this resistance is negligible. But it matters when:</p>
+<ul>
+<li>Wires are long (power distribution, speaker cables)</li>
+<li>Currents are high (power supply connections)</li>
+<li>Precision measurements are needed</li>
+<li>Wire gauge is small (thin wires)</li>
+</ul>
+<p><strong>American Wire Gauge (AWG)</strong> specifies wire sizes. Smaller AWG numbers mean thicker wires with lower resistance. Common hookup wire is 22 AWG; house wiring uses 12 or 14 AWG.</p>
+<table>
+<thead>
+<tr>
+<th>AWG</th>
+<th>Diameter (mm)</th>
+<th>Resistance (Ω/m)</th>
+<th>Typical Use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>10</td>
+<td>2.59</td>
+<td>0.0033</td>
+<td>Power distribution</td>
+</tr>
+<tr>
+<td>14</td>
+<td>1.63</td>
+<td>0.0083</td>
+<td>House wiring</td>
+</tr>
+<tr>
+<td>18</td>
+<td>1.02</td>
+<td>0.021</td>
+<td>Lamp cord</td>
+</tr>
+<tr>
+<td>22</td>
+<td>0.64</td>
+<td>0.053</td>
+<td>Hookup wire</td>
+</tr>
+<tr>
+<td>26</td>
+<td>0.40</td>
+<td>0.134</td>
+<td>Ribbon cable</td>
+</tr>
+<tr>
+<td>30</td>
+<td>0.25</td>
+<td>0.339</td>
+<td>Wire wrap</td>
+</tr>
+</tbody>
+</table>
+<h2 id="putting-it-all-together-analysis-example">Putting It All Together: Analysis Example</h2>
+<p>Let's work through a complete circuit analysis using all the tools we've developed.</p>
+<p><strong>Problem</strong>: Find all currents and voltages in a circuit with:
+- 12V voltage source
+- R1 = 2kΩ in series with a parallel combination
+- Parallel combination: R2 = 3kΩ and R3 = 6kΩ</p>
+<p><strong>Solution</strong>:</p>
+<p><strong>Step 1: Find equivalent resistance of parallel combination</strong></p>
+<p><span class="arithmatex">\(R_{23} = \frac{R_2 \cdot R_3}{R_2 + R_3} = \frac{3k \cdot 6k}{3k + 6k} = \frac{18M}{9k} = 2kΩ\)</span></p>
+<p><strong>Step 2: Find total resistance</strong></p>
+<p><span class="arithmatex">\(R_{total} = R_1 + R_{23} = 2kΩ + 2kΩ = 4kΩ\)</span></p>
+<p><strong>Step 3: Find total current</strong> (from source, through R1)</p>
+<p><span class="arithmatex">\(I_{total} = \frac{V_s}{R_{total}} = \frac{12V}{4kΩ} = 3mA\)</span></p>
+<p><strong>Step 4: Find voltage across R1</strong></p>
+<p><span class="arithmatex">\(V_1 = I_{total} \cdot R_1 = 3mA \cdot 2kΩ = 6V\)</span></p>
+<p><strong>Step 5: Find voltage across parallel combination</strong></p>
+<p><span class="arithmatex">\(V_{23} = V_s - V_1 = 12V - 6V = 6V\)</span></p>
+<p>(Or: <span class="arithmatex">\(V_{23} = I_{total} \cdot R_{23} = 3mA \cdot 2kΩ = 6V\)</span>)</p>
+<p><strong>Step 6: Find branch currents</strong></p>
+<p><span class="arithmatex">\(I_2 = \frac{V_{23}}{R_2} = \frac{6V}{3kΩ} = 2mA\)</span></p>
+<p><span class="arithmatex">\(I_3 = \frac{V_{23}}{R_3} = \frac{6V}{6kΩ} = 1mA\)</span></p>
+<p><strong>Verification</strong>: <span class="arithmatex">\(I_2 + I_3 = 2mA + 1mA = 3mA = I_{total}\)</span> ✓</p>
+<p>The current divides according to the inverse resistance ratio: twice as much current flows through R2 (half the resistance of R3).</p>
+<h2 id="summary-and-key-takeaways">Summary and Key Takeaways</h2>
+<p>Congratulations! You've acquired some serious circuit superpowers in this chapter. Let's recap what you can now do:</p>
+<p><strong>Core Skills Gained:</strong></p>
+<ul>
+<li>Apply Ohm's Law in all three forms to find voltage, current, or resistance</li>
+<li>Calculate power dissipation and select appropriately rated components</li>
+<li>Decode resistor color bands to determine resistance values</li>
+<li>Analyze series circuits (same current, voltages add, resistances add)</li>
+<li>Analyze parallel circuits (same voltage, currents add, resistances combine reciprocally)</li>
+<li>Break down series-parallel combinations systematically</li>
+<li>Design voltage dividers for specific output voltages</li>
+<li>Understand current division in parallel branches</li>
+</ul>
+<p><strong>Key Formulas to Remember:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Formula</th>
+<th>Application</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="arithmatex">\(V = IR\)</span></td>
+<td>Ohm's Law</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(P = VI = I^2R = V^2/R\)</span></td>
+<td>Power</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(R_s = R_1 + R_2 + ...\)</span></td>
+<td>Series resistance</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(1/R_p = 1/R_1 + 1/R_2 + ...\)</span></td>
+<td>Parallel resistance</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(R_p = (R_1 \cdot R_2)/(R_1 + R_2)\)</span></td>
+<td>Two parallel resistors</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(V_{out} = V_{in} \cdot R_2/(R_1 + R_2)\)</span></td>
+<td>Voltage divider</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Practical Wisdom:</strong></p>
+<ul>
+<li>Always check power ratings—components fail when overheated</li>
+<li>Derate components to improve reliability</li>
+<li>Voltage dividers need high-impedance loads to work properly</li>
+<li>Real wires have resistance that may matter at high currents</li>
+<li>Tolerance specifications tell you the range of actual values to expect</li>
+</ul>
+<p>In the next chapter, we'll build on these foundations with Kirchhoff's Laws and more sophisticated analysis techniques. The circuits will get more complex, but the fundamental tools you've learned here will carry you through.</p>
+<p>Now go forth and analyze circuits! And remember: resistance isn't futile—it's measured in ohms.</p>
+<details class="question">
+<summary>Self-Check: Can You Answer These?</summary>
+<ol>
+<li>
+<p>A 5V source connects to two 10kΩ resistors in series. What current flows? What is the voltage across each resistor?</p>
+</li>
+<li>
+<p>Those same resistors are now in parallel across the 5V source. What is the equivalent resistance? What is the total current? What current flows through each resistor?</p>
+</li>
+<li>
+<p>You need exactly 2.5V from a 9V battery using a voltage divider. If R1 = 2.6kΩ, what should R2 be?</p>
+</li>
+<li>
+<p>A 470Ω resistor with 0.4V across it dissipates how much power? Would a 1/4W resistor be adequate?</p>
+</li>
+</ol>
+</details>
+
+
+
+
+
+
+
+  
+  
+
+
+
+  
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../01-electric-charge-basic-quantities/" class="md-footer__link md-footer__link--prev" aria-label="Previous: 1. Electric Charge and Quantities">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                1. Electric Charge and Quantities
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../03-kirchhoffs-laws-topology/" class="md-footer__link md-footer__link--next" aria-label="Next: 3. Kirchhoff&#39;s Laws and Topology">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                3. Kirchhoff's Laws and Topology
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.copy", "navigation.expand", "navigation.path", "navigation.prune", "navigation.indexes", "toc.follow", "navigation.top", "navigation.footer", "content.action.edit"], "search": "../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.83f73b43.min.js"></script>
+      
+        <script src="../../js/extra.js"></script>
+      
+        <script src="../../js/katex.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+      
+    
+  </body>
+</html>

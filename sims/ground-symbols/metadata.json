@@ -1,0 +1,80 @@
+{
+  "$schema": "https://github.com/dmccreary/microsims/blob/main/src/microsim-schema/microsim-schema.json",
+  "title": "Ground Symbol Reference Guide",
+  "description": "Interactive reference guide for identifying and distinguishing between different ground symbols used in circuit schematics. Includes hover descriptions and quiz mode for practice.",
+  "creator": "Dan McCreary",
+  "subject": ["Electrical Engineering", "Circuit Analysis", "Schematic Reading"],
+  "date": "2026-01-30",
+  "type": "Interactive Simulation",
+  "format": "text/html",
+  "language": "en",
+  "rights": "CC BY 4.0",
+  "gradeLevel": "High School, Undergraduate",
+  "subjectArea": "Electrical Engineering",
+  "topic": "Ground Symbols",
+  "learningObjectives": [
+    "Identify the six common ground symbols used in circuit schematics",
+    "Distinguish between earth ground, chassis ground, and signal ground",
+    "Recognize when digital and analog grounds are kept separate"
+  ],
+  "bloomsTaxonomyLevels": ["Remember"],
+  "duration": "5-10 minutes",
+  "prerequisites": ["Basic understanding of electrical circuits"],
+  "framework": "p5.js",
+  "canvasDimensions": "responsive × 420",
+  "responsive": "Width-responsive",
+  "dependencies": ["p5.js CDN"],
+  "accessibility": {
+    "screenReaderSupport": true,
+    "keyboardNavigation": false
+  },
+  "controls": [
+    {
+      "type": "hover",
+      "name": "Symbol Hover",
+      "description": "Hover over any symbol to see its full name, description, and typical use"
+    },
+    {
+      "type": "button",
+      "name": "Quiz Mode",
+      "description": "Toggle quiz mode to test symbol recognition"
+    },
+    {
+      "type": "button",
+      "name": "Reset",
+      "description": "Reset the quiz score"
+    }
+  ],
+  "symbols": [
+    {
+      "name": "Earth Ground",
+      "description": "Connected to physical earth",
+      "use": "Power systems, safety grounds, building wiring"
+    },
+    {
+      "name": "Chassis Ground",
+      "description": "Connected to equipment metal enclosure",
+      "use": "Equipment enclosures, shielding"
+    },
+    {
+      "name": "Signal Ground",
+      "description": "Common reference point in circuits",
+      "use": "Audio systems, signal circuits"
+    },
+    {
+      "name": "Digital Ground (DGND)",
+      "description": "Reference for digital circuits",
+      "use": "Digital circuit sections"
+    },
+    {
+      "name": "Analog Ground (AGND)",
+      "description": "Reference for sensitive analog circuits",
+      "use": "Analog circuit sections"
+    },
+    {
+      "name": "Common Ground",
+      "description": "General reference point",
+      "use": "General circuit reference"
+    }
+  ]
+}

@@ -1,0 +1,2742 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="An intelligent interactive Circuits textbook for EE and CS students with AI-generated content and simulations.">
+      
+      
+        <meta name="author" content="Dan McCreary">
+      
+      
+        <link rel="canonical" href="https://dmccreary.github.io/circuits/chapters/12-filters-resonance/">
+      
+      
+        <link rel="prev" href="../11-frequency-response-bode/">
+      
+      
+        <link rel="next" href="../13-operational-amplifiers/">
+      
+      
+      <link rel="icon" href="../../img/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.43">
+    
+    
+      
+        <title>12. Filters and Resonance - Circuits 1</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.0253249f.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../css/extra.css">
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+<script id="__analytics">function __md_analytics(){function e(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],e("js",new Date),e("config","G-9J4MVE6LWP"),document.addEventListener("DOMContentLoaded",(function(){document.forms.search&&document.forms.search.query.addEventListener("blur",(function(){this.value&&e("event","search",{search_term:this.value})}));document$.subscribe((function(){var t=document.forms.feedback;if(void 0!==t)for(var a of t.querySelectorAll("[type=submit]"))a.addEventListener("click",(function(a){a.preventDefault();var n=document.location.pathname,d=this.getAttribute("data-md-value");e("event","feedback",{page:n,data:d}),t.firstElementChild.disabled=!0;var r=t.querySelector(".md-feedback__note [data-md-value='"+d+"']");r&&(r.hidden=!1)})),t.hidden=!1})),location$.subscribe((function(t){e("config","G-9J4MVE6LWP",{page_path:t.pathname})}))}));var t=document.createElement("script");t.async=!0,t.src="https://www.googletagmanager.com/gtag/js?id=G-9J4MVE6LWP",document.getElementById("__analytics").insertAdjacentElement("afterEnd",t)}</script>
+  
+    <script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
+  
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="orange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#filters-and-resonance" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Circuits 1" class="md-header__button md-logo" aria-label="Circuits 1" data-md-component="logo">
+      
+  <img src="../../img/course-logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Circuits 1
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              12. Filters and Resonance
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/dmccreary/circuits" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub Repo
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Circuits 1" class="md-nav__button md-logo" aria-label="Circuits 1" data-md-component="logo">
+      
+  <img src="../../img/course-logo.png" alt="logo">
+
+    </a>
+    Circuits 1
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/dmccreary/circuits" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub Repo
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../about/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    About This Course
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+    
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Chapters
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Chapters
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-electric-charge-basic-quantities/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1. Electric Charge and Quantities
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-ohms-law-basic-configurations/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2. Ohm's Law and Configurations
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-kirchhoffs-laws-topology/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3. Kirchhoff's Laws and Topology
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-dc-circuit-analysis/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4. DC Circuit Analysis
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-passive-components/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5. Passive Components
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-transient-analysis-rc-rl/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    6. Transient Analysis RC/RL
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-second-order-rlc-circuits/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    7. Second-Order RLC Circuits
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-ac-signals-sinusoidal/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    8. AC Signals and Sinusoids
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../09-phasors-complex-impedance/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    9. Phasors and Impedance
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10-ac-power-analysis/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    10. AC Power Analysis
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../11-frequency-response-bode/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    11. Frequency Response and Bode
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    12. Filters and Resonance
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    12. Filters and Resonance
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      Summary
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#concepts-covered" class="md-nav__link">
+    <span class="md-ellipsis">
+      Concepts Covered
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prerequisites
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#introduction-sculpting-sound-with-circuits" class="md-nav__link">
+    <span class="md-ellipsis">
+      Introduction: Sculpting Sound with Circuits
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#first-order-filters-the-building-blocks" class="md-nav__link">
+    <span class="md-ellipsis">
+      First-Order Filters: The Building Blocks
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="First-Order Filters: The Building Blocks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rc-low-pass-filter" class="md-nav__link">
+    <span class="md-ellipsis">
+      RC Low-Pass Filter
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rc-high-pass-filter" class="md-nav__link">
+    <span class="md-ellipsis">
+      RC High-Pass Filter
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rl-low-pass-filter" class="md-nav__link">
+    <span class="md-ellipsis">
+      RL Low-Pass Filter
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rl-high-pass-filter" class="md-nav__link">
+    <span class="md-ellipsis">
+      RL High-Pass Filter
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="RL High-Pass Filter">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-first-order-filter-comparison" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: First-Order Filter Comparison
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#second-order-filters-adding-resonance" class="md-nav__link">
+    <span class="md-ellipsis">
+      Second-Order Filters: Adding Resonance
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Second-Order Filters: Adding Resonance">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rlc-band-pass-filter" class="md-nav__link">
+    <span class="md-ellipsis">
+      RLC Band-Pass Filter
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="RLC Band-Pass Filter">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-second-order-filter-designer" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Second-Order Filter Designer
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#passive-vs-active-filters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Passive vs. Active Filters
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Passive vs. Active Filters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#passive-filters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Passive Filters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#active-filters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Active Filters
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#filter-design-process" class="md-nav__link">
+    <span class="md-ellipsis">
+      Filter Design Process
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#audio-tone-control-bass-and-treble" class="md-nav__link">
+    <span class="md-ellipsis">
+      Audio Tone Control: Bass and Treble
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Audio Tone Control: Bass and Treble">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bass-filter" class="md-nav__link">
+    <span class="md-ellipsis">
+      Bass Filter
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#treble-filter" class="md-nav__link">
+    <span class="md-ellipsis">
+      Treble Filter
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shelving-filters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Shelving Filters
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#audio-signal-levels-and-decibels" class="md-nav__link">
+    <span class="md-ellipsis">
+      Audio Signal Levels and Decibels
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Audio Signal Levels and Decibels">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#dbv-decibels-relative-to-1-volt" class="md-nav__link">
+    <span class="md-ellipsis">
+      dBV (decibels relative to 1 volt)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dbu-decibels-relative-to-0775-volts" class="md-nav__link">
+    <span class="md-ellipsis">
+      dBu (decibels relative to 0.775 volts)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#headroom-and-dynamic-range" class="md-nav__link">
+    <span class="md-ellipsis">
+      Headroom and Dynamic Range
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#audio-transducers-microphones-and-speakers" class="md-nav__link">
+    <span class="md-ellipsis">
+      Audio Transducers: Microphones and Speakers
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Audio Transducers: Microphones and Speakers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#microphones" class="md-nav__link">
+    <span class="md-ellipsis">
+      Microphones
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#speakers" class="md-nav__link">
+    <span class="md-ellipsis">
+      Speakers
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Speakers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-audio-signal-chain" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Audio Signal Chain
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#amplifier-gain-in-filter-circuits" class="md-nav__link">
+    <span class="md-ellipsis">
+      Amplifier Gain in Filter Circuits
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#practical-design-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      Practical Design Example
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#self-check-questions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Self-Check Questions
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Summary
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../13-operational-amplifiers/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    13. Operational Amplifiers
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../14-signals-audio-lab/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    14. Signal Analysis and Fourier
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../15-audio-applications/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    15. Audio Applications
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../16-laboratory-techniques/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    16. Laboratory Techniques
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../sims/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    MicroSims
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../sections/index.md" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Supplementary Sections
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../learning-graph/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Learning Graph
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../prompts/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Sample Prompts
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+          
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../faq/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    FAQ
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../glossary/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Glossary
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how-we-built-this-site/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    How We Built This Site
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../references/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    References
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../license/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    License
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contact/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Contact
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      Summary
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#concepts-covered" class="md-nav__link">
+    <span class="md-ellipsis">
+      Concepts Covered
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prerequisites
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#introduction-sculpting-sound-with-circuits" class="md-nav__link">
+    <span class="md-ellipsis">
+      Introduction: Sculpting Sound with Circuits
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#first-order-filters-the-building-blocks" class="md-nav__link">
+    <span class="md-ellipsis">
+      First-Order Filters: The Building Blocks
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="First-Order Filters: The Building Blocks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rc-low-pass-filter" class="md-nav__link">
+    <span class="md-ellipsis">
+      RC Low-Pass Filter
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rc-high-pass-filter" class="md-nav__link">
+    <span class="md-ellipsis">
+      RC High-Pass Filter
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rl-low-pass-filter" class="md-nav__link">
+    <span class="md-ellipsis">
+      RL Low-Pass Filter
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rl-high-pass-filter" class="md-nav__link">
+    <span class="md-ellipsis">
+      RL High-Pass Filter
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="RL High-Pass Filter">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-first-order-filter-comparison" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: First-Order Filter Comparison
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#second-order-filters-adding-resonance" class="md-nav__link">
+    <span class="md-ellipsis">
+      Second-Order Filters: Adding Resonance
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Second-Order Filters: Adding Resonance">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rlc-band-pass-filter" class="md-nav__link">
+    <span class="md-ellipsis">
+      RLC Band-Pass Filter
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="RLC Band-Pass Filter">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-second-order-filter-designer" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Second-Order Filter Designer
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#passive-vs-active-filters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Passive vs. Active Filters
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Passive vs. Active Filters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#passive-filters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Passive Filters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#active-filters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Active Filters
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#filter-design-process" class="md-nav__link">
+    <span class="md-ellipsis">
+      Filter Design Process
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#audio-tone-control-bass-and-treble" class="md-nav__link">
+    <span class="md-ellipsis">
+      Audio Tone Control: Bass and Treble
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Audio Tone Control: Bass and Treble">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bass-filter" class="md-nav__link">
+    <span class="md-ellipsis">
+      Bass Filter
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#treble-filter" class="md-nav__link">
+    <span class="md-ellipsis">
+      Treble Filter
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shelving-filters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Shelving Filters
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#audio-signal-levels-and-decibels" class="md-nav__link">
+    <span class="md-ellipsis">
+      Audio Signal Levels and Decibels
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Audio Signal Levels and Decibels">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#dbv-decibels-relative-to-1-volt" class="md-nav__link">
+    <span class="md-ellipsis">
+      dBV (decibels relative to 1 volt)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dbu-decibels-relative-to-0775-volts" class="md-nav__link">
+    <span class="md-ellipsis">
+      dBu (decibels relative to 0.775 volts)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#headroom-and-dynamic-range" class="md-nav__link">
+    <span class="md-ellipsis">
+      Headroom and Dynamic Range
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#audio-transducers-microphones-and-speakers" class="md-nav__link">
+    <span class="md-ellipsis">
+      Audio Transducers: Microphones and Speakers
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Audio Transducers: Microphones and Speakers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#microphones" class="md-nav__link">
+    <span class="md-ellipsis">
+      Microphones
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#speakers" class="md-nav__link">
+    <span class="md-ellipsis">
+      Speakers
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Speakers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-audio-signal-chain" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Audio Signal Chain
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#amplifier-gain-in-filter-circuits" class="md-nav__link">
+    <span class="md-ellipsis">
+      Amplifier Gain in Filter Circuits
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#practical-design-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      Practical Design Example
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#self-check-questions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Self-Check Questions
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Summary
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+    <a href="https://github.com/dmccreary/circuits/blob/master/docs/chapters/12-filters-resonance/index.md" title="Edit this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+
+
+<h1 id="filters-and-resonance">Filters and Resonance</h1>
+<h2 id="summary">Summary</h2>
+<p>This chapter provides practical coverage of filter circuits used in audio and signal processing applications. Students will learn to design first and second-order filters using RC, RL, and RLC configurations, understand filter specifications like order and roll-off rate, and apply these concepts to audio tone control circuits. The chapter covers both passive filters using only RLC components and introduces active filters using operational amplifiers. By the end, students will be able to design filters to meet specific frequency response requirements.</p>
+<h2 id="concepts-covered">Concepts Covered</h2>
+<p>This chapter covers the following 22 concepts from the learning graph:</p>
+<ol>
+<li>First-Order Filter</li>
+<li>Second-Order Filter</li>
+<li>RC Low-Pass Filter</li>
+<li>RC High-Pass Filter</li>
+<li>RL Low-Pass Filter</li>
+<li>RL High-Pass Filter</li>
+<li>RLC Band-Pass Filter</li>
+<li>Passive Filter</li>
+<li>Active Filter</li>
+<li>Filter Design</li>
+<li>Audio Tone Control</li>
+<li>Bass Filter</li>
+<li>Treble Filter</li>
+<li>Amplifier Gain</li>
+<li>Decibels in Audio</li>
+<li>dBV</li>
+<li>dBu</li>
+<li>Headroom</li>
+<li>Dynamic Range</li>
+<li>Audio Signal</li>
+<li>Microphone</li>
+<li>Speaker</li>
+</ol>
+<h2 id="prerequisites">Prerequisites</h2>
+<p>This chapter builds on concepts from:</p>
+<ul>
+<li><a href="../06-transient-analysis-rc-rl/">Chapter 6: Transient Analysis of RC and RL Circuits</a></li>
+<li><a href="../07-second-order-rlc-circuits/">Chapter 7: Second-Order Circuits and RLC Behavior</a></li>
+<li><a href="../11-frequency-response-bode/">Chapter 11: Frequency Response and Bode Plots</a></li>
+</ul>
+<hr />
+<p>title: Filters and Resonance
+description: Design practical filter circuits for audio and signal processing applications
+generated_by: chapter-content-generator v0.03
+date: 2026-01-30</p>
+<hr />
+<h2 id="introduction-sculpting-sound-with-circuits">Introduction: Sculpting Sound with Circuits</h2>
+<p>Every time you adjust the bass and treble on your stereo, you're using filters. Every time you talk on a phone that somehow makes your voice clear despite background noise, filters are working behind the scenes. Every time a radio picks out one station from thousands of signals crowding the airwaves—you guessed it, filters.</p>
+<p>Filters are the sculptors of the frequency spectrum. They let you decide which frequencies to keep and which to discard, which to emphasize and which to suppress. In the previous chapter, you learned the theory of frequency response. Now it's time to put that theory to work designing real filter circuits.</p>
+<p>This chapter bridges the gap between mathematical transfer functions and practical component selection. You'll learn to design first-order RC and RL filters, second-order RLC filters, and get your first taste of active filters that can amplify while filtering. Along the way, we'll explore audio applications where filters transform raw signals into the sounds we want to hear.</p>
+<h2 id="first-order-filters-the-building-blocks">First-Order Filters: The Building Blocks</h2>
+<p><strong>First-order filters</strong> contain one reactive element (capacitor or inductor) and produce a -20 dB/decade roll-off. They're simple, predictable, and form the foundation for more complex filter designs.</p>
+<p><strong>Transfer function form:</strong></p>
+<p>[H(j\omega) = \frac{K}{1 + j\omega/\omega_c} \text{ (low-pass)}]
+[H(j\omega) = \frac{K \cdot j\omega/\omega_c}{1 + j\omega/\omega_c} \text{ (high-pass)}]</p>
+<p><strong>Characteristics:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>First-Order Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Roll-off rate</td>
+<td>20 dB/decade</td>
+</tr>
+<tr>
+<td>Phase shift range</td>
+<td>0° to 90°</td>
+</tr>
+<tr>
+<td>Order</td>
+<td>1</td>
+</tr>
+<tr>
+<td>Reactive elements</td>
+<td>1 (C or L)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="rc-low-pass-filter">RC Low-Pass Filter</h3>
+<p>The <strong>RC low-pass filter</strong> is the most common first-order filter. Output is taken across the capacitor.</p>
+<p><strong>Circuit:</strong> Series resistor, capacitor to ground</p>
+<p><strong>Transfer function:</strong>
+[H(j\omega) = \frac{1}{1 + j\omega RC}]</p>
+<p><strong>Cutoff frequency:</strong>
+[f_c = \frac{1}{2\pi RC}]</p>
+<p><strong>Design equations:</strong>
+Given <span class="arithmatex">\(f_c\)</span>, choose R and C such that <span class="arithmatex">\(RC = \frac{1}{2\pi f_c}\)</span></p>
+<p><strong>Example:</strong> For <span class="arithmatex">\(f_c = 1\)</span> kHz:
+[RC = \frac{1}{2\pi \times 1000} = 159.2 \text{ μs}]</p>
+<p>Choose C = 100 nF: <span class="arithmatex">\(R = \frac{159.2 \text{ μs}}{100 \text{ nF}} = 1.592 \text{ kΩ}\)</span>
+Use standard value R = 1.5 kΩ → actual <span class="arithmatex">\(f_c = 1.06\)</span> kHz</p>
+<h3 id="rc-high-pass-filter">RC High-Pass Filter</h3>
+<p>The <strong>RC high-pass filter</strong> has the same components as the low-pass, but output is taken across the resistor.</p>
+<p><strong>Circuit:</strong> Series capacitor, resistor to ground (output across R)</p>
+<p><strong>Transfer function:</strong>
+[H(j\omega) = \frac{j\omega RC}{1 + j\omega RC}]</p>
+<p><strong>Cutoff frequency:</strong>
+[f_c = \frac{1}{2\pi RC}]</p>
+<p>At low frequencies, the capacitor blocks; at high frequencies, it passes.</p>
+<h3 id="rl-low-pass-filter">RL Low-Pass Filter</h3>
+<p>The <strong>RL low-pass filter</strong> uses an inductor instead of a capacitor.</p>
+<p><strong>Circuit:</strong> Resistor to ground, series inductor (output across R)</p>
+<p><strong>Cutoff frequency:</strong>
+[f_c = \frac{R}{2\pi L}]</p>
+<p><strong>Why RL is less common:</strong>
+- Inductors are larger, heavier, and more expensive than capacitors
+- Inductors have parasitic resistance
+- Inductors can pick up magnetic interference</p>
+<p>RL filters are mainly used in power applications where inductors handle high currents better than capacitors.</p>
+<h3 id="rl-high-pass-filter">RL High-Pass Filter</h3>
+<p><strong>Circuit:</strong> Inductor to ground, series resistor (output across L)</p>
+<p><strong>Cutoff frequency:</strong>
+[f_c = \frac{R}{2\pi L}]</p>
+<h4 id="diagram-first-order-filter-comparison">Diagram: First-Order Filter Comparison</h4>
+<iframe src="../../sims/first-order-filters/main.html" width="100%" height="550px" scrolling="no" style="overflow: hidden;"></iframe>
+
+<details markdown="1">
+<summary>First-Order Filter Comparison</summary>
+Type: microsim
+
+Bloom Level: Analyze (L4)
+Bloom Verb: compare
+
+Learning Objective: Students will compare RC and RL implementations of low-pass and high-pass filters by observing their frequency responses with the same cutoff frequency.
+
+Visual elements:
+- Four circuits: RC LP, RC HP, RL LP, RL HP
+- Bode magnitude plot showing all four responses overlaid
+- Cutoff frequency marker shared by all
+- Component values displayed for each circuit
+
+Interactive controls:
+- Slider: Target cutoff frequency (100 Hz to 10 kHz)
+- Toggle: Show RC only / RL only / All
+- Toggle: Normalize component values
+- Display: Calculated R, C, L for each circuit
+- Input: Fix R or C/L value
+
+Observations highlighted:
+- "Same cutoff, same response shape"
+- "RC more practical at audio frequencies"
+- "RL used in power applications"
+
+Default parameters:
+- f_c = 1 kHz
+- R = 1 kΩ for all
+- C = 159 nF, L = 159 mH (calculated)
+
+Canvas layout:
+- Circuit schematics: 400 × 200 pixels (top)
+- Bode plot: 600 × 250 pixels (bottom)
+- Control area: 100 pixels below
+
+Implementation: p5.js
+</details>
+
+<h2 id="second-order-filters-adding-resonance">Second-Order Filters: Adding Resonance</h2>
+<p><strong>Second-order filters</strong> contain two reactive elements and produce -40 dB/decade roll-off. They can exhibit resonance, producing a peak in the response.</p>
+<p><strong>Key parameters:</strong></p>
+<ul>
+<li><strong>Cutoff frequency</strong> (<span class="arithmatex">\(f_c\)</span> or <span class="arithmatex">\(\omega_0\)</span>): Where roll-off begins</li>
+<li><strong>Quality factor</strong> (Q): Sharpness of response</li>
+<li><strong>Damping ratio</strong> (<span class="arithmatex">\(\zeta = 1/2Q\)</span>): Controls peak behavior</li>
+</ul>
+<p><strong>Standard form transfer function:</strong>
+[H(s) = \frac{\omega_0^2}{s^2 + (2\omega_0/Q)s + \omega_0^2}]</p>
+<table>
+<thead>
+<tr>
+<th>Q Value</th>
+<th>Damping</th>
+<th>Response Shape</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>&lt; 0.5</td>
+<td>Overdamped</td>
+<td>No peak, gradual rolloff</td>
+</tr>
+<tr>
+<td>0.707</td>
+<td>Butterworth</td>
+<td>Maximally flat passband</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Slightly underdamped</td>
+<td>Small peak (≈3 dB)</td>
+</tr>
+<tr>
+<td>&gt; 1</td>
+<td>Underdamped</td>
+<td>Pronounced peak</td>
+</tr>
+<tr>
+<td>10</td>
+<td>Highly underdamped</td>
+<td>Sharp resonance</td>
+</tr>
+</tbody>
+</table>
+<h3 id="rlc-band-pass-filter">RLC Band-Pass Filter</h3>
+<p>The <strong>RLC band-pass filter</strong> passes a band of frequencies centered at the resonant frequency.</p>
+<p><strong>Series RLC band-pass</strong> (output across R):
+[f_0 = \frac{1}{2\pi\sqrt{LC}}]
+[Q = \frac{1}{R}\sqrt{\frac{L}{C}} = \frac{f_0}{BW}]
+[BW = \frac{R}{2\pi L}]</p>
+<p><strong>Design process:</strong></p>
+<ol>
+<li>Choose center frequency <span class="arithmatex">\(f_0\)</span></li>
+<li>Choose desired Q (affects bandwidth)</li>
+<li>Calculate LC product: <span class="arithmatex">\(LC = \frac{1}{(2\pi f_0)^2}\)</span></li>
+<li>Choose L or C, calculate the other</li>
+<li>Calculate R: <span class="arithmatex">\(R = \frac{2\pi f_0 L}{Q}\)</span></li>
+</ol>
+<h4 id="diagram-second-order-filter-designer">Diagram: Second-Order Filter Designer</h4>
+<iframe src="../../sims/second-order-filter/main.html" width="100%" height="550px" scrolling="no" style="overflow: hidden;"></iframe>
+
+<details markdown="1">
+<summary>Second-Order Filter Designer</summary>
+Type: microsim
+
+Bloom Level: Apply (L3)
+Bloom Verb: design
+
+Learning Objective: Students will design second-order RLC filters by specifying center frequency and Q, then observing the resulting component values and frequency response.
+
+Visual elements:
+- Circuit schematic (series RLC)
+- Bode magnitude and phase plots
+- Peak height indicator for underdamped responses
+- Bandwidth markers on plot
+- Component values display
+
+Interactive controls:
+- Slider: Center frequency f₀ (100 Hz to 100 kHz, log)
+- Slider: Q factor (0.5 to 20)
+- Radio: Filter type (LP, HP, BP)
+- Toggle: Fix L or Fix C for design
+- Input: Fixed component value
+- Button: Calculate components
+
+Design calculations displayed:
+- LC = 1/(2πf₀)²
+- R = 2πf₀L/Q (or R = Q/(2πf₀C))
+- BW = f₀/Q
+- Peak height (dB) if Q > 0.707
+
+Default parameters:
+- f₀ = 1 kHz
+- Q = 5 (narrow band-pass)
+- L = 10 mH (fixed)
+- Calculated: C = 2.53 μF, R = 12.6 Ω
+
+Canvas layout:
+- Circuit/specs: 250 × 400 pixels
+- Bode plots: 350 × 400 pixels
+- Control area: 100 pixels below
+
+Implementation: p5.js
+</details>
+
+<h2 id="passive-vs-active-filters">Passive vs. Active Filters</h2>
+<h3 id="passive-filters">Passive Filters</h3>
+<p><strong>Passive filters</strong> use only resistors, capacitors, and inductors—no power supply or amplification.</p>
+<p><strong>Advantages:</strong></p>
+<ul>
+<li>Simple, no power supply needed</li>
+<li>High reliability</li>
+<li>Can handle high power</li>
+<li>No active device noise</li>
+</ul>
+<p><strong>Disadvantages:</strong></p>
+<ul>
+<li>Cannot amplify (gain ≤ 1)</li>
+<li>Loading effects change response</li>
+<li>Large inductors for low frequencies</li>
+<li>Limited Q in some topologies</li>
+</ul>
+<h3 id="active-filters">Active Filters</h3>
+<p><strong>Active filters</strong> use amplifying devices (usually op-amps) along with RC networks.</p>
+<p><strong>Advantages:</strong></p>
+<ul>
+<li>Can provide gain (amplify while filtering)</li>
+<li>No inductors needed (cheaper, smaller)</li>
+<li>Easy to cascade without loading</li>
+<li>High Q achievable</li>
+<li>Adjustable gain and cutoff</li>
+</ul>
+<p><strong>Disadvantages:</strong></p>
+<ul>
+<li>Requires power supply</li>
+<li>Bandwidth limited by op-amp</li>
+<li>More components</li>
+<li>Potential for noise and distortion</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Passive</th>
+<th>Active</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Gain</td>
+<td>≤ 1 (loss)</td>
+<td>Any value</td>
+</tr>
+<tr>
+<td>Inductors</td>
+<td>Often needed</td>
+<td>Not needed</td>
+</tr>
+<tr>
+<td>Power supply</td>
+<td>None</td>
+<td>Required</td>
+</tr>
+<tr>
+<td>Cascading</td>
+<td>Loading issues</td>
+<td>No loading</td>
+</tr>
+<tr>
+<td>High Q</td>
+<td>Difficult</td>
+<td>Easy</td>
+</tr>
+<tr>
+<td>High frequency</td>
+<td>Excellent</td>
+<td>Limited by op-amp</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition tip">
+<p class="admonition-title">When to Choose Active Filters</p>
+<p>Use active filters for audio frequencies when you need gain, precise response shapes, or want to avoid large inductors. Use passive filters for RF, high-power applications, or when simplicity and reliability are paramount.</p>
+</div>
+<h2 id="filter-design-process">Filter Design Process</h2>
+<p>Designing a filter involves translating specifications into component values:</p>
+<p><strong>Step 1: Define specifications</strong></p>
+<ul>
+<li>Filter type (LP, HP, BP, BR)</li>
+<li>Cutoff frequency/frequencies</li>
+<li>Passband ripple (if any)</li>
+<li>Stopband attenuation</li>
+<li>Order required</li>
+</ul>
+<p><strong>Step 2: Choose topology</strong></p>
+<ul>
+<li>First-order RC/RL for simple roll-off</li>
+<li>Second-order RLC for steeper roll-off or resonance</li>
+<li>Active for gain or inductor-free design</li>
+</ul>
+<p><strong>Step 3: Calculate component values</strong></p>
+<p>Using design equations for the chosen topology.</p>
+<p><strong>Step 4: Select standard values</strong></p>
+<p>Components come in standard values (E12, E24 series). Choose nearest values.</p>
+<p><strong>Step 5: Verify response</strong></p>
+<p>Simulate or measure to confirm specifications are met.</p>
+<h2 id="audio-tone-control-bass-and-treble">Audio Tone Control: Bass and Treble</h2>
+<p><strong>Audio tone control</strong> circuits adjust the frequency balance of sound. The classic Baxandall tone control (named after Peter Baxandall) provides independent bass and treble adjustment.</p>
+<h3 id="bass-filter">Bass Filter</h3>
+<p>A <strong>bass filter</strong> emphasizes or attenuates low frequencies (typically below 200-500 Hz).</p>
+<p><strong>Bass boost:</strong> Low-pass shelving filter with gain at low frequencies</p>
+<p><strong>Bass cut:</strong> Attenuate low frequencies while passing midrange and treble</p>
+<p><strong>Typical bass control range:</strong> ±12 dB at 100 Hz</p>
+<h3 id="treble-filter">Treble Filter</h3>
+<p>A <strong>treble filter</strong> emphasizes or attenuates high frequencies (typically above 2-5 kHz).</p>
+<p><strong>Treble boost:</strong> High-pass shelving filter with gain at high frequencies</p>
+<p><strong>Treble cut:</strong> Attenuate high frequencies while passing bass and midrange</p>
+<p><strong>Typical treble control range:</strong> ±12 dB at 10 kHz</p>
+<h3 id="shelving-filters">Shelving Filters</h3>
+<p>Unlike the simple filters that continue rolling off forever, <strong>shelving filters</strong> level off to a constant gain in the stop band. They're like stepping up or down to a shelf, not sliding off a cliff.</p>
+<p><strong>Low-frequency shelf:</strong> Adjusts gain below a corner frequency, flat response above</p>
+<p><strong>High-frequency shelf:</strong> Adjusts gain above a corner frequency, flat response below</p>
+<h2 id="audio-signal-levels-and-decibels">Audio Signal Levels and Decibels</h2>
+<p>Audio engineers use specific decibel references:</p>
+<h3 id="dbv-decibels-relative-to-1-volt">dBV (decibels relative to 1 volt)</h3>
+<div class="arithmatex">\[dBV = 20\log_{10}\left(\frac{V_{rms}}{1V}\right)\]</div>
+<p><strong>Reference:</strong> 1 V RMS = 0 dBV</p>
+<p><strong>Common levels:</strong></p>
+<table>
+<thead>
+<tr>
+<th>dBV</th>
+<th>Voltage</th>
+<th>Application</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>+4 dBV</td>
+<td>1.58 V</td>
+<td>Professional line level</td>
+</tr>
+<tr>
+<td>0 dBV</td>
+<td>1.0 V</td>
+<td>Consumer line level (some)</td>
+</tr>
+<tr>
+<td>-10 dBV</td>
+<td>316 mV</td>
+<td>Consumer line level (typical)</td>
+</tr>
+<tr>
+<td>-60 dBV</td>
+<td>1 mV</td>
+<td>Microphone level</td>
+</tr>
+</tbody>
+</table>
+<h3 id="dbu-decibels-relative-to-0775-volts">dBu (decibels relative to 0.775 volts)</h3>
+<div class="arithmatex">\[dBu = 20\log_{10}\left(\frac{V_{rms}}{0.775V}\right)\]</div>
+<p><strong>Reference:</strong> 0.775 V RMS = 0 dBu (originally referenced to 600Ω termination = 1 mW)</p>
+<p><strong>Why 0.775V?</strong> It's the voltage that produces 1 mW into 600Ω.</p>
+<table>
+<thead>
+<tr>
+<th>dBu</th>
+<th>dBV</th>
+<th>Voltage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>+4 dBu</td>
+<td>+1.8 dBV</td>
+<td>1.23 V</td>
+</tr>
+<tr>
+<td>0 dBu</td>
+<td>-2.2 dBV</td>
+<td>0.775 V</td>
+</tr>
+<tr>
+<td>-10 dBu</td>
+<td>-12.2 dBV</td>
+<td>245 mV</td>
+</tr>
+</tbody>
+</table>
+<h3 id="headroom-and-dynamic-range">Headroom and Dynamic Range</h3>
+<p><strong>Headroom</strong> is the safety margin between normal operating level and maximum level (clipping).</p>
+<div class="arithmatex">\[\text{Headroom (dB)} = \text{Maximum level} - \text{Nominal level}\]</div>
+<p>Typical professional equipment has 20+ dB of headroom.</p>
+<p><strong>Dynamic range</strong> is the ratio between the loudest and quietest signals a system can handle:</p>
+<div class="arithmatex">\[\text{Dynamic Range (dB)} = \text{Maximum level} - \text{Noise floor}\]</div>
+<table>
+<thead>
+<tr>
+<th>Medium</th>
+<th>Typical Dynamic Range</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CD audio</td>
+<td>96 dB</td>
+</tr>
+<tr>
+<td>Vinyl record</td>
+<td>60-70 dB</td>
+</tr>
+<tr>
+<td>FM radio</td>
+<td>50-60 dB</td>
+</tr>
+<tr>
+<td>Telephone</td>
+<td>30-40 dB</td>
+</tr>
+</tbody>
+</table>
+<h2 id="audio-transducers-microphones-and-speakers">Audio Transducers: Microphones and Speakers</h2>
+<h3 id="microphones">Microphones</h3>
+<p>A <strong>microphone</strong> converts sound (acoustic energy) to electrical signals.</p>
+<p><strong>Types:</strong></p>
+<ul>
+<li><strong>Dynamic:</strong> Moving coil in magnetic field, rugged, no power needed</li>
+<li><strong>Condenser:</strong> Capacitor with moving plate, sensitive, needs phantom power</li>
+<li><strong>Ribbon:</strong> Thin metal ribbon in magnetic field, delicate, warm sound</li>
+</ul>
+<p><strong>Typical output levels:</strong> -60 to -40 dBV (1-10 mV)</p>
+<p><strong>Amplifier gain needed:</strong> 40-60 dB to reach line level</p>
+<h3 id="speakers">Speakers</h3>
+<p>A <strong>speaker</strong> (loudspeaker) converts electrical signals to sound.</p>
+<p><strong>Basic operation:</strong></p>
+<ol>
+<li>Current through voice coil creates magnetic field</li>
+<li>Interacts with permanent magnet</li>
+<li>Cone moves, pushing air</li>
+<li>Air pressure waves = sound</li>
+</ol>
+<p><strong>Impedance:</strong> Typically 4Ω, 8Ω, or 16Ω (mostly resistive at low frequencies, complex at higher frequencies)</p>
+<p><strong>Sensitivity:</strong> Sound pressure level (SPL) produced for 1W input at 1 meter distance</p>
+<p><strong>Crossover networks:</strong> Filter circuits that direct different frequencies to appropriate drivers (woofer, tweeter)</p>
+<h4 id="diagram-audio-signal-chain">Diagram: Audio Signal Chain</h4>
+<iframe src="../../sims/audio-signal-chain/main.html" width="100%" height="500px" scrolling="no" style="overflow: hidden;"></iframe>
+
+<details markdown="1">
+<summary>Audio Signal Chain</summary>
+Type: microsim
+
+Bloom Level: Understand (L2)
+Bloom Verb: explain
+
+Learning Objective: Students will explain the signal levels and gain stages in a typical audio system from microphone to speaker.
+
+Visual elements:
+- Signal flow diagram: Mic → Preamp → Tone Control → Power Amp → Speaker
+- Level meters at each stage showing dBV or dBu
+- Gain stages with amplification/attenuation values
+- Frequency response modification at tone control
+- Headroom indication at each stage
+
+Interactive controls:
+- Slider: Input level (mic sensitivity)
+- Slider: Preamp gain (20-60 dB)
+- Slider: Bass adjustment (±12 dB)
+- Slider: Treble adjustment (±12 dB)
+- Slider: Volume (power amp gain)
+- Display: Level at each stage
+
+Annotations:
+- "Mic level: ~-50 dBV"
+- "Line level: ~0 dBV"
+- "Power amp output: Watts to speaker"
+- Clipping indicator if any stage overloads
+
+Default parameters:
+- Typical vocal recording chain
+- Moderate levels with good headroom
+
+Canvas layout:
+- Signal chain diagram: 600 × 350 pixels
+- Control area: 100 pixels below
+
+Implementation: p5.js
+</details>
+
+<h2 id="amplifier-gain-in-filter-circuits">Amplifier Gain in Filter Circuits</h2>
+<p>When using active filters, <strong>amplifier gain</strong> becomes a design parameter alongside cutoff frequency.</p>
+<p><strong>First-order active low-pass (inverting):</strong>
+[H(j\omega) = -\frac{R_f/R_i}{1 + j\omega R_f C}]</p>
+<ul>
+<li>DC gain: <span class="arithmatex">\(-R_f/R_i\)</span></li>
+<li>Cutoff: <span class="arithmatex">\(f_c = \frac{1}{2\pi R_f C}\)</span></li>
+</ul>
+<p><strong>Sallen-Key second-order (unity gain):</strong></p>
+<p>A popular topology for second-order active filters using a single op-amp with gain of 1.</p>
+<div class="arithmatex">\[f_c = \frac{1}{2\pi\sqrt{R_1 R_2 C_1 C_2}}\]</div>
+<p>For equal-value components (<span class="arithmatex">\(R_1 = R_2 = R\)</span>, <span class="arithmatex">\(C_1 = C_2 = C\)</span>):
+[f_c = \frac{1}{2\pi RC}]</p>
+<h2 id="practical-design-example">Practical Design Example</h2>
+<p><strong>Design a tone control circuit for a guitar amplifier:</strong></p>
+<p><strong>Specifications:</strong></p>
+<ul>
+<li>Bass control: ±15 dB at 100 Hz</li>
+<li>Treble control: ±15 dB at 3 kHz</li>
+<li>Unity gain at 1 kHz (midpoint)</li>
+</ul>
+<p><strong>Approach:</strong></p>
+<ol>
+<li>Use shelving filter topology</li>
+<li>Calculate component values for corner frequencies</li>
+<li>Add potentiometers for variable boost/cut</li>
+<li>Buffer input and output with op-amp stages</li>
+</ol>
+<p><strong>Component guidelines:</strong></p>
+<ul>
+<li>Bass control: RC time constant for ~100 Hz</li>
+<li>Treble control: RC time constant for ~3 kHz</li>
+<li>Use log-taper potentiometers for perceptually linear adjustment</li>
+</ul>
+<h2 id="self-check-questions">Self-Check Questions</h2>
+<details class="question">
+<summary>1. Design an RC low-pass filter with cutoff frequency 5 kHz. If C = 10 nF, what value of R is needed?</summary>
+<p>Using the cutoff frequency formula:
+[f_c = \frac{1}{2\pi RC}]</p>
+<p>Solving for R:
+[R = \frac{1}{2\pi f_c C} = \frac{1}{2\pi \times 5000 \times 10 \times 10^{-9}}]
+[R = \frac{1}{3.14 \times 10^{-4}} = 3183 \text{ Ω}]</p>
+<p>Use standard value R = 3.3 kΩ (E24 series)</p>
+<p>Actual cutoff with R = 3.3 kΩ:
+[f_c = \frac{1}{2\pi \times 3300 \times 10 \times 10^{-9}} = 4.82 \text{ kHz}]</p>
+<p>Close enough for most applications!</p>
+</details>
+<details class="question">
+<summary>2. A band-pass filter has center frequency 10 kHz and Q = 20. What is the bandwidth?</summary>
+<p>Bandwidth formula:
+[BW = \frac{f_0}{Q} = \frac{10000}{20} = 500 \text{ Hz}]</p>
+<p>The filter passes frequencies from approximately:
+- Lower cutoff: <span class="arithmatex">\(f_0 - BW/2 = 10000 - 250 = 9750\)</span> Hz
+- Upper cutoff: <span class="arithmatex">\(f_0 + BW/2 = 10000 + 250 = 10250\)</span> Hz</p>
+<p>This 500 Hz window centered at 10 kHz is quite narrow, making it useful for selecting a specific frequency.</p>
+</details>
+<details class="question">
+<summary>3. Why are active filters preferred over passive LC filters at audio frequencies?</summary>
+<p>Several practical reasons favor active filters for audio:</p>
+<ol>
+<li>
+<p><strong>No inductors:</strong> At audio frequencies (20 Hz - 20 kHz), inductors would need to be very large (henries!) and expensive. Capacitors and op-amps are much cheaper and smaller.</p>
+</li>
+<li>
+<p><strong>Gain is possible:</strong> Active filters can amplify the signal while filtering, eliminating the need for separate amplifier stages.</p>
+</li>
+<li>
+<p><strong>No loading issues:</strong> Op-amp buffers provide high input impedance and low output impedance, so cascading multiple filter stages doesn't change their individual responses.</p>
+</li>
+<li>
+<p><strong>High Q easily achieved:</strong> Getting high Q with passive RLC requires either very large L or very small R, both problematic. Active filters achieve high Q with just RC components.</p>
+</li>
+<li>
+<p><strong>Adjustability:</strong> Active filter parameters can be made adjustable with potentiometers without complex switching.</p>
+</li>
+</ol>
+</details>
+<details class="question">
+<summary>4. A microphone outputs -50 dBV. What voltage is this, and how much gain (in dB) is needed to reach +4 dBV professional line level?</summary>
+<p>Converting -50 dBV to voltage:
+[V = 10^{-50/20} \times 1\text{V} = 10^{-2.5} \text{V} = 3.16 \text{ mV}]</p>
+<p>Gain needed:
+[\text{Gain (dB)} = +4 - (-50) = 54 \text{ dB}]</p>
+<p>This is a voltage gain of:
+[A_V = 10^{54/20} = 10^{2.7} = 501]</p>
+<p>The microphone preamp needs about 500× voltage gain to bring the signal to professional line level.</p>
+</details>
+<h2 id="summary_1">Summary</h2>
+<p>This chapter equipped you with practical filter design skills:</p>
+<ol>
+<li>
+<p><strong>First-order filters are building blocks</strong> - RC and RL configurations provide -20 dB/decade roll-off</p>
+</li>
+<li>
+<p><strong>Second-order filters add resonance capability</strong> - RLC circuits can have peaked responses with high Q</p>
+</li>
+<li>
+<p><strong>Passive filters are simple but limited</strong> - No gain, loading effects, large inductors at low frequencies</p>
+</li>
+<li>
+<p><strong>Active filters overcome passive limitations</strong> - Gain, no inductors, easy cascading, but need power</p>
+</li>
+<li>
+<p><strong>Design starts with specifications</strong> - Cutoff frequency, Q, gain, filter type</p>
+</li>
+<li>
+<p><strong>Standard component values constrain designs</strong> - Adjust calculations to nearest E12 or E24 values</p>
+</li>
+<li>
+<p><strong>Audio tone controls use shelving filters</strong> - Bass and treble adjust low and high frequencies</p>
+</li>
+<li>
+<p><strong>Decibel references matter in audio</strong> - dBV and dBu have specific voltage references</p>
+</li>
+<li>
+<p><strong>Headroom prevents clipping</strong> - Design for adequate margin above normal levels</p>
+</li>
+<li>
+<p><strong>The signal chain has multiple gain stages</strong> - Microphone to speaker involves several amplification and filtering steps</p>
+</li>
+</ol>
+<p>With these tools, you can design filters for any frequency response specification. Whether you're building an audio equalizer, removing noise from a sensor signal, or selecting a radio channel, the principles are the same: choose the right topology, calculate component values, and verify the response. Filter design is where theory meets practice—and now you're equipped to make it happen.</p>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../11-frequency-response-bode/" class="md-footer__link md-footer__link--prev" aria-label="Previous: 11. Frequency Response and Bode">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                11. Frequency Response and Bode
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../13-operational-amplifiers/" class="md-footer__link md-footer__link--next" aria-label="Next: 13. Operational Amplifiers">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                13. Operational Amplifiers
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.copy", "navigation.expand", "navigation.path", "navigation.prune", "navigation.indexes", "toc.follow", "navigation.top", "navigation.footer", "content.action.edit"], "search": "../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.83f73b43.min.js"></script>
+      
+        <script src="../../js/extra.js"></script>
+      
+        <script src="../../js/katex.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+      
+    
+  </body>
+</html>

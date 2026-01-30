@@ -1,0 +1,2867 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="An intelligent interactive Circuits textbook for EE and CS students with AI-generated content and simulations.">
+      
+      
+        <meta name="author" content="Dan McCreary">
+      
+      
+        <link rel="canonical" href="https://dmccreary.github.io/circuits/chapters/10-ac-power-analysis/">
+      
+      
+        <link rel="prev" href="../09-phasors-complex-impedance/">
+      
+      
+        <link rel="next" href="../11-frequency-response-bode/">
+      
+      
+      <link rel="icon" href="../../img/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.43">
+    
+    
+      
+        <title>10. AC Power Analysis - Circuits 1</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.0253249f.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../css/extra.css">
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+<script id="__analytics">function __md_analytics(){function e(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],e("js",new Date),e("config","G-9J4MVE6LWP"),document.addEventListener("DOMContentLoaded",(function(){document.forms.search&&document.forms.search.query.addEventListener("blur",(function(){this.value&&e("event","search",{search_term:this.value})}));document$.subscribe((function(){var t=document.forms.feedback;if(void 0!==t)for(var a of t.querySelectorAll("[type=submit]"))a.addEventListener("click",(function(a){a.preventDefault();var n=document.location.pathname,d=this.getAttribute("data-md-value");e("event","feedback",{page:n,data:d}),t.firstElementChild.disabled=!0;var r=t.querySelector(".md-feedback__note [data-md-value='"+d+"']");r&&(r.hidden=!1)})),t.hidden=!1})),location$.subscribe((function(t){e("config","G-9J4MVE6LWP",{page_path:t.pathname})}))}));var t=document.createElement("script");t.async=!0,t.src="https://www.googletagmanager.com/gtag/js?id=G-9J4MVE6LWP",document.getElementById("__analytics").insertAdjacentElement("afterEnd",t)}</script>
+  
+    <script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
+  
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="orange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#ac-power-analysis" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Circuits 1" class="md-header__button md-logo" aria-label="Circuits 1" data-md-component="logo">
+      
+  <img src="../../img/course-logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Circuits 1
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              10. AC Power Analysis
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/dmccreary/circuits" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub Repo
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Circuits 1" class="md-nav__button md-logo" aria-label="Circuits 1" data-md-component="logo">
+      
+  <img src="../../img/course-logo.png" alt="logo">
+
+    </a>
+    Circuits 1
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/dmccreary/circuits" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub Repo
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../about/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    About This Course
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+    
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Chapters
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Chapters
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-electric-charge-basic-quantities/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1. Electric Charge and Quantities
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-ohms-law-basic-configurations/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2. Ohm's Law and Configurations
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-kirchhoffs-laws-topology/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3. Kirchhoff's Laws and Topology
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-dc-circuit-analysis/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4. DC Circuit Analysis
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-passive-components/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5. Passive Components
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-transient-analysis-rc-rl/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    6. Transient Analysis RC/RL
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-second-order-rlc-circuits/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    7. Second-Order RLC Circuits
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-ac-signals-sinusoidal/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    8. AC Signals and Sinusoids
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../09-phasors-complex-impedance/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    9. Phasors and Impedance
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    10. AC Power Analysis
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    10. AC Power Analysis
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      Summary
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#concepts-covered" class="md-nav__link">
+    <span class="md-ellipsis">
+      Concepts Covered
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prerequisites
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#introduction-where-does-the-power-go" class="md-nav__link">
+    <span class="md-ellipsis">
+      Introduction: Where Does the Power Go?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#instantaneous-power-the-moment-by-moment-reality" class="md-nav__link">
+    <span class="md-ellipsis">
+      Instantaneous Power: The Moment-by-Moment Reality
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Instantaneous Power: The Moment-by-Moment Reality">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-instantaneous-power-oscillation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Instantaneous Power Oscillation
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#average-power-what-actually-gets-used" class="md-nav__link">
+    <span class="md-ellipsis">
+      Average Power: What Actually Gets Used
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#real-power-the-workhorse" class="md-nav__link">
+    <span class="md-ellipsis">
+      Real Power: The Workhorse
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reactive-power-the-busy-work" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reactive Power: The Busy Work
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#apparent-power-the-full-picture" class="md-nav__link">
+    <span class="md-ellipsis">
+      Apparent Power: The Full Picture
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#complex-power-the-elegant-formulation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Complex Power: The Elegant Formulation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-power-triangle-visualizing-the-relationship" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Power Triangle: Visualizing the Relationship
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Power Triangle: Visualizing the Relationship">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-interactive-power-triangle" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Interactive Power Triangle
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#power-factor-leading-and-lagging" class="md-nav__link">
+    <span class="md-ellipsis">
+      Power Factor: Leading and Lagging
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Power Factor: Leading and Lagging">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#lagging-power-factor" class="md-nav__link">
+    <span class="md-ellipsis">
+      Lagging Power Factor
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#leading-power-factor" class="md-nav__link">
+    <span class="md-ellipsis">
+      Leading Power Factor
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#power-factor-correction" class="md-nav__link">
+    <span class="md-ellipsis">
+      Power Factor Correction
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Power Factor Correction">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-power-factor-correction-simulator" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Power Factor Correction Simulator
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#power-in-circuit-elements" class="md-nav__link">
+    <span class="md-ellipsis">
+      Power in Circuit Elements
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Power in Circuit Elements">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#power-in-resistors" class="md-nav__link">
+    <span class="md-ellipsis">
+      Power in Resistors
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#power-in-capacitors" class="md-nav__link">
+    <span class="md-ellipsis">
+      Power in Capacitors
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#power-in-inductors" class="md-nav__link">
+    <span class="md-ellipsis">
+      Power in Inductors
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Power in Inductors">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-power-flow-in-r-l-c" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Power Flow in R, L, C
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rms-power-calculations" class="md-nav__link">
+    <span class="md-ellipsis">
+      RMS Power Calculations
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#maximum-power-transfer-in-ac-circuits" class="md-nav__link">
+    <span class="md-ellipsis">
+      Maximum Power Transfer in AC Circuits
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#efficiency" class="md-nav__link">
+    <span class="md-ellipsis">
+      Efficiency
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#power-gain" class="md-nav__link">
+    <span class="md-ellipsis">
+      Power Gain
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-complete-power-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked Example: Complete Power Analysis
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#self-check-questions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Self-Check Questions
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Summary
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../11-frequency-response-bode/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    11. Frequency Response and Bode
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../12-filters-resonance/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    12. Filters and Resonance
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../13-operational-amplifiers/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    13. Operational Amplifiers
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../14-signals-audio-lab/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    14. Signal Analysis and Fourier
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../15-audio-applications/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    15. Audio Applications
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../16-laboratory-techniques/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    16. Laboratory Techniques
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../sims/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    MicroSims
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../sections/index.md" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Supplementary Sections
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../learning-graph/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Learning Graph
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../prompts/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Sample Prompts
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+          
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../faq/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    FAQ
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../glossary/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Glossary
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how-we-built-this-site/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    How We Built This Site
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../references/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    References
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../license/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    License
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contact/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Contact
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      Summary
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#concepts-covered" class="md-nav__link">
+    <span class="md-ellipsis">
+      Concepts Covered
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prerequisites
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#introduction-where-does-the-power-go" class="md-nav__link">
+    <span class="md-ellipsis">
+      Introduction: Where Does the Power Go?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#instantaneous-power-the-moment-by-moment-reality" class="md-nav__link">
+    <span class="md-ellipsis">
+      Instantaneous Power: The Moment-by-Moment Reality
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Instantaneous Power: The Moment-by-Moment Reality">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-instantaneous-power-oscillation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Instantaneous Power Oscillation
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#average-power-what-actually-gets-used" class="md-nav__link">
+    <span class="md-ellipsis">
+      Average Power: What Actually Gets Used
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#real-power-the-workhorse" class="md-nav__link">
+    <span class="md-ellipsis">
+      Real Power: The Workhorse
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reactive-power-the-busy-work" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reactive Power: The Busy Work
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#apparent-power-the-full-picture" class="md-nav__link">
+    <span class="md-ellipsis">
+      Apparent Power: The Full Picture
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#complex-power-the-elegant-formulation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Complex Power: The Elegant Formulation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-power-triangle-visualizing-the-relationship" class="md-nav__link">
+    <span class="md-ellipsis">
+      The Power Triangle: Visualizing the Relationship
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Power Triangle: Visualizing the Relationship">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-interactive-power-triangle" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Interactive Power Triangle
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#power-factor-leading-and-lagging" class="md-nav__link">
+    <span class="md-ellipsis">
+      Power Factor: Leading and Lagging
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Power Factor: Leading and Lagging">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#lagging-power-factor" class="md-nav__link">
+    <span class="md-ellipsis">
+      Lagging Power Factor
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#leading-power-factor" class="md-nav__link">
+    <span class="md-ellipsis">
+      Leading Power Factor
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#power-factor-correction" class="md-nav__link">
+    <span class="md-ellipsis">
+      Power Factor Correction
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Power Factor Correction">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-power-factor-correction-simulator" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Power Factor Correction Simulator
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#power-in-circuit-elements" class="md-nav__link">
+    <span class="md-ellipsis">
+      Power in Circuit Elements
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Power in Circuit Elements">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#power-in-resistors" class="md-nav__link">
+    <span class="md-ellipsis">
+      Power in Resistors
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#power-in-capacitors" class="md-nav__link">
+    <span class="md-ellipsis">
+      Power in Capacitors
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#power-in-inductors" class="md-nav__link">
+    <span class="md-ellipsis">
+      Power in Inductors
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Power in Inductors">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-power-flow-in-r-l-c" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Power Flow in R, L, C
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rms-power-calculations" class="md-nav__link">
+    <span class="md-ellipsis">
+      RMS Power Calculations
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#maximum-power-transfer-in-ac-circuits" class="md-nav__link">
+    <span class="md-ellipsis">
+      Maximum Power Transfer in AC Circuits
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#efficiency" class="md-nav__link">
+    <span class="md-ellipsis">
+      Efficiency
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#power-gain" class="md-nav__link">
+    <span class="md-ellipsis">
+      Power Gain
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-complete-power-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked Example: Complete Power Analysis
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#self-check-questions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Self-Check Questions
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Summary
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+    <a href="https://github.com/dmccreary/circuits/blob/master/docs/chapters/10-ac-power-analysis/index.md" title="Edit this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+
+
+<h1 id="ac-power-analysis">AC Power Analysis</h1>
+<h2 id="summary">Summary</h2>
+<p>This chapter examines power in AC circuits, which behaves quite differently from DC power due to the phase relationships between voltage and current. Students will learn about instantaneous, average, real, reactive, and apparent power, and understand how power factor affects energy efficiency. The chapter covers the power triangle, power factor correction using capacitors, and power calculations in resistive, capacitive, and inductive elements. Understanding AC power is crucial for audio amplifier design and power system efficiency.</p>
+<h2 id="concepts-covered">Concepts Covered</h2>
+<p>This chapter covers the following 21 concepts from the learning graph:</p>
+<ol>
+<li>Instantaneous Power</li>
+<li>Average Power</li>
+<li>Real Power</li>
+<li>Reactive Power</li>
+<li>Apparent Power</li>
+<li>Complex Power</li>
+<li>Power Triangle</li>
+<li>Power Factor</li>
+<li>Leading Power Factor</li>
+<li>Lagging Power Factor</li>
+<li>Power Factor Correction</li>
+<li>VAR</li>
+<li>Watt</li>
+<li>Volt-Ampere</li>
+<li>Maximum Power in AC</li>
+<li>RMS Power Calculation</li>
+<li>Power in Resistors</li>
+<li>Power in Capacitors</li>
+<li>Power in Inductors</li>
+<li>Efficiency</li>
+<li>Power Gain</li>
+</ol>
+<h2 id="prerequisites">Prerequisites</h2>
+<p>This chapter builds on concepts from:</p>
+<ul>
+<li><a href="../01-electric-charge-basic-quantities/">Chapter 1: Electric Charge and Basic Circuit Quantities</a></li>
+<li><a href="../05-passive-components/">Chapter 5: Passive Components: Resistors, Capacitors, and Inductors</a></li>
+<li><a href="../09-phasors-complex-impedance/">Chapter 9: Phasors and Complex Impedance</a></li>
+</ul>
+<hr />
+<p>title: AC Power Analysis
+description: Understand real, reactive, and apparent power, power factor, and efficiency in AC circuits
+generated_by: chapter-content-generator v0.03
+date: 2026-01-30</p>
+<hr />
+<h2 id="introduction-where-does-the-power-go">Introduction: Where Does the Power Go?</h2>
+<p>In DC circuits, power is straightforward: <span class="arithmatex">\(P = VI\)</span>, energy flows from source to load, and that's that. AC circuits tell a more interesting story. Sometimes energy flows <em>backward</em> from load to source. Sometimes voltage and current are working at cross-purposes. And sometimes what looks like a lot of power isn't doing any useful work at all.</p>
+<p>Welcome to AC power analysis, where we untangle the mysteries of:</p>
+<ul>
+<li>Why your electric bill charges for "real" power while power companies worry about "reactive" power</li>
+<li>Why a motor can draw more current than you'd expect from its wattage</li>
+<li>Why power factor correction capacitors can save factories thousands of dollars</li>
+<li>Why your audio amplifier's speaker wires matter</li>
+</ul>
+<p>Understanding AC power is where circuit theory meets the real world of energy efficiency, power distribution, and amplifier design. The concepts here apply to everything from the power grid to your laptop charger to concert PA systems.</p>
+<h2 id="instantaneous-power-the-moment-by-moment-reality">Instantaneous Power: The Moment-by-Moment Reality</h2>
+<p><strong>Instantaneous power</strong> is the power at any specific instant in time:</p>
+<div class="arithmatex">\[p(t) = v(t) \cdot i(t)\]</div>
+<p>For sinusoidal signals:
+[v(t) = V_m \cos(\omega t + \theta_v)]
+[i(t) = I_m \cos(\omega t + \theta_i)]</p>
+<p>The instantaneous power is:
+[p(t) = V_m I_m \cos(\omega t + \theta_v) \cos(\omega t + \theta_i)]</p>
+<p>Using the trig identity <span class="arithmatex">\(\cos A \cos B = \frac{1}{2}[\cos(A-B) + \cos(A+B)]\)</span>:</p>
+<div class="arithmatex">\[p(t) = \frac{V_m I_m}{2}\cos(\theta_v - \theta_i) + \frac{V_m I_m}{2}\cos(2\omega t + \theta_v + \theta_i)\]</div>
+<p>This reveals two components:</p>
+<ol>
+<li><strong>Constant term:</strong> <span class="arithmatex">\(\frac{V_m I_m}{2}\cos\theta\)</span> - the average power</li>
+<li><strong>Oscillating term:</strong> Fluctuates at twice the signal frequency</li>
+</ol>
+<p>The oscillating component means power flows back and forth between source and reactive elements (L and C) every quarter cycle!</p>
+<h4 id="diagram-instantaneous-power-oscillation">Diagram: Instantaneous Power Oscillation</h4>
+<iframe src="../../sims/instantaneous-power/main.html" width="100%" height="500px" scrolling="no" style="overflow: hidden;"></iframe>
+
+<details markdown="1">
+<summary>Instantaneous Power Oscillation</summary>
+Type: microsim
+
+Bloom Level: Understand (L2)
+Bloom Verb: explain
+
+Learning Objective: Students will explain how instantaneous power oscillates and can go negative, representing energy returning to the source.
+
+Visual elements:
+- Top plot: v(t) and i(t) waveforms
+- Bottom plot: p(t) = v(t)×i(t) instantaneous power
+- Shading: Positive power (green) and negative power (red)
+- Average power line shown as horizontal dashed line
+- Phase angle between v and i indicated
+- Current time marker synchronized across both plots
+
+Interactive controls:
+- Slider: Phase angle θ between v and i (0° to 90°)
+- Slider: Current magnitude (affects power scale)
+- Toggle: Show/hide average power line
+- Toggle: Show/hide shaded regions
+- Display: Average power calculation
+
+Annotations for different phase angles:
+- θ = 0°: "All positive - resistive load"
+- θ = 45°: "Some energy returns to source"
+- θ = 90°: "Average power = 0, all reactive"
+
+Default parameters:
+- θ = 30° (typical inductive load)
+- Vm = 10V, Im = 5A
+
+Canvas layout:
+- Dual stacked plots: 600 × 200 pixels each
+- Control area: 100 pixels below
+
+Implementation: p5.js
+</details>
+
+<h2 id="average-power-what-actually-gets-used">Average Power: What Actually Gets Used</h2>
+<p><strong>Average power</strong> (also called real power or active power) is the time-averaged value of instantaneous power over one complete cycle:</p>
+<div class="arithmatex">\[P_{avg} = \frac{1}{T}\int_0^T p(t) \, dt\]</div>
+<p>For sinusoids, this works out to:</p>
+<div class="arithmatex">\[P = \frac{V_m I_m}{2}\cos\theta = V_{rms} I_{rms} \cos\theta\]</div>
+<p>Where <span class="arithmatex">\(\theta = \theta_v - \theta_i\)</span> is the phase angle between voltage and current.</p>
+<p><strong>Key insight:</strong> The factor <span class="arithmatex">\(\cos\theta\)</span> is the <strong>power factor</strong>. It determines how much of the apparent power does useful work.</p>
+<table>
+<thead>
+<tr>
+<th>Phase Angle θ</th>
+<th>cos θ</th>
+<th>Power Factor</th>
+<th>Interpretation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0°</td>
+<td>1.00</td>
+<td>Unity</td>
+<td>All power is real (resistive)</td>
+</tr>
+<tr>
+<td>30°</td>
+<td>0.866</td>
+<td>0.866 lagging</td>
+<td>Moderate reactive component</td>
+</tr>
+<tr>
+<td>45°</td>
+<td>0.707</td>
+<td>0.707</td>
+<td>Equal real and reactive</td>
+</tr>
+<tr>
+<td>60°</td>
+<td>0.50</td>
+<td>0.5 lagging</td>
+<td>Mostly reactive</td>
+</tr>
+<tr>
+<td>90°</td>
+<td>0.00</td>
+<td>Zero</td>
+<td>All reactive (pure L or C)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="real-power-the-workhorse">Real Power: The Workhorse</h2>
+<p><strong>Real power</strong> (P) is the average power that performs actual work—heating elements, turning motors, producing light and sound. It's measured in <strong>watts (W)</strong>.</p>
+<div class="arithmatex">\[P = V_{rms} I_{rms} \cos\theta = I_{rms}^2 R = \frac{V_{rms}^2}{R} \cdot \frac{R}{|Z|^2}\]</div>
+<p><strong>Where real power goes:</strong></p>
+<ul>
+<li>Heat in resistive elements</li>
+<li>Mechanical work in motors</li>
+<li>Light from lamps</li>
+<li>Sound from speakers</li>
+<li>Computation in processors</li>
+</ul>
+<p><strong>What you pay for:</strong> Your electric bill is based on real power consumed (kilowatt-hours), not apparent power.</p>
+<div class="admonition tip">
+<p class="admonition-title">Why Watts Matter</p>
+<p>When someone asks "How much power?" they usually mean real power in watts. A 100W light bulb consumes 100W of real power. A 1000W microwave uses 1000W of real power. This is the energy that does useful work and appears on your electric bill.</p>
+</div>
+<h2 id="reactive-power-the-busy-work">Reactive Power: The Busy Work</h2>
+<p><strong>Reactive power</strong> (Q) represents energy that oscillates between the source and reactive elements (inductors and capacitors) without being consumed. It's measured in <strong>volt-amperes reactive (VAR)</strong>.</p>
+<div class="arithmatex">\[Q = V_{rms} I_{rms} \sin\theta = I_{rms}^2 X\]</div>
+<p><strong>Reactive power characteristics:</strong></p>
+<ul>
+<li>Doesn't perform useful work</li>
+<li>Energy flows back and forth each quarter cycle</li>
+<li>Still requires current to flow (sizing wires, transformers)</li>
+<li>Inductive loads: Q &gt; 0 (positive, "lagging")</li>
+<li>Capacitive loads: Q &lt; 0 (negative, "leading")</li>
+</ul>
+<p><strong>Why reactive power matters:</strong></p>
+<p>Even though reactive power doesn't do work, it:</p>
+<ul>
+<li>Increases current magnitude (I²R losses in wires)</li>
+<li>Requires larger transformers and generators</li>
+<li>Reduces power system capacity</li>
+<li>Can cause voltage drops</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Load Type</th>
+<th>Q</th>
+<th>Sign Convention</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Inductive</td>
+<td>Positive</td>
+<td>Absorbs VARs (lagging)</td>
+</tr>
+<tr>
+<td>Capacitive</td>
+<td>Negative</td>
+<td>Supplies VARs (leading)</td>
+</tr>
+<tr>
+<td>Resistive</td>
+<td>Zero</td>
+<td>No reactive power</td>
+</tr>
+</tbody>
+</table>
+<h2 id="apparent-power-the-full-picture">Apparent Power: The Full Picture</h2>
+<p><strong>Apparent power</strong> (S) is the product of RMS voltage and RMS current, representing the total "power handling" required:</p>
+<div class="arithmatex">\[S = V_{rms} I_{rms}\]</div>
+<p>Apparent power is measured in <strong>volt-amperes (VA)</strong>, not watts, to distinguish it from real power.</p>
+<p><strong>The power relationship:</strong></p>
+<div class="arithmatex">\[S^2 = P^2 + Q^2\]</div>
+<p>Or equivalently:</p>
+<div class="arithmatex">\[S = \sqrt{P^2 + Q^2}\]</div>
+<p><strong>Apparent power determines:</strong></p>
+<ul>
+<li>Wire and cable sizing (must carry full current)</li>
+<li>Transformer ratings</li>
+<li>Generator capacity</li>
+<li>Circuit breaker ratings</li>
+</ul>
+<p><strong>Example:</strong> A motor draws 10A from a 120V source with power factor 0.8.
+- Apparent power: S = 120 × 10 = 1200 VA
+- Real power: P = 1200 × 0.8 = 960 W
+- Reactive power: Q = 1200 × 0.6 = 720 VAR</p>
+<p>The motor only does 960W of work, but the supply must provide capacity for 1200 VA!</p>
+<h2 id="complex-power-the-elegant-formulation">Complex Power: The Elegant Formulation</h2>
+<p><strong>Complex power</strong> combines real and reactive power into a single complex number:</p>
+<div class="arithmatex">\[\mathbf{S} = P + jQ = V_{rms} I_{rms}^*\]</div>
+<p>Where <span class="arithmatex">\(I^*\)</span> is the complex conjugate of the current phasor.</p>
+<p><strong>Alternative formula using impedance:</strong></p>
+<div class="arithmatex">\[\mathbf{S} = I_{rms}^2 Z = \frac{V_{rms}^2}{Z^*}\]</div>
+<p><strong>Components:</strong></p>
+<ul>
+<li>Real part: <span class="arithmatex">\(P = \text{Re}\{\mathbf{S}\}\)</span> = Real power (W)</li>
+<li>Imaginary part: <span class="arithmatex">\(Q = \text{Im}\{\mathbf{S}\}\)</span> = Reactive power (VAR)</li>
+<li>Magnitude: <span class="arithmatex">\(|\mathbf{S}| = S\)</span> = Apparent power (VA)</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Quantity</th>
+<th>Symbol</th>
+<th>Formula</th>
+<th>Units</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Real Power</td>
+<td>P</td>
+<td><span class="arithmatex">\(V I \cos\theta\)</span></td>
+<td>Watts (W)</td>
+</tr>
+<tr>
+<td>Reactive Power</td>
+<td>Q</td>
+<td><span class="arithmatex">\(V I \sin\theta\)</span></td>
+<td>VAR</td>
+</tr>
+<tr>
+<td>Apparent Power</td>
+<td>S</td>
+<td><span class="arithmatex">\(V I\)</span></td>
+<td>VA</td>
+</tr>
+<tr>
+<td>Complex Power</td>
+<td><strong>S</strong></td>
+<td><span class="arithmatex">\(P + jQ\)</span></td>
+<td>VA</td>
+</tr>
+</tbody>
+</table>
+<h2 id="the-power-triangle-visualizing-the-relationship">The Power Triangle: Visualizing the Relationship</h2>
+<p>The <strong>power triangle</strong> shows the geometric relationship between P, Q, and S:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span>
+<span class="normal">5</span>
+<span class="normal">6</span></pre></div></td><td class="code"><div><pre><span></span><code>           S (VA)
+           /|
+          / |
+         /  | Q (VAR)
+        /θ__|
+         P (W)
+</code></pre></div></td></tr></table></div>
+<p><strong>Relationships:</strong></p>
+<ul>
+<li>Hypotenuse: Apparent power S</li>
+<li>Horizontal leg: Real power P</li>
+<li>Vertical leg: Reactive power Q</li>
+<li>Angle: Phase angle θ (same as impedance angle)</li>
+</ul>
+<p><strong>From the triangle:</strong></p>
+<p>[S = \sqrt{P^2 + Q^2}]
+[\cos\theta = \frac{P}{S}] (power factor)
+[\tan\theta = \frac{Q}{P}]</p>
+<h4 id="diagram-interactive-power-triangle">Diagram: Interactive Power Triangle</h4>
+<iframe src="../../sims/power-triangle/main.html" width="100%" height="500px" scrolling="no" style="overflow: hidden;"></iframe>
+
+<details markdown="1">
+<summary>Interactive Power Triangle</summary>
+Type: microsim
+
+Bloom Level: Apply (L3)
+Bloom Verb: calculate
+
+Learning Objective: Students will calculate power quantities from the power triangle relationship and observe how power factor affects the relationship between P, Q, and S.
+
+Visual elements:
+- Power triangle with P, Q, S labeled
+- Phase angle θ shown with arc
+- Color coding: P (green), Q (red for inductive/blue for capacitive), S (purple)
+- Phasor diagram showing V and I relationship (linked)
+- Numerical values displayed on triangle sides
+
+Interactive controls:
+- Mode toggle: "Enter P and Q" vs "Enter S and θ"
+- Slider: P or S (depending on mode)
+- Slider: Q or θ (depending on mode)
+- Toggle: Inductive/Capacitive load
+- Display: All calculated values
+
+Calculations displayed:
+- S = √(P² + Q²)
+- Power factor = P/S = cos(θ)
+- θ = tan⁻¹(Q/P)
+- Current = S/V (for given V)
+
+Visual feedback:
+- Triangle reshapes with parameter changes
+- Q above horizontal for inductive (lagging)
+- Q below horizontal for capacitive (leading)
+
+Default parameters:
+- P = 800W
+- Q = 600 VAR (inductive)
+- S = 1000 VA
+- PF = 0.8 lagging
+
+Canvas layout:
+- Triangle display: 450 × 350 pixels
+- Control area: 100 pixels below
+
+Implementation: p5.js
+</details>
+
+<h2 id="power-factor-leading-and-lagging">Power Factor: Leading and Lagging</h2>
+<p><strong>Power factor</strong> (PF) is the cosine of the phase angle between voltage and current:</p>
+<div class="arithmatex">\[PF = \cos\theta = \frac{P}{S}\]</div>
+<p>Power factor ranges from 0 to 1 and indicates how efficiently apparent power is converted to real power.</p>
+<h3 id="lagging-power-factor">Lagging Power Factor</h3>
+<p>A <strong>lagging power factor</strong> occurs when current lags behind voltage. This happens with inductive loads:</p>
+<ul>
+<li>Motors</li>
+<li>Transformers</li>
+<li>Fluorescent light ballasts</li>
+<li>Most industrial loads</li>
+</ul>
+<p><strong>Characteristics:</strong>
+- θ &gt; 0° (positive angle)
+- Q &gt; 0 (positive reactive power)
+- Load absorbs VARs</p>
+<h3 id="leading-power-factor">Leading Power Factor</h3>
+<p>A <strong>leading power factor</strong> occurs when current leads voltage. This happens with capacitive loads:</p>
+<ul>
+<li>Power factor correction capacitors</li>
+<li>Lightly loaded synchronous motors</li>
+<li>Some electronic power supplies</li>
+</ul>
+<p><strong>Characteristics:</strong>
+- θ &lt; 0° (negative angle)
+- Q &lt; 0 (negative reactive power)
+- Load supplies VARs</p>
+<table>
+<thead>
+<tr>
+<th>Power Factor</th>
+<th>Description</th>
+<th>Typical Load</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1.0</td>
+<td>Unity</td>
+<td>Resistive heaters, incandescent bulbs</td>
+</tr>
+<tr>
+<td>0.95 lagging</td>
+<td>Excellent</td>
+<td>Well-corrected motors</td>
+</tr>
+<tr>
+<td>0.85 lagging</td>
+<td>Good</td>
+<td>Typical industrial mix</td>
+</tr>
+<tr>
+<td>0.70 lagging</td>
+<td>Poor</td>
+<td>Uncompensated motors</td>
+</tr>
+<tr>
+<td>0.50 lagging</td>
+<td>Very poor</td>
+<td>Lightly loaded motors</td>
+</tr>
+</tbody>
+</table>
+<h2 id="power-factor-correction">Power Factor Correction</h2>
+<p><strong>Power factor correction</strong> improves power factor by adding reactive elements (usually capacitors) that supply reactive power locally, reducing the reactive power drawn from the source.</p>
+<p><strong>Why correct power factor?</strong></p>
+<ol>
+<li><strong>Reduce current:</strong> Lower current for same real power means smaller wires, less I²R loss</li>
+<li><strong>Increase capacity:</strong> Existing infrastructure can handle more load</li>
+<li><strong>Avoid penalties:</strong> Utilities charge penalties for poor power factor</li>
+<li><strong>Improve voltage regulation:</strong> Less reactive current means less voltage drop</li>
+</ol>
+<p><strong>Correction method:</strong></p>
+<p>For an inductive load with lagging power factor, add parallel capacitors:</p>
+<div class="arithmatex">\[Q_C = P(\tan\theta_{old} - \tan\theta_{new})\]</div>
+<div class="arithmatex">\[C = \frac{Q_C}{\omega V_{rms}^2}\]</div>
+<p><strong>Example:</strong> A 10 kW load operates at 0.7 PF lagging from 240V, 60Hz. Correct to 0.95 PF.</p>
+<p>Old: <span class="arithmatex">\(\theta_1 = \cos^{-1}(0.7) = 45.57°\)</span>, <span class="arithmatex">\(\tan\theta_1 = 1.02\)</span>
+New: <span class="arithmatex">\(\theta_2 = \cos^{-1}(0.95) = 18.19°\)</span>, <span class="arithmatex">\(\tan\theta_2 = 0.329\)</span></p>
+<p>[Q_C = 10000(1.02 - 0.329) = 6910 \text{ VAR}]
+[C = \frac{6910}{2\pi(60)(240)^2} = 319 \text{ μF}]</p>
+<p>Adding about 320 μF of capacitance reduces reactive power from the source by 6910 VAR!</p>
+<h4 id="diagram-power-factor-correction-simulator">Diagram: Power Factor Correction Simulator</h4>
+<iframe src="../../sims/pf-correction/main.html" width="100%" height="550px" scrolling="no" style="overflow: hidden;"></iframe>
+
+<details markdown="1">
+<summary>Power Factor Correction Simulator</summary>
+Type: microsim
+
+Bloom Level: Apply (L3)
+Bloom Verb: solve
+
+Learning Objective: Students will solve for the required capacitance to correct power factor and observe the resulting reduction in line current.
+
+Visual elements:
+- Circuit diagram showing load with parallel correction capacitor
+- Before/after power triangles side by side
+- Current phasor diagram showing reduction
+- Ammeter showing line current before and after
+- Savings calculation display
+
+Interactive controls:
+- Slider: Real power P (1kW to 100kW)
+- Slider: Original power factor (0.5 to 0.95)
+- Slider: Target power factor (0.9 to 1.0)
+- Input: Supply voltage (120V, 240V, 480V options)
+- Input: Frequency (50Hz or 60Hz)
+- Button: Calculate correction
+
+Calculations displayed:
+- Q_old and Q_new
+- Required Q_C
+- Required capacitance C
+- Current reduction percentage
+- Power loss reduction (I²R savings)
+
+Visual feedback:
+- Power triangle shrinks vertically (Q reduction)
+- S vector shortens
+- Current magnitude decreases
+- "Savings: X% current reduction" highlighted
+
+Default parameters:
+- P = 10 kW
+- PF_old = 0.7 lagging
+- PF_new = 0.95 lagging
+- V = 240V, f = 60Hz
+
+Canvas layout:
+- Circuit/triangles: 450 × 400 pixels
+- Current display: 150 × 400 pixels
+- Control area: 100 pixels below
+
+Implementation: p5.js
+</details>
+
+<h2 id="power-in-circuit-elements">Power in Circuit Elements</h2>
+<p>Each passive component has a distinct power behavior:</p>
+<h3 id="power-in-resistors">Power in Resistors</h3>
+<p>Resistors only have real power—voltage and current are in phase:</p>
+<p>[P_R = I_{rms}^2 R = \frac{V_{rms}^2}{R}]
+[Q_R = 0]</p>
+<p>All power absorbed by a resistor is converted to heat. Power factor for a pure resistor is 1.</p>
+<h3 id="power-in-capacitors">Power in Capacitors</h3>
+<p>Pure capacitors have only reactive power—current leads voltage by 90°:</p>
+<p>[P_C = 0]
+[Q_C = -V_{rms} I_{rms} = -I_{rms}^2 X_C = -\frac{V_{rms}^2}{X_C}]</p>
+<p>The negative sign indicates capacitors <em>supply</em> reactive power (they're sources of VARs). Power factor is 0 leading.</p>
+<h3 id="power-in-inductors">Power in Inductors</h3>
+<p>Pure inductors have only reactive power—current lags voltage by 90°:</p>
+<p>[P_L = 0]
+[Q_L = V_{rms} I_{rms} = I_{rms}^2 X_L = \frac{V_{rms}^2}{X_L}]</p>
+<p>Inductors <em>absorb</em> reactive power (they're loads for VARs). Power factor is 0 lagging.</p>
+<table>
+<thead>
+<tr>
+<th>Element</th>
+<th>Real Power P</th>
+<th>Reactive Power Q</th>
+<th>Power Factor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Resistor</td>
+<td>I²R</td>
+<td>0</td>
+<td>1 (resistive)</td>
+</tr>
+<tr>
+<td>Capacitor</td>
+<td>0</td>
+<td>-V²/X_C (negative)</td>
+<td>0 (leading)</td>
+</tr>
+<tr>
+<td>Inductor</td>
+<td>0</td>
+<td>V²/X_L (positive)</td>
+<td>0 (lagging)</td>
+</tr>
+</tbody>
+</table>
+<h4 id="diagram-power-flow-in-r-l-c">Diagram: Power Flow in R, L, C</h4>
+<iframe src="../../sims/power-flow-rlc/main.html" width="100%" height="500px" scrolling="no" style="overflow: hidden;"></iframe>
+
+<details markdown="1">
+<summary>Power Flow in R, L, C</summary>
+Type: microsim
+
+Bloom Level: Understand (L2)
+Bloom Verb: explain
+
+Learning Objective: Students will explain the difference in power behavior between resistors, capacitors, and inductors by observing energy flow patterns.
+
+Visual elements:
+- Three circuits side by side: Pure R, Pure C, Pure L
+- Each with animated energy flow arrows
+- Instantaneous power plots below each circuit
+- Energy storage indicators (E-field for C, B-field for L)
+- Heat dissipation indicator for R
+
+Interactive controls:
+- Slider: Frequency (affects L and C reactance)
+- Slider: Component value (R, L, or C)
+- Toggle: Animate energy flow
+- Toggle: Show all three or focus on one
+- Display: P and Q for each element
+
+Animation behavior:
+- R: Steady energy flow to heat
+- C: Energy pulses back and forth, average = 0
+- L: Energy pulses back and forth, average = 0
+- Arrows show energy direction, thickness shows magnitude
+
+Visual annotations:
+- R: "Energy → Heat (P = I²R, Q = 0)"
+- C: "Energy ↔ E-field (P = 0, Q < 0)"
+- L: "Energy ↔ B-field (P = 0, Q > 0)"
+
+Default parameters:
+- ω = 1000 rad/s
+- Visible animation speed
+
+Canvas layout:
+- Three-panel display: 600 × 350 pixels
+- Control area: 100 pixels below
+
+Implementation: p5.js
+</details>
+
+<h2 id="rms-power-calculations">RMS Power Calculations</h2>
+<p>Since AC power involves time-varying quantities, we use RMS values to simplify calculations:</p>
+<p><strong>For any load with impedance Z:</strong></p>
+<p>[P = I_{rms}^2 R = V_{rms} I_{rms} \cos\theta]
+[Q = I_{rms}^2 X = V_{rms} I_{rms} \sin\theta]
+[S = I_{rms}^2 |Z| = V_{rms} I_{rms}]</p>
+<p><strong>The power formulas summary:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Formula</th>
+<th>Using I_rms</th>
+<th>Using V_rms</th>
+<th>Using both</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>P (real)</td>
+<td><span class="arithmatex">\(I_{rms}^2 R\)</span></td>
+<td>(\frac{V_{rms}^2 R}{</td>
+<td>Z</td>
+</tr>
+<tr>
+<td>Q (reactive)</td>
+<td><span class="arithmatex">\(I_{rms}^2 X\)</span></td>
+<td>(\frac{V_{rms}^2 X}{</td>
+<td>Z</td>
+</tr>
+<tr>
+<td>S (apparent)</td>
+<td>(I_{rms}^2</td>
+<td>Z</td>
+<td>)</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">Why RMS Works</p>
+<p>RMS (Root Mean Square) values are specifically designed so that power formulas work the same as DC. The RMS value of an AC signal delivers the same power to a resistor as a DC signal of that value. That's why RMS is the standard for AC measurements.</p>
+</div>
+<h2 id="maximum-power-transfer-in-ac-circuits">Maximum Power Transfer in AC Circuits</h2>
+<p>For maximum power transfer from a source with internal impedance <span class="arithmatex">\(Z_s = R_s + jX_s\)</span> to a load <span class="arithmatex">\(Z_L\)</span>:</p>
+<div class="arithmatex">\[Z_L = Z_s^* = R_s - jX_s\]</div>
+<p>The load impedance should be the <strong>complex conjugate</strong> of the source impedance.</p>
+<p><strong>When conjugate matched:</strong></p>
+<ul>
+<li>Load resistance equals source resistance: <span class="arithmatex">\(R_L = R_s\)</span></li>
+<li>Load reactance cancels source reactance: <span class="arithmatex">\(X_L = -X_s\)</span></li>
+<li>Resonance occurs, maximizing current</li>
+<li>Maximum power delivered: <span class="arithmatex">\(P_{max} = \frac{V_s^2}{4R_s}\)</span></li>
+</ul>
+<p><strong>Efficiency consideration:</strong></p>
+<p>At conjugate matching, only 50% of the total power reaches the load (the other 50% is lost in the source). For high-efficiency applications, <span class="arithmatex">\(R_L &gt;&gt; R_s\)</span> is preferred, trading maximum power for maximum efficiency.</p>
+<table>
+<thead>
+<tr>
+<th>Match Type</th>
+<th>Condition</th>
+<th>Power</th>
+<th>Efficiency</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Conjugate match</td>
+<td>Z_L = Z_s*</td>
+<td>Maximum</td>
+<td>50%</td>
+</tr>
+<tr>
+<td>High efficiency</td>
+<td>R_L &gt;&gt; R_s</td>
+<td>Less than max</td>
+<td>&gt;90%</td>
+</tr>
+<tr>
+<td>Mismatch</td>
+<td>Random Z_L</td>
+<td>Low</td>
+<td>Variable</td>
+</tr>
+</tbody>
+</table>
+<h2 id="efficiency">Efficiency</h2>
+<p><strong>Efficiency</strong> (η) is the ratio of useful output power to total input power:</p>
+<div class="arithmatex">\[\eta = \frac{P_{out}}{P_{in}} = \frac{P_{out}}{P_{out} + P_{losses}}\]</div>
+<p>Usually expressed as a percentage:</p>
+<div class="arithmatex">\[\eta(\%) = \frac{P_{out}}{P_{in}} \times 100\%\]</div>
+<p><strong>Power loss sources:</strong></p>
+<ul>
+<li>I²R losses in wires (copper losses)</li>
+<li>Core losses in transformers and motors (iron losses)</li>
+<li>Switching losses in electronics</li>
+<li>Friction and windage in rotating machines</li>
+</ul>
+<p><strong>Typical efficiencies:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Device</th>
+<th>Typical Efficiency</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Power transformer</td>
+<td>95-99%</td>
+</tr>
+<tr>
+<td>AC induction motor</td>
+<td>80-95%</td>
+</tr>
+<tr>
+<td>Incandescent bulb</td>
+<td>2-5%</td>
+</tr>
+<tr>
+<td>LED bulb</td>
+<td>35-50%</td>
+</tr>
+<tr>
+<td>Solar panel</td>
+<td>15-22%</td>
+</tr>
+<tr>
+<td>Power electronics</td>
+<td>85-98%</td>
+</tr>
+</tbody>
+</table>
+<h2 id="power-gain">Power Gain</h2>
+<p><strong>Power gain</strong> measures amplification in terms of power:</p>
+<div class="arithmatex">\[A_P = \frac{P_{out}}{P_{in}}\]</div>
+<p>In decibels:</p>
+<div class="arithmatex">\[A_P(dB) = 10\log_{10}\left(\frac{P_{out}}{P_{in}}\right)\]</div>
+<p><strong>Relationship to voltage and current gain:</strong></p>
+<div class="arithmatex">\[A_P = A_V \cdot A_I\]</div>
+<p>In dB: <span class="arithmatex">\(A_P(dB) = A_V(dB) + A_I(dB)\)</span></p>
+<p><strong>For impedance-matched systems:</strong></p>
+<div class="arithmatex">\[A_P(dB) = 20\log_{10}|A_V| = 20\log_{10}|A_I|\]</div>
+<p>(when Z_in = Z_out)</p>
+<table>
+<thead>
+<tr>
+<th>Power Gain</th>
+<th>dB</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1000</td>
+<td>30 dB</td>
+<td>High gain amplifier</td>
+</tr>
+<tr>
+<td>100</td>
+<td>20 dB</td>
+<td>Moderate amplifier</td>
+</tr>
+<tr>
+<td>10</td>
+<td>10 dB</td>
+<td>Low gain amplifier</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0 dB</td>
+<td>Unity (buffer)</td>
+</tr>
+<tr>
+<td>0.1</td>
+<td>-10 dB</td>
+<td>Attenuator</td>
+</tr>
+</tbody>
+</table>
+<h2 id="worked-example-complete-power-analysis">Worked Example: Complete Power Analysis</h2>
+<p><strong>Problem:</strong> A series RL load with R = 30Ω and X_L = 40Ω is connected to a 120V RMS, 60Hz source. Find all power quantities, power factor, and the capacitor needed for unity power factor correction.</p>
+<p><strong>Solution:</strong></p>
+<p><strong>Step 1: Find impedance and current</strong></p>
+<p>[Z = R + jX_L = 30 + j40 = 50\angle 53.13° \text{ Ω}]
+[I_{rms} = \frac{V_{rms}}{|Z|} = \frac{120}{50} = 2.4 \text{ A}]</p>
+<p><strong>Step 2: Calculate powers</strong></p>
+<p>[P = I_{rms}^2 R = (2.4)^2 (30) = 172.8 \text{ W}]
+[Q = I_{rms}^2 X_L = (2.4)^2 (40) = 230.4 \text{ VAR}]
+[S = I_{rms}^2 |Z| = (2.4)^2 (50) = 288 \text{ VA}]</p>
+<p>Check: <span class="arithmatex">\(\sqrt{P^2 + Q^2} = \sqrt{172.8^2 + 230.4^2} = 288\)</span> ✓</p>
+<p><strong>Step 3: Find power factor</strong></p>
+<div class="arithmatex">\[PF = \cos\theta = \cos(53.13°) = 0.6 \text{ lagging}\]</div>
+<p>Or: <span class="arithmatex">\(PF = P/S = 172.8/288 = 0.6\)</span> ✓</p>
+<p><strong>Step 4: Power factor correction to unity</strong></p>
+<p>For PF = 1.0, we need Q_C = -Q_L to cancel all reactive power:</p>
+<div class="arithmatex">\[Q_C = -230.4 \text{ VAR}\]</div>
+<div class="arithmatex">\[C = \frac{|Q_C|}{\omega V_{rms}^2} = \frac{230.4}{2\pi(60)(120)^2} = 42.5 \text{ μF}\]</div>
+<p><strong>After correction:</strong></p>
+<ul>
+<li>Current drops from 2.4A to <span class="arithmatex">\(I = P/V = 172.8/120 = 1.44\)</span> A</li>
+<li>40% current reduction!</li>
+<li>Same real power delivered with less line current</li>
+</ul>
+<h2 id="self-check-questions">Self-Check Questions</h2>
+<details class="question">
+<summary>1. A motor draws 5A from a 240V, 60Hz source at 0.8 power factor lagging. Calculate P, Q, S, and the phase angle.</summary>
+<p><strong>Apparent power:</strong>
+[S = V \cdot I = 240 \times 5 = 1200 \text{ VA}]</p>
+<p><strong>Real power:</strong>
+[P = S \times PF = 1200 \times 0.8 = 960 \text{ W}]</p>
+<p><strong>Phase angle:</strong>
+[\theta = \cos^{-1}(0.8) = 36.87°]</p>
+<p><strong>Reactive power:</strong>
+[Q = S \times \sin\theta = 1200 \times 0.6 = 720 \text{ VAR}]</p>
+<p>Or: <span class="arithmatex">\(Q = \sqrt{S^2 - P^2} = \sqrt{1200^2 - 960^2} = 720\)</span> VAR</p>
+<p>The motor consumes 960W of real power and 720 VAR of reactive power.</p>
+</details>
+<details class="question">
+<summary>2. Why does a capacitor have negative reactive power while an inductor has positive reactive power?</summary>
+<p>This is a sign convention that reflects energy flow direction relative to the source:</p>
+<p><strong>Inductor (Q &gt; 0, positive):</strong>
+- Current lags voltage
+- Absorbs reactive power from the source
+- Acts as a VAR "load"</p>
+<p><strong>Capacitor (Q &lt; 0, negative):</strong>
+- Current leads voltage
+- Supplies reactive power back to the circuit
+- Acts as a VAR "source"</p>
+<p>Think of it this way: Inductors are hungry for VARs (they absorb them), while capacitors are generous with VARs (they supply them). This is why adding capacitors to an inductive load cancels out the VAR requirement from the source—the capacitor supplies what the inductor needs locally.</p>
+</details>
+<details class="question">
+<summary>3. A factory has a 500 kW load at 0.7 PF lagging. What size capacitor bank (in kVAR) is needed to improve power factor to 0.95 lagging?</summary>
+<p><strong>Original reactive power:</strong>
+[\theta_1 = \cos^{-1}(0.7) = 45.57°]
+[Q_1 = P \tan\theta_1 = 500 \times 1.02 = 510 \text{ kVAR}]</p>
+<p><strong>Target reactive power:</strong>
+[\theta_2 = \cos^{-1}(0.95) = 18.19°]
+[Q_2 = P \tan\theta_2 = 500 \times 0.329 = 164.5 \text{ kVAR}]</p>
+<p><strong>Required capacitor bank:</strong>
+[Q_C = Q_1 - Q_2 = 510 - 164.5 = 345.5 \text{ kVAR}]</p>
+<p>A 350 kVAR capacitor bank (rounded to standard size) would provide the needed correction.</p>
+</details>
+<details class="question">
+<summary>4. At maximum power transfer with conjugate matching, why is efficiency only 50%?</summary>
+<p>With conjugate matching:
+- <span class="arithmatex">\(Z_L = Z_s^*\)</span>, which means <span class="arithmatex">\(R_L = R_s\)</span> and <span class="arithmatex">\(X_L = -X_s\)</span>
+- The reactances cancel, leaving only resistances in series
+- The circuit becomes equivalent to <span class="arithmatex">\(R_s\)</span> and <span class="arithmatex">\(R_L = R_s\)</span> in series</p>
+<p>Total current: <span class="arithmatex">\(I = V_s/(R_s + R_L) = V_s/(2R_s)\)</span></p>
+<p>Power to load: <span class="arithmatex">\(P_L = I^2 R_L = \frac{V_s^2}{4R_s}\)</span></p>
+<p>Power in source: <span class="arithmatex">\(P_s = I^2 R_s = \frac{V_s^2}{4R_s}\)</span></p>
+<p>Total power: <span class="arithmatex">\(P_{total} = P_L + P_s = \frac{V_s^2}{2R_s}\)</span></p>
+<p>Efficiency: <span class="arithmatex">\(\eta = P_L/P_{total} = 50\%\)</span></p>
+<p>Half the power is always dissipated in the source resistance. This is acceptable in communication systems where maximizing signal power is critical. For power delivery (utility systems), we prioritize efficiency by making <span class="arithmatex">\(R_L &gt;&gt; R_s\)</span>.</p>
+</details>
+<h2 id="summary_1">Summary</h2>
+<p>AC power analysis reveals the complex relationship between voltage, current, and useful work:</p>
+<ol>
+<li>
+<p><strong>Instantaneous power oscillates</strong> - It can go negative, meaning energy flows back to the source</p>
+</li>
+<li>
+<p><strong>Real power (P) does useful work</strong> - Measured in watts, it's what you pay for and what performs tasks</p>
+</li>
+<li>
+<p><strong>Reactive power (Q) sloshes back and forth</strong> - Measured in VAR, it doesn't do work but requires current capacity</p>
+</li>
+<li>
+<p><strong>Apparent power (S) is the total "burden"</strong> - Measured in VA, it determines equipment sizing</p>
+</li>
+<li>
+<p><strong>The power triangle relates P, Q, and S</strong> - They form a right triangle with <span class="arithmatex">\(S^2 = P^2 + Q^2\)</span></p>
+</li>
+<li>
+<p><strong>Power factor measures efficiency</strong> - <span class="arithmatex">\(PF = P/S = \cos\theta\)</span>; higher is better</p>
+</li>
+<li>
+<p><strong>Lagging PF means inductive load</strong> - Most industrial loads are lagging due to motors</p>
+</li>
+<li>
+<p><strong>Power factor correction uses capacitors</strong> - They supply VARs locally, reducing current from the source</p>
+</li>
+<li>
+<p><strong>Resistors consume real power only</strong> - Capacitors and inductors have only reactive power</p>
+</li>
+<li>
+<p><strong>Maximum power requires conjugate matching</strong> - But efficiency is only 50%; for power systems, we optimize differently</p>
+</li>
+</ol>
+<p>Understanding these concepts is essential for anyone working with power systems, from designing efficient motor drives to sizing cables to understanding why your electricity bill exists. In audio applications, these same principles govern amplifier efficiency, speaker matching, and power delivery to transducers. The physics of power is everywhere—now you have the tools to analyze it.</p>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../09-phasors-complex-impedance/" class="md-footer__link md-footer__link--prev" aria-label="Previous: 9. Phasors and Impedance">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                9. Phasors and Impedance
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../11-frequency-response-bode/" class="md-footer__link md-footer__link--next" aria-label="Next: 11. Frequency Response and Bode">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                11. Frequency Response and Bode
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.copy", "navigation.expand", "navigation.path", "navigation.prune", "navigation.indexes", "toc.follow", "navigation.top", "navigation.footer", "content.action.edit"], "search": "../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.83f73b43.min.js"></script>
+      
+        <script src="../../js/extra.js"></script>
+      
+        <script src="../../js/katex.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+      
+    
+  </body>
+</html>

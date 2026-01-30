@@ -1,0 +1,1835 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="An intelligent interactive Circuits textbook for EE and CS students with AI-generated content and simulations.">
+      
+      
+        <meta name="author" content="Dan McCreary">
+      
+      
+        <link rel="canonical" href="https://dmccreary.github.io/circuits/learning-graph/concept-list/">
+      
+      
+        <link rel="prev" href="../">
+      
+      
+        <link rel="next" href="../course-description-assessment/">
+      
+      
+      <link rel="icon" href="../../img/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.43">
+    
+    
+      
+        <title>Concept List - Circuits 1</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.0253249f.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../css/extra.css">
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+<script id="__analytics">function __md_analytics(){function e(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],e("js",new Date),e("config","G-9J4MVE6LWP"),document.addEventListener("DOMContentLoaded",(function(){document.forms.search&&document.forms.search.query.addEventListener("blur",(function(){this.value&&e("event","search",{search_term:this.value})}));document$.subscribe((function(){var t=document.forms.feedback;if(void 0!==t)for(var a of t.querySelectorAll("[type=submit]"))a.addEventListener("click",(function(a){a.preventDefault();var n=document.location.pathname,d=this.getAttribute("data-md-value");e("event","feedback",{page:n,data:d}),t.firstElementChild.disabled=!0;var r=t.querySelector(".md-feedback__note [data-md-value='"+d+"']");r&&(r.hidden=!1)})),t.hidden=!1})),location$.subscribe((function(t){e("config","G-9J4MVE6LWP",{page_path:t.pathname})}))}));var t=document.createElement("script");t.async=!0,t.src="https://www.googletagmanager.com/gtag/js?id=G-9J4MVE6LWP",document.getElementById("__analytics").insertAdjacentElement("afterEnd",t)}</script>
+  
+    <script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
+  
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="orange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#circuits-1-concept-list" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Circuits 1" class="md-header__button md-logo" aria-label="Circuits 1" data-md-component="logo">
+      
+  <img src="../../img/course-logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Circuits 1
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Concept List
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/dmccreary/circuits" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub Repo
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Circuits 1" class="md-nav__button md-logo" aria-label="Circuits 1" data-md-component="logo">
+      
+  <img src="../../img/course-logo.png" alt="logo">
+
+    </a>
+    Circuits 1
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/dmccreary/circuits" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub Repo
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../about/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    About This Course
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../chapters/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Chapters
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../sims/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    MicroSims
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../sections/index.md" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Supplementary Sections
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Learning Graph
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6" id="__nav_6_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Learning Graph
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Concept List
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Concept List
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#foundational-concepts-1-30" class="md-nav__link">
+    <span class="md-ellipsis">
+      Foundational Concepts (1-30)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#circuit-analysis-techniques-31-55" class="md-nav__link">
+    <span class="md-ellipsis">
+      Circuit Analysis Techniques (31-55)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#passive-components-56-80" class="md-nav__link">
+    <span class="md-ellipsis">
+      Passive Components (56-80)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#transient-analysis-81-105" class="md-nav__link">
+    <span class="md-ellipsis">
+      Transient Analysis (81-105)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ac-circuit-fundamentals-106-135" class="md-nav__link">
+    <span class="md-ellipsis">
+      AC Circuit Fundamentals (106-135)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ac-power-136-155" class="md-nav__link">
+    <span class="md-ellipsis">
+      AC Power (136-155)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#frequency-response-156-180" class="md-nav__link">
+    <span class="md-ellipsis">
+      Frequency Response (156-180)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#filters-181-200" class="md-nav__link">
+    <span class="md-ellipsis">
+      Filters (181-200)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#operational-amplifiers-201-230" class="md-nav__link">
+    <span class="md-ellipsis">
+      Operational Amplifiers (201-230)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#signal-analysis-231-250" class="md-nav__link">
+    <span class="md-ellipsis">
+      Signal Analysis (231-250)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#audio-applications-251-275" class="md-nav__link">
+    <span class="md-ellipsis">
+      Audio Applications (251-275)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#laboratory-and-measurement-276-300" class="md-nav__link">
+    <span class="md-ellipsis">
+      Laboratory and Measurement (276-300)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#category-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      Category Summary
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#review-instructions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Review Instructions
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../course-description-assessment/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Course Description Assessment
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../quality-metrics/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Quality Metrics
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../concept-taxonomy/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Concept Taxonomy
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../taxonomy-distribution/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Taxonomy Distribution
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chapter-metrics/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Chapter Metrics
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../prompts/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Sample Prompts
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+          
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../faq/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    FAQ
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../glossary/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Glossary
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how-we-built-this-site/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    How We Built This Site
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../references/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    References
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../license/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    License
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contact/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Contact
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#foundational-concepts-1-30" class="md-nav__link">
+    <span class="md-ellipsis">
+      Foundational Concepts (1-30)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#circuit-analysis-techniques-31-55" class="md-nav__link">
+    <span class="md-ellipsis">
+      Circuit Analysis Techniques (31-55)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#passive-components-56-80" class="md-nav__link">
+    <span class="md-ellipsis">
+      Passive Components (56-80)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#transient-analysis-81-105" class="md-nav__link">
+    <span class="md-ellipsis">
+      Transient Analysis (81-105)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ac-circuit-fundamentals-106-135" class="md-nav__link">
+    <span class="md-ellipsis">
+      AC Circuit Fundamentals (106-135)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ac-power-136-155" class="md-nav__link">
+    <span class="md-ellipsis">
+      AC Power (136-155)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#frequency-response-156-180" class="md-nav__link">
+    <span class="md-ellipsis">
+      Frequency Response (156-180)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#filters-181-200" class="md-nav__link">
+    <span class="md-ellipsis">
+      Filters (181-200)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#operational-amplifiers-201-230" class="md-nav__link">
+    <span class="md-ellipsis">
+      Operational Amplifiers (201-230)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#signal-analysis-231-250" class="md-nav__link">
+    <span class="md-ellipsis">
+      Signal Analysis (231-250)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#audio-applications-251-275" class="md-nav__link">
+    <span class="md-ellipsis">
+      Audio Applications (251-275)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#laboratory-and-measurement-276-300" class="md-nav__link">
+    <span class="md-ellipsis">
+      Laboratory and Measurement (276-300)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#category-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      Category Summary
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#review-instructions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Review Instructions
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+    <a href="https://github.com/dmccreary/circuits/blob/master/docs/learning-graph/concept-list.md" title="Edit this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+
+
+<h1 id="circuits-1-concept-list">Circuits 1 Concept List</h1>
+<p>This document contains 300 concepts for the Circuits 1 learning graph.</p>
+<h2 id="foundational-concepts-1-30">Foundational Concepts (1-30)</h2>
+<ol>
+<li>Electric Charge</li>
+<li>Voltage</li>
+<li>Current</li>
+<li>Electrical Energy</li>
+<li>Power</li>
+<li>Resistance</li>
+<li>Ohm's Law</li>
+<li>Conductance</li>
+<li>Electrical Ground</li>
+<li>Circuit Schematic Symbols</li>
+<li>Voltage Source</li>
+<li>Current Source</li>
+<li>Dependent Sources</li>
+<li>Series Circuits</li>
+<li>Parallel Circuits</li>
+<li>Series-Parallel Circuits</li>
+<li>Voltage Divider</li>
+<li>Current Divider</li>
+<li>Kirchhoff's Voltage Law</li>
+<li>Kirchhoff's Current Law</li>
+<li>Node</li>
+<li>Branch</li>
+<li>Loop</li>
+<li>Mesh</li>
+<li>Open Circuit</li>
+<li>Short Circuit</li>
+<li>Power Dissipation</li>
+<li>Energy Conservation</li>
+<li>SI Units for Circuits</li>
+<li>Circuit Topology</li>
+</ol>
+<h2 id="circuit-analysis-techniques-31-55">Circuit Analysis Techniques (31-55)</h2>
+<ol>
+<li>Node Voltage Method</li>
+<li>Reference Node</li>
+<li>Supernode</li>
+<li>Mesh Current Method</li>
+<li>Supermesh</li>
+<li>Linearity</li>
+<li>Superposition Principle</li>
+<li>Source Transformation</li>
+<li>Thevenin's Theorem</li>
+<li>Thevenin Equivalent</li>
+<li>Norton's Theorem</li>
+<li>Norton Equivalent</li>
+<li>Maximum Power Transfer</li>
+<li>Load Resistance</li>
+<li>Equivalent Resistance</li>
+<li>Delta Configuration</li>
+<li>Wye Configuration</li>
+<li>Delta-Wye Transformation</li>
+<li>Circuit Simplification</li>
+<li>Nodal Analysis</li>
+<li>Mesh Analysis</li>
+<li>Two-Port Networks</li>
+<li>Input Resistance</li>
+<li>Output Resistance</li>
+<li>Loading Effect</li>
+</ol>
+<h2 id="passive-components-56-80">Passive Components (56-80)</h2>
+<ol>
+<li>Resistor</li>
+<li>Resistor Color Code</li>
+<li>Resistor Tolerance</li>
+<li>Potentiometer</li>
+<li>Capacitor</li>
+<li>Capacitance</li>
+<li>Parallel Plate Capacitor</li>
+<li>Dielectric Material</li>
+<li>Capacitor Energy Storage</li>
+<li>Capacitors in Series</li>
+<li>Capacitors in Parallel</li>
+<li>Inductor</li>
+<li>Inductance</li>
+<li>Magnetic Field</li>
+<li>Inductor Energy Storage</li>
+<li>Inductors in Series</li>
+<li>Inductors in Parallel</li>
+<li>Mutual Inductance</li>
+<li>Coupling Coefficient</li>
+<li>Wire Resistance</li>
+<li>Parasitic Capacitance</li>
+<li>Parasitic Inductance</li>
+<li>Component Power Rating</li>
+<li>Component Derating</li>
+<li>Real vs Ideal Components</li>
+</ol>
+<h2 id="transient-analysis-81-105">Transient Analysis (81-105)</h2>
+<ol>
+<li>Transient Response</li>
+<li>Steady-State Response</li>
+<li>Time Constant</li>
+<li>RC Circuit</li>
+<li>RC Charging</li>
+<li>RC Discharging</li>
+<li>RL Circuit</li>
+<li>RL Energizing</li>
+<li>RL De-energizing</li>
+<li>Exponential Response</li>
+<li>Initial Conditions</li>
+<li>Final Conditions</li>
+<li>Natural Response</li>
+<li>Forced Response</li>
+<li>Complete Response</li>
+<li>First-Order Circuits</li>
+<li>Second-Order Circuits</li>
+<li>RLC Circuit</li>
+<li>Overdamped Response</li>
+<li>Underdamped Response</li>
+<li>Critically Damped Response</li>
+<li>Damping Ratio</li>
+<li>Natural Frequency</li>
+<li>Step Response</li>
+<li>Pulse Response</li>
+</ol>
+<h2 id="ac-circuit-fundamentals-106-135">AC Circuit Fundamentals (106-135)</h2>
+<ol>
+<li>Alternating Current</li>
+<li>Sinusoidal Waveform</li>
+<li>Amplitude</li>
+<li>Frequency</li>
+<li>Period</li>
+<li>Angular Frequency</li>
+<li>Phase Angle</li>
+<li>Phase Shift</li>
+<li>Peak Value</li>
+<li>Peak-to-Peak Value</li>
+<li>RMS Value</li>
+<li>Average Value</li>
+<li>Complex Numbers</li>
+<li>Rectangular Form</li>
+<li>Polar Form</li>
+<li>Euler's Formula</li>
+<li>Phasor</li>
+<li>Phasor Diagram</li>
+<li>Phasor Addition</li>
+<li>Impedance</li>
+<li>Reactance</li>
+<li>Capacitive Reactance</li>
+<li>Inductive Reactance</li>
+<li>Admittance</li>
+<li>Susceptance</li>
+<li>AC Resistance</li>
+<li>Impedance Triangle</li>
+<li>Complex Impedance</li>
+<li>AC Circuit Analysis</li>
+<li>Phasor Domain</li>
+</ol>
+<h2 id="ac-power-136-155">AC Power (136-155)</h2>
+<ol>
+<li>Instantaneous Power</li>
+<li>Average Power</li>
+<li>Real Power</li>
+<li>Reactive Power</li>
+<li>Apparent Power</li>
+<li>Complex Power</li>
+<li>Power Triangle</li>
+<li>Power Factor</li>
+<li>Leading Power Factor</li>
+<li>Lagging Power Factor</li>
+<li>Power Factor Correction</li>
+<li>VAR</li>
+<li>Watt</li>
+<li>Volt-Ampere</li>
+<li>Maximum Power in AC</li>
+<li>RMS Power Calculation</li>
+<li>Power in Resistors</li>
+<li>Power in Capacitors</li>
+<li>Power in Inductors</li>
+<li>Efficiency</li>
+</ol>
+<h2 id="frequency-response-156-180">Frequency Response (156-180)</h2>
+<ol>
+<li>Frequency Response</li>
+<li>Transfer Function</li>
+<li>Magnitude Response</li>
+<li>Phase Response</li>
+<li>Bode Plot</li>
+<li>Bode Magnitude Plot</li>
+<li>Bode Phase Plot</li>
+<li>Decibel</li>
+<li>Decade</li>
+<li>Octave</li>
+<li>Cutoff Frequency</li>
+<li>Corner Frequency</li>
+<li>Half-Power Point</li>
+<li>Bandwidth</li>
+<li>Passband</li>
+<li>Stopband</li>
+<li>Roll-Off Rate</li>
+<li>Asymptotic Approximation</li>
+<li>Poles and Zeros</li>
+<li>Resonance</li>
+<li>Resonant Frequency</li>
+<li>Quality Factor</li>
+<li>Selectivity</li>
+<li>Series Resonance</li>
+<li>Parallel Resonance</li>
+</ol>
+<h2 id="filters-181-200">Filters (181-200)</h2>
+<ol>
+<li>Filter</li>
+<li>Low-Pass Filter</li>
+<li>High-Pass Filter</li>
+<li>Band-Pass Filter</li>
+<li>Band-Reject Filter</li>
+<li>Notch Filter</li>
+<li>First-Order Filter</li>
+<li>Second-Order Filter</li>
+<li>Filter Order</li>
+<li>RC Low-Pass Filter</li>
+<li>RC High-Pass Filter</li>
+<li>RL Low-Pass Filter</li>
+<li>RL High-Pass Filter</li>
+<li>RLC Band-Pass Filter</li>
+<li>Passive Filter</li>
+<li>Active Filter</li>
+<li>Filter Design</li>
+<li>Audio Tone Control</li>
+<li>Bass Filter</li>
+<li>Treble Filter</li>
+</ol>
+<h2 id="operational-amplifiers-201-230">Operational Amplifiers (201-230)</h2>
+<ol>
+<li>Operational Amplifier</li>
+<li>Ideal Op-Amp</li>
+<li>Op-Amp Symbol</li>
+<li>Inverting Input</li>
+<li>Non-Inverting Input</li>
+<li>Op-Amp Output</li>
+<li>Open-Loop Gain</li>
+<li>Closed-Loop Gain</li>
+<li>Negative Feedback</li>
+<li>Positive Feedback</li>
+<li>Virtual Short</li>
+<li>Virtual Ground</li>
+<li>Inverting Amplifier</li>
+<li>Non-Inverting Amplifier</li>
+<li>Voltage Follower</li>
+<li>Buffer Amplifier</li>
+<li>Summing Amplifier</li>
+<li>Difference Amplifier</li>
+<li>Instrumentation Amplifier</li>
+<li>Integrator Circuit</li>
+<li>Differentiator Circuit</li>
+<li>Op-Amp Bandwidth</li>
+<li>Gain-Bandwidth Product</li>
+<li>Slew Rate</li>
+<li>Input Offset Voltage</li>
+<li>Input Bias Current</li>
+<li>Common Mode Rejection</li>
+<li>CMRR</li>
+<li>Op-Amp Saturation</li>
+<li>Rail-to-Rail Op-Amp</li>
+</ol>
+<h2 id="signal-analysis-231-250">Signal Analysis (231-250)</h2>
+<ol>
+<li>Signal</li>
+<li>Periodic Signal</li>
+<li>Aperiodic Signal</li>
+<li>Fourier Series</li>
+<li>Fundamental Frequency</li>
+<li>Harmonics</li>
+<li>Harmonic Content</li>
+<li>Spectrum</li>
+<li>Frequency Spectrum</li>
+<li>Time Domain</li>
+<li>Frequency Domain</li>
+<li>Waveform Symmetry</li>
+<li>Even Symmetry</li>
+<li>Odd Symmetry</li>
+<li>Half-Wave Symmetry</li>
+<li>DC Component</li>
+<li>AC Component</li>
+<li>Signal Amplitude</li>
+<li>Crest Factor</li>
+<li>Form Factor</li>
+</ol>
+<h2 id="audio-applications-251-275">Audio Applications (251-275)</h2>
+<ol>
+<li>Audio Signal</li>
+<li>Audio Frequency Range</li>
+<li>Human Hearing Range</li>
+<li>Microphone</li>
+<li>Speaker</li>
+<li>Audio Amplifier</li>
+<li>Preamplifier</li>
+<li>Power Amplifier</li>
+<li>Amplifier Gain</li>
+<li>Voltage Gain</li>
+<li>Current Gain</li>
+<li>Power Gain</li>
+<li>Decibels in Audio</li>
+<li>dBV</li>
+<li>dBu</li>
+<li>Headroom</li>
+<li>Dynamic Range</li>
+<li>Signal-to-Noise Ratio</li>
+<li>Noise Floor</li>
+<li>Thermal Noise</li>
+<li>Audio Distortion</li>
+<li>Harmonic Distortion</li>
+<li>THD</li>
+<li>Intermodulation Distortion</li>
+<li>Clipping</li>
+</ol>
+<h2 id="laboratory-and-measurement-276-300">Laboratory and Measurement (276-300)</h2>
+<ol>
+<li>Multimeter</li>
+<li>Oscilloscope</li>
+<li>Function Generator</li>
+<li>DC Power Supply</li>
+<li>Spectrum Analyzer</li>
+<li>Voltage Measurement</li>
+<li>Current Measurement</li>
+<li>Resistance Measurement</li>
+<li>Frequency Measurement</li>
+<li>Phase Measurement</li>
+<li>Oscilloscope Probe</li>
+<li>Probe Compensation</li>
+<li>Triggering</li>
+<li>Time Base</li>
+<li>Vertical Sensitivity</li>
+<li>AC Coupling</li>
+<li>DC Coupling</li>
+<li>Breadboard</li>
+<li>Prototyping</li>
+<li>Soldering</li>
+<li>Circuit Debugging</li>
+<li>Measurement Error</li>
+<li>Loading Error</li>
+<li>Calibration</li>
+<li>Safety Practices</li>
+</ol>
+<hr />
+<p><strong>Total Concepts: 300</strong></p>
+<h2 id="category-summary">Category Summary</h2>
+<table>
+<thead>
+<tr>
+<th>Category</th>
+<th>Count</th>
+<th>Range</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Foundational Concepts</td>
+<td>30</td>
+<td>1-30</td>
+</tr>
+<tr>
+<td>Circuit Analysis Techniques</td>
+<td>25</td>
+<td>31-55</td>
+</tr>
+<tr>
+<td>Passive Components</td>
+<td>25</td>
+<td>56-80</td>
+</tr>
+<tr>
+<td>Transient Analysis</td>
+<td>25</td>
+<td>81-105</td>
+</tr>
+<tr>
+<td>AC Circuit Fundamentals</td>
+<td>30</td>
+<td>106-135</td>
+</tr>
+<tr>
+<td>AC Power</td>
+<td>20</td>
+<td>136-155</td>
+</tr>
+<tr>
+<td>Frequency Response</td>
+<td>25</td>
+<td>156-180</td>
+</tr>
+<tr>
+<td>Filters</td>
+<td>20</td>
+<td>181-200</td>
+</tr>
+<tr>
+<td>Operational Amplifiers</td>
+<td>30</td>
+<td>201-230</td>
+</tr>
+<tr>
+<td>Signal Analysis</td>
+<td>20</td>
+<td>231-250</td>
+</tr>
+<tr>
+<td>Audio Applications</td>
+<td>25</td>
+<td>251-275</td>
+</tr>
+<tr>
+<td>Laboratory and Measurement</td>
+<td>25</td>
+<td>276-300</td>
+</tr>
+</tbody>
+</table>
+<h2 id="review-instructions">Review Instructions</h2>
+<p>Please review this concept list carefully before proceeding to the next step:</p>
+<ol>
+<li><strong>Check for missing concepts</strong> - Are there important topics from the course that should be added?</li>
+<li><strong>Check for irrelevant concepts</strong> - Are there concepts that go beyond the scope of Circuits 1?</li>
+<li><strong>Verify label quality</strong> - Are labels clear, concise, and under 32 characters?</li>
+<li><strong>Check for duplicates</strong> - Are any concepts redundant or overlapping?</li>
+</ol>
+<p>Making changes now will save significant effort in later steps. It is much easier to modify the concept list than to fix the dependency graph later.</p>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../" class="md-footer__link md-footer__link--prev" aria-label="Previous: Introduction">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Introduction
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../course-description-assessment/" class="md-footer__link md-footer__link--next" aria-label="Next: Course Description Assessment">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Course Description Assessment
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.copy", "navigation.expand", "navigation.path", "navigation.prune", "navigation.indexes", "toc.follow", "navigation.top", "navigation.footer", "content.action.edit"], "search": "../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.83f73b43.min.js"></script>
+      
+        <script src="../../js/extra.js"></script>
+      
+        <script src="../../js/katex.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+      
+    
+  </body>
+</html>

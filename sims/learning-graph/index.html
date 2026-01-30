@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="AI Circuits Course Materials. All content licensed Creative Commons ShareAlike Attribution Noncommercial">
+        <meta name="description" content="An intelligent interactive Circuits textbook for EE and CS students with AI-generated content and simulations.">
       
       
         <meta name="author" content="Dan McCreary">
@@ -15,7 +15,7 @@
         <link rel="canonical" href="https://dmccreary.github.io/circuits/sims/learning-graph/">
       
       
-        <link rel="prev" href="../">
+        <link rel="prev" href="../circuit-symbol-flashcards/">
       
       
         <link rel="next" href="../background-grid/">
@@ -26,7 +26,7 @@
     
     
       
-        <title>Learning Graph - AI Circuits Course</title>
+        <title>Learning Graph - Circuits 1</title>
       
     
     
@@ -53,6 +53,8 @@
     
     
       <link rel="stylesheet" href="../../css/extra.css">
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
     
     <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
@@ -104,7 +106,7 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../.." title="AI Circuits Course" class="md-header__button md-logo" aria-label="AI Circuits Course" data-md-component="logo">
+    <a href="../.." title="Circuits 1" class="md-header__button md-logo" aria-label="Circuits 1" data-md-component="logo">
       
   <img src="../../img/course-logo.png" alt="logo">
 
@@ -117,7 +119,7 @@
       <div class="md-header__ellipsis">
         <div class="md-header__topic">
           <span class="md-ellipsis">
-            AI Circuits Course
+            Circuits 1
           </span>
         </div>
         <div class="md-header__topic" data-md-component="header-topic">
@@ -210,12 +212,12 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../.." title="AI Circuits Course" class="md-nav__button md-logo" aria-label="AI Circuits Course" data-md-component="logo">
+    <a href="../.." title="Circuits 1" class="md-nav__button md-logo" aria-label="Circuits 1" data-md-component="logo">
       
   <img src="../../img/course-logo.png" alt="logo">
 
     </a>
-    AI Circuits Course
+    Circuits 1
   </label>
   
     <div class="md-nav__source">
@@ -302,6 +304,44 @@
         
       
         
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
       
         
           
@@ -324,7 +364,7 @@
         
   
   
-    <a href="../../sections/" class="md-nav__link">
+    <a href="../../chapters/" class="md-nav__link">
       
   
   <span class="md-ellipsis">
@@ -347,86 +387,7 @@
       
   
   
-  
-  
     
-    
-      
-        
-          
-        
-      
-        
-      
-        
-      
-        
-      
-        
-          
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-          
-        
-      
-        
-      
-        
-          
-        
-      
-        
-      
-        
-      
-        
-          
-        
-      
-    
-    
-    
-      
-        
-        
-      
-    
-    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
-      
-        
-  
-  
-    <a href="../../prompts/" class="md-nav__link">
-      
-  
-  <span class="md-ellipsis">
-    Sample Prompts
-  </span>
-  
-
-      
-        <span class="md-nav__icon md-icon"></span>
-      
-    </a>
-  
-
-      
-    </li>
-  
-
-    
-      
-      
-  
   
   
   
@@ -441,48 +402,13 @@
           
         
       
-    
-    
-    
-      
         
+          
         
       
-    
-    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
-      
         
-  
-  
-    <a href="../../faq/" class="md-nav__link">
-      
-  
-  <span class="md-ellipsis">
-    FAQ
-  </span>
-  
-
-      
-        <span class="md-nav__icon md-icon"></span>
-      
-    </a>
-  
-
-      
-    </li>
-  
-
-    
-      
-      
-  
-  
-    
-  
-  
-  
-    
-    
+          
+        
       
         
           
@@ -514,8 +440,6 @@
       
         
           
-        
-      
         
       
     
@@ -527,7 +451,7 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
         
           
           
@@ -543,19 +467,103 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_6" id="__nav_6_label" tabindex="0">
+              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="0">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_6">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
             <span class="md-nav__icon md-icon"></span>
             MicroSims
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
             
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../water-flow-analogy/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Water Flow Analogy
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../power-triangle/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Power Triangle
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ground-symbols/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Ground Symbols
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../circuit-symbol-flashcards/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Circuit Symbol Flashcards
+  </span>
+  
+
+      </a>
+    </li>
+  
+
               
             
               
@@ -663,7 +671,7 @@
         
   
   <span class="md-ellipsis">
-    Circuit Similarity
+    Circuit Embeddings
   </span>
   
 
@@ -736,8 +744,15 @@
 
               
             
-              
-                
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
   
   
   
@@ -748,7 +763,125 @@
         
       
         
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../sections/index.md" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Supplementary Sections
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
           
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../learning-graph/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Learning Graph
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
         
       
         
@@ -756,7 +889,11 @@
         
       
         
-          
+      
+        
+      
+        
+      
         
       
         
@@ -764,7 +901,13 @@
         
       
         
+      
+        
           
+        
+      
+        
+      
         
       
         
@@ -772,16 +915,47 @@
         
       
         
-          
-        
+      
+    
+    
+    
       
         
-          
         
       
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
         
-          
-        
+  
+  
+    <a href="../../prompts/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Sample Prompts
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
       
         
           
@@ -804,11 +978,11 @@
         
   
   
-    <a href="../components/" class="md-nav__link">
+    <a href="../../faq/" class="md-nav__link">
       
   
   <span class="md-ellipsis">
-    Component Tests
+    FAQ
   </span>
   
 
@@ -818,14 +992,6 @@
     </a>
   
 
-      
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
       
     </li>
   
@@ -863,26 +1029,6 @@
   
   <span class="md-ellipsis">
     How We Built This Site
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../checklist/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Checklist
   </span>
   
 
@@ -1030,7 +1176,7 @@
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../" class="md-footer__link md-footer__link--prev" aria-label="Previous: Introduction">
+          <a href="../circuit-symbol-flashcards/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Circuit Symbol Flashcards">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
@@ -1040,7 +1186,7 @@
                 Previous
               </span>
               <div class="md-ellipsis">
-                Introduction
+                Circuit Symbol Flashcards
               </div>
             </div>
           </a>
@@ -1093,6 +1239,12 @@
       <script src="../../assets/javascripts/bundle.83f73b43.min.js"></script>
       
         <script src="../../js/extra.js"></script>
+      
+        <script src="../../js/katex.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
       
     
   </body>

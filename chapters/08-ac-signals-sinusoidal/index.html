@@ -1,0 +1,3109 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="An intelligent interactive Circuits textbook for EE and CS students with AI-generated content and simulations.">
+      
+      
+        <meta name="author" content="Dan McCreary">
+      
+      
+        <link rel="canonical" href="https://dmccreary.github.io/circuits/chapters/08-ac-signals-sinusoidal/">
+      
+      
+        <link rel="prev" href="../07-second-order-rlc-circuits/">
+      
+      
+        <link rel="next" href="../09-phasors-complex-impedance/">
+      
+      
+      <link rel="icon" href="../../img/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.43">
+    
+    
+      
+        <title>8. AC Signals and Sinusoids - Circuits 1</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.0253249f.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../css/extra.css">
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+<script id="__analytics">function __md_analytics(){function e(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],e("js",new Date),e("config","G-9J4MVE6LWP"),document.addEventListener("DOMContentLoaded",(function(){document.forms.search&&document.forms.search.query.addEventListener("blur",(function(){this.value&&e("event","search",{search_term:this.value})}));document$.subscribe((function(){var t=document.forms.feedback;if(void 0!==t)for(var a of t.querySelectorAll("[type=submit]"))a.addEventListener("click",(function(a){a.preventDefault();var n=document.location.pathname,d=this.getAttribute("data-md-value");e("event","feedback",{page:n,data:d}),t.firstElementChild.disabled=!0;var r=t.querySelector(".md-feedback__note [data-md-value='"+d+"']");r&&(r.hidden=!1)})),t.hidden=!1})),location$.subscribe((function(t){e("config","G-9J4MVE6LWP",{page_path:t.pathname})}))}));var t=document.createElement("script");t.async=!0,t.src="https://www.googletagmanager.com/gtag/js?id=G-9J4MVE6LWP",document.getElementById("__analytics").insertAdjacentElement("afterEnd",t)}</script>
+  
+    <script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
+  
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="orange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#ac-signals-and-sinusoidal-waveforms" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Circuits 1" class="md-header__button md-logo" aria-label="Circuits 1" data-md-component="logo">
+      
+  <img src="../../img/course-logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Circuits 1
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              8. AC Signals and Sinusoids
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/dmccreary/circuits" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub Repo
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Circuits 1" class="md-nav__button md-logo" aria-label="Circuits 1" data-md-component="logo">
+      
+  <img src="../../img/course-logo.png" alt="logo">
+
+    </a>
+    Circuits 1
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/dmccreary/circuits" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub Repo
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../about/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    About This Course
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+    
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Chapters
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Chapters
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-electric-charge-basic-quantities/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1. Electric Charge and Quantities
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-ohms-law-basic-configurations/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2. Ohm's Law and Configurations
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-kirchhoffs-laws-topology/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3. Kirchhoff's Laws and Topology
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-dc-circuit-analysis/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4. DC Circuit Analysis
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-passive-components/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5. Passive Components
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-transient-analysis-rc-rl/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    6. Transient Analysis RC/RL
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-second-order-rlc-circuits/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    7. Second-Order RLC Circuits
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    8. AC Signals and Sinusoids
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    8. AC Signals and Sinusoids
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      Summary
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#concepts-covered" class="md-nav__link">
+    <span class="md-ellipsis">
+      Concepts Covered
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prerequisites
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#introduction-why-the-world-runs-on-waves" class="md-nav__link">
+    <span class="md-ellipsis">
+      Introduction: Why the World Runs on Waves
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#alternating-current-the-back-and-forth-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      Alternating Current: The Back-and-Forth Flow
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sinusoidal-waveforms-natures-favorite-curve" class="md-nav__link">
+    <span class="md-ellipsis">
+      Sinusoidal Waveforms: Nature's Favorite Curve
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Sinusoidal Waveforms: Nature's Favorite Curve">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-sinusoidal-waveform-anatomy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Sinusoidal Waveform Anatomy
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#amplitude-measurements" class="md-nav__link">
+    <span class="md-ellipsis">
+      Amplitude Measurements
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#frequency-and-period" class="md-nav__link">
+    <span class="md-ellipsis">
+      Frequency and Period
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-the-starting-point" class="md-nav__link">
+    <span class="md-ellipsis">
+      Phase: The Starting Point
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Phase: The Starting Point">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-phase-relationship-visualizer" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Phase Relationship Visualizer
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#signals-the-language-of-information" class="md-nav__link">
+    <span class="md-ellipsis">
+      Signals: The Language of Information
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Signals: The Language of Information">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#periodic-and-aperiodic-signals" class="md-nav__link">
+    <span class="md-ellipsis">
+      Periodic and Aperiodic Signals
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dc-and-ac-components" class="md-nav__link">
+    <span class="md-ellipsis">
+      DC and AC Components
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="DC and AC Components">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-dc-and-ac-component-separator" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: DC and AC Component Separator
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#time-domain-and-frequency-domain-two-perspectives" class="md-nav__link">
+    <span class="md-ellipsis">
+      Time Domain and Frequency Domain: Two Perspectives
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Time Domain and Frequency Domain: Two Perspectives">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-time-domain-vs-frequency-domain" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Time Domain vs Frequency Domain
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#complex-numbers-your-new-best-friend" class="md-nav__link">
+    <span class="md-ellipsis">
+      Complex Numbers: Your New Best Friend
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Complex Numbers: Your New Best Friend">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rectangular-form" class="md-nav__link">
+    <span class="md-ellipsis">
+      Rectangular Form
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polar-form" class="md-nav__link">
+    <span class="md-ellipsis">
+      Polar Form
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Polar Form">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-complex-number-visualizer" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Complex Number Visualizer
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#eulers-formula-the-bridge-between-worlds" class="md-nav__link">
+    <span class="md-ellipsis">
+      Euler's Formula: The Bridge Between Worlds
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Euler's Formula: The Bridge Between Worlds">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-eulers-formula-on-the-unit-circle" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Euler's Formula on the Unit Circle
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#signal-amplitude-beyond-peak-values" class="md-nav__link">
+    <span class="md-ellipsis">
+      Signal Amplitude: Beyond Peak Values
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Signal Amplitude: Beyond Peak Values">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#crest-factor" class="md-nav__link">
+    <span class="md-ellipsis">
+      Crest Factor
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#form-factor" class="md-nav__link">
+    <span class="md-ellipsis">
+      Form Factor
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#voltage-gain-and-current-gain" class="md-nav__link">
+    <span class="md-ellipsis">
+      Voltage Gain and Current Gain
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Voltage Gain and Current Gain">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-gain-and-decibel-converter" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Gain and Decibel Converter
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-characterizing-an-ac-signal" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked Example: Characterizing an AC Signal
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#complex-number-operations-practice" class="md-nav__link">
+    <span class="md-ellipsis">
+      Complex Number Operations: Practice
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#self-check-questions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Self-Check Questions
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Summary
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../09-phasors-complex-impedance/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    9. Phasors and Impedance
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10-ac-power-analysis/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    10. AC Power Analysis
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../11-frequency-response-bode/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    11. Frequency Response and Bode
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../12-filters-resonance/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    12. Filters and Resonance
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../13-operational-amplifiers/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    13. Operational Amplifiers
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../14-signals-audio-lab/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    14. Signal Analysis and Fourier
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../15-audio-applications/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    15. Audio Applications
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../16-laboratory-techniques/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    16. Laboratory Techniques
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../sims/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    MicroSims
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../sections/index.md" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Supplementary Sections
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../learning-graph/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Learning Graph
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../prompts/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Sample Prompts
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+          
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../faq/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    FAQ
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../glossary/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Glossary
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how-we-built-this-site/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    How We Built This Site
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../references/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    References
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../license/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    License
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contact/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Contact
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      Summary
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#concepts-covered" class="md-nav__link">
+    <span class="md-ellipsis">
+      Concepts Covered
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prerequisites
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#introduction-why-the-world-runs-on-waves" class="md-nav__link">
+    <span class="md-ellipsis">
+      Introduction: Why the World Runs on Waves
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#alternating-current-the-back-and-forth-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      Alternating Current: The Back-and-Forth Flow
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sinusoidal-waveforms-natures-favorite-curve" class="md-nav__link">
+    <span class="md-ellipsis">
+      Sinusoidal Waveforms: Nature's Favorite Curve
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Sinusoidal Waveforms: Nature's Favorite Curve">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-sinusoidal-waveform-anatomy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Sinusoidal Waveform Anatomy
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#amplitude-measurements" class="md-nav__link">
+    <span class="md-ellipsis">
+      Amplitude Measurements
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#frequency-and-period" class="md-nav__link">
+    <span class="md-ellipsis">
+      Frequency and Period
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-the-starting-point" class="md-nav__link">
+    <span class="md-ellipsis">
+      Phase: The Starting Point
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Phase: The Starting Point">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-phase-relationship-visualizer" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Phase Relationship Visualizer
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#signals-the-language-of-information" class="md-nav__link">
+    <span class="md-ellipsis">
+      Signals: The Language of Information
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Signals: The Language of Information">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#periodic-and-aperiodic-signals" class="md-nav__link">
+    <span class="md-ellipsis">
+      Periodic and Aperiodic Signals
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dc-and-ac-components" class="md-nav__link">
+    <span class="md-ellipsis">
+      DC and AC Components
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="DC and AC Components">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-dc-and-ac-component-separator" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: DC and AC Component Separator
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#time-domain-and-frequency-domain-two-perspectives" class="md-nav__link">
+    <span class="md-ellipsis">
+      Time Domain and Frequency Domain: Two Perspectives
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Time Domain and Frequency Domain: Two Perspectives">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-time-domain-vs-frequency-domain" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Time Domain vs Frequency Domain
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#complex-numbers-your-new-best-friend" class="md-nav__link">
+    <span class="md-ellipsis">
+      Complex Numbers: Your New Best Friend
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Complex Numbers: Your New Best Friend">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rectangular-form" class="md-nav__link">
+    <span class="md-ellipsis">
+      Rectangular Form
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#polar-form" class="md-nav__link">
+    <span class="md-ellipsis">
+      Polar Form
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Polar Form">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-complex-number-visualizer" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Complex Number Visualizer
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#eulers-formula-the-bridge-between-worlds" class="md-nav__link">
+    <span class="md-ellipsis">
+      Euler's Formula: The Bridge Between Worlds
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Euler's Formula: The Bridge Between Worlds">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-eulers-formula-on-the-unit-circle" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Euler's Formula on the Unit Circle
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#signal-amplitude-beyond-peak-values" class="md-nav__link">
+    <span class="md-ellipsis">
+      Signal Amplitude: Beyond Peak Values
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Signal Amplitude: Beyond Peak Values">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#crest-factor" class="md-nav__link">
+    <span class="md-ellipsis">
+      Crest Factor
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#form-factor" class="md-nav__link">
+    <span class="md-ellipsis">
+      Form Factor
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#voltage-gain-and-current-gain" class="md-nav__link">
+    <span class="md-ellipsis">
+      Voltage Gain and Current Gain
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Voltage Gain and Current Gain">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-gain-and-decibel-converter" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Gain and Decibel Converter
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-characterizing-an-ac-signal" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked Example: Characterizing an AC Signal
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#complex-number-operations-practice" class="md-nav__link">
+    <span class="md-ellipsis">
+      Complex Number Operations: Practice
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#self-check-questions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Self-Check Questions
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Summary
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+    <a href="https://github.com/dmccreary/circuits/blob/master/docs/chapters/08-ac-signals-sinusoidal/index.md" title="Edit this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+
+
+<h1 id="ac-signals-and-sinusoidal-waveforms">AC Signals and Sinusoidal Waveforms</h1>
+<h2 id="summary">Summary</h2>
+<p>This chapter introduces alternating current (AC) and the sinusoidal waveforms that are fundamental to power systems and signal processing. Students will learn to characterize sinusoids by their amplitude, frequency, period, and phase, and understand the relationships between these parameters. The chapter covers important measurement quantities including peak, peak-to-peak, RMS, and average values. Complex numbers are introduced as the mathematical foundation for phasor analysis in the next chapter.</p>
+<h2 id="concepts-covered">Concepts Covered</h2>
+<p>This chapter covers the following 18 concepts from the learning graph:</p>
+<ol>
+<li>Alternating Current</li>
+<li>Sinusoidal Waveform</li>
+<li>Complex Numbers</li>
+<li>Rectangular Form</li>
+<li>Polar Form</li>
+<li>Euler's Formula</li>
+<li>Signal</li>
+<li>Periodic Signal</li>
+<li>Aperiodic Signal</li>
+<li>Time Domain</li>
+<li>Frequency Domain</li>
+<li>DC Component</li>
+<li>AC Component</li>
+<li>Signal Amplitude</li>
+<li>Crest Factor</li>
+<li>Form Factor</li>
+<li>Voltage Gain</li>
+<li>Current Gain</li>
+</ol>
+<h2 id="prerequisites">Prerequisites</h2>
+<p>This chapter builds on concepts from:</p>
+<ul>
+<li><a href="../01-electric-charge-basic-quantities/">Chapter 1: Electric Charge and Basic Circuit Quantities</a></li>
+<li><a href="../05-passive-components/">Chapter 5: Passive Components: Resistors, Capacitors, and Inductors</a></li>
+</ul>
+<hr />
+<p>title: AC Signals and Sinusoidal Waveforms
+description: Master alternating current, sinusoidal analysis, complex numbers, and signal characterization
+generated_by: chapter-content-generator v0.03
+date: 2026-01-30</p>
+<hr />
+<h2 id="introduction-why-the-world-runs-on-waves">Introduction: Why the World Runs on Waves</h2>
+<p>Walk into any room, flip a light switch, and you're tapping into a global network of energy that flows back and forth, back and forth—60 times per second in the Americas, 50 times per second in most of the rest of the world. This isn't a design flaw or a compromise; it's a deliberate choice that makes modern electrical power possible.</p>
+<p>Welcome to the world of <strong>alternating current (AC)</strong>, where voltages and currents don't just sit there—they <em>dance</em>. They follow a graceful sinusoidal pattern, the smoothest curve mathematics can produce, and this simple waveform turns out to be absurdly useful for everything from power transmission to radio communication to music recording.</p>
+<p>In this chapter, you'll learn to describe these dancing signals mathematically, extract meaningful measurements from them, and prepare for the powerful analytical tools (phasors!) that make AC circuit analysis surprisingly elegant. You'll also meet complex numbers—not because we want to make your life complicated, but because they make <em>this</em> math beautifully simple.</p>
+<h2 id="alternating-current-the-back-and-forth-flow">Alternating Current: The Back-and-Forth Flow</h2>
+<p><strong>Alternating current (AC)</strong> is electric current that periodically reverses direction. Unlike direct current (DC), where electrons flow steadily in one direction like a river, AC electrons shuffle back and forth like commuters in a subway car.</p>
+<p><strong>Why does AC dominate power systems?</strong></p>
+<ol>
+<li><strong>Transformers work with AC</strong> - Voltage can be stepped up for efficient long-distance transmission, then stepped down for safe household use</li>
+<li><strong>Generation is natural</strong> - Rotating generators naturally produce sinusoidal AC</li>
+<li><strong>Motors are simpler</strong> - AC induction motors have no brushes or commutators to wear out</li>
+<li><strong>Switching is easier</strong> - AC crosses through zero every half-cycle, making circuit breakers more effective</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>Characteristic</th>
+<th>DC</th>
+<th>AC</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Direction</td>
+<td>Constant</td>
+<td>Reverses periodically</td>
+</tr>
+<tr>
+<td>Voltage transformation</td>
+<td>Difficult</td>
+<td>Easy (transformers)</td>
+</tr>
+<tr>
+<td>Long-distance transmission</td>
+<td>High losses</td>
+<td>Low losses (high voltage)</td>
+</tr>
+<tr>
+<td>Storage</td>
+<td>Batteries</td>
+<td>Requires conversion</td>
+</tr>
+<tr>
+<td>Generation</td>
+<td>Requires rectification</td>
+<td>Natural (rotating machines)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>The great AC/DC debate:</strong> Thomas Edison championed DC, while Nikola Tesla and George Westinghouse promoted AC. AC won for power distribution because transformers allowed high-voltage transmission with low losses. DC has made a comeback in some applications (data centers, solar panels, electric vehicles) but AC still reigns for the grid.</p>
+<h2 id="sinusoidal-waveforms-natures-favorite-curve">Sinusoidal Waveforms: Nature's Favorite Curve</h2>
+<p>A <strong>sinusoidal waveform</strong> (or sinusoid) is a mathematical curve describing smooth, repetitive oscillation. It's defined by the sine or cosine function:</p>
+<div class="arithmatex">\[v(t) = V_m \sin(\omega t + \phi)\]</div>
+<p>Or equivalently:</p>
+<div class="arithmatex">\[v(t) = V_m \cos(\omega t + \phi - 90°)\]</div>
+<p>Where:</p>
+<ul>
+<li><span class="arithmatex">\(V_m\)</span> = Peak amplitude (maximum value)</li>
+<li><span class="arithmatex">\(\omega\)</span> = Angular frequency in rad/s (<span class="arithmatex">\(\omega = 2\pi f\)</span>)</li>
+<li><span class="arithmatex">\(t\)</span> = Time in seconds</li>
+<li><span class="arithmatex">\(\phi\)</span> = Phase angle in radians (or degrees)</li>
+</ul>
+<p><strong>Why sinusoids are special:</strong></p>
+<ol>
+<li><strong>Derivatives and integrals are sinusoids</strong> - The derivative of a sine is a cosine, and vice versa. This makes differential equations much easier!</li>
+<li><strong>Sinusoids through linear systems remain sinusoids</strong> - Only the amplitude and phase change, not the shape</li>
+<li><strong>Any periodic signal can be built from sinusoids</strong> - Fourier showed that any repeating waveform is just a sum of sinusoids at different frequencies</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Symbol</th>
+<th>Formula</th>
+<th>Units</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Peak amplitude</td>
+<td><span class="arithmatex">\(V_m\)</span>, <span class="arithmatex">\(I_m\)</span></td>
+<td>Maximum value</td>
+<td>V, A</td>
+</tr>
+<tr>
+<td>Angular frequency</td>
+<td><span class="arithmatex">\(\omega\)</span></td>
+<td><span class="arithmatex">\(2\pi f\)</span></td>
+<td>rad/s</td>
+</tr>
+<tr>
+<td>Frequency</td>
+<td><span class="arithmatex">\(f\)</span></td>
+<td><span class="arithmatex">\(1/T\)</span></td>
+<td>Hz</td>
+</tr>
+<tr>
+<td>Period</td>
+<td><span class="arithmatex">\(T\)</span></td>
+<td><span class="arithmatex">\(1/f\)</span></td>
+<td>s</td>
+</tr>
+<tr>
+<td>Phase</td>
+<td><span class="arithmatex">\(\phi\)</span></td>
+<td>Angle offset</td>
+<td>rad or °</td>
+</tr>
+</tbody>
+</table>
+<h4 id="diagram-sinusoidal-waveform-anatomy">Diagram: Sinusoidal Waveform Anatomy</h4>
+<iframe src="../../sims/sinusoid-anatomy/main.html" width="100%" height="500px" scrolling="no" style="overflow: hidden;"></iframe>
+
+<details markdown="1">
+<summary>Sinusoidal Waveform Anatomy</summary>
+Type: microsim
+
+Bloom Level: Understand (L2)
+Bloom Verb: explain
+
+Learning Objective: Students will explain the relationship between sinusoidal parameters (amplitude, frequency, phase) and the resulting waveform shape.
+
+Visual elements:
+- Main plot: Sinusoidal waveform v(t) vs time
+- Amplitude markers: Peak-to-peak, peak, RMS shown as horizontal lines
+- Period marker: Arrow spanning one complete cycle
+- Phase reference: Vertical line at t=0 showing phase offset
+- Mathematical formula displayed and updated in real-time
+- Zero crossings highlighted
+
+Interactive controls:
+- Slider: Amplitude Vm (1V to 10V)
+- Slider: Frequency f (1Hz to 100Hz, or period T)
+- Slider: Phase φ (-180° to +180°)
+- Toggle: Show/hide RMS level
+- Toggle: Show sine or cosine reference
+- Display: Current formula with values
+
+Annotations:
+- "Period T = 1/f" spanning one cycle
+- "Peak Vm" at maximum point
+- "Phase shift" showing offset from reference
+
+Default parameters:
+- Vm = 5V
+- f = 10Hz
+- φ = 0°
+
+Canvas layout:
+- Plot area: 600 × 350 pixels
+- Control area: 100 pixels below
+
+Implementation: p5.js
+</details>
+
+<h3 id="amplitude-measurements">Amplitude Measurements</h3>
+<p>Different applications require different ways of characterizing amplitude:</p>
+<p><strong>Peak Value (<span class="arithmatex">\(V_p\)</span> or <span class="arithmatex">\(V_m\)</span>):</strong> The maximum instantaneous value from zero
+[V_p = V_m]</p>
+<p><strong>Peak-to-Peak Value (<span class="arithmatex">\(V_{pp}\)</span>):</strong> The total swing from minimum to maximum
+[V_{pp} = 2V_m]</p>
+<p><strong>RMS Value (<span class="arithmatex">\(V_{rms}\)</span>):</strong> The "equivalent DC" value for power calculations
+[V_{rms} = \frac{V_m}{\sqrt{2}} \approx 0.707 \times V_m]</p>
+<p><strong>Average Value (<span class="arithmatex">\(V_{avg}\)</span>):</strong> The mean value over one half-cycle (full-cycle average is zero!)
+[V_{avg} = \frac{2V_m}{\pi} \approx 0.637 \times V_m]</p>
+<table>
+<thead>
+<tr>
+<th>Measurement</th>
+<th>Formula</th>
+<th>For 120V RMS Wall Outlet</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RMS</td>
+<td><span class="arithmatex">\(V_{rms}\)</span></td>
+<td>120 V</td>
+</tr>
+<tr>
+<td>Peak</td>
+<td><span class="arithmatex">\(V_m = \sqrt{2} \times V_{rms}\)</span></td>
+<td>170 V</td>
+</tr>
+<tr>
+<td>Peak-to-Peak</td>
+<td><span class="arithmatex">\(V_{pp} = 2V_m\)</span></td>
+<td>340 V</td>
+</tr>
+<tr>
+<td>Average (half-cycle)</td>
+<td><span class="arithmatex">\(V_{avg} = 2V_m/\pi\)</span></td>
+<td>108 V</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition tip">
+<p class="admonition-title">Why RMS Matters</p>
+<p>RMS (Root Mean Square) is the most important AC measurement because it directly relates to power. A 120V RMS AC source delivers the same heating power to a resistor as a 120V DC source. This is why your wall outlet is rated at 120V RMS—that's the effective voltage for power delivery.</p>
+</div>
+<h3 id="frequency-and-period">Frequency and Period</h3>
+<p><strong>Frequency (<span class="arithmatex">\(f\)</span>)</strong> tells you how many complete cycles occur per second:
+[f = \frac{1}{T} \text{ Hz}]</p>
+<p><strong>Period (<span class="arithmatex">\(T\)</span>)</strong> is the time for one complete cycle:
+[T = \frac{1}{f} \text{ seconds}]</p>
+<p><strong>Angular frequency (<span class="arithmatex">\(\omega\)</span>)</strong> converts frequency to radians:
+[\omega = 2\pi f \text{ rad/s}]</p>
+<table>
+<thead>
+<tr>
+<th>Standard</th>
+<th>Frequency</th>
+<th>Period</th>
+<th>Angular Frequency</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>US Power</td>
+<td>60 Hz</td>
+<td>16.67 ms</td>
+<td>377 rad/s</td>
+</tr>
+<tr>
+<td>EU Power</td>
+<td>50 Hz</td>
+<td>20 ms</td>
+<td>314 rad/s</td>
+</tr>
+<tr>
+<td>Audio (A4)</td>
+<td>440 Hz</td>
+<td>2.27 ms</td>
+<td>2,765 rad/s</td>
+</tr>
+<tr>
+<td>AM Radio</td>
+<td>1 MHz</td>
+<td>1 μs</td>
+<td>6.28 × 10⁶ rad/s</td>
+</tr>
+<tr>
+<td>WiFi</td>
+<td>2.4 GHz</td>
+<td>0.42 ns</td>
+<td>1.51 × 10¹⁰ rad/s</td>
+</tr>
+</tbody>
+</table>
+<h3 id="phase-the-starting-point">Phase: The Starting Point</h3>
+<p><strong>Phase (<span class="arithmatex">\(\phi\)</span>)</strong> describes where the waveform starts at time <span class="arithmatex">\(t = 0\)</span>. Two signals with the same frequency but different phases are said to be "out of phase."</p>
+<p><strong>Phase relationships:</strong></p>
+<ul>
+<li><strong>In phase</strong> (<span class="arithmatex">\(\phi = 0°\)</span>): Peaks align</li>
+<li><strong>90° out of phase</strong> (quadrature): One peaks when the other crosses zero</li>
+<li><strong>180° out of phase</strong> (antiphase): Peaks of one align with troughs of the other</li>
+</ul>
+<p>[v_1(t) = V_m \sin(\omega t)]
+[v_2(t) = V_m \sin(\omega t + 90°) = V_m \cos(\omega t)]</p>
+<p>When we say "<span class="arithmatex">\(v_2\)</span> leads <span class="arithmatex">\(v_1\)</span> by 90°," we mean <span class="arithmatex">\(v_2\)</span> reaches its peak earlier in time.</p>
+<h4 id="diagram-phase-relationship-visualizer">Diagram: Phase Relationship Visualizer</h4>
+<iframe src="../../sims/phase-relationship/main.html" width="100%" height="450px" scrolling="no" style="overflow: hidden;"></iframe>
+
+<details markdown="1">
+<summary>Phase Relationship Visualizer</summary>
+Type: microsim
+
+Bloom Level: Understand (L2)
+Bloom Verb: compare
+
+Learning Objective: Students will compare two sinusoidal signals with different phase relationships and interpret leading/lagging terminology.
+
+Visual elements:
+- Dual waveform plot showing two signals (blue and red)
+- Reference signal (blue): v₁(t) = Vm sin(ωt)
+- Phase-shifted signal (red): v₂(t) = Vm sin(ωt + φ)
+- Phase angle marked between corresponding points
+- Phasor diagram showing both signals as rotating vectors
+- "Leads" or "Lags" label indicating relationship
+
+Interactive controls:
+- Slider: Phase difference φ (-180° to +180°)
+- Button: Quick select: 0°, 90°, 180°, -90°
+- Toggle: Show/hide phasor diagram
+- Toggle: Animate phasor rotation
+- Display: Phase relationship description
+
+Visual feedback:
+- φ > 0: "Signal 2 LEADS signal 1 by φ°"
+- φ < 0: "Signal 2 LAGS signal 1 by |φ|°"
+- φ = 0: "Signals are IN PHASE"
+- φ = ±180°: "Signals are in ANTIPHASE"
+
+Default parameters:
+- φ = 45° (signal 2 leads)
+- Same amplitude for both signals
+- f = 5 Hz for visible animation
+
+Canvas layout:
+- Waveform plot: 400 × 300 pixels
+- Phasor diagram: 200 × 300 pixels (side)
+- Control area: 100 pixels below
+
+Implementation: p5.js
+</details>
+
+<h2 id="signals-the-language-of-information">Signals: The Language of Information</h2>
+<p>A <strong>signal</strong> is any quantity that varies with time and conveys information. Signals are everywhere:</p>
+<ul>
+<li>Voltage from a microphone (audio signal)</li>
+<li>Current through a sensor (measurement signal)</li>
+<li>Digital bits on a network cable (data signal)</li>
+<li>Your heartbeat as recorded by an ECG (biosignal)</li>
+</ul>
+<h3 id="periodic-and-aperiodic-signals">Periodic and Aperiodic Signals</h3>
+<p><strong>Periodic signal:</strong> A signal that repeats exactly after a fixed time interval (the period T).
+[x(t) = x(t + T) \text{ for all } t]</p>
+<p>Examples: Power line voltage, clock signals, musical tones</p>
+<p><strong>Aperiodic signal:</strong> A signal that doesn't repeat (or only exists for a finite duration).</p>
+<p>Examples: Single pulse, speech, transients, noise</p>
+<table>
+<thead>
+<tr>
+<th>Signal Type</th>
+<th>Mathematical Property</th>
+<th>Examples</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Periodic</td>
+<td><span class="arithmatex">\(x(t) = x(t+T)\)</span></td>
+<td>Sine wave, square wave, clock</td>
+</tr>
+<tr>
+<td>Aperiodic</td>
+<td>No repetition</td>
+<td>Pulse, noise, speech</td>
+</tr>
+<tr>
+<td>Continuous</td>
+<td>Defined for all t</td>
+<td>Analog audio</td>
+</tr>
+<tr>
+<td>Discrete</td>
+<td>Defined at sample points</td>
+<td>Digital audio</td>
+</tr>
+</tbody>
+</table>
+<h3 id="dc-and-ac-components">DC and AC Components</h3>
+<p>Any signal can be decomposed into:</p>
+<p><strong>DC Component:</strong> The average (constant) value of the signal
+[V_{DC} = \frac{1}{T}\int_0^T v(t) \, dt]</p>
+<p><strong>AC Component:</strong> The time-varying part that oscillates around the DC level
+[v_{AC}(t) = v(t) - V_{DC}]</p>
+<p>A pure sinusoid centered at zero has no DC component. Add a constant offset, and you've introduced DC:</p>
+<div class="arithmatex">\[v(t) = V_{DC} + V_m \sin(\omega t)\]</div>
+<p>This decomposition is crucial in electronics:</p>
+<ul>
+<li>Power supplies filter out AC ripple to produce clean DC</li>
+<li>Coupling capacitors block DC while passing AC signals</li>
+<li>Bias circuits add DC offsets to center signals in their operating range</li>
+</ul>
+<h4 id="diagram-dc-and-ac-component-separator">Diagram: DC and AC Component Separator</h4>
+<iframe src="../../sims/dc-ac-separator/main.html" width="100%" height="450px" scrolling="no" style="overflow: hidden;"></iframe>
+
+<details markdown="1">
+<summary>DC and AC Component Separator</summary>
+Type: microsim
+
+Bloom Level: Understand (L2)
+Bloom Verb: classify
+
+Learning Objective: Students will classify signal components as DC or AC by observing how a composite signal can be separated into its constant and varying parts.
+
+Visual elements:
+- Top plot: Original composite signal v(t) = V_DC + Vm sin(ωt)
+- Middle plot: DC component only (horizontal line at V_DC)
+- Bottom plot: AC component only (sinusoid centered at zero)
+- Visual arrows showing extraction
+- Coupling capacitor icon showing "blocks DC, passes AC"
+
+Interactive controls:
+- Slider: DC offset V_DC (0 to 5V)
+- Slider: AC amplitude Vm (0 to 5V)
+- Slider: Frequency f (1Hz to 20Hz)
+- Toggle: Show/hide component labels
+- Display: Calculated values for DC and AC RMS
+
+Annotations:
+- "Average value = DC component"
+- "Oscillation around average = AC component"
+- Formula showing v(t) = V_DC + v_AC(t)
+
+Default parameters:
+- V_DC = 2.5V
+- Vm = 2V
+- f = 5Hz
+
+Canvas layout:
+- Three stacked plot areas: 600 × 120 pixels each
+- Control area: 100 pixels below
+
+Implementation: p5.js
+</details>
+
+<h2 id="time-domain-and-frequency-domain-two-perspectives">Time Domain and Frequency Domain: Two Perspectives</h2>
+<p>Every signal can be viewed from two complementary perspectives:</p>
+<p><strong>Time Domain:</strong> Shows how the signal varies over time. The x-axis is time, and you see the actual waveform shape.</p>
+<p><strong>Frequency Domain:</strong> Shows what frequencies are present in the signal. The x-axis is frequency, and you see the spectrum—which sinusoids combine to create the signal.</p>
+<p>Think of it like describing a musical chord:</p>
+<ul>
+<li><strong>Time domain:</strong> The actual sound wave shape—complicated!</li>
+<li><strong>Frequency domain:</strong> A list of notes being played—C, E, G (a C major chord)</li>
+</ul>
+<p>The transformation between these views is called the <strong>Fourier Transform</strong>, and it's one of the most powerful tools in engineering. We'll explore this more in Chapter 14, but for now, understand that:</p>
+<ul>
+<li>A pure sinusoid appears as a single spike in the frequency domain</li>
+<li>A complex wave appears as multiple spikes (multiple frequency components)</li>
+<li>The frequency domain reveals information hidden in the time domain</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Domain</th>
+<th>X-axis</th>
+<th>Y-axis</th>
+<th>Shows</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Time</td>
+<td>Time (s)</td>
+<td>Amplitude (V)</td>
+<td>Waveform shape, timing</td>
+</tr>
+<tr>
+<td>Frequency</td>
+<td>Frequency (Hz)</td>
+<td>Amplitude (V)</td>
+<td>Spectral content, harmonics</td>
+</tr>
+</tbody>
+</table>
+<h4 id="diagram-time-domain-vs-frequency-domain">Diagram: Time Domain vs Frequency Domain</h4>
+<iframe src="../../sims/time-frequency-domain/main.html" width="100%" height="500px" scrolling="no" style="overflow: hidden;"></iframe>
+
+<details markdown="1">
+<summary>Time Domain vs Frequency Domain</summary>
+Type: microsim
+
+Bloom Level: Understand (L2)
+Bloom Verb: explain
+
+Learning Objective: Students will explain how time domain waveforms correspond to frequency domain spectra by observing simple sinusoids and their spectral representations.
+
+Visual elements:
+- Left panel: Time domain plot v(t) vs t
+- Right panel: Frequency domain spectrum |V(f)| vs f
+- For composite signals: show individual components in different colors
+- Spectral lines with amplitude markers
+- Animation showing how adding sinusoids builds complex waves
+
+Step-through mode:
+- Stage 1: Single sinusoid → single spectral line
+- Stage 2: Two sinusoids → two spectral lines
+- Stage 3: Three sinusoids → three lines, complex time waveform
+- Stage 4: Many sinusoids → approaching square wave
+
+Interactive controls:
+- Dropdown: Signal type (single sine, two sines, square wave approximation)
+- Slider: Fundamental frequency f₁ (1-20 Hz)
+- Slider: Number of harmonics (for square wave)
+- Button: Step through / Animate
+- Toggle: Show individual components
+
+Annotations:
+- "Time domain shows SHAPE"
+- "Frequency domain shows CONTENT"
+
+Default parameters:
+- Single sinusoid at 5 Hz
+- Step-through mode active
+
+Canvas layout:
+- Two side-by-side plots: 300 × 350 pixels each
+- Control area: 100 pixels below
+
+Instructional Rationale: Step-through helps students see the one-to-one correspondence between time and frequency representations.
+
+Implementation: p5.js
+</details>
+
+<h2 id="complex-numbers-your-new-best-friend">Complex Numbers: Your New Best Friend</h2>
+<p>If you've been dreading complex numbers, prepare for a surprise: they're going to make your life <em>easier</em>. Complex numbers provide a compact way to represent both magnitude and phase in a single mathematical object.</p>
+<p><strong>Definition:</strong> A complex number <span class="arithmatex">\(z\)</span> has a real part and an imaginary part:
+[z = a + jb]</p>
+<p>Where:</p>
+<ul>
+<li><span class="arithmatex">\(a\)</span> = Real part (<span class="arithmatex">\(\text{Re}(z)\)</span>)</li>
+<li><span class="arithmatex">\(b\)</span> = Imaginary part (<span class="arithmatex">\(\text{Im}(z)\)</span>)</li>
+<li><span class="arithmatex">\(j = \sqrt{-1}\)</span> (Engineers use <span class="arithmatex">\(j\)</span> because <span class="arithmatex">\(i\)</span> is reserved for current!)</li>
+</ul>
+<p><strong>Why complex numbers for AC circuits?</strong></p>
+<ul>
+<li>Sinusoids at the same frequency can be represented as complex numbers called phasors</li>
+<li>Adding sinusoids becomes adding complex numbers (simple!)</li>
+<li>Differentiation and integration become multiplication and division (even simpler!)</li>
+<li>Circuit analysis with complex impedances follows all the DC rules you already know</li>
+</ul>
+<h3 id="rectangular-form">Rectangular Form</h3>
+<p><strong>Rectangular form</strong> (or Cartesian form) expresses a complex number as:
+[z = a + jb]</p>
+<p>This form is best for:</p>
+<ul>
+<li>Addition and subtraction</li>
+<li>Visualizing real and imaginary parts separately</li>
+</ul>
+<p><strong>Operations in rectangular form:</strong></p>
+<p>Addition: <span class="arithmatex">\((a_1 + jb_1) + (a_2 + jb_2) = (a_1 + a_2) + j(b_1 + b_2)\)</span></p>
+<p>Subtraction: <span class="arithmatex">\((a_1 + jb_1) - (a_2 + jb_2) = (a_1 - a_2) + j(b_1 - b_2)\)</span></p>
+<p>Multiplication: <span class="arithmatex">\((a_1 + jb_1)(a_2 + jb_2) = (a_1 a_2 - b_1 b_2) + j(a_1 b_2 + a_2 b_1)\)</span></p>
+<h3 id="polar-form">Polar Form</h3>
+<p><strong>Polar form</strong> expresses a complex number using magnitude and angle:
+[z = r \angle \theta = r(\cos\theta + j\sin\theta)]</p>
+<p>Where:</p>
+<ul>
+<li><span class="arithmatex">\(r = |z| = \sqrt{a^2 + b^2}\)</span> (magnitude)</li>
+<li><span class="arithmatex">\(\theta = \tan^{-1}(b/a)\)</span> (angle or argument)</li>
+</ul>
+<p>This form is best for:</p>
+<ul>
+<li>Multiplication and division</li>
+<li>Representing phasors (sinusoid magnitude and phase)</li>
+</ul>
+<p><strong>Operations in polar form:</strong></p>
+<p>Multiplication: <span class="arithmatex">\(r_1 \angle \theta_1 \times r_2 \angle \theta_2 = r_1 r_2 \angle (\theta_1 + \theta_2)\)</span></p>
+<p>Division: <span class="arithmatex">\(\frac{r_1 \angle \theta_1}{r_2 \angle \theta_2} = \frac{r_1}{r_2} \angle (\theta_1 - \theta_2)\)</span></p>
+<p><strong>Converting between forms:</strong></p>
+<table>
+<thead>
+<tr>
+<th>From</th>
+<th>To</th>
+<th>Formulas</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Rectangular</td>
+<td>Polar</td>
+<td><span class="arithmatex">\(r = \sqrt{a^2+b^2}\)</span>, <span class="arithmatex">\(\theta = \tan^{-1}(b/a)\)</span></td>
+</tr>
+<tr>
+<td>Polar</td>
+<td>Rectangular</td>
+<td><span class="arithmatex">\(a = r\cos\theta\)</span>, <span class="arithmatex">\(b = r\sin\theta\)</span></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition tip">
+<p class="admonition-title">Choosing the Right Form</p>
+<p>Use rectangular form for addition/subtraction, polar form for multiplication/division. Your calculator can switch between them, but understanding both builds intuition for what complex numbers represent.</p>
+</div>
+<h4 id="diagram-complex-number-visualizer">Diagram: Complex Number Visualizer</h4>
+<iframe src="../../sims/complex-number-viz/main.html" width="100%" height="500px" scrolling="no" style="overflow: hidden;"></iframe>
+
+<details markdown="1">
+<summary>Complex Number Visualizer</summary>
+Type: microsim
+
+Bloom Level: Apply (L3)
+Bloom Verb: calculate
+
+Learning Objective: Students will calculate complex number conversions between rectangular and polar forms using the complex plane visualization.
+
+Visual elements:
+- Complex plane with real (x) and imaginary (y) axes
+- Point representing complex number z
+- Vector from origin to point showing magnitude
+- Angle arc showing θ
+- Projections onto real and imaginary axes
+- Both rectangular and polar forms displayed
+
+Interactive controls:
+- Mode toggle: "Enter rectangular" vs "Enter polar"
+- Rectangular mode: Sliders for a (-5 to 5) and b (-5 to 5)
+- Polar mode: Sliders for r (0 to 7) and θ (-180° to 180°)
+- Button: Generate random number (quiz mode)
+- Display: Both forms shown with live updates
+
+Conversion formulas shown:
+- r = √(a² + b²) with calculation
+- θ = tan⁻¹(b/a) with quadrant adjustment
+- a = r cos(θ) with calculation
+- b = r sin(θ) with calculation
+
+Visual feedback:
+- Dotted lines showing projections
+- Color coding: real part (blue), imaginary part (green)
+- Magnitude shown as red vector
+
+Default parameters:
+- z = 3 + j4 (classic 3-4-5 triangle)
+- Shows r = 5, θ = 53.13°
+
+Canvas layout:
+- Complex plane: 400 × 400 pixels
+- Control/display panel: 200 × 400 pixels (side)
+- Control area: 100 pixels below
+
+Implementation: p5.js
+</details>
+
+<h3 id="eulers-formula-the-bridge-between-worlds">Euler's Formula: The Bridge Between Worlds</h3>
+<p><strong>Euler's formula</strong> is one of the most beautiful equations in mathematics:</p>
+<div class="arithmatex">\[e^{j\theta} = \cos\theta + j\sin\theta\]</div>
+<p>This connects exponentials with trigonometry, allowing us to write complex numbers as:</p>
+<div class="arithmatex">\[z = re^{j\theta}\]</div>
+<p><strong>Why this matters for circuits:</strong></p>
+<p>The sinusoid <span class="arithmatex">\(v(t) = V_m \cos(\omega t + \phi)\)</span> can be written as:</p>
+<div class="arithmatex">\[v(t) = \text{Re}\{V_m e^{j(\omega t + \phi)}\}\]</div>
+<p>This exponential form makes differentiation trivial:</p>
+<div class="arithmatex">\[\frac{d}{dt}e^{j\omega t} = j\omega e^{j\omega t}\]</div>
+<p>Differentiation just multiplies by <span class="arithmatex">\(j\omega\)</span>! This is why complex exponentials (and phasors) are so powerful for AC analysis.</p>
+<p><strong>Euler's identity</strong> (the "most beautiful equation"):
+[e^{j\pi} + 1 = 0]</p>
+<p>This single equation connects five fundamental constants: <span class="arithmatex">\(e\)</span>, <span class="arithmatex">\(j\)</span>, <span class="arithmatex">\(\pi\)</span>, 1, and 0.</p>
+<table>
+<thead>
+<tr>
+<th>Form</th>
+<th>Expression</th>
+<th>Best for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Rectangular</td>
+<td><span class="arithmatex">\(a + jb\)</span></td>
+<td>Addition, subtraction</td>
+</tr>
+<tr>
+<td>Polar</td>
+<td><span class="arithmatex">\(r \angle \theta\)</span></td>
+<td>Multiplication, division</td>
+</tr>
+<tr>
+<td>Exponential</td>
+<td><span class="arithmatex">\(re^{j\theta}\)</span></td>
+<td>Calculus, phasor analysis</td>
+</tr>
+</tbody>
+</table>
+<h4 id="diagram-eulers-formula-on-the-unit-circle">Diagram: Euler's Formula on the Unit Circle</h4>
+<iframe src="../../sims/euler-circle/main.html" width="100%" height="450px" scrolling="no" style="overflow: hidden;"></iframe>
+
+<details markdown="1">
+<summary>Euler's Formula on the Unit Circle</summary>
+Type: microsim
+
+Bloom Level: Understand (L2)
+Bloom Verb: explain
+
+Learning Objective: Students will explain how Euler's formula relates rotating phasors to sinusoidal projections by observing the unit circle animation.
+
+Visual elements:
+- Unit circle on complex plane
+- Rotating phasor e^(jωt) as animated vector
+- Projection onto real axis: cos(ωt)
+- Projection onto imaginary axis: sin(ωt)
+- Side plots showing cos and sin waveforms being traced
+- Current angle θ displayed
+
+Step-through or animation mode:
+- Step through key angles: 0°, 30°, 45°, 60°, 90°, 180°, 270°, 360°
+- Or continuous rotation at adjustable speed
+
+Interactive controls:
+- Button: Step / Animate
+- Slider: Rotation speed (when animating)
+- Button: Reset to 0°
+- Toggle: Show/hide projection waveforms
+- Display: e^(jθ) = cos(θ) + j·sin(θ) with values
+
+Visual annotations:
+- "Real part = cos(θ)" on horizontal projection
+- "Imaginary part = sin(θ)" on vertical projection
+- Formula: e^(jθ) = cos(θ) + j sin(θ)
+
+Default parameters:
+- Step mode starting at θ = 0°
+- Unit magnitude (r = 1)
+
+Canvas layout:
+- Unit circle: 350 × 350 pixels
+- Side waveform plots: 250 × 175 pixels (stacked)
+- Control area: 100 pixels below
+
+Instructional Rationale: Step-through reveals the fundamental connection between rotating vectors and sinusoidal waveforms.
+
+Implementation: p5.js
+</details>
+
+<h2 id="signal-amplitude-beyond-peak-values">Signal Amplitude: Beyond Peak Values</h2>
+<p>We've already introduced peak, peak-to-peak, RMS, and average values. Now let's look at two ratios that characterize waveform shape:</p>
+<h3 id="crest-factor">Crest Factor</h3>
+<p><strong>Crest factor</strong> (or peak factor) is the ratio of peak value to RMS value:
+[CF = \frac{V_{peak}}{V_{RMS}}]</p>
+<p>For a pure sinusoid:
+[CF = \frac{V_m}{V_m/\sqrt{2}} = \sqrt{2} \approx 1.414]</p>
+<p>Crest factor tells you how "peaky" a waveform is:</p>
+<table>
+<thead>
+<tr>
+<th>Waveform</th>
+<th>Crest Factor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DC</td>
+<td>1.00</td>
+</tr>
+<tr>
+<td>Sine wave</td>
+<td>1.414</td>
+</tr>
+<tr>
+<td>Square wave</td>
+<td>1.00</td>
+</tr>
+<tr>
+<td>Triangle wave</td>
+<td>1.73</td>
+</tr>
+<tr>
+<td>Pulse (10% duty)</td>
+<td>3.16</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Why crest factor matters:</strong></p>
+<ul>
+<li>High crest factor signals stress components more than their RMS value suggests</li>
+<li>Amplifiers must handle peak values without clipping</li>
+<li>Power supplies must provide headroom for peaks</li>
+</ul>
+<h3 id="form-factor">Form Factor</h3>
+<p><strong>Form factor</strong> is the ratio of RMS value to average (rectified) value:
+[FF = \frac{V_{RMS}}{V_{avg}}]</p>
+<p>For a pure sinusoid:
+[FF = \frac{V_m/\sqrt{2}}{2V_m/\pi} = \frac{\pi}{2\sqrt{2}} \approx 1.111]</p>
+<table>
+<thead>
+<tr>
+<th>Waveform</th>
+<th>Form Factor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Sine wave</td>
+<td>1.111</td>
+</tr>
+<tr>
+<td>Square wave</td>
+<td>1.00</td>
+</tr>
+<tr>
+<td>Triangle wave</td>
+<td>1.155</td>
+</tr>
+<tr>
+<td>Sawtooth wave</td>
+<td>1.155</td>
+</tr>
+</tbody>
+</table>
+<p>Form factor describes the "fullness" of a waveform. A square wave fills every moment at maximum, giving it a form factor of 1. A sine wave has "wasted" area near zero crossings.</p>
+<h2 id="voltage-gain-and-current-gain">Voltage Gain and Current Gain</h2>
+<p><strong>Gain</strong> measures how much a circuit amplifies (or attenuates) a signal:</p>
+<p><strong>Voltage gain:</strong>
+[A_V = \frac{V_{out}}{V_{in}}]</p>
+<p><strong>Current gain:</strong>
+[A_I = \frac{I_{out}}{I_{in}}]</p>
+<p><strong>Power gain:</strong>
+[A_P = \frac{P_{out}}{P_{in}} = A_V \times A_I]</p>
+<p>Gain can be:</p>
+<ul>
+<li>Greater than 1: Amplification</li>
+<li>Equal to 1: Unity gain (buffer)</li>
+<li>Less than 1: Attenuation</li>
+<li>Negative: Signal inversion (180° phase shift)</li>
+</ul>
+<p><strong>Decibel notation</strong> is often used because:</p>
+<ul>
+<li>Large gain ranges become manageable numbers</li>
+<li>Cascaded gains add instead of multiply</li>
+</ul>
+<p>[A_V(dB) = 20\log_{10}|A_V|]
+[A_P(dB) = 10\log_{10}|A_P|]</p>
+<table>
+<thead>
+<tr>
+<th>Voltage Gain</th>
+<th>Decibels</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1000</td>
+<td>60 dB</td>
+<td>High amplification</td>
+</tr>
+<tr>
+<td>100</td>
+<td>40 dB</td>
+<td>Strong amplification</td>
+</tr>
+<tr>
+<td>10</td>
+<td>20 dB</td>
+<td>Moderate amplification</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0 dB</td>
+<td>Unity</td>
+</tr>
+<tr>
+<td>0.1</td>
+<td>-20 dB</td>
+<td>Moderate attenuation</td>
+</tr>
+<tr>
+<td>0.01</td>
+<td>-40 dB</td>
+<td>Strong attenuation</td>
+</tr>
+</tbody>
+</table>
+<h4 id="diagram-gain-and-decibel-converter">Diagram: Gain and Decibel Converter</h4>
+<iframe src="../../sims/gain-db-converter/main.html" width="100%" height="400px" scrolling="no" style="overflow: hidden;"></iframe>
+
+<details markdown="1">
+<summary>Gain and Decibel Converter</summary>
+Type: microsim
+
+Bloom Level: Apply (L3)
+Bloom Verb: calculate
+
+Learning Objective: Students will calculate conversions between linear gain and decibel notation for voltage and power gains.
+
+Visual elements:
+- Input signal representation (fixed amplitude)
+- Output signal representation (scaled by gain)
+- Visual comparison of input vs output amplitudes
+- Logarithmic scale showing dB relationship
+- Bidirectional conversion display
+
+Interactive controls:
+- Toggle: Enter as "Linear gain" or "Decibels"
+- Slider: Gain value (0.001 to 1000, logarithmic)
+- Toggle: Voltage gain or Power gain mode
+- Display: Both linear and dB values
+
+Calculations shown:
+- Voltage: dB = 20 log₁₀(A_V)
+- Power: dB = 10 log₁₀(A_P)
+- Inverse formulas for conversion
+
+Quick reference displayed:
+- ×2 = +6 dB (voltage), +3 dB (power)
+- ×10 = +20 dB (voltage), +10 dB (power)
+- ×0.5 = -6 dB (voltage), -3 dB (power)
+
+Default parameters:
+- Voltage gain mode
+- A_V = 10 (20 dB)
+
+Canvas layout:
+- Signal visualization: 300 × 200 pixels
+- Conversion display: 300 × 200 pixels
+- Control area: 100 pixels below
+
+Implementation: p5.js
+</details>
+
+<h2 id="worked-example-characterizing-an-ac-signal">Worked Example: Characterizing an AC Signal</h2>
+<p>Let's put it all together with a practical example.</p>
+<p><strong>Problem:</strong> A voltage signal is measured as:
+[v(t) = 3 + 5\sin(2\pi \cdot 60 \cdot t + 30°) \text{ V}]</p>
+<p>Find: DC component, AC amplitude, frequency, period, RMS value (total), peak value (total), and crest factor.</p>
+<p><strong>Solution:</strong></p>
+<p><strong>DC Component:</strong>
+[V_{DC} = 3 \text{ V}]</p>
+<p><strong>AC Amplitude (peak):</strong>
+[V_m = 5 \text{ V}]</p>
+<p><strong>Frequency:</strong>
+The argument of sine is <span class="arithmatex">\(2\pi \cdot 60 \cdot t\)</span>, so <span class="arithmatex">\(\omega = 2\pi \cdot 60\)</span> rad/s
+[f = 60 \text{ Hz}]</p>
+<p><strong>Period:</strong>
+[T = \frac{1}{f} = \frac{1}{60} = 16.67 \text{ ms}]</p>
+<p><strong>RMS of AC component only:</strong>
+[V_{AC,rms} = \frac{V_m}{\sqrt{2}} = \frac{5}{\sqrt{2}} = 3.54 \text{ V}]</p>
+<p><strong>Total RMS value</strong> (DC + AC):
+[V_{rms,total} = \sqrt{V_{DC}^2 + V_{AC,rms}^2} = \sqrt{3^2 + 3.54^2} = \sqrt{9 + 12.5} = 4.64 \text{ V}]</p>
+<p><strong>Peak value (total):</strong>
+[V_{peak} = V_{DC} + V_m = 3 + 5 = 8 \text{ V}]</p>
+<p><strong>Minimum value:</strong>
+[V_{min} = V_{DC} - V_m = 3 - 5 = -2 \text{ V}]</p>
+<p><strong>Crest factor:</strong>
+[CF = \frac{V_{peak}}{V_{rms,total}} = \frac{8}{4.64} = 1.72]</p>
+<p>Note that the crest factor is higher than a pure sinusoid (1.414) because the DC offset pushes the peak higher relative to the RMS value.</p>
+<h2 id="complex-number-operations-practice">Complex Number Operations: Practice</h2>
+<p><strong>Example 1: Addition (use rectangular form)</strong></p>
+<p>Add <span class="arithmatex">\(z_1 = 3 + j4\)</span> and <span class="arithmatex">\(z_2 = 2 - j5\)</span>:</p>
+<div class="arithmatex">\[z_1 + z_2 = (3 + 2) + j(4 - 5) = 5 - j1\]</div>
+<p><strong>Example 2: Multiplication (use polar form)</strong></p>
+<p>Multiply <span class="arithmatex">\(z_1 = 5\angle 53.13°\)</span> and <span class="arithmatex">\(z_2 = 3\angle -30°\)</span>:</p>
+<div class="arithmatex">\[z_1 \times z_2 = (5 \times 3)\angle(53.13° - 30°) = 15\angle 23.13°\]</div>
+<p><strong>Example 3: Division (use polar form)</strong></p>
+<p>Divide <span class="arithmatex">\(z_1 = 10\angle 60°\)</span> by <span class="arithmatex">\(z_2 = 2\angle 15°\)</span>:</p>
+<div class="arithmatex">\[\frac{z_1}{z_2} = \frac{10}{2}\angle(60° - 15°) = 5\angle 45°\]</div>
+<p><strong>Example 4: Convert and multiply</strong></p>
+<p>Multiply <span class="arithmatex">\(z_1 = 3 + j4\)</span> and <span class="arithmatex">\(z_2 = 1 + j1\)</span>:</p>
+<p>First convert to polar:
+- <span class="arithmatex">\(z_1 = 5\angle 53.13°\)</span>
+- <span class="arithmatex">\(z_2 = \sqrt{2}\angle 45°\)</span></p>
+<p>Then multiply:
+[z_1 \times z_2 = 5\sqrt{2}\angle 98.13° = 7.07\angle 98.13°]</p>
+<p>Convert back to rectangular if needed:
+[z = 7.07(\cos 98.13° + j\sin 98.13°) = -1 + j7]</p>
+<p>You can verify: <span class="arithmatex">\((3 + j4)(1 + j1) = 3 + j3 + j4 + j^2 4 = 3 + j7 - 4 = -1 + j7\)</span> ✓</p>
+<h2 id="self-check-questions">Self-Check Questions</h2>
+<details class="question">
+<summary>1. A sinusoidal voltage has a peak value of 170V and a frequency of 60 Hz. Write its time-domain expression (assuming zero phase) and calculate its RMS value.</summary>
+<p>Time-domain expression:
+[v(t) = 170\sin(2\pi \cdot 60 \cdot t) = 170\sin(377t) \text{ V}]</p>
+<p>RMS value:
+[V_{rms} = \frac{V_m}{\sqrt{2}} = \frac{170}{\sqrt{2}} = 120.2 \text{ V}]</p>
+<p>This is actually the standard US wall outlet specification: 120V RMS with 170V peak at 60 Hz!</p>
+</details>
+<details class="question">
+<summary>2. Convert z = 5 - j12 to polar form.</summary>
+<p>Magnitude:
+[r = \sqrt{5^2 + (-12)^2} = \sqrt{25 + 144} = \sqrt{169} = 13]</p>
+<p>Angle (note: the point is in the fourth quadrant):
+[\theta = \tan^{-1}\left(\frac{-12}{5}\right) = \tan^{-1}(-2.4) = -67.38°]</p>
+<p>Polar form:
+[z = 13\angle -67.38°]</p>
+<p>Or in exponential form:
+[z = 13e^{-j67.38°}]</p>
+</details>
+<details class="question">
+<summary>3. Two voltage sources are v₁(t) = 10sin(ωt) and v₂(t) = 10sin(ωt + 90°). What is the phase relationship between them?</summary>
+<p>Signal v₂ has a phase of +90° relative to v₁.</p>
+<p>Since v₂ has a positive phase angle (leading angle), <strong>v₂ leads v₁ by 90°</strong>.</p>
+<p>Equivalently, <strong>v₁ lags v₂ by 90°</strong>.</p>
+<p>At any instant, v₂ reaches its peak 1/4 of a period earlier than v₁. When v₁ is at zero (crossing positive), v₂ is at its positive peak.</p>
+<p>Note: v₂(t) = 10sin(ωt + 90°) = 10cos(ωt), so this is the classic sine-cosine relationship.</p>
+</details>
+<details class="question">
+<summary>4. An amplifier has a voltage gain of 40 dB. What is the linear voltage gain? If the input is 10 mV RMS, what is the output?</summary>
+<p>Convert dB to linear gain:
+[A_V = 10^{(40/20)} = 10^2 = 100]</p>
+<p>Output voltage:
+[V_{out} = A_V \times V_{in} = 100 \times 10 \text{ mV} = 1000 \text{ mV} = 1 \text{ V RMS}]</p>
+<p>The amplifier increases the signal by a factor of 100, turning a 10 mV signal into 1 V.</p>
+</details>
+<h2 id="summary_1">Summary</h2>
+<p>This chapter introduced the mathematical language of AC circuits:</p>
+<ol>
+<li>
+<p><strong>Alternating current reverses periodically</strong> - AC dominates power systems because transformers enable efficient voltage transformation and transmission</p>
+</li>
+<li>
+<p><strong>Sinusoids are characterized by amplitude, frequency, and phase</strong> - These three parameters completely describe any pure sinusoidal signal</p>
+</li>
+<li>
+<p><strong>RMS is the most important amplitude measure</strong> - It directly relates to power delivery and equals <span class="arithmatex">\(V_m/\sqrt{2}\)</span> for sinusoids</p>
+</li>
+<li>
+<p><strong>Signals can be viewed in time domain or frequency domain</strong> - Time shows waveform shape, frequency shows spectral content</p>
+</li>
+<li>
+<p><strong>DC and AC components can be separated</strong> - Any signal is the sum of its constant (DC) and varying (AC) parts</p>
+</li>
+<li>
+<p><strong>Complex numbers simplify AC analysis</strong> - Rectangular form for addition, polar form for multiplication</p>
+</li>
+<li>
+<p><strong>Euler's formula bridges trigonometry and exponentials</strong> - <span class="arithmatex">\(e^{j\theta} = \cos\theta + j\sin\theta\)</span> enables phasor analysis</p>
+</li>
+<li>
+<p><strong>Gain measures amplification</strong> - Expressed as linear ratio or in decibels; voltage dB = 20 log(A_V)</p>
+</li>
+</ol>
+<p>With these foundations in place, you're ready for the next chapter where we'll transform sinusoids into phasors—stationary complex numbers that represent rotating signals. This transformation will make AC circuit analysis as straightforward as DC analysis with Ohm's law. The math of complex numbers that might seem like extra work now will pay enormous dividends in simplifying circuit calculations.</p>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../07-second-order-rlc-circuits/" class="md-footer__link md-footer__link--prev" aria-label="Previous: 7. Second-Order RLC Circuits">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                7. Second-Order RLC Circuits
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../09-phasors-complex-impedance/" class="md-footer__link md-footer__link--next" aria-label="Next: 9. Phasors and Impedance">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                9. Phasors and Impedance
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.copy", "navigation.expand", "navigation.path", "navigation.prune", "navigation.indexes", "toc.follow", "navigation.top", "navigation.footer", "content.action.edit"], "search": "../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.83f73b43.min.js"></script>
+      
+        <script src="../../js/extra.js"></script>
+      
+        <script src="../../js/katex.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+      
+    
+  </body>
+</html>

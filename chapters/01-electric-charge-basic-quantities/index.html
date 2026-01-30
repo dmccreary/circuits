@@ -1,0 +1,3018 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Introduction to fundamental electrical quantities including charge, voltage, current, power, and resistance">
+      
+      
+        <meta name="author" content="Dan McCreary">
+      
+      
+        <link rel="canonical" href="https://dmccreary.github.io/circuits/chapters/01-electric-charge-basic-quantities/">
+      
+      
+        <link rel="prev" href="../">
+      
+      
+        <link rel="next" href="../02-ohms-law-basic-configurations/">
+      
+      
+      <link rel="icon" href="../../img/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.43">
+    
+    
+      
+        <title>Electric Charge and Basic Circuit Quantities - Circuits 1</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.0253249f.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../css/extra.css">
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+<script id="__analytics">function __md_analytics(){function e(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],e("js",new Date),e("config","G-9J4MVE6LWP"),document.addEventListener("DOMContentLoaded",(function(){document.forms.search&&document.forms.search.query.addEventListener("blur",(function(){this.value&&e("event","search",{search_term:this.value})}));document$.subscribe((function(){var t=document.forms.feedback;if(void 0!==t)for(var a of t.querySelectorAll("[type=submit]"))a.addEventListener("click",(function(a){a.preventDefault();var n=document.location.pathname,d=this.getAttribute("data-md-value");e("event","feedback",{page:n,data:d}),t.firstElementChild.disabled=!0;var r=t.querySelector(".md-feedback__note [data-md-value='"+d+"']");r&&(r.hidden=!1)})),t.hidden=!1})),location$.subscribe((function(t){e("config","G-9J4MVE6LWP",{page_path:t.pathname})}))}));var t=document.createElement("script");t.async=!0,t.src="https://www.googletagmanager.com/gtag/js?id=G-9J4MVE6LWP",document.getElementById("__analytics").insertAdjacentElement("afterEnd",t)}</script>
+  
+    <script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
+  
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="orange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#electric-charge-and-basic-circuit-quantities" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Circuits 1" class="md-header__button md-logo" aria-label="Circuits 1" data-md-component="logo">
+      
+  <img src="../../img/course-logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Circuits 1
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Electric Charge and Basic Circuit Quantities
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/dmccreary/circuits" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub Repo
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Circuits 1" class="md-nav__button md-logo" aria-label="Circuits 1" data-md-component="logo">
+      
+  <img src="../../img/course-logo.png" alt="logo">
+
+    </a>
+    Circuits 1
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/dmccreary/circuits" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub Repo
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../about/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    About This Course
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+    
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Chapters
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Chapters
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    1. Electric Charge and Quantities
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    1. Electric Charge and Quantities
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      Summary
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#concepts-covered" class="md-nav__link">
+    <span class="md-ellipsis">
+      Concepts Covered
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prerequisites
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#welcome-to-your-new-superpower" class="md-nav__link">
+    <span class="md-ellipsis">
+      Welcome to Your New Superpower
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#electric-charge-where-it-all-begins" class="md-nav__link">
+    <span class="md-ellipsis">
+      Electric Charge: Where It All Begins
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#current-charge-in-motion" class="md-nav__link">
+    <span class="md-ellipsis">
+      Current: Charge in Motion
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Current: Charge in Motion">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#electric-current" class="md-nav__link">
+    <span class="md-ellipsis">
+      Electric Current
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#diagram-water-flow-analogy-for-electric-current" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Water Flow Analogy for Electric Current
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#conventional-current-vs-electron-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      Conventional Current vs. Electron Flow
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#voltage-the-electrical-push" class="md-nav__link">
+    <span class="md-ellipsis">
+      Voltage: The Electrical "Push"
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Voltage: The Electrical "Push"">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#voltage-definition" class="md-nav__link">
+    <span class="md-ellipsis">
+      Voltage Definition
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#electrical-energy-and-power-getting-work-done" class="md-nav__link">
+    <span class="md-ellipsis">
+      Electrical Energy and Power: Getting Work Done
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Electrical Energy and Power: Getting Work Done">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#electrical-energy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Electrical Energy
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#electrical-power" class="md-nav__link">
+    <span class="md-ellipsis">
+      Electrical Power
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#power-equations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Power Equations
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#diagram-power-triangle-visualization" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Power Triangle Visualization
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a-note-on-energy-units" class="md-nav__link">
+    <span class="md-ellipsis">
+      A Note on Energy Units
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#resistance-the-opposition" class="md-nav__link">
+    <span class="md-ellipsis">
+      Resistance: The Opposition
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Resistance: The Opposition">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ohms-law" class="md-nav__link">
+    <span class="md-ellipsis">
+      Ohm's Law
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conductance-the-flip-side" class="md-nav__link">
+    <span class="md-ellipsis">
+      Conductance: The Flip Side
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Conductance: The Flip Side">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#conductance" class="md-nav__link">
+    <span class="md-ellipsis">
+      Conductance
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#electrical-ground-the-reference-point" class="md-nav__link">
+    <span class="md-ellipsis">
+      Electrical Ground: The Reference Point
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Electrical Ground: The Reference Point">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-ground-symbol-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Ground Symbol Reference
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#circuit-schematic-symbols-the-language-of-circuits" class="md-nav__link">
+    <span class="md-ellipsis">
+      Circuit Schematic Symbols: The Language of Circuits
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Circuit Schematic Symbols: The Language of Circuits">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-interactive-circuit-symbol-flashcards" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Interactive Circuit Symbol Flashcards
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nodes-and-branches-circuit-anatomy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Nodes and Branches: Circuit Anatomy
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Nodes and Branches: Circuit Anatomy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-node-and-branch-identification-trainer" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Node and Branch Identification Trainer
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#open-circuits-and-short-circuits-the-extremes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Open Circuits and Short Circuits: The Extremes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#power-dissipation-where-the-energy-goes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Power Dissipation: Where the Energy Goes
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Power Dissipation: Where the Energy Goes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#power-dissipation-in-a-resistor" class="md-nav__link">
+    <span class="md-ellipsis">
+      Power Dissipation in a Resistor
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#diagram-power-dissipation-calculator" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Power Dissipation Calculator
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#si-units-for-circuits-speaking-the-language" class="md-nav__link">
+    <span class="md-ellipsis">
+      SI Units for Circuits: Speaking the Language
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#putting-it-all-together" class="md-nav__link">
+    <span class="md-ellipsis">
+      Putting It All Together
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-takeaways" class="md-nav__link">
+    <span class="md-ellipsis">
+      Key Takeaways
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#chapter-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      Chapter Summary
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-ohms-law-basic-configurations/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2. Ohm's Law and Configurations
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-kirchhoffs-laws-topology/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3. Kirchhoff's Laws and Topology
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-dc-circuit-analysis/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4. DC Circuit Analysis
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-passive-components/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5. Passive Components
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-transient-analysis-rc-rl/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    6. Transient Analysis RC/RL
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-second-order-rlc-circuits/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    7. Second-Order RLC Circuits
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-ac-signals-sinusoidal/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    8. AC Signals and Sinusoids
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../09-phasors-complex-impedance/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    9. Phasors and Impedance
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10-ac-power-analysis/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    10. AC Power Analysis
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../11-frequency-response-bode/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    11. Frequency Response and Bode
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../12-filters-resonance/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    12. Filters and Resonance
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../13-operational-amplifiers/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    13. Operational Amplifiers
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../14-signals-audio-lab/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    14. Signal Analysis and Fourier
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../15-audio-applications/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    15. Audio Applications
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../16-laboratory-techniques/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    16. Laboratory Techniques
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../sims/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    MicroSims
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../sections/index.md" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Supplementary Sections
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../learning-graph/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Learning Graph
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../prompts/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Sample Prompts
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+          
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../faq/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    FAQ
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../glossary/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Glossary
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how-we-built-this-site/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    How We Built This Site
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../references/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    References
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../license/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    License
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contact/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Contact
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      Summary
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#concepts-covered" class="md-nav__link">
+    <span class="md-ellipsis">
+      Concepts Covered
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prerequisites
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#welcome-to-your-new-superpower" class="md-nav__link">
+    <span class="md-ellipsis">
+      Welcome to Your New Superpower
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#electric-charge-where-it-all-begins" class="md-nav__link">
+    <span class="md-ellipsis">
+      Electric Charge: Where It All Begins
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#current-charge-in-motion" class="md-nav__link">
+    <span class="md-ellipsis">
+      Current: Charge in Motion
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Current: Charge in Motion">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#electric-current" class="md-nav__link">
+    <span class="md-ellipsis">
+      Electric Current
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#diagram-water-flow-analogy-for-electric-current" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Water Flow Analogy for Electric Current
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#conventional-current-vs-electron-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      Conventional Current vs. Electron Flow
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#voltage-the-electrical-push" class="md-nav__link">
+    <span class="md-ellipsis">
+      Voltage: The Electrical "Push"
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Voltage: The Electrical "Push"">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#voltage-definition" class="md-nav__link">
+    <span class="md-ellipsis">
+      Voltage Definition
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#electrical-energy-and-power-getting-work-done" class="md-nav__link">
+    <span class="md-ellipsis">
+      Electrical Energy and Power: Getting Work Done
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Electrical Energy and Power: Getting Work Done">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#electrical-energy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Electrical Energy
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#electrical-power" class="md-nav__link">
+    <span class="md-ellipsis">
+      Electrical Power
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#power-equations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Power Equations
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#diagram-power-triangle-visualization" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Power Triangle Visualization
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a-note-on-energy-units" class="md-nav__link">
+    <span class="md-ellipsis">
+      A Note on Energy Units
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#resistance-the-opposition" class="md-nav__link">
+    <span class="md-ellipsis">
+      Resistance: The Opposition
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Resistance: The Opposition">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ohms-law" class="md-nav__link">
+    <span class="md-ellipsis">
+      Ohm's Law
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conductance-the-flip-side" class="md-nav__link">
+    <span class="md-ellipsis">
+      Conductance: The Flip Side
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Conductance: The Flip Side">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#conductance" class="md-nav__link">
+    <span class="md-ellipsis">
+      Conductance
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#electrical-ground-the-reference-point" class="md-nav__link">
+    <span class="md-ellipsis">
+      Electrical Ground: The Reference Point
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Electrical Ground: The Reference Point">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-ground-symbol-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Ground Symbol Reference
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#circuit-schematic-symbols-the-language-of-circuits" class="md-nav__link">
+    <span class="md-ellipsis">
+      Circuit Schematic Symbols: The Language of Circuits
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Circuit Schematic Symbols: The Language of Circuits">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-interactive-circuit-symbol-flashcards" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Interactive Circuit Symbol Flashcards
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nodes-and-branches-circuit-anatomy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Nodes and Branches: Circuit Anatomy
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Nodes and Branches: Circuit Anatomy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-node-and-branch-identification-trainer" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Node and Branch Identification Trainer
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#open-circuits-and-short-circuits-the-extremes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Open Circuits and Short Circuits: The Extremes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#power-dissipation-where-the-energy-goes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Power Dissipation: Where the Energy Goes
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Power Dissipation: Where the Energy Goes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#power-dissipation-in-a-resistor" class="md-nav__link">
+    <span class="md-ellipsis">
+      Power Dissipation in a Resistor
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#diagram-power-dissipation-calculator" class="md-nav__link">
+    <span class="md-ellipsis">
+      Diagram: Power Dissipation Calculator
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#si-units-for-circuits-speaking-the-language" class="md-nav__link">
+    <span class="md-ellipsis">
+      SI Units for Circuits: Speaking the Language
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#putting-it-all-together" class="md-nav__link">
+    <span class="md-ellipsis">
+      Putting It All Together
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-takeaways" class="md-nav__link">
+    <span class="md-ellipsis">
+      Key Takeaways
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#chapter-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      Chapter Summary
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+    <a href="https://github.com/dmccreary/circuits/blob/master/docs/chapters/01-electric-charge-basic-quantities/index.md" title="Edit this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+
+
+<h1 id="electric-charge-and-basic-circuit-quantities">Electric Charge and Basic Circuit Quantities</h1>
+<h2 id="summary">Summary</h2>
+<p>This chapter introduces the fundamental electrical quantities that form the foundation of all circuit analysis. Students will learn about electric charge, voltage, current, power, and resistance - the essential building blocks for understanding how electrical circuits work. The chapter also covers basic circuit terminology including nodes, branches, and the concept of electrical ground. By the end of this chapter, students will be able to identify and define the core quantities measured in electrical systems and understand the SI units used throughout the course.</p>
+<h2 id="concepts-covered">Concepts Covered</h2>
+<p>This chapter covers the following 15 concepts from the learning graph:</p>
+<ol>
+<li>Electric Charge</li>
+<li>Voltage</li>
+<li>Current</li>
+<li>Electrical Energy</li>
+<li>Power</li>
+<li>Resistance</li>
+<li>Conductance</li>
+<li>Electrical Ground</li>
+<li>Circuit Schematic Symbols</li>
+<li>Node</li>
+<li>Branch</li>
+<li>Open Circuit</li>
+<li>Short Circuit</li>
+<li>Power Dissipation</li>
+<li>SI Units for Circuits</li>
+</ol>
+<h2 id="prerequisites">Prerequisites</h2>
+<p>This chapter assumes only the prerequisites listed in the <a href="../../course-description/">course description</a>. Students should have completed introductory calculus and basic algebra including complex number operations.</p>
+<hr />
+<h2 id="welcome-to-your-new-superpower">Welcome to Your New Superpower</h2>
+<p>Congratulations! You're about to acquire a superpower that most people will never have. No, you won't be able to fly or read minds (sorry), but you <em>will</em> be able to look at any electronic device and understand <em>how it actually works</em>. That smartphone in your pocket? You'll know what's happening inside. That amplifier pushing sound through your speakers? You'll understand why it does what it does.</p>
+<p>Think about it: electricity powers almost everything in modern life, yet most people treat it like magic. "I flip the switch, light comes on. Cool." But you? You're going to understand <em>why</em> the light comes on, and more importantly, how to make your own things come on (that didn't come out right, but you know what I mean).</p>
+<p>This chapter lays the foundation for everything that follows. We'll start with the tiniest players in the electrical universe—charged particles—and work our way up to the quantities you'll measure, calculate, and eventually master. Let's get started.</p>
+<h2 id="electric-charge-where-it-all-begins">Electric Charge: Where It All Begins</h2>
+<p>Everything in the electrical world starts with <strong>electric charge</strong>. Charge is a fundamental property of matter, just like mass, but instead of telling you how much "stuff" something has, charge tells you how that stuff will interact electromagnetically.</p>
+<p>Here's the key insight: there are exactly two types of charge, which we creatively call <em>positive</em> and <em>negative</em>. (Benjamin Franklin made this naming choice in the 1750s, and we've been stuck with it ever since. Thanks, Ben.) Opposite charges attract, like charges repel. Simple as that.</p>
+<p>The fundamental unit of charge is the <strong>coulomb</strong> (C), named after Charles-Augustin de Coulomb, who spent a lot of time measuring forces between charged objects so you wouldn't have to. One coulomb is actually a <em>huge</em> amount of charge—roughly 6.24 × 10¹⁸ electrons worth. In practical circuits, we usually deal with much smaller quantities like microcoulombs (μC) or nanocoulombs (nC).</p>
+<table>
+<thead>
+<tr>
+<th>Prefix</th>
+<th>Symbol</th>
+<th>Multiplier</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>mega</td>
+<td>M</td>
+<td>10⁶</td>
+<td>1 MC = 1,000,000 C</td>
+</tr>
+<tr>
+<td>kilo</td>
+<td>k</td>
+<td>10³</td>
+<td>1 kC = 1,000 C</td>
+</tr>
+<tr>
+<td>milli</td>
+<td>m</td>
+<td>10⁻³</td>
+<td>1 mC = 0.001 C</td>
+</tr>
+<tr>
+<td>micro</td>
+<td>μ</td>
+<td>10⁻⁶</td>
+<td>1 μC = 0.000001 C</td>
+</tr>
+<tr>
+<td>nano</td>
+<td>n</td>
+<td>10⁻⁹</td>
+<td>1 nC = 0.000000001 C</td>
+</tr>
+<tr>
+<td>pico</td>
+<td>p</td>
+<td>10⁻¹²</td>
+<td>1 pC = 0.000000000001 C</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition tip">
+<p class="admonition-title">The Electron's Charge</p>
+<p>A single electron carries a charge of approximately <span class="arithmatex">\(-1.602 \times 10^{-19}\)</span> coulombs. Yes, that's negative—electrons are the negative ones. Protons carry the same magnitude but positive. This tiny number is sometimes called the <em>elementary charge</em> and is one of the fundamental constants of nature.</p>
+</div>
+<h2 id="current-charge-in-motion">Current: Charge in Motion</h2>
+<p>Here's where things get interesting. Charge sitting still is about as useful as a car with no gas—it has potential, but it's not doing anything. When charges <em>move</em>, that's when the magic happens. This flow of charge is called <strong>electric current</strong>.</p>
+<p>Current is defined as the rate at which charge flows past a point:</p>
+<h4 id="electric-current">Electric Current</h4>
+<p><span class="arithmatex">\(I = \frac{dQ}{dt}\)</span></p>
+<p>where:</p>
+<ul>
+<li><span class="arithmatex">\(I\)</span> is the current in amperes (A)</li>
+<li><span class="arithmatex">\(Q\)</span> is the charge in coulombs (C)</li>
+<li><span class="arithmatex">\(t\)</span> is time in seconds (s)</li>
+</ul>
+<p>For those of you who remember your calculus (and I know you do, because it was a prerequisite), this is just saying that current is the derivative of charge with respect to time. If charge is flowing at a steady rate, the equation simplifies to <span class="arithmatex">\(I = Q/t\)</span>.</p>
+<p>The unit of current is the <strong>ampere</strong> (A), named after André-Marie Ampère. One ampere equals one coulomb per second. That's a lot of electrons moving past—about 6.24 × 10¹⁸ of them every second!</p>
+<p>Here's a fun fact that trips up a lot of students: in most circuits, the actual electrons move incredibly slowly—often just millimeters per second. This is called <em>drift velocity</em>. So why does your light turn on instantly when you flip the switch? Because you're not waiting for specific electrons to arrive; you're waiting for the <em>electromagnetic field</em> to propagate, which happens at nearly the speed of light. It's like a pipe full of water: when you turn on the faucet, water comes out the other end immediately, even though the specific water molecules at the faucet won't arrive at the spout for a while.</p>
+<h4 id="diagram-water-flow-analogy-for-electric-current">Diagram: Water Flow Analogy for Electric Current</h4>
+<iframe src="../../sims/water-flow-analogy/main.html" width="100%" height="450px" scrolling="no"></iframe>
+
+<details markdown="1">
+<summary>Water Flow Analogy for Electric Current</summary>
+Type: microsim
+
+Bloom Level: Understand (L2)
+Bloom Verb: Compare, explain
+
+Learning Objective: Students will be able to explain how electric current flow is analogous to water flow in pipes, comparing pressure to voltage and flow rate to current.
+
+Visual Elements:
+- Split screen showing water pipe system (top) and electrical circuit (bottom)
+- Water pipe with visible water particles/droplets flowing
+- Electrical wire with animated electrons (small dots) drifting
+- Pressure gauge on water system corresponding to voltmeter on circuit
+- Flow meter on water system corresponding to ammeter on circuit
+- Pump on water system corresponding to battery in circuit
+
+Interactive Controls:
+- Slider: "Pump Pressure / Battery Voltage" (1-12 units)
+- Slider: "Pipe Diameter / Wire Gauge" (narrow to wide)
+- Toggle: Show/Hide particle animation
+- Button: Reset to defaults
+
+Default Parameters:
+- Pressure/Voltage: 6 units
+- Pipe/Wire: Medium
+- Animation: On
+
+Behavior:
+- Increasing pressure/voltage increases flow rate in both systems proportionally
+- Wider pipe/wire allows more flow for same pressure
+- Particles move slowly but field effect is instant
+- Display numerical values for flow rate and current
+- Show that turning on "pump" instantly affects flow at outlet
+
+Canvas Layout:
+- Width: responsive to container
+- Height: 400px
+- Top half: water system
+- Bottom half: electrical equivalent
+- Right panel: controls and readouts
+
+Instructional Rationale: The water analogy is a classic tool for understanding current flow because students have intuitive experience with water pressure and flow. This side-by-side comparison reinforces the abstract electrical concepts with concrete physical analogs.
+
+Implementation: p5.js with particle system for water/electron animation
+Link to Microsim: [Water Flow Analogy](../../sims/water-flow-analogy/index.md)
+</details>
+
+<h3 id="conventional-current-vs-electron-flow">Conventional Current vs. Electron Flow</h3>
+<p>Here's a historical quirk that causes endless confusion: <strong>conventional current</strong> flows from positive to negative, but electrons actually flow from negative to positive. Why? Because when scientists first defined current direction, they didn't know electrons existed. They guessed that positive charges were moving, and they guessed wrong. By the time we figured out the truth, the convention was too deeply embedded to change.</p>
+<p>For circuit analysis, we use conventional current (positive to negative), and everything works out mathematically. Just remember:</p>
+<ul>
+<li><strong>Conventional current</strong>: Flows from + to − (what we use in analysis)</li>
+<li><strong>Electron flow</strong>: Flows from − to + (what actually happens in wires)</li>
+</ul>
+<p>Don't let this keep you up at night. Pick one convention and stick with it. We'll use conventional current throughout this course.</p>
+<h2 id="voltage-the-electrical-push">Voltage: The Electrical "Push"</h2>
+<p>If current is the flow of charge, <strong>voltage</strong> is what makes charges want to flow in the first place. Voltage is the <em>electrical potential difference</em> between two points—it's the "pressure" that pushes charges through a circuit.</p>
+<p>More precisely, voltage is the energy required to move a unit of charge between two points:</p>
+<h4 id="voltage-definition">Voltage Definition</h4>
+<p><span class="arithmatex">\(V = \frac{W}{Q}\)</span></p>
+<p>where:</p>
+<ul>
+<li><span class="arithmatex">\(V\)</span> is the voltage in volts (V)</li>
+<li><span class="arithmatex">\(W\)</span> is the work (energy) in joules (J)</li>
+<li><span class="arithmatex">\(Q\)</span> is the charge in coulombs (C)</li>
+</ul>
+<p>One volt means one joule of energy per coulomb of charge. The unit is named after Alessandro Volta, who invented the first true battery (the "voltaic pile") in 1800.</p>
+<p>Here's the crucial point: <strong>voltage is always measured between two points</strong>. You can't talk about "the voltage at point A" without implicitly referencing some other point. This is like altitude—when you say a mountain is 14,000 feet tall, you mean 14,000 feet above sea level, not 14,000 feet above nothing.</p>
+<table>
+<thead>
+<tr>
+<th>Common Voltage Sources</th>
+<th>Typical Voltage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AA battery</td>
+<td>1.5 V</td>
+</tr>
+<tr>
+<td>USB port</td>
+<td>5 V</td>
+</tr>
+<tr>
+<td>Car battery</td>
+<td>12 V</td>
+</tr>
+<tr>
+<td>US wall outlet (RMS)</td>
+<td>120 V</td>
+</tr>
+<tr>
+<td>European wall outlet (RMS)</td>
+<td>230 V</td>
+</tr>
+<tr>
+<td>High-voltage transmission line</td>
+<td>115,000 - 765,000 V</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition warning">
+<p class="admonition-title">Safety First</p>
+<p>Voltages above about 50V can be dangerous to humans under certain conditions. While we'll mostly work with low-voltage circuits in the lab, always treat electricity with respect. The wall outlet in your room can absolutely kill you. Don't be a statistic.</p>
+</div>
+<h2 id="electrical-energy-and-power-getting-work-done">Electrical Energy and Power: Getting Work Done</h2>
+<p>Now we can talk about what electricity actually <em>does</em> for us: <strong>work</strong>. When charges move through a circuit, they can transfer energy—lighting bulbs, spinning motors, heating elements, or processing information.</p>
+<p><strong>Electrical energy</strong> is the capacity to do work, measured in joules (J). When a charge <span class="arithmatex">\(Q\)</span> moves through a voltage <span class="arithmatex">\(V\)</span>, the energy transferred is:</p>
+<h4 id="electrical-energy">Electrical Energy</h4>
+<p><span class="arithmatex">\(W = Q \cdot V\)</span></p>
+<p>where:</p>
+<ul>
+<li><span class="arithmatex">\(W\)</span> is energy in joules (J)</li>
+<li><span class="arithmatex">\(Q\)</span> is charge in coulombs (C)</li>
+<li><span class="arithmatex">\(V\)</span> is voltage in volts (V)</li>
+</ul>
+<p>But usually we care more about the <em>rate</em> at which energy is transferred. This is <strong>power</strong>, measured in watts (W):</p>
+<h4 id="electrical-power">Electrical Power</h4>
+<p><span class="arithmatex">\(P = \frac{dW}{dt} = V \cdot I\)</span></p>
+<p>where:</p>
+<ul>
+<li><span class="arithmatex">\(P\)</span> is power in watts (W)</li>
+<li><span class="arithmatex">\(V\)</span> is voltage in volts (V)</li>
+<li><span class="arithmatex">\(I\)</span> is current in amperes (A)</li>
+</ul>
+<p>One watt equals one joule per second. This elegant equation, <span class="arithmatex">\(P = VI\)</span>, will become one of your best friends in circuit analysis.</p>
+<p>Since <span class="arithmatex">\(V = IR\)</span> (as we'll see shortly), we can also express power as:</p>
+<h4 id="power-equations">Power Equations</h4>
+<p><span class="arithmatex">\(P = VI = I^2R = \frac{V^2}{R}\)</span></p>
+<p>These three forms are all equivalent; use whichever is most convenient for your problem.</p>
+<h4 id="diagram-power-triangle-visualization">Diagram: Power Triangle Visualization</h4>
+<iframe src="../../sims/power-triangle/main.html" width="100%" height="400px" scrolling="no" style="overflow: hidden;"></iframe>
+
+<details markdown="1">
+<summary>Power Triangle Visualization</summary>
+Type: infographic
+
+Bloom Level: Apply (L3)
+Bloom Verb: Calculate, use
+
+Learning Objective: Students will be able to use the power triangle to quickly identify which formula to use for calculating power, voltage, current, or resistance.
+
+Visual Elements:
+- Large triangle divided into sections
+- Top section: P (Power)
+- Bottom left section: V (Voltage)
+- Bottom right section: I (Current)
+- Below triangle: R (Resistance) relationships
+- Highlighting system to show which formula applies
+
+Interactive Elements:
+- Click on any variable to "cover" it and reveal the formula to solve for it
+- Hover over formulas to see them enlarged
+- Input fields to enter known values
+- Calculate button to solve for unknown
+- Display of result with units
+
+Layout:
+- Center: Interactive triangle centered at 30% of canvasWidth
+- Right side: Calculator panel using right 30% of the canvasWidth
+- Bottom: Formula reference showing all three forms of power equation
+
+Color Scheme:
+- Power (P): Gold/Yellow
+- Voltage (V): Blue
+- Current (I): Green
+- Resistance (R): Orange
+
+Default State:
+- No variable covered
+- All formulas visible
+- Empty input fields
+
+Instructional Rationale: The "cover the variable you want" trick is a classic mnemonic for Ohm's law and power relationships. This interactive version lets students practice the technique while also performing calculations.
+
+Implementation: p5.js 
+</details>
+
+<h3 id="a-note-on-energy-units">A Note on Energy Units</h3>
+<p>Your electricity bill doesn't list energy in joules—it uses <strong>kilowatt-hours (kWh)</strong>. One kilowatt-hour is the energy consumed when using 1000 watts for one hour:</p>
+<p><span class="arithmatex">\(1 \text{ kWh} = 1000 \text{ W} \times 3600 \text{ s} = 3.6 \times 10^6 \text{ J} = 3.6 \text{ MJ}\)</span></p>
+<p>So when you leave a 100W light bulb on for 10 hours, you use 1 kWh of energy. At typical US electricity prices (around $0.12-0.15/kWh), that costs you about 12-15 cents. Not much for one bulb, but it adds up across all the devices in your home!</p>
+<h2 id="resistance-the-opposition">Resistance: The Opposition</h2>
+<p>Not all materials let charges flow through them equally. <strong>Resistance</strong> is the property that opposes the flow of current. It's like friction for electricity.</p>
+<p>The relationship between voltage, current, and resistance is captured in the most famous equation in electronics:</p>
+<h4 id="ohms-law">Ohm's Law</h4>
+<p><span class="arithmatex">\(V = IR\)</span></p>
+<p>where:</p>
+<ul>
+<li><span class="arithmatex">\(V\)</span> is voltage in volts (V)</li>
+<li><span class="arithmatex">\(I\)</span> is current in amperes (A)</li>
+<li><span class="arithmatex">\(R\)</span> is resistance in ohms (Ω)</li>
+</ul>
+<p>This is <strong>Ohm's Law</strong>, named after Georg Ohm, who discovered this relationship in 1827. It tells us that for a given resistance, increasing voltage increases current proportionally. Or equivalently, for a given voltage, increasing resistance decreases current.</p>
+<p>The unit of resistance is the <strong>ohm</strong> (Ω), represented by the Greek letter omega. One ohm is the resistance that allows one ampere to flow when one volt is applied.</p>
+<table>
+<thead>
+<tr>
+<th>Material</th>
+<th>Typical Resistivity</th>
+<th>Classification</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Silver</td>
+<td>1.59 × 10⁻⁸ Ω·m</td>
+<td>Conductor</td>
+</tr>
+<tr>
+<td>Copper</td>
+<td>1.68 × 10⁻⁸ Ω·m</td>
+<td>Conductor</td>
+</tr>
+<tr>
+<td>Aluminum</td>
+<td>2.65 × 10⁻⁸ Ω·m</td>
+<td>Conductor</td>
+</tr>
+<tr>
+<td>Silicon (pure)</td>
+<td>~2300 Ω·m</td>
+<td>Semiconductor</td>
+</tr>
+<tr>
+<td>Glass</td>
+<td>10¹⁰ - 10¹⁴ Ω·m</td>
+<td>Insulator</td>
+</tr>
+<tr>
+<td>Rubber</td>
+<td>~10¹³ Ω·m</td>
+<td>Insulator</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">Not Everything Obeys Ohm's Law</p>
+<p>Ohm's Law applies to <em>ohmic</em> (linear) materials where resistance is constant regardless of voltage or current. Many real devices—like diodes, transistors, and even light bulbs—are <em>non-ohmic</em>, meaning their resistance changes with operating conditions. We'll explore some of these in later chapters.</p>
+</div>
+<h2 id="conductance-the-flip-side">Conductance: The Flip Side</h2>
+<p><strong>Conductance</strong> is simply the reciprocal of resistance—it measures how easily current flows rather than how much it's opposed:</p>
+<h4 id="conductance">Conductance</h4>
+<p><span class="arithmatex">\(G = \frac{1}{R} = \frac{I}{V}\)</span></p>
+<p>where:</p>
+<ul>
+<li><span class="arithmatex">\(G\)</span> is conductance in siemens (S)</li>
+<li><span class="arithmatex">\(R\)</span> is resistance in ohms (Ω)</li>
+</ul>
+<p>The unit is the <strong>siemens</strong> (S), named after Werner von Siemens. (You might also see the older unit "mho," which is "ohm" spelled backward. Electrical engineers have a... particular sense of humor.)</p>
+<p>Why bother with conductance? In some analyses, especially with parallel circuits, it's mathematically more convenient. If you have conductances in parallel, they simply add up—much easier than dealing with reciprocals of resistances.</p>
+<h2 id="electrical-ground-the-reference-point">Electrical Ground: The Reference Point</h2>
+<p>Remember how we said voltage is always measured between two points? Well, we need to pick a reference point for our measurements, and that reference is called <strong>electrical ground</strong>.</p>
+<p>Ground is typically defined as 0V, and all other voltages in a circuit are measured relative to it. In different contexts, ground can be:</p>
+<ul>
+<li><strong>Earth ground</strong>: Literally connected to the Earth (like the third prong on a US outlet)</li>
+<li><strong>Chassis ground</strong>: Connected to a device's metal enclosure</li>
+<li><strong>Signal ground</strong>: A common reference point in a circuit (may not be connected to Earth)</li>
+</ul>
+<p>In circuit diagrams, ground is shown with one of several symbols:</p>
+<ul>
+<li>Chassis/Earth ground: Three horizontal lines of decreasing width</li>
+<li>Signal ground: A single line (sometimes with a small triangle)</li>
+</ul>
+<p>The key insight is that ground doesn't necessarily mean "connected to the physical earth." It's just a convenient reference point we all agree to call 0V.</p>
+<h4 id="diagram-ground-symbol-reference">Diagram: Ground Symbol Reference</h4>
+<iframe src="../../sims/ground-symbols/main.html" width="100%" height="350px" scrolling="no" style="overflow: hidden;"></iframe>
+
+<details markdown="1">
+<summary>Ground Symbol Reference Guide</summary>
+Type: infographic
+
+Bloom Level: Remember (L1)
+Bloom Verb: Identify, recognize
+
+Learning Objective: Students will be able to identify and distinguish between different ground symbols used in circuit schematics.
+
+Visual Elements:
+- Grid of 4-6 common ground symbols
+- Each symbol clearly drawn with proper proportions
+- Label below each symbol with name and typical use
+- Brief description of when each type is used
+
+Ground Symbols to Include:
+1. Earth Ground (three decreasing horizontal lines)
+   - Use: Power systems, safety grounds, building wiring
+2. Chassis Ground (three lines with chassis rectangle)
+   - Use: Equipment enclosures, shielding
+3. Signal Ground (single triangle pointing down)
+   - Use: Common reference in circuits, audio systems
+4. Digital Ground (may have "DGND" label)
+   - Use: Digital circuit reference
+5. Analog Ground (may have "AGND" label)
+   - Use: Sensitive analog circuits
+
+Interactive Elements:
+- Hover over each symbol for expanded description
+- Click to see example circuit using that ground type
+- Quiz mode: Symbol appears, student identifies type
+
+Layout:
+- 2x3 grid of ground symbols
+- Clean white background
+- Consistent sizing for all symbols
+
+Color Scheme:
+- Symbols in black
+- Labels in dark gray
+- Hover highlights in blue
+
+Instructional Rationale: Recognizing ground symbols is essential for reading schematics. This reference provides quick visual recognition practice.
+
+Implementation: p5.js with hover detection
+</details>
+
+<h2 id="circuit-schematic-symbols-the-language-of-circuits">Circuit Schematic Symbols: The Language of Circuits</h2>
+<p>Just as musicians read sheet music, electrical engineers read <strong>circuit schematics</strong>. These diagrams use standardized symbols to represent components and their connections. Learning these symbols is like learning an alphabet—once you know them, you can read any circuit diagram.</p>
+<p>Here are the essential symbols you'll encounter in this course:</p>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Symbol Description</th>
+<th>Key Characteristic</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Resistor</td>
+<td>Zigzag line (US) or rectangle (EU)</td>
+<td>Opposes current</td>
+</tr>
+<tr>
+<td>Capacitor</td>
+<td>Two parallel lines (one may be curved)</td>
+<td>Stores charge</td>
+</tr>
+<tr>
+<td>Inductor</td>
+<td>Coiled line</td>
+<td>Stores energy in magnetic field</td>
+</tr>
+<tr>
+<td>Voltage source</td>
+<td>Circle with + and −</td>
+<td>Provides constant voltage</td>
+</tr>
+<tr>
+<td>Current source</td>
+<td>Circle with arrow</td>
+<td>Provides constant current</td>
+</tr>
+<tr>
+<td>Ground</td>
+<td>Three lines or triangle</td>
+<td>Reference point (0V)</td>
+</tr>
+<tr>
+<td>Wire</td>
+<td>Straight line</td>
+<td>Ideal conductor (0Ω)</td>
+</tr>
+<tr>
+<td>Node</td>
+<td>Dot at wire junction</td>
+<td>Connection point</td>
+</tr>
+</tbody>
+</table>
+<h4 id="diagram-interactive-circuit-symbol-flashcards">Diagram: Interactive Circuit Symbol Flashcards</h4>
+<iframe src="../../sims/circuit-symbol-flashcards/main.html" width="100%" height="482px" scrolling="no" style="overflow: hidden;"></iframe>
+
+<details markdown="1">
+<summary>Circuit Symbol Flashcard Trainer</summary>
+Type: microsim
+
+Bloom Level: Remember (L1)
+Bloom Verb: Recall, identify
+
+Learning Objective: Students will be able to identify common circuit schematic symbols and recall their names and functions.
+
+Visual Elements:
+- Large flashcard area showing symbol
+- Card flip animation revealing answer
+- Progress indicator showing cards completed
+- Score tracker for quiz mode
+- Symbol drawn in clean black lines on white background
+
+Interactive Controls:
+- Button: "Flip Card" (reveals answer)
+- Button: "Next Card" (shows new symbol)
+- Button: "Previous Card" (review previous)
+- Toggle: "Quiz Mode" (hide answers until flip)
+- Dropdown: Select category (All, Sources, Passive, Connections)
+- Button: "Shuffle Deck"
+
+Symbol Set (minimum 15 symbols):
+1. Resistor (US style)
+2. Resistor (EU style)
+3. Capacitor (non-polarized)
+4. Capacitor (polarized/electrolytic)
+5. Inductor
+6. DC Voltage Source
+7. AC Voltage Source
+8. Current Source
+9. Dependent Voltage Source (diamond)
+10. Dependent Current Source (diamond)
+11. Ground (earth)
+12. Ground (signal/chassis)
+13. Wire crossing (no connection)
+14. Wire junction (connection/node)
+15. Switch (SPST)
+16. Operational Amplifier
+
+Default Parameters:
+- Quiz mode: Off
+- Category: All
+- Start with card 1
+
+Behavior:
+- Cards cycle through all symbols in category
+- In quiz mode, answer hidden until flip
+- Tracks correct/incorrect in quiz mode
+- Shuffle randomizes order
+- Shows name, symbol, and one-sentence description
+
+Canvas Layout:
+- Width: responsive
+- Height: 400px
+- Center: Large flashcard (300x200px)
+- Bottom: Navigation controls
+- Top right: Progress/Score
+
+Instructional Rationale: Flashcards are proven effective for memorizing symbol recognition, which is a pure recall task. Interactive digital flashcards allow self-paced practice with immediate feedback.
+
+Implementation: p5.js with card flip animation and celebration animations upon completions
+Use the src/circuits-js-lib/p5-circuit-lib.js to draw the symbols.
+If you need to create a new symbol, add it to the src/circuits-js-lib/p5-circuit-lib.js
+</details>
+
+<h2 id="nodes-and-branches-circuit-anatomy">Nodes and Branches: Circuit Anatomy</h2>
+<p>To analyze circuits, we need vocabulary for describing their structure. Two fundamental concepts are <strong>nodes</strong> and <strong>branches</strong>.</p>
+<p>A <strong>node</strong> is any point where two or more circuit elements connect. Think of it as a junction or intersection in the circuit. All points that are connected by ideal wire (zero resistance) form a single node, even if they look like multiple points in the schematic.</p>
+<p>A <strong>branch</strong> is a path between two nodes that contains a single circuit element (like a resistor, capacitor, or source). Each branch carries its own current.</p>
+<p>Here's a simple way to think about it:</p>
+<ul>
+<li><strong>Nodes</strong> are the dots where things meet</li>
+<li><strong>Branches</strong> are the paths between dots</li>
+</ul>
+<p>Why does this matter? Because these concepts are the foundation of systematic circuit analysis. Kirchhoff's laws (coming in Chapter 3) are expressed in terms of nodes and branches, and techniques like nodal analysis are built entirely around them.</p>
+<p>Consider a simple circuit with a battery and two resistors:</p>
+<ul>
+<li>If the resistors are in series, you have 2 nodes and 2 branches</li>
+<li>If the resistors are in parallel, you have 2 nodes and 3 branches (one for each resistor plus the battery)</li>
+</ul>
+<h4 id="diagram-node-and-branch-identification-trainer">Diagram: Node and Branch Identification Trainer</h4>
+<iframe src="../../sims/node-branch-trainer/main.html" width="100%" height="500px" scrolling="no" style="overflow: hidden;"></iframe>
+
+<details markdown="1">
+<summary>Node and Branch Identification Trainer</summary>
+Type: microsim
+
+Bloom Level: Understand (L2)
+Bloom Verb: Identify, classify
+
+Learning Objective: Students will be able to identify and count nodes and branches in circuit schematics, distinguishing between apparent visual junctions and true electrical nodes.
+
+Visual Elements:
+- Circuit schematic display area (left side)
+- Multiple example circuits of increasing complexity
+- Highlighted nodes (when identified correctly)
+- Highlighted branches (different color from nodes)
+- Counters showing node count and branch count
+- Feedback messages for correct/incorrect identification
+
+Interactive Controls:
+- Click on schematic to mark nodes (places a dot)
+- Drag to trace branches (draws highlight line)
+- Button: "Check Answer"
+- Button: "Show Solution"
+- Button: "Next Circuit"
+- Button: "Previous Circuit"
+- Dropdown: Difficulty (Easy/Medium/Hard)
+- Button: "Clear Markings"
+
+Circuit Examples (progressive difficulty):
+Easy:
+1. Single resistor with voltage source (2 nodes, 2 branches)
+2. Two resistors in series with source (2 nodes, 2 branches - tricky!)
+3. Two resistors in parallel with source (2 nodes, 3 branches)
+
+Medium:
+4. Three resistors mixed (3 nodes, 4 branches)
+5. Voltage source with 3 parallel resistors (2 nodes, 4 branches)
+6. Ladder network (4 nodes, 5 branches)
+
+Hard:
+7. Bridge circuit (4 nodes, 6 branches)
+8. Complex network (5+ nodes)
+
+Default Parameters:
+- Difficulty: Easy
+- Start with circuit 1
+- No markings
+
+Behavior:
+- Clicking places/removes node marker
+- Dragging creates branch trace
+- Check Answer compares to correct count
+- Show Solution reveals all nodes (gold) and branches (blue)
+- Score tracking across circuits
+- Hints available after two wrong attempts
+
+Canvas Layout:
+- Width: responsive
+- Height: 450px
+- Left 60%: Circuit display
+- Right 40%: Controls, counters, feedback
+
+Instructional Rationale: Students often struggle with the concept that wires connecting components form a single node. This interactive trainer provides practice with immediate feedback, reinforcing the abstract concept through hands-on identification.
+
+Implementation: p5.js with clickable regions and path drawing
+</details>
+
+<h2 id="open-circuits-and-short-circuits-the-extremes">Open Circuits and Short Circuits: The Extremes</h2>
+<p>Two special circuit conditions that every engineer must understand are <strong>open circuits</strong> and <strong>short circuits</strong>. These represent the extreme cases of resistance.</p>
+<p>An <strong>open circuit</strong> has infinite resistance—no current can flow. This happens when there's a break in the circuit path, like a switch in the off position or a wire that's been cut. In an open circuit:</p>
+<ul>
+<li>Current = 0 (no path for current to flow)</li>
+<li>Voltage can be anything (it's the "open-circuit voltage")</li>
+<li>Power = 0 (no current means no power transfer)</li>
+</ul>
+<p>A <strong>short circuit</strong> has zero resistance—current can flow with no voltage drop. This happens when two points are connected by a path of zero resistance (like a wire). In a short circuit:</p>
+<ul>
+<li>Voltage = 0 across the short (V = IR = I × 0 = 0)</li>
+<li>Current can be very large (limited only by other circuit elements)</li>
+<li>This is often dangerous because excessive current causes overheating</li>
+</ul>
+<div class="admonition danger">
+<p class="admonition-title">Short Circuits Are Dangerous</p>
+<p>Never create an unintentional short circuit, especially across a power source. A short across a battery can cause it to rapidly overheat, potentially causing fire or explosion. A short across wall power can cause fires and electrical shocks. Circuit breakers and fuses exist specifically to protect against short-circuit conditions.</p>
+</div>
+<p>The humor in "short circuit" is that there's nothing humorous about it—it can literally set things on fire. Always double-check your circuits before applying power!</p>
+<table>
+<thead>
+<tr>
+<th>Condition</th>
+<th>Resistance</th>
+<th>Current</th>
+<th>Voltage Across</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Open Circuit</td>
+<td>∞ (infinite)</td>
+<td>0</td>
+<td>Any value</td>
+</tr>
+<tr>
+<td>Short Circuit</td>
+<td>0</td>
+<td>Limited by rest of circuit</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Normal Operation</td>
+<td>Finite, non-zero</td>
+<td>Finite, non-zero</td>
+<td>Finite, non-zero</td>
+</tr>
+</tbody>
+</table>
+<h2 id="power-dissipation-where-the-energy-goes">Power Dissipation: Where the Energy Goes</h2>
+<p>When current flows through a resistance, electrical energy is converted to heat. This is called <strong>power dissipation</strong>, and it's governed by our power equations:</p>
+<h4 id="power-dissipation-in-a-resistor">Power Dissipation in a Resistor</h4>
+<p><span class="arithmatex">\(P = I^2R = \frac{V^2}{R}\)</span></p>
+<p>where:</p>
+<ul>
+<li><span class="arithmatex">\(P\)</span> is power dissipated in watts (W)</li>
+<li><span class="arithmatex">\(I\)</span> is current through the resistor in amperes (A)</li>
+<li><span class="arithmatex">\(V\)</span> is voltage across the resistor in volts (V)</li>
+<li><span class="arithmatex">\(R\)</span> is resistance in ohms (Ω)</li>
+</ul>
+<p>This might seem like a bad thing (wasted energy!), but it's actually essential for many applications:</p>
+<ul>
+<li><strong>Heating elements</strong> in toasters, space heaters, and hair dryers rely on resistive heating</li>
+<li><strong>Light bulbs</strong> (incandescent) produce light by heating a filament until it glows</li>
+<li><strong>Current-sensing resistors</strong> convert current to a measurable voltage drop</li>
+</ul>
+<p>However, power dissipation in components that aren't <em>supposed</em> to heat up (like resistors in signal circuits) is indeed waste. Engineers spend considerable effort minimizing unwanted power dissipation to improve efficiency and prevent overheating.</p>
+<p>Every resistor has a <strong>power rating</strong>—the maximum power it can safely dissipate without damage. Common ratings are 1/8W, 1/4W, 1/2W, 1W, and 2W for small resistors. Exceeding this rating will cause the resistor to overheat, potentially changing its resistance value, failing open, or even catching fire.</p>
+<h4 id="diagram-power-dissipation-calculator">Diagram: Power Dissipation Calculator</h4>
+<iframe src="../../sims/power-dissipation-calc/main.html" width="100%" height="400px" scrolling="no" style="overflow: hidden;"></iframe>
+
+<details markdown="1">
+<summary>Power Dissipation Calculator</summary>
+Type: microsim
+
+Bloom Level: Apply (L3)
+Bloom Verb: Calculate, solve
+
+Learning Objective: Students will be able to calculate power dissipation in resistors using any combination of known values (V, I, R) and determine if a resistor's power rating is adequate.
+
+Visual Elements:
+- Resistor symbol in center with current arrow and voltage labels
+- Three input/output displays for V, I, R
+- Large power readout showing calculated P
+- Visual thermometer or heat indicator showing "temperature"
+- Power rating selector with color-coded safety indicator
+- Warning indicator when power exceeds rating
+
+Interactive Controls:
+- Input field: Voltage (V) - with unit selector (V, mV)
+- Input field: Current (I) - with unit selector (A, mA, μA)
+- Input field: Resistance (R) - with unit selector (Ω, kΩ, MΩ)
+- Dropdown: Power rating (1/8W, 1/4W, 1/2W, 1W, 2W, 5W)
+- Radio buttons: Select which two values to input (V&I, V&R, or I&R)
+- Button: Calculate
+
+Behavior:
+- User selects which two values to input
+- Third value and power are calculated automatically
+- Thermometer rises proportionally to power
+- If calculated power > rating, show red warning and "hot" animation
+- If power < 50% of rating, show green "safe" indicator
+- If power 50-100% of rating, show yellow "caution"
+- Display all three forms of power equation with current values substituted
+
+Default Parameters:
+- V = 5V, R = 1kΩ (calculate I and P)
+- Power rating: 1/4W
+
+Canvas Layout:
+- Width: responsive
+- Height: 350px
+- Center: Circuit visualization with resistor
+- Left: Input controls
+- Right: Results and safety indicator
+
+Instructional Rationale: Power calculations are a core skill, and connecting them to real-world consequences (overheating) motivates careful attention. The safety indicator bridges theory to practical engineering concerns.
+
+Implementation: p5.js with input validation and animated heat indicator
+</details>
+
+<h2 id="si-units-for-circuits-speaking-the-language">SI Units for Circuits: Speaking the Language</h2>
+<p>Throughout this course (and your entire career in electrical engineering), you'll use the <strong>International System of Units (SI)</strong>. Consistency in units prevents errors and allows engineers worldwide to communicate precisely.</p>
+<p>Here's your essential reference table for electrical quantities:</p>
+<table>
+<thead>
+<tr>
+<th>Quantity</th>
+<th>Symbol</th>
+<th>SI Unit</th>
+<th>Unit Symbol</th>
+<th>Base Units</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Charge</td>
+<td>Q</td>
+<td>coulomb</td>
+<td>C</td>
+<td>A·s</td>
+</tr>
+<tr>
+<td>Current</td>
+<td>I</td>
+<td>ampere</td>
+<td>A</td>
+<td>A (base unit)</td>
+</tr>
+<tr>
+<td>Voltage</td>
+<td>V</td>
+<td>volt</td>
+<td>V</td>
+<td>kg·m²/(A·s³)</td>
+</tr>
+<tr>
+<td>Resistance</td>
+<td>R</td>
+<td>ohm</td>
+<td>Ω</td>
+<td>V/A</td>
+</tr>
+<tr>
+<td>Conductance</td>
+<td>G</td>
+<td>siemens</td>
+<td>S</td>
+<td>A/V</td>
+</tr>
+<tr>
+<td>Power</td>
+<td>P</td>
+<td>watt</td>
+<td>W</td>
+<td>J/s = V·A</td>
+</tr>
+<tr>
+<td>Energy</td>
+<td>W</td>
+<td>joule</td>
+<td>J</td>
+<td>kg·m²/s²</td>
+</tr>
+<tr>
+<td>Capacitance</td>
+<td>C</td>
+<td>farad</td>
+<td>F</td>
+<td>A·s/V</td>
+</tr>
+<tr>
+<td>Inductance</td>
+<td>L</td>
+<td>henry</td>
+<td>H</td>
+<td>V·s/A</td>
+</tr>
+</tbody>
+</table>
+<p>The SI prefix system lets us express very large or very small quantities conveniently. You'll frequently encounter:</p>
+<ul>
+<li><strong>Milliamps (mA)</strong>: 10⁻³ A — typical current in small circuits</li>
+<li><strong>Microfarads (μF)</strong>: 10⁻⁶ F — common capacitor values</li>
+<li><strong>Kilohms (kΩ)</strong>: 10³ Ω — common resistor values</li>
+<li><strong>Megohms (MΩ)</strong>: 10⁶ Ω — high resistor values</li>
+</ul>
+<div class="admonition tip">
+<p class="admonition-title">Dimensional Analysis Is Your Friend</p>
+<p>When you're not sure if your answer is correct, check the units. If you're calculating current and your answer comes out in volts, something went wrong. This simple technique catches more errors than you'd expect.</p>
+</div>
+<h2 id="putting-it-all-together">Putting It All Together</h2>
+<p>Let's see how all these concepts connect in a simple example. Consider a circuit with a 9V battery connected to a 1kΩ resistor.</p>
+<p><strong>What we know:</strong>
+- V = 9V
+- R = 1kΩ = 1000Ω</p>
+<p><strong>Calculate current using Ohm's Law:</strong></p>
+<p><span class="arithmatex">\(I = \frac{V}{R} = \frac{9\text{ V}}{1000\text{ Ω}} = 0.009\text{ A} = 9\text{ mA}\)</span></p>
+<p><strong>Calculate power dissipation:</strong></p>
+<p><span class="arithmatex">\(P = VI = (9\text{ V})(0.009\text{ A}) = 0.081\text{ W} = 81\text{ mW}\)</span></p>
+<p>Or equivalently:</p>
+<p><span class="arithmatex">\(P = \frac{V^2}{R} = \frac{(9\text{ V})^2}{1000\text{ Ω}} = \frac{81}{1000}\text{ W} = 81\text{ mW}\)</span></p>
+<p>A standard 1/4W (250mW) resistor can easily handle this power level. We're well within the safe operating range.</p>
+<p><strong>In terms of energy</strong>, if this circuit runs for one hour:</p>
+<p><span class="arithmatex">\(W = Pt = (0.081\text{ W})(3600\text{ s}) = 291.6\text{ J}\)</span></p>
+<p>Or about 0.081 Wh, which is 0.000081 kWh. At $0.12/kWh, running this circuit for an hour costs about $0.00001—basically free!</p>
+<h2 id="key-takeaways">Key Takeaways</h2>
+<p>Congratulations! You've just acquired the vocabulary of electrical engineering. Let's recap the essential concepts:</p>
+<ol>
+<li>
+<p><strong>Electric Charge (Q)</strong>: The fundamental property that creates electrical phenomena. Measured in coulombs (C).</p>
+</li>
+<li>
+<p><strong>Current (I)</strong>: The flow of charge. Current = charge per time. Measured in amperes (A).</p>
+</li>
+<li>
+<p><strong>Voltage (V)</strong>: The "push" that moves charges. Voltage = energy per charge. Measured in volts (V).</p>
+</li>
+<li>
+<p><strong>Resistance (R)</strong>: Opposition to current flow. Measured in ohms (Ω).</p>
+</li>
+<li>
+<p><strong>Ohm's Law</strong>: V = IR. The most important equation in circuits.</p>
+</li>
+<li>
+<p><strong>Power (P)</strong>: Rate of energy transfer. P = VI. Measured in watts (W).</p>
+</li>
+<li>
+<p><strong>Nodes and Branches</strong>: The structural elements of circuits used in analysis.</p>
+</li>
+<li>
+<p><strong>Ground</strong>: The reference point for voltage measurements (defined as 0V).</p>
+</li>
+<li>
+<p><strong>Open Circuit</strong>: Infinite resistance, zero current.</p>
+</li>
+<li>
+<p><strong>Short Circuit</strong>: Zero resistance, potentially dangerous high current.</p>
+</li>
+</ol>
+<p>These concepts are your foundation. Every circuit you analyze for the rest of your career will use these building blocks. In the next chapter, we'll see how to apply these concepts to real circuit configurations using Ohm's Law, voltage dividers, and current dividers.</p>
+<p>Now go forth and see the world differently. That LED on your phone? You know there's current flowing through it, limited by a resistor, powered by a voltage from the battery. That's not magic anymore—that's engineering. That's your superpower.</p>
+<hr />
+<h2 id="chapter-summary">Chapter Summary</h2>
+<details class="note">
+<summary>Quick Review Questions - Click to Reveal Answers</summary>
+<p><strong>Q1: What is the relationship between conventional current direction and electron flow?</strong></p>
+<p>Conventional current flows from positive to negative, while electrons actually flow from negative to positive. We use conventional current for circuit analysis.</p>
+<p><strong>Q2: If a 12V source is connected to a 3kΩ resistor, what current flows?</strong></p>
+<p><span class="arithmatex">\(I = V/R = 12V / 3000Ω = 0.004A = 4mA\)</span></p>
+<p><strong>Q3: What power is dissipated in the above resistor?</strong></p>
+<p><span class="arithmatex">\(P = VI = (12V)(0.004A) = 0.048W = 48mW\)</span></p>
+<p><strong>Q4: Why is voltage always measured between two points?</strong></p>
+<p>Voltage is a <em>difference</em> in electrical potential. Just like height needs a reference point (sea level), voltage needs a reference point (ground). A single point doesn't have a voltage—only the difference between two points does.</p>
+<p><strong>Q5: What's the difference between an open circuit and a short circuit?</strong></p>
+<p>Open circuit: infinite resistance, zero current, can have voltage across it. Short circuit: zero resistance, zero voltage across it, current limited only by rest of circuit (potentially very high and dangerous).</p>
+</details>
+
+
+
+
+
+
+
+  
+  
+
+
+
+  
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../" class="md-footer__link md-footer__link--prev" aria-label="Previous: List of Chapters">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                List of Chapters
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../02-ohms-law-basic-configurations/" class="md-footer__link md-footer__link--next" aria-label="Next: 2. Ohm&#39;s Law and Configurations">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                2. Ohm's Law and Configurations
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.copy", "navigation.expand", "navigation.path", "navigation.prune", "navigation.indexes", "toc.follow", "navigation.top", "navigation.footer", "content.action.edit"], "search": "../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.83f73b43.min.js"></script>
+      
+        <script src="../../js/extra.js"></script>
+      
+        <script src="../../js/katex.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+      
+    
+  </body>
+</html>
