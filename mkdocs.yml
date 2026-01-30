@@ -124,10 +124,14 @@ theme:
     - content.action.edit
 plugins:
   - search
+  # leave these commented out until we figure out the watcher bug that prevents live rebuilds
+  #- social
+  #- social_override
+
 extra_javascript:
   - javascripts/mathjax.js
   - https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js
-#  - social
+
 markdown_extensions:
   - meta
   - admonition
