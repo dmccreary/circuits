@@ -414,7 +414,7 @@ Here are the essential symbols you'll encounter in this course:
 
 #### Diagram: Interactive Circuit Symbol Flashcards
 
-<iframe src="../../sims/circuit-symbol-flashcards/main.html" width="100%" height="450px" scrolling="no" style="overflow: hidden;"></iframe>
+<iframe src="../../sims/circuit-symbol-flashcards/main.html" width="100%" height="482px" scrolling="no" style="overflow: hidden;"></iframe>
 
 <details markdown="1">
 <summary>Circuit Symbol Flashcard Trainer</summary>
@@ -479,7 +479,9 @@ Canvas Layout:
 
 Instructional Rationale: Flashcards are proven effective for memorizing symbol recognition, which is a pure recall task. Interactive digital flashcards allow self-paced practice with immediate feedback.
 
-Implementation: p5.js with card flip animation
+Implementation: p5.js with card flip animation and celebration animations upon completions
+Use the src/circuits-js-lib/p5-circuit-lib.js to draw the symbols.
+If you need to create a new symbol, add it to the src/circuits-js-lib/p5-circuit-lib.js
 </details>
 
 ## Nodes and Branches: Circuit Anatomy
