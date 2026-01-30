@@ -392,7 +392,7 @@ Color Scheme:
 
 Instructional Rationale: Recognizing ground symbols is essential for reading schematics. This reference provides quick visual recognition practice.
 
-Implementation: SVG graphics with CSS hover effects
+Implementation: p5.js with hover detection
 </details>
 
 ## Circuit Schematic Symbols: The Language of Circuits
