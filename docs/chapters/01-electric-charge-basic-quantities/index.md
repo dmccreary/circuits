@@ -137,6 +137,7 @@ Canvas Layout:
 Instructional Rationale: The water analogy is a classic tool for understanding current flow because students have intuitive experience with water pressure and flow. This side-by-side comparison reinforces the abstract electrical concepts with concrete physical analogs.
 
 Implementation: p5.js with particle system for water/electron animation
+Link to Microsim: [Water Flow Analogy](../../sims/water-flow-analogy/index.md)
 </details>
 
 ### Conventional Current vs. Electron Flow
@@ -249,8 +250,8 @@ Interactive Elements:
 - Display of result with units
 
 Layout:
-- Center: Interactive triangle
-- Right side: Calculator panel
+- Center: Interactive triangle centered at 30% of canvasWidth
+- Right side: Calculator panel using right 30% of the canvasWidth
 - Bottom: Formula reference showing all three forms of power equation
 
 Color Scheme:
@@ -266,7 +267,7 @@ Default State:
 
 Instructional Rationale: The "cover the variable you want" trick is a classic mnemonic for Ohm's law and power relationships. This interactive version lets students practice the technique while also performing calculations.
 
-Implementation: HTML/CSS/JavaScript with SVG for triangle graphics
+Implementation: p5.js 
 </details>
 
 ### A Note on Energy Units

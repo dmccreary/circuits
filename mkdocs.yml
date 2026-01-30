@@ -1,5 +1,5 @@
 site_name: Circuits 1
-site_description: 'An intelligent interactive Circuits course for EE and CS students with AI-generated content and simulations.'
+site_description: 'An intelligent interactive Circuits textbook for EE and CS students with AI-generated content and simulations.'
 site_author: 'Dan McCreary'
 repo_name: 'GitHub Repo'
 site_url: 'https://dmccreary.github.io/circuits/'
@@ -28,6 +28,19 @@ nav:
     - 14. Signal Analysis and Fourier: chapters/14-signals-audio-lab/index.md
     - 15. Audio Applications: chapters/15-audio-applications/index.md
     - 16. Laboratory Techniques: chapters/16-laboratory-techniques/index.md
+
+  - MicroSims:
+    - Introduction: sims/index.md
+    - Water Flow Analogy: sims/water-flow-analogy/index.md
+    - Power Triangle: sims/power-triangle/index.md
+    - Learning Graph: sims/learning-graph/index.md
+    - Background Grid: sims/background-grid/index.md
+    - Simple DC Circuit: sims/dc-circuit/index.md
+    - DC Circuit V2: sims/dc-circuit/circuits-v2.md
+    - prompts/circuit-similarity/index.md
+    - prompts/top-100-circuits/top-100-circuits.md
+    - sims/circuit-similarity/index.md
+    - sims/templates/index.md
 
   - Supplementary Sections:
     - Table of Contents: sections/index.md
@@ -85,22 +98,6 @@ nav:
     - Glossary Terms: prompts/glossary-terms.md
     - Similarity Plot: prompts/similarity-plot/index.md
   
-  - FAQ:
-    - Intro: faq/index.md
-    - Series and Parallel: faq/series-and-parallel/index.md
-  
-  - MicroSims:
-    - Introduction: sims/index.md
-    - Water Flow Analogy: sims/water-flow-analogy/index.md
-    - Learning Graph: sims/learning-graph/index.md
-    - Background Grid: sims/background-grid/index.md
-    - Simple DC Circuit: sims/dc-circuit/index.md
-    - DC Circuit V2: sims/dc-circuit/circuits-v2.md
-    - prompts/circuit-similarity/index.md
-    - prompts/top-100-circuits/top-100-circuits.md
-    - sims/circuit-similarity/index.md
-    - sims/templates/index.md
-
     - Component Tests:
       - Introduction: sims/components.md
       - Circuit Library Test: sims/circuit-lib/index.md
@@ -115,9 +112,12 @@ nav:
       - Animated Wire: sims/animated-wire/index.md
       - Wire: sims/wire/index.md
 
+  - FAQ:
+    - Intro: faq/index.md
+    - Series and Parallel: faq/series-and-parallel/index.md
+
   - Glossary: glossary.md
   - How We Built This Site: how-we-built-this-site.md
-  - Checklist: checklist.md
   - References: references.md
   - License: license.md
   - Contact: contact.md
