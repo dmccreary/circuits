@@ -22,6 +22,14 @@ nav:
     - MOSFETs: sections/70-mosfet/index.md
     - Frequency Response: sections/10-frequency-response/index.md
   
+  - Learning Graph:
+    - Introduction: learning-graph/index.md
+    - Concept List: learning-graph/concept-list.md
+    - Course Description Assessment: learning-graph/course-description-assessment.md
+    - Quality Metrics: learning-graph/quality-metrics.md
+    - Concept Taxonomy: learning-graph/concept-taxonomy.md
+    - Taxonomy Distribution: learning-graph/taxonomy-distribution.md
+
   - Sample Prompts:
     - Introduction: prompts/index.md
     - Learning Via Simulations: prompts/learning-via-interactive-simulations.md
