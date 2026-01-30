@@ -1,5 +1,5 @@
 # Contact
 
-Please contact me on [LinkedIn](https://www.linkedin.com/in/danmccreary/)
+Please contact me on my [LinkedIn Page](https://www.linkedin.com/in/danmccreary/)
 
-Thanks! - Dan
+Thanks! - Dan McCreary
