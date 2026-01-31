@@ -62,6 +62,10 @@ CircuiTikZ is pronounced "Circuit Ticks".
 * See also: [TicZ](#tikz)
 * See also: [Overleaf](#overleaf)
 
+#### Claude Code Skill
+
+A way of packaging rules for consistent generation of code by an intelligent agent.
+
 #### Current
 
 The flow of electric charge through a conductor, measured in amperes (A).

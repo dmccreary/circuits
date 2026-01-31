@@ -1,6 +1,12 @@
+---
+title: Schemdraw Circuit Generator
+description: The Circuit Generator is a Claude Code Skill that allows you to describe an electrical circuit in plain text which is converted into a high quality circuit diagram.
+image: img/audio-crossover.jpg
+og:image: img/audio-crossover.jpg
+---
 # Schemdraw Circuit Generator
 
-Schemdraw is a Python package for producing high-quality electrical circuit schematic diagrams. This course includes a **Claude Code skill** that generates circuit diagrams from natural language descriptions.
+Schemdraw is a Python package for producing high-quality electrical circuit schematic diagrams. This course includes a **[Claude Code Skill](../../glossary.md#claude-code-skill)** that generates circuit diagrams from natural language descriptions.
 
 ## Overview
 
