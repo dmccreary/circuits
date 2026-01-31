@@ -80,7 +80,7 @@ Ohm's Law states that voltage equals current times resistance: V = IR. It's the 
 
 ### What is the difference between series and parallel circuits?
 
-In a **series circuit**, components are connected end-to-end, so the same current flows through each component. In a **parallel circuit**, components share the same voltage across them but may carry different currents. These two configurations behave very differently—series resistances add directly, while parallel resistances combine as reciprocals. See [Chapter 2](chapters/02-ohms-law-basic-configurations/index.md#series-circuits) for details.
+In a **series circuit**, components are connected end-to-end, so the same current flows through each component. In a **parallel circuit**, components share the same voltage across them but may carry different currents. These two configurations behave very differently—series resistances add directly, while parallel resistances combine as reciprocals. See [Chapter 2](chapters/02-ohms-law-basic-configurations/index.md) for details.
 
 ### What are Kirchhoff's Laws?
 
@@ -92,15 +92,15 @@ Impedance (Z) is the AC generalization of resistance. It's a complex number that
 
 ### What is the difference between capacitive and inductive reactance?
 
-**Capacitive reactance** (Xc = 1/ωC) decreases with frequency—capacitors pass high frequencies easily but block low frequencies. **Inductive reactance** (XL = ωL) increases with frequency—inductors pass low frequencies easily but block high frequencies. This frequency-dependent behavior is the basis for filter design. See [Chapter 9](chapters/09-phasors-complex-impedance/index.md#reactance) for detailed analysis.
+**Capacitive reactance** (Xc = 1/ωC) decreases with frequency—capacitors pass high frequencies easily but block low frequencies. **Inductive reactance** (XL = ωL) increases with frequency—inductors pass low frequencies easily but block high frequencies. This frequency-dependent behavior is the basis for filter design. See [Chapter 9](chapters/09-phasors-complex-impedance/index.md) for detailed analysis.
 
 ### What is a phasor?
 
-A phasor is a complex number that represents the magnitude and phase angle of a sinusoidal signal. Instead of dealing with time-varying sine waves, phasors let you use simple algebra with complex numbers. For example, a 10V signal leading by 30° becomes 10∠30° or 10e^(j30°). This dramatically simplifies AC circuit analysis. See [Chapter 9](chapters/09-phasors-complex-impedance/index.md#phasors) for the full treatment.
+A phasor is a complex number that represents the magnitude and phase angle of a sinusoidal signal. Instead of dealing with time-varying sine waves, phasors let you use simple algebra with complex numbers. For example, a 10V signal leading by 30° becomes 10∠30° or 10e^(j30°). This dramatically simplifies AC circuit analysis. See [Chapter 9](chapters/09-phasors-complex-impedance/index.md) for the full treatment.
 
 ### What is resonance in circuits?
 
-Resonance occurs when the inductive and capacitive reactances in a circuit are equal, causing them to cancel. At the resonant frequency, an RLC circuit exhibits maximum (series) or minimum (parallel) impedance, and energy oscillates between the inductor and capacitor. The resonant frequency is f₀ = 1/(2π√LC). See [Chapter 12](chapters/12-filters-resonance/index.md#resonance) for detailed analysis.
+Resonance occurs when the inductive and capacitive reactances in a circuit are equal, causing them to cancel. At the resonant frequency, an RLC circuit exhibits maximum (series) or minimum (parallel) impedance, and energy oscillates between the inductor and capacitor. The resonant frequency is f₀ = 1/(2π√LC). See [Chapter 12](chapters/12-filters-resonance/index.md) for detailed analysis.
 
 ### What is the time constant?
 
@@ -108,7 +108,7 @@ The time constant (τ) characterizes how quickly a first-order circuit responds 
 
 ### What is power factor?
 
-Power factor is the ratio of real power (watts) to apparent power (volt-amperes): PF = P/S = cos(θ), where θ is the phase angle between voltage and current. A power factor of 1 means all power delivered is being consumed; lower values indicate reactive power circulating without doing useful work. See [Chapter 10](chapters/10-ac-power-analysis/index.md#power-factor) for detailed analysis.
+Power factor is the ratio of real power (watts) to apparent power (volt-amperes): PF = P/S = cos(θ), where θ is the phase angle between voltage and current. A power factor of 1 means all power delivered is being consumed; lower values indicate reactive power circulating without doing useful work. See [Chapter 10](chapters/10-ac-power-analysis/index.md) for detailed analysis.
 
 ### What is an operational amplifier?
 
@@ -116,7 +116,7 @@ An operational amplifier (op-amp) is a high-gain electronic voltage amplifier wi
 
 ### What is a transfer function?
 
-A transfer function H(jω) describes how a circuit modifies signals as a function of frequency. It's the ratio of output to input: H(jω) = Vout/Vin. The magnitude |H(jω)| tells you the gain at each frequency, while the phase ∠H(jω) tells you the phase shift. See [Chapter 11](chapters/11-frequency-response-bode/index.md#transfer-functions) for detailed treatment.
+A transfer function H(jω) describes how a circuit modifies signals as a function of frequency. It's the ratio of output to input: H(jω) = Vout/Vin. The magnitude |H(jω)| tells you the gain at each frequency, while the phase ∠H(jω) tells you the phase shift. See [Chapter 11](chapters/11-frequency-response-bode/index.md) for detailed treatment.
 
 ### What is the difference between a low-pass and high-pass filter?
 
@@ -124,7 +124,7 @@ A **low-pass filter** passes low frequencies and attenuates high frequencies—t
 
 ### What is THD (Total Harmonic Distortion)?
 
-THD measures how much harmonic content an amplifier adds to a signal. It's calculated as the RMS sum of all harmonic voltages divided by the fundamental: THD = √(V₂² + V₃² + V₄² + ...)/V₁ × 100%. Lower THD means cleaner amplification—professional audio typically requires THD < 0.1%. See [Chapter 15](chapters/15-audio-applications/index.md#thd) for complete coverage.
+THD measures how much harmonic content an amplifier adds to a signal. It's calculated as the RMS sum of all harmonic voltages divided by the fundamental: THD = √(V₂² + V₃² + V₄² + ...)/V₁ × 100%. Lower THD means cleaner amplification—professional audio typically requires THD < 0.1%. See [Chapter 15](chapters/15-audio-applications/index.md) for complete coverage.
 
 ### What is the difference between transient and steady-state response?
 
@@ -132,15 +132,15 @@ THD measures how much harmonic content an amplifier adds to a signal. It's calcu
 
 ### What determines whether a second-order circuit is overdamped, underdamped, or critically damped?
 
-The damping ratio ζ determines the response character. For RLC circuits, ζ = R/(2√(L/C)). When ζ > 1, the circuit is overdamped (sluggish, no oscillation). When ζ < 1, it's underdamped (oscillates while decaying). When ζ = 1, it's critically damped (fastest settling without oscillation). See [Chapter 7](chapters/07-second-order-rlc-circuits/index.md#damping) for detailed analysis.
+The damping ratio ζ determines the response character. For RLC circuits, ζ = R/(2√(L/C)). When ζ > 1, the circuit is overdamped (sluggish, no oscillation). When ζ < 1, it's underdamped (oscillates while decaying). When ζ = 1, it's critically damped (fastest settling without oscillation). See [Chapter 7](chapters/07-second-order-rlc-circuits/index.md) for detailed analysis.
 
 ### What is the difference between RMS and peak values?
 
-**Peak value** is the maximum instantaneous amplitude of a waveform. **RMS (Root Mean Square)** is the equivalent DC value that would produce the same power dissipation in a resistor. For sinusoids, Vrms = Vpeak/√2 ≈ 0.707 × Vpeak. RMS values are used for power calculations because they represent actual heating effect. See [Chapter 8](chapters/08-ac-signals-sinusoidal/index.md#rms-values).
+**Peak value** is the maximum instantaneous amplitude of a waveform. **RMS (Root Mean Square)** is the equivalent DC value that would produce the same power dissipation in a resistor. For sinusoids, Vrms = Vpeak/√2 ≈ 0.707 × Vpeak. RMS values are used for power calculations because they represent actual heating effect. See [Chapter 8](chapters/08-ac-signals-sinusoidal/index.md).
 
 ### What is Thevenin's theorem?
 
-Thevenin's theorem states that any linear circuit with two terminals can be replaced by an equivalent circuit consisting of a voltage source (Vth) in series with a resistance (Rth). This dramatically simplifies circuit analysis, especially when analyzing how a circuit behaves with different loads. See [Chapter 4](chapters/04-dc-circuit-analysis/index.md#thevenins-theorem) for the method.
+Thevenin's theorem states that any linear circuit with two terminals can be replaced by an equivalent circuit consisting of a voltage source (Vth) in series with a resistance (Rth). This dramatically simplifies circuit analysis, especially when analyzing how a circuit behaves with different loads. See [Chapter 4](chapters/04-dc-circuit-analysis/index.md) for the method.
 
 ### What is the Fourier series and why does it matter for circuits?
 
@@ -168,23 +168,23 @@ See [Chapter 2](chapters/02-ohms-law-basic-configurations/index.md) for examples
 
 **Polar to rectangular:** Given z = r∠θ, real part a = r·cos(θ) and imaginary part b = r·sin(θ)
 
-Euler's formula connects them: re^(jθ) = r(cos θ + j sin θ). See [Chapter 9](chapters/09-phasors-complex-impedance/index.md#complex-numbers).
+Euler's formula connects them: re^(jθ) = r(cos θ + j sin θ). See [Chapter 9](chapters/09-phasors-complex-impedance/index.md).
 
 ### What is the formula for capacitive reactance?
 
-Capacitive reactance is Xc = 1/(ωC) = 1/(2πfC), measured in ohms. Note that Xc decreases as frequency increases—a 1 μF capacitor has Xc = 159 Ω at 1 kHz but only 15.9 Ω at 10 kHz. In impedance form, Zc = -jXc = 1/(jωC). See [Chapter 9](chapters/09-phasors-complex-impedance/index.md#capacitive-reactance).
+Capacitive reactance is Xc = 1/(ωC) = 1/(2πfC), measured in ohms. Note that Xc decreases as frequency increases—a 1 μF capacitor has Xc = 159 Ω at 1 kHz but only 15.9 Ω at 10 kHz. In impedance form, Zc = -jXc = 1/(jωC). See [Chapter 9](chapters/09-phasors-complex-impedance/index.md).
 
 ### What is the formula for inductive reactance?
 
-Inductive reactance is XL = ωL = 2πfL, measured in ohms. Unlike capacitive reactance, XL increases with frequency—a 10 mH inductor has XL = 62.8 Ω at 1 kHz but 628 Ω at 10 kHz. In impedance form, ZL = jXL = jωL. See [Chapter 9](chapters/09-phasors-complex-impedance/index.md#inductive-reactance).
+Inductive reactance is XL = ωL = 2πfL, measured in ohms. Unlike capacitive reactance, XL increases with frequency—a 10 mH inductor has XL = 62.8 Ω at 1 kHz but 628 Ω at 10 kHz. In impedance form, ZL = jXL = jωL. See [Chapter 9](chapters/09-phasors-complex-impedance/index.md).
 
 ### How do I calculate the cutoff frequency of an RC filter?
 
-The cutoff frequency is fc = 1/(2πRC), where R is in ohms and C is in farads. At this frequency, the output is at -3 dB (70.7% of the input voltage), and the phase shift is 45°. For example, R = 10 kΩ and C = 0.1 μF gives fc = 159 Hz. See [Chapter 12](chapters/12-filters-resonance/index.md#first-order-filters).
+The cutoff frequency is fc = 1/(2πRC), where R is in ohms and C is in farads. At this frequency, the output is at -3 dB (70.7% of the input voltage), and the phase shift is 45°. For example, R = 10 kΩ and C = 0.1 μF gives fc = 159 Hz. See [Chapter 12](chapters/12-filters-resonance/index.md).
 
 ### How do I calculate resonant frequency?
 
-For an RLC circuit, the resonant frequency is f₀ = 1/(2π√LC), where L is in henrys and C is in farads. At resonance, XL = Xc, so the reactive components cancel. For example, L = 10 mH and C = 1 μF gives f₀ = 1.59 kHz. See [Chapter 12](chapters/12-filters-resonance/index.md#resonance).
+For an RLC circuit, the resonant frequency is f₀ = 1/(2π√LC), where L is in henrys and C is in farads. At resonance, XL = Xc, so the reactive components cancel. For example, L = 10 mH and C = 1 μF gives f₀ = 1.59 kHz. See [Chapter 12](chapters/12-filters-resonance/index.md).
 
 ### What is the gain formula for an inverting amplifier?
 
@@ -196,7 +196,7 @@ For a non-inverting op-amp amplifier, the voltage gain is Av = 1 + Rf/Rin. There
 
 ### How do I read resistor color codes?
 
-Standard resistors use 4-band color codes: first two bands give digits, third band is the multiplier, fourth band is tolerance. The color sequence is: Black=0, Brown=1, Red=2, Orange=3, Yellow=4, Green=5, Blue=6, Violet=7, Gray=8, White=9. For example, Brown-Black-Red-Gold = 10 × 100 = 1 kΩ ± 5%. See [Chapter 5](chapters/05-passive-components/index.md#resistor-color-codes).
+Standard resistors use 4-band color codes: first two bands give digits, third band is the multiplier, fourth band is tolerance. The color sequence is: Black=0, Brown=1, Red=2, Orange=3, Yellow=4, Green=5, Blue=6, Violet=7, Gray=8, White=9. For example, Brown-Black-Red-Gold = 10 × 100 = 1 kΩ ± 5%. See [Chapter 5](chapters/05-passive-components/index.md).
 
 ### What is the formula for power in AC circuits?
 
@@ -217,7 +217,7 @@ The time constant τ = RC, where R is in ohms and C is in farads, giving τ in s
 
 ### What is a decibel and how do I use it?
 
-A decibel (dB) is a logarithmic unit for expressing ratios. For voltage: dB = 20 log₁₀(V₂/V₁). For power: dB = 10 log₁₀(P₂/P₁). Common values: +6 dB ≈ 2× voltage, +20 dB = 10× voltage, -3 dB ≈ 0.707× voltage (half power point). See [Chapter 11](chapters/11-frequency-response-bode/index.md#decibels).
+A decibel (dB) is a logarithmic unit for expressing ratios. For voltage: dB = 20 log₁₀(V₂/V₁). For power: dB = 10 log₁₀(P₂/P₁). Common values: +6 dB ≈ 2× voltage, +20 dB = 10× voltage, -3 dB ≈ 0.707× voltage (half power point). See [Chapter 11](chapters/11-frequency-response-bode/index.md).
 
 ### How do I draw a Bode plot?
 
@@ -227,17 +227,17 @@ A decibel (dB) is a logarithmic unit for expressing ratios. For voltage: dB = 20
 4. Round the corners (±3 dB at corner frequencies)
 5. Add phase plot: 0° or 180° at low frequencies, ±90° change per pole/zero
 
-See [Chapter 11](chapters/11-frequency-response-bode/index.md#bode-plots) for complete methodology.
+See [Chapter 11](chapters/11-frequency-response-bode/index.md) for complete methodology.
 
 ### What is the quality factor Q and how do I calculate it?
 
-Quality factor Q measures the sharpness of resonance. For series RLC: Q = (1/R)√(L/C) = ω₀L/R = 1/(ω₀RC). For parallel RLC: Q = R√(C/L). Higher Q means narrower bandwidth and sharper resonance. Bandwidth BW = f₀/Q. See [Chapter 12](chapters/12-filters-resonance/index.md#quality-factor).
+Quality factor Q measures the sharpness of resonance. For series RLC: Q = (1/R)√(L/C) = ω₀L/R = 1/(ω₀RC). For parallel RLC: Q = R√(C/L). Higher Q means narrower bandwidth and sharper resonance. Bandwidth BW = f₀/Q. See [Chapter 12](chapters/12-filters-resonance/index.md).
 
 ## Common Challenges
 
 ### Why does my voltage divider give the wrong output when I connect a load?
 
-Loading effect! The output of a voltage divider depends on the load resistance. When you connect a load RL, it appears in parallel with R₂, reducing the effective resistance and thus the output voltage. Solution: Use a buffer amplifier (voltage follower) between the divider and load, or design the divider with much lower resistance than the load. See [Chapter 4](chapters/04-dc-circuit-analysis/index.md#loading-effects).
+Loading effect! The output of a voltage divider depends on the load resistance. When you connect a load RL, it appears in parallel with R₂, reducing the effective resistance and thus the output voltage. Solution: Use a buffer amplifier (voltage follower) between the divider and load, or design the divider with much lower resistance than the load. See [Chapter 4](chapters/04-dc-circuit-analysis/index.md).
 
 ### Why is my op-amp output stuck at the power supply rail?
 
@@ -248,7 +248,7 @@ This is saturation, and common causes include:
 3. **Input exceeds common-mode range** - The input voltage is too close to the rails
 4. **Gain too high** - Even small input offsets saturate high-gain stages
 
-Check your feedback resistor connections first. See [Chapter 13](chapters/13-operational-amplifiers/index.md#saturation).
+Check your feedback resistor connections first. See [Chapter 13](chapters/13-operational-amplifiers/index.md).
 
 ### Why is my filter's cutoff frequency different from what I calculated?
 
@@ -259,7 +259,7 @@ Common reasons include:
 3. **Parasitic capacitance** - Breadboard and wiring add stray capacitance
 4. **Measurement error** - The -3 dB point must be measured precisely
 
-Use 1% tolerance components for better accuracy. See [Chapter 12](chapters/12-filters-resonance/index.md#filter-design).
+Use 1% tolerance components for better accuracy. See [Chapter 12](chapters/12-filters-resonance/index.md).
 
 ### Why do I measure different voltages with different multimeters?
 
@@ -287,7 +287,7 @@ Unwanted oscillation usually comes from:
 4. **Too much gain** - High-gain stages are more prone to oscillation
 5. **Capacitive loading** - Long cables can cause instability
 
-See [Chapter 13](chapters/13-operational-amplifiers/index.md#stability) for prevention techniques.
+See [Chapter 13](chapters/13-operational-amplifiers/index.md) for prevention techniques.
 
 ### How do I debug a circuit that doesn't work?
 
@@ -312,7 +312,7 @@ Common noise sources:
 4. **EMI pickup** - Shield sensitive inputs, use twisted pairs
 5. **Component noise** - Carbon resistors are noisier than metal film
 
-See [Chapter 15](chapters/15-audio-applications/index.md#noise) for detailed noise reduction techniques.
+See [Chapter 15](chapters/15-audio-applications/index.md) for detailed noise reduction techniques.
 
 ### Why does my transient response look different from the simulation?
 
@@ -355,7 +355,7 @@ For most circuits, either works—choose the one with fewer equations. See [Chap
 
 ### How do I choose between Thevenin and Norton equivalents?
 
-**Use Thevenin** when connecting to a load in series (most common). **Use Norton** when connecting to a load in parallel or when the circuit naturally contains current sources. You can always convert between them: Vth = In × Rth. See [Chapter 4](chapters/04-dc-circuit-analysis/index.md#thevenin-and-norton).
+**Use Thevenin** when connecting to a load in series (most common). **Use Norton** when connecting to a load in parallel or when the circuit naturally contains current sources. You can always convert between them: Vth = In × Rth. See [Chapter 4](chapters/04-dc-circuit-analysis/index.md).
 
 ### What probe setting should I use on the oscilloscope?
 
@@ -377,7 +377,7 @@ Use 1X only when signal amplitude is too small (< 10 mV range). Always compensat
 5. **Recalculate actual fc** - Verify the achieved cutoff frequency
 6. **Consider tolerances** - Use 1% components for precision filters
 
-See [Chapter 12](chapters/12-filters-resonance/index.md#filter-design) for detailed procedures.
+See [Chapter 12](chapters/12-filters-resonance/index.md) for detailed procedures.
 
 ### How do I minimize noise in audio circuit design?
 
@@ -413,21 +413,21 @@ See [Chapter 15](chapters/15-audio-applications/index.md#practical-design-consid
 - When AC riding on large DC level
 - Never for very low frequencies (< 10 Hz)
 
-See [Chapter 16](chapters/16-laboratory-techniques/index.md#ac-dc-coupling).
+See [Chapter 16](chapters/16-laboratory-techniques/index.md).
 
 ## Advanced Topics
 
 ### How does maximum power transfer relate to impedance matching in audio?
 
-Maximum power transfer occurs when the load impedance equals the complex conjugate of the source impedance: ZL = ZS*. For resistive circuits, this means RL = Rth. In audio, this is why amplifier output impedances and speaker impedances are specified (e.g., 8Ω speakers with low-impedance amplifiers). The damping factor (Zspeaker/Zamp) affects bass control. See [Chapter 10](chapters/10-ac-power-analysis/index.md#maximum-power-transfer).
+Maximum power transfer occurs when the load impedance equals the complex conjugate of the source impedance: ZL = ZS*. For resistive circuits, this means RL = Rth. In audio, this is why amplifier output impedances and speaker impedances are specified (e.g., 8Ω speakers with low-impedance amplifiers). The damping factor (Zspeaker/Zamp) affects bass control. See [Chapter 10](chapters/10-ac-power-analysis/index.md).
 
 ### What causes intermodulation distortion and why is it worse than harmonic distortion?
 
-Intermodulation distortion (IMD) occurs when two or more input frequencies mix to create sum and difference frequencies. For inputs f₁ and f₂, IMD creates f₁±f₂, 2f₁±f₂, etc. These products are NOT harmonically related to the input—they're musically dissonant. A 1 kHz + 1.5 kHz input creates 500 Hz and 2.5 kHz—notes that don't belong to either input. This sounds "dirty" even at low levels. See [Chapter 15](chapters/15-audio-applications/index.md#intermodulation-distortion).
+Intermodulation distortion (IMD) occurs when two or more input frequencies mix to create sum and difference frequencies. For inputs f₁ and f₂, IMD creates f₁±f₂, 2f₁±f₂, etc. These products are NOT harmonically related to the input—they're musically dissonant. A 1 kHz + 1.5 kHz input creates 500 Hz and 2.5 kHz—notes that don't belong to either input. This sounds "dirty" even at low levels. See [Chapter 15](chapters/15-audio-applications/index.md).
 
 ### How do poles and zeros affect frequency response?
 
-**Poles** (roots of the denominator) create -20 dB/decade roll-off and -90° phase shift each. **Zeros** (roots of the numerator) create +20 dB/decade rise and +90° phase shift each. Their locations in the s-plane determine stability and frequency response shape. Right half-plane poles indicate instability. See [Chapter 11](chapters/11-frequency-response-bode/index.md#poles-and-zeros).
+**Poles** (roots of the denominator) create -20 dB/decade roll-off and -90° phase shift each. **Zeros** (roots of the numerator) create +20 dB/decade rise and +90° phase shift each. Their locations in the s-plane determine stability and frequency response shape. Right half-plane poles indicate instability. See [Chapter 11](chapters/11-frequency-response-bode/index.md).
 
 ### What is gain-bandwidth product in op-amps?
 
@@ -441,7 +441,7 @@ Second-order filters provide steeper roll-off (40 dB/decade) and can have peaked
 2. **Quality factor Q** determines peaking and damping
 3. **Damping ratio** ζ = 1/(2Q) determines transient response
 
-Sallen-Key topology is common for active second-order filters. See [Chapter 12](chapters/12-filters-resonance/index.md#second-order-filters).
+Sallen-Key topology is common for active second-order filters. See [Chapter 12](chapters/12-filters-resonance/index.md).
 
 ### What is the difference between Class A, AB, and D amplifiers?
 
@@ -451,7 +451,7 @@ Sallen-Key topology is common for active second-order filters. See [Chapter 12](
 
 **Class D:** Switching amplifier with PWM. Very high efficiency (>90%), requires output filtering. Good for portable devices and subwoofers.
 
-See [Chapter 15](chapters/15-audio-applications/index.md#power-amplifier-classes).
+See [Chapter 15](chapters/15-audio-applications/index.md).
 
 ### How do I analyze a circuit with mutual inductance?
 
@@ -470,7 +470,7 @@ Settling time depends on the damping ratio ζ and natural frequency ω₀. For a
 - Critically damped (ζ=1): ts ≈ 5/ω₀ for 1% settling
 - Underdamped (ζ<1): ts ≈ 4/(ζω₀) for 2% settling
 
-Faster natural frequency and higher damping (up to critical) reduce settling time. See [Chapter 7](chapters/07-second-order-rlc-circuits/index.md#settling-time).
+Faster natural frequency and higher damping (up to critical) reduce settling time. See [Chapter 7](chapters/07-second-order-rlc-circuits/index.md).
 
 ### How does power factor correction work?
 
@@ -484,4 +484,4 @@ This reduces current draw and line losses. See [Chapter 10](chapters/10-ac-power
 
 ### What is CMRR and why does it matter?
 
-Common-Mode Rejection Ratio (CMRR) measures how well a differential amplifier rejects signals that appear identically at both inputs. CMRR = Ad/Acm, typically expressed in dB (good op-amps: 80-120 dB). High CMRR is essential for rejecting noise pickup in instrumentation amplifiers and balanced audio connections. See [Chapter 13](chapters/13-operational-amplifiers/index.md#cmrr).
+Common-Mode Rejection Ratio (CMRR) measures how well a differential amplifier rejects signals that appear identically at both inputs. CMRR = Ad/Acm, typically expressed in dB (good op-amps: 80-120 dB). High CMRR is essential for rejecting noise pickup in instrumentation amplifiers and balanced audio connections. See [Chapter 13](chapters/13-operational-amplifiers/index.md).
