@@ -9,7 +9,7 @@ edit_uri: 'blob/master/docs'
 nav:
   - Home: index.md
   - About This Course: about.md
-
+  - Course Description: course-description.md
   - Chapters:
     - List of Chapters: chapters/index.md
     - 1. Electric Charge and Quantities: chapters/01-electric-charge-basic-quantities/index.md
@@ -47,7 +47,7 @@ nav:
   - Circuits:
     - List of Circuits: circuits/index.md
     - SchemaDraw: circuits/schemadraw/index.md
-    - Test Table: circuits/schemadraw/test.md
+    - Test Table: circuits/schemadraw/test-table.md
 
   - Supplementary Sections:
     - Table of Contents: old-sections/index.md
