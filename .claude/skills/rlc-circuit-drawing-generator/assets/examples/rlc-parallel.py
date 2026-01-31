@@ -16,9 +16,9 @@ with schemdraw.Drawing() as d:
     d += elm.Line().right().length(1)
     d += elm.Dot()
 
-    # Top branch - Resistor
+    # Top branch - Resistor (use default label positioning)
     d.push()
-    d += elm.Resistor().right().label('R₁\n1kΩ')
+    d += elm.Resistor().right().label('R₁  1kΩ')
     d += elm.Dot()
     d.pop()
 
@@ -26,14 +26,14 @@ with schemdraw.Drawing() as d:
     d += elm.Line().down().length(1.5)
     d += elm.Dot()
     d.push()
-    d += elm.Inductor().right().label('L₁\n10mH')
+    d += elm.Inductor().right().label('L₁  10mH')
     d += elm.Dot()
     d += elm.Line().up().length(1.5)
     d.pop()
 
     # Bottom branch - Capacitor
     d += elm.Line().down().length(1.5)
-    d += elm.Capacitor().right().label('C₁\n100nF')
+    d += elm.Capacitor().right().label('C₁  100nF')
     d += elm.Line().up().length(3)
 
     # Continue to return path

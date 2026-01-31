@@ -140,23 +140,29 @@ elm.Resistor().right().length(3)  # Resistor spanning 3 units
 
 ## Labeling
 
-### Basic Label
+**Best Practice**: Use `.label('text')` without specifying `loc` - Schemdraw's default positioning handles placement intelligently based on element orientation.
+
+### Basic Label (Recommended)
 ```python
-elm.Resistor().label('R₁')
+elm.Resistor().right().label('R₁  10kΩ')
+elm.Capacitor().down().label('C₁  100μF')
+elm.SourceV().up().label('V₁\n6V')
 ```
 
-### Label with Value
+### Label with Newline
 ```python
 elm.Resistor().label('R₁\n10kΩ')
 ```
 
-### Label Position
+### Explicit Label Position (Use Only If Needed)
 ```python
 elm.Resistor().label('R₁', loc='top')     # Label on top
 elm.Resistor().label('R₁', loc='bottom')  # Label on bottom
 elm.Resistor().label('R₁', loc='left')    # Label on left
 elm.Resistor().label('R₁', loc='right')   # Label on right
 ```
+
+Note: Specifying `loc` overrides the smart default positioning. Only use explicit positioning when the default doesn't work for your layout.
 
 ### Multiple Labels
 ```python

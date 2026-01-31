@@ -9,13 +9,13 @@ with schemdraw.Drawing() as d:
     d.config(unit=3, fontsize=12)
 
     # Voltage source (left side, vertical, positive on top)
-    d += elm.SourceV().up().label('V₁\n12V')
+    source = d.add(elm.SourceV().up().label('V₁\n12V'))
 
     # Short connecting wire
     d += elm.Line().right().length(0.5)
 
-    # Resistor
-    d += elm.Resistor().right().label('R₁\n1kΩ')
+    # Resistor - use default label positioning
+    d += elm.Resistor().right().label('R₁  1kΩ')
 
     # Short connecting wire
     d += elm.Line().right().length(0.5)
@@ -26,10 +26,10 @@ with schemdraw.Drawing() as d:
     # Ground reference on return path
     d += elm.Ground()
 
-    # Return wire to source negative terminal
-    d += elm.Line().left().length(2)
+    # Return wire toward source
+    d += elm.Line().left().tox(source.start)
 
-    # Connect back up to source negative
-    d += elm.Line().up().to(d.here)
+    # Connect up to source negative terminal
+    d += elm.Line().up().toy(source.start)
 
     d.save('simple-resistive.svg')
