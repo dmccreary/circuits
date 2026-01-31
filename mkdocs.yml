@@ -50,16 +50,15 @@ nav:
     - Test Table: circuits/schemadraw/test.md
 
   - Supplementary Sections:
-    - Table of Contents: sections/index.md
-    - Introduction: sections/01-intro/index.md
-    - Voltage Across a Capacitor: sections/05-voltage-across-a-capacitor/index.md
-    - Circuit Laws: sections/02-laws/index.md
-    - Diodes: sections/50-diode/index.md
+    - Table of Contents: old-sections/index.md
+    - Introduction: old-sections/01-intro/index.md
+    - Voltage Across a Capacitor: old-sections/05-voltage-across-a-capacitor/index.md
+    - Circuit Laws: old-sections/02-laws/index.md
+    - Diodes: old-sections/50-diode/index.md
     - Transistors:
-       - Introduction: sections/60-transistors/index.md
-       - LED Driver Circuit: sections/60-transistors/led-circuit.md
-    - MOSFETs: sections/70-mosfet/index.md
-    - Frequency Response: sections/10-frequency-response/index.md
+       - Introduction: old-sections/60-transistors/index.md
+       - LED Driver Circuit: old-sections/60-transistors/led-circuit.md
+    - MOSFETs: old-sections/70-mosfet/index.md
   
   - Learning Graph:
     - Introduction: learning-graph/index.md
