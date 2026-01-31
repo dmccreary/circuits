@@ -15,14 +15,10 @@ with schemdraw.Drawing() as d:
     # Short connecting wire
     d += elm.Line().right().length(0.5)
 
-    # Resistor
-    d += elm.Resistor().right().label('R₁\n100Ω')
-
-    # Inductor
-    d += elm.Inductor().right().label('L₁\n10mH')
-
-    # Capacitor
-    d += elm.Capacitor().right().label('C₁\n1μF')
+    # Components - use default label positioning
+    d += elm.Resistor().right().label('R₁  100Ω')
+    d += elm.Inductor().right().label('L₁  10mH')
+    d += elm.Capacitor().right().label('C₁  1μF')
 
     # Short connecting wire
     d += elm.Line().right().length(0.5)

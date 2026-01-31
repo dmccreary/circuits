@@ -2,7 +2,9 @@
 
 Common circuit patterns and their Schemdraw implementations.
 
-**Important**: The ground symbol must be connected to the source negative terminal to form a complete circuit.
+**Important**:
+- The ground symbol must be connected to the source negative terminal to form a complete circuit.
+- Use `.label('text')` without `loc` parameter - Schemdraw's default positioning handles label placement intelligently.
 
 ## Pattern 1: Simple Single-Component Circuit
 
@@ -331,11 +333,12 @@ with schemdraw.Drawing() as d:
 
 ## Tips for Clean Layouts
 
-1. **Consistent spacing**: Use `length(0.5)` for short connecting wires
-2. **Vertical source**: Always place voltage source vertically on the left
-3. **Ground placement**: Put ground on the return path (bottom)
-4. **Complete circuit**: Always connect the return path back to the source negative terminal using `.tox()` and `.toy()`
-5. **Label formatting**: Use newlines (`\n`) to separate name from value
-6. **Unit scaling**: Use `d.config(unit=3)` for good proportions
-7. **Push/Pop**: Use for parallel branches to return to junction points
-8. **Store source reference**: Use `source = d.add(...)` to reference anchors later
+1. **Default label positioning**: Use `.label('text')` without `loc` parameter - Schemdraw automatically positions labels based on element orientation
+2. **Consistent spacing**: Use `length(0.5)` for short connecting wires
+3. **Vertical source**: Always place voltage source vertically on the left
+4. **Ground placement**: Put ground on the return path (bottom)
+5. **Complete circuit**: Always connect the return path back to the source negative terminal using `.tox()` and `.toy()`
+6. **Label formatting**: Use spaces (`R₁  10kΩ`) or newlines (`\n`) to separate name from value
+7. **Unit scaling**: Use `d.config(unit=3)` for good proportions
+8. **Push/Pop**: Use for parallel branches to return to junction points
+9. **Store source reference**: Use `source = d.add(...)` to reference anchors later

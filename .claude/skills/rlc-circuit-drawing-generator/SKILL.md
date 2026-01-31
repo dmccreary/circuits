@@ -58,6 +58,8 @@ Use the bundled references for syntax:
 
 **Important**: The ground must be connected to the source negative terminal to form a complete circuit.
 
+**Labeling**: Use `.label('text')` without specifying `loc` - Schemdraw's default positioning handles placement intelligently based on element orientation.
+
 ```python
 import schemdraw
 import schemdraw.elements as elm
@@ -69,11 +71,11 @@ with schemdraw.Drawing() as d:
     # Store reference to access anchors later
     source = d.add(elm.SourceV().up().label('V₁\n12V'))
 
-    # Top rail with components
+    # Top rail with components - labels use default positioning
     d += elm.Line().right().length(0.5)
-    d += elm.Resistor().right().label('R₁\n100Ω')
-    d += elm.Inductor().right().label('L₁\n10mH')
-    d += elm.Capacitor().right().label('C₁\n1μF')
+    d += elm.Resistor().right().label('R₁  100Ω')
+    d += elm.Inductor().right().label('L₁  10mH')
+    d += elm.Capacitor().right().label('C₁  1μF')
     d += elm.Line().right().length(0.5)
 
     # Return path with ground
