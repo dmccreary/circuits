@@ -37,6 +37,7 @@
         "Phasors",
         "Photoresistor",
         "pymdownx",
+        "Schemdraw",
         "Schmitt",
         "Smartboard",
         "Thevenin",
