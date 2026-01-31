@@ -209,4 +209,4 @@ pip install schemdraw
 
 - [Schemdraw Documentation](https://schemdraw.readthedocs.io/en/stable/index.html)
 - [Schemdraw GitHub](https://github.com/cdelker/schemdraw)
-- [Claude Code Skill]()
+- [Claude Code Skill](https://github.com/dmccreary/circuits/tree/main/.claude/skills/rlc-circuit-drawing-generator)
