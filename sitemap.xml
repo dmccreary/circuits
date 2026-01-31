@@ -2,426 +2,450 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://dmccreary.github.io/circuits/</loc>
-         <lastmod>2026-01-30</lastmod>
+         <lastmod>2026-01-31</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/circuits/about/</loc>
-         <lastmod>2026-01-30</lastmod>
+         <lastmod>2026-01-31</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/circuits/contact/</loc>
-         <lastmod>2026-01-30</lastmod>
+         <lastmod>2026-01-31</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/circuits/course-description/</loc>
-         <lastmod>2026-01-30</lastmod>
-    </url>
-    <url>
-         <loc>https://dmccreary.github.io/circuits/glossary/</loc>
-         <lastmod>2026-01-30</lastmod>
-    </url>
-    <url>
-         <loc>https://dmccreary.github.io/circuits/how-we-built-this-site/</loc>
-         <lastmod>2026-01-30</lastmod>
-    </url>
-    <url>
-         <loc>https://dmccreary.github.io/circuits/license/</loc>
-         <lastmod>2026-01-30</lastmod>
-    </url>
-    <url>
-         <loc>https://dmccreary.github.io/circuits/references/</loc>
-         <lastmod>2026-01-30</lastmod>
-    </url>
-    <url>
-         <loc>https://dmccreary.github.io/circuits/chapters/</loc>
-         <lastmod>2026-01-30</lastmod>
-    </url>
-    <url>
-         <loc>https://dmccreary.github.io/circuits/chapters/01-electric-charge-basic-quantities/</loc>
-         <lastmod>2026-01-30</lastmod>
-    </url>
-    <url>
-         <loc>https://dmccreary.github.io/circuits/chapters/02-ohms-law-basic-configurations/</loc>
-         <lastmod>2026-01-30</lastmod>
-    </url>
-    <url>
-         <loc>https://dmccreary.github.io/circuits/chapters/03-kirchhoffs-laws-topology/</loc>
-         <lastmod>2026-01-30</lastmod>
-    </url>
-    <url>
-         <loc>https://dmccreary.github.io/circuits/chapters/04-dc-circuit-analysis/</loc>
-         <lastmod>2026-01-30</lastmod>
-    </url>
-    <url>
-         <loc>https://dmccreary.github.io/circuits/chapters/05-passive-components/</loc>
-         <lastmod>2026-01-30</lastmod>
-    </url>
-    <url>
-         <loc>https://dmccreary.github.io/circuits/chapters/06-transient-analysis-rc-rl/</loc>
-         <lastmod>2026-01-30</lastmod>
-    </url>
-    <url>
-         <loc>https://dmccreary.github.io/circuits/chapters/07-second-order-rlc-circuits/</loc>
-         <lastmod>2026-01-30</lastmod>
-    </url>
-    <url>
-         <loc>https://dmccreary.github.io/circuits/chapters/08-ac-signals-sinusoidal/</loc>
-         <lastmod>2026-01-30</lastmod>
-    </url>
-    <url>
-         <loc>https://dmccreary.github.io/circuits/chapters/09-phasors-complex-impedance/</loc>
-         <lastmod>2026-01-30</lastmod>
-    </url>
-    <url>
-         <loc>https://dmccreary.github.io/circuits/chapters/10-ac-power-analysis/</loc>
-         <lastmod>2026-01-30</lastmod>
-    </url>
-    <url>
-         <loc>https://dmccreary.github.io/circuits/chapters/11-frequency-response-bode/</loc>
-         <lastmod>2026-01-30</lastmod>
-    </url>
-    <url>
-         <loc>https://dmccreary.github.io/circuits/chapters/12-filters-resonance/</loc>
-         <lastmod>2026-01-30</lastmod>
-    </url>
-    <url>
-         <loc>https://dmccreary.github.io/circuits/chapters/13-operational-amplifiers/</loc>
-         <lastmod>2026-01-30</lastmod>
-    </url>
-    <url>
-         <loc>https://dmccreary.github.io/circuits/chapters/14-signals-audio-lab/</loc>
-         <lastmod>2026-01-30</lastmod>
-    </url>
-    <url>
-         <loc>https://dmccreary.github.io/circuits/chapters/15-audio-applications/</loc>
-         <lastmod>2026-01-30</lastmod>
-    </url>
-    <url>
-         <loc>https://dmccreary.github.io/circuits/chapters/16-laboratory-techniques/</loc>
-         <lastmod>2026-01-30</lastmod>
+         <lastmod>2026-01-31</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/circuits/faq/</loc>
-         <lastmod>2026-01-30</lastmod>
+         <lastmod>2026-01-31</lastmod>
+    </url>
+    <url>
+         <loc>https://dmccreary.github.io/circuits/glossary/</loc>
+         <lastmod>2026-01-31</lastmod>
+    </url>
+    <url>
+         <loc>https://dmccreary.github.io/circuits/how-we-built-this-site/</loc>
+         <lastmod>2026-01-31</lastmod>
+    </url>
+    <url>
+         <loc>https://dmccreary.github.io/circuits/license/</loc>
+         <lastmod>2026-01-31</lastmod>
+    </url>
+    <url>
+         <loc>https://dmccreary.github.io/circuits/references/</loc>
+         <lastmod>2026-01-31</lastmod>
+    </url>
+    <url>
+         <loc>https://dmccreary.github.io/circuits/chapters/</loc>
+         <lastmod>2026-01-31</lastmod>
+    </url>
+    <url>
+         <loc>https://dmccreary.github.io/circuits/chapters/01-electric-charge-basic-quantities/</loc>
+         <lastmod>2026-01-31</lastmod>
+    </url>
+    <url>
+         <loc>https://dmccreary.github.io/circuits/chapters/02-ohms-law-basic-configurations/</loc>
+         <lastmod>2026-01-31</lastmod>
+    </url>
+    <url>
+         <loc>https://dmccreary.github.io/circuits/chapters/03-kirchhoffs-laws-topology/</loc>
+         <lastmod>2026-01-31</lastmod>
+    </url>
+    <url>
+         <loc>https://dmccreary.github.io/circuits/chapters/04-dc-circuit-analysis/</loc>
+         <lastmod>2026-01-31</lastmod>
+    </url>
+    <url>
+         <loc>https://dmccreary.github.io/circuits/chapters/05-passive-components/</loc>
+         <lastmod>2026-01-31</lastmod>
+    </url>
+    <url>
+         <loc>https://dmccreary.github.io/circuits/chapters/06-transient-analysis-rc-rl/</loc>
+         <lastmod>2026-01-31</lastmod>
+    </url>
+    <url>
+         <loc>https://dmccreary.github.io/circuits/chapters/07-second-order-rlc-circuits/</loc>
+         <lastmod>2026-01-31</lastmod>
+    </url>
+    <url>
+         <loc>https://dmccreary.github.io/circuits/chapters/08-ac-signals-sinusoidal/</loc>
+         <lastmod>2026-01-31</lastmod>
+    </url>
+    <url>
+         <loc>https://dmccreary.github.io/circuits/chapters/09-phasors-complex-impedance/</loc>
+         <lastmod>2026-01-31</lastmod>
+    </url>
+    <url>
+         <loc>https://dmccreary.github.io/circuits/chapters/10-ac-power-analysis/</loc>
+         <lastmod>2026-01-31</lastmod>
+    </url>
+    <url>
+         <loc>https://dmccreary.github.io/circuits/chapters/11-frequency-response-bode/</loc>
+         <lastmod>2026-01-31</lastmod>
+    </url>
+    <url>
+         <loc>https://dmccreary.github.io/circuits/chapters/12-filters-resonance/</loc>
+         <lastmod>2026-01-31</lastmod>
+    </url>
+    <url>
+         <loc>https://dmccreary.github.io/circuits/chapters/13-operational-amplifiers/</loc>
+         <lastmod>2026-01-31</lastmod>
+    </url>
+    <url>
+         <loc>https://dmccreary.github.io/circuits/chapters/14-signals-audio-lab/</loc>
+         <lastmod>2026-01-31</lastmod>
+    </url>
+    <url>
+         <loc>https://dmccreary.github.io/circuits/chapters/15-audio-applications/</loc>
+         <lastmod>2026-01-31</lastmod>
+    </url>
+    <url>
+         <loc>https://dmccreary.github.io/circuits/chapters/16-laboratory-techniques/</loc>
+         <lastmod>2026-01-31</lastmod>
+    </url>
+    <url>
+         <loc>https://dmccreary.github.io/circuits/circuits/</loc>
+         <lastmod>2026-01-31</lastmod>
+    </url>
+    <url>
+         <loc>https://dmccreary.github.io/circuits/circuits/schemadraw/</loc>
+         <lastmod>2026-01-31</lastmod>
+    </url>
+    <url>
+         <loc>https://dmccreary.github.io/circuits/circuits/schemadraw/test-table/</loc>
+         <lastmod>2026-01-31</lastmod>
+    </url>
+    <url>
+         <loc>https://dmccreary.github.io/circuits/faq/</loc>
+         <lastmod>2026-01-31</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/circuits/faq/series-and-parallel/</loc>
-         <lastmod>2026-01-30</lastmod>
+         <lastmod>2026-01-31</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/circuits/learning-graph/</loc>
-         <lastmod>2026-01-30</lastmod>
+         <lastmod>2026-01-31</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/circuits/learning-graph/book-metrics/</loc>
-         <lastmod>2026-01-30</lastmod>
+         <lastmod>2026-01-31</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/circuits/learning-graph/chapter-metrics/</loc>
-         <lastmod>2026-01-30</lastmod>
+         <lastmod>2026-01-31</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/circuits/learning-graph/concept-list/</loc>
-         <lastmod>2026-01-30</lastmod>
+         <lastmod>2026-01-31</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/circuits/learning-graph/concept-taxonomy/</loc>
-         <lastmod>2026-01-30</lastmod>
+         <lastmod>2026-01-31</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/circuits/learning-graph/course-description-assessment/</loc>
-         <lastmod>2026-01-30</lastmod>
+         <lastmod>2026-01-31</lastmod>
+    </url>
+    <url>
+         <loc>https://dmccreary.github.io/circuits/learning-graph/faq-quality-report/</loc>
+         <lastmod>2026-01-31</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/circuits/learning-graph/quality-metrics/</loc>
-         <lastmod>2026-01-30</lastmod>
+         <lastmod>2026-01-31</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/circuits/learning-graph/taxonomy-distribution/</loc>
-         <lastmod>2026-01-30</lastmod>
+         <lastmod>2026-01-31</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/circuits/learning-graph/logs/learning-graph-generator-0.03-2026-01-30/</loc>
-         <lastmod>2026-01-30</lastmod>
+         <lastmod>2026-01-31</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/circuits/old-sections/</loc>
-         <lastmod>2026-01-30</lastmod>
+         <lastmod>2026-01-31</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/circuits/old-sections/01-intro/</loc>
-         <lastmod>2026-01-30</lastmod>
+         <lastmod>2026-01-31</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/circuits/old-sections/02-laws/</loc>
-         <lastmod>2026-01-30</lastmod>
+         <lastmod>2026-01-31</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/circuits/old-sections/05-voltage-across-a-capacitor/</loc>
-         <lastmod>2026-01-30</lastmod>
+         <lastmod>2026-01-31</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/circuits/old-sections/10-frequency-response/</loc>
-         <lastmod>2026-01-30</lastmod>
+         <lastmod>2026-01-31</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/circuits/old-sections/50-diode/</loc>
-         <lastmod>2026-01-30</lastmod>
+         <lastmod>2026-01-31</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/circuits/old-sections/60-transistors/</loc>
-         <lastmod>2026-01-30</lastmod>
+         <lastmod>2026-01-31</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/circuits/old-sections/60-transistors/led-circuit/</loc>
-         <lastmod>2026-01-30</lastmod>
+         <lastmod>2026-01-31</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/circuits/old-sections/70-mosfet/</loc>
-         <lastmod>2026-01-30</lastmod>
+         <lastmod>2026-01-31</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/circuits/prompts/</loc>
-         <lastmod>2026-01-30</lastmod>
+         <lastmod>2026-01-31</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/circuits/prompts/adding-latex-equations/</loc>
-         <lastmod>2026-01-30</lastmod>
+         <lastmod>2026-01-31</lastmod>
+    </url>
+    <url>
+         <loc>https://dmccreary.github.io/circuits/prompts/circuit-diagram-skill/</loc>
+         <lastmod>2026-01-31</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/circuits/prompts/frequently-asked-questions/</loc>
-         <lastmod>2026-01-30</lastmod>
+         <lastmod>2026-01-31</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/circuits/prompts/generate-chapter-content/</loc>
-         <lastmod>2026-01-30</lastmod>
+         <lastmod>2026-01-31</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/circuits/prompts/glossary-terms/</loc>
-         <lastmod>2026-01-30</lastmod>
+         <lastmod>2026-01-31</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/circuits/prompts/learning-via-interactive-simulations/</loc>
-         <lastmod>2026-01-30</lastmod>
+         <lastmod>2026-01-31</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/circuits/prompts/metaphors-and-stories/</loc>
-         <lastmod>2026-01-30</lastmod>
+         <lastmod>2026-01-31</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/circuits/prompts/chatbot/</loc>
-         <lastmod>2026-01-30</lastmod>
+         <lastmod>2026-01-31</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/circuits/prompts/circuit-diagrams/</loc>
-         <lastmod>2026-01-30</lastmod>
+         <lastmod>2026-01-31</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/circuits/prompts/circuit-diagrams/circuitikz-templates/</loc>
-         <lastmod>2026-01-30</lastmod>
+         <lastmod>2026-01-31</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/circuits/prompts/circuit-diagrams/gen-circuit-diagrams-mermaid/</loc>
-         <lastmod>2026-01-30</lastmod>
+         <lastmod>2026-01-31</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/circuits/prompts/circuit-similarity/</loc>
-         <lastmod>2026-01-30</lastmod>
+         <lastmod>2026-01-31</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/circuits/prompts/current-voltage-plots/</loc>
-         <lastmod>2026-01-30</lastmod>
+         <lastmod>2026-01-31</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/circuits/prompts/formulas/</loc>
-         <lastmod>2026-01-30</lastmod>
+         <lastmod>2026-01-31</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/circuits/prompts/formulas/full/</loc>
-         <lastmod>2026-01-30</lastmod>
+         <lastmod>2026-01-31</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/circuits/prompts/knowledge-graph/</loc>
-         <lastmod>2026-01-30</lastmod>
+         <lastmod>2026-01-31</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/circuits/prompts/knowledge-graph/add-categories-to-concepts/</loc>
-         <lastmod>2026-01-30</lastmod>
+         <lastmod>2026-01-31</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/circuits/prompts/knowledge-graph/concept-dependency-graph/</loc>
-         <lastmod>2026-01-30</lastmod>
+         <lastmod>2026-01-31</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/circuits/prompts/knowledge-graph/concept-enumeration/</loc>
-         <lastmod>2026-01-30</lastmod>
+         <lastmod>2026-01-31</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/circuits/prompts/knowledge-graph/concept-taxonomy/</loc>
-         <lastmod>2026-01-30</lastmod>
+         <lastmod>2026-01-31</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/circuits/prompts/knowledge-graph/three-graphs/</loc>
-         <lastmod>2026-01-30</lastmod>
+         <lastmod>2026-01-31</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/circuits/prompts/knowledge-graph/graph/</loc>
-         <lastmod>2026-01-30</lastmod>
+         <lastmod>2026-01-31</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/circuits/prompts/lesson-plan/</loc>
-         <lastmod>2026-01-30</lastmod>
+         <lastmod>2026-01-31</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/circuits/prompts/lesson-plan/circuit-lesson-plan-template/</loc>
-         <lastmod>2026-01-30</lastmod>
+         <lastmod>2026-01-31</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/circuits/prompts/lesson-plan/spoiler-test/</loc>
-         <lastmod>2026-01-30</lastmod>
+         <lastmod>2026-01-31</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/circuits/prompts/similarity-plot/</loc>
-         <lastmod>2026-01-30</lastmod>
+         <lastmod>2026-01-31</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/circuits/prompts/top-100-circuits/</loc>
-         <lastmod>2026-01-30</lastmod>
+         <lastmod>2026-01-31</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/circuits/prompts/top-100-circuits/open-ai-deep-research/</loc>
-         <lastmod>2026-01-30</lastmod>
+         <lastmod>2026-01-31</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/circuits/prompts/top-100-circuits/top-100-circuits/</loc>
-         <lastmod>2026-01-30</lastmod>
+         <lastmod>2026-01-31</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/circuits/prompts/top-100-circuits/top-100-claude/</loc>
-         <lastmod>2026-01-30</lastmod>
+         <lastmod>2026-01-31</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/circuits/sims/</loc>
-         <lastmod>2026-01-30</lastmod>
+         <lastmod>2026-01-31</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/circuits/sims/components/</loc>
-         <lastmod>2026-01-30</lastmod>
+         <lastmod>2026-01-31</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/circuits/sims/animated-switches/</loc>
-         <lastmod>2026-01-30</lastmod>
+         <lastmod>2026-01-31</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/circuits/sims/animated-wire/</loc>
-         <lastmod>2026-01-30</lastmod>
+         <lastmod>2026-01-31</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/circuits/sims/background-grid/</loc>
-         <lastmod>2026-01-30</lastmod>
+         <lastmod>2026-01-31</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/circuits/sims/background-grid/TODO/</loc>
-         <lastmod>2026-01-30</lastmod>
+         <lastmod>2026-01-31</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/circuits/sims/battery/</loc>
-         <lastmod>2026-01-30</lastmod>
+         <lastmod>2026-01-31</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/circuits/sims/capacitor/</loc>
-         <lastmod>2026-01-30</lastmod>
+         <lastmod>2026-01-31</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/circuits/sims/circuit-lib/</loc>
-         <lastmod>2026-01-30</lastmod>
+         <lastmod>2026-01-31</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/circuits/sims/circuit-similarity/</loc>
-         <lastmod>2026-01-30</lastmod>
+         <lastmod>2026-01-31</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/circuits/sims/circuit-symbol-flashcards/</loc>
-         <lastmod>2026-01-30</lastmod>
+         <lastmod>2026-01-31</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/circuits/sims/current-meter/</loc>
-         <lastmod>2026-01-30</lastmod>
+         <lastmod>2026-01-31</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/circuits/sims/current-meter/TODO/</loc>
-         <lastmod>2026-01-30</lastmod>
+         <lastmod>2026-01-31</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/circuits/sims/dc-circuit/</loc>
-         <lastmod>2026-01-30</lastmod>
+         <lastmod>2026-01-31</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/circuits/sims/dc-circuit/TODO/</loc>
-         <lastmod>2026-01-30</lastmod>
+         <lastmod>2026-01-31</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/circuits/sims/dc-circuit/circuits-v2/</loc>
-         <lastmod>2026-01-30</lastmod>
+         <lastmod>2026-01-31</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/circuits/sims/diode/</loc>
-         <lastmod>2026-01-30</lastmod>
+         <lastmod>2026-01-31</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/circuits/sims/diode/TODO/</loc>
-         <lastmod>2026-01-30</lastmod>
+         <lastmod>2026-01-31</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/circuits/sims/falstad-to-json/TODO/</loc>
-         <lastmod>2026-01-30</lastmod>
+         <lastmod>2026-01-31</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/circuits/sims/graph-viewer/</loc>
-         <lastmod>2026-01-30</lastmod>
+         <lastmod>2026-01-31</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/circuits/sims/ground-symbols/</loc>
-         <lastmod>2026-01-30</lastmod>
+         <lastmod>2026-01-31</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/circuits/sims/inductor/</loc>
-         <lastmod>2026-01-30</lastmod>
+         <lastmod>2026-01-31</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/circuits/sims/learning-graph/</loc>
-         <lastmod>2026-01-30</lastmod>
+         <lastmod>2026-01-31</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/circuits/sims/learning-graph/TODO/</loc>
-         <lastmod>2026-01-30</lastmod>
+         <lastmod>2026-01-31</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/circuits/sims/light-bulb/</loc>
-         <lastmod>2026-01-30</lastmod>
+         <lastmod>2026-01-31</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/circuits/sims/power-triangle/</loc>
-         <lastmod>2026-01-30</lastmod>
+         <lastmod>2026-01-31</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/circuits/sims/resistor/</loc>
-         <lastmod>2026-01-30</lastmod>
+         <lastmod>2026-01-31</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/circuits/sims/switch/</loc>
-         <lastmod>2026-01-30</lastmod>
+         <lastmod>2026-01-31</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/circuits/sims/templates/</loc>
-         <lastmod>2026-01-30</lastmod>
+         <lastmod>2026-01-31</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/circuits/sims/water-flow-analogy/</loc>
-         <lastmod>2026-01-30</lastmod>
+         <lastmod>2026-01-31</lastmod>
     </url>
     <url>
          <loc>https://dmccreary.github.io/circuits/sims/wire/</loc>
-         <lastmod>2026-01-30</lastmod>
+         <lastmod>2026-01-31</lastmod>
     </url>
 </urlset>
