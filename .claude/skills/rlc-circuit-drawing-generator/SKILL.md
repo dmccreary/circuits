@@ -30,23 +30,24 @@ Users can describe circuits in natural language:
 
 ## Layout Convention
 
-All circuits follow this standard layout:
+**Preferred layout**: Vertical component arrangement on the right side.
 
 ```
-    ┌────[R₁]────[L₁]────[C₁]────┐
-    │                             │
-   (+)                            │
-  (SRC)                           │
-   (-)                            │
-    │                             │
-    └─────────────⏚──────────────┘
-                (GND)
+    ┌───────────────────┐
+    │                   │
+   (+)                [R₁]
+  (SRC)                 │
+   (-)                [L₁]
+    │                   │
+    └────────⏚────────[C₁]
+           (GND)        │
+                        │
 ```
 
 - **Power source**: Vertical on left side, positive terminal on top
-- **Components**: Arranged to the right of the source
+- **Components**: Arranged vertically on the right side using `.down()`
 - **Ground**: Reference point on the return path (bottom)
-- **Labels**: Include component designators and values (R₁=10Ω)
+- **Labels**: Include component designators and values (R₁  10kΩ) - use default positioning
 
 ## Schemdraw Code Generation
 
@@ -54,7 +55,7 @@ Use the bundled references for syntax:
 - `references/schemdraw-guide.md` - Component elements and methods
 - `references/circuit-patterns.md` - Common topology templates
 
-### Basic Structure
+### Basic Structure (Vertical Layout - Preferred)
 
 **Important**: The ground must be connected to the source negative terminal to form a complete circuit.
 
@@ -68,18 +69,18 @@ with schemdraw.Drawing() as d:
     d.config(unit=3, fontsize=12)
 
     # Start with power source (vertical, positive up)
-    # Store reference to access anchors later
     source = d.add(elm.SourceV().up().label('V₁\n12V'))
 
-    # Top rail with components - labels use default positioning
-    d += elm.Line().right().length(0.5)
-    d += elm.Resistor().right().label('R₁  100Ω')
-    d += elm.Inductor().right().label('L₁  10mH')
-    d += elm.Capacitor().right().label('C₁  1μF')
-    d += elm.Line().right().length(0.5)
+    # Top rail to the right
+    d += elm.Line().right().length(5).at(source.end)
+
+    # Components arranged vertically using .down()
+    d += elm.Resistor().down().label('R₁  100Ω')
+    d += elm.Inductor().down().label('L₁  10mH')
+    d += elm.Capacitor().down().label('C₁  1μF')
 
     # Return path with ground
-    d += elm.Line().down().length(3)
+    d += elm.Line().left().length(3)
     d += elm.Ground()
 
     # Connect back to source negative terminal

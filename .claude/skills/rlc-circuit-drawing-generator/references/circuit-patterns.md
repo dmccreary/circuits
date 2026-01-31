@@ -3,21 +3,22 @@
 Common circuit patterns and their Schemdraw implementations.
 
 **Important**:
+- **Preferred layout**: Vertical component arrangement on the right side using `.down()`
 - The ground symbol must be connected to the source negative terminal to form a complete circuit.
 - Use `.label('text')` without `loc` parameter - Schemdraw's default positioning handles label placement intelligently.
 
-## Pattern 1: Simple Single-Component Circuit
+## Pattern 1: Simple Single-Component Circuit (Vertical - Preferred)
 
 A voltage source with one component (resistor, capacitor, or inductor).
 
 ```
-    ┌────[R₁]────┐
-    │            │
-   (+)           │
-  (V₁)           │
-   (-)           │
-    │            │
-    └─────⏚─────┘
+    ┌──────────────┐
+    │              │
+   (+)           [R₁]
+  (V₁)             │
+   (-)             │
+    │              │
+    └──────⏚──────┘
 ```
 
 ```python
@@ -30,13 +31,14 @@ with schemdraw.Drawing() as d:
     # Voltage source (left side, vertical)
     source = d.add(elm.SourceV().up().label('V₁\n12V'))
 
-    # Top component
-    d += elm.Line().right().length(0.5)
-    d += elm.Resistor().right().label('R₁\n1kΩ')
-    d += elm.Line().right().length(0.5)
+    # Top rail to the right
+    d += elm.Line().right().length(5).at(source.end)
+
+    # Component vertical on right side
+    d += elm.Resistor().down().label('R₁  1kΩ')
 
     # Return path
-    d += elm.Line().down().length(3)
+    d += elm.Line().left().length(3)
     d += elm.Ground()
     d += elm.Line().left().tox(source.start)
     d += elm.Line().up().toy(source.start)  # Connect to source negative
@@ -44,18 +46,18 @@ with schemdraw.Drawing() as d:
     d.save('simple_resistor.svg')
 ```
 
-## Pattern 2: Series RC Circuit
+## Pattern 2: Series RC Circuit (Vertical - Preferred)
 
 Resistor and capacitor in series.
 
 ```
-    ┌────[R₁]────[C₁]────┐
-    │                     │
-   (+)                    │
-  (V₁)                    │
-   (-)                    │
-    │                     │
-    └─────────⏚──────────┘
+    ┌──────────────┐
+    │              │
+   (+)           [R₁]
+  (V₁)             │
+   (-)           [C₁]
+    │              │
+    └──────⏚──────┘
 ```
 
 ```python
@@ -66,11 +68,10 @@ with schemdraw.Drawing() as d:
     d.config(unit=3, fontsize=12)
 
     source = d.add(elm.SourceV().up().label('V₁\n12V'))
-    d += elm.Line().right().length(0.5)
-    d += elm.Resistor().right().label('R₁\n10kΩ')
-    d += elm.Capacitor().right().label('C₁\n100nF')
-    d += elm.Line().right().length(0.5)
-    d += elm.Line().down().length(3)
+    d += elm.Line().right().length(5).at(source.end)
+    d += elm.Resistor().down().label('R₁  10kΩ')
+    d += elm.Capacitor().down().label('C₁  100nF')
+    d += elm.Line().left().length(3)
     d += elm.Ground()
     d += elm.Line().left().tox(source.start)
     d += elm.Line().up().toy(source.start)  # Connect to source negative
@@ -78,18 +79,18 @@ with schemdraw.Drawing() as d:
     d.save('rc_series.svg')
 ```
 
-## Pattern 3: Series RL Circuit
+## Pattern 3: Series RL Circuit (Vertical - Preferred)
 
 Resistor and inductor in series.
 
 ```
-    ┌────[R₁]────[L₁]────┐
-    │                     │
-   (+)                    │
-  (V₁)                    │
-   (-)                    │
-    │                     │
-    └─────────⏚──────────┘
+    ┌──────────────┐
+    │              │
+   (+)           [R₁]
+  (V₁)             │
+   (-)           [L₁]
+    │              │
+    └──────⏚──────┘
 ```
 
 ```python
@@ -100,11 +101,10 @@ with schemdraw.Drawing() as d:
     d.config(unit=3, fontsize=12)
 
     source = d.add(elm.SourceV().up().label('V₁\n12V'))
-    d += elm.Line().right().length(0.5)
-    d += elm.Resistor().right().label('R₁\n100Ω')
-    d += elm.Inductor().right().label('L₁\n10mH')
-    d += elm.Line().right().length(0.5)
-    d += elm.Line().down().length(3)
+    d += elm.Line().right().length(5).at(source.end)
+    d += elm.Resistor().down().label('R₁  100Ω')
+    d += elm.Inductor().down().label('L₁  10mH')
+    d += elm.Line().left().length(3)
     d += elm.Ground()
     d += elm.Line().left().tox(source.start)
     d += elm.Line().up().toy(source.start)  # Connect to source negative
@@ -112,18 +112,20 @@ with schemdraw.Drawing() as d:
     d.save('rl_series.svg')
 ```
 
-## Pattern 4: Series RLC Circuit
+## Pattern 4: Series RLC Circuit (Vertical - Preferred)
 
 Full RLC series circuit - the fundamental resonant circuit.
 
 ```
-    ┌────[R₁]────[L₁]────[C₁]────┐
-    │                             │
-   (+)                            │
-  (V₁)                            │
-   (-)                            │
-    │                             │
-    └─────────────⏚──────────────┘
+    ┌──────────────┐
+    │              │
+   (+)           [R₁]
+  (V₁)             │
+   (-)           [L₁]
+    │              │
+    │            [C₁]
+    │              │
+    └──────⏚──────┘
 ```
 
 ```python
@@ -134,12 +136,11 @@ with schemdraw.Drawing() as d:
     d.config(unit=3, fontsize=12)
 
     source = d.add(elm.SourceV().up().label('V₁\n12V'))
-    d += elm.Line().right().length(0.5)
-    d += elm.Resistor().right().label('R₁\n100Ω')
-    d += elm.Inductor().right().label('L₁\n10mH')
-    d += elm.Capacitor().right().label('C₁\n1μF')
-    d += elm.Line().right().length(0.5)
-    d += elm.Line().down().length(3)
+    d += elm.Line().right().length(5).at(source.end)
+    d += elm.Resistor().down().label('R₁  100Ω')
+    d += elm.Inductor().down().label('L₁  10mH')
+    d += elm.Capacitor().down().label('C₁  1μF')
+    d += elm.Line().left().length(3)
     d += elm.Ground()
     d += elm.Line().left().tox(source.start)
     d += elm.Line().up().toy(source.start)  # Connect to source negative
@@ -333,12 +334,13 @@ with schemdraw.Drawing() as d:
 
 ## Tips for Clean Layouts
 
-1. **Default label positioning**: Use `.label('text')` without `loc` parameter - Schemdraw automatically positions labels based on element orientation
-2. **Consistent spacing**: Use `length(0.5)` for short connecting wires
-3. **Vertical source**: Always place voltage source vertically on the left
-4. **Ground placement**: Put ground on the return path (bottom)
-5. **Complete circuit**: Always connect the return path back to the source negative terminal using `.tox()` and `.toy()`
-6. **Label formatting**: Use spaces (`R₁  10kΩ`) or newlines (`\n`) to separate name from value
-7. **Unit scaling**: Use `d.config(unit=3)` for good proportions
-8. **Push/Pop**: Use for parallel branches to return to junction points
-9. **Store source reference**: Use `source = d.add(...)` to reference anchors later
+1. **Vertical component layout (preferred)**: Arrange components vertically on the right side using `.down()` - this produces cleaner diagrams
+2. **Default label positioning**: Use `.label('text')` without `loc` parameter - Schemdraw automatically positions labels based on element orientation
+3. **Vertical source**: Always place voltage source vertically on the left with `.up()`
+4. **Top rail**: Use `d += elm.Line().right().length(5).at(source.end)` to connect source to components
+5. **Ground placement**: Put ground on the return path (bottom)
+6. **Complete circuit**: Always connect the return path back to the source negative terminal using `.tox()` and `.toy()`
+7. **Label formatting**: Use spaces (`R₁  10kΩ`) or newlines (`\n`) to separate name from value
+8. **Unit scaling**: Use `d.config(unit=3)` for good proportions
+9. **Push/Pop**: Use for parallel branches to return to junction points
+10. **Store source reference**: Use `source = d.add(...)` to reference anchors later

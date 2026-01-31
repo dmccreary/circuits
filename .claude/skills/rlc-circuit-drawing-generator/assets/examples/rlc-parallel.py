@@ -2,6 +2,7 @@
 RLC Parallel Circuit (Tank Circuit)
 A voltage source with R, L, and C in parallel.
 Used in radio frequency circuits and bandpass filters.
+Note: Parallel circuits use horizontal branches for clarity.
 """
 import schemdraw
 import schemdraw.elements as elm
@@ -16,7 +17,7 @@ with schemdraw.Drawing() as d:
     d += elm.Line().right().length(1)
     d += elm.Dot()
 
-    # Top branch - Resistor (use default label positioning)
+    # Top branch - Resistor
     d.push()
     d += elm.Resistor().right().label('R₁  1kΩ')
     d += elm.Dot()
