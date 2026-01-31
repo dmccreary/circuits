@@ -44,6 +44,11 @@ nav:
     - sims/circuit-similarity/index.md
     - sims/templates/index.md
 
+  - Circuits:
+    - List of Circuits: circuits/index.md
+    - SchemaDraw: circuits/schemadraw/index.md
+    - Test Table: circuits/schemadraw/test.md
+
   - Supplementary Sections:
     - Table of Contents: sections/index.md
     - Introduction: sections/01-intro/index.md
