@@ -151,8 +151,8 @@ theme:
 plugins:
   - search
   # leave these commented out until we figure out the watcher bug that prevents live rebuilds
-  #- social
-  #- social_override
+  - social
+  - social_override
 
 markdown_extensions:
   - meta
