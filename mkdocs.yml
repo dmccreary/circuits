@@ -64,6 +64,7 @@ nav:
     - Concept Taxonomy: learning-graph/concept-taxonomy.md
     - Taxonomy Distribution: learning-graph/taxonomy-distribution.md
     - Chapter Metrics: learning-graph/chapter-metrics.md
+    - FAQ Quality Report: learning-graph/faq-quality-report.md
 
   - Sample Prompts:
     - Introduction: prompts/index.md
@@ -114,9 +115,7 @@ nav:
       - Animated Wire: sims/animated-wire/index.md
       - Wire: sims/wire/index.md
 
-  - FAQ:
-    - Intro: faq/index.md
-    - Series and Parallel: faq/series-and-parallel/index.md
+  - FAQ: faq.md
 
   - Glossary: glossary.md
   - How We Built This Site: how-we-built-this-site.md

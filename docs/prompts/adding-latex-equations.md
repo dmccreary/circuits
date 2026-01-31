@@ -1,7 +1,7 @@
 # Adding LaTeX Equations
 
 We have enabled the LaTeX markdown extensions using MathJax on
-this site.  There are three ways to render eqations:
+this site.  There are three ways to render equations:
 
 1. **Inline:** simply surround the LaTeX expression with dollar signs
 2. **Centered:** surround the LeTex expression with '''\[''' and '''\]'''
