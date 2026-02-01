@@ -120,6 +120,41 @@ d.pop()
 d += elm.Capacitor().down().label('C₁  1μF')
 ```
 
+### Two-Way Audio Crossover Network
+
+A 2nd-order Butterworth crossover that splits an audio signal into high-frequency (tweeter) and low-frequency (woofer) paths at approximately 3kHz for 8Ω speakers.
+
+**Filter topology:**
+
+- **High-pass (Tweeter):** Series capacitor blocks lows, shunt inductor shorts lows to ground
+- **Low-pass (Woofer):** Series inductor blocks highs, shunt capacitor shorts highs to ground
+
+![Audio Crossover Network](./audio-crossover.svg)
+
+```python
+# High-pass path (to Tweeter)
+d += elm.Line().up().length(2)
+d += elm.Capacitor().right().label('C₁  4.7μF')  # Series C blocks lows
+d += elm.Dot()
+d.push()
+d += elm.Inductor().down().label('L₁\n0.3mH')   # Shunt L shorts lows
+d += elm.Line().down().toy(source.start)
+d.pop()
+d += elm.Line().right().length(2)
+d += elm.Resistor().down().label('Tweeter\n8Ω')
+
+# Low-pass path (to Woofer)
+d += elm.Line().down().length(2)
+d += elm.Inductor().right().label('L₂  0.6mH')  # Series L blocks highs
+d += elm.Dot()
+d.push()
+d += elm.Capacitor().down().label('C₂\n4.7μF')  # Shunt C shorts highs
+d += elm.Line().down().toy(source.start)
+d.pop()
+d += elm.Line().right().length(2)
+d += elm.Resistor().down().label('Woofer\n8Ω')
+```
+
 ## Components Reference
 
 | Component | Schemdraw Element | Symbol |
