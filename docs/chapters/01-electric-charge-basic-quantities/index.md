@@ -36,8 +36,6 @@ This chapter covers the following 15 concepts from the learning graph:
 
 This chapter assumes only the prerequisites listed in the [course description](../../course-description.md). Students should have completed introductory calculus and basic algebra including complex number operations.
 
----
-
 ## Welcome to Your New Superpower
 
 Congratulations! You're about to acquire a superpower that most people will never have. No, you won't be able to fly or read minds (sorry), but you *will* be able to look at any electronic device and understand *how it actually works*. That smartphone in your pocket? You'll know what's happening inside. That amplifier pushing sound through your speakers? You'll understand why it does what it does.
