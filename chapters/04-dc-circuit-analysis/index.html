@@ -21,8 +21,11 @@
         <link rel="next" href="../05-passive-components/">
       
       
+        
+      
+      
       <link rel="icon" href="../../img/favicon.ico">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.43">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
     
     
       
@@ -30,10 +33,10 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.0253249f.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.618322db.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
       
       
 
@@ -72,34 +75,20 @@
 
     
     
-      
-        <meta  property="og:type"  content="website" >
-      
-        <meta  property="og:title"  content="DC Circuit Analysis Methods - Circuits 1" >
-      
-        <meta  property="og:description"  content="Master Thevenin, Norton, and systematic analysis techniques for simplifying complex circuits" >
-      
-        <meta  property="og:image"  content="https://dmccreary.github.io/circuits/assets/images/social/chapters/04-dc-circuit-analysis/index.png" >
-      
-        <meta  property="og:image:type"  content="image/png" >
-      
-        <meta  property="og:image:width"  content="1200" >
-      
-        <meta  property="og:image:height"  content="630" >
-      
-        <meta  property="og:url"  content="https://dmccreary.github.io/circuits/chapters/04-dc-circuit-analysis/" >
-      
-        <meta  name="twitter:card"  content="summary_large_image" >
-      
-        <meta  name="twitter:title"  content="DC Circuit Analysis Methods - Circuits 1" >
-      
-        <meta  name="twitter:description"  content="Master Thevenin, Norton, and systematic analysis techniques for simplifying complex circuits" >
-      
-        <meta  name="twitter:image"  content="https://dmccreary.github.io/circuits/assets/images/social/chapters/04-dc-circuit-analysis/index.png" >
-      
-    
-    
-  </head>
+  
+<meta property="og:type" content="website" />
+<meta property="og:title" content="DC Circuit Analysis Methods - Circuits 1" />
+<meta property="og:description" content="Master Thevenin, Norton, and systematic analysis techniques for simplifying complex circuits" />
+<meta property="og:image" content="https://dmccreary.github.io/circuits/assets/images/social/chapters/04-dc-circuit-analysis/index.png" />
+<meta property="og:image:type" content="image/png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:url" content="https://dmccreary.github.io/circuits/chapters/04-dc-circuit-analysis/" />
+<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:title" content="DC Circuit Analysis Methods - Circuits 1" />
+<meta property="twitter:description" content="Master Thevenin, Norton, and systematic analysis techniques for simplifying complex circuits" />
+<meta property="twitter:image" content="https://dmccreary.github.io/circuits/assets/images/social/chapters/04-dc-circuit-analysis/index.png" />
+</head>
   
   
     
@@ -163,11 +152,13 @@
     
     
     
-      <label class="md-header__button md-icon" for="__search">
-        
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
-      </label>
-      <div class="md-search" data-md-component="search" role="dialog">
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
   <label class="md-search__overlay" for="__search"></label>
   <div class="md-search__inner" role="search">
     <form class="md-search__form" name="search">
@@ -199,13 +190,14 @@
     </div>
   </div>
 </div>
+      
     
     
       <div class="md-header__source">
         <a href="https://github.com/dmccreary/circuits" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
   </div>
   <div class="md-source__repository">
     GitHub Repo
@@ -250,7 +242,7 @@
       <a href="https://github.com/dmccreary/circuits" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
   </div>
   <div class="md-source__repository">
     GitHub Repo
@@ -270,9 +262,16 @@
       <a href="../.." class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
+    
+  
     Home
+  
+
+    
   </span>
+  
   
 
       </a>
@@ -290,9 +289,16 @@
       <a href="../../about/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
+    
+  
     About This Course
+  
+
+    
   </span>
+  
   
 
       </a>
@@ -310,9 +316,16 @@
       <a href="../../course-description/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
+    
+  
     Course Description
+  
+
+    
   </span>
+  
   
 
       </a>
@@ -336,69 +349,38 @@
         
       
         
-          
+      
         
       
         
-          
+      
         
       
         
-          
+      
         
       
         
-          
+      
         
       
         
-          
+      
         
       
         
-          
+      
         
       
         
-          
+      
         
       
         
-          
-        
       
         
-          
-        
       
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
+    
     
     
     
@@ -411,14 +393,20 @@
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
         
           
-          
           <div class="md-nav__link md-nav__container">
             <a href="../" class="md-nav__link ">
               
   
+  
   <span class="md-ellipsis">
+    
+  
     Chapters
+  
+
+    
   </span>
+  
   
 
             </a>
@@ -433,7 +421,11 @@
         <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_4">
             <span class="md-nav__icon md-icon"></span>
-            Chapters
+            
+  
+    Chapters
+  
+
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
             
@@ -449,9 +441,16 @@
       <a href="../01-electric-charge-basic-quantities/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
+    
+  
     1. Electric Charge and Quantities
+  
+
+    
   </span>
+  
   
 
       </a>
@@ -470,9 +469,16 @@
       <a href="../02-ohms-law-basic-configurations/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
+    
+  
     2. Ohm's Law and Configurations
+  
+
+    
   </span>
+  
   
 
       </a>
@@ -491,9 +497,16 @@
       <a href="../03-kirchhoffs-laws-topology/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
+    
+  
     3. Kirchhoff's Laws and Topology
+  
+
+    
   </span>
+  
   
 
       </a>
@@ -521,9 +534,16 @@
         <label class="md-nav__link md-nav__link--active" for="__toc">
           
   
+  
   <span class="md-ellipsis">
+    
+  
     4. DC Circuit Analysis
+  
+
+    
   </span>
+  
   
 
           <span class="md-nav__icon md-icon"></span>
@@ -532,9 +552,16 @@
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
+  
   <span class="md-ellipsis">
+    
+  
     4. DC Circuit Analysis
+  
+
+    
   </span>
+  
   
 
       </a>
@@ -557,7 +584,9 @@
         <li class="md-nav__item">
   <a href="#summary" class="md-nav__link">
     <span class="md-ellipsis">
-      Summary
+      
+        Summary
+      
     </span>
   </a>
   
@@ -566,7 +595,9 @@
         <li class="md-nav__item">
   <a href="#concepts-covered" class="md-nav__link">
     <span class="md-ellipsis">
-      Concepts Covered
+      
+        Concepts Covered
+      
     </span>
   </a>
   
@@ -575,7 +606,9 @@
         <li class="md-nav__item">
   <a href="#prerequisites" class="md-nav__link">
     <span class="md-ellipsis">
-      Prerequisites
+      
+        Prerequisites
+      
     </span>
   </a>
   
@@ -584,7 +617,9 @@
         <li class="md-nav__item">
   <a href="#introduction-the-circuit-whisperers-toolkit" class="md-nav__link">
     <span class="md-ellipsis">
-      Introduction: The Circuit Whisperer's Toolkit
+      
+        Introduction: The Circuit Whisperer's Toolkit
+      
     </span>
   </a>
   
@@ -593,7 +628,9 @@
         <li class="md-nav__item">
   <a href="#nodal-analysis-every-node-tells-a-story" class="md-nav__link">
     <span class="md-ellipsis">
-      Nodal Analysis: Every Node Tells a Story
+      
+        Nodal Analysis: Every Node Tells a Story
+      
     </span>
   </a>
   
@@ -603,7 +640,9 @@
           <li class="md-nav__item">
   <a href="#the-nodal-analysis-recipe" class="md-nav__link">
     <span class="md-ellipsis">
-      The Nodal Analysis Recipe
+      
+        The Nodal Analysis Recipe
+      
     </span>
   </a>
   
@@ -613,7 +652,9 @@
           <li class="md-nav__item">
   <a href="#diagram-nodal-analysis-step-by-step" class="md-nav__link">
     <span class="md-ellipsis">
-      Diagram: Nodal Analysis Step-by-Step
+      
+        Diagram: Nodal Analysis Step-by-Step
+      
     </span>
   </a>
   
@@ -627,7 +668,9 @@
           <li class="md-nav__item">
   <a href="#setting-up-the-kcl-equations" class="md-nav__link">
     <span class="md-ellipsis">
-      Setting Up the KCL Equations
+      
+        Setting Up the KCL Equations
+      
     </span>
   </a>
   
@@ -637,7 +680,9 @@
           <li class="md-nav__item">
   <a href="#kcl-at-a-node" class="md-nav__link">
     <span class="md-ellipsis">
-      KCL at a Node
+      
+        KCL at a Node
+      
     </span>
   </a>
   
@@ -651,7 +696,9 @@
           <li class="md-nav__item">
   <a href="#nodal-analysis-with-voltage-sources" class="md-nav__link">
     <span class="md-ellipsis">
-      Nodal Analysis with Voltage Sources
+      
+        Nodal Analysis with Voltage Sources
+      
     </span>
   </a>
   
@@ -665,7 +712,9 @@
         <li class="md-nav__item">
   <a href="#mesh-analysis-going-around-in-circles-on-purpose" class="md-nav__link">
     <span class="md-ellipsis">
-      Mesh Analysis: Going Around in Circles (On Purpose)
+      
+        Mesh Analysis: Going Around in Circles (On Purpose)
+      
     </span>
   </a>
   
@@ -675,7 +724,9 @@
           <li class="md-nav__item">
   <a href="#the-mesh-analysis-recipe" class="md-nav__link">
     <span class="md-ellipsis">
-      The Mesh Analysis Recipe
+      
+        The Mesh Analysis Recipe
+      
     </span>
   </a>
   
@@ -685,7 +736,9 @@
           <li class="md-nav__item">
   <a href="#diagram-mesh-analysis-visualization" class="md-nav__link">
     <span class="md-ellipsis">
-      Diagram: Mesh Analysis Visualization
+      
+        Diagram: Mesh Analysis Visualization
+      
     </span>
   </a>
   
@@ -699,7 +752,9 @@
           <li class="md-nav__item">
   <a href="#nodal-vs-mesh-when-to-use-which" class="md-nav__link">
     <span class="md-ellipsis">
-      Nodal vs. Mesh: When to Use Which?
+      
+        Nodal vs. Mesh: When to Use Which?
+      
     </span>
   </a>
   
@@ -713,17 +768,21 @@
         <li class="md-nav__item">
   <a href="#thevenins-theorem-the-great-simplifier" class="md-nav__link">
     <span class="md-ellipsis">
-      Thevenin's Theorem: The Great Simplifier
+      
+        Thevenin's Theorem: The Great Simplifier
+      
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Thevenin's Theorem: The Great Simplifier">
+    <nav class="md-nav" aria-label="Thevenin&#39;s Theorem: The Great Simplifier">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
   <a href="#thevenin-equivalent-circuit" class="md-nav__link">
     <span class="md-ellipsis">
-      Thevenin Equivalent Circuit
+      
+        Thevenin Equivalent Circuit
+      
     </span>
   </a>
   
@@ -732,7 +791,9 @@
           <li class="md-nav__item">
   <a href="#diagram-thevenin-equivalent-concept" class="md-nav__link">
     <span class="md-ellipsis">
-      Diagram: Thevenin Equivalent Concept
+      
+        Diagram: Thevenin Equivalent Concept
+      
     </span>
   </a>
   
@@ -741,7 +802,9 @@
           <li class="md-nav__item">
   <a href="#finding-the-thevenin-equivalent" class="md-nav__link">
     <span class="md-ellipsis">
-      Finding the Thevenin Equivalent
+      
+        Finding the Thevenin Equivalent
+      
     </span>
   </a>
   
@@ -751,7 +814,9 @@
           <li class="md-nav__item">
   <a href="#diagram-thevenin-step-by-step-solver" class="md-nav__link">
     <span class="md-ellipsis">
-      Diagram: Thevenin Step-by-Step Solver
+      
+        Diagram: Thevenin Step-by-Step Solver
+      
     </span>
   </a>
   
@@ -770,17 +835,21 @@
         <li class="md-nav__item">
   <a href="#nortons-theorem-thevenins-alter-ego" class="md-nav__link">
     <span class="md-ellipsis">
-      Norton's Theorem: Thevenin's Alter Ego
+      
+        Norton's Theorem: Thevenin's Alter Ego
+      
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Norton's Theorem: Thevenin's Alter Ego">
+    <nav class="md-nav" aria-label="Norton&#39;s Theorem: Thevenin&#39;s Alter Ego">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
   <a href="#norton-equivalent-circuit" class="md-nav__link">
     <span class="md-ellipsis">
-      Norton Equivalent Circuit
+      
+        Norton Equivalent Circuit
+      
     </span>
   </a>
   
@@ -789,7 +858,9 @@
           <li class="md-nav__item">
   <a href="#thevenin-norton-relationship" class="md-nav__link">
     <span class="md-ellipsis">
-      Thevenin-Norton Relationship
+      
+        Thevenin-Norton Relationship
+      
     </span>
   </a>
   
@@ -798,7 +869,9 @@
           <li class="md-nav__item">
   <a href="#diagram-thevenin-norton-duality" class="md-nav__link">
     <span class="md-ellipsis">
-      Diagram: Thevenin-Norton Duality
+      
+        Diagram: Thevenin-Norton Duality
+      
     </span>
   </a>
   
@@ -812,7 +885,9 @@
         <li class="md-nav__item">
   <a href="#source-transformation-the-quick-conversion" class="md-nav__link">
     <span class="md-ellipsis">
-      Source Transformation: The Quick Conversion
+      
+        Source Transformation: The Quick Conversion
+      
     </span>
   </a>
   
@@ -822,7 +897,9 @@
           <li class="md-nav__item">
   <a href="#diagram-source-transformation-practice" class="md-nav__link">
     <span class="md-ellipsis">
-      Diagram: Source Transformation Practice
+      
+        Diagram: Source Transformation Practice
+      
     </span>
   </a>
   
@@ -836,7 +913,9 @@
         <li class="md-nav__item">
   <a href="#maximum-power-transfer-getting-the-most-bang-for-your-buck" class="md-nav__link">
     <span class="md-ellipsis">
-      Maximum Power Transfer: Getting the Most Bang for Your Buck
+      
+        Maximum Power Transfer: Getting the Most Bang for Your Buck
+      
     </span>
   </a>
   
@@ -846,7 +925,9 @@
           <li class="md-nav__item">
   <a href="#maximum-power-transfer-theorem" class="md-nav__link">
     <span class="md-ellipsis">
-      Maximum Power Transfer Theorem
+      
+        Maximum Power Transfer Theorem
+      
     </span>
   </a>
   
@@ -855,7 +936,9 @@
           <li class="md-nav__item">
   <a href="#maximum-power-formula" class="md-nav__link">
     <span class="md-ellipsis">
-      Maximum Power Formula
+      
+        Maximum Power Formula
+      
     </span>
   </a>
   
@@ -864,7 +947,9 @@
           <li class="md-nav__item">
   <a href="#diagram-maximum-power-transfer-curve" class="md-nav__link">
     <span class="md-ellipsis">
-      Diagram: Maximum Power Transfer Curve
+      
+        Diagram: Maximum Power Transfer Curve
+      
     </span>
   </a>
   
@@ -873,7 +958,9 @@
           <li class="md-nav__item">
   <a href="#when-maximum-power-transfer-matters" class="md-nav__link">
     <span class="md-ellipsis">
-      When Maximum Power Transfer Matters
+      
+        When Maximum Power Transfer Matters
+      
     </span>
   </a>
   
@@ -887,7 +974,9 @@
         <li class="md-nav__item">
   <a href="#input-and-output-resistance-what-the-world-sees" class="md-nav__link">
     <span class="md-ellipsis">
-      Input and Output Resistance: What the World Sees
+      
+        Input and Output Resistance: What the World Sees
+      
     </span>
   </a>
   
@@ -897,7 +986,9 @@
           <li class="md-nav__item">
   <a href="#output-resistance" class="md-nav__link">
     <span class="md-ellipsis">
-      Output Resistance
+      
+        Output Resistance
+      
     </span>
   </a>
   
@@ -907,7 +998,9 @@
           <li class="md-nav__item">
   <a href="#output-resistance_1" class="md-nav__link">
     <span class="md-ellipsis">
-      Output Resistance
+      
+        Output Resistance
+      
     </span>
   </a>
   
@@ -921,7 +1014,9 @@
           <li class="md-nav__item">
   <a href="#input-resistance" class="md-nav__link">
     <span class="md-ellipsis">
-      Input Resistance
+      
+        Input Resistance
+      
     </span>
   </a>
   
@@ -931,7 +1026,9 @@
           <li class="md-nav__item">
   <a href="#input-resistance_1" class="md-nav__link">
     <span class="md-ellipsis">
-      Input Resistance
+      
+        Input Resistance
+      
     </span>
   </a>
   
@@ -940,7 +1037,9 @@
           <li class="md-nav__item">
   <a href="#diagram-input-and-output-resistance" class="md-nav__link">
     <span class="md-ellipsis">
-      Diagram: Input and Output Resistance
+      
+        Diagram: Input and Output Resistance
+      
     </span>
   </a>
   
@@ -959,7 +1058,9 @@
         <li class="md-nav__item">
   <a href="#the-loading-effect-when-circuits-misbehave" class="md-nav__link">
     <span class="md-ellipsis">
-      The Loading Effect: When Circuits Misbehave
+      
+        The Loading Effect: When Circuits Misbehave
+      
     </span>
   </a>
   
@@ -969,7 +1070,9 @@
           <li class="md-nav__item">
   <a href="#minimizing-loading" class="md-nav__link">
     <span class="md-ellipsis">
-      Minimizing Loading
+      
+        Minimizing Loading
+      
     </span>
   </a>
   
@@ -979,7 +1082,9 @@
           <li class="md-nav__item">
   <a href="#diagram-loading-effect-demonstration" class="md-nav__link">
     <span class="md-ellipsis">
-      Diagram: Loading Effect Demonstration
+      
+        Diagram: Loading Effect Demonstration
+      
     </span>
   </a>
   
@@ -998,7 +1103,9 @@
         <li class="md-nav__item">
   <a href="#two-port-networks-the-black-box-view" class="md-nav__link">
     <span class="md-ellipsis">
-      Two-Port Networks: The Black Box View
+      
+        Two-Port Networks: The Black Box View
+      
     </span>
   </a>
   
@@ -1008,7 +1115,9 @@
           <li class="md-nav__item">
   <a href="#two-port-parameters" class="md-nav__link">
     <span class="md-ellipsis">
-      Two-Port Parameters
+      
+        Two-Port Parameters
+      
     </span>
   </a>
   
@@ -1018,7 +1127,9 @@
           <li class="md-nav__item">
   <a href="#two-port-impedance-parameters" class="md-nav__link">
     <span class="md-ellipsis">
-      Two-Port Impedance Parameters
+      
+        Two-Port Impedance Parameters
+      
     </span>
   </a>
   
@@ -1027,7 +1138,9 @@
           <li class="md-nav__item">
   <a href="#diagram-two-port-network-concept" class="md-nav__link">
     <span class="md-ellipsis">
-      Diagram: Two-Port Network Concept
+      
+        Diagram: Two-Port Network Concept
+      
     </span>
   </a>
   
@@ -1046,7 +1159,9 @@
         <li class="md-nav__item">
   <a href="#introduction-to-reactive-components" class="md-nav__link">
     <span class="md-ellipsis">
-      Introduction to Reactive Components
+      
+        Introduction to Reactive Components
+      
     </span>
   </a>
   
@@ -1056,7 +1171,9 @@
           <li class="md-nav__item">
   <a href="#the-capacitor-storing-charge" class="md-nav__link">
     <span class="md-ellipsis">
-      The Capacitor: Storing Charge
+      
+        The Capacitor: Storing Charge
+      
     </span>
   </a>
   
@@ -1066,7 +1183,9 @@
           <li class="md-nav__item">
   <a href="#capacitance" class="md-nav__link">
     <span class="md-ellipsis">
-      Capacitance
+      
+        Capacitance
+      
     </span>
   </a>
   
@@ -1075,7 +1194,9 @@
           <li class="md-nav__item">
   <a href="#diagram-capacitor-construction-and-symbol" class="md-nav__link">
     <span class="md-ellipsis">
-      Diagram: Capacitor Construction and Symbol
+      
+        Diagram: Capacitor Construction and Symbol
+      
     </span>
   </a>
   
@@ -1089,7 +1210,9 @@
           <li class="md-nav__item">
   <a href="#the-inductor-storing-current" class="md-nav__link">
     <span class="md-ellipsis">
-      The Inductor: Storing Current
+      
+        The Inductor: Storing Current
+      
     </span>
   </a>
   
@@ -1099,7 +1222,9 @@
           <li class="md-nav__item">
   <a href="#inductance" class="md-nav__link">
     <span class="md-ellipsis">
-      Inductance
+      
+        Inductance
+      
     </span>
   </a>
   
@@ -1108,7 +1233,9 @@
           <li class="md-nav__item">
   <a href="#diagram-inductor-construction-and-symbol" class="md-nav__link">
     <span class="md-ellipsis">
-      Diagram: Inductor Construction and Symbol
+      
+        Diagram: Inductor Construction and Symbol
+      
     </span>
   </a>
   
@@ -1122,7 +1249,9 @@
           <li class="md-nav__item">
   <a href="#capacitors-vs-inductors-a-comparison" class="md-nav__link">
     <span class="md-ellipsis">
-      Capacitors vs. Inductors: A Comparison
+      
+        Capacitors vs. Inductors: A Comparison
+      
     </span>
   </a>
   
@@ -1136,7 +1265,9 @@
         <li class="md-nav__item">
   <a href="#practical-applications" class="md-nav__link">
     <span class="md-ellipsis">
-      Practical Applications
+      
+        Practical Applications
+      
     </span>
   </a>
   
@@ -1146,7 +1277,9 @@
           <li class="md-nav__item">
   <a href="#application-1-audio-amplifier-output-matching" class="md-nav__link">
     <span class="md-ellipsis">
-      Application 1: Audio Amplifier Output Matching
+      
+        Application 1: Audio Amplifier Output Matching
+      
     </span>
   </a>
   
@@ -1155,7 +1288,9 @@
           <li class="md-nav__item">
   <a href="#application-2-sensor-signal-conditioning" class="md-nav__link">
     <span class="md-ellipsis">
-      Application 2: Sensor Signal Conditioning
+      
+        Application 2: Sensor Signal Conditioning
+      
     </span>
   </a>
   
@@ -1164,7 +1299,9 @@
           <li class="md-nav__item">
   <a href="#application-3-battery-characterization" class="md-nav__link">
     <span class="md-ellipsis">
-      Application 3: Battery Characterization
+      
+        Application 3: Battery Characterization
+      
     </span>
   </a>
   
@@ -1178,7 +1315,9 @@
         <li class="md-nav__item">
   <a href="#summary-and-key-takeaways" class="md-nav__link">
     <span class="md-ellipsis">
-      Summary and Key Takeaways
+      
+        Summary and Key Takeaways
+      
     </span>
   </a>
   
@@ -1203,9 +1342,16 @@
       <a href="../05-passive-components/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
+    
+  
     5. Passive Components
+  
+
+    
   </span>
+  
   
 
       </a>
@@ -1224,9 +1370,16 @@
       <a href="../06-transient-analysis-rc-rl/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
+    
+  
     6. Transient Analysis RC/RL
+  
+
+    
   </span>
+  
   
 
       </a>
@@ -1245,9 +1398,16 @@
       <a href="../07-second-order-rlc-circuits/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
+    
+  
     7. Second-Order RLC Circuits
+  
+
+    
   </span>
+  
   
 
       </a>
@@ -1266,9 +1426,16 @@
       <a href="../08-ac-signals-sinusoidal/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
+    
+  
     8. AC Signals and Sinusoids
+  
+
+    
   </span>
+  
   
 
       </a>
@@ -1287,9 +1454,16 @@
       <a href="../09-phasors-complex-impedance/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
+    
+  
     9. Phasors and Impedance
+  
+
+    
   </span>
+  
   
 
       </a>
@@ -1308,9 +1482,16 @@
       <a href="../10-ac-power-analysis/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
+    
+  
     10. AC Power Analysis
+  
+
+    
   </span>
+  
   
 
       </a>
@@ -1329,9 +1510,16 @@
       <a href="../11-frequency-response-bode/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
+    
+  
     11. Frequency Response and Bode
+  
+
+    
   </span>
+  
   
 
       </a>
@@ -1350,9 +1538,16 @@
       <a href="../12-filters-resonance/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
+    
+  
     12. Filters and Resonance
+  
+
+    
   </span>
+  
   
 
       </a>
@@ -1371,9 +1566,16 @@
       <a href="../13-operational-amplifiers/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
+    
+  
     13. Operational Amplifiers
+  
+
+    
   </span>
+  
   
 
       </a>
@@ -1392,9 +1594,16 @@
       <a href="../14-signals-audio-lab/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
+    
+  
     14. Signal Analysis and Fourier
+  
+
+    
   </span>
+  
   
 
       </a>
@@ -1413,9 +1622,16 @@
       <a href="../15-audio-applications/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
+    
+  
     15. Audio Applications
+  
+
+    
   </span>
+  
   
 
       </a>
@@ -1434,9 +1650,16 @@
       <a href="../16-laboratory-techniques/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
+    
+  
     16. Laboratory Techniques
+  
+
+    
   </span>
+  
   
 
       </a>
@@ -1466,49 +1689,30 @@
         
       
         
-          
-        
       
         
-          
-        
       
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
         
       
         
       
         
-          
+      
+        
+      
         
       
         
       
         
-          
+      
         
       
         
-          
+      
         
       
+    
     
     
     
@@ -1520,14 +1724,22 @@
     <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
       
         
+  
   
   
     <a href="../../sims/" class="md-nav__link">
       
   
+  
   <span class="md-ellipsis">
+    
+  
     MicroSims
+  
+
+    
   </span>
+  
   
 
       
@@ -1555,11 +1767,10 @@
         
       
         
-          
-        
       
         
       
+    
     
     
     
@@ -1571,14 +1782,22 @@
     <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
       
         
+  
   
   
     <a href="../../circuits/" class="md-nav__link">
       
   
+  
   <span class="md-ellipsis">
+    
+  
     Circuits
+  
+
+    
   </span>
+  
   
 
       
@@ -1606,27 +1825,18 @@
         
       
         
-          
-        
       
         
-          
-        
       
-        
-          
-        
-      
-        
-          
         
       
         
       
         
-          
+      
         
       
+    
     
     
     
@@ -1638,14 +1848,22 @@
     <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
       
         
+  
   
   
     <a href="../../old-sections/" class="md-nav__link">
       
   
+  
   <span class="md-ellipsis">
+    
+  
     Supplementary Sections
+  
+
+    
   </span>
+  
   
 
       
@@ -1689,6 +1907,7 @@
     
     
     
+    
       
         
         
@@ -1697,14 +1916,22 @@
     <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
       
         
+  
   
   
     <a href="../../learning-graph/" class="md-nav__link">
       
   
+  
   <span class="md-ellipsis">
+    
+  
     Learning Graph
+  
+
+    
   </span>
+  
   
 
       
@@ -1738,7 +1965,15 @@
         
       
         
-          
+      
+        
+      
+        
+      
+        
+      
+        
+      
         
       
         
@@ -1750,25 +1985,10 @@
         
       
         
-          
-        
       
         
       
-        
-          
-        
-      
-        
-      
-        
-      
-        
-          
-        
-      
-        
-      
+    
     
     
     
@@ -1782,12 +2002,20 @@
         
   
   
+  
     <a href="../../prompts/" class="md-nav__link">
       
   
+  
   <span class="md-ellipsis">
+    
+  
     Sample Prompts
+  
+
+    
   </span>
+  
   
 
       
@@ -1811,9 +2039,16 @@
       <a href="../../faq/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
+    
+  
     FAQ
+  
+
+    
   </span>
+  
   
 
       </a>
@@ -1831,9 +2066,16 @@
       <a href="../../glossary/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
+    
+  
     Glossary
+  
+
+    
   </span>
+  
   
 
       </a>
@@ -1851,9 +2093,16 @@
       <a href="../../how-we-built-this-site/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
+    
+  
     How We Built This Site
+  
+
+    
   </span>
+  
   
 
       </a>
@@ -1871,9 +2120,16 @@
       <a href="../../references/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
+    
+  
     References
+  
+
+    
   </span>
+  
   
 
       </a>
@@ -1891,9 +2147,16 @@
       <a href="../../license/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
+    
+  
     License
+  
+
+    
   </span>
+  
   
 
       </a>
@@ -1911,9 +2174,16 @@
       <a href="../../contact/" class="md-nav__link">
         
   
+  
   <span class="md-ellipsis">
+    
+  
     Contact
+  
+
+    
   </span>
+  
   
 
       </a>
@@ -1950,7 +2220,9 @@
         <li class="md-nav__item">
   <a href="#summary" class="md-nav__link">
     <span class="md-ellipsis">
-      Summary
+      
+        Summary
+      
     </span>
   </a>
   
@@ -1959,7 +2231,9 @@
         <li class="md-nav__item">
   <a href="#concepts-covered" class="md-nav__link">
     <span class="md-ellipsis">
-      Concepts Covered
+      
+        Concepts Covered
+      
     </span>
   </a>
   
@@ -1968,7 +2242,9 @@
         <li class="md-nav__item">
   <a href="#prerequisites" class="md-nav__link">
     <span class="md-ellipsis">
-      Prerequisites
+      
+        Prerequisites
+      
     </span>
   </a>
   
@@ -1977,7 +2253,9 @@
         <li class="md-nav__item">
   <a href="#introduction-the-circuit-whisperers-toolkit" class="md-nav__link">
     <span class="md-ellipsis">
-      Introduction: The Circuit Whisperer's Toolkit
+      
+        Introduction: The Circuit Whisperer's Toolkit
+      
     </span>
   </a>
   
@@ -1986,7 +2264,9 @@
         <li class="md-nav__item">
   <a href="#nodal-analysis-every-node-tells-a-story" class="md-nav__link">
     <span class="md-ellipsis">
-      Nodal Analysis: Every Node Tells a Story
+      
+        Nodal Analysis: Every Node Tells a Story
+      
     </span>
   </a>
   
@@ -1996,7 +2276,9 @@
           <li class="md-nav__item">
   <a href="#the-nodal-analysis-recipe" class="md-nav__link">
     <span class="md-ellipsis">
-      The Nodal Analysis Recipe
+      
+        The Nodal Analysis Recipe
+      
     </span>
   </a>
   
@@ -2006,7 +2288,9 @@
           <li class="md-nav__item">
   <a href="#diagram-nodal-analysis-step-by-step" class="md-nav__link">
     <span class="md-ellipsis">
-      Diagram: Nodal Analysis Step-by-Step
+      
+        Diagram: Nodal Analysis Step-by-Step
+      
     </span>
   </a>
   
@@ -2020,7 +2304,9 @@
           <li class="md-nav__item">
   <a href="#setting-up-the-kcl-equations" class="md-nav__link">
     <span class="md-ellipsis">
-      Setting Up the KCL Equations
+      
+        Setting Up the KCL Equations
+      
     </span>
   </a>
   
@@ -2030,7 +2316,9 @@
           <li class="md-nav__item">
   <a href="#kcl-at-a-node" class="md-nav__link">
     <span class="md-ellipsis">
-      KCL at a Node
+      
+        KCL at a Node
+      
     </span>
   </a>
   
@@ -2044,7 +2332,9 @@
           <li class="md-nav__item">
   <a href="#nodal-analysis-with-voltage-sources" class="md-nav__link">
     <span class="md-ellipsis">
-      Nodal Analysis with Voltage Sources
+      
+        Nodal Analysis with Voltage Sources
+      
     </span>
   </a>
   
@@ -2058,7 +2348,9 @@
         <li class="md-nav__item">
   <a href="#mesh-analysis-going-around-in-circles-on-purpose" class="md-nav__link">
     <span class="md-ellipsis">
-      Mesh Analysis: Going Around in Circles (On Purpose)
+      
+        Mesh Analysis: Going Around in Circles (On Purpose)
+      
     </span>
   </a>
   
@@ -2068,7 +2360,9 @@
           <li class="md-nav__item">
   <a href="#the-mesh-analysis-recipe" class="md-nav__link">
     <span class="md-ellipsis">
-      The Mesh Analysis Recipe
+      
+        The Mesh Analysis Recipe
+      
     </span>
   </a>
   
@@ -2078,7 +2372,9 @@
           <li class="md-nav__item">
   <a href="#diagram-mesh-analysis-visualization" class="md-nav__link">
     <span class="md-ellipsis">
-      Diagram: Mesh Analysis Visualization
+      
+        Diagram: Mesh Analysis Visualization
+      
     </span>
   </a>
   
@@ -2092,7 +2388,9 @@
           <li class="md-nav__item">
   <a href="#nodal-vs-mesh-when-to-use-which" class="md-nav__link">
     <span class="md-ellipsis">
-      Nodal vs. Mesh: When to Use Which?
+      
+        Nodal vs. Mesh: When to Use Which?
+      
     </span>
   </a>
   
@@ -2106,17 +2404,21 @@
         <li class="md-nav__item">
   <a href="#thevenins-theorem-the-great-simplifier" class="md-nav__link">
     <span class="md-ellipsis">
-      Thevenin's Theorem: The Great Simplifier
+      
+        Thevenin's Theorem: The Great Simplifier
+      
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Thevenin's Theorem: The Great Simplifier">
+    <nav class="md-nav" aria-label="Thevenin&#39;s Theorem: The Great Simplifier">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
   <a href="#thevenin-equivalent-circuit" class="md-nav__link">
     <span class="md-ellipsis">
-      Thevenin Equivalent Circuit
+      
+        Thevenin Equivalent Circuit
+      
     </span>
   </a>
   
@@ -2125,7 +2427,9 @@
           <li class="md-nav__item">
   <a href="#diagram-thevenin-equivalent-concept" class="md-nav__link">
     <span class="md-ellipsis">
-      Diagram: Thevenin Equivalent Concept
+      
+        Diagram: Thevenin Equivalent Concept
+      
     </span>
   </a>
   
@@ -2134,7 +2438,9 @@
           <li class="md-nav__item">
   <a href="#finding-the-thevenin-equivalent" class="md-nav__link">
     <span class="md-ellipsis">
-      Finding the Thevenin Equivalent
+      
+        Finding the Thevenin Equivalent
+      
     </span>
   </a>
   
@@ -2144,7 +2450,9 @@
           <li class="md-nav__item">
   <a href="#diagram-thevenin-step-by-step-solver" class="md-nav__link">
     <span class="md-ellipsis">
-      Diagram: Thevenin Step-by-Step Solver
+      
+        Diagram: Thevenin Step-by-Step Solver
+      
     </span>
   </a>
   
@@ -2163,17 +2471,21 @@
         <li class="md-nav__item">
   <a href="#nortons-theorem-thevenins-alter-ego" class="md-nav__link">
     <span class="md-ellipsis">
-      Norton's Theorem: Thevenin's Alter Ego
+      
+        Norton's Theorem: Thevenin's Alter Ego
+      
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Norton's Theorem: Thevenin's Alter Ego">
+    <nav class="md-nav" aria-label="Norton&#39;s Theorem: Thevenin&#39;s Alter Ego">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
   <a href="#norton-equivalent-circuit" class="md-nav__link">
     <span class="md-ellipsis">
-      Norton Equivalent Circuit
+      
+        Norton Equivalent Circuit
+      
     </span>
   </a>
   
@@ -2182,7 +2494,9 @@
           <li class="md-nav__item">
   <a href="#thevenin-norton-relationship" class="md-nav__link">
     <span class="md-ellipsis">
-      Thevenin-Norton Relationship
+      
+        Thevenin-Norton Relationship
+      
     </span>
   </a>
   
@@ -2191,7 +2505,9 @@
           <li class="md-nav__item">
   <a href="#diagram-thevenin-norton-duality" class="md-nav__link">
     <span class="md-ellipsis">
-      Diagram: Thevenin-Norton Duality
+      
+        Diagram: Thevenin-Norton Duality
+      
     </span>
   </a>
   
@@ -2205,7 +2521,9 @@
         <li class="md-nav__item">
   <a href="#source-transformation-the-quick-conversion" class="md-nav__link">
     <span class="md-ellipsis">
-      Source Transformation: The Quick Conversion
+      
+        Source Transformation: The Quick Conversion
+      
     </span>
   </a>
   
@@ -2215,7 +2533,9 @@
           <li class="md-nav__item">
   <a href="#diagram-source-transformation-practice" class="md-nav__link">
     <span class="md-ellipsis">
-      Diagram: Source Transformation Practice
+      
+        Diagram: Source Transformation Practice
+      
     </span>
   </a>
   
@@ -2229,7 +2549,9 @@
         <li class="md-nav__item">
   <a href="#maximum-power-transfer-getting-the-most-bang-for-your-buck" class="md-nav__link">
     <span class="md-ellipsis">
-      Maximum Power Transfer: Getting the Most Bang for Your Buck
+      
+        Maximum Power Transfer: Getting the Most Bang for Your Buck
+      
     </span>
   </a>
   
@@ -2239,7 +2561,9 @@
           <li class="md-nav__item">
   <a href="#maximum-power-transfer-theorem" class="md-nav__link">
     <span class="md-ellipsis">
-      Maximum Power Transfer Theorem
+      
+        Maximum Power Transfer Theorem
+      
     </span>
   </a>
   
@@ -2248,7 +2572,9 @@
           <li class="md-nav__item">
   <a href="#maximum-power-formula" class="md-nav__link">
     <span class="md-ellipsis">
-      Maximum Power Formula
+      
+        Maximum Power Formula
+      
     </span>
   </a>
   
@@ -2257,7 +2583,9 @@
           <li class="md-nav__item">
   <a href="#diagram-maximum-power-transfer-curve" class="md-nav__link">
     <span class="md-ellipsis">
-      Diagram: Maximum Power Transfer Curve
+      
+        Diagram: Maximum Power Transfer Curve
+      
     </span>
   </a>
   
@@ -2266,7 +2594,9 @@
           <li class="md-nav__item">
   <a href="#when-maximum-power-transfer-matters" class="md-nav__link">
     <span class="md-ellipsis">
-      When Maximum Power Transfer Matters
+      
+        When Maximum Power Transfer Matters
+      
     </span>
   </a>
   
@@ -2280,7 +2610,9 @@
         <li class="md-nav__item">
   <a href="#input-and-output-resistance-what-the-world-sees" class="md-nav__link">
     <span class="md-ellipsis">
-      Input and Output Resistance: What the World Sees
+      
+        Input and Output Resistance: What the World Sees
+      
     </span>
   </a>
   
@@ -2290,7 +2622,9 @@
           <li class="md-nav__item">
   <a href="#output-resistance" class="md-nav__link">
     <span class="md-ellipsis">
-      Output Resistance
+      
+        Output Resistance
+      
     </span>
   </a>
   
@@ -2300,7 +2634,9 @@
           <li class="md-nav__item">
   <a href="#output-resistance_1" class="md-nav__link">
     <span class="md-ellipsis">
-      Output Resistance
+      
+        Output Resistance
+      
     </span>
   </a>
   
@@ -2314,7 +2650,9 @@
           <li class="md-nav__item">
   <a href="#input-resistance" class="md-nav__link">
     <span class="md-ellipsis">
-      Input Resistance
+      
+        Input Resistance
+      
     </span>
   </a>
   
@@ -2324,7 +2662,9 @@
           <li class="md-nav__item">
   <a href="#input-resistance_1" class="md-nav__link">
     <span class="md-ellipsis">
-      Input Resistance
+      
+        Input Resistance
+      
     </span>
   </a>
   
@@ -2333,7 +2673,9 @@
           <li class="md-nav__item">
   <a href="#diagram-input-and-output-resistance" class="md-nav__link">
     <span class="md-ellipsis">
-      Diagram: Input and Output Resistance
+      
+        Diagram: Input and Output Resistance
+      
     </span>
   </a>
   
@@ -2352,7 +2694,9 @@
         <li class="md-nav__item">
   <a href="#the-loading-effect-when-circuits-misbehave" class="md-nav__link">
     <span class="md-ellipsis">
-      The Loading Effect: When Circuits Misbehave
+      
+        The Loading Effect: When Circuits Misbehave
+      
     </span>
   </a>
   
@@ -2362,7 +2706,9 @@
           <li class="md-nav__item">
   <a href="#minimizing-loading" class="md-nav__link">
     <span class="md-ellipsis">
-      Minimizing Loading
+      
+        Minimizing Loading
+      
     </span>
   </a>
   
@@ -2372,7 +2718,9 @@
           <li class="md-nav__item">
   <a href="#diagram-loading-effect-demonstration" class="md-nav__link">
     <span class="md-ellipsis">
-      Diagram: Loading Effect Demonstration
+      
+        Diagram: Loading Effect Demonstration
+      
     </span>
   </a>
   
@@ -2391,7 +2739,9 @@
         <li class="md-nav__item">
   <a href="#two-port-networks-the-black-box-view" class="md-nav__link">
     <span class="md-ellipsis">
-      Two-Port Networks: The Black Box View
+      
+        Two-Port Networks: The Black Box View
+      
     </span>
   </a>
   
@@ -2401,7 +2751,9 @@
           <li class="md-nav__item">
   <a href="#two-port-parameters" class="md-nav__link">
     <span class="md-ellipsis">
-      Two-Port Parameters
+      
+        Two-Port Parameters
+      
     </span>
   </a>
   
@@ -2411,7 +2763,9 @@
           <li class="md-nav__item">
   <a href="#two-port-impedance-parameters" class="md-nav__link">
     <span class="md-ellipsis">
-      Two-Port Impedance Parameters
+      
+        Two-Port Impedance Parameters
+      
     </span>
   </a>
   
@@ -2420,7 +2774,9 @@
           <li class="md-nav__item">
   <a href="#diagram-two-port-network-concept" class="md-nav__link">
     <span class="md-ellipsis">
-      Diagram: Two-Port Network Concept
+      
+        Diagram: Two-Port Network Concept
+      
     </span>
   </a>
   
@@ -2439,7 +2795,9 @@
         <li class="md-nav__item">
   <a href="#introduction-to-reactive-components" class="md-nav__link">
     <span class="md-ellipsis">
-      Introduction to Reactive Components
+      
+        Introduction to Reactive Components
+      
     </span>
   </a>
   
@@ -2449,7 +2807,9 @@
           <li class="md-nav__item">
   <a href="#the-capacitor-storing-charge" class="md-nav__link">
     <span class="md-ellipsis">
-      The Capacitor: Storing Charge
+      
+        The Capacitor: Storing Charge
+      
     </span>
   </a>
   
@@ -2459,7 +2819,9 @@
           <li class="md-nav__item">
   <a href="#capacitance" class="md-nav__link">
     <span class="md-ellipsis">
-      Capacitance
+      
+        Capacitance
+      
     </span>
   </a>
   
@@ -2468,7 +2830,9 @@
           <li class="md-nav__item">
   <a href="#diagram-capacitor-construction-and-symbol" class="md-nav__link">
     <span class="md-ellipsis">
-      Diagram: Capacitor Construction and Symbol
+      
+        Diagram: Capacitor Construction and Symbol
+      
     </span>
   </a>
   
@@ -2482,7 +2846,9 @@
           <li class="md-nav__item">
   <a href="#the-inductor-storing-current" class="md-nav__link">
     <span class="md-ellipsis">
-      The Inductor: Storing Current
+      
+        The Inductor: Storing Current
+      
     </span>
   </a>
   
@@ -2492,7 +2858,9 @@
           <li class="md-nav__item">
   <a href="#inductance" class="md-nav__link">
     <span class="md-ellipsis">
-      Inductance
+      
+        Inductance
+      
     </span>
   </a>
   
@@ -2501,7 +2869,9 @@
           <li class="md-nav__item">
   <a href="#diagram-inductor-construction-and-symbol" class="md-nav__link">
     <span class="md-ellipsis">
-      Diagram: Inductor Construction and Symbol
+      
+        Diagram: Inductor Construction and Symbol
+      
     </span>
   </a>
   
@@ -2515,7 +2885,9 @@
           <li class="md-nav__item">
   <a href="#capacitors-vs-inductors-a-comparison" class="md-nav__link">
     <span class="md-ellipsis">
-      Capacitors vs. Inductors: A Comparison
+      
+        Capacitors vs. Inductors: A Comparison
+      
     </span>
   </a>
   
@@ -2529,7 +2901,9 @@
         <li class="md-nav__item">
   <a href="#practical-applications" class="md-nav__link">
     <span class="md-ellipsis">
-      Practical Applications
+      
+        Practical Applications
+      
     </span>
   </a>
   
@@ -2539,7 +2913,9 @@
           <li class="md-nav__item">
   <a href="#application-1-audio-amplifier-output-matching" class="md-nav__link">
     <span class="md-ellipsis">
-      Application 1: Audio Amplifier Output Matching
+      
+        Application 1: Audio Amplifier Output Matching
+      
     </span>
   </a>
   
@@ -2548,7 +2924,9 @@
           <li class="md-nav__item">
   <a href="#application-2-sensor-signal-conditioning" class="md-nav__link">
     <span class="md-ellipsis">
-      Application 2: Sensor Signal Conditioning
+      
+        Application 2: Sensor Signal Conditioning
+      
     </span>
   </a>
   
@@ -2557,7 +2935,9 @@
           <li class="md-nav__item">
   <a href="#application-3-battery-characterization" class="md-nav__link">
     <span class="md-ellipsis">
-      Application 3: Battery Characterization
+      
+        Application 3: Battery Characterization
+      
     </span>
   </a>
   
@@ -2571,7 +2951,9 @@
         <li class="md-nav__item">
   <a href="#summary-and-key-takeaways" class="md-nav__link">
     <span class="md-ellipsis">
-      Summary and Key Takeaways
+      
+        Summary and Key Takeaways
+      
     </span>
   </a>
   
@@ -2587,12 +2969,62 @@
           
           
             <div class="md-content" data-md-component="content">
+              
+                
+
+
+
+  
+
+
+  <nav class="md-path" aria-label="Navigation" >
+    <ol class="md-path__list">
+      
+        
+  
+  
+    <li class="md-path__item">
+      <a href="../.." class="md-path__link">
+        
+  <span class="md-ellipsis">
+    Home
+  </span>
+
+      </a>
+    </li>
+  
+
+      
+      
+        
+  
+  
+    
+    
+      <li class="md-path__item">
+        <a href="../" class="md-path__link">
+          
+  <span class="md-ellipsis">
+    Chapters
+  </span>
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ol>
+  </nav>
+
+              
               <article class="md-content__inner md-typeset">
                 
                   
 
+
   
-    <a href="https://github.com/dmccreary/circuits/blob/master/docs/chapters/04-dc-circuit-analysis/index.md" title="Edit this page" class="md-content__button md-icon">
+    <a href="https://github.com/dmccreary/circuits/blob/master/docs/chapters/04-dc-circuit-analysis/index.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
     </a>
@@ -3941,10 +4373,13 @@ Implementation: p5.js with animated magnetic field visualization
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.copy", "navigation.expand", "navigation.path", "navigation.prune", "navigation.indexes", "toc.follow", "navigation.top", "navigation.footer", "content.action.edit"], "search": "../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["content.code.copy", "navigation.expand", "navigation.path", "navigation.prune", "navigation.indexes", "toc.follow", "navigation.top", "navigation.footer", "content.action.edit"], "search": "../../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../assets/javascripts/bundle.83f73b43.min.js"></script>
+      <script src="../../assets/javascripts/bundle.e71a0d61.min.js"></script>
       
         <script src="../../js/extra.js"></script>
       
