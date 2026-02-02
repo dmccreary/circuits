@@ -166,6 +166,10 @@ markdown_extensions:
   # enable LaTeX extensions with KaTeX
   - pymdownx.arithmatex:
       generic: true
+  # enable emoji shortcodes like :rocket: :white_check_mark:
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
 
 extra_css:
   - css/extra.css
