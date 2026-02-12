@@ -262,45 +262,98 @@ function drawFlashcard() {
     let cardX = (canvasWidth - cardWidth) / 2;
     let cardY = 85;
 
-    // Card shadow
-    noStroke();
-    fill(180, 180, 180, 100);
-    rect(cardX + 4, cardY + 4, cardWidth, cardHeight, 12);
-
     let symbol = symbols[shuffledOrder[currentCard]];
 
-    // LEARN MODE: Show symbol with name underneath (no flipping)
+    // LEARN MODE: Two-column layout - symbol card on left, info panel on right
     if (currentMode === "Learn") {
+        let infoGap = 15;
+        let learnCardWidth = min(200, floor((canvasWidth - margin * 2 - infoGap) * 0.45));
+        let learnCardX = margin;
+
+        // Card shadow
+        noStroke();
+        fill(180, 180, 180, 100);
+        rect(learnCardX + 4, cardY + 4, learnCardWidth, cardHeight, 12);
+
         // Card background
         fill(255);
         stroke(150);
         strokeWeight(2);
-        rect(cardX, cardY, cardWidth, cardHeight, 12);
+        rect(learnCardX, cardY, learnCardWidth, cardHeight, 12);
 
-        // Draw symbol
-        drawSymbol(shuffledOrder[currentCard], cardX + cardWidth / 2, cardY + cardHeight / 2 - 35, 80);
+        // Draw symbol centered on card
+        drawSymbol(shuffledOrder[currentCard], learnCardX + learnCardWidth / 2, cardY + cardHeight / 2, 80);
 
-        // Show name underneath symbol
+        // Info panel on the right
+        let panelX = learnCardX + learnCardWidth + infoGap;
+        let panelWidth = canvasWidth - panelX - margin;
+
+        // Panel shadow
+        noStroke();
+        fill(180, 180, 180, 60);
+        rect(panelX + 3, cardY + 3, panelWidth, cardHeight, 10);
+
+        // Panel background
+        fill(255, 250, 240);
+        stroke(200, 180, 140);
+        strokeWeight(1.5);
+        rect(panelX, cardY, panelWidth, cardHeight, 10);
+
+        // Symbol name - calculate wrapped height for flowing layout
         fill('black');
         noStroke();
         textAlign(CENTER, TOP);
         textSize(18);
         textStyle(BOLD);
-        text(symbol.name, cardX + cardWidth / 2, cardY + cardHeight - 65);
+        let nameBoxWidth = panelWidth - 20;
+        let nameY = cardY + 25;
+        text(symbol.name, panelX + 10, nameY, nameBoxWidth);
 
-        // Category badge
+        // Measure how tall the name text is
+        let nameLineH = textLeading();
+        let words = symbol.name.split(' ');
+        let nameLines = 1;
+        let testLine = words[0];
+        for (let i = 1; i < words.length; i++) {
+            let next = testLine + ' ' + words[i];
+            if (textWidth(next) > nameBoxWidth) {
+                nameLines++;
+                testLine = words[i];
+            } else {
+                testLine = next;
+            }
+        }
+        let nameBottom = nameY + nameLines * nameLineH;
+
+        // Category badge - flows below name
+        let catY = nameBottom + 5;
         textStyle(NORMAL);
-        textSize(11);
+        textSize(12);
         fill(100, 100, 200);
-        text('[' + symbol.category + ']', cardX + cardWidth / 2, cardY + cardHeight - 40);
+        text('[' + symbol.category + ']', panelX + 10, catY, nameBoxWidth);
 
-        // Hint text
-        fill(120);
-        textSize(11);
-        text('Click card for description', cardX + cardWidth / 2, cardY + cardHeight - 20);
+        // Divider line
+        let divY = catY + 22;
+        stroke(220, 200, 170);
+        strokeWeight(1);
+        line(panelX + 20, divY, panelX + panelWidth - 20, divY);
+
+        // Description
+        let descY = divY + 10;
+        fill(60);
+        noStroke();
+        textAlign(CENTER, TOP);
+        textSize(14);
+        textStyle(NORMAL);
+        text(symbol.description, panelX + 15, descY, panelWidth - 30, cardY + cardHeight - descY - 15);
 
         return;
     }
+
+    // Card shadow (Flip/Quiz modes)
+    noStroke();
+    fill(180, 180, 180, 100);
+    rect(cardX + 4, cardY + 4, cardWidth, cardHeight, 12);
 
     // FLIP and QUIZ MODES: Use flip animation
     let scaleX = isFlipping ? abs(cos(flipProgress * PI)) : 1;
@@ -815,7 +868,7 @@ function drawControls() {
     textSize(11);
     textAlign(RIGHT, CENTER);
     if (currentMode === "Learn") {
-        text('Browse symbols with names shown', canvasWidth - 15, btnY2 + buttonHeight / 2);
+        text('Browse symbols with descriptions', canvasWidth - 15, btnY2 + buttonHeight / 2);
     } else if (currentMode === "Quiz") {
         text('Test yourself - flip to check', canvasWidth - 15, btnY2 + buttonHeight / 2);
     } else {
@@ -903,11 +956,7 @@ function mousePressed() {
 
     if (mouseX >= cardX && mouseX <= cardX + cardWidth &&
         mouseY >= cardY && mouseY <= cardY + cardHeight) {
-        if (currentMode === "Learn") {
-            // In Learn mode, clicking shows description in an alert or we can show a tooltip
-            // For now, let's show it as a temporary flip to see description
-            showLearnDescription();
-        } else {
+        if (currentMode !== "Learn") {
             flipCard();
         }
     }
@@ -944,9 +993,7 @@ function isOverButton(x, y, w, h) {
 
 function keyPressed() {
     if (key === ' ' || key === 'Enter') {
-        if (currentMode === "Learn") {
-            showLearnDescription();
-        } else {
+        if (currentMode !== "Learn") {
             flipCard();
         }
     } else if (keyCode === LEFT_ARROW && currentCard > 0) {
