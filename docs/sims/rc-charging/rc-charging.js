@@ -37,14 +37,16 @@ let iNow = 0;      // Current current
 // UI positions
 let sliderX, sliderWidth;
 let sliderY1, sliderY2, sliderY3;
-let buttonX, buttonY;
 
-// lineWidth is used by circuit-lib.js drawAnimatedWire
-// It's not declared with let/const in the lib, so we declare it here
-lineWidth = 3;
+// Line width used by circuit-lib.js drawAnimatedWire
+let lineWidth = 3;
 
 // Simulation speed: how many simulated seconds per real second
 let simSpeed;
+
+// DOM elements
+let vsSlider, rSlider, cSlider;
+let switchButton, resetButton;
 
 function setup() {
     drawHeight = circuitHeight + graphHeight;
@@ -55,11 +57,31 @@ function setup() {
 
     sliderX = sliderLeftMargin;
     sliderWidth = containerWidth - sliderX - 20;
-    sliderY1 = drawHeight + 18;
-    sliderY2 = drawHeight + 40;
-    sliderY3 = drawHeight + 62;
-    buttonX = 15;
-    buttonY = drawHeight + 82;
+    sliderY1 = drawHeight + 33;
+    sliderY2 = drawHeight + 57;
+    sliderY3 = drawHeight + 81;
+
+    // DOM sliders
+    vsSlider = createSlider(1, 20, vs, 1);
+    vsSlider.position(sliderLeftMargin, sliderY1);
+    vsSlider.size(sliderWidth);
+
+    rSlider = createSlider(1, 100, rVal, 1);
+    rSlider.position(sliderLeftMargin, sliderY2);
+    rSlider.size(sliderWidth);
+
+    cSlider = createSlider(1, 100, cVal, 1);
+    cSlider.position(sliderLeftMargin, sliderY3);
+    cSlider.size(sliderWidth);
+
+    // DOM buttons
+    switchButton = createButton('Close Switch');
+    switchButton.position(15, drawHeight + 8);
+    switchButton.mousePressed(toggleSwitch);
+
+    resetButton = createButton('Reset');
+    resetButton.position(130, drawHeight + 8);
+    resetButton.mousePressed(resetSimulation);
 
     recalculate();
 
@@ -68,6 +90,17 @@ function setup() {
 
 function draw() {
     background(255);
+
+    // Read slider values and recalculate if changed
+    let newVs = vsSlider.value();
+    let newRVal = rSlider.value();
+    let newCVal = cSlider.value();
+    if (newVs !== vs || newRVal !== rVal || newCVal !== cVal) {
+        vs = newVs;
+        rVal = newRVal;
+        cVal = newCVal;
+        onParameterChange();
+    }
 
     // Update simulation if switch is closed
     if (switchClosed) {
@@ -100,7 +133,7 @@ function draw() {
     line(0, circuitHeight, containerWidth, circuitHeight);
 
     drawGraphs();
-    drawControls();
+    drawControlLabels();
 }
 
 function recalculate() {
@@ -235,7 +268,7 @@ function drawCircuitDiagram() {
     let capY = cy - capH / 2;
     wireSegment(right, topY, right, capY);
 
-    // Capacitor (vertical on right side) - 7-param signature from circuit-lib.js
+    // Capacitor (vertical on right side)
     stroke(0);
     noFill();
     drawCapacitor(right - capW / 2, capY, capW, capH, lineWidth, VERTICAL, "C " + cVal + "\u00B5F");
@@ -296,7 +329,7 @@ function formatTau(tauSec) {
     }
 }
 
-// Resistor drawing without debug bounding box (circuit-lib.js drawResistor has one)
+// Resistor drawing without debug bounding box
 function drawResistorClean(x, y, rwidth, rheight, lw, orientation, label) {
     push();
     strokeWeight(lw);
@@ -521,144 +554,36 @@ function drawDashedLine(x1, y1, x2, y2, pattern, col) {
 
 // ==================== CONTROLS ====================
 
-function drawControls() {
+function drawControlLabels() {
     // Background
     fill(245);
     stroke(200);
     strokeWeight(1);
     rect(0, drawHeight, containerWidth, controlHeight);
 
-    // Slider 1: Source Voltage
-    drawCtrlSlider("Source Voltage Vs:", vs, 1, 20, sliderX, sliderY1, sliderWidth, " V");
-
-    // Slider 2: Resistance
-    drawCtrlSlider("Resistance R:", rVal, 1, 100, sliderX, sliderY2, sliderWidth, " k\u03A9");
-
-    // Slider 3: Capacitance
-    drawCtrlSlider("Capacitance C:", cVal, 1, 100, sliderX, sliderY3, sliderWidth, " \u00B5F");
-
-    // Close/Open Switch button
-    let switchLabel = switchClosed ? "Open Switch" : "Close Switch";
-    drawCtrlButton(switchLabel, buttonX, buttonY, 100, 22);
-
-    // Reset button
-    drawCtrlButton("Reset", buttonX + 110, buttonY, 60, 22);
-
-    // Tau display
-    noStroke();
-    fill(0);
-    textSize(11);
-    textAlign(RIGHT, CENTER);
-    text("\u03C4 = " + formatTau(tau) + "   I\u2080 = " + iInitial.toFixed(2) + " mA", containerWidth - 15, buttonY + 11);
-}
-
-function drawCtrlSlider(label, value, minVal, maxVal, x, y, w, suffix) {
+    // Slider labels (drawn to the left of DOM sliders)
     fill(0);
     noStroke();
     textSize(12);
     textAlign(RIGHT, CENTER);
-    text(label + " " + value + suffix, x - 10, y);
+    text("Source Voltage Vs: " + vs + " V", sliderX - 10, sliderY1 + 8);
+    text("Resistance R: " + rVal + " k\u03A9", sliderX - 10, sliderY2 + 8);
+    text("Capacitance C: " + cVal + " \u00B5F", sliderX - 10, sliderY3 + 8);
 
-    // Track
-    fill(200);
-    stroke(150);
-    strokeWeight(1);
-    rect(x, y - 4, w, 8, 4);
-
-    // Fill
-    let fillWidth = map(value, minVal, maxVal, 0, w);
-    fill(70, 130, 180);
-    noStroke();
-    rect(x, y - 4, fillWidth, 8, 4);
-
-    // Handle
-    let handleX = x + fillWidth;
-    fill(255);
-    stroke(70, 130, 180);
-    strokeWeight(2);
-    ellipse(handleX, y, 14, 14);
-}
-
-function drawCtrlButton(label, x, y, w, h) {
-    fill(70, 130, 180);
-    stroke(50, 100, 150);
-    strokeWeight(1);
-    rect(x, y, w, h, 4);
-
-    fill(255);
-    noStroke();
-    textSize(12);
-    textAlign(CENTER, CENTER);
-    text(label, x + w / 2, y + h / 2);
+    // Tau and initial current display
+    textAlign(RIGHT, CENTER);
+    text("\u03C4 = " + formatTau(tau) + "   I\u2080 = " + iInitial.toFixed(2) + " mA", containerWidth - 15, drawHeight + 95);
 }
 
 // ==================== INTERACTION ====================
 
-function mousePressed() {
-    // Slider 1: Voltage
-    if (mouseY >= sliderY1 - 10 && mouseY <= sliderY1 + 10 &&
-        mouseX >= sliderX && mouseX <= sliderX + sliderWidth) {
-        vs = round(map(mouseX, sliderX, sliderX + sliderWidth, 1, 20));
-        vs = constrain(vs, 1, 20);
-        onParameterChange();
-    }
-
-    // Slider 2: Resistance
-    if (mouseY >= sliderY2 - 10 && mouseY <= sliderY2 + 10 &&
-        mouseX >= sliderX && mouseX <= sliderX + sliderWidth) {
-        rVal = round(map(mouseX, sliderX, sliderX + sliderWidth, 1, 100));
-        rVal = constrain(rVal, 1, 100);
-        onParameterChange();
-    }
-
-    // Slider 3: Capacitance
-    if (mouseY >= sliderY3 - 10 && mouseY <= sliderY3 + 10 &&
-        mouseX >= sliderX && mouseX <= sliderX + sliderWidth) {
-        cVal = round(map(mouseX, sliderX, sliderX + sliderWidth, 1, 100));
-        cVal = constrain(cVal, 1, 100);
-        onParameterChange();
-    }
-
-    // Close/Open Switch button
-    if (mouseX >= buttonX && mouseX <= buttonX + 100 &&
-        mouseY >= buttonY && mouseY <= buttonY + 22) {
-        switchClosed = !switchClosed;
-        if (switchClosed && simTime >= 5 * tau) {
-            resetSimulation();
-            switchClosed = true;
-        }
-    }
-
-    // Reset button
-    if (mouseX >= buttonX + 110 && mouseX <= buttonX + 170 &&
-        mouseY >= buttonY && mouseY <= buttonY + 22) {
+function toggleSwitch() {
+    switchClosed = !switchClosed;
+    switchButton.html(switchClosed ? 'Open Switch' : 'Close Switch');
+    if (switchClosed && simTime >= 5 * tau) {
         resetSimulation();
-    }
-}
-
-function mouseDragged() {
-    // Slider 1
-    if (mouseY >= sliderY1 - 10 && mouseY <= sliderY1 + 10 &&
-        mouseX >= sliderX - 10 && mouseX <= sliderX + sliderWidth + 10) {
-        vs = round(map(mouseX, sliderX, sliderX + sliderWidth, 1, 20));
-        vs = constrain(vs, 1, 20);
-        onParameterChange();
-    }
-
-    // Slider 2
-    if (mouseY >= sliderY2 - 10 && mouseY <= sliderY2 + 10 &&
-        mouseX >= sliderX - 10 && mouseX <= sliderX + sliderWidth + 10) {
-        rVal = round(map(mouseX, sliderX, sliderX + sliderWidth, 1, 100));
-        rVal = constrain(rVal, 1, 100);
-        onParameterChange();
-    }
-
-    // Slider 3
-    if (mouseY >= sliderY3 - 10 && mouseY <= sliderY3 + 10 &&
-        mouseX >= sliderX - 10 && mouseX <= sliderX + sliderWidth + 10) {
-        cVal = round(map(mouseX, sliderX, sliderX + sliderWidth, 1, 100));
-        cVal = constrain(cVal, 1, 100);
-        onParameterChange();
+        switchClosed = true;
+        switchButton.html('Open Switch');
     }
 }
 
@@ -673,6 +598,7 @@ function onParameterChange() {
 
 function resetSimulation() {
     switchClosed = false;
+    switchButton.html('Close Switch');
     simTime = 0;
     animationTime = 0;
     vcNow = 0;
@@ -687,6 +613,9 @@ function windowResized() {
     updateCanvasSize();
     resizeCanvas(containerWidth, canvasHeight);
     sliderWidth = containerWidth - sliderX - 20;
+    vsSlider.size(sliderWidth);
+    rSlider.size(sliderWidth);
+    cSlider.size(sliderWidth);
 }
 
 function updateCanvasSize() {
