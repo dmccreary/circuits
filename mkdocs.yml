@@ -41,6 +41,7 @@ nav:
     - DC Circuit V2: sims/dc-circuit/circuits-v2.md
     - Natural Frequency Calculator: sims/natural-frequency-calculator/index.md
     - RC Charging: sims/rc-charging/index.md
+    - Filter Frequency Response: sims/filter-frequency-response/index.md
     - prompts/circuit-similarity/index.md
     - prompts/top-100-circuits/top-100-circuits.md
     - sims/circuit-similarity/index.md
