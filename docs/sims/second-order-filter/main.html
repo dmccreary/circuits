@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Second-Order Filter Designer</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <style>
+        * { box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; margin: 0; padding: 10px; background: #fff; }
+        .sim-container { max-width: 720px; margin: 0 auto; }
+        h3 { text-align: center; margin: 0 0 8px; font-size: 1.1em; color: #222; }
+
+        .toggle-row {
+            display: flex;
+            justify-content: center;
+            gap: 6px;
+            margin-bottom: 8px;
+        }
+        .filter-btn {
+            padding: 4px 18px;
+            border: 2px solid #4527A0;
+            border-radius: 16px;
+            background: white;
+            color: #4527A0;
+            cursor: pointer;
+            font-size: 0.88em;
+            font-weight: bold;
+            transition: all 0.2s;
+        }
+        .filter-btn.active { background: #4527A0; color: white; }
+
+        .chart-wrapper { position: relative; height: 280px; margin-bottom: 8px; }
+
+        .controls {
+            background: #f0f0f0;
+            border-radius: 6px;
+            padding: 10px 14px;
+        }
+        .slider-row {
+            display: flex;
+            align-items: center;
+            margin: 5px 0;
+        }
+        .slider-label {
+            min-width: 200px;
+            text-align: right;
+            padding-right: 10px;
+            font-size: 0.85em;
+            font-family: 'Courier New', monospace;
+            color: #333;
+        }
+        .slider-row input[type=range] {
+            flex: 1;
+            accent-color: #4527A0;
+            cursor: pointer;
+        }
+
+        /* Info grid */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 6px;
+            margin-top: 8px;
+        }
+        .info-cell {
+            background: white;
+            border-radius: 4px;
+            padding: 6px 8px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+        .info-cell .val {
+            font-size: 1.05em;
+            font-weight: bold;
+            color: #4527A0;
+            font-family: 'Courier New', monospace;
+        }
+        .info-cell .lbl {
+            font-size: 0.75em;
+            color: #666;
+        }
+
+        .comp-row {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 6px;
+            font-size: 0.82em;
+            color: #444;
+            font-family: 'Courier New', monospace;
+        }
+
+        .btn-row { display: flex; gap: 8px; margin-top: 8px; }
+        .action-btn {
+            padding: 5px 14px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.85em;
+            font-weight: bold;
+            background: #78909C;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+<div class="sim-container">
+    <h3>Second-Order RLC Filter Designer</h3>
+
+    <div class="toggle-row">
+        <button class="filter-btn active" id="btnLP" onclick="setFilter('lp')">Low-Pass</button>
+        <button class="filter-btn"        id="btnHP" onclick="setFilter('hp')">High-Pass</button>
+        <button class="filter-btn"        id="btnBP" onclick="setFilter('bp')">Band-Pass</button>
+    </div>
+
+    <div class="chart-wrapper">
+        <canvas id="bodeChart"></canvas>
+    </div>
+
+    <div class="controls">
+        <div class="slider-row">
+            <span class="slider-label" id="f0Label">f&#x2080;: 1.00 kHz</span>
+            <input type="range" id="f0Slider" min="0" max="100" value="33" oninput="updateParams()">
+        </div>
+        <div class="slider-row">
+            <span class="slider-label" id="qLabel">Q: 1.0 (slight peak)</span>
+            <input type="range" id="qSlider" min="0" max="100" value="22" oninput="updateParams()">
+        </div>
+
+        <!-- Key metrics -->
+        <div class="info-grid">
+            <div class="info-cell">
+                <div class="val" id="bwDisplay">1.00 kHz</div>
+                <div class="lbl">Bandwidth (BW = f&#x2080;/Q)</div>
+            </div>
+            <div class="info-cell">
+                <div class="val" id="peakDisplay">0.0 dB</div>
+                <div class="lbl">Peak Gain</div>
+            </div>
+            <div class="info-cell">
+                <div class="val" id="dampDisplay">0.50</div>
+                <div class="lbl">Damping ratio &#950;</div>
+            </div>
+        </div>
+
+        <!-- Component values (series RLC, L fixed at 10 mH) -->
+        <div class="comp-row" id="compRow">
+            L = 10 mH &nbsp;&nbsp; C = 2.53 &#956;F &nbsp;&nbsp; R = 6.28 &#937;
+        </div>
+
+        <div class="btn-row">
+            <button class="action-btn" onclick="resetSim()">&#8635; Reset</button>
+        </div>
+    </div>
+</div>
+
+<script>
+// =====================================================
+// Constants
+// =====================================================
+const FREQ_MIN = 10;
+const FREQ_MAX = 1e6;
+const N_POINTS = 300;
+
+const F0_MIN = 100;      // 100 Hz
+const F0_MAX = 1e5;      // 100 kHz
+
+const Q_MIN  = 0.1;
+const Q_MAX  = 20;
+
+const L_FIXED = 10e-3;   // 10 mH (fixed inductor for component calculation)
+
+// =====================================================
+// State
+// =====================================================
+let f0 = 1000;
+let Q  = 1.0;
+let filterType = 'lp';
+
+// =====================================================
+// Frequency array
+// =====================================================
+const FREQUENCIES = (function () {
+    const arr = [];
+    for (let i = 0; i < N_POINTS; i++) {
+        arr.push(FREQ_MIN * Math.pow(FREQ_MAX / FREQ_MIN, i / (N_POINTS - 1)));
+    }
+    return arr;
+})();
+
+// =====================================================
+// Math
+// =====================================================
+function sliderToLog(val, minVal, maxVal) {
+    return minVal * Math.pow(maxVal / minVal, val / 100);
+}
+
+/** Second-order magnitude in dB. u = f/f0 */
+function magnitudeDB(f, f0, Q, type) {
+    const u = f / f0;
+    const denom = Math.sqrt(Math.pow(1 - u * u, 2) + Math.pow(u / Q, 2));
+    let mag;
+    if (type === 'lp')      mag = 1 / denom;
+    else if (type === 'hp') mag = (u * u) / denom;
+    else                    mag = (u / Q) / denom;  // bp
+    return 20 * Math.log10(Math.max(mag, 1e-10));
+}
+
+/** Peak gain for LP/HP (only when Q > 1/sqrt(2)) */
+function peakGainDB(Q, type) {
+    if (type === 'bp') return 0;  // BP always peaks at 0 dB at f0
+    if (Q <= 1 / Math.sqrt(2)) return 0;
+    // LP peak at u = sqrt(1 - 1/(2Q²))
+    const u2 = 1 - 1 / (2 * Q * Q);
+    const denom = Math.sqrt(Math.pow(1 - u2, 2) + u2 / (Q * Q));
+    const mag = (type === 'lp') ? (1 / denom) : (u2 / denom);
+    return 20 * Math.log10(mag);
+}
+
+// =====================================================
+// Formatting
+// =====================================================
+function formatFreq(f) {
+    if (f >= 1e3) return (f / 1e3).toFixed(f >= 1e4 ? 1 : 2) + ' kHz';
+    return f.toFixed(0) + ' Hz';
+}
+
+function formatR(r) {
+    if (r >= 1000) return (r / 1000).toFixed(2) + ' k\u03A9';
+    if (r < 1) return (r * 1000).toFixed(1) + ' m\u03A9';
+    return r.toFixed(2) + ' \u03A9';
+}
+
+function formatC(c) {
+    if (c >= 1e-6) return (c * 1e6).toFixed(c >= 100e-6 ? 0 : 2) + ' \u03BCF';
+    if (c >= 1e-9) return (c * 1e9).toFixed(c >= 100e-9 ? 0 : 1) + ' nF';
+    return (c * 1e12).toFixed(0) + ' pF';
+}
+
+// =====================================================
+// Chart.js
+// =====================================================
+const ctx = document.getElementById('bodeChart').getContext('2d');
+
+// Plugin to draw f0 vertical and bandwidth markers
+const annotationPlugin = {
+    id: 'annotations',
+    afterDraw(chart) {
+        const xS = chart.scales.x;
+        const yS = chart.scales.y;
+        const c  = chart.ctx;
+
+        // f0 vertical marker
+        const x0 = xS.getPixelForValue(f0);
+        c.save();
+        c.beginPath();
+        c.moveTo(x0, yS.top);
+        c.lineTo(x0, yS.bottom);
+        c.strokeStyle = 'rgba(69, 39, 160, 0.4)';
+        c.lineWidth = 1.5;
+        c.setLineDash([6, 3]);
+        c.stroke();
+        c.setLineDash([]);
+
+        // -3 dB horizontal marker
+        if (yS.min <= -3 && yS.max >= -3) {
+            const y3 = yS.getPixelForValue(-3);
+            c.beginPath();
+            c.moveTo(xS.left, y3);
+            c.lineTo(xS.right, y3);
+            c.strokeStyle = 'rgba(120,120,120,0.5)';
+            c.lineWidth = 1;
+            c.setLineDash([4, 4]);
+            c.stroke();
+            c.setLineDash([]);
+        }
+
+        c.restore();
+    }
+};
+
+const chart = new Chart(ctx, {
+    type: 'line',
+    plugins: [annotationPlugin],
+    data: {
+        datasets: [{
+            label: 'Low-Pass Gain',
+            data: [],
+            borderColor: '#4527A0',
+            backgroundColor: 'rgba(69, 39, 160, 0.08)',
+            borderWidth: 2.5,
+            pointRadius: 0,
+            fill: true,
+            tension: 0
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        animation: { duration: 0 },
+        scales: {
+            x: {
+                type: 'logarithmic',
+                min: FREQ_MIN,
+                max: FREQ_MAX,
+                title: { display: true, text: 'Frequency (Hz)', font: { size: 11 } },
+                ticks: {
+                    callback(value) {
+                        const lv = Math.log10(value);
+                        if (Math.abs(lv - Math.round(lv)) < 0.01) return formatFreq(value);
+                        return '';
+                    },
+                    maxRotation: 0,
+                    font: { size: 10 }
+                },
+                grid: { color: 'rgba(0,0,0,0.08)' }
+            },
+            y: {
+                min: -65,
+                max: 20,
+                title: { display: true, text: 'Magnitude (dB)', font: { size: 11 } },
+                ticks: { stepSize: 10, callback: v => v + ' dB', font: { size: 10 } },
+                grid: { color: 'rgba(0,0,0,0.08)' }
+            }
+        },
+        plugins: {
+            legend: { display: true, position: 'top', labels: { font: { size: 10 }, boxWidth: 18 } },
+            tooltip: {
+                callbacks: {
+                    title: items => 'f = ' + formatFreq(items[0].parsed.x),
+                    label: item => 'Gain = ' + item.parsed.y.toFixed(1) + ' dB'
+                }
+            }
+        }
+    }
+});
+
+// =====================================================
+// Filter colors by type
+// =====================================================
+const FILTER_COLORS = {
+    lp: { border: '#4527A0', bg: 'rgba(69,39,160,0.08)', label: 'Low-Pass Gain' },
+    hp: { border: '#B71C1C', bg: 'rgba(183,28,28,0.08)', label: 'High-Pass Gain' },
+    bp: { border: '#1B5E20', bg: 'rgba(27,94,32,0.08)', label: 'Band-Pass Gain' }
+};
+
+// =====================================================
+// Update
+// =====================================================
+function updateChart() {
+    const col = FILTER_COLORS[filterType];
+    chart.data.datasets[0].label = col.label;
+    chart.data.datasets[0].borderColor = col.border;
+    chart.data.datasets[0].backgroundColor = col.bg;
+    chart.data.datasets[0].data = FREQUENCIES.map(f => ({
+        x: f,
+        y: magnitudeDB(f, f0, Q, filterType)
+    }));
+    chart.update('none');
+}
+
+function updateParams() {
+    f0 = sliderToLog(parseFloat(document.getElementById('f0Slider').value), F0_MIN, F0_MAX);
+    Q  = sliderToLog(parseFloat(document.getElementById('qSlider').value),  Q_MIN,  Q_MAX);
+
+    const zeta = 1 / (2 * Q);
+    const bw   = f0 / Q;
+    const peak = peakGainDB(Q, filterType);
+
+    // Component values (series RLC, L fixed)
+    const omega0 = 2 * Math.PI * f0;
+    const C = 1 / (omega0 * omega0 * L_FIXED);
+    const Rval = omega0 * L_FIXED / Q;
+
+    // Q description
+    let qDesc = '';
+    if (Q < 0.5)       qDesc = '(overdamped)';
+    else if (Q < 0.71) qDesc = '(critically damped)';
+    else if (Q < 0.72) qDesc = '(Butterworth)';
+    else if (Q < 2)    qDesc = '(slight peak)';
+    else if (Q < 5)    qDesc = '(resonant peak)';
+    else               qDesc = '(sharp resonance)';
+
+    document.getElementById('f0Label').textContent = 'f\u2080: ' + formatFreq(f0);
+    document.getElementById('qLabel').textContent  = 'Q: ' + Q.toFixed(Q < 1 ? 2 : 1) + ' ' + qDesc;
+    document.getElementById('bwDisplay').textContent  = formatFreq(bw);
+    document.getElementById('peakDisplay').textContent = peak.toFixed(1) + ' dB';
+    document.getElementById('dampDisplay').textContent = zeta.toFixed(3);
+    document.getElementById('compRow').innerHTML =
+        'L = 10 mH &nbsp;&nbsp; C = ' + formatC(C) + ' &nbsp;&nbsp; R = ' + formatR(Rval);
+
+    updateChart();
+}
+
+function setFilter(type) {
+    filterType = type;
+    ['LP', 'HP', 'BP'].forEach(id => {
+        document.getElementById('btn' + id).classList.toggle('active', id.toLowerCase() === type);
+    });
+    updateParams();
+}
+
+function resetSim() {
+    document.getElementById('f0Slider').value = 33;
+    document.getElementById('qSlider').value  = 22;
+    filterType = 'lp';
+    ['LP', 'HP', 'BP'].forEach(id => {
+        document.getElementById('btn' + id).classList.toggle('active', id === 'LP');
+    });
+    updateParams();
+}
+
+updateParams();
+</script>
+</body>
+</html>

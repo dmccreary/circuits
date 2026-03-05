@@ -42,6 +42,9 @@ nav:
     - Natural Frequency Calculator: sims/natural-frequency-calculator/index.md
     - RC Charging: sims/rc-charging/index.md
     - Filter Frequency Response: sims/filter-frequency-response/index.md
+    - First-Order Filters: sims/first-order-filters/index.md
+    - Second-Order Filter Designer: sims/second-order-filter/index.md
+    - Audio Signal Chain: sims/audio-signal-chain/index.md
     - prompts/circuit-similarity/index.md
     - prompts/top-100-circuits/top-100-circuits.md
     - sims/circuit-similarity/index.md
