@@ -25,7 +25,7 @@
       
       
       <link rel="icon" href="../../img/favicon.ico">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
     
     
       
@@ -33,7 +33,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.618322db.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
       
         
         <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
@@ -75,20 +75,7 @@
 
     
     
-  
-<meta property="og:type" content="website" />
-<meta property="og:title" content="Kirchhoff's Laws and Circuit Topology - Circuits 1" />
-<meta property="og:description" content="Master the conservation laws and systematic methods for analyzing any circuit" />
-<meta property="og:image" content="https://dmccreary.github.io/circuits/assets/images/social/chapters/03-kirchhoffs-laws-topology/index.png" />
-<meta property="og:image:type" content="image/png" />
-<meta property="og:image:width" content="1200" />
-<meta property="og:image:height" content="630" />
-<meta property="og:url" content="https://dmccreary.github.io/circuits/chapters/03-kirchhoffs-laws-topology/" />
-<meta property="twitter:card" content="summary_large_image" />
-<meta property="twitter:title" content="Kirchhoff's Laws and Circuit Topology - Circuits 1" />
-<meta property="twitter:description" content="Master the conservation laws and systematic methods for analyzing any circuit" />
-<meta property="twitter:image" content="https://dmccreary.github.io/circuits/assets/images/social/chapters/03-kirchhoffs-laws-topology/index.png" />
-</head>
+  </head>
   
   
     
@@ -1517,6 +1504,10 @@
       
         
       
+        
+      
+        
+      
     
     
     
@@ -2865,7 +2856,7 @@ Implementation: p5.js with canvas-based controls
 <div class="arithmatex">\[I = \frac{V_{source}}{R_{total}} = \frac{12V}{2+3+1\Omega} = \frac{12V}{6\Omega} = 2A\]</div>
 <p>Now apply KVL starting at the battery's negative terminal, going clockwise:</p>
 <div class="arithmatex">\[+12V - (2A)(2\Omega) - (2A)(3\Omega) - (2A)(1\Omega) = 0\]</div>
-<p><span class="arithmatex">\(<span class="arithmatex">\(+12V - 4V - 6V - 2V = 0\)</span>\)</span> ✓</p>
+<p>$<span class="arithmatex">\(+12V - 4V - 6V - 2V = 0\)</span>$ ✓</p>
 <p>The math checks out. The battery provides 12V, and that energy is dissipated across the three resistors.</p>
 <h2 id="circuit-topology-the-shape-of-the-circuit">Circuit Topology: The Shape of the Circuit</h2>
 <p>Now that you know the laws, let's talk about the <em>structure</em> of circuits. <strong>Circuit topology</strong> is the study of how components are connected—independent of what those components actually are. It's like looking at a subway map: you care about which stations connect to which, not whether the train is red or blue.</p>
@@ -2975,9 +2966,9 @@ Implementation: p5.js with canvas-based controls
 <p><strong>Step 2:</strong> Define node voltages <span class="arithmatex">\(V_A\)</span> and <span class="arithmatex">\(V_B\)</span></p>
 <p><strong>Step 3:</strong> Write KCL at each node:</p>
 <p>At node A (assuming all currents leaving):
-<span class="arithmatex">\(<span class="arithmatex">\(\frac{V_A - 10}{R_1} + \frac{V_A - V_B}{R_2} = 0\)</span>\)</span></p>
+$<span class="arithmatex">\(\frac{V_A - 10}{R_1} + \frac{V_A - V_B}{R_2} = 0\)</span>$</p>
 <p>At node B:
-<span class="arithmatex">\(<span class="arithmatex">\(\frac{V_B - V_A}{R_2} + \frac{V_B - 0}{R_3} = 0\)</span>\)</span></p>
+$<span class="arithmatex">\(\frac{V_B - V_A}{R_2} + \frac{V_B - 0}{R_3} = 0\)</span>$</p>
 <p><strong>Step 4:</strong> Solve the system. With specific values, this becomes straightforward algebra (or matrix operations for larger circuits).</p>
 <h3 id="the-supernode-when-voltage-sources-get-tricky">The Supernode: When Voltage Sources Get Tricky</h3>
 <p>What happens when a voltage source connects two non-reference nodes? You can't write the usual KCL equation because you don't know the current through an ideal voltage source.</p>
@@ -3060,9 +3051,9 @@ Implementation: p5.js with canvas-based controls
 <h3 id="mesh-analysis-example">Mesh Analysis Example</h3>
 <p>Consider a two-mesh circuit. Define mesh currents <span class="arithmatex">\(I_1\)</span> (left mesh, clockwise) and <span class="arithmatex">\(I_2\)</span> (right mesh, clockwise).</p>
 <p><strong>Mesh 1 (left):</strong>
-<span class="arithmatex">\(<span class="arithmatex">\(V_s - I_1 R_1 - (I_1 - I_2)R_2 = 0\)</span>\)</span></p>
+$<span class="arithmatex">\(V_s - I_1 R_1 - (I_1 - I_2)R_2 = 0\)</span>$</p>
 <p><strong>Mesh 2 (right):</strong>
-<span class="arithmatex">\(<span class="arithmatex">\(-(I_2 - I_1)R_2 - I_2 R_3 = 0\)</span>\)</span></p>
+$<span class="arithmatex">\(-(I_2 - I_1)R_2 - I_2 R_3 = 0\)</span>$</p>
 <p>Rearranging into matrix form:</p>
 <div class="arithmatex">\[\begin{bmatrix} R_1 + R_2 &amp; -R_2 \\ -R_2 &amp; R_2 + R_3 \end{bmatrix} \begin{bmatrix} I_1 \\ I_2 \end{bmatrix} = \begin{bmatrix} V_s \\ 0 \end{bmatrix}\]</div>
 <p>Beautiful symmetry! The main diagonal has the sum of resistors in each mesh; the off-diagonal terms show the shared resistors (with negative signs).</p>
@@ -3628,10 +3619,10 @@ Implementation: p5.js with canvas-based controls
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["content.code.copy", "navigation.expand", "navigation.path", "navigation.prune", "navigation.indexes", "toc.follow", "navigation.top", "navigation.footer", "content.action.edit"], "search": "../../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["content.code.copy", "navigation.expand", "navigation.path", "navigation.prune", "navigation.indexes", "toc.follow", "navigation.top", "navigation.footer", "content.action.edit"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../assets/javascripts/bundle.e71a0d61.min.js"></script>
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
       
         <script src="../../js/extra.js"></script>
       
