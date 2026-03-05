@@ -6,19 +6,19 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="An intelligent interactive Circuits textbook for EE and CS students with AI-generated content and simulations.">
+        <meta name="description" content="Interactive Bode plot for RC low-pass and high-pass filters. Adjust R and C with sliders to see cutoff frequency and magnitude response update in real time, with an animated frequency sweep cursor.">
       
       
         <meta name="author" content="Dan McCreary">
       
       
-        <link rel="canonical" href="https://dmccreary.github.io/circuits/sims/diode/">
+        <link rel="canonical" href="https://dmccreary.github.io/circuits/sims/filter-frequency-response/">
       
       
-        <link rel="prev" href="../inductor/">
+        <link rel="prev" href="../rc-charging/">
       
       
-        <link rel="next" href="../animated-wire/">
+        <link rel="next" href="../../prompts/circuit-similarity/">
       
       
         
@@ -29,7 +29,7 @@
     
     
       
-        <title>Diode - Circuits 1</title>
+        <title>RC Filter Frequency Response MicroSim - Circuits 1</title>
       
     
     
@@ -92,7 +92,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#draw-diode-test" class="md-skip">
+        <a href="#rc-filter-frequency-response-microsim" class="md-skip">
           Skip to content
         </a>
       
@@ -127,7 +127,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Diode
+              RC Filter Frequency Response MicroSim
             
           </span>
         </div>
@@ -410,6 +410,8 @@
       
   
   
+    
+  
   
   
     
@@ -454,18 +456,17 @@
     
     
       
-        
-        
-      
     
-    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
-  
-  
-  
-    <a href="../" class="md-nav__link">
-      
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
   
   
   <span class="md-ellipsis">
@@ -479,12 +480,608 @@
   
   
 
-      
-        <span class="md-nav__icon md-icon"></span>
-      
-    </a>
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_5" id="__nav_5_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    MicroSims
   
 
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../water-flow-analogy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Water Flow Analogy
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../power-triangle/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Power Triangle
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ground-symbols/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ground Symbols
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../circuit-symbol-flashcards/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Circuit Symbol Flashcards
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../learning-graph/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Learning Graph
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../background-grid/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Background Grid
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dc-circuit/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simple DC Circuit
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dc-circuit/circuits-v2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    DC Circuit V2
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../natural-frequency-calculator/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Natural Frequency Calculator
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rc-charging/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RC Charging
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Filter Frequency Response
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Filter Frequency Response
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#description" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Description
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Description">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#how-to-use" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How to Use
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lesson-plan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lesson Plan
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Lesson Plan">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#learning-objectives" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Learning Objectives
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#target-audience" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Target Audience
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#activities" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Activities
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#assessment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Assessment
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#technical-notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Technical Notes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        References
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../prompts/circuit-similarity/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Circuit Embeddings
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../prompts/top-100-circuits/top-100-circuits/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Top 100 Circuits
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../circuit-similarity/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Circuit Similarity Map
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../templates/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    A title under 60 characters.
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
       
     </li>
   
@@ -686,8 +1283,6 @@
       
   
   
-    
-  
   
   
     
@@ -732,17 +1327,18 @@
     
     
       
+        
+        
+      
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
       
         
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" checked>
-        
-          
-          <div class="md-nav__link md-nav__container">
-            <a href="../../prompts/" class="md-nav__link ">
-              
+  
+  
+  
+    <a href="../../prompts/" class="md-nav__link">
+      
   
   
   <span class="md-ellipsis">
@@ -756,997 +1352,12 @@
   
   
 
-            </a>
-            
-              
-              <label class="md-nav__link " for="__nav_9" id="__nav_9_label" tabindex="0">
-                <span class="md-nav__icon md-icon"></span>
-              </label>
-            
-          </div>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_9">
-            <span class="md-nav__icon md-icon"></span>
-            
-  
-    Sample Prompts
-  
-
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../prompts/learning-via-interactive-simulations/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Learning Via Simulations
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    
-    
-      
-        
-          
-        
-      
-        
-      
-        
-      
-    
-    
-    
-    
-      
-        
-        
-      
-    
-    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
-      
-        
-  
-  
-  
-    <a href="../../prompts/top-100-circuits/" class="md-nav__link">
-      
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Top 100 Circuits
-  
-
-    
-  </span>
-  
-  
-
       
         <span class="md-nav__icon md-icon"></span>
       
     </a>
   
 
-      
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    
-    
-      
-        
-          
-        
-      
-        
-      
-        
-      
-    
-    
-    
-    
-      
-        
-        
-      
-    
-    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
-      
-        
-  
-  
-  
-    <a href="../../prompts/circuit-diagrams/" class="md-nav__link">
-      
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Generating Circuit Diagrams
-  
-
-    
-  </span>
-  
-  
-
-      
-        <span class="md-nav__icon md-icon"></span>
-      
-    </a>
-  
-
-      
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../prompts/current-voltage-plots/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Current-Voltage Plots
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../prompts/adding-latex-equations/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Adding LaTeX Equations
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    
-    
-      
-        
-          
-        
-      
-        
-      
-    
-    
-    
-    
-      
-        
-        
-      
-    
-    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
-      
-        
-  
-  
-  
-    <a href="../../prompts/formulas/" class="md-nav__link">
-      
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Common Formulas
-  
-
-    
-  </span>
-  
-  
-
-      
-        <span class="md-nav__icon md-icon"></span>
-      
-    </a>
-  
-
-      
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../prompts/frequently-asked-questions/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Frequently Asked Questions
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    
-    
-      
-        
-          
-        
-      
-        
-      
-        
-      
-    
-    
-    
-    
-      
-        
-        
-      
-    
-    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
-      
-        
-  
-  
-  
-    <a href="../../prompts/lesson-plan/" class="md-nav__link">
-      
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Lesson Plans
-  
-
-    
-  </span>
-  
-  
-
-      
-        <span class="md-nav__icon md-icon"></span>
-      
-    </a>
-  
-
-      
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../prompts/chatbot/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    ChatBot
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    
-    
-      
-        
-          
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-    
-    
-    
-    
-      
-        
-        
-      
-    
-    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
-      
-        
-  
-  
-  
-    <a href="../../prompts/knowledge-graph/" class="md-nav__link">
-      
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Generating Knowledge Graphs
-  
-
-    
-  </span>
-  
-  
-
-      
-        <span class="md-nav__icon md-icon"></span>
-      
-    </a>
-  
-
-      
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../prompts/circuit-similarity/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Circuit Embeddings
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../prompts/metaphors-and-stories/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Metaphors and Stories
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../prompts/glossary-terms/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Glossary Terms
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../prompts/similarity-plot/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Similarity Plot
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-    
-  
-  
-  
-    
-    
-      
-        
-      
-        
-          
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-    
-    
-    
-    
-      
-    
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9_16" checked>
-        
-          
-          <div class="md-nav__link md-nav__container">
-            <a href="../circuit-lib/" class="md-nav__link ">
-              
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Component Tests
-  
-
-    
-  </span>
-  
-  
-
-            </a>
-            
-              
-              <label class="md-nav__link " for="__nav_9_16" id="__nav_9_16_label" tabindex="0">
-                <span class="md-nav__icon md-icon"></span>
-              </label>
-            
-          </div>
-        
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_9_16_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_9_16">
-            <span class="md-nav__icon md-icon"></span>
-            
-  
-    Component Tests
-  
-
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../components/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Introduction
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../switch/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Switch
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../animated-switches/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Animated Switches
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../light-bulb/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Light Bulb
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../battery/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Battery
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../resistor/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Resistor
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../capacitor/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Capacitor
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../inductor/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Inductor
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-    
-  
-  
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Diode
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-      
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../animated-wire/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Animated Wire
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../wire/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Wire
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
       
     </li>
   
@@ -1961,6 +1572,125 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#description" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Description
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Description">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#how-to-use" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How to Use
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lesson-plan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lesson Plan
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Lesson Plan">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#learning-objectives" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Learning Objectives
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#target-audience" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Target Audience
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#activities" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Activities
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#assessment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Assessment
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#technical-notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Technical Notes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        References
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -2002,28 +1732,10 @@
     
     
       <li class="md-path__item">
-        <a href="../../prompts/" class="md-path__link">
+        <a href="../" class="md-path__link">
           
   <span class="md-ellipsis">
-    Sample Prompts
-  </span>
-
-        </a>
-      </li>
-    
-  
-
-      
-        
-  
-  
-    
-    
-      <li class="md-path__item">
-        <a href="../components/" class="md-path__link">
-          
-  <span class="md-ellipsis">
-    Component Tests
+    MicroSims
   </span>
 
         </a>
@@ -2042,7 +1754,7 @@
 
 
   
-    <a href="https://github.com/dmccreary/circuits/blob/master/docs/sims/diode/index.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+    <a href="https://github.com/dmccreary/circuits/blob/master/docs/sims/filter-frequency-response/index.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
     </a>
@@ -2050,13 +1762,131 @@
   
 
 
-<h1 id="draw-diode-test">Draw Diode Test</h1>
+<h1 id="rc-filter-frequency-response-microsim">RC Filter Frequency Response MicroSim</h1>
+<iframe src="main.html" width="100%" height="500px" scrolling="no"></iframe>
+
+<p><strong>Copy this iframe to your website:</strong></p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="p">&lt;</span><span class="nt">iframe</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;https://dmccreary.github.io/circuits/sims/filter-frequency-response/main.html&quot;</span> <span class="na">width</span><span class="o">=</span><span class="s">&quot;100%&quot;</span> <span class="na">height</span><span class="o">=</span><span class="s">&quot;500px&quot;</span> <span class="na">scrolling</span><span class="o">=</span><span class="s">&quot;no&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">iframe</span><span class="p">&gt;</span>
+</code></pre></div></td></tr></table></div>
+<p><a class="md-button md-button--primary" href="main.html">Run the Filter Frequency Response MicroSim in fullscreen</a></p>
+<h2 id="description">Description</h2>
+<p>This MicroSim displays an interactive <strong>Bode plot</strong> — a graph of filter gain (in decibels) versus frequency (on a log scale) — for a first-order RC filter. Students can switch between low-pass and high-pass configurations, adjust component values, and watch the response curve, cutoff frequency marker, and <span class="arithmatex">\(-3 \text{ dB}\)</span> reference line update instantly.</p>
+<p><strong>Key Concepts Demonstrated:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Quantity</th>
+<th>Formula</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Cutoff frequency</td>
+<td><span class="arithmatex">\(f_c = \dfrac{1}{2\pi RC}\)</span></td>
+<td>Frequency at which gain drops to <span class="arithmatex">\(-3 \text{ dB}\)</span> (≈ 70.7% of passband)</td>
+</tr>
+<tr>
+<td>Low-pass gain</td>
+<td><span class="arithmatex">\(\|H(f)\| = \dfrac{1}{\sqrt{1+(f/f_c)^2}}\)</span></td>
+<td>Passes low frequencies, attenuates high</td>
+</tr>
+<tr>
+<td>High-pass gain</td>
+<td><span class="arithmatex">\(\|H(f)\| = \dfrac{f/f_c}{\sqrt{1+(f/f_c)^2}}\)</span></td>
+<td>Passes high frequencies, attenuates low</td>
+</tr>
+<tr>
+<td>Roll-off rate</td>
+<td><span class="arithmatex">\(-20 \text{ dB/decade}\)</span></td>
+<td>Gain drops 20 dB for each ×10 in frequency beyond <span class="arithmatex">\(f_c\)</span></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Interactive Features:</strong></p>
+<ul>
+<li><strong>Filter Type Buttons</strong>: Switch between Low-Pass and High-Pass instantly</li>
+<li><strong>R Slider</strong>: Adjust resistance from 100 Ω to 100 kΩ (log scale)</li>
+<li><strong>C Slider</strong>: Adjust capacitance from 1 nF to 10 μF (log scale)</li>
+<li><strong>Live <span class="arithmatex">\(f_c\)</span> Display</strong>: Cutoff frequency updates in real time as you move sliders</li>
+<li><strong>Dashed Reference Lines</strong>: <span class="arithmatex">\(-3 \text{ dB}\)</span> horizontal line and <span class="arithmatex">\(f_c\)</span> vertical marker</li>
+<li><strong>Frequency Sweep</strong>: Animated orange cursor sweeps across the plot, showing gain at each frequency</li>
+</ul>
+<h3 id="how-to-use">How to Use</h3>
+<ol>
+<li>Observe the initial state: 1 kΩ, 100 nF, <span class="arithmatex">\(f_c \approx 1.59 \text{ kHz}\)</span>, Low-Pass selected</li>
+<li>Move the <strong>R slider</strong> right — watch <span class="arithmatex">\(f_c\)</span> drop and the curve shift left</li>
+<li>Move the <strong>C slider</strong> left — watch <span class="arithmatex">\(f_c\)</span> rise and the curve shift right</li>
+<li>Click <strong>High-Pass</strong> — the curve flips; low frequencies are now attenuated</li>
+<li>Click <strong>Start Sweep</strong> to animate a cursor across the plot; the readout shows frequency and gain at each point</li>
+<li>Note where the cursor crosses the <span class="arithmatex">\(-3 \text{ dB}\)</span> line — that is <span class="arithmatex">\(f_c\)</span></li>
+<li>Click <strong>Reset</strong> to return to default values</li>
+</ol>
+<h2 id="lesson-plan">Lesson Plan</h2>
+<h3 id="learning-objectives">Learning Objectives</h3>
+<p>After completing this lesson, students will be able to:</p>
+<ul>
+<li>Calculate the cutoff frequency <span class="arithmatex">\(f_c = \frac{1}{2\pi RC}\)</span> for a given RC filter</li>
+<li>Explain why the <span class="arithmatex">\(-3 \text{ dB}\)</span> point is the standard definition of cutoff frequency</li>
+<li>Predict how increasing R or C shifts the frequency response curve</li>
+<li>Distinguish the behavior of low-pass and high-pass RC filters from their Bode plots</li>
+<li>Describe the <span class="arithmatex">\(-20 \text{ dB/decade}\)</span> roll-off rate of a first-order filter</li>
+</ul>
+<h3 id="target-audience">Target Audience</h3>
+<ul>
+<li>College freshmen/sophomores in introductory circuits or signals courses</li>
+<li>Prerequisites: Understanding of resistors, capacitors, and the concept of impedance</li>
+</ul>
+<h3 id="activities">Activities</h3>
+<ol>
+<li>
+<p><strong>Cutoff Frequency Prediction</strong>: Set R = 10 kΩ and C = 10 nF. Before moving sliders, calculate <span class="arithmatex">\(f_c\)</span> by hand. Then check the display — does it match?</p>
+</li>
+<li>
+<p><strong>Decade Comparison</strong>: Set R = 1 kΩ, C = 100 nF (<span class="arithmatex">\(f_c \approx 1.59 \text{ kHz}\)</span>). Now multiply R by 10 (10 kΩ) — how does <span class="arithmatex">\(f_c\)</span> change? Then restore R and multiply C by 10 — same result?</p>
+</li>
+<li>
+<p><strong>Low-Pass vs High-Pass</strong>: With identical R and C values, toggle between the two filter types. What do you notice about the curves at <span class="arithmatex">\(f_c\)</span>?</p>
+</li>
+<li>
+<p><strong>Sweep Observation</strong>: Start the sweep and watch the gain readout. Pause mentally when the cursor is exactly at <span class="arithmatex">\(f_c\)</span> — what is the gain in dB?</p>
+</li>
+<li>
+<p><strong>Design Challenge</strong>: Design a low-pass filter with <span class="arithmatex">\(f_c = 10 \text{ kHz}\)</span> using available component values. Use the sim to verify your design.</p>
+</li>
+</ol>
+<h3 id="assessment">Assessment</h3>
+<p><strong>Formative Questions:</strong></p>
+<ul>
+<li>If R = 4.7 kΩ and C = 33 nF, what is <span class="arithmatex">\(f_c\)</span>?</li>
+<li>At a frequency of <span class="arithmatex">\(10 f_c\)</span>, what is the approximate gain in dB for a low-pass filter?</li>
+<li>Why do both low-pass and high-pass filters have the same gain (<span class="arithmatex">\(-3 \text{ dB}\)</span>) at <span class="arithmatex">\(f_c\)</span>?</li>
+<li>If you need to shift <span class="arithmatex">\(f_c\)</span> up by one decade, what change to R would achieve this?</li>
+</ul>
+<p><strong>Reflection Prompt:</strong></p>
+<p>Explain in your own words why the Bode plot x-axis uses a logarithmic frequency scale instead of a linear scale.</p>
+<h2 id="technical-notes">Technical Notes</h2>
+<p>The simulation implements the first-order RC filter transfer function:</p>
+<p><strong>Low-pass:</strong>
+[H_{LP}(f) = \frac{1}{1 + j(f/f_c)}, \quad |H_{LP}| = \frac{1}{\sqrt{1 + (f/f_c)^2}}]</p>
+<p><strong>High-pass:</strong>
+[H_{HP}(f) = \frac{j(f/f_c)}{1 + j(f/f_c)}, \quad |H_{HP}| = \frac{f/f_c}{\sqrt{1 + (f/f_c)^2}}]</p>
+<p>Both are plotted as <span class="arithmatex">\(20 \log_{10}(|H|)\)</span> in dB over 200 log-spaced frequency points from 1 Hz to 10 MHz. The chart uses Chart.js 4.x with a logarithmic x-axis. Component sliders use log mapping so each decade of R or C gets equal slider travel.</p>
+<h2 id="references">References</h2>
+<ul>
+<li><a href="https://www.khanacademy.org/science/electrical-engineering/ee-circuit-analysis-topic/ee-filters">Khan Academy: Filters</a> - Introduction to filter concepts</li>
+<li><a href="https://www.chartjs.org/docs/latest/">Chart.js Documentation</a> - JavaScript charting library used for the Bode plot</li>
+<li><a href="https://www.allaboutcircuits.com/textbook/alternating-current/chpt-8/low-pass-filters/">All About Circuits: RC Filters</a> - Detailed treatment of RC filter theory</li>
+</ul>
 
 
 
 
 
 
+
+  
+  
 
 
 
@@ -2088,7 +1918,7 @@
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../inductor/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Inductor">
+          <a href="../rc-charging/" class="md-footer__link md-footer__link--prev" aria-label="Previous: RC Charging">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
@@ -2098,20 +1928,20 @@
                 Previous
               </span>
               <div class="md-ellipsis">
-                Inductor
+                RC Charging
               </div>
             </div>
           </a>
         
         
           
-          <a href="../animated-wire/" class="md-footer__link md-footer__link--next" aria-label="Next: Animated Wire">
+          <a href="../../prompts/circuit-similarity/" class="md-footer__link md-footer__link--next" aria-label="Next: Circuit Embeddings">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Animated Wire
+                Circuit Embeddings
               </div>
             </div>
             <div class="md-footer__button md-icon">
