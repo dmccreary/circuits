@@ -7,12 +7,12 @@ og:image: /sims/rc-charging/rc-charging.png
 
 # RC Charging Circuit MicroSim
 
-<iframe src="main.html" width="100%" height="612px" scrolling="no"></iframe>
+<iframe src="main.html" width="100%" height="650px" scrolling="no"></iframe>
 
 **Copy this iframe to your website:**
 
 ```html
-<iframe src="https://dmccreary.github.io/circuits/sims/rc-charging/main.html" width="100%" height="612px" scrolling="no"></iframe>
+<iframe src="https://dmccreary.github.io/circuits/sims/rc-charging/main.html" width="100%" height="650px" scrolling="no"></iframe>
 ```
 
 [Run the RC Charging MicroSim in fullscreen](main.html){ .md-button .md-button--primary }
