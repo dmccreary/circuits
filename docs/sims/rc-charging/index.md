@@ -17,6 +17,12 @@ og:image: /sims/rc-charging/rc-charging.png
 
 [Run the RC Charging MicroSim in fullscreen](main.html){ .md-button .md-button--primary }
 
+## Circuit Schematic
+
+![RC Charging Circuit Schematic](rc-charging-diagram.svg)
+
+*RC charging circuit: closing the switch connects the battery through the resistor to the capacitor, which charges exponentially toward Vs.*
+
 ## Description
 
 This MicroSim visualizes the RC charging process — what happens when a capacitor charges through a resistor after a switch is closed. The simulation combines an animated circuit schematic with real-time voltage and current graphs.
