@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Basic Op-Amp Configurations</title>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.7/lib/p5.js"></script>
+    <style>
+        * { box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; margin: 0; padding: 8px; background: #fff; }
+        .sim-container { max-width: 720px; margin: 0 auto; }
+        h3 { text-align: center; margin: 0 0 6px; font-size: 1.05em; color: #222; }
+        #canvas-container canvas { display: block; }
+        .controls {
+            background: #f0f0f0;
+            border-radius: 6px;
+            padding: 8px 14px;
+            margin-top: 4px;
+        }
+        .toggle-row {
+            display: flex;
+            justify-content: center;
+            gap: 6px;
+            margin-bottom: 8px;
+        }
+        .cfg-btn {
+            padding: 5px 18px;
+            border: 2px solid #4A148C;
+            border-radius: 16px;
+            background: white;
+            color: #4A148C;
+            cursor: pointer;
+            font-size: 0.88em;
+            font-weight: bold;
+            transition: all 0.2s;
+        }
+        .cfg-btn.active { background: #4A148C; color: white; }
+        .slider-row {
+            display: flex;
+            align-items: center;
+            margin: 4px 0;
+        }
+        .slider-label {
+            min-width: 200px;
+            text-align: right;
+            padding-right: 10px;
+            font-size: 0.84em;
+            font-family: 'Courier New', monospace;
+            color: #333;
+        }
+        .slider-row input[type=range] { flex: 1; accent-color: #4A148C; cursor: pointer; }
+        .btn-row { display: flex; gap: 8px; margin-top: 6px; }
+        .action-btn {
+            padding: 4px 14px; border: none; border-radius: 4px;
+            cursor: pointer; font-size: 0.85em; font-weight: bold;
+        }
+        .btn-anim { background: #43A047; color: white; }
+        .btn-anim.running { background: #E53935; }
+        .btn-reset { background: #78909C; color: white; }
+    </style>
+</head>
+<body>
+<div class="sim-container">
+    <h3>Basic Op-Amp Configurations</h3>
+
+    <div class="toggle-row">
+        <button class="cfg-btn active" id="btnInv"  onclick="setConfig('inverting')">Inverting</button>
+        <button class="cfg-btn"        id="btnNon"  onclick="setConfig('noninverting')">Non-Inverting</button>
+        <button class="cfg-btn"        id="btnFol"  onclick="setConfig('follower')">Voltage Follower</button>
+    </div>
+
+    <div id="canvas-container"></div>
+
+    <div class="controls">
+        <div class="slider-row">
+            <span class="slider-label" id="riLabel">Ri: 10 k&#937;</span>
+            <input type="range" id="riSlider" min="1" max="100" value="10" oninput="updateSim()">
+        </div>
+        <div class="slider-row">
+            <span class="slider-label" id="rfLabel">Rf: 100 k&#937;</span>
+            <input type="range" id="rfSlider" min="1" max="1000" value="100" oninput="updateSim()">
+        </div>
+        <div class="slider-row">
+            <span class="slider-label" id="vinLabel">Vin amplitude: 1.0 V</span>
+            <input type="range" id="vinSlider" min="1" max="50" value="10" oninput="updateSim()">
+        </div>
+        <div class="btn-row">
+            <button class="action-btn btn-anim" id="animBtn" onclick="toggleAnim()">&#9654; Start</button>
+            <button class="action-btn btn-reset" onclick="resetSim()">&#8635; Reset</button>
+        </div>
+    </div>
+</div>
+
+<script>
+// =====================================================
+// State
+// =====================================================
+let config  = 'inverting';
+let Ri      = 10;    // kΩ
+let Rf      = 100;   // kΩ
+let vinAmp  = 1.0;   // V
+let t       = 0;     // time (radians)
+let isAnimating = false;
+let animId  = null;
+
+const SUPPLY = 15;   // ±15V supply rails
+
+function getGain() {
+    if (config === 'inverting')    return -Rf / Ri;
+    if (config === 'noninverting') return 1 + Rf / Ri;
+    return 1;
+}
+
+function getGainFormula() {
+    if (config === 'inverting')    return 'Av = \u2212Rf/Ri = \u2212' + (Rf/Ri).toFixed(1);
+    if (config === 'noninverting') return 'Av = 1 + Rf/Ri = +' + (1 + Rf/Ri).toFixed(1);
+    return 'Av = 1 (output follows input)';
+}
+
+function updateSim() {
+    Ri     = parseFloat(document.getElementById('riSlider').value);
+    Rf     = parseFloat(document.getElementById('rfSlider').value);
+    vinAmp = parseFloat(document.getElementById('vinSlider').value) / 10;
+    const riStr = Ri >= 1000 ? (Ri/1000).toFixed(1) + ' M\u03A9' : Ri + ' k\u03A9';
+    const rfStr = Rf >= 1000 ? (Rf/1000).toFixed(1) + ' M\u03A9' : Rf + ' k\u03A9';
+    document.getElementById('riLabel').textContent  = 'Ri: ' + riStr;
+    document.getElementById('rfLabel').textContent  = 'Rf: ' + rfStr;
+    document.getElementById('vinLabel').textContent = 'Vin amplitude: ' + vinAmp.toFixed(1) + ' V';
+    myP5.redraw();
+}
+
+function setConfig(cfg) {
+    config = cfg;
+    ['Inv','Non','Fol'].forEach(id => {
+        document.getElementById('btn' + id).classList.remove('active');
+    });
+    const map = { inverting: 'Inv', noninverting: 'Non', follower: 'Fol' };
+    document.getElementById('btn' + map[cfg]).classList.add('active');
+    // Follower has no Ri/Rf sliders
+    const hidden = cfg === 'follower' ? 'hidden' : 'visible';
+    document.getElementById('riSlider').parentElement.style.visibility = hidden;
+    document.getElementById('rfSlider').parentElement.style.visibility = hidden;
+    updateSim();
+}
+
+function toggleAnim() {
+    isAnimating = !isAnimating;
+    const btn = document.getElementById('animBtn');
+    if (isAnimating) {
+        btn.textContent = '\u23F9 Stop';
+        btn.classList.add('running');
+        myP5.loop();
+    } else {
+        btn.textContent = '\u25B6 Start';
+        btn.classList.remove('running');
+        myP5.noLoop();
+    }
+}
+
+function resetSim() {
+    if (isAnimating) toggleAnim();
+    t = 0;
+    document.getElementById('riSlider').value = 10;
+    document.getElementById('rfSlider').value = 100;
+    document.getElementById('vinSlider').value = 10;
+    setConfig('inverting');
+}
+
+// =====================================================
+// p5.js sketch
+// =====================================================
+const sketch = function (p) {
+    const CW = 700, CH = 370;
+    const SPLIT = 315;   // schematic | waveform divider
+
+    // Op-amp geometry (for left schematic panel)
+    const OA_CX = 175, OA_CY = 175;
+    const OA_W  = 76,  OA_H  = 68;
+    const OA_LX = OA_CX - OA_W / 2;
+    const OA_RX = OA_CX + OA_W / 2;
+    const OA_VM = OA_CY - OA_H * 0.2;
+    const OA_VP = OA_CY + OA_H * 0.2;
+
+    // Waveform panel
+    const WF_X1 = SPLIT + 30, WF_X2 = CW - 15;
+    const WF_Y1 = 35,         WF_Y2 = CH - 30;
+    const WF_W  = WF_X2 - WF_X1;
+    const WF_H  = WF_Y2 - WF_Y1;
+
+    // ---- drawing helpers ----
+    function drawResistorH(x1, x2, y, label) {
+        const bw = Math.min((x2 - x1) * 0.5, 50);
+        const bh = 14;
+        const mx = (x1 + x2) / 2;
+        p.stroke(40); p.strokeWeight(1.8);
+        p.line(x1, y, mx - bw/2, y);
+        p.line(mx + bw/2, y, x2, y);
+        p.fill(250); p.strokeWeight(1.2);
+        p.rect(mx - bw/2, y - bh/2, bw, bh, 3);
+        p.noStroke(); p.fill(40);
+        p.textAlign(p.CENTER, p.BOTTOM);
+        p.textSize(10);
+        p.text(label, mx, y - bh/2 - 1);
+    }
+
+    function drawResistorV(x, y1, y2, label) {
+        const bh = Math.min((y2 - y1) * 0.5, 40);
+        const bw = 14;
+        const my = (y1 + y2) / 2;
+        p.stroke(40); p.strokeWeight(1.8);
+        p.line(x, y1, x, my - bh/2);
+        p.line(x, my + bh/2, x, y2);
+        p.fill(250); p.strokeWeight(1.2);
+        p.rect(x - bw/2, my - bh/2, bw, bh, 3);
+        p.noStroke(); p.fill(40);
+        p.textAlign(p.LEFT, p.CENTER);
+        p.textSize(10);
+        p.text(label, x + bw/2 + 2, my);
+    }
+
+    function drawOpAmp() {
+        p.stroke(40); p.strokeWeight(1.8);
+        p.fill(245, 245, 255);
+        p.triangle(OA_LX, OA_CY - OA_H/2, OA_LX, OA_CY + OA_H/2, OA_RX, OA_CY);
+        p.noStroke(); p.fill(40);
+        p.textAlign(p.LEFT, p.CENTER);
+        p.textSize(13);
+        p.text('\u2212', OA_LX + 6, OA_VM);
+        p.text('+', OA_LX + 6, OA_VP);
+    }
+
+    function drawGround(x, y) {
+        p.stroke(60); p.strokeWeight(1.8);
+        p.line(x, y - 8, x, y);
+        [20, 13, 6].forEach((w, i) => p.line(x - w/2, y + i*6, x + w/2, y + i*6));
+    }
+
+    function labelNode(x, y, txt, col) {
+        p.noStroke(); p.fill(col || p.color(40, 40, 160));
+        p.textAlign(p.CENTER, p.BOTTOM);
+        p.textSize(10);
+        p.text(txt, x, y);
+    }
+
+    // ---- Waveform plotting ----
+    function drawWaveformPanel() {
+        // Background
+        p.noStroke(); p.fill(248);
+        p.rect(WF_X1 - 5, WF_Y1 - 5, WF_W + 10, WF_H + 10, 4);
+
+        // Grid lines
+        const yMid = WF_Y1 + WF_H / 2;
+        p.stroke(200); p.strokeWeight(1);
+        // Horizontal: 0V, ±5, ±10, ±15
+        [-15, -10, -5, 0, 5, 10, 15].forEach(v => {
+            const y = p.map(v, -SUPPLY, SUPPLY, WF_Y2, WF_Y1);
+            p.stroke(v === 0 ? 160 : 210);
+            p.strokeWeight(v === 0 ? 1.5 : 0.8);
+            p.line(WF_X1, y, WF_X2, y);
+            p.noStroke(); p.fill(120);
+            p.textAlign(p.RIGHT, p.CENTER);
+            p.textSize(9);
+            if (v !== 0) p.text(v + 'V', WF_X1 - 2, y);
+        });
+        p.noStroke(); p.fill(120);
+        p.textAlign(p.RIGHT, p.CENTER);
+        p.textSize(9);
+        p.text('0V', WF_X1 - 2, yMid);
+
+        // Vertical grid (per half-cycle)
+        p.stroke(210); p.strokeWeight(0.8);
+        [0.5, 1.0, 1.5, 2.0].forEach(frac => {
+            const x = WF_X1 + frac / 2 * WF_W;
+            p.line(x, WF_Y1, x, WF_Y2);
+        });
+
+        // Supply rail shading
+        const railY = p.map(SUPPLY, -SUPPLY, SUPPLY, WF_Y2, WF_Y1);
+        const railYN = p.map(-SUPPLY, -SUPPLY, SUPPLY, WF_Y2, WF_Y1);
+        p.noStroke(); p.fill(255, 200, 200, 80);
+        p.rect(WF_X1, WF_Y1, WF_W, railY - WF_Y1);
+        p.rect(WF_X1, railYN, WF_W, WF_Y2 - railYN);
+
+        // Axis labels
+        p.noStroke(); p.fill(80);
+        p.textAlign(p.CENTER, p.BOTTOM);
+        p.textSize(10);
+        p.text('Time \u2192', WF_X1 + WF_W / 2, WF_Y2 + 12);
+
+        // Draw waveforms (2 full cycles = 4π)
+        const Av = getGain();
+        const voutAmp = p.constrain(Math.abs(Av) * vinAmp, 0, SUPPLY);
+        const outInvert = Av < 0;
+
+        const N = 300;
+        // Input wave (blue)
+        p.stroke(30, 80, 200); p.strokeWeight(2); p.noFill();
+        p.beginShape();
+        for (let i = 0; i < N; i++) {
+            const frac = i / (N - 1);
+            const phase = frac * 4 * Math.PI + t;
+            const vin = vinAmp * Math.sin(phase);
+            const x = WF_X1 + frac * WF_W;
+            const y = p.map(vin, -SUPPLY, SUPPLY, WF_Y2, WF_Y1);
+            p.vertex(x, y);
+        }
+        p.endShape();
+
+        // Output wave (red for inverting, green for others)
+        const outCol = outInvert ? p.color(200, 30, 30) : p.color(20, 140, 20);
+        p.stroke(outCol); p.strokeWeight(2.5); p.noFill();
+        p.beginShape();
+        for (let i = 0; i < N; i++) {
+            const frac = i / (N - 1);
+            const phase = frac * 4 * Math.PI + t;
+            const vin = vinAmp * Math.sin(phase);
+            let vout = Av * vin;
+            vout = p.constrain(vout, -SUPPLY, SUPPLY);
+            const x = WF_X1 + frac * WF_W;
+            const y = p.map(vout, -SUPPLY, SUPPLY, WF_Y2, WF_Y1);
+            p.vertex(x, y);
+        }
+        p.endShape();
+
+        // Legend
+        const lx = WF_X1 + 8, ly = WF_Y1 + 8;
+        p.stroke(30, 80, 200); p.strokeWeight(2);
+        p.line(lx, ly + 6, lx + 18, ly + 6);
+        p.noStroke(); p.fill(30, 80, 200);
+        p.textAlign(p.LEFT, p.TOP);
+        p.textSize(10);
+        p.text('Vin (\u00B1' + vinAmp.toFixed(1) + 'V)', lx + 22, ly);
+
+        p.stroke(outCol); p.strokeWeight(2.5);
+        p.line(lx, ly + 20, lx + 18, ly + 20);
+        p.noStroke(); p.fill(outCol);
+        p.textSize(10);
+        const clipping = Math.abs(Av) * vinAmp > SUPPLY;
+        p.text('Vout (\u00B1' + voutAmp.toFixed(1) + 'V)' + (clipping ? ' \u26A0clip' : ''), lx + 22, ly + 14);
+
+        // Gain box
+        p.noStroke(); p.fill(240, 240, 255);
+        p.stroke(120, 120, 200);
+        p.strokeWeight(1);
+        p.rect(WF_X1 + WF_W - 145, WF_Y1 + 4, 140, 40, 4);
+        p.noStroke(); p.fill(40, 40, 140);
+        p.textAlign(p.CENTER, p.CENTER);
+        p.textSize(11); p.textStyle(p.BOLD);
+        p.text(getGainFormula(), WF_X1 + WF_W - 75, WF_Y1 + 14);
+        p.textStyle(p.NORMAL);
+        const phaseStr = Av < 0 ? '180\u00B0 phase shift' : 'In-phase output';
+        p.textSize(10); p.fill(80, 80, 160);
+        p.text(phaseStr, WF_X1 + WF_W - 75, WF_Y1 + 30);
+    }
+
+    // ---- Schematic drawing ----
+    function drawInverting() {
+        const vx = 30, vy = OA_VM;      // Vin
+        const jx = OA_LX - 30, jy = OA_VM; // junction
+        const fx = OA_RX, fy = OA_CY;      // Vout tap
+        const fbY = 90;                     // feedback wire height
+
+        p.stroke(50); p.strokeWeight(1.8);
+        // Vin wire
+        p.line(vx + 18, vy, jx - 50, vy);
+        // Ri end to junction
+        p.line(jx - 10, jy, jx, jy);
+        // Junction to op-amp
+        p.line(jx, jy, OA_LX, OA_VM);
+        // V+ to ground
+        p.line(OA_LX, OA_VP, OA_LX - 20, OA_VP);
+        p.line(OA_LX - 20, OA_VP, OA_LX - 20, OA_VP + 55);
+        drawGround(OA_LX - 20, OA_VP + 55);
+        // Output
+        p.line(OA_RX, OA_CY, SPLIT - 15, OA_CY);
+        // Feedback loop
+        p.line(fx + 5, fy, fx + 5, fbY);
+        p.line(fx + 5, fbY, jx, fbY);
+        p.line(jx, fbY, jx, jy);
+
+        drawResistorH(vx + 18, jx - 50, vy, 'Ri=' + Ri + 'k');
+        drawResistorH(jx + 15, fx - 15, fbY, 'Rf=' + (Rf >= 1000 ? (Rf/1000).toFixed(0)+'M' : Rf+'k'));
+        drawOpAmp();
+        p.fill(40); p.noStroke(); p.circle(jx, jy, 6); p.circle(fx+5, fy, 5);
+        labelNode(vx, vy - 14, 'Vin', p.color(30, 80, 200));
+        labelNode(SPLIT - 15, OA_CY - 12, 'Vout', p.color(200, 30, 30));
+
+        // formula
+        p.noStroke(); p.fill(60, 60, 150);
+        p.textAlign(p.CENTER, p.BOTTOM);
+        p.textSize(11); p.textStyle(p.BOLD);
+        p.text('Av = \u2212 Rf / Ri', SPLIT / 2, CH - 10);
+        p.textStyle(p.NORMAL);
+    }
+
+    function drawNonInverting() {
+        const vx = 30, vy = OA_VP;          // Vin at V+ pin
+        const jx = OA_LX - 25, jy = OA_VM; // V- junction
+        const gndY = OA_VM + 90;
+        const fbY  = 110;
+        const fx   = OA_RX, fy = OA_CY;
+
+        p.stroke(50); p.strokeWeight(1.8);
+        // Vin → V+
+        p.line(vx + 18, vy, OA_LX, OA_VP);
+        // V- junction → op-amp
+        p.line(jx, jy, OA_LX, OA_VM);
+        // Ri: V- junction to ground
+        p.line(jx, jy + 10, jx, gndY - 35);
+        drawGround(jx, gndY);
+        // Output wire
+        p.line(OA_RX, OA_CY, SPLIT - 15, OA_CY);
+        // Feedback: Vout → Rf → junction
+        p.line(fx + 5, fy, fx + 5, fbY);
+        p.line(fx + 5, fbY, jx, fbY);
+        p.line(jx, fbY, jx, jy);
+
+        drawResistorV(jx, jy + 10, gndY - 35, 'Ri=' + Ri + 'k');
+        drawResistorH(jx + 15, fx - 15, fbY, 'Rf=' + (Rf >= 1000 ? (Rf/1000).toFixed(0)+'M' : Rf+'k'));
+        drawOpAmp();
+        p.fill(40); p.noStroke(); p.circle(jx, jy, 6); p.circle(fx+5, fy, 5);
+        labelNode(vx, vy - 14, 'Vin', p.color(30, 80, 200));
+        labelNode(SPLIT - 15, OA_CY - 12, 'Vout', p.color(20, 140, 20));
+
+        p.noStroke(); p.fill(60, 60, 150);
+        p.textAlign(p.CENTER, p.BOTTOM);
+        p.textSize(11); p.textStyle(p.BOLD);
+        p.text('Av = 1 + Rf / Ri', SPLIT / 2, CH - 10);
+        p.textStyle(p.NORMAL);
+    }
+
+    function drawFollower() {
+        const vx = 30, vy = OA_VP;
+        const fx  = OA_RX, fy = OA_CY;
+        const jy  = OA_VM;
+
+        p.stroke(50); p.strokeWeight(1.8);
+        // Vin → V+
+        p.line(vx + 18, vy, OA_LX, OA_VP);
+        // V- to direct feedback (wire from output back to V-)
+        p.line(OA_RX, OA_CY, SPLIT - 15, OA_CY);
+        p.line(fx + 5, fy, fx + 5, jy);
+        p.line(fx + 5, jy, OA_LX, OA_VM);
+
+        drawOpAmp();
+        p.fill(40); p.noStroke(); p.circle(fx+5, fy, 5);
+        labelNode(vx, vy - 14, 'Vin', p.color(30, 80, 200));
+        labelNode(SPLIT - 15, OA_CY - 12, 'Vout', p.color(20, 140, 20));
+
+        // "Direct feedback" label
+        p.noStroke(); p.fill(100, 60, 0);
+        p.textAlign(p.CENTER, p.CENTER);
+        p.textSize(10);
+        p.text('direct feedback', (fx + 5 + OA_LX) / 2, jy - 12);
+
+        p.noStroke(); p.fill(60, 60, 150);
+        p.textAlign(p.CENTER, p.BOTTOM);
+        p.textSize(11); p.textStyle(p.BOLD);
+        p.text('Av = 1  (Vout = Vin)', SPLIT / 2, CH - 10);
+        p.textStyle(p.NORMAL);
+    }
+
+    p.setup = function () {
+        const canvas = p.createCanvas(CW, CH);
+        canvas.parent('canvas-container');
+        p.textFont('Arial');
+        p.noLoop();
+    };
+
+    p.draw = function () {
+        p.background(255);
+
+        // Divider
+        p.stroke(200); p.strokeWeight(1);
+        p.line(SPLIT, 10, SPLIT, CH - 10);
+
+        // Panel labels
+        p.noStroke(); p.fill(100);
+        p.textAlign(p.CENTER, p.TOP);
+        p.textSize(10);
+        const cfgNames = { inverting: 'Inverting Amplifier', noninverting: 'Non-Inverting Amplifier', follower: 'Voltage Follower (Buffer)' };
+        p.text(cfgNames[config], SPLIT / 2, 8);
+        p.text('Input & Output Waveforms', SPLIT + (CW - SPLIT) / 2, 8);
+
+        // Draw schematic
+        if (config === 'inverting')    drawInverting();
+        else if (config === 'noninverting') drawNonInverting();
+        else                           drawFollower();
+
+        // Draw waveform panel
+        drawWaveformPanel();
+
+        // Advance time if animating
+        if (isAnimating) {
+            t += 0.04;
+            if (t > 4 * Math.PI) t -= 4 * Math.PI;
+        }
+    };
+};
+
+const myP5 = new p5(sketch);
+
+window.updateSim  = updateSim;
+window.setConfig  = setConfig;
+window.toggleAnim = toggleAnim;
+window.resetSim   = resetSim;
+
+updateSim();
+</script>
+</body>
+</html>

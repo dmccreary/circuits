@@ -45,6 +45,8 @@ nav:
     - First-Order Filters: sims/first-order-filters/index.md
     - Second-Order Filter Designer: sims/second-order-filter/index.md
     - Audio Signal Chain: sims/audio-signal-chain/index.md
+    - Op-Amp Golden Rules: sims/opamp-golden-rules/index.md
+    - Op-Amp Configurations: sims/opamp-configurations/index.md
     - prompts/circuit-similarity/index.md
     - prompts/top-100-circuits/top-100-circuits.md
     - sims/circuit-similarity/index.md
