@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Harmonic Content Explorer</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <style>
+        * { box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; margin: 0; padding: 10px; background: #fff; }
+        .sim-container { max-width: 720px; margin: 0 auto; }
+        h3 { text-align: center; margin: 0 0 8px; font-size: 1.1em; color: #222; }
+
+        .preset-row {
+            display: flex;
+            justify-content: center;
+            gap: 6px;
+            margin-bottom: 8px;
+            flex-wrap: wrap;
+        }
+        .preset-btn {
+            padding: 4px 16px;
+            border: 2px solid #1565C0;
+            border-radius: 16px;
+            background: white;
+            color: #1565C0;
+            cursor: pointer;
+            font-size: 0.85em;
+            font-weight: bold;
+            transition: all 0.2s;
+        }
+        .preset-btn.active { background: #1565C0; color: white; }
+
+        .chart-wrapper { position: relative; margin-bottom: 6px; }
+        .chart-wrapper.tall  { height: 210px; }
+        .chart-wrapper.short { height: 130px; }
+
+        .controls {
+            background: #f0f0f0;
+            border-radius: 6px;
+            padding: 8px 14px;
+        }
+        .controls-title {
+            font-size: 0.82em;
+            font-weight: bold;
+            color: #555;
+            margin-bottom: 4px;
+        }
+        .slider-row {
+            display: flex;
+            align-items: center;
+            margin: 3px 0;
+        }
+        .slider-label {
+            min-width: 180px;
+            text-align: right;
+            padding-right: 10px;
+            font-size: 0.82em;
+            font-family: 'Courier New', monospace;
+            color: #333;
+        }
+        .slider-row input[type=range] {
+            flex: 1;
+            cursor: pointer;
+        }
+        .btn-row { display: flex; gap: 8px; margin-top: 6px; }
+        .action-btn {
+            padding: 5px 14px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.85em;
+            font-weight: bold;
+            background: #78909C;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+<div class="sim-container">
+    <h3>Harmonic Content Explorer</h3>
+
+    <div class="preset-row">
+        <button class="preset-btn" id="btnSine"     onclick="setPreset('sine')">Sine</button>
+        <button class="preset-btn active" id="btnSquare"   onclick="setPreset('square')">Square</button>
+        <button class="preset-btn" id="btnTriangle" onclick="setPreset('triangle')">Triangle</button>
+        <button class="preset-btn" id="btnSawtooth" onclick="setPreset('sawtooth')">Sawtooth</button>
+        <button class="preset-btn" id="btnCustom"   onclick="setPreset('custom')">Custom</button>
+    </div>
+
+    <!-- Time-domain waveform -->
+    <div class="chart-wrapper tall">
+        <canvas id="waveChart"></canvas>
+    </div>
+
+    <!-- Frequency spectrum -->
+    <div class="chart-wrapper short">
+        <canvas id="specChart"></canvas>
+    </div>
+
+    <div class="controls">
+        <div class="controls-title">Harmonic Amplitudes — drag to build a custom waveform</div>
+        <div id="slidersContainer"></div>
+        <div class="btn-row">
+            <button class="action-btn" onclick="setPreset('square')">&#8635; Reset to Square</button>
+        </div>
+    </div>
+</div>
+
+<script>
+// =====================================================
+// Configuration
+// =====================================================
+const N_HARMONICS = 7;
+const N_TIME      = 500;   // points across 2 full periods
+const PRESETS     = ['sine', 'square', 'triangle', 'sawtooth', 'custom'];
+
+// Color per harmonic
+const HARMONIC_COLORS = [
+    '#1565C0', '#B71C1C', '#1B5E20', '#E65100',
+    '#4A148C', '#004D40', '#827717'
+];
+
+// =====================================================
+// State
+// =====================================================
+let amplitudes   = new Array(N_HARMONICS).fill(0);  // signed, −1 to +1
+let currentPreset = 'square';
+
+// =====================================================
+// Preset definitions  (signed Fourier coefficients,
+// normalised so the fundamental magnitude = 1)
+// =====================================================
+function getPresetAmplitudes(preset) {
+    const a = new Array(N_HARMONICS).fill(0);
+    switch (preset) {
+        case 'sine':
+            a[0] = 1.0;
+            break;
+        case 'square':
+            // 4/π · [sin − (1/3)sin3 + (1/5)sin5 − …], normalised
+            for (let n = 1; n <= N_HARMONICS; n++) {
+                if (n % 2 === 1) a[n-1] = 1 / n;   // odd harmonics only, all positive (standard form)
+            }
+            break;
+        case 'triangle':
+            // 8/π² · [sin − (1/9)sin3 + (1/25)sin5 − …], normalised so H1 = 1
+            {
+                let sign = 1;
+                for (let n = 1; n <= N_HARMONICS; n += 2) {
+                    a[n-1] = sign / (n * n);
+                    sign = -sign;
+                }
+                // normalise
+                const m = Math.abs(a[0]);
+                for (let i = 0; i < N_HARMONICS; i++) a[i] /= m;
+            }
+            break;
+        case 'sawtooth':
+            // 2/π · [sin − (1/2)sin2 + (1/3)sin3 − …], normalised
+            for (let n = 1; n <= N_HARMONICS; n++) {
+                a[n-1] = (n % 2 === 1 ? 1 : -1) / n;
+            }
+            break;
+        // 'custom' — keep existing amplitudes unchanged
+    }
+    return a;
+}
+
+// =====================================================
+// Waveform synthesis: sum of sin harmonics over 0…2T
+// =====================================================
+function computeWaveform(amps) {
+    const pts = [];
+    for (let i = 0; i < N_TIME; i++) {
+        const t = (i / N_TIME) * 2;   // 0 to 2 periods
+        let y = 0;
+        for (let n = 1; n <= N_HARMONICS; n++) {
+            y += amps[n-1] * Math.sin(n * 2 * Math.PI * t);
+        }
+        pts.push({ x: t, y: y });
+    }
+    return pts;
+}
+
+// =====================================================
+// Slider ↔ amplitude mapping  (slider 0–100; 50 = 0.0)
+// =====================================================
+function sliderToAmp(v) { return (v - 50) / 50; }
+function ampToSlider(a) { return Math.round(a * 50 + 50); }
+
+// =====================================================
+// Build slider DOM
+// =====================================================
+function createSliders() {
+    const container = document.getElementById('slidersContainer');
+    container.innerHTML = '';
+    for (let n = 1; n <= N_HARMONICS; n++) {
+        const div = document.createElement('div');
+        div.className = 'slider-row';
+
+        const label = document.createElement('span');
+        label.className = 'slider-label';
+        label.id = 'hLabel' + n;
+        label.style.color = HARMONIC_COLORS[n-1];
+
+        const input = document.createElement('input');
+        input.type = 'range';
+        input.id   = 'hSlider' + n;
+        input.min  = 0;
+        input.max  = 100;
+        input.value = 50;  // default = 0
+        input.style.accentColor = HARMONIC_COLORS[n-1];
+        input.addEventListener('input', () => {
+            currentPreset = 'custom';
+            updatePresetButtons();
+            readSliders();
+            refreshAll();
+        });
+
+        div.appendChild(label);
+        div.appendChild(input);
+        container.appendChild(div);
+    }
+}
+
+function readSliders() {
+    for (let n = 1; n <= N_HARMONICS; n++) {
+        amplitudes[n-1] = sliderToAmp(parseFloat(document.getElementById('hSlider' + n).value));
+    }
+}
+
+function writeSliders() {
+    for (let n = 1; n <= N_HARMONICS; n++) {
+        document.getElementById('hSlider' + n).value = ampToSlider(amplitudes[n-1]);
+    }
+    updateLabels();
+}
+
+function updateLabels() {
+    for (let n = 1; n <= N_HARMONICS; n++) {
+        const sym = n === 1 ? 'f\u2080' : n + 'f\u2080';
+        document.getElementById('hLabel' + n).textContent =
+            'H' + n + ' (' + sym + '): ' + amplitudes[n-1].toFixed(3);
+    }
+}
+
+// =====================================================
+// Chart.js — Waveform (line)
+// =====================================================
+const waveCtx = document.getElementById('waveChart').getContext('2d');
+
+// Dataset 0 = sum (bold black), datasets 1-7 = individual harmonics (thin)
+function buildWaveDatasets() {
+    const ds = [];
+    ds.push({
+        label: 'Sum',
+        data: [],
+        borderColor: '#111',
+        backgroundColor: 'transparent',
+        borderWidth: 2.5,
+        pointRadius: 0,
+        tension: 0,
+        order: 0
+    });
+    for (let n = 1; n <= N_HARMONICS; n++) {
+        ds.push({
+            label: 'H' + n,
+            data: [],
+            borderColor: HARMONIC_COLORS[n-1] + '77',
+            backgroundColor: 'transparent',
+            borderWidth: 1,
+            pointRadius: 0,
+            tension: 0,
+            order: n
+        });
+    }
+    return ds;
+}
+
+const waveChart = new Chart(waveCtx, {
+    type: 'line',
+    data: { datasets: buildWaveDatasets() },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        animation: { duration: 0 },
+        scales: {
+            x: {
+                type: 'linear',
+                min: 0, max: 2,
+                title: { display: true, text: 'Time (periods)', font: { size: 10 } },
+                ticks: {
+                    stepSize: 0.5,
+                    callback: v => v + 'T',
+                    font: { size: 9 }
+                },
+                grid: { color: 'rgba(0,0,0,0.07)' }
+            },
+            y: {
+                title: { display: true, text: 'Amplitude', font: { size: 10 } },
+                ticks: { font: { size: 9 } },
+                grid: { color: 'rgba(0,0,0,0.07)' }
+            }
+        },
+        plugins: {
+            legend: { display: false },
+            tooltip: { enabled: false }
+        }
+    }
+});
+
+// =====================================================
+// Chart.js — Spectrum (bar)
+// =====================================================
+const specCtx = document.getElementById('specChart').getContext('2d');
+
+const specChart = new Chart(specCtx, {
+    type: 'bar',
+    data: {
+        labels: Array.from({ length: N_HARMONICS }, (_, i) => (i + 1) + 'f\u2080'),
+        datasets: [{
+            label: '|Amplitude|',
+            data: new Array(N_HARMONICS).fill(0),
+            backgroundColor: HARMONIC_COLORS,
+            borderColor: HARMONIC_COLORS,
+            borderWidth: 1
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        animation: { duration: 0 },
+        scales: {
+            x: {
+                title: { display: true, text: 'Harmonic Frequency', font: { size: 10 } },
+                ticks: { font: { size: 9 } },
+                grid: { display: false }
+            },
+            y: {
+                min: 0, max: 1.05,
+                title: { display: true, text: '|Amplitude|', font: { size: 10 } },
+                ticks: { font: { size: 9 } }
+            }
+        },
+        plugins: {
+            legend: { display: false },
+            tooltip: {
+                callbacks: {
+                    label: item => '|A| = ' + item.parsed.y.toFixed(3)
+                }
+            }
+        }
+    }
+});
+
+// =====================================================
+// Refresh both charts from current amplitudes[]
+// =====================================================
+function refreshAll() {
+    updateLabels();
+
+    // Sum waveform
+    waveChart.data.datasets[0].data = computeWaveform(amplitudes);
+
+    // Individual harmonic traces
+    for (let n = 1; n <= N_HARMONICS; n++) {
+        const single = new Array(N_HARMONICS).fill(0);
+        single[n-1] = amplitudes[n-1];
+        waveChart.data.datasets[n].data = computeWaveform(single);
+    }
+    waveChart.update('none');
+
+    // Magnitude spectrum
+    specChart.data.datasets[0].data = amplitudes.map(Math.abs);
+    specChart.update('none');
+}
+
+// =====================================================
+// Preset buttons
+// =====================================================
+function updatePresetButtons() {
+    PRESETS.forEach(p => {
+        const id = 'btn' + p.charAt(0).toUpperCase() + p.slice(1);
+        const btn = document.getElementById(id);
+        if (btn) btn.classList.toggle('active', p === currentPreset);
+    });
+}
+
+function setPreset(preset) {
+    currentPreset = preset;
+    updatePresetButtons();
+    if (preset !== 'custom') {
+        amplitudes = getPresetAmplitudes(preset);
+        writeSliders();
+    }
+    refreshAll();
+}
+
+// =====================================================
+// Initialise
+// =====================================================
+createSliders();
+setPreset('square');
+</script>
+</body>
+</html>

@@ -112,6 +112,7 @@
         <button class="filter-btn active" id="btnLP" onclick="setFilter('lp')">Low-Pass</button>
         <button class="filter-btn"        id="btnHP" onclick="setFilter('hp')">High-Pass</button>
         <button class="filter-btn"        id="btnBP" onclick="setFilter('bp')">Band-Pass</button>
+        <button class="filter-btn"        id="btnBR" onclick="setFilter('br')">Band-Reject</button>
     </div>
 
     <div class="chart-wrapper">
@@ -203,13 +204,14 @@ function magnitudeDB(f, f0, Q, type) {
     let mag;
     if (type === 'lp')      mag = 1 / denom;
     else if (type === 'hp') mag = (u * u) / denom;
-    else                    mag = (u / Q) / denom;  // bp
+    else if (type === 'bp') mag = (u / Q) / denom;
+    else                    mag = Math.abs(1 - u * u) / denom;  // br (band-reject / notch)
     return 20 * Math.log10(Math.max(mag, 1e-10));
 }
 
 /** Peak gain for LP/HP (only when Q > 1/sqrt(2)) */
 function peakGainDB(Q, type) {
-    if (type === 'bp') return 0;  // BP always peaks at 0 dB at f0
+    if (type === 'bp' || type === 'br') return 0;  // BP peaks at 0 dB at f0; BR passband is 0 dB
     if (Q <= 1 / Math.sqrt(2)) return 0;
     // LP peak at u = sqrt(1 - 1/(2Q²))
     const u2 = 1 - 1 / (2 * Q * Q);
@@ -342,7 +344,8 @@ const chart = new Chart(ctx, {
 const FILTER_COLORS = {
     lp: { border: '#4527A0', bg: 'rgba(69,39,160,0.08)', label: 'Low-Pass Gain' },
     hp: { border: '#B71C1C', bg: 'rgba(183,28,28,0.08)', label: 'High-Pass Gain' },
-    bp: { border: '#1B5E20', bg: 'rgba(27,94,32,0.08)', label: 'Band-Pass Gain' }
+    bp: { border: '#1B5E20', bg: 'rgba(27,94,32,0.08)', label: 'Band-Pass Gain' },
+    br: { border: '#E65100', bg: 'rgba(230,81,0,0.08)', label: 'Band-Reject Gain' }
 };
 
 // =====================================================
@@ -395,7 +398,7 @@ function updateParams() {
 
 function setFilter(type) {
     filterType = type;
-    ['LP', 'HP', 'BP'].forEach(id => {
+    ['LP', 'HP', 'BP', 'BR'].forEach(id => {
         document.getElementById('btn' + id).classList.toggle('active', id.toLowerCase() === type);
     });
     updateParams();
