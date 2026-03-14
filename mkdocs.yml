@@ -41,6 +41,8 @@ nav:
     - DC Circuit V2: sims/dc-circuit/circuits-v2.md
     - Natural Frequency Calculator: sims/natural-frequency-calculator/index.md
     - RC Charging: sims/rc-charging/index.md
+    - RL Energizing: sims/rl-charging/index.md
+    - RLC Transient Response: sims/rlc-circuit/index.md
     - Filter Frequency Response: sims/filter-frequency-response/index.md
     - First-Order Filters: sims/first-order-filters/index.md
     - Second-Order Filter Designer: sims/second-order-filter/index.md
