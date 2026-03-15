@@ -250,12 +250,14 @@ function drawCircuit() {
     // ── SPDT switch ────────────────────────────────────────────────────────
     drawSPDTSwitch(swAX, swCX, swBX, swY, switchPos);
 
-    // ── Common → cap top ──────────────────────────────────────────────────
+    // ── Common → cap top plate ────────────────────────────────────────────
     if (active) {
         drawAnimatedWire(swCX, swY + 10, capX, capTopY, eSpeed, 1.0);
+        drawAnimatedWire(capX, capTopY, capX, capMidY - gapH / 2, eSpeed, 1.0);
     } else {
         stroke(0); strokeWeight(lineWidth);
         line(swCX, swY + 10, capX, capTopY);
+        line(capX, capTopY, capX, capMidY - gapH / 2);
     }
 
     // ── Capacitor (vertical) ──────────────────────────────────────────────
