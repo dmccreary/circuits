@@ -32,9 +32,52 @@
         }
         .preset-btn.active { background: #1565C0; color: white; }
 
+        /* Step-through bar */
+        .step-bar {
+            background: #E3F2FD;
+            border-radius: 6px;
+            padding: 6px 12px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .step-bar-btn {
+            padding: 4px 14px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.85em;
+            font-weight: bold;
+        }
+        .step-btn-primary { background: #1565C0; color: white; }
+        .step-btn-gray    { background: #78909C; color: white; }
+        .step-btn-red     { background: #C62828; color: white; }
+        #stepDisplay {
+            flex: 1;
+            text-align: center;
+            font-size: 0.85em;
+            font-weight: bold;
+            color: #1565C0;
+        }
+
         .chart-wrapper { position: relative; margin-bottom: 6px; }
         .chart-wrapper.tall  { height: 210px; }
         .chart-wrapper.short { height: 130px; }
+
+        /* Formula box */
+        .formula-box {
+            background: #FFF8E1;
+            border-left: 3px solid #F9A825;
+            border-radius: 0 4px 4px 0;
+            padding: 6px 10px;
+            margin-bottom: 6px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.80em;
+            color: #333;
+            word-break: break-word;
+        }
 
         .controls {
             background: #f0f0f0;
@@ -51,6 +94,7 @@
             display: flex;
             align-items: center;
             margin: 3px 0;
+            transition: opacity 0.2s;
         }
         .slider-label {
             min-width: 180px;
@@ -89,6 +133,15 @@
         <button class="preset-btn" id="btnCustom"   onclick="setPreset('custom')">Custom</button>
     </div>
 
+    <!-- Step-through bar -->
+    <div class="step-bar">
+        <button class="step-bar-btn step-btn-primary" id="btnStartStep" onclick="startStepThrough()">&#9654; Step Through</button>
+        <span id="stepDisplay">All 7 harmonics shown</span>
+        <button class="step-bar-btn step-btn-gray"    id="btnRemoveHarm" style="display:none" onclick="removeHarmonic()">&#8592; Remove</button>
+        <button class="step-bar-btn step-btn-primary" id="btnAddHarm"    style="display:none" onclick="addHarmonic()">Add Next &#8594;</button>
+        <button class="step-bar-btn step-btn-red"     id="btnExitStep"   style="display:none" onclick="exitStepThrough()">&#10005; Exit</button>
+    </div>
+
     <!-- Time-domain waveform -->
     <div class="chart-wrapper tall">
         <canvas id="waveChart"></canvas>
@@ -98,6 +151,9 @@
     <div class="chart-wrapper short">
         <canvas id="specChart"></canvas>
     </div>
+
+    <!-- Formula display -->
+    <div class="formula-box" id="formulaBox"></div>
 
     <div class="controls">
         <div class="controls-title">Harmonic Amplitudes — drag to build a custom waveform</div>
@@ -125,8 +181,10 @@ const HARMONIC_COLORS = [
 // =====================================================
 // State
 // =====================================================
-let amplitudes   = new Array(N_HARMONICS).fill(0);  // signed, −1 to +1
+let amplitudes    = new Array(N_HARMONICS).fill(0);  // signed, -1 to +1
 let currentPreset = 'square';
+let stepMode      = false;
+let stepCount     = N_HARMONICS;
 
 // =====================================================
 // Preset definitions  (signed Fourier coefficients,
@@ -139,13 +197,13 @@ function getPresetAmplitudes(preset) {
             a[0] = 1.0;
             break;
         case 'square':
-            // 4/π · [sin − (1/3)sin3 + (1/5)sin5 − …], normalised
+            // 4/pi * [sin - (1/3)sin3 + (1/5)sin5 - ...], normalised
             for (let n = 1; n <= N_HARMONICS; n++) {
                 if (n % 2 === 1) a[n-1] = 1 / n;   // odd harmonics only, all positive (standard form)
             }
             break;
         case 'triangle':
-            // 8/π² · [sin − (1/9)sin3 + (1/25)sin5 − …], normalised so H1 = 1
+            // 8/pi^2 * [sin - (1/9)sin3 + (1/25)sin5 - ...], normalised so H1 = 1
             {
                 let sign = 1;
                 for (let n = 1; n <= N_HARMONICS; n += 2) {
@@ -158,18 +216,18 @@ function getPresetAmplitudes(preset) {
             }
             break;
         case 'sawtooth':
-            // 2/π · [sin − (1/2)sin2 + (1/3)sin3 − …], normalised
+            // 2/pi * [sin - (1/2)sin2 + (1/3)sin3 - ...], normalised
             for (let n = 1; n <= N_HARMONICS; n++) {
                 a[n-1] = (n % 2 === 1 ? 1 : -1) / n;
             }
             break;
-        // 'custom' — keep existing amplitudes unchanged
+        // 'custom' -- keep existing amplitudes unchanged
     }
     return a;
 }
 
 // =====================================================
-// Waveform synthesis: sum of sin harmonics over 0…2T
+// Waveform synthesis: sum of sin harmonics over 0...2T
 // =====================================================
 function computeWaveform(amps) {
     const pts = [];
@@ -185,7 +243,7 @@ function computeWaveform(amps) {
 }
 
 // =====================================================
-// Slider ↔ amplitude mapping  (slider 0–100; 50 = 0.0)
+// Slider <-> amplitude mapping  (slider 0-100; 50 = 0.0)
 // =====================================================
 function sliderToAmp(v) { return (v - 50) / 50; }
 function ampToSlider(a) { return Math.round(a * 50 + 50); }
@@ -199,6 +257,7 @@ function createSliders() {
     for (let n = 1; n <= N_HARMONICS; n++) {
         const div = document.createElement('div');
         div.className = 'slider-row';
+        div.id = 'sliderRow' + n;
 
         const label = document.createElement('span');
         label.className = 'slider-label';
@@ -247,7 +306,119 @@ function updateLabels() {
 }
 
 // =====================================================
-// Chart.js — Waveform (line)
+// Step-through logic
+// =====================================================
+function updateStepDisplay() {
+    const el = document.getElementById('stepDisplay');
+    if (!stepMode) {
+        el.textContent = 'All ' + N_HARMONICS + ' harmonics shown';
+    } else {
+        el.textContent = 'Step ' + stepCount + ' of ' + N_HARMONICS + ': H' + stepCount + (stepCount === 1 ? ' only' : ' added');
+    }
+}
+
+function updateStepButtonStates() {
+    if (stepMode) {
+        document.getElementById('btnAddHarm').disabled    = stepCount >= N_HARMONICS;
+        document.getElementById('btnRemoveHarm').disabled = stepCount <= 1;
+    }
+}
+
+function updateSliderRowOpacity() {
+    for (let n = 1; n <= N_HARMONICS; n++) {
+        const row = document.getElementById('sliderRow' + n);
+        if (row) {
+            row.style.opacity = (stepMode && n > stepCount) ? '0.25' : '1';
+        }
+    }
+}
+
+function startStepThrough() {
+    stepMode  = true;
+    stepCount = 1;
+    document.getElementById('btnStartStep').style.display  = 'none';
+    document.getElementById('btnRemoveHarm').style.display = 'inline-block';
+    document.getElementById('btnAddHarm').style.display    = 'inline-block';
+    document.getElementById('btnExitStep').style.display   = 'inline-block';
+    updateStepDisplay();
+    updateStepButtonStates();
+    updateSliderRowOpacity();
+    refreshAll();
+}
+
+function addHarmonic() {
+    if (stepCount < N_HARMONICS) {
+        stepCount++;
+        updateStepDisplay();
+        updateStepButtonStates();
+        updateSliderRowOpacity();
+        refreshAll();
+    }
+}
+
+function removeHarmonic() {
+    if (stepCount > 1) {
+        stepCount--;
+        updateStepDisplay();
+        updateStepButtonStates();
+        updateSliderRowOpacity();
+        refreshAll();
+    }
+}
+
+function exitStepThrough() {
+    stepMode  = false;
+    stepCount = N_HARMONICS;
+    document.getElementById('btnStartStep').style.display  = 'inline-block';
+    document.getElementById('btnRemoveHarm').style.display = 'none';
+    document.getElementById('btnAddHarm').style.display    = 'none';
+    document.getElementById('btnExitStep').style.display   = 'none';
+    updateStepDisplay();
+    updateSliderRowOpacity();
+    refreshAll();
+}
+
+// =====================================================
+// Formula builder
+// =====================================================
+function buildFormula(activeAmps) {
+    const omegaTerms = ['', '', '2\u03C9\u2080t', '3\u03C9\u2080t', '4\u03C9\u2080t', '5\u03C9\u2080t', '6\u03C9\u2080t'];
+    // n=1 -> omega_0 t, n=2 -> 2*omega_0*t, etc.
+    function omegaStr(n) {
+        if (n === 1) return '\u03C9\u2080t';
+        return n + '\u03C9\u2080t';
+    }
+
+    let terms = [];
+    for (let n = 1; n <= N_HARMONICS; n++) {
+        const a = activeAmps[n-1];
+        if (Math.abs(a) < 0.001) continue;
+        terms.push({ coeff: a, arg: omegaStr(n) });
+    }
+
+    if (terms.length === 0) return 'f(t) = 0';
+
+    let result = 'f(t) = ';
+    terms.forEach((term, idx) => {
+        const absVal = Math.abs(term.coeff).toFixed(3);
+        if (idx === 0) {
+            // First term: show sign only if negative
+            if (term.coeff < 0) result += '\u2212';
+            result += absVal + '\u00B7sin(' + term.arg + ')';
+        } else {
+            if (term.coeff < 0) {
+                result += ' \u2212 ';
+            } else {
+                result += ' + ';
+            }
+            result += absVal + '\u00B7sin(' + term.arg + ')';
+        }
+    });
+    return result;
+}
+
+// =====================================================
+// Chart.js -- Waveform (line)
 // =====================================================
 const waveCtx = document.getElementById('waveChart').getContext('2d');
 
@@ -312,7 +483,7 @@ const waveChart = new Chart(waveCtx, {
 });
 
 // =====================================================
-// Chart.js — Spectrum (bar)
+// Chart.js -- Spectrum (bar)
 // =====================================================
 const specCtx = document.getElementById('specChart').getContext('2d');
 
@@ -361,20 +532,52 @@ const specChart = new Chart(specCtx, {
 function refreshAll() {
     updateLabels();
 
+    // Compute active amplitudes (zero out inactive harmonics in step mode)
+    const activeAmps = amplitudes.map((a, i) => (stepMode && i >= stepCount) ? 0 : a);
+
     // Sum waveform
-    waveChart.data.datasets[0].data = computeWaveform(amplitudes);
+    waveChart.data.datasets[0].data = computeWaveform(activeAmps);
 
     // Individual harmonic traces
     for (let n = 1; n <= N_HARMONICS; n++) {
         const single = new Array(N_HARMONICS).fill(0);
         single[n-1] = amplitudes[n-1];
         waveChart.data.datasets[n].data = computeWaveform(single);
+
+        if (stepMode) {
+            if (n === stepCount) {
+                // Highlight the current newest harmonic
+                waveChart.data.datasets[n].borderColor = HARMONIC_COLORS[n-1];
+                waveChart.data.datasets[n].borderWidth  = 2;
+            } else {
+                // Fade others
+                waveChart.data.datasets[n].borderColor = HARMONIC_COLORS[n-1] + '11';
+                waveChart.data.datasets[n].borderWidth  = 1;
+            }
+        } else {
+            waveChart.data.datasets[n].borderColor = HARMONIC_COLORS[n-1] + '77';
+            waveChart.data.datasets[n].borderWidth  = 1;
+        }
     }
     waveChart.update('none');
 
-    // Magnitude spectrum
-    specChart.data.datasets[0].data = amplitudes.map(Math.abs);
+    // Magnitude spectrum with faded inactive bars in step mode
+    specChart.data.datasets[0].data = activeAmps.map(Math.abs);
+    if (stepMode) {
+        specChart.data.datasets[0].backgroundColor = HARMONIC_COLORS.map((c, i) =>
+            i < stepCount ? c : c + '22'
+        );
+        specChart.data.datasets[0].borderColor = HARMONIC_COLORS.map((c, i) =>
+            i < stepCount ? c : c + '22'
+        );
+    } else {
+        specChart.data.datasets[0].backgroundColor = HARMONIC_COLORS;
+        specChart.data.datasets[0].borderColor      = HARMONIC_COLORS;
+    }
     specChart.update('none');
+
+    // Formula
+    document.getElementById('formulaBox').textContent = buildFormula(activeAmps);
 }
 
 // =====================================================
@@ -389,6 +592,8 @@ function updatePresetButtons() {
 }
 
 function setPreset(preset) {
+    // Exit step mode when a preset is clicked
+    if (stepMode) exitStepThrough();
     currentPreset = preset;
     updatePresetButtons();
     if (preset !== 'custom') {
