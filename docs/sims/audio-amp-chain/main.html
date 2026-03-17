@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Audio Amplifier Chain</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: Arial, sans-serif;
+    background: #f5f5f5;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 16px;
+  }
+  h1 {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #1a237e;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+  #canvas-container {
+    border: 1px solid #ccc;
+    background: #fff;
+    max-width: 720px;
+    width: 100%;
+  }
+  #controls {
+    background: #f0f0f0;
+    border: 1px solid #ccc;
+    border-top: none;
+    padding: 14px 16px 12px;
+    max-width: 720px;
+    width: 100%;
+  }
+  .control-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    gap: 8px;
+  }
+  .control-label {
+    min-width: 240px;
+    text-align: right;
+    font-size: 0.85rem;
+    color: #333;
+    flex-shrink: 0;
+  }
+  input[type="range"] {
+    flex: 1;
+    min-width: 120px;
+  }
+  select {
+    font-size: 0.85rem;
+    padding: 3px 6px;
+    border: 1px solid #aaa;
+    border-radius: 3px;
+  }
+  .checkbox-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+    padding-left: 248px;
+  }
+  .checkbox-row label {
+    font-size: 0.85rem;
+    color: #333;
+  }
+  .button-row {
+    display: flex;
+    gap: 10px;
+    padding-left: 248px;
+  }
+  button {
+    padding: 5px 18px;
+    font-size: 0.85rem;
+    background: #1565C0;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  button:hover { background: #0d47a1; }
+</style>
+</head>
+<body>
+<h1>Audio Amplifier Chain</h1>
+<div id="canvas-container">
+  <canvas id="myCanvas" width="700" height="360"></canvas>
+</div>
+<div id="controls">
+  <div class="control-row">
+    <span class="control-label" id="label-input">Input Level (Mic): -50 dBV</span>
+    <input type="range" id="slider-input" min="-70" max="-20" step="1" value="-50">
+  </div>
+  <div class="control-row">
+    <span class="control-label" id="label-preamp">Preamp Gain: 40 dB</span>
+    <input type="range" id="slider-preamp" min="20" max="60" step="1" value="40">
+  </div>
+  <div class="control-row">
+    <span class="control-label" id="label-master">Master Volume: 0 dB</span>
+    <input type="range" id="slider-master" min="-20" max="6" step="1" value="0">
+  </div>
+  <div class="control-row">
+    <span class="control-label">View stage:</span>
+    <select id="select-stage">
+      <option value="0">Mic</option>
+      <option value="1">Preamp</option>
+      <option value="2">Mixer</option>
+      <option value="3">Power Amp</option>
+      <option value="4">Speaker</option>
+    </select>
+  </div>
+  <div class="checkbox-row">
+    <input type="checkbox" id="cb-noise">
+    <label for="cb-noise">Show noise floor</label>
+  </div>
+  <div class="button-row">
+    <button id="btn-reset">Reset</button>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+<script>
+// ── State ──────────────────────────────────────────────────────────────
+let inputLevel  = -50;   // dBV from slider
+let preampGain  = 40;    // dB from slider
+let masterVol   = 0;     // dB from slider
+let viewStage   = 0;     // 0=Mic, 1=Preamp, 2=Mixer, 3=PowerAmp, 4=Speaker
+let showNoise   = false;
+
+// ── Signal chain ──────────────────────────────────────────────────────
+const CLIP_LINE  = +6;   // dBV: preamp clips here
+const CLIP_PA    = +20;  // dBV: power amp clips here
+const NOISE_FLOOR_DBV = -90;
+
+function computeChain() {
+  const micOut = inputLevel;
+
+  let preampRaw = micOut + preampGain;
+  const preampClip = preampRaw > CLIP_LINE;
+  const preampOut  = preampClip ? CLIP_LINE : preampRaw;
+
+  const mixerOut = preampOut; // unity gain
+
+  let paRaw = mixerOut + masterVol;
+  const paClip = paRaw > CLIP_PA;
+  const paOut  = paClip ? CLIP_PA : paRaw;
+
+  const spkOut = paOut;
+
+  return {
+    levels:  [micOut, preampOut, mixerOut, paOut, spkOut],
+    clips:   [false, preampClip, false, paClip, false],
+    rawLevels: [micOut, preampRaw, mixerOut, paRaw, spkOut]
+  };
+}
+
+// ── Layout constants ──────────────────────────────────────────────────
+const W = 700, H = 360;
+const BLOCK_W = 90, BLOCK_H = 70;
+const BLOCK_Y = 38;   // top of blocks
+const METER_H = 80;   // height of level meter below block
+const WAVEFORM_Y = 220; // top of waveform strip
+const WAVEFORM_H = 100;
+const WAVEFORM_W = W - 40;
+
+const STAGE_NAMES = ["Mic", "Preamp", "Mixer", "Power Amp", "Speaker"];
+const BLOCK_COLOR = "#1565C0";
+const ARROW_COLOR = "#555555";
+const CLIP_COLOR  = "#B71C1C";
+const WAVE_COLOR  = "#00695C";
+
+// Compute x-center of each block, distributed evenly across width
+function blockCenterX(i) {
+  const margin = 55;
+  const step = (W - 2 * margin) / 4;
+  return margin + i * step;
+}
+
+// ── dBV → meter bar height (0..1) ─────────────────────────────────────
+function dbToFraction(db) {
+  // -80 dBV → 0,  0 dBV → 0.70,  +20 dBV → 1.0
+  // linear interpolation between anchor points
+  if (db <= -80) return 0;
+  if (db >= 20)  return 1;
+  if (db <= 0) {
+    return 0.70 * (db + 80) / 80;
+  }
+  // 0 → +20: 0.70 → 1.0
+  return 0.70 + 0.30 * db / 20;
+}
+
+function meterColor(db) {
+  if (db < -10) return [56, 142, 60];   // green
+  if (db < 0)   return [245, 167, 0];   // yellow-orange
+  return [183, 28, 28];                  // red
+}
+
+// ── Waveform ──────────────────────────────────────────────────────────
+function getWaveformSamples(chain, stageIdx, numSamples) {
+  const db = chain.levels[stageIdx];
+  const raw = chain.rawLevels[stageIdx];
+  const clipDb = (stageIdx === 1) ? CLIP_LINE : (stageIdx === 3) ? CLIP_PA : Infinity;
+  const isClipped = chain.clips[stageIdx];
+
+  // amplitude in linear scale relative to a reference 0 dBV=1 V
+  const ampLinear = Math.pow(10, db / 20);
+  const clipLinear = Math.pow(10, clipDb / 20);
+  const noiseAmp = showNoise ? 0.01 : 0;
+
+  const samples = [];
+  for (let s = 0; s < numSamples; s++) {
+    const t = s / numSamples;
+    let v = ampLinear * Math.sin(2 * Math.PI * 3 * t); // 3 cycles
+    // For clipping: the raw amplitude before clip
+    if (isClipped) {
+      const rawAmp = Math.pow(10, raw / 20);
+      let rawV = rawAmp * Math.sin(2 * Math.PI * 3 * t);
+      rawV = Math.max(-clipLinear, Math.min(clipLinear, rawV));
+      v = rawV;
+    }
+    if (showNoise) {
+      v += noiseAmp * (Math.random() * 2 - 1);
+    }
+    samples.push(v);
+  }
+  return { samples, ampLinear, isClipped };
+}
+
+// ── p5.js sketch ──────────────────────────────────────────────────────
+const sketch = function(p) {
+  p.setup = function() {
+    const cnv = p.createCanvas(W, H);
+    cnv.parent('canvas-container');
+    // Replace default canvas insertion with existing canvas
+    p.noLoop();
+    p.textFont('Arial');
+    p.draw();
+  };
+
+  p.draw = function() {
+    const chain = computeChain();
+
+    p.background(255);
+
+    // ── Draw blocks + arrows ─────────────────────────────────────────
+    for (let i = 0; i < 5; i++) {
+      const cx = blockCenterX(i);
+      const bx = cx - BLOCK_W / 2;
+      const by = BLOCK_Y;
+
+      // Arrow from previous block
+      if (i > 0) {
+        const prevCx = blockCenterX(i - 1);
+        const ax1 = prevCx + BLOCK_W / 2;
+        const ax2 = cx - BLOCK_W / 2;
+        const ay  = BLOCK_Y + BLOCK_H / 2;
+        p.stroke(ARROW_COLOR);
+        p.strokeWeight(2);
+        p.line(ax1, ay, ax2, ay);
+        // Arrowhead
+        p.fill(ARROW_COLOR);
+        p.noStroke();
+        p.triangle(ax2, ay - 5, ax2, ay + 5, ax2 + 9, ay);
+      }
+
+      // Block fill
+      const isSelected = (i === viewStage);
+      p.strokeWeight(isSelected ? 3 : 1.5);
+      p.stroke(isSelected ? '#FF8F00' : BLOCK_COLOR);
+      p.fill(BLOCK_COLOR);
+      p.rect(bx, by, BLOCK_W, BLOCK_H, 5);
+
+      // Block name
+      p.noStroke();
+      p.fill(255);
+      p.textSize(12);
+      p.textAlign(p.CENTER, p.CENTER);
+      p.textStyle(p.BOLD);
+      p.text(STAGE_NAMES[i], cx, by + BLOCK_H * 0.33);
+
+      // dBV inside block
+      p.textStyle(p.NORMAL);
+      p.textSize(11);
+      const dbStr = chain.levels[i].toFixed(1) + " dBV";
+      p.text(dbStr, cx, by + BLOCK_H * 0.65);
+
+      // CLIP label
+      if (chain.clips[i]) {
+        p.fill(CLIP_COLOR);
+        p.textSize(11);
+        p.textStyle(p.BOLD);
+        p.text("CLIP", cx, by - 10);
+        p.textStyle(p.NORMAL);
+      }
+
+      // ── Level meter bar ──────────────────────────────────────────
+      const meterX  = cx - 14;
+      const meterW  = 28;
+      const meterTop = BLOCK_Y + BLOCK_H + 6;
+      const meterBot = meterTop + METER_H;
+
+      // Background
+      p.noStroke();
+      p.fill(220);
+      p.rect(meterX, meterTop, meterW, METER_H, 2);
+
+      // Fill
+      const frac = dbToFraction(chain.levels[i]);
+      const fillH = frac * METER_H;
+      const [r, g, b] = meterColor(chain.levels[i]);
+      p.fill(r, g, b);
+      p.rect(meterX, meterBot - fillH, meterW, fillH, 2);
+
+      // Noise floor line
+      if (showNoise) {
+        const nf = dbToFraction(NOISE_FLOOR_DBV);
+        const nfY = meterBot - nf * METER_H;
+        p.stroke(100, 100, 255, 160);
+        p.strokeWeight(1);
+        p.line(meterX, nfY, meterX + meterW, nfY);
+      }
+
+      // Meter outline
+      p.noFill();
+      p.stroke(150);
+      p.strokeWeight(1);
+      p.rect(meterX, meterTop, meterW, METER_H, 2);
+
+      // 0 dBV tick line on meter
+      const zeroY = meterBot - dbToFraction(0) * METER_H;
+      p.stroke(180, 0, 0, 180);
+      p.strokeWeight(1);
+      p.line(meterX - 4, zeroY, meterX + meterW + 4, zeroY);
+
+      // Annotation text below meter
+      p.noStroke();
+      p.fill(50);
+      p.textAlign(p.CENTER, p.TOP);
+      p.textSize(9.5);
+      p.textStyle(p.NORMAL);
+
+      let annot = "";
+      if (i === 0) {
+        annot = "~" + chain.levels[0].toFixed(0) + " dBV";
+      } else if (i === 1) {
+        annot = chain.levels[1].toFixed(1) + " dBV";
+      } else if (i === 2) {
+        annot = "Unity gain";
+      } else if (i === 3) {
+        const dbv = chain.levels[3];
+        const vRms = Math.pow(10, dbv / 20);
+        const pWatts = (vRms * vRms) / 8;
+        const pStr = pWatts < 10 ? pWatts.toFixed(2) : pWatts.toFixed(1);
+        annot = dbv.toFixed(1) + " dBV\n" + pStr + " W/8Ω";
+      } else if (i === 4) {
+        annot = "Output";
+      }
+
+      // Multi-line annotation
+      const lines = annot.split('\n');
+      lines.forEach((line, li) => {
+        p.text(line, cx, meterBot + 4 + li * 11);
+      });
+    }
+
+    // ── Waveform strip ───────────────────────────────────────────────
+    const wx = 20, wy = WAVEFORM_Y, ww = WAVEFORM_W, wh = WAVEFORM_H;
+
+    // Background
+    p.noStroke();
+    p.fill(245, 250, 248);
+    p.rect(wx, wy, ww, wh, 4);
+    p.noFill();
+    p.stroke(200);
+    p.strokeWeight(1);
+    p.rect(wx, wy, ww, wh, 4);
+
+    // Stage label
+    p.noStroke();
+    p.fill(60);
+    p.textAlign(p.LEFT, p.TOP);
+    p.textSize(11);
+    p.textStyle(p.BOLD);
+    p.text("Waveform: " + STAGE_NAMES[viewStage], wx + 8, wy + 4);
+    p.textStyle(p.NORMAL);
+
+    // Center line
+    const wMid = wy + wh / 2;
+    p.stroke(180);
+    p.strokeWeight(1);
+    p.line(wx + 4, wMid, wx + ww - 4, wMid);
+
+    // Generate and draw waveform
+    const NUM_SAMPLES = 400;
+    const waveData = getWaveformSamples(chain, viewStage, NUM_SAMPLES);
+    const { samples } = waveData;
+
+    // Find max abs value for scaling (use clipLinear if clipped, else actual amp)
+    const db = chain.levels[viewStage];
+    const rawDb = chain.rawLevels[viewStage];
+    const dispDb = Math.max(db, rawDb);
+    let scaleRef = Math.pow(10, Math.max(dispDb, -60) / 20);
+    scaleRef = Math.max(scaleRef, 1e-6);
+
+    const drawH = (wh / 2) * 0.82; // usable half-height
+
+    p.stroke(WAVE_COLOR);
+    p.strokeWeight(2);
+    p.noFill();
+    p.beginShape();
+    for (let s = 0; s < NUM_SAMPLES; s++) {
+      const x = wx + 4 + (s / (NUM_SAMPLES - 1)) * (ww - 8);
+      const y = wMid - (samples[s] / scaleRef) * drawH;
+      p.vertex(x, y);
+    }
+    p.endShape();
+
+    // CLIP annotation on waveform
+    if (chain.clips[viewStage]) {
+      p.noStroke();
+      p.fill(CLIP_COLOR);
+      p.textSize(13);
+      p.textStyle(p.BOLD);
+      p.textAlign(p.RIGHT, p.TOP);
+      p.text("CLIP", wx + ww - 8, wy + 18);
+      p.textStyle(p.NORMAL);
+    }
+  };
+};
+
+// ── Bootstrap p5.js ───────────────────────────────────────────────────
+// We use instance mode to attach to our container
+let myP5;
+document.addEventListener('DOMContentLoaded', () => {
+  myP5 = new p5(sketch, document.getElementById('canvas-container'));
+});
+
+// ── Control wiring ────────────────────────────────────────────────────
+function triggerRedraw() {
+  if (myP5) myP5.redraw();
+}
+
+document.getElementById('slider-input').addEventListener('input', function() {
+  inputLevel = parseFloat(this.value);
+  document.getElementById('label-input').textContent =
+    "Input Level (Mic): " + inputLevel + " dBV";
+  triggerRedraw();
+});
+
+document.getElementById('slider-preamp').addEventListener('input', function() {
+  preampGain = parseFloat(this.value);
+  document.getElementById('label-preamp').textContent =
+    "Preamp Gain: " + preampGain + " dB";
+  triggerRedraw();
+});
+
+document.getElementById('slider-master').addEventListener('input', function() {
+  masterVol = parseFloat(this.value);
+  const sign = masterVol >= 0 ? "+" : "";
+  document.getElementById('label-master').textContent =
+    "Master Volume: " + sign + masterVol + " dB";
+  triggerRedraw();
+});
+
+document.getElementById('select-stage').addEventListener('change', function() {
+  viewStage = parseInt(this.value);
+  triggerRedraw();
+});
+
+document.getElementById('cb-noise').addEventListener('change', function() {
+  showNoise = this.checked;
+  triggerRedraw();
+});
+
+document.getElementById('btn-reset').addEventListener('click', function() {
+  inputLevel = -50;
+  preampGain = 40;
+  masterVol  = 0;
+  viewStage  = 0;
+  showNoise  = false;
+
+  document.getElementById('slider-input').value  = -50;
+  document.getElementById('slider-preamp').value = 40;
+  document.getElementById('slider-master').value = 0;
+  document.getElementById('select-stage').value  = 0;
+  document.getElementById('cb-noise').checked    = false;
+
+  document.getElementById('label-input').textContent  = "Input Level (Mic): -50 dBV";
+  document.getElementById('label-preamp').textContent = "Preamp Gain: 40 dB";
+  document.getElementById('label-master').textContent = "Master Volume: +0 dB";
+
+  triggerRedraw();
+});
+</script>
+</body>
+</html>
