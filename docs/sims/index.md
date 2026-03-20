@@ -4,6 +4,22 @@
 
 [Simple DC Circuit](./dc-circuit/index.md)
 
+## RC Charging Circuit
+
+[RC Charging Circuit](./rc-charging/index.md)
+
+This simulation demonstrates the transient behavior of an RC circuit — how a capacitor charges through a resistor when a switch is closed. Features an animated schematic with electron flow, real-time voltage and current graphs, and an SPDT switch to switch between charge and discharge modes.
+
+<iframe src="./rc-charging/main.html" width="100%" height="650px" scrolling="no"></iframe>
+
+## Filter Frequency Response
+
+[Filter Frequency Response](./filter-frequency-response/index.md)
+
+Interactive Bode plot for RC low-pass and high-pass filters. Adjust R and C with sliders to see the magnitude response and cutoff frequency update in real time, with an animated frequency sweep cursor.
+
+<iframe src="./filter-frequency-response/main.html" width="100%" height="500px" scrolling="no"></iframe>
+
 ## References
 
 ## Falstad

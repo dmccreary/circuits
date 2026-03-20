@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Distortion Types Visualizer</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <style>
+        * { box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; margin: 0; padding: 10px; background: #fff; }
+        .sim-container { max-width: 720px; margin: 0 auto; }
+        h3 { text-align: center; margin: 0 0 8px; font-size: 1.1em; color: #222; }
+
+        .chart-block { margin-bottom: 6px; }
+        .chart-label {
+            text-align: center;
+            font-size: 0.80em;
+            font-weight: bold;
+            color: #555;
+            margin-bottom: 2px;
+        }
+
+        .controls {
+            background: #f0f0f0;
+            border-radius: 6px;
+            padding: 8px 14px;
+            margin-top: 6px;
+        }
+
+        .control-row {
+            display: flex;
+            align-items: center;
+            margin: 5px 0;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+        .control-label {
+            min-width: 230px;
+            text-align: right;
+            padding-right: 10px;
+            font-size: 0.85em;
+            font-family: 'Courier New', monospace;
+            color: #333;
+        }
+        .control-row input[type=range] {
+            flex: 1;
+            min-width: 120px;
+            accent-color: #1565C0;
+            cursor: pointer;
+        }
+        .control-row select {
+            flex: 1;
+            min-width: 120px;
+            padding: 3px 6px;
+            font-size: 0.85em;
+            border: 1.5px solid #aaa;
+            border-radius: 4px;
+            background: #fff;
+            cursor: pointer;
+        }
+
+        .thd-row {
+            display: flex;
+            align-items: center;
+            margin: 6px 0;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .thd-row-label {
+            font-size: 0.85em;
+            font-family: 'Courier New', monospace;
+            color: #333;
+        }
+        .thd-badge {
+            display: inline-block;
+            padding: 4px 14px;
+            border-radius: 12px;
+            font-weight: bold;
+            font-size: 1.0em;
+            font-family: 'Courier New', monospace;
+            color: #fff;
+        }
+
+        .scale-toggle {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85em;
+            color: #333;
+        }
+        .scale-btn {
+            padding: 3px 12px;
+            border: 1.5px solid #1565C0;
+            border-radius: 12px;
+            background: white;
+            color: #1565C0;
+            cursor: pointer;
+            font-size: 0.82em;
+            font-weight: bold;
+            transition: all 0.2s;
+        }
+        .scale-btn.active { background: #1565C0; color: white; }
+
+        .check-row {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.85em;
+            color: #333;
+            margin: 5px 0;
+        }
+        .check-row input[type=checkbox] {
+            accent-color: #1565C0;
+            cursor: pointer;
+        }
+        .check-row label { cursor: pointer; }
+
+        .btn-row { display: flex; gap: 8px; margin-top: 8px; }
+        .action-btn {
+            padding: 5px 14px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.85em;
+            font-weight: bold;
+            background: #78909C;
+            color: white;
+        }
+
+        .obs-box {
+            background: #E3F2FD;
+            border-left: 3px solid #1565C0;
+            border-radius: 4px;
+            padding: 6px 10px;
+            margin-top: 6px;
+            font-size: 0.82em;
+            color: #333;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+<div class="sim-container">
+    <h3>Distortion Types Visualizer</h3>
+
+    <!-- Waveform chart -->
+    <div class="chart-block">
+        <div class="chart-label">Input &amp; Output Waveforms (3 cycles)</div>
+        <div style="position:relative; height:200px;"><canvas id="waveChart"></canvas></div>
+    </div>
+
+    <!-- Spectrum chart -->
+    <div class="chart-block">
+        <div class="chart-label">Frequency Spectrum</div>
+        <div style="position:relative; height:160px;"><canvas id="specChart"></canvas></div>
+    </div>
+
+    <!-- Controls -->
+    <div class="controls">
+
+        <!-- Distortion type -->
+        <div class="control-row">
+            <span class="control-label">Distortion type:</span>
+            <select id="distType" onchange="onTypeChange()">
+                <option value="none">None</option>
+                <option value="softclip" selected>Soft Clip</option>
+                <option value="hardclip">Hard Clip</option>
+                <option value="asymmetric">Asymmetric</option>
+                <option value="imd">IMD</option>
+            </select>
+        </div>
+
+        <!-- Drive level -->
+        <div class="control-row">
+            <span class="control-label" id="driveLabel">Drive level: 0.70</span>
+            <input type="range" id="driveSlider" min="0" max="1.5" step="0.01" value="0.7" oninput="onSlider()">
+        </div>
+
+        <!-- Distortion amount (hidden for None, Hard Clip, IMD) -->
+        <div class="control-row" id="distAmtRow">
+            <span class="control-label" id="distAmtLabel">Distortion amount: 0.50</span>
+            <input type="range" id="distAmtSlider" min="0" max="1" step="0.01" value="0.5" oninput="onSlider()">
+        </div>
+
+        <!-- Two-tone test checkbox -->
+        <div class="check-row" id="twoToneRow" style="display:none;">
+            <input type="checkbox" id="twoToneChk" onchange="onSlider()">
+            <label for="twoToneChk">Two-tone test (IMD)</label>
+        </div>
+
+        <!-- Scale toggle -->
+        <div class="scale-toggle" style="margin: 6px 0;">
+            Spectrum scale:
+            <button class="scale-btn active" id="btnLinear" onclick="setScale('linear')">Linear</button>
+            <button class="scale-btn"        id="btnDB"     onclick="setScale('dB')">dB</button>
+        </div>
+
+        <!-- THD display -->
+        <div class="thd-row">
+            <span class="thd-row-label">Total Harmonic Distortion:</span>
+            <span class="thd-badge" id="thdBadge">THD: 0.00%</span>
+        </div>
+
+        <!-- Observation -->
+        <div class="obs-box" id="obsBox"></div>
+
+        <!-- Reset -->
+        <div class="btn-row">
+            <button class="action-btn" onclick="resetSim()">&#8635; Reset</button>
+        </div>
+    </div>
+</div>
+
+<script>
+// =====================================================
+// Constants
+// =====================================================
+const N = 512;
+const N_HARMONICS = 10;
+const N_IMD_HALF = 15;  // half-harmonics for IMD
+
+const OBS = {
+    none:       'Clean output \u2014 no distortion products.',
+    softclip:   'Soft clipping adds odd harmonics (3f, 5f\u2026). Sounds \u2018warm\u2019 at low drive.',
+    hardclip:   'Hard clipping adds strong odd harmonics. Harsh, buzzy sound.',
+    asymmetric: 'Asymmetric clipping adds even harmonics (2f, 4f\u2026). Sounds \u2018warmer\u2019 than symmetric.',
+    imd:        'Two-tone test reveals intermodulation products at sum/difference frequencies \u2014 not harmonically related to either input.'
+};
+
+// =====================================================
+// State
+// =====================================================
+let distType   = 'softclip';
+let drive      = 0.70;
+let distAmt    = 0.50;
+let scaleMode  = 'linear';
+
+// =====================================================
+// Signal generation
+// =====================================================
+function generateInput(type, driveVal) {
+    const sig = new Float64Array(N);
+    if (type === 'imd') {
+        // Two-tone: 0.5 * sin(2pi*t) + 0.5 * sin(2pi*1.5*t), t: 0..3
+        for (let i = 0; i < N; i++) {
+            const t = i / N * 3;
+            sig[i] = 0.5 * Math.sin(2 * Math.PI * t) + 0.5 * Math.sin(2 * Math.PI * 1.5 * t);
+        }
+    } else {
+        // Single tone: drive * sin(2pi*t), t: 0..3
+        for (let i = 0; i < N; i++) {
+            const t = i / N * 3;
+            sig[i] = driveVal * Math.sin(2 * Math.PI * t);
+        }
+    }
+    return sig;
+}
+
+function applyDistortion(input, type, driveVal, distAmtVal) {
+    const out = new Float64Array(N);
+    for (let i = 0; i < N; i++) {
+        const x = input[i];
+        let y;
+        switch (type) {
+            case 'none':
+                y = x;
+                break;
+            case 'softclip': {
+                const k = 1 + distAmtVal * 4;
+                y = Math.tanh(x * k) / Math.tanh(k);
+                break;
+            }
+            case 'hardclip': {
+                const thr = 1.0 - distAmtVal * 0.7;
+                y = Math.max(-thr, Math.min(thr, x));
+                break;
+            }
+            case 'asymmetric': {
+                // positive: soft clip with tanh
+                // negative: hard clip
+                const k = 1 + distAmtVal * 4;
+                const negThr = -(1 - distAmtVal * 0.5);
+                if (x >= 0) {
+                    y = Math.tanh(x * k) / Math.tanh(k);
+                } else {
+                    y = Math.max(negThr, x);
+                }
+                break;
+            }
+            case 'imd': {
+                const k2 = driveVal * 2;
+                const denom = Math.tanh(k2) || 1;
+                y = Math.tanh(x * k2) / denom;
+                break;
+            }
+            default:
+                y = x;
+        }
+        out[i] = y;
+    }
+    return out;
+}
+
+// =====================================================
+// DFT for harmonic amplitudes (single tone, harmonics 1..nH)
+// nPoints = N, but we compute over exactly 3 periods so
+// bin k=1 corresponds to 1 cycle in the 3-period window, i.e. 1f
+// =====================================================
+function computeHarmonicAmplitudes(signal, nHarmonics) {
+    // t goes 0..3 periods → fundamental has 3 full cycles in signal
+    // DFT at k=3 corresponds to 1f, k=6 to 2f, etc.
+    const amps = [];
+    for (let h = 1; h <= nHarmonics; h++) {
+        const k = h * 3;  // bin for h-th harmonic in a 3-period window
+        let re = 0, im = 0;
+        for (let i = 0; i < N; i++) {
+            const angle = 2 * Math.PI * k * i / N;
+            re += signal[i] * Math.cos(angle);
+            im -= signal[i] * Math.sin(angle);
+        }
+        amps.push(2 * Math.sqrt(re * re + im * im) / N);
+    }
+    // Normalize to fundamental
+    const fund = amps[0] || 1;
+    return amps.map(a => a / fund);
+}
+
+// =====================================================
+// DFT for IMD: half-harmonic resolution (0.5f steps)
+// k=1 → 0.5f, k=2 → 1f, ... k=nHalfHarms → nHalfHarms*0.5f
+// t goes 0..3: the 0.5f tone has 1.5 cycles, 1f has 3 cycles, 1.5f has 4.5 cycles
+// bin k in N-point DFT over 3 periods: k_bin = k * 1.5  (0.5f * 3 = 1.5)
+// =====================================================
+function computeIMDAmplitudes(signal, nHalf) {
+    const amps = [];
+    for (let h = 1; h <= nHalf; h++) {
+        // half-harmonic index h: frequency = h * 0.5f
+        // cycles in 3-period window of 1f = h * 0.5 * 3 = h * 1.5
+        const k = h * 1.5;  // non-integer bin → compute directly
+        let re = 0, im = 0;
+        for (let i = 0; i < N; i++) {
+            const angle = 2 * Math.PI * k * i / N;
+            re += signal[i] * Math.cos(angle);
+            im -= signal[i] * Math.sin(angle);
+        }
+        amps.push(2 * Math.sqrt(re * re + im * im) / N);
+    }
+    // Normalize to max input tone (max of 1f=k2, 1.5f=k3)
+    const maxInputTone = Math.max(amps[1], amps[2]) || 1;
+    return amps.map(a => a / maxInputTone);
+}
+
+// =====================================================
+// THD computation
+// =====================================================
+function computeTHD(amps) {
+    if (amps.length < 2) return 0;
+    let sumSq = 0;
+    for (let i = 1; i < amps.length; i++) {
+        sumSq += amps[i] * amps[i];
+    }
+    return Math.sqrt(sumSq) / (amps[0] || 1) * 100;
+}
+
+// =====================================================
+// Bar colors for spectrum
+// fundamental: #1565C0, input harmonics: #00695C, distortion products: #B71C1C
+// Single tone: fundamental=1f (blue), all harmonics 2f+ = red
+// IMD: input tones are 1f (h=2) and 1.5f (h=3), everything else = red
+// =====================================================
+function getBarColors(nBars, isIMD) {
+    const colors = [];
+    for (let i = 0; i < nBars; i++) {
+        if (isIMD) {
+            // h=1 → 0.5f, h=2 → 1f, h=3 → 1.5f
+            if (i === 1 || i === 2) {
+                colors.push('#00695C');  // input tones
+            } else {
+                colors.push('#B71C1C');  // distortion products
+            }
+        } else {
+            if (i === 0) {
+                colors.push('#1565C0');  // fundamental
+            } else {
+                colors.push('#B71C1C');  // harmonic distortion products
+            }
+        }
+    }
+    return colors;
+}
+
+// =====================================================
+// Chart.js setup
+// =====================================================
+const waveCtx = document.getElementById('waveChart').getContext('2d');
+const specCtx = document.getElementById('specChart').getContext('2d');
+
+const waveChart = new Chart(waveCtx, {
+    type: 'line',
+    data: {
+        datasets: [
+            {
+                label: 'Input',
+                data: [],
+                borderColor: '#1565C0',
+                backgroundColor: 'transparent',
+                borderWidth: 2,
+                borderDash: [5, 4],
+                pointRadius: 0,
+                tension: 0,
+                fill: false
+            },
+            {
+                label: 'Output',
+                data: [],
+                borderColor: '#212121',
+                backgroundColor: 'transparent',
+                borderWidth: 2,
+                borderDash: [],
+                pointRadius: 0,
+                tension: 0,
+                fill: false
+            }
+        ]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        animation: { duration: 0 },
+        scales: {
+            x: {
+                type: 'linear',
+                title: { display: true, text: 'Time (cycles)', font: { size: 10 } },
+                ticks: { font: { size: 9 }, maxTicksLimit: 8 },
+                grid: { color: 'rgba(0,0,0,0.07)' },
+                min: 0,
+                max: 3
+            },
+            y: {
+                min: -1.5,
+                max: 1.5,
+                title: { display: true, text: 'Amplitude', font: { size: 10 } },
+                ticks: { font: { size: 9 }, stepSize: 0.5 },
+                grid: { color: 'rgba(0,0,0,0.07)' }
+            }
+        },
+        plugins: {
+            legend: {
+                display: true,
+                position: 'top',
+                labels: { font: { size: 9 }, boxWidth: 24 }
+            },
+            tooltip: {
+                callbacks: {
+                    title: items => 't = ' + items[0].parsed.x.toFixed(3),
+                    label: item => item.dataset.label + ': ' + item.parsed.y.toFixed(3)
+                }
+            }
+        }
+    }
+});
+
+const specChart = new Chart(specCtx, {
+    type: 'bar',
+    data: {
+        labels: [],
+        datasets: [{
+            label: 'Amplitude',
+            data: [],
+            backgroundColor: [],
+            borderColor: 'rgba(0,0,0,0.2)',
+            borderWidth: 1
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        animation: { duration: 0 },
+        scales: {
+            x: {
+                title: { display: true, text: 'Frequency', font: { size: 10 } },
+                ticks: { font: { size: 9 }, maxRotation: 40 },
+                grid: { display: false }
+            },
+            y: {
+                min: 0,
+                max: 1.05,
+                title: { display: true, text: '|Amplitude| (normalized)', font: { size: 10 } },
+                ticks: { font: { size: 9 } }
+            }
+        },
+        plugins: {
+            legend: { display: false },
+            tooltip: {
+                callbacks: {
+                    label: item => 'A = ' + item.parsed.y.toFixed(4)
+                }
+            }
+        }
+    }
+});
+
+// =====================================================
+// Main update function
+// =====================================================
+function updateAll() {
+    const isIMD = distType === 'imd';
+
+    // Generate input signal
+    const inputSig = generateInput(distType, drive);
+
+    // Apply distortion
+    const outputSig = applyDistortion(inputSig, distType, drive, distAmt);
+
+    // Build x-axis time values (0..3 cycles)
+    const xVals = [];
+    for (let i = 0; i < N; i++) {
+        xVals.push(i / N * 3);
+    }
+
+    // Update waveform chart
+    waveChart.data.datasets[0].data = xVals.map((x, i) => ({ x, y: inputSig[i] }));
+    waveChart.data.datasets[1].data = xVals.map((x, i) => ({ x, y: outputSig[i] }));
+    waveChart.update('none');
+
+    // Compute spectrum
+    let amps, labels, barColors;
+
+    if (isIMD) {
+        amps = computeIMDAmplitudes(outputSig, N_IMD_HALF);
+        labels = amps.map((_, i) => ((i + 1) * 0.5).toFixed(1) + 'f');
+        barColors = getBarColors(amps.length, true);
+    } else {
+        amps = computeHarmonicAmplitudes(outputSig, N_HARMONICS);
+        labels = amps.map((_, i) => (i + 1) + 'f');
+        barColors = getBarColors(amps.length, false);
+    }
+
+    // Scale mode
+    let specData;
+    if (scaleMode === 'dB') {
+        specData = amps.map(a => a > 1e-9 ? 20 * Math.log10(a) : -100);
+        specChart.options.scales.y.min = -80;
+        specChart.options.scales.y.max = 5;
+        specChart.options.scales.y.title.text = 'Magnitude (dB)';
+    } else {
+        specData = amps.slice();
+        specChart.options.scales.y.min = 0;
+        specChart.options.scales.y.max = 1.05;
+        specChart.options.scales.y.title.text = '|Amplitude| (normalized)';
+    }
+
+    specChart.data.labels = labels;
+    specChart.data.datasets[0].data = specData;
+    specChart.data.datasets[0].backgroundColor = barColors;
+    specChart.update('none');
+
+    // THD (only meaningful for single-tone)
+    let thdVal = 0;
+    if (!isIMD) {
+        thdVal = computeTHD(amps);
+    } else {
+        // For IMD, show THD-like ratio using non-input-tone bins
+        // input tones: indices 1 and 2 (1f and 1.5f)
+        let nonInputSumSq = 0;
+        let inputSumSq = 0;
+        for (let i = 0; i < amps.length; i++) {
+            if (i === 1 || i === 2) inputSumSq += amps[i] * amps[i];
+            else nonInputSumSq += amps[i] * amps[i];
+        }
+        const inputRMS = Math.sqrt(inputSumSq) || 1;
+        thdVal = Math.sqrt(nonInputSumSq) / inputRMS * 100;
+    }
+
+    // Update THD badge
+    const badge = document.getElementById('thdBadge');
+    badge.textContent = 'THD: ' + thdVal.toFixed(2) + '%';
+    if (thdVal < 0.1) {
+        badge.style.backgroundColor = '#2E7D32';  // green
+    } else if (thdVal < 1.0) {
+        badge.style.backgroundColor = '#F57F17';  // yellow/amber
+    } else {
+        badge.style.backgroundColor = '#B71C1C';  // red
+    }
+
+    // Observation
+    document.getElementById('obsBox').textContent = OBS[distType] || '';
+}
+
+// =====================================================
+// Control handlers
+// =====================================================
+function onTypeChange() {
+    distType = document.getElementById('distType').value;
+
+    // Show/hide distortion amount slider
+    const showDistAmt = (distType === 'softclip' || distType === 'asymmetric');
+    document.getElementById('distAmtRow').style.display = showDistAmt ? 'flex' : 'none';
+
+    // Show/hide two-tone checkbox
+    const showTwoTone = (distType === 'imd');
+    document.getElementById('twoToneRow').style.display = showTwoTone ? 'flex' : 'none';
+
+    updateAll();
+}
+
+function onSlider() {
+    drive   = parseFloat(document.getElementById('driveSlider').value);
+    distAmt = parseFloat(document.getElementById('distAmtSlider').value);
+
+    document.getElementById('driveLabel').textContent   = 'Drive level: ' + drive.toFixed(2);
+    document.getElementById('distAmtLabel').textContent = 'Distortion amount: ' + distAmt.toFixed(2);
+
+    updateAll();
+}
+
+function setScale(mode) {
+    scaleMode = mode;
+    document.getElementById('btnLinear').classList.toggle('active', mode === 'linear');
+    document.getElementById('btnDB').classList.toggle('active', mode === 'dB');
+    updateAll();
+}
+
+function resetSim() {
+    distType  = 'softclip';
+    drive     = 0.70;
+    distAmt   = 0.50;
+    scaleMode = 'linear';
+
+    document.getElementById('distType').value       = 'softclip';
+    document.getElementById('driveSlider').value    = '0.7';
+    document.getElementById('distAmtSlider').value  = '0.5';
+    document.getElementById('twoToneChk').checked   = false;
+    document.getElementById('driveLabel').textContent   = 'Drive level: 0.70';
+    document.getElementById('distAmtLabel').textContent = 'Distortion amount: 0.50';
+
+    document.getElementById('btnLinear').classList.add('active');
+    document.getElementById('btnDB').classList.remove('active');
+
+    onTypeChange();
+}
+
+// =====================================================
+// Initialise
+// =====================================================
+onTypeChange();
+</script>
+</body>
+</html>
