@@ -1,0 +1,34 @@
+{
+  "title": "Natural Frequency Calculator",
+  "description": "An interactive calculator that computes the natural frequency of an LC circuit from inductance and capacitance values, displaying step-by-step calculations and a log-log plot showing the inverse square root relationship.",
+  "creator": "Dan McCreary",
+  "date": "2026-02-06",
+  "subject": ["LC circuit", "natural frequency", "resonance", "inductance", "capacitance", "electrical engineering"],
+  "type": "Interactive Simulation",
+  "format": "text/html",
+  "language": "en",
+  "rights": "CC BY-NC-SA 4.0",
+  "bloomLevel": "Apply",
+  "bloomVerb": "calculate",
+  "concepts": ["natural frequency", "angular frequency", "LC product", "inverse square root relationship"],
+  "prerequisites": ["inductance", "capacitance", "square roots", "logarithms"],
+  "library": "p5.js",
+  "controls": [
+    {
+      "type": "slider",
+      "label": "Inductance L",
+      "min": "0.1 mH",
+      "max": "100 mH",
+      "default": "10 mH",
+      "scale": "logarithmic"
+    },
+    {
+      "type": "slider",
+      "label": "Capacitance C",
+      "min": "0.01 µF",
+      "max": "100 µF",
+      "default": "1 µF",
+      "scale": "logarithmic"
+    }
+  ]
+}

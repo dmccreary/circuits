@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Time Domain to Frequency Domain</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <style>
+        * { box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; margin: 0; padding: 10px; background: #fff; }
+        .sim-container { max-width: 720px; margin: 0 auto; }
+        h3 { text-align: center; margin: 0 0 8px; font-size: 1.1em; color: #222; }
+
+        .wave-toggle {
+            display: flex;
+            justify-content: center;
+            gap: 6px;
+            margin-bottom: 8px;
+            flex-wrap: wrap;
+        }
+        .wave-btn {
+            padding: 4px 14px;
+            border: 2px solid #00695C;
+            border-radius: 16px;
+            background: white;
+            color: #00695C;
+            cursor: pointer;
+            font-size: 0.85em;
+            font-weight: bold;
+            transition: all 0.2s;
+        }
+        .wave-btn.active { background: #00695C; color: white; }
+
+        /* Side-by-side charts */
+        .charts-row { display: flex; gap: 10px; margin-bottom: 6px; }
+        .chart-col { flex: 1; min-width: 0; }
+        .chart-col-label {
+            text-align: center;
+            font-size: 0.80em;
+            font-weight: bold;
+            color: #555;
+            margin-bottom: 2px;
+        }
+        @media (max-width: 500px) { .charts-row { flex-direction: column; } }
+
+        .controls {
+            background: #f0f0f0;
+            border-radius: 6px;
+            padding: 8px 14px;
+        }
+        .slider-row {
+            display: flex;
+            align-items: center;
+            margin: 5px 0;
+        }
+        .slider-label {
+            min-width: 200px;
+            text-align: right;
+            padding-right: 10px;
+            font-size: 0.85em;
+            font-family: 'Courier New', monospace;
+            color: #333;
+        }
+        .slider-row input[type=range] {
+            flex: 1;
+            accent-color: #00695C;
+            cursor: pointer;
+        }
+
+        /* Scale toggle */
+        .scale-toggle {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 6px;
+            font-size: 0.85em;
+            color: #333;
+        }
+        .scale-btn {
+            padding: 3px 12px;
+            border: 1.5px solid #00695C;
+            border-radius: 12px;
+            background: white;
+            color: #00695C;
+            cursor: pointer;
+            font-size: 0.82em;
+            font-weight: bold;
+            transition: all 0.2s;
+        }
+        .scale-btn.active { background: #00695C; color: white; }
+
+        /* Harmonics toggle */
+        .harm-toggle {
+            margin-top: 6px;
+            font-size: 0.85em;
+            color: #333;
+        }
+        .harm-toggle label { cursor: pointer; }
+        .harm-toggle input[type=checkbox] {
+            accent-color: #00695C;
+            cursor: pointer;
+        }
+
+        .btn-row { display: flex; gap: 8px; margin-top: 8px; }
+        .action-btn {
+            padding: 5px 14px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.85em;
+            font-weight: bold;
+            background: #78909C;
+            color: white;
+        }
+
+        /* Observation callout */
+        .obs-box {
+            background: #E0F2F1;
+            border-left: 3px solid #00695C;
+            border-radius: 4px;
+            padding: 6px 10px;
+            margin-top: 6px;
+            font-size: 0.82em;
+            color: #333;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+<div class="sim-container">
+    <h3>Time Domain &#x2192; Frequency Domain</h3>
+
+    <div class="wave-toggle">
+        <button class="wave-btn" id="btnSine"     onclick="setWave('sine')">Sine</button>
+        <button class="wave-btn active" id="btnSquare"   onclick="setWave('square')">Square</button>
+        <button class="wave-btn" id="btnTriangle" onclick="setWave('triangle')">Triangle</button>
+        <button class="wave-btn" id="btnSawtooth" onclick="setWave('sawtooth')">Sawtooth</button>
+        <button class="wave-btn" id="btnPulse"    onclick="setWave('pulse')">Pulse</button>
+    </div>
+
+    <!-- Side-by-side charts -->
+    <div class="charts-row">
+        <div class="chart-col">
+            <div class="chart-col-label">Time Domain</div>
+            <div style="position:relative; height:270px;"><canvas id="timeChart"></canvas></div>
+        </div>
+        <div class="chart-col">
+            <div class="chart-col-label">Frequency Domain</div>
+            <div style="position:relative; height:270px;"><canvas id="freqChart"></canvas></div>
+        </div>
+    </div>
+
+    <div class="controls">
+        <div class="slider-row">
+            <span class="slider-label" id="f0Label">f&#x2080;: 200 Hz</span>
+            <input type="range" id="f0Slider" min="0" max="100" value="30" oninput="onSlider()">
+        </div>
+        <div class="slider-row" id="dutyRow" style="display:none">
+            <span class="slider-label" id="dutyLabel">Duty cycle: 50%</span>
+            <input type="range" id="dutySlider" min="5" max="95" value="50" oninput="onSlider()">
+        </div>
+        <div class="slider-row">
+            <span class="slider-label" id="nLabel">Harmonics shown: 9</span>
+            <input type="range" id="nSlider" min="1" max="15" value="9" oninput="onSlider()">
+        </div>
+
+        <div class="scale-toggle">
+            Spectrum scale:
+            <button class="scale-btn active" id="btnLinear" onclick="setScale('linear')">Linear</button>
+            <button class="scale-btn"        id="btnDB"     onclick="setScale('dB')">dB</button>
+        </div>
+
+        <div class="harm-toggle">
+            <label>
+                <input type="checkbox" id="chkHarmonics" onchange="onHarmonicsToggle()">
+                Show individual harmonics on time plot
+            </label>
+        </div>
+
+        <div class="obs-box" id="obsBox"></div>
+
+        <div class="btn-row">
+            <button class="action-btn" onclick="resetSim()">&#8635; Reset</button>
+        </div>
+    </div>
+</div>
+
+<script>
+// =====================================================
+// Configuration
+// =====================================================
+const N_TIME   = 600;    // time-domain sample points (3 periods)
+const F0_MIN   = 50;     // Hz
+const F0_MAX   = 2000;   // Hz
+
+const WAVE_TYPES = ['sine', 'square', 'triangle', 'sawtooth', 'pulse'];
+
+// Observations shown for each waveform type
+const OBS = {
+    sine:     'Pure sine \u2192 single spectral line at f\u2080. No harmonics.',
+    square:   'Square wave \u2192 odd harmonics only (3f\u2080, 5f\u2080\u2026). Amplitudes decay as 1/n.',
+    triangle: 'Triangle wave \u2192 odd harmonics only. Amplitudes decay as 1/n\u00B2 (much faster than square).',
+    sawtooth: 'Sawtooth wave \u2192 all harmonics present. Amplitudes decay as 1/n.',
+    pulse:    'Narrow pulse \u2192 wide spectrum. Wider pulse \u2192 narrower spectrum (time\u2013bandwidth trade-off).'
+};
+
+// Harmonic colors (cycling)
+const HARM_COLORS = [
+    '#1565C0','#B71C1C','#1B5E20','#E65100','#4A148C',
+    '#004D40','#827717','#880E4F','#0D47A1','#E65100',
+    '#33691E','#4E342E','#006064','#37474F','#AD1457'
+];
+
+// =====================================================
+// State
+// =====================================================
+let waveType      = 'square';
+let f0            = 200;
+let nHarm         = 9;
+let duty          = 0.5;    // for pulse (0-1)
+let scaleMode     = 'linear';
+let showHarmonics = false;
+
+// =====================================================
+// Fourier coefficients (sine series, up to nMax harmonics)
+// =====================================================
+function getCoefficients(type, nMax, D) {
+    const c = new Array(nMax).fill(0);
+    switch (type) {
+        case 'sine':
+            c[0] = 1.0;
+            break;
+        case 'square':
+            for (let n = 1; n <= nMax; n++) {
+                if (n % 2 === 1) c[n-1] = 1 / n;
+            }
+            break;
+        case 'triangle':
+            {
+                let sign = 1;
+                for (let n = 1; n <= nMax; n += 2) {
+                    c[n-1] = sign / (n * n);
+                    sign = -sign;
+                }
+                const m = Math.abs(c[0]);
+                for (let i = 0; i < nMax; i++) c[i] /= m;
+            }
+            break;
+        case 'sawtooth':
+            for (let n = 1; n <= nMax; n++) {
+                c[n-1] = (n % 2 === 1 ? 1 : -1) / n;
+            }
+            break;
+        case 'pulse':
+            // Cosine series for rectangular pulse, duty D, DC removed
+            // a_n = (2/npi) sin(npiD), normalised to |a_1|
+            {
+                const a1 = Math.abs(2 / Math.PI * Math.sin(Math.PI * D));
+                for (let n = 1; n <= nMax; n++) {
+                    const val = (2 / (n * Math.PI)) * Math.sin(n * Math.PI * D);
+                    c[n-1] = a1 > 0 ? val / a1 : 0;
+                }
+            }
+            break;
+    }
+    return c;
+}
+
+// =====================================================
+// Waveform synthesis -- 3 periods (sum waveform)
+// =====================================================
+function computeWaveform(type, f0val, D, nMax) {
+    const T = 1 / f0val;
+    const tMax = 3 * T;
+    const coeff = getCoefficients(type, nMax, D);
+    const pts = [];
+
+    for (let i = 0; i < N_TIME; i++) {
+        const t = (i / (N_TIME - 1)) * tMax;
+        let y;
+        if (type === 'pulse') {
+            y = 0;
+            for (let n = 1; n <= nMax; n++) {
+                y += coeff[n-1] * Math.cos(n * 2 * Math.PI * f0val * t);
+            }
+        } else {
+            y = 0;
+            for (let n = 1; n <= nMax; n++) {
+                y += coeff[n-1] * Math.sin(n * 2 * Math.PI * f0val * t);
+            }
+        }
+        pts.push({ x: t * 1000, y: y });  // t in ms
+    }
+    return pts;
+}
+
+// =====================================================
+// Single harmonic waveform (for showHarmonics overlay)
+// =====================================================
+function computeSingleHarmonic(type, f0val, D, nMax, harmonicN) {
+    const T = 1 / f0val;
+    const tMax = 3 * T;
+    const coeff = getCoefficients(type, nMax, D);
+    const pts = [];
+    const a = coeff[harmonicN - 1];
+
+    for (let i = 0; i < N_TIME; i++) {
+        const t = (i / (N_TIME - 1)) * tMax;
+        let y;
+        if (type === 'pulse') {
+            y = a * Math.cos(harmonicN * 2 * Math.PI * f0val * t);
+        } else {
+            y = a * Math.sin(harmonicN * 2 * Math.PI * f0val * t);
+        }
+        pts.push({ x: t * 1000, y: y });
+    }
+    return pts;
+}
+
+// =====================================================
+// Formatting
+// =====================================================
+function formatFreq(f) {
+    if (f >= 1000) return (f / 1000).toFixed(f >= 10000 ? 1 : 2) + ' kHz';
+    return Math.round(f) + ' Hz';
+}
+
+function sliderToLog(v, min, max) {
+    return min * Math.pow(max / min, v / 100);
+}
+
+// =====================================================
+// Charts
+// =====================================================
+const timeCtx = document.getElementById('timeChart').getContext('2d');
+const freqCtx = document.getElementById('freqChart').getContext('2d');
+
+const timeChart = new Chart(timeCtx, {
+    type: 'line',
+    data: {
+        datasets: [{
+            label: 'Waveform',
+            data: [],
+            borderColor: '#00695C',
+            backgroundColor: 'rgba(0,105,92,0.08)',
+            borderWidth: 2.5,
+            pointRadius: 0,
+            tension: 0,
+            fill: true
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        animation: { duration: 0 },
+        scales: {
+            x: {
+                type: 'linear',
+                title: { display: true, text: 'Time (ms)', font: { size: 10 } },
+                ticks: { font: { size: 9 }, maxTicksLimit: 8 },
+                grid: { color: 'rgba(0,0,0,0.07)' }
+            },
+            y: {
+                min: -1.4, max: 1.4,
+                title: { display: true, text: 'Amplitude', font: { size: 10 } },
+                ticks: { font: { size: 9 }, stepSize: 0.5 },
+                grid: { color: 'rgba(0,0,0,0.07)' }
+            }
+        },
+        plugins: {
+            legend: { display: false },
+            tooltip: {
+                callbacks: {
+                    title: items => 't = ' + items[0].parsed.x.toFixed(3) + ' ms',
+                    label: item => 'y = ' + item.parsed.y.toFixed(3)
+                }
+            }
+        }
+    }
+});
+
+const freqChart = new Chart(freqCtx, {
+    type: 'bar',
+    data: {
+        labels: [],
+        datasets: [{
+            label: 'Amplitude',
+            data: [],
+            backgroundColor: '#00695C',
+            borderColor: '#004D40',
+            borderWidth: 1
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        animation: { duration: 0 },
+        scales: {
+            x: {
+                title: { display: true, text: 'Harmonic Frequency', font: { size: 10 } },
+                ticks: { font: { size: 9 }, maxRotation: 30 },
+                grid: { display: false }
+            },
+            y: {
+                title: { display: true, text: 'Amplitude', font: { size: 10 } },
+                ticks: { font: { size: 9 } }
+            }
+        },
+        plugins: {
+            legend: { display: false },
+            tooltip: {
+                callbacks: {
+                    label: item => 'A = ' + item.parsed.y.toFixed(3)
+                }
+            }
+        }
+    }
+});
+
+// =====================================================
+// Update charts from current state
+// =====================================================
+function updateAll() {
+    // --- Time domain ---
+    // Rebuild datasets array each call
+    const sumDataset = {
+        label: 'Sum',
+        data: computeWaveform(waveType, f0, duty, nHarm),
+        borderColor: '#00695C',
+        backgroundColor: 'rgba(0,105,92,0.08)',
+        borderWidth: 2.5,
+        pointRadius: 0,
+        tension: 0,
+        fill: true
+    };
+
+    const newDatasets = [sumDataset];
+
+    if (showHarmonics) {
+        for (let n = 1; n <= nHarm; n++) {
+            const color = HARM_COLORS[(n - 1) % HARM_COLORS.length];
+            newDatasets.push({
+                label: 'H' + n,
+                data: computeSingleHarmonic(waveType, f0, duty, nHarm, n),
+                borderColor: color + '88',
+                backgroundColor: 'transparent',
+                borderWidth: 1,
+                pointRadius: 0,
+                tension: 0,
+                fill: false
+            });
+        }
+    }
+
+    timeChart.data.datasets = newDatasets;
+
+    // Update x-axis title to show period
+    const T_ms = (1 / f0 * 1000).toFixed(2);
+    timeChart.options.scales.x.title.text = 'Time (ms)  [T = ' + T_ms + ' ms, showing 3 periods]';
+    timeChart.update('none');
+
+    // --- Frequency spectrum ---
+    const coeff = getCoefficients(waveType, nHarm, duty);
+    const labels = coeff.map((_, i) => formatFreq((i + 1) * f0));
+    let data;
+    if (scaleMode === 'dB') {
+        data = coeff.map(c => {
+            const mag = Math.abs(c);
+            return mag > 1e-6 ? 20 * Math.log10(mag) : -80;
+        });
+        freqChart.options.scales.y.title.text = 'Magnitude (dB)';
+        freqChart.options.scales.y.min = -80;
+        freqChart.options.scales.y.max = 5;
+    } else {
+        data = coeff.map(Math.abs);
+        freqChart.options.scales.y.title.text = '|Amplitude|';
+        freqChart.options.scales.y.min = 0;
+        freqChart.options.scales.y.max = 1.05;
+    }
+    freqChart.data.labels = labels;
+    freqChart.data.datasets[0].data = data;
+
+    // Match spectrum bar colors to harmonic colors when showHarmonics is on
+    if (showHarmonics) {
+        const barColors = coeff.map((_, i) => HARM_COLORS[i % HARM_COLORS.length]);
+        freqChart.data.datasets[0].backgroundColor = barColors;
+        freqChart.data.datasets[0].borderColor      = barColors;
+    } else {
+        freqChart.data.datasets[0].backgroundColor = '#00695C';
+        freqChart.data.datasets[0].borderColor      = '#004D40';
+    }
+    freqChart.update('none');
+
+    // Observation text
+    document.getElementById('obsBox').textContent = OBS[waveType] || '';
+}
+
+// =====================================================
+// Slider / control handlers
+// =====================================================
+function onSlider() {
+    f0    = sliderToLog(parseFloat(document.getElementById('f0Slider').value), F0_MIN, F0_MAX);
+    nHarm = parseInt(document.getElementById('nSlider').value);
+    duty  = parseInt(document.getElementById('dutySlider').value) / 100;
+
+    document.getElementById('f0Label').textContent   = 'f\u2080: ' + formatFreq(f0);
+    document.getElementById('nLabel').textContent    = 'Harmonics shown: ' + nHarm;
+    document.getElementById('dutyLabel').textContent = 'Duty cycle: ' + Math.round(duty * 100) + '%';
+
+    updateAll();
+}
+
+function setWave(type) {
+    waveType = type;
+    WAVE_TYPES.forEach(w => {
+        const id = 'btn' + w.charAt(0).toUpperCase() + w.slice(1);
+        document.getElementById(id).classList.toggle('active', w === type);
+    });
+    // Show duty cycle slider only for pulse
+    document.getElementById('dutyRow').style.display = (type === 'pulse') ? 'flex' : 'none';
+    updateAll();
+}
+
+function setScale(mode) {
+    scaleMode = mode;
+    document.getElementById('btnLinear').classList.toggle('active', mode === 'linear');
+    document.getElementById('btnDB').classList.toggle('active', mode === 'dB');
+    updateAll();
+}
+
+function onHarmonicsToggle() {
+    showHarmonics = document.getElementById('chkHarmonics').checked;
+    updateAll();
+}
+
+function resetSim() {
+    document.getElementById('f0Slider').value   = 30;
+    document.getElementById('nSlider').value    = 9;
+    document.getElementById('dutySlider').value = 50;
+    document.getElementById('chkHarmonics').checked = false;
+    showHarmonics = false;
+    scaleMode = 'linear';
+    document.getElementById('btnLinear').classList.add('active');
+    document.getElementById('btnDB').classList.remove('active');
+    setWave('square');
+}
+
+// =====================================================
+// Initialise
+// =====================================================
+onSlider();
+setWave('square');
+</script>
+</body>
+</html>

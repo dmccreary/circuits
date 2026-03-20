@@ -39,6 +39,18 @@ nav:
     - Background Grid: sims/background-grid/index.md
     - Simple DC Circuit: sims/dc-circuit/index.md
     - DC Circuit V2: sims/dc-circuit/circuits-v2.md
+    - Natural Frequency Calculator: sims/natural-frequency-calculator/index.md
+    - RC Charging: sims/rc-charging/index.md
+    - RL Energizing: sims/rl-charging/index.md
+    - RLC Transient Response: sims/rlc-circuit/index.md
+    - Filter Frequency Response: sims/filter-frequency-response/index.md
+    - First-Order Filters: sims/first-order-filters/index.md
+    - Second-Order Filter Designer: sims/second-order-filter/index.md
+    - Audio Signal Chain: sims/audio-signal-chain/index.md
+    - Op-Amp Golden Rules: sims/opamp-golden-rules/index.md
+    - Op-Amp Configurations: sims/opamp-configurations/index.md
+    - Kirchhoff's Laws: sims/kirchhoffs-law/index.md
+    - Ohm's Law Triangle: sims/ohms-triangle/index.md
     - prompts/circuit-similarity/index.md
     - prompts/top-100-circuits/top-100-circuits.md
     - sims/circuit-similarity/index.md
@@ -123,6 +135,7 @@ nav:
 
   - Glossary: glossary.md
   - How We Built This Site: how-we-built-this-site.md
+  - Feature Checklist: feature-checklist.md
   - References: references.md
   - License: license.md
   - Contact: contact.md
@@ -151,8 +164,8 @@ theme:
 plugins:
   - search
   # leave these commented out until we figure out the watcher bug that prevents live rebuilds
-  - social
-  - social_override
+  # - social
+  # - social_override
 
 markdown_extensions:
   - meta
@@ -165,6 +178,10 @@ markdown_extensions:
   # enable LaTeX extensions with KaTeX
   - pymdownx.arithmatex:
       generic: true
+  # enable emoji shortcodes like :rocket: :white_check_mark:
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
 
 extra_css:
   - css/extra.css
@@ -172,6 +189,7 @@ extra_css:
 
 extra_javascript:
   - js/extra.js
+  - js/audio-reader.js
   # configure KaTeX for rendering LaTeX math using backslash delimiters
   - js/katex.js
   - https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js

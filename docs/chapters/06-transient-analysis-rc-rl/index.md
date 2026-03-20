@@ -430,7 +430,7 @@ where:
 
 #### Diagram: RL Circuit Response
 
-<iframe src="../../sims/rl-circuit/main.html" width="100%" height="500px" scrolling="no"></iframe>
+<iframe src="../../sims/rl-charging/main.html" width="100%" height="500px" scrolling="no"></iframe>
 
 <details markdown="1">
 <summary>RL Circuit Response MicroSim</summary>

@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Op-Amp Golden Rules Visualizer</title>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.7/lib/p5.js"></script>
+    <style>
+        * { box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; margin: 0; padding: 8px; background: #fff; }
+        .sim-container { max-width: 720px; margin: 0 auto; }
+        h3 { text-align: center; margin: 0 0 6px; font-size: 1.05em; color: #222; }
+        #canvas-container canvas { display: block; }
+        .controls {
+            background: #f0f0f0;
+            border-radius: 6px;
+            padding: 8px 14px;
+            margin-top: 4px;
+        }
+        .slider-row {
+            display: flex;
+            align-items: center;
+            margin: 5px 0;
+        }
+        .slider-label {
+            min-width: 200px;
+            text-align: right;
+            padding-right: 10px;
+            font-size: 0.84em;
+            font-family: 'Courier New', monospace;
+            color: #333;
+        }
+        .slider-row input[type=range] { flex: 1; accent-color: #1A237E; cursor: pointer; }
+        .btn-row { display: flex; gap: 8px; margin-top: 6px; }
+        .step-btn {
+            padding: 4px 14px;
+            border: 2px solid #1A237E;
+            border-radius: 4px;
+            background: white;
+            color: #1A237E;
+            cursor: pointer;
+            font-size: 0.85em;
+            font-weight: bold;
+        }
+        .step-btn:hover { background: #1A237E; color: white; }
+        .reset-btn {
+            padding: 4px 14px;
+            border: none;
+            border-radius: 4px;
+            background: #78909C;
+            color: white;
+            cursor: pointer;
+            font-size: 0.85em;
+            font-weight: bold;
+        }
+        .step-label {
+            font-size: 0.82em;
+            color: #555;
+            line-height: 1.4;
+            margin-top: 4px;
+            min-height: 36px;
+        }
+    </style>
+</head>
+<body>
+<div class="sim-container">
+    <h3>Op-Amp Golden Rules Visualizer (Inverting Amplifier)</h3>
+    <div id="canvas-container"></div>
+    <div class="controls">
+        <div class="slider-row">
+            <span class="slider-label" id="vinLabel">V&#x1D56C;&#x2099;: +1.0 V</span>
+            <input type="range" id="vinSlider" min="-50" max="50" value="10" oninput="updateSim()">
+        </div>
+        <div class="slider-row">
+            <span class="slider-label" id="gainLabel">Rf/Ri ratio: 10 (Gain = &minus;10)</span>
+            <input type="range" id="gainSlider" min="1" max="20" value="10" oninput="updateSim()">
+        </div>
+        <div class="btn-row">
+            <button class="step-btn" onclick="prevStep()">&#9664; Prev</button>
+            <button class="step-btn" onclick="nextStep()">Next &#9654;</button>
+            <button class="reset-btn" onclick="resetSim()">&#8635; Reset</button>
+        </div>
+        <div class="step-label" id="stepLabel">
+            <b>Step 1 of 4:</b> Input voltage V&#x1D56C;&#x2099; is applied through R&#x1D456; to the inverting input (V&#x207B;).
+        </div>
+    </div>
+</div>
+
+<script>
+// =====================================================
+// Shared state
+// =====================================================
+let Vin  = 1.0;
+let gain = 10;
+let step = 1;   // 1–4
+
+const STEPS = [
+    { title: "Step 1 of 4", text: "Input voltage V\u1D56C\u2099 is applied through R\u1D456 to the inverting input (V\u207B)." },
+    { title: "Step 2 of 4", text: "Negative feedback: the op-amp drives its output to minimise the difference (V\u207A \u2212 V\u207B). The output adjusts until V\u207B \u2248 V\u207A." },
+    { title: "Step 3 of 4", text: "Golden Rule 1 \u2014 Virtual Short: V\u207B = V\u207A = 0 V (virtual ground). The inverting input is held at 0 V by feedback \u2014 not by a direct connection to ground." },
+    { title: "Step 4 of 4", text: "Golden Rule 2 \u2014 No input current: I\u207A = I\u207B = 0. All of I\u1D456 must flow through R\u2093. Output settles at V\u2080\u1D64\u209C = \u2212V\u1D56C\u2099 \u00D7 R\u2093/R\u1D456." }
+];
+
+function updateSim() {
+    Vin  = parseFloat(document.getElementById('vinSlider').value) / 10;
+    gain = parseFloat(document.getElementById('gainSlider').value);
+
+    document.getElementById('vinLabel').textContent =
+        'V\u{1D56C}n: ' + (Vin >= 0 ? '+' : '') + Vin.toFixed(1) + ' V';
+    document.getElementById('gainLabel').innerHTML =
+        'Rf/Ri ratio: ' + gain + ' (Gain = &minus;' + gain + ')';
+
+    redrawCanvas();
+}
+
+function nextStep() { if (step < 4) { step++; showStep(); } }
+function prevStep() { if (step > 1) { step--; showStep(); } }
+
+function showStep() {
+    const s = STEPS[step - 1];
+    document.getElementById('stepLabel').innerHTML =
+        '<b>' + s.title + ':</b> ' + s.text;
+    redrawCanvas();
+}
+
+function resetSim() {
+    document.getElementById('vinSlider').value = 10;
+    document.getElementById('gainSlider').value = 10;
+    step = 1;
+    showStep();
+    updateSim();
+}
+
+// =====================================================
+// p5.js sketch
+// =====================================================
+const sketch = function (p) {
+    const CW = 700, CH = 310;
+
+    // Op-amp geometry
+    const OA_CX = 390, OA_CY = 150;
+    const OA_W  = 90,  OA_H  = 80;
+    const OA_LX = OA_CX - OA_W / 2;   // left face x
+    const OA_RX = OA_CX + OA_W / 2;   // apex x
+    const OA_VM = OA_CY - OA_H * 0.2; // V- pin y  (upper input)
+    const OA_VP = OA_CY + OA_H * 0.2; // V+ pin y  (lower input)
+
+    // Key nodes
+    const VIN_X  = 55,  VIN_Y  = OA_VM;
+    const NODE_X = 285, NODE_Y = OA_VM;   // V- junction
+    const VOUT_X = 590, VOUT_Y = OA_CY;
+
+    // Feedback wire y (above everything)
+    const FB_Y = 75;
+
+    // Ground anchor
+    const GND_X = OA_LX, GND_Y = OA_VP + 70;
+
+    // ---- drawing helpers ----
+    function drawResistorH(x1, x2, y, label) {
+        const bw = Math.min((x2 - x1) * 0.55, 60);
+        const bh = 16;
+        const mx = (x1 + x2) / 2;
+        p.stroke(40); p.strokeWeight(2);
+        p.line(x1, y, mx - bw / 2, y);
+        p.line(mx + bw / 2, y, x2, y);
+        p.fill(255); p.strokeWeight(1.5);
+        p.rect(mx - bw / 2, y - bh / 2, bw, bh, 3);
+        p.noStroke(); p.fill(40);
+        p.textAlign(p.CENTER, p.BOTTOM);
+        p.textSize(11);
+        p.text(label, mx, y - bh / 2 - 2);
+    }
+
+    function drawOpAmp() {
+        const lx = OA_LX, rx = OA_RX, cy = OA_CY;
+        p.stroke(40); p.strokeWeight(2);
+        p.fill(245, 245, 255);
+        p.triangle(lx, cy - OA_H / 2, lx, cy + OA_H / 2, rx, cy);
+        // Input labels
+        p.noStroke(); p.fill(40);
+        p.textAlign(p.LEFT, p.CENTER);
+        p.textSize(13);
+        p.text('\u2212', lx + 8, OA_VM);
+        p.text('+', lx + 8, OA_VP);
+    }
+
+    function drawGround(x, y) {
+        p.stroke(60); p.strokeWeight(2);
+        p.line(x, y - 10, x, y);
+        const lines = [22, 14, 6];
+        lines.forEach((w, i) => {
+            p.line(x - w / 2, y + i * 7, x + w / 2, y + i * 7);
+        });
+    }
+
+    function nodeVoltageLabel(x, y, label, value, highlight) {
+        p.noStroke();
+        p.fill(highlight ? p.color(255, 240, 200) : p.color(230, 240, 255));
+        p.stroke(highlight ? p.color(200, 140, 0) : p.color(100, 100, 180));
+        p.strokeWeight(1);
+        p.rect(x - 30, y - 14, 60, 20, 4);
+        p.noStroke();
+        p.fill(highlight ? p.color(160, 80, 0) : p.color(40, 40, 140));
+        p.textAlign(p.CENTER, p.CENTER);
+        p.textSize(11);
+        p.text(label + ' = ' + (value >= 0 ? '+' : '') + value.toFixed(2) + 'V', x, y - 4);
+    }
+
+    function currentArrow(x, y, rightward, label, isZero) {
+        const col = isZero ? p.color(150, 150, 150) : p.color(200, 60, 0);
+        p.stroke(col); p.strokeWeight(2);
+        const dx = rightward ? 20 : -20;
+        p.line(x, y, x + dx, y);
+        p.fill(col); p.noStroke();
+        if (rightward) {
+            p.triangle(x + dx, y - 5, x + dx, y + 5, x + dx + 8, y);
+        } else {
+            p.triangle(x + dx, y - 5, x + dx, y + 5, x + dx - 8, y);
+        }
+        p.textAlign(p.CENTER, p.BOTTOM);
+        p.textSize(10);
+        p.fill(col);
+        p.text(label, x + dx / 2, y - 3);
+    }
+
+    p.setup = function () {
+        const canvas = p.createCanvas(CW, CH);
+        canvas.parent('canvas-container');
+        p.textFont('Arial');
+        p.noLoop();
+    };
+
+    p.draw = function () {
+        p.background(255);
+
+        const Vout = p.constrain(-Vin * gain, -15, 15);
+        const Ri = 10000, Rf = gain * Ri;
+        const Ii = Vin / Ri;
+        const Vnode = 0; // virtual ground
+
+        // ---- Wires ----
+        p.stroke(60); p.strokeWeight(2);
+
+        // Vin to Ri start
+        p.line(VIN_X + 20, VIN_Y, VIN_X + 70, VIN_Y);
+
+        // Ri end to V- junction
+        p.line(NODE_X - 50, NODE_Y, NODE_X, NODE_Y);
+
+        // V- junction to op-amp V- pin
+        p.line(NODE_X, NODE_Y, OA_LX, OA_VM);
+
+        // V+ pin to ground
+        p.stroke(60); p.strokeWeight(2);
+        p.line(OA_LX, OA_VP, GND_X, OA_VP);
+        p.line(GND_X, OA_VP, GND_X, GND_Y);
+        drawGround(GND_X, GND_Y);
+
+        // Output wire
+        p.stroke(60); p.strokeWeight(2);
+        p.line(OA_RX, OA_CY, VOUT_X, VOUT_Y);
+
+        // Feedback: Vout up → FB_Y → back to node
+        p.line(VOUT_X - 10, VOUT_Y, VOUT_X - 10, FB_Y);
+        p.line(VOUT_X - 10, FB_Y, NODE_X, FB_Y);
+        p.line(NODE_X, FB_Y, NODE_X, NODE_Y);
+
+        // ---- Components ----
+        drawResistorH(VIN_X + 70, NODE_X - 50, VIN_Y, 'Ri');
+        drawResistorH(NODE_X + 30, VOUT_X - 70, FB_Y, 'Rf');
+        drawOpAmp();
+
+        // ---- Vin label ----
+        p.noStroke(); p.fill(0);
+        p.textAlign(p.CENTER, p.CENTER);
+        p.textSize(12);
+        p.fill(40, 100, 200);
+        p.text('Vin', VIN_X, VIN_Y - 16);
+        p.textSize(14); p.textStyle(p.BOLD);
+        p.text((Vin >= 0 ? '+' : '') + Vin.toFixed(1) + 'V', VIN_X, VIN_Y + 4);
+        p.textStyle(p.NORMAL);
+
+        // ---- Node voltage labels ----
+        const highlightVm = (step >= 3);
+        const highlightVout = (step >= 4);
+
+        // V+ = 0V (always)
+        nodeVoltageLabel(GND_X - 55, OA_VP + 30, 'V+', 0, false);
+
+        // V- = virtual ground
+        nodeVoltageLabel(NODE_X, NODE_Y + 30, 'V\u207B', Vnode, highlightVm);
+
+        // Vout
+        nodeVoltageLabel(VOUT_X, VOUT_Y - 25, 'Vout', Vout, highlightVout);
+
+        // ---- Node dots ----
+        p.fill(40); p.noStroke();
+        p.circle(NODE_X, NODE_Y, 8);
+        p.circle(VOUT_X - 10, VOUT_Y, 6);
+
+        // ---- Current arrows ----
+        const showCurrents = (step >= 4);
+        // Current through Ri
+        currentArrow(170, VIN_Y - 22, true,
+            showCurrents ? 'Ii=' + (Ii * 1000).toFixed(2) + 'mA' : 'Ii',
+            false);
+        // Zero currents into op-amp inputs
+        currentArrow(OA_LX - 25, OA_VM - 15, true,
+            showCurrents ? 'I\u207B=0' : '', showCurrents);
+        currentArrow(OA_LX - 25, OA_VP + 15, true,
+            showCurrents ? 'I\u207A=0' : '', showCurrents);
+
+        // ---- Virtual ground annotation ----
+        if (step >= 3) {
+            p.noStroke();
+            p.fill(255, 220, 100, 200);
+            p.rect(NODE_X - 52, NODE_Y - 48, 104, 20, 4);
+            p.fill(120, 60, 0);
+            p.textAlign(p.CENTER, p.CENTER);
+            p.textSize(10);
+            p.text('Virtual Ground (V\u207B \u2248 0V)', NODE_X, NODE_Y - 38);
+        }
+
+        // ---- Gain box (top-right) ----
+        p.noStroke();
+        p.fill(230, 245, 230);
+        p.stroke(80, 160, 80);
+        p.strokeWeight(1);
+        p.rect(CW - 160, 12, 148, 70, 6);
+        p.noStroke(); p.fill(30, 100, 30);
+        p.textAlign(p.LEFT, p.TOP);
+        p.textSize(11);
+        const VoutDisplay = p.constrain(-Vin * gain, -15, 15);
+        const clipped = Math.abs(-Vin * gain) > 15;
+        p.text('Av = \u2212Rf/Ri = \u2212' + gain, CW - 152, 20);
+        p.text('Vin  = ' + (Vin >= 0 ? '+' : '') + Vin.toFixed(2) + ' V', CW - 152, 36);
+        p.fill(clipped ? 180 : 30, clipped ? 0 : 100, clipped ? 0 : 30);
+        p.text('Vout = ' + (VoutDisplay >= 0 ? '+' : '') + VoutDisplay.toFixed(2) + 'V' + (clipped ? ' \u26A0 clipped' : ''), CW - 152, 52);
+        p.fill(30, 100, 30);
+        p.text('Ri = 10k\u03A9   Rf = ' + (gain * 10) + 'k\u03A9', CW - 152, 68);
+
+        // ---- Step highlight box (left) ----
+        p.noStroke();
+        const stepColors = [
+            [200, 220, 255],
+            [200, 255, 220],
+            [255, 245, 200],
+            [255, 220, 220]
+        ];
+        const sc = stepColors[step - 1];
+        p.fill(sc[0], sc[1], sc[2], 180);
+        p.stroke(150);
+        p.strokeWeight(1);
+        p.rect(8, CH - 40, 200, 30, 4);
+        p.noStroke(); p.fill(60);
+        p.textAlign(p.CENTER, p.CENTER);
+        p.textSize(10);
+        p.text('Step ' + step + '/4  \u2014  use Next/Prev buttons', 108, CH - 25);
+
+        p.noLoop();
+    };
+};
+
+const myP5 = new p5(sketch);
+
+function redrawCanvas() { myP5.redraw(); }
+window.updateSim = updateSim;
+window.nextStep  = nextStep;
+window.prevStep  = prevStep;
+window.resetSim  = resetSim;
+
+updateSim();
+</script>
+</body>
+</html>
