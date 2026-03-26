@@ -1,0 +1,69 @@
+{
+  "title": "Water Flow Analogy MicroSim",
+  "description": "Interactive simulation comparing water flow in pipes to electric current in wires, demonstrating voltage-pressure and current-flow rate analogies",
+  "creator": "Dan McCreary",
+  "date": "2026-01-30",
+  "subject": [
+    "Electric Current",
+    "Voltage",
+    "Water Analogy",
+    "Circuit Fundamentals",
+    "Current Flow Visualization"
+  ],
+  "type": "Interactive Simulation",
+  "format": "text/html",
+  "language": "en-US",
+  "rights": "CC BY 4.0",
+  "publisher": "AI Circuits Course",
+  "identifier": "https://dmccreary.github.io/circuits/sims/water-flow-analogy/",
+  "educationalLevel": "Undergraduate",
+  "learningResourceType": "simulation",
+  "audience": "Students, Educators",
+  "version": "1.0.0",
+  "bloomLevel": [
+    "Understand"
+  ],
+  "concepts": [
+    "Electric Current",
+    "Voltage",
+    "Resistance",
+    "Current Flow",
+    "Pressure Analogy"
+  ],
+  "prerequisites": [
+    "Basic understanding of water flow",
+    "Familiarity with pumps and pipes"
+  ],
+  "library": "p5.js",
+  "visualizationType": [
+    "animation",
+    "split-screen comparison",
+    "interactive-demo",
+    "simulation"
+  ],
+  "learningObjectives": [
+    "Explain how electric current flow is analogous to water flow in pipes",
+    "Compare voltage to water pressure as the driving force",
+    "Compare current to flow rate as the rate of charge movement",
+    "Describe how conductor size affects current flow"
+  ],
+  "pedagogical": {
+    "pattern": "analogy-comparison",
+    "bloomAlignment": [
+      "understand"
+    ],
+    "bloomVerbs": [
+      "compare",
+      "explain",
+      "describe"
+    ],
+    "pacing": "self-paced",
+    "supportsPrediction": true,
+    "dataVisibility": "high",
+    "feedbackType": [
+      "immediate",
+      "visual"
+    ],
+    "interactionStyle": "manipulate"
+  }
+}

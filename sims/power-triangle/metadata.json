@@ -1,0 +1,78 @@
+{
+  "$schema": "https://github.com/dmccreary/microsims/blob/main/src/microsim-schema/microsim-schema.json",
+  "title": "Power Triangle Visualization",
+  "description": "Interactive power triangle for learning power, voltage, current, and resistance relationships using P=VI and Ohm's Law. Students can click on variables to reveal formulas and use the built-in calculator.",
+  "creator": "Dan McCreary",
+  "subject": ["Electrical Engineering", "Circuit Analysis", "Physics"],
+  "date": "2026-01-30",
+  "type": "Interactive Simulation",
+  "format": "text/html",
+  "language": "en",
+  "rights": "CC BY 4.0",
+  "gradeLevel": "High School, Undergraduate",
+  "subjectArea": "Electrical Engineering",
+  "topic": "Power Calculations",
+  "learningObjectives": [
+    "Use the power triangle to identify which formula to use for calculating power, voltage, or current",
+    "Apply the power equations P=VI, P=I²R, and P=V²/R to solve circuit problems",
+    "Explain the relationship between power, voltage, current, and resistance"
+  ],
+  "bloomsTaxonomyLevels": ["Apply", "Understand"],
+  "duration": "10-15 minutes",
+  "prerequisites": ["Basic algebra", "Understanding of voltage and current concepts"],
+  "framework": "p5.js",
+  "canvasDimensions": "responsive × 450",
+  "responsive": "Width-responsive",
+  "dependencies": ["p5.js CDN"],
+  "accessibility": {
+    "screenReaderSupport": true,
+    "keyboardNavigation": true
+  },
+  "controls": [
+    {
+      "type": "clickable",
+      "name": "Triangle Variables",
+      "description": "Click P, V, or I in the triangle to cover that variable and reveal the formula"
+    },
+    {
+      "type": "input",
+      "name": "Voltage Input",
+      "description": "Enter voltage value in volts"
+    },
+    {
+      "type": "input",
+      "name": "Current Input",
+      "description": "Enter current value in amperes"
+    },
+    {
+      "type": "input",
+      "name": "Resistance Input",
+      "description": "Enter resistance value in ohms"
+    },
+    {
+      "type": "button",
+      "name": "Calculate",
+      "description": "Calculate power from entered values"
+    },
+    {
+      "type": "button",
+      "name": "Clear",
+      "description": "Clear all input values and results"
+    }
+  ],
+  "modelType": "mathematical",
+  "equations": [
+    "P = V × I",
+    "P = I² × R",
+    "P = V² / R"
+  ],
+  "assumptions": [
+    "Ohmic (linear) resistances",
+    "DC circuit analysis",
+    "Ideal components"
+  ],
+  "limitations": [
+    "Does not account for reactive power in AC circuits",
+    "Assumes ideal resistive loads"
+  ]
+}

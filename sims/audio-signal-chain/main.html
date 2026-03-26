@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>Audio Signal Chain</title>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.7/lib/p5.js"></script>
+    <style>
+        * { box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; margin: 0; padding: 8px; background: #fff; }
+        .sim-container { max-width: 720px; margin: 0 auto; }
+        h3 { text-align: center; margin: 0 0 6px; font-size: 1.05em; color: #222; }
+        #p5-canvas-container canvas { display: block; }
+        .controls {
+            background: #f0f0f0;
+            border-radius: 6px;
+            padding: 8px 14px;
+            margin-top: 4px;
+        }
+        .ctrl-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4px 16px;
+        }
+        .slider-row {
+            display: flex;
+            align-items: center;
+            margin: 4px 0;
+        }
+        .slider-label {
+            min-width: 175px;
+            text-align: right;
+            padding-right: 8px;
+            font-size: 0.82em;
+            font-family: 'Courier New', monospace;
+            color: #333;
+        }
+        .slider-row input[type=range] {
+            flex: 1;
+            accent-color: #424242;
+            cursor: pointer;
+        }
+        .btn-row {
+            display: flex;
+            gap: 8px;
+            margin-top: 6px;
+        }
+        .action-btn {
+            padding: 4px 14px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.84em;
+            font-weight: bold;
+            background: #78909C;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+<div class="sim-container">
+    <h3>Audio Signal Chain: Mic to Speaker</h3>
+    <div id="p5-canvas-container"></div>
+
+    <div class="controls">
+        <div class="ctrl-grid">
+            <div class="slider-row">
+                <span class="slider-label" id="micLabel">Mic level: -50 dBV</span>
+                <input type="range" id="micSlider" min="-70" max="-30" value="-50" oninput="updateControls()">
+            </div>
+            <div class="slider-row">
+                <span class="slider-label" id="preampLabel">Preamp gain: +40 dB</span>
+                <input type="range" id="preampSlider" min="20" max="60" value="40" oninput="updateControls()">
+            </div>
+            <div class="slider-row">
+                <span class="slider-label" id="bassLabel">Bass adjust: 0 dB</span>
+                <input type="range" id="bassSlider" min="-12" max="12" value="0" oninput="updateControls()">
+            </div>
+            <div class="slider-row">
+                <span class="slider-label" id="trebleLabel">Treble adjust: 0 dB</span>
+                <input type="range" id="trebleSlider" min="-12" max="12" value="0" oninput="updateControls()">
+            </div>
+            <div class="slider-row">
+                <span class="slider-label" id="volumeLabel">Volume: -6 dB</span>
+                <input type="range" id="volumeSlider" min="-30" max="0" value="-6" oninput="updateControls()">
+            </div>
+        </div>
+        <div class="btn-row">
+            <button class="action-btn" onclick="resetSim()">&#8635; Reset</button>
+        </div>
+    </div>
+</div>
+
+<script>
+// =====================================================
+// Signal chain state (shared between p5 and DOM)
+// =====================================================
+let state = {
+    micLevel:    -50,   // dBV
+    preampGain:   40,   // dB
+    bassAdj:       0,   // dB
+    trebleAdj:     0,   // dB
+    volumeAdj:    -6,   // dB
+    powerAmpGain: 30    // fixed (not user-controlled)
+};
+
+// Computed levels at each tap (dBV), updated by computeLevels()
+let levels = { mic: 0, preamp: 0, bass: 0, mid: 0, treble: 0, amp: 0 };
+
+const CLIP_THRESHOLD = 10;   // dBV — anything above this clips
+const METER_MIN      = -70;  // dBV at bottom of meter
+const METER_MAX      = 15;   // dBV at top of meter
+
+function computeLevels() {
+    const afterMic    = state.micLevel;
+    const afterPreamp = afterMic + state.preampGain;
+    const afterBass   = afterPreamp + state.bassAdj;
+    const afterMid    = afterPreamp;
+    const afterTreble = afterPreamp + state.trebleAdj;
+    const afterAmp    = afterPreamp + state.powerAmpGain + state.volumeAdj;
+
+    levels = {
+        mic:    afterMic,
+        preamp: afterPreamp,
+        bass:   afterBass,
+        mid:    afterMid,
+        treble: afterTreble,
+        amp:    afterAmp
+    };
+}
+
+// =====================================================
+// DOM control update
+// =====================================================
+function updateControls() {
+    state.micLevel   = parseFloat(document.getElementById('micSlider').value);
+    state.preampGain = parseFloat(document.getElementById('preampSlider').value);
+    state.bassAdj    = parseFloat(document.getElementById('bassSlider').value);
+    state.trebleAdj  = parseFloat(document.getElementById('trebleSlider').value);
+    state.volumeAdj  = parseFloat(document.getElementById('volumeSlider').value);
+
+    const sign = v => v >= 0 ? '+' : '';
+    document.getElementById('micLabel').textContent    = 'Mic level: '      + state.micLevel.toFixed(0) + ' dBV';
+    document.getElementById('preampLabel').textContent = 'Preamp gain: '    + sign(state.preampGain) + state.preampGain.toFixed(0) + ' dB';
+    document.getElementById('bassLabel').textContent   = 'Bass adjust: '    + sign(state.bassAdj) + state.bassAdj.toFixed(0) + ' dB';
+    document.getElementById('trebleLabel').textContent = 'Treble adjust: '  + sign(state.trebleAdj) + state.trebleAdj.toFixed(0) + ' dB';
+    document.getElementById('volumeLabel').textContent = 'Volume: '         + sign(state.volumeAdj) + state.volumeAdj.toFixed(0) + ' dB';
+
+    computeLevels();
+}
+
+function resetSim() {
+    document.getElementById('micSlider').value    = -50;
+    document.getElementById('preampSlider').value =  40;
+    document.getElementById('bassSlider').value   =   0;
+    document.getElementById('trebleSlider').value =   0;
+    document.getElementById('volumeSlider').value =  -6;
+    updateControls();
+}
+
+updateControls();
+
+// =====================================================
+// p5.js sketch
+// =====================================================
+const sketch = function (p) {
+    // Canvas dimensions
+    const CW = 700;
+    const CH = 300;
+
+    // Stage definitions
+    const STAGES = [
+        { id: 'mic',    label: 'MIC',       sub: 'Dynamic',   col: [80, 80, 80] },
+        { id: 'preamp', label: 'PREAMP',     sub: '+20–60 dB', col: [21, 101, 192] },
+        { id: 'tone',   label: 'TONE CTRL',  sub: 'Bass/Treble',col: [27, 94, 32] },
+        { id: 'amp',    label: 'POWER AMP',  sub: '+30 dB',    col: [183, 84, 0] },
+        { id: 'spk',    label: 'SPEAKER',    sub: '8Ω load',   col: [136, 14, 79] }
+    ];
+
+    // Layout
+    const MARGIN_L = 30;
+    const MARGIN_R = 20;
+    const BOX_W  = 85;
+    const BOX_H  = 60;
+    const BOX_Y  = CH / 2 - BOX_H / 2 - 10;
+    const N = STAGES.length;
+    const totalWidth = CW - MARGIN_L - MARGIN_R;
+    const spacing    = totalWidth / (N - 1);
+    const stageX     = STAGES.map((_, i) => MARGIN_L + i * spacing);
+
+    // Meter dimensions
+    const METER_W = 18;
+    const METER_H = 140;
+    const METER_Y = BOX_Y + BOX_H + 14;
+
+    // Level tap positions (between/after stages) — 5 taps: after each stage
+    // We show meters ABOVE or below each stage box
+    // Actually show meter INSIDE / next to each stage for current level
+
+    // Level reference lines
+    const LEVEL_REFS = [
+        { dbv: 0,    label: '0 dBV (consumer line)', col: [0, 150, 200] },
+        { dbv: -10,  label: '−10 dBV',               col: [100, 100, 100] },
+        { dbv: 4,    label: '+4 dBV (pro line)',      col: [200, 130, 0] },
+        { dbv: CLIP_THRESHOLD, label: 'Clip',         col: [200, 0, 0] }
+    ];
+
+    function dbvToY(dbv) {
+        // Map METER_MIN..METER_MAX to METER_Y+METER_H..METER_Y
+        const frac = p.constrain((dbv - METER_MIN) / (METER_MAX - METER_MIN), 0, 1);
+        return METER_Y + METER_H - frac * METER_H;
+    }
+
+    function drawMeter(x, dbvMid, dbvBass, dbvTreble, isSpk) {
+        const mx = x - METER_W * 1.5;
+
+        // Background
+        p.noStroke();
+        p.fill(220);
+        p.rect(mx, METER_Y, METER_W * 3 + 2, METER_H, 2);
+
+        // Danger zone (above clip)
+        const clipY = dbvToY(CLIP_THRESHOLD);
+        p.fill(255, 200, 200);
+        p.rect(mx, METER_Y, METER_W * 3 + 2, clipY - METER_Y, 2);
+
+        // For speaker: just show power in watts instead of dBV bars
+        if (isSpk) {
+            // Convert amp output dBV to watts into 8Ω
+            const Vrms = Math.pow(10, dbvMid / 20);
+            const watts = (Vrms * Vrms) / 8;
+            const barH  = p.constrain((dbvMid - METER_MIN) / (METER_MAX - METER_MIN), 0, 1) * METER_H;
+            const barY  = METER_Y + METER_H - barH;
+            const clipping = dbvMid > CLIP_THRESHOLD;
+            p.fill(clipping ? 220 : 136, clipping ? 50 : 14, clipping ? 50 : 79);
+            p.rect(mx + 3, barY, METER_W * 3 - 4, barH, 2);
+            // Label
+            p.fill(50);
+            p.textAlign(p.CENTER, p.BOTTOM);
+            p.textSize(9);
+            p.text(watts < 1 ? (watts * 1000).toFixed(0) + 'mW' : watts.toFixed(1) + 'W', x, METER_Y + METER_H + 14);
+            return;
+        }
+
+        // Three bars: bass (left), mid (center), treble (right)
+        const bars = [
+            { dbv: dbvBass,  col: [41, 98, 255],    xOff: 0 },
+            { dbv: dbvMid,   col: [50, 150, 50],     xOff: METER_W },
+            { dbv: dbvTreble,col: [220, 120, 0],     xOff: METER_W * 2 }
+        ];
+
+        bars.forEach(bar => {
+            const barH = p.constrain((bar.dbv - METER_MIN) / (METER_MAX - METER_MIN), 0, 1) * METER_H;
+            const barY = METER_Y + METER_H - barH;
+            const clipping = bar.dbv > CLIP_THRESHOLD;
+            p.fill(clipping ? 220 : bar.col[0], clipping ? 50 : bar.col[1], clipping ? 50 : bar.col[2]);
+            p.rect(mx + bar.xOff + 1, barY, METER_W - 2, barH, 1);
+
+            // Clipping flash indicator
+            if (clipping) {
+                p.fill(255, 0, 0, 180);
+                p.rect(mx + bar.xOff + 1, METER_Y, METER_W - 2, 6, 1);
+            }
+        });
+
+        // dBV label
+        p.fill(50);
+        p.textAlign(p.CENTER, p.BOTTOM);
+        p.textSize(9);
+        p.text(dbvMid.toFixed(0) + ' dBV', x, METER_Y + METER_H + 14);
+    }
+
+    function drawStageBox(x, stage, isHighlighted) {
+        const bx = x - BOX_W / 2;
+        const col = stage.col;
+
+        // Box shadow effect
+        p.noStroke();
+        p.fill(col[0] - 20, col[1] - 20, col[2] - 20, 80);
+        p.rect(bx + 3, BOX_Y + 3, BOX_W, BOX_H, 8);
+
+        // Box
+        p.fill(col[0], col[1], col[2]);
+        p.rect(bx, BOX_Y, BOX_W, BOX_H, 8);
+
+        // Label
+        p.fill(255);
+        p.textAlign(p.CENTER, p.CENTER);
+        p.textStyle(p.BOLD);
+        p.textSize(11);
+        p.text(stage.label, x, BOX_Y + BOX_H * 0.38);
+        p.textStyle(p.NORMAL);
+        p.textSize(8.5);
+        p.fill(220, 220, 220);
+        p.text(stage.sub, x, BOX_Y + BOX_H * 0.68);
+    }
+
+    function drawArrow(x1, x2) {
+        const y = BOX_Y + BOX_H / 2;
+        p.stroke(100);
+        p.strokeWeight(1.5);
+        p.line(x1 + BOX_W / 2, y, x2 - BOX_W / 2, y);
+        // Arrowhead
+        const ax = x2 - BOX_W / 2;
+        p.fill(100);
+        p.noStroke();
+        p.triangle(ax, y - 5, ax, y + 5, ax + 8, y);
+    }
+
+    function drawScale() {
+        // Vertical dBV scale on left
+        const sx = 22;
+        p.stroke(160);
+        p.strokeWeight(1);
+        p.line(sx, METER_Y, sx, METER_Y + METER_H);
+
+        // Reference levels
+        LEVEL_REFS.forEach(ref => {
+            const ry = dbvToY(ref.dbv);
+            if (ry >= METER_Y && ry <= METER_Y + METER_H) {
+                p.stroke(ref.col[0], ref.col[1], ref.col[2], 150);
+                p.strokeWeight(1);
+                p.setLineDash ? p.setLineDash([3, 3]) : null;
+                p.fill(ref.col[0], ref.col[1], ref.col[2]);
+                p.noStroke();
+                p.textAlign(p.RIGHT, p.CENTER);
+                p.textSize(8);
+                p.text(ref.dbv + ' dBV', sx - 2, ry);
+                // Tick
+                p.stroke(ref.col[0], ref.col[1], ref.col[2], 120);
+                p.strokeWeight(1);
+                p.line(sx - 3, ry, sx, ry);
+            }
+        });
+
+        // Legend: bass/mid/treble
+        const lx = CW - 90, ly = METER_Y + METER_H + 22;
+        [[41, 98, 255, 'Bass (100Hz)'],
+         [50, 150, 50, 'Mid (1kHz)'],
+         [220, 120, 0, 'Treble (10kHz)']].forEach((item, i) => {
+            p.noStroke();
+            p.fill(item[0], item[1], item[2]);
+            p.rect(lx, ly + i * 13, 10, 10, 2);
+            p.fill(60);
+            p.textAlign(p.LEFT, p.CENTER);
+            p.textSize(8.5);
+            p.text(item[3], lx + 13, ly + i * 13 + 5);
+        });
+    }
+
+    p.setup = function () {
+        const canvas = p.createCanvas(CW, CH);
+        canvas.parent('p5-canvas-container');
+        p.textFont('Arial');
+        computeLevels();
+    };
+
+    p.draw = function () {
+        p.background(255);
+        computeLevels();
+
+        // Draw scale
+        drawScale();
+
+        // Draw arrows between stages
+        for (let i = 0; i < STAGES.length - 1; i++) {
+            drawArrow(stageX[i], stageX[i + 1]);
+        }
+
+        // Draw stage boxes
+        STAGES.forEach((stage, i) => drawStageBox(stageX[i], stage, false));
+
+        // Draw level meters below each stage
+        const taps = [
+            { x: stageX[0], mid: levels.mic,    bass: levels.mic,    treble: levels.mic,    spk: false },
+            { x: stageX[1], mid: levels.mid,     bass: levels.mid,    treble: levels.mid,    spk: false },
+            { x: stageX[2], mid: levels.mid,     bass: levels.bass,   treble: levels.treble, spk: false },
+            { x: stageX[3], mid: levels.amp,     bass: levels.amp,    treble: levels.amp,    spk: false },
+            { x: stageX[4], mid: levels.amp,     bass: levels.amp,    treble: levels.amp,    spk: true  }
+        ];
+
+        taps.forEach(tap => drawMeter(tap.x, tap.mid, tap.bass, tap.treble, tap.spk));
+
+        // Title labels above meters
+        p.noStroke();
+        p.fill(80);
+        p.textAlign(p.CENTER, p.BOTTOM);
+        p.textSize(8.5);
+        p.textStyle(p.NORMAL);
+        const tapLabels = ['Output', 'Output', 'Output', 'Output', 'Power'];
+        taps.forEach((tap, i) => p.text(tapLabels[i], tap.x, METER_Y - 3));
+
+        p.noLoop();
+    };
+
+    // Redraw whenever slider changes
+    window._p5redraw = () => p.redraw();
+};
+
+// Attach p5 instance
+const myP5 = new p5(sketch);
+
+// Hook slider changes into p5 redraw
+const origUpdate = updateControls;
+window.updateControls = function () {
+    origUpdate();
+    if (window._p5redraw) window._p5redraw();
+};
+
+window.resetSim = function () {
+    document.getElementById('micSlider').value    = -50;
+    document.getElementById('preampSlider').value =  40;
+    document.getElementById('bassSlider').value   =   0;
+    document.getElementById('trebleSlider').value =   0;
+    document.getElementById('volumeSlider').value =  -6;
+    updateControls();
+};
+</script>
+</body>
+</html>

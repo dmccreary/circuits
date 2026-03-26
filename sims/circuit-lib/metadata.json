@@ -1,0 +1,88 @@
+{
+  "title": "Circuit Component Library Test",
+  "description": "Test demonstration of the p5.js circuit component drawing library with functions for resistors, capacitors, inductors, batteries, and switches",
+  "creator": "Dan McCreary",
+  "date": "2025-06-01",
+  "subject": [
+    "Circuit Components",
+    "Drawing Library",
+    "p5.js",
+    "Electronic Symbols",
+    "Circuit Diagrams"
+  ],
+  "type": "Interactive Simulation",
+  "format": "text/html",
+  "language": "en-US",
+  "rights": "CC BY 4.0",
+  "publisher": "AI Circuits Course",
+  "identifier": "https://dmccreary.github.io/circuits/sims/circuit-lib/",
+  "educationalLevel": "High School",
+  "learningResourceType": "simulation",
+  "audience": "Students, Educators, Developers",
+  "version": "1.0.0",
+  "bloomLevel": [
+    "Understand",
+    "Apply",
+    "Create"
+  ],
+  "concepts": [
+    "Circuit Symbols",
+    "Component Library",
+    "Resistors",
+    "Capacitors",
+    "Inductors",
+    "Batteries",
+    "Switches"
+  ],
+  "prerequisites": [
+    "Basic Circuit Concepts",
+    "JavaScript Basics"
+  ],
+  "library": "p5.js",
+  "visualizationType": [
+    "animation",
+    "diagram",
+    "graph",
+    "interactive-demo",
+    "network",
+    "simulation"
+  ],
+  "learningObjectives": [
+    "Understand the key concepts of circuit component library test",
+    "Explore circuit component library test through interactive visualization",
+    "Apply knowledge of circuit component library test to solve problems",
+    "Experiment with parameters to observe their effects on circuit component library test"
+  ],
+  "bloomsTaxonomy": [
+    "Remember",
+    "Understand",
+    "Apply",
+    "Analyze",
+    "Evaluate",
+    "Create"
+  ],
+  "pedagogical": {
+    "pattern": "assessment",
+    "bloomAlignment": [
+      "understand",
+      "apply",
+      "analyze"
+    ],
+    "bloomVerbs": [
+      "compare",
+      "describe",
+      "apply",
+      "calculate",
+      "demonstrate"
+    ],
+    "pacing": "self-paced",
+    "supportsPrediction": false,
+    "dataVisibility": "high",
+    "feedbackType": [
+      "immediate",
+      "corrective",
+      "explanatory"
+    ],
+    "interactionStyle": "construct"
+  }
+}

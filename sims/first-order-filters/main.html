@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+    <title>First-Order Filter Comparison</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <style>
+        * { box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; margin: 0; padding: 10px; background: #fff; }
+        .sim-container { max-width: 720px; margin: 0 auto; }
+        h3 { text-align: center; margin: 0 0 8px; font-size: 1.1em; color: #222; }
+
+        .toggle-row {
+            display: flex;
+            justify-content: center;
+            gap: 6px;
+            margin-bottom: 8px;
+        }
+        .toggle-btn {
+            padding: 4px 16px;
+            border: 2px solid #555;
+            border-radius: 16px;
+            background: white;
+            color: #555;
+            cursor: pointer;
+            font-size: 0.85em;
+            font-weight: bold;
+            transition: all 0.2s;
+        }
+        .toggle-btn.active { background: #555; color: white; }
+
+        .chart-wrapper { position: relative; height: 300px; margin-bottom: 8px; }
+
+        .controls {
+            background: #f0f0f0;
+            border-radius: 6px;
+            padding: 10px 14px;
+        }
+        .slider-row {
+            display: flex;
+            align-items: center;
+            margin: 5px 0;
+        }
+        .slider-label {
+            min-width: 180px;
+            text-align: right;
+            padding-right: 10px;
+            font-size: 0.85em;
+            font-family: 'Courier New', monospace;
+            color: #333;
+        }
+        .slider-row input[type=range] {
+            flex: 1;
+            accent-color: #1565C0;
+            cursor: pointer;
+        }
+        .comp-table {
+            width: 100%;
+            margin-top: 8px;
+            border-collapse: collapse;
+            font-size: 0.82em;
+        }
+        .comp-table th {
+            background: #ddd;
+            padding: 4px 8px;
+            text-align: center;
+        }
+        .comp-table td {
+            padding: 3px 8px;
+            text-align: center;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        .color-rc-lp { color: #1565C0; font-weight: bold; }
+        .color-rc-hp { color: #B71C1C; font-weight: bold; }
+        .color-rl-lp { color: #1565C0; font-style: italic; }
+        .color-rl-hp { color: #B71C1C; font-style: italic; }
+
+        .info-note {
+            margin-top: 6px;
+            font-size: 0.80em;
+            color: #555;
+            text-align: center;
+            font-style: italic;
+        }
+        .btn-row { display: flex; gap: 8px; margin-top: 8px; }
+        .action-btn {
+            padding: 5px 14px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.85em;
+            font-weight: bold;
+            background: #78909C;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+<div class="sim-container">
+    <h3>First-Order Filter Comparison: RC vs RL</h3>
+
+    <div class="toggle-row">
+        <button class="toggle-btn active" id="btnAll"   onclick="setView('all')">All Filters</button>
+        <button class="toggle-btn"        id="btnRC"    onclick="setView('rc')">RC Only</button>
+        <button class="toggle-btn"        id="btnRL"    onclick="setView('rl')">RL Only</button>
+    </div>
+
+    <div class="chart-wrapper">
+        <canvas id="bodeChart"></canvas>
+    </div>
+
+    <div class="controls">
+        <div class="slider-row">
+            <span class="slider-label" id="fcLabel">f&#x2093;: 1.00 kHz</span>
+            <input type="range" id="fcSlider" min="0" max="100" value="50" oninput="updateParams()">
+        </div>
+        <div class="slider-row">
+            <span class="slider-label" id="rLabel">R: 1.00 k&#937;</span>
+            <input type="range" id="rSlider" min="0" max="100" value="33" oninput="updateParams()">
+        </div>
+
+        <table class="comp-table">
+            <thead>
+                <tr>
+                    <th>Circuit</th>
+                    <th>Type</th>
+                    <th>R</th>
+                    <th>C or L</th>
+                    <th>f&#x2093; Formula</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="color-rc-lp">RC Low-Pass</td>
+                    <td>Output across C</td>
+                    <td id="rcR">1.00 k&#937;</td>
+                    <td id="rcC">159 nF</td>
+                    <td>1/(2&#960;RC)</td>
+                </tr>
+                <tr>
+                    <td class="color-rc-hp">RC High-Pass</td>
+                    <td>Output across R</td>
+                    <td id="rcR2">1.00 k&#937;</td>
+                    <td id="rcC2">159 nF</td>
+                    <td>1/(2&#960;RC)</td>
+                </tr>
+                <tr>
+                    <td class="color-rl-lp">RL Low-Pass</td>
+                    <td>Output across R</td>
+                    <td id="rlR">1.00 k&#937;</td>
+                    <td id="rlL">159 mH</td>
+                    <td>R/(2&#960;L)</td>
+                </tr>
+                <tr>
+                    <td class="color-rl-hp">RL High-Pass</td>
+                    <td>Output across L</td>
+                    <td id="rlR2">1.00 k&#937;</td>
+                    <td id="rlL2">159 mH</td>
+                    <td>R/(2&#960;L)</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="info-note" id="infoNote">
+            RC and RL filters with the same f&#x2093; have identical frequency response shapes &mdash; only the component type differs.
+        </div>
+        <div class="btn-row">
+            <button class="action-btn" onclick="resetSim()">&#8635; Reset</button>
+        </div>
+    </div>
+</div>
+
+<script>
+// =====================================================
+// Constants
+// =====================================================
+const FREQ_MIN = 10;
+const FREQ_MAX = 1e6;
+const N_POINTS = 200;
+
+const FC_MIN = 100;    // 100 Hz
+const FC_MAX = 1e4;    // 10 kHz
+
+const R_MIN = 100;
+const R_MAX = 1e4;     // 10 kΩ
+
+// =====================================================
+// State
+// =====================================================
+let fc = 1000;   // Hz
+let R  = 1000;   // Ω
+let view = 'all';
+
+// =====================================================
+// Pre-computed frequency array
+// =====================================================
+const FREQUENCIES = (function () {
+    const arr = [];
+    for (let i = 0; i < N_POINTS; i++) {
+        arr.push(FREQ_MIN * Math.pow(FREQ_MAX / FREQ_MIN, i / (N_POINTS - 1)));
+    }
+    return arr;
+})();
+
+// =====================================================
+// Math helpers
+// =====================================================
+function sliderToLog(val, minVal, maxVal) {
+    return minVal * Math.pow(maxVal / minVal, val / 100);
+}
+
+function lpDB(f, cutoff) {
+    const u = f / cutoff;
+    return 20 * Math.log10(1 / Math.sqrt(1 + u * u));
+}
+
+function hpDB(f, cutoff) {
+    const u = f / cutoff;
+    return 20 * Math.log10(u / Math.sqrt(1 + u * u));
+}
+
+// =====================================================
+// Formatting
+// =====================================================
+function formatR(r) {
+    if (r >= 1e4) return (r / 1000).toFixed(1) + ' k\u03A9';
+    if (r >= 1e3) return (r / 1000).toFixed(2) + ' k\u03A9';
+    return Math.round(r) + ' \u03A9';
+}
+
+function formatC(c) {
+    if (c >= 1e-3)  return (c * 1e3).toFixed(1) + ' mF';
+    if (c >= 1e-6)  return (c * 1e6).toFixed(c >= 100e-6 ? 0 : 1) + ' \u03BCF';
+    if (c >= 1e-9)  return (c * 1e9).toFixed(c >= 100e-9 ? 0 : 1) + ' nF';
+    return (c * 1e12).toFixed(0) + ' pF';
+}
+
+function formatL(l) {
+    if (l >= 1)    return l.toFixed(2) + ' H';
+    if (l >= 1e-3) return (l * 1e3).toFixed(l >= 100e-3 ? 0 : 1) + ' mH';
+    return (l * 1e6).toFixed(0) + ' \u03BCH';
+}
+
+function formatFreq(f) {
+    if (f >= 1e3) return (f / 1e3).toFixed(f >= 1e4 ? 1 : 2) + ' kHz';
+    return f.toFixed(0) + ' Hz';
+}
+
+// =====================================================
+// Chart.js setup
+// =====================================================
+const ctx = document.getElementById('bodeChart').getContext('2d');
+
+const chart = new Chart(ctx, {
+    type: 'line',
+    data: {
+        datasets: [
+            {
+                // 0: RC Low-Pass
+                label: 'RC Low-Pass',
+                data: [],
+                borderColor: '#1565C0',
+                backgroundColor: 'transparent',
+                borderWidth: 2.5,
+                pointRadius: 0,
+                tension: 0,
+                borderDash: []
+            },
+            {
+                // 1: RC High-Pass
+                label: 'RC High-Pass',
+                data: [],
+                borderColor: '#B71C1C',
+                backgroundColor: 'transparent',
+                borderWidth: 2.5,
+                pointRadius: 0,
+                tension: 0,
+                borderDash: []
+            },
+            {
+                // 2: RL Low-Pass (dashed — same response as RC LP)
+                label: 'RL Low-Pass',
+                data: [],
+                borderColor: '#1565C0',
+                backgroundColor: 'transparent',
+                borderWidth: 1.5,
+                pointRadius: 0,
+                tension: 0,
+                borderDash: [8, 4]
+            },
+            {
+                // 3: RL High-Pass (dashed — same response as RC HP)
+                label: 'RL High-Pass',
+                data: [],
+                borderColor: '#B71C1C',
+                backgroundColor: 'transparent',
+                borderWidth: 1.5,
+                pointRadius: 0,
+                tension: 0,
+                borderDash: [8, 4]
+            },
+            {
+                // 4: fc vertical marker
+                label: 'f\u2093',
+                data: [],
+                borderColor: 'rgba(100,100,100,0.5)',
+                backgroundColor: 'transparent',
+                borderWidth: 1.5,
+                pointRadius: 0,
+                tension: 0,
+                borderDash: [4, 4]
+            }
+        ]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        animation: { duration: 0 },
+        scales: {
+            x: {
+                type: 'logarithmic',
+                min: FREQ_MIN,
+                max: FREQ_MAX,
+                title: { display: true, text: 'Frequency (Hz)', font: { size: 11 } },
+                ticks: {
+                    callback(value) {
+                        const lv = Math.log10(value);
+                        if (Math.abs(lv - Math.round(lv)) < 0.01) return formatFreq(value);
+                        return '';
+                    },
+                    maxRotation: 0,
+                    font: { size: 10 }
+                },
+                grid: { color: 'rgba(0,0,0,0.08)' }
+            },
+            y: {
+                min: -65,
+                max: 5,
+                title: { display: true, text: 'Magnitude (dB)', font: { size: 11 } },
+                ticks: { stepSize: 10, callback: v => v + ' dB', font: { size: 10 } },
+                grid: { color: 'rgba(0,0,0,0.08)' }
+            }
+        },
+        plugins: {
+            legend: {
+                display: true,
+                position: 'top',
+                labels: { font: { size: 10 }, boxWidth: 20, padding: 10 }
+            },
+            tooltip: {
+                callbacks: {
+                    title: items => 'f = ' + formatFreq(items[0].parsed.x),
+                    label: item => item.dataset.label + ': ' + item.parsed.y.toFixed(1) + ' dB'
+                }
+            }
+        }
+    }
+});
+
+// =====================================================
+// Update chart and UI
+// =====================================================
+function updateChart() {
+    const showRC = (view === 'all' || view === 'rc');
+    const showRL = (view === 'all' || view === 'rl');
+
+    // RC LP
+    chart.data.datasets[0].data = FREQUENCIES.map(f => ({ x: f, y: lpDB(f, fc) }));
+    chart.data.datasets[0].hidden = !showRC;
+    // RC HP
+    chart.data.datasets[1].data = FREQUENCIES.map(f => ({ x: f, y: hpDB(f, fc) }));
+    chart.data.datasets[1].hidden = !showRC;
+    // RL LP
+    chart.data.datasets[2].data = FREQUENCIES.map(f => ({ x: f, y: lpDB(f, fc) }));
+    chart.data.datasets[2].hidden = !showRL;
+    // RL HP
+    chart.data.datasets[3].data = FREQUENCIES.map(f => ({ x: f, y: hpDB(f, fc) }));
+    chart.data.datasets[3].hidden = !showRL;
+    // fc marker
+    chart.data.datasets[4].data = [{ x: fc, y: -65 }, { x: fc, y: 5 }];
+
+    chart.update('none');
+}
+
+function updateParams() {
+    fc = sliderToLog(parseFloat(document.getElementById('fcSlider').value), FC_MIN, FC_MAX);
+    R  = sliderToLog(parseFloat(document.getElementById('rSlider').value),  R_MIN,  R_MAX);
+
+    const C = 1 / (2 * Math.PI * fc * R);
+    const L = R / (2 * Math.PI * fc);
+
+    document.getElementById('fcLabel').textContent = 'f\u2093: ' + formatFreq(fc);
+    document.getElementById('rLabel').textContent  = 'R: ' + formatR(R);
+
+    // Component table
+    const rStr = formatR(R);
+    const cStr = formatC(C);
+    const lStr = formatL(L);
+
+    document.getElementById('rcR').textContent  = rStr;
+    document.getElementById('rcC').textContent  = cStr;
+    document.getElementById('rcR2').textContent = rStr;
+    document.getElementById('rcC2').textContent = cStr;
+    document.getElementById('rlR').textContent  = rStr;
+    document.getElementById('rlL').textContent  = lStr;
+    document.getElementById('rlR2').textContent = rStr;
+    document.getElementById('rlL2').textContent = lStr;
+
+    updateChart();
+}
+
+function setView(v) {
+    view = v;
+    ['All', 'RC', 'RL'].forEach(id => {
+        document.getElementById('btn' + id).classList.toggle('active', id.toLowerCase() === v);
+    });
+    updateChart();
+}
+
+function resetSim() {
+    document.getElementById('fcSlider').value = 50;
+    document.getElementById('rSlider').value  = 33;
+    view = 'all';
+    ['All', 'RC', 'RL'].forEach(id => {
+        document.getElementById('btn' + id).classList.toggle('active', id === 'All');
+    });
+    updateParams();
+}
+
+updateParams();
+</script>
+</body>
+</html>
