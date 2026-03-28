@@ -1,357 +1,330 @@
 // KCL Node Visualization MicroSim
-// Shows a central node with 4 branches, animated current particles,
-// color-coded arrows, and sliders to adjust current magnitudes.
-// Demonstrates Kirchhoff's Current Law: sum of currents at a node = 0.
+// Interactive demonstration of Kirchhoff's Current Law
+// Four branches meet at a central node with animated current flow
 
 'use strict';
 
-// ── Canvas ───────────────────────────────────────────────────────────────────
-let canvasWidth;
-const canvasHeight = 500;
+let canvasW, canvasH = 500;
+let cx, cy;  // node center
 
-// ── Colors ───────────────────────────────────────────────────────────────────
-const BG_COLOR      = '#f8f9fa';
-const NODE_COLOR    = '#2c3e50';
-const WIRE_COLOR    = '#555';
-const ENTER_COLOR   = '#27ae60';  // green - current entering
-const LEAVE_COLOR   = '#e74c3c';  // red   - current leaving
-const SLIDER_TRACK  = '#ccc';
-const SLIDER_FILL   = '#3498db';
-const SLIDER_KNOB   = '#2980b9';
-const TEXT_COLOR    = '#2c3e50';
-const PANEL_BG      = '#eef2f7';
+// Branch data: angle, current value, particles
+const ANGLES = [ -Math.PI/2, 0, Math.PI/2, Math.PI ]; // top, right, bottom, left
+const LABELS = ['I₁','I₂','I₃','I₄'];
+const DEFAULTS = [3, 2, -4, -1];
+let currents = [...DEFAULTS];
 
-// ── Branch layout ────────────────────────────────────────────────────────────
-// Angles: top, right, bottom, left
-const BRANCH_ANGLES = [-Math.PI / 2, 0, Math.PI / 2, Math.PI];
-const BRANCH_LABELS = ['I\u2081', 'I\u2082', 'I\u2083', 'I\u2084'];
-const BRANCH_LENGTH = 110;
+// Slider state
+const SL_W = 160, SL_H = 6, KNOB_R = 9;
+let sliders = [];
 
-// ── Sliders ──────────────────────────────────────────────────────────────────
-let sliders = [];  // {x, y, w, val, min, max, label, dragging}
-const SLIDER_W = 180;
-const SLIDER_H = 6;
-const KNOB_R   = 10;
-const SLIDER_MIN = -5;
-const SLIDER_MAX = 5;
-const DEFAULT_VALS = [3, 2, -4, -1];
+// Particles
+let dots = [];
+const DOTS_PER = 8;
 
-// ── Particles ────────────────────────────────────────────────────────────────
-let particles = [];  // {branch, t, speed}
-const PARTICLE_R = 4;
-const PARTICLES_PER_BRANCH = 6;
-
-// ── Node center ──────────────────────────────────────────────────────────────
-let cx, cy;
+// Layout
+const BRANCH_LEN = 100;
+const DRAW_TOP = 60;
+let nodeY;
 
 function setup() {
-    canvasWidth = min(windowWidth, 700);
-    let cnv = createCanvas(canvasWidth, canvasHeight);
-    cnv.parent('main');
+    canvasW = min(windowWidth - 4, 680);
+    createCanvas(canvasW, canvasH).parent('main');
     textFont('Arial');
+    nodeY = DRAW_TOP + 120;
+    cx = canvasW / 2;
+    cy = nodeY;
+    buildSliders();
+    buildDots();
+}
 
-    cx = canvasWidth / 2;
-    cy = 180;
-
-    // Create sliders in the control panel area
-    let sliderStartY = 360;
-    let sliderGap = 32;
-    let sliderLeft = canvasWidth / 2 - SLIDER_W / 2 + 40;
-
+function buildSliders() {
+    sliders = [];
+    let left = cx - SL_W / 2 + 30;
+    let top = 365;
     for (let i = 0; i < 4; i++) {
-        sliders.push({
-            x: sliderLeft,
-            y: sliderStartY + i * sliderGap,
-            w: SLIDER_W,
-            val: DEFAULT_VALS[i],
-            min: SLIDER_MIN,
-            max: SLIDER_MAX,
-            label: BRANCH_LABELS[i],
-            dragging: false
-        });
+        sliders.push({ x: left, y: top + i * 30, val: currents[i], drag: false });
     }
+}
 
-    // Initialize particles
+function buildDots() {
+    dots = [];
     for (let b = 0; b < 4; b++) {
-        for (let p = 0; p < PARTICLES_PER_BRANCH; p++) {
-            particles.push({
-                branch: b,
-                t: p / PARTICLES_PER_BRANCH,
-                speed: 0
-            });
+        for (let j = 0; j < DOTS_PER; j++) {
+            dots.push({ b: b, t: j / DOTS_PER });
         }
     }
 }
 
 function draw() {
-    background(BG_COLOR);
+    background(248, 249, 252);
 
     // Title
-    fill(TEXT_COLOR);
     noStroke();
+    fill(40);
     textAlign(CENTER, TOP);
-    textSize(18);
+    textSize(17);
     textStyle(BOLD);
-    text("Kirchhoff's Current Law (KCL)", canvasWidth / 2, 12);
+    text("Kirchhoff's Current Law (KCL)", cx, 10);
     textStyle(NORMAL);
-    textSize(13);
-    fill('#666');
-    text('Sum of currents entering a node equals sum leaving', canvasWidth / 2, 36);
+    textSize(12);
+    fill(100);
+    text('The algebraic sum of all currents at a node equals zero', cx, 32);
 
-    // ── Draw branches and arrows ─────────────────────────────────────────────
+    // Read slider values
+    for (let i = 0; i < 4; i++) currents[i] = sliders[i].val;
+
+    drawBranches();
+    animateDots();
+    drawNode();
+    drawStatus();
+    drawPanel();
+}
+
+// ── Branches with arrows ────────────────────────────────────────────────
+
+function drawBranches() {
     for (let i = 0; i < 4; i++) {
-        drawBranch(i);
+        let a = ANGLES[i];
+        let ex = cx + cos(a) * BRANCH_LEN;
+        let ey = cy + sin(a) * BRANCH_LEN;
+        let v = currents[i];
+        let col = v >= 0 ? color(39, 174, 96) : color(231, 76, 60);
+
+        // Wire
+        stroke(100);
+        strokeWeight(2.5);
+        line(cx, cy, ex, ey);
+
+        // Endpoint dot
+        noStroke();
+        fill(col);
+        ellipse(ex, ey, 12, 12);
+
+        // Arrow at midpoint
+        if (abs(v) > 0.05) {
+            let mid = 0.55;
+            let ax = cx + cos(a) * BRANCH_LEN * mid;
+            let ay = cy + sin(a) * BRANCH_LEN * mid;
+            let arrAngle = v > 0 ? a + PI : a; // toward node if positive
+            let sz = map(abs(v), 0, 5, 5, 12);
+            push();
+            translate(ax, ay);
+            rotate(arrAngle);
+            fill(col);
+            noStroke();
+            triangle(0, 0, -sz * 1.8, -sz * 0.6, -sz * 1.8, sz * 0.6);
+            pop();
+        }
+
+        // Label
+        let ld = BRANCH_LEN + 26;
+        let lx = cx + cos(a) * ld;
+        let ly = cy + sin(a) * ld;
+        noStroke();
+        fill(40);
+        textAlign(CENTER, CENTER);
+        textSize(13);
+        textStyle(BOLD);
+        let sign = v >= 0 ? '+' : '';
+        text(LABELS[i] + ' = ' + sign + nf(v, 1, 1) + ' A', lx, ly);
+        textStyle(NORMAL);
     }
+}
 
-    // ── Draw particles ───────────────────────────────────────────────────────
-    updateAndDrawParticles();
+// ── Animated dots ───────────────────────────────────────────────────────
 
-    // ── Draw central node ────────────────────────────────────────────────────
-    fill(NODE_COLOR);
+function animateDots() {
+    for (let d of dots) {
+        let v = currents[d.b];
+        if (abs(v) < 0.1) continue;
+
+        // Move: positive = toward node
+        d.t -= v * 0.003;
+        if (d.t > 1) d.t -= 1;
+        if (d.t < 0) d.t += 1;
+
+        let a = ANGLES[d.b];
+        let r = lerp(BRANCH_LEN - 5, 14, d.t);
+        let px = cx + cos(a) * r;
+        let py = cy + sin(a) * r;
+
+        let c = v > 0 ? color(39, 174, 96, 200) : color(231, 76, 60, 200);
+        noStroke();
+        fill(c);
+        ellipse(px, py, 7, 7);
+    }
+}
+
+// ── Central node ────────────────────────────────────────────────────────
+
+function drawNode() {
+    // Glow
     noStroke();
-    ellipse(cx, cy, 20, 20);
+    fill(44, 62, 80, 40);
+    ellipse(cx, cy, 30, 30);
+    // Node
+    fill(44, 62, 80);
+    ellipse(cx, cy, 22, 22);
+    // Label
     fill(255);
     textAlign(CENTER, CENTER);
-    textSize(10);
+    textSize(11);
     textStyle(BOLD);
     text('N', cx, cy);
     textStyle(NORMAL);
-
-    // ── Control panel ────────────────────────────────────────────────────────
-    drawControlPanel();
-
-    // ── KCL status ───────────────────────────────────────────────────────────
-    drawKCLStatus();
 }
 
-function drawBranch(i) {
-    let angle = BRANCH_ANGLES[i];
-    let val = sliders[i].val;
-    let entering = val > 0;
-    let col = entering ? color(ENTER_COLOR) : color(LEAVE_COLOR);
+// ── KCL status ──────────────────────────────────────────────────────────
 
-    // Wire from node to endpoint
-    let ex = cx + cos(angle) * BRANCH_LENGTH;
-    let ey = cy + sin(angle) * BRANCH_LENGTH;
+function drawStatus() {
+    let sum = currents.reduce((a, b) => a + b, 0);
+    let ok = abs(sum) < 0.05;
 
-    stroke(WIRE_COLOR);
-    strokeWeight(3);
-    line(cx, cy, ex, ey);
+    let sy = cy + BRANCH_LEN + 48;
 
-    // Terminal circle
-    fill(col);
+    // Background pill
+    let pw = 260, ph = 44;
     noStroke();
-    ellipse(ex, ey, 14, 14);
+    fill(ok ? color(232, 245, 233) : color(253, 237, 237));
+    rect(cx - pw / 2, sy - ph / 2, pw, ph, 22);
 
-    // Arrow on wire
-    if (abs(val) > 0.01) {
-        drawArrow(i, val, col);
-    }
+    // Border
+    stroke(ok ? color(76, 175, 80) : color(229, 57, 53));
+    strokeWeight(2);
+    noFill();
+    rect(cx - pw / 2, sy - ph / 2, pw, ph, 22);
 
-    // Label near endpoint
-    let labelDist = BRANCH_LENGTH + 28;
-    let lx = cx + cos(angle) * labelDist;
-    let ly = cy + sin(angle) * labelDist;
-    fill(TEXT_COLOR);
+    // Text
     noStroke();
     textAlign(CENTER, CENTER);
-    textSize(14);
+
+    textSize(15);
     textStyle(BOLD);
-    text(BRANCH_LABELS[i] + ' = ' + nf(val, 1, 1) + 'A', lx, ly);
-    textStyle(NORMAL);
-}
+    fill(40);
+    text('ΣI = ' + (sum >= 0 ? '+' : '') + nf(sum, 1, 1) + ' A', cx, sy - 8);
 
-function drawArrow(i, val, col) {
-    let angle = BRANCH_ANGLES[i];
-    // Arrow direction: positive = towards node (entering), negative = away from node (leaving)
-    let dir = val > 0 ? 1 : -1;
-
-    // Arrow position along the branch (midpoint)
-    let arrowDist = BRANCH_LENGTH * 0.55;
-    let ax = cx + cos(angle) * arrowDist;
-    let ay = cy + sin(angle) * arrowDist;
-
-    // Arrow points toward node if entering, away if leaving
-    let arrowAngle = angle + (dir > 0 ? Math.PI : 0);
-
-    push();
-    translate(ax, ay);
-    rotate(arrowAngle);
-    fill(col);
-    noStroke();
-    let sz = map(abs(val), 0, 5, 6, 14);
-    triangle(0, 0, -sz * 1.6, -sz * 0.7, -sz * 1.6, sz * 0.7);
-    pop();
-}
-
-function updateAndDrawParticles() {
-    for (let p of particles) {
-        let val = sliders[p.branch].val;
-        // Speed proportional to current magnitude, direction based on sign
-        // Positive = toward node (t decreases from 1 to 0)
-        // Negative = away from node (t increases from 0 to 1)
-        let speed = val * 0.004;
-        p.t -= speed;
-
-        // Wrap
-        if (p.t > 1) p.t -= 1;
-        if (p.t < 0) p.t += 1;
-
-        if (abs(val) < 0.1) continue;  // Don't draw if nearly zero
-
-        let angle = BRANCH_ANGLES[p.branch];
-        let dist = lerp(BRANCH_LENGTH, 12, p.t);
-        let px = cx + cos(angle) * dist;
-        let py = cy + sin(angle) * dist;
-
-        let entering = val > 0;
-        let c = entering ? color(ENTER_COLOR) : color(LEAVE_COLOR);
-        // Fade alpha based on position
-        let alpha = map(abs(p.t - 0.5), 0, 0.5, 255, 120);
-        c.setAlpha(alpha);
-        fill(c);
-        noStroke();
-        ellipse(px, py, PARTICLE_R * 2, PARTICLE_R * 2);
-    }
-}
-
-function drawControlPanel() {
-    // Panel background
-    fill(PANEL_BG);
-    noStroke();
-    let panelY = 335;
-    let panelH = canvasHeight - panelY - 5;
-    rect(10, panelY, canvasWidth - 20, panelH, 10);
-
-    // Panel title
-    fill(TEXT_COLOR);
-    textAlign(CENTER, TOP);
     textSize(13);
-    textStyle(BOLD);
-    text('Adjust Branch Currents (positive = entering node)', canvasWidth / 2, panelY + 6);
-    textStyle(NORMAL);
-
-    // Draw sliders
-    for (let i = 0; i < 4; i++) {
-        drawSlider(sliders[i], i);
-    }
-}
-
-function drawSlider(s, idx) {
-    let entering = s.val > 0;
-    let valColor = entering ? ENTER_COLOR : (s.val < 0 ? LEAVE_COLOR : '#888');
-
-    // Label
-    fill(TEXT_COLOR);
-    noStroke();
-    textAlign(RIGHT, CENTER);
-    textSize(13);
-    textStyle(BOLD);
-    text(s.label + ':', s.x - 12, s.y);
-    textStyle(NORMAL);
-
-    // Track
-    stroke(SLIDER_TRACK);
-    strokeWeight(SLIDER_H);
-    strokeCap(ROUND);
-    line(s.x, s.y, s.x + s.w, s.y);
-
-    // Fill to knob
-    let knobX = map(s.val, s.min, s.max, s.x, s.x + s.w);
-    let zeroX = map(0, s.min, s.max, s.x, s.x + s.w);
-    stroke(valColor);
-    strokeWeight(SLIDER_H);
-    line(zeroX, s.y, knobX, s.y);
-
-    // Zero tick
-    stroke('#999');
-    strokeWeight(1);
-    line(zeroX, s.y - 8, zeroX, s.y + 8);
-
-    // Knob
-    fill(valColor);
-    noStroke();
-    ellipse(knobX, s.y, KNOB_R * 2, KNOB_R * 2);
-
-    // Value
-    fill(valColor);
-    textAlign(LEFT, CENTER);
-    textSize(12);
-    textStyle(BOLD);
-    let sign = s.val >= 0 ? '+' : '';
-    text(sign + nf(s.val, 1, 1) + 'A', s.x + s.w + 10, s.y);
-    textStyle(NORMAL);
-}
-
-function drawKCLStatus() {
-    let total = 0;
-    for (let s of sliders) total += s.val;
-
-    let satisfied = abs(total) < 0.05;
-
-    // Status display between circuit and panel
-    let statusY = 300;
-    textAlign(CENTER, CENTER);
-    textSize(20);
-    textStyle(BOLD);
-
-    // Sum text
-    fill(TEXT_COLOR);
-    noStroke();
-    let sumStr = '\u03A3I = ' + nf(total, 1, 1) + ' A';
-    text(sumStr, canvasWidth / 2, statusY);
-
-    // Status message
-    textSize(16);
-    if (satisfied) {
-        fill(ENTER_COLOR);
-        text('KCL Satisfied \u2713', canvasWidth / 2, statusY + 24);
+    if (ok) {
+        fill(46, 125, 50);
+        text('✓ KCL Satisfied', cx, sy + 10);
     } else {
-        fill(LEAVE_COLOR);
-        // Pulsing effect for violation warning
-        let pulse = map(sin(millis() * 0.005), -1, 1, 180, 255);
-        fill(pulse, 50, 50);
-        text('KCL Violated!', canvasWidth / 2, statusY + 24);
+        let pulse = map(sin(millis() * 0.006), -1, 1, 0.6, 1.0);
+        fill(229, 57, 53, pulse * 255);
+        text('✗ KCL Violated!', cx, sy + 10);
     }
     textStyle(NORMAL);
 }
 
-// ── Mouse interaction ────────────────────────────────────────────────────────
+// ── Control panel ───────────────────────────────────────────────────────
+
+function drawPanel() {
+    let py = 345;
+    let ph = canvasH - py - 6;
+
+    // Panel bg
+    noStroke();
+    fill(238, 242, 247);
+    rect(8, py, canvasW - 16, ph, 10);
+
+    // Title
+    fill(60);
+    textAlign(CENTER, TOP);
+    textSize(11);
+    textStyle(BOLD);
+    text('Adjust Currents  (+ entering  |  − leaving)', cx, py + 5);
+    textStyle(NORMAL);
+
+    for (let i = 0; i < 4; i++) {
+        let s = sliders[i];
+        let v = s.val;
+        let col = v >= 0 ? color(39, 174, 96) : color(231, 76, 60);
+        let knobX = map(v, -5, 5, s.x, s.x + SL_W);
+        let zeroX = map(0, -5, 5, s.x, s.x + SL_W);
+
+        // Label
+        noStroke();
+        fill(40);
+        textAlign(RIGHT, CENTER);
+        textSize(12);
+        textStyle(BOLD);
+        text(LABELS[i] + ':', s.x - 10, s.y);
+        textStyle(NORMAL);
+
+        // Track
+        stroke(200);
+        strokeWeight(SL_H);
+        strokeCap(ROUND);
+        line(s.x, s.y, s.x + SL_W, s.y);
+
+        // Fill from zero to knob
+        stroke(col);
+        strokeWeight(SL_H);
+        line(zeroX, s.y, knobX, s.y);
+
+        // Zero tick
+        stroke(150);
+        strokeWeight(1);
+        line(zeroX, s.y - 7, zeroX, s.y + 7);
+
+        // Knob
+        noStroke();
+        fill(255);
+        ellipse(knobX, s.y, KNOB_R * 2 + 4, KNOB_R * 2 + 4);
+        fill(col);
+        ellipse(knobX, s.y, KNOB_R * 2, KNOB_R * 2);
+
+        // Value text
+        fill(col);
+        textAlign(LEFT, CENTER);
+        textSize(11);
+        textStyle(BOLD);
+        let sg = v >= 0 ? '+' : '';
+        text(sg + nf(v, 1, 1) + ' A', s.x + SL_W + 8, s.y);
+        textStyle(NORMAL);
+    }
+}
+
+// ── Mouse interaction ───────────────────────────────────────────────────
 
 function mousePressed() {
     for (let s of sliders) {
-        let knobX = map(s.val, s.min, s.max, s.x, s.x + s.w);
-        if (dist(mouseX, mouseY, knobX, s.y) < KNOB_R + 5) {
-            s.dragging = true;
+        let kx = map(s.val, -5, 5, s.x, s.x + SL_W);
+        if (dist(mouseX, mouseY, kx, s.y) < KNOB_R + 6) {
+            s.drag = true;
         }
     }
 }
 
 function mouseDragged() {
     for (let s of sliders) {
-        if (s.dragging) {
-            let newVal = map(mouseX, s.x, s.x + s.w, s.min, s.max);
-            // Snap to 0.5 increments
-            newVal = round(newVal * 2) / 2;
-            s.val = constrain(newVal, s.min, s.max);
+        if (s.drag) {
+            let nv = map(mouseX, s.x, s.x + SL_W, -5, 5);
+            nv = round(nv * 2) / 2; // snap 0.5
+            s.val = constrain(nv, -5, 5);
         }
     }
 }
 
 function mouseReleased() {
-    for (let s of sliders) {
-        s.dragging = false;
-    }
+    for (let s of sliders) s.drag = false;
+}
+
+function touchStarted() {
+    mousePressed();
+    return false;
+}
+function touchMoved() {
+    mouseDragged();
+    return false;
+}
+function touchEnded() {
+    mouseReleased();
+    return false;
 }
 
 function windowResized() {
-    canvasWidth = min(windowWidth, 700);
-    resizeCanvas(canvasWidth, canvasHeight);
-    cx = canvasWidth / 2;
-
-    // Reposition sliders
-    let sliderLeft = canvasWidth / 2 - SLIDER_W / 2 + 40;
-    for (let i = 0; i < 4; i++) {
-        sliders[i].x = sliderLeft;
-    }
+    canvasW = min(windowWidth - 4, 680);
+    resizeCanvas(canvasW, canvasH);
+    cx = canvasW / 2;
+    buildSliders();
 }
