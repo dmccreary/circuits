@@ -3125,59 +3125,47 @@
 <h4 id="diagram-nodal-analysis-step-by-step">Diagram: Nodal Analysis Step-by-Step</h4>
 <iframe src="../../sims/nodal-analysis-steps/main.html" width="100%" height="550px" scrolling="no"></iframe>
 
-<details markdown="1">
+<details>
 <summary>Nodal Analysis Step-by-Step MicroSim</summary>
-Type: microsim
-
-Purpose: Guide students through the nodal analysis process with a three-node circuit
-
-Bloom Level: Apply (L3)
-Bloom Verb: execute
-
-Learning Objective: Students will execute the nodal analysis procedure to solve for unknown node voltages in a multi-node circuit.
-
-Instructional Rationale: Step-through with concrete worked examples shows students the complete process. Seeing equations form and solve builds confidence in the systematic method.
-
-Data Visibility Requirements:
+<p>Type: microsim</p>
+<p>Purpose: Guide students through the nodal analysis process with a three-node circuit</p>
+<p>Bloom Level: Apply (L3)
+Bloom Verb: execute</p>
+<p>Learning Objective: Students will execute the nodal analysis procedure to solve for unknown node voltages in a multi-node circuit.</p>
+<p>Instructional Rationale: Step-through with concrete worked examples shows students the complete process. Seeing equations form and solve builds confidence in the systematic method.</p>
+<p>Data Visibility Requirements:
 - Stage 1: Show circuit with labeled nodes and ground
 - Stage 2: Write KCL equation for Node 1 (show current directions)
 - Stage 3: Write KCL equation for Node 2
 - Stage 4: Show system of equations in matrix form
 - Stage 5: Solve and display node voltages
-- Stage 6: Calculate branch currents from node voltages
-
-Canvas layout:
+- Stage 6: Calculate branch currents from node voltages</p>
+<p>Canvas layout:
 - Left section (450px): Circuit diagram with highlighting
-- Right section (200px): Equation panel showing current step
-
-Visual elements:
+- Right section (200px): Equation panel showing current step</p>
+<p>Visual elements:
 - Circuit with voltage source, three nodes, four resistors
 - Node labels (V1, V2) with ground reference
 - Current direction arrows that appear as equations are written
-- Highlighting to show which node is being analyzed
-
-Interactive controls:
+- Highlighting to show which node is being analyzed</p>
+<p>Interactive controls:
 - Button: "Next Step" advances through analysis
 - Button: "Previous Step" goes back
 - Button: "Reset" returns to beginning
 - Checkbox: "Show all currents"
-- Display: Running equation development
-
-Default circuit:
+- Display: Running equation development</p>
+<p>Default circuit:
 - 10V voltage source
 - R1 = 2kΩ, R2 = 4kΩ, R3 = 4kΩ, R4 = 2kΩ
-- Three-node configuration
-
-Behavior:
+- Three-node configuration</p>
+<p>Behavior:
 - Each step highlights relevant circuit portion
 - Equations build incrementally
 - Matrix form shows after individual equations
 - Solution shows substitution process
-- Final currents calculated and displayed
-
-Implementation: p5.js with step-based visualization and equation rendering
+- Final currents calculated and displayed</p>
+<p>Implementation: p5.js with step-based visualization and equation rendering</p>
 </details>
-
 <h3 id="setting-up-the-kcl-equations">Setting Up the KCL Equations</h3>
 <p>For each node, we write: <strong>sum of currents leaving = 0</strong> (treating entering currents as negative). Using Ohm's Law to express each current:</p>
 <h4 id="kcl-at-a-node">KCL at a Node</h4>
@@ -3233,59 +3221,47 @@ Implementation: p5.js with step-based visualization and equation rendering
 <h4 id="diagram-mesh-analysis-visualization">Diagram: Mesh Analysis Visualization</h4>
 <iframe src="../../sims/mesh-analysis/main.html" width="100%" height="550px" scrolling="no"></iframe>
 
-<details markdown="1">
+<details>
 <summary>Mesh Analysis Step-by-Step MicroSim</summary>
-Type: microsim
-
-Purpose: Demonstrate mesh analysis on a two-mesh circuit with shared resistor
-
-Bloom Level: Apply (L3)
-Bloom Verb: solve
-
-Learning Objective: Students will solve for mesh currents using KVL equations and determine actual branch currents from mesh current differences.
-
-Instructional Rationale: Visual representation of mesh currents as circulating loops helps students understand the concept. Highlighting shared resistors shows why current subtraction is needed.
-
-Data Visibility Requirements:
+<p>Type: microsim</p>
+<p>Purpose: Demonstrate mesh analysis on a two-mesh circuit with shared resistor</p>
+<p>Bloom Level: Apply (L3)
+Bloom Verb: solve</p>
+<p>Learning Objective: Students will solve for mesh currents using KVL equations and determine actual branch currents from mesh current differences.</p>
+<p>Instructional Rationale: Visual representation of mesh currents as circulating loops helps students understand the concept. Highlighting shared resistors shows why current subtraction is needed.</p>
+<p>Data Visibility Requirements:
 - Stage 1: Show circuit with mesh current assignments (I1, I2)
 - Stage 2: Write KVL equation for Mesh 1, showing each voltage term
 - Stage 3: Write KVL equation for Mesh 2
 - Stage 4: Show system of equations
 - Stage 5: Solve for mesh currents
-- Stage 6: Calculate actual branch currents (especially shared resistor: I1 - I2)
-
-Canvas layout:
+- Stage 6: Calculate actual branch currents (especially shared resistor: I1 - I2)</p>
+<p>Canvas layout:
 - Main area (500px): Circuit with mesh current loops visualized
-- Side panel (150px): Equation development
-
-Visual elements:
+- Side panel (150px): Equation development</p>
+<p>Visual elements:
 - Two adjacent meshes sharing one resistor
 - Circular arrows showing mesh current direction
 - Shared resistor highlighted to show both currents
 - Voltage drops labeled with polarity
-- Different colors for each mesh
-
-Interactive controls:
+- Different colors for each mesh</p>
+<p>Interactive controls:
 - Button: "Next Step"
 - Button: "Previous Step"
 - Sliders for voltage source and resistor values
 - Display: Mesh current values
-- Display: Actual branch currents
-
-Default circuit:
+- Display: Actual branch currents</p>
+<p>Default circuit:
 - Vs1 = 10V, Vs2 = 5V
 - R1 = 1kΩ, R2 = 2kΩ (shared), R3 = 1kΩ
-- Two meshes sharing R2
-
-Behavior:
+- Two meshes sharing R2</p>
+<p>Behavior:
 - Mesh currents shown as animated loops
 - Shared resistor shows both currents with subtraction
 - Step through builds equations incrementally
-- Final branch currents clearly labeled
-
-Implementation: p5.js with animated mesh current visualization
+- Final branch currents clearly labeled</p>
+<p>Implementation: p5.js with animated mesh current visualization</p>
 </details>
-
 <h3 id="nodal-vs-mesh-when-to-use-which">Nodal vs. Mesh: When to Use Which?</h3>
 <p>Both methods always work, but one may be easier depending on the circuit:</p>
 <table>
@@ -3342,53 +3318,42 @@ Implementation: p5.js with animated mesh current visualization
 <h4 id="diagram-thevenin-equivalent-concept">Diagram: Thevenin Equivalent Concept</h4>
 <iframe src="../../sims/thevenin-concept/main.html" width="100%" height="450px" scrolling="no"></iframe>
 
-<details markdown="1">
+<details>
 <summary>Thevenin Equivalent Concept MicroSim</summary>
-Type: microsim
-
-Purpose: Visualize the concept of replacing a complex circuit with its Thevenin equivalent
-
-Bloom Level: Understand (L2)
-Bloom Verb: explain
-
-Learning Objective: Students will explain how a complex circuit can be represented by a simple voltage source and series resistance that behaves identically at the terminals.
-
-Instructional Rationale: Side-by-side comparison of original and equivalent circuit with matching I-V characteristics demonstrates equivalence visually.
-
-Data Visibility Requirements:
+<p>Type: microsim</p>
+<p>Purpose: Visualize the concept of replacing a complex circuit with its Thevenin equivalent</p>
+<p>Bloom Level: Understand (L2)
+Bloom Verb: explain</p>
+<p>Learning Objective: Students will explain how a complex circuit can be represented by a simple voltage source and series resistance that behaves identically at the terminals.</p>
+<p>Instructional Rationale: Side-by-side comparison of original and equivalent circuit with matching I-V characteristics demonstrates equivalence visually.</p>
+<p>Data Visibility Requirements:
 - Stage 1: Show original complex circuit with load terminals highlighted
 - Stage 2: Show measurement of open-circuit voltage (Vth)
 - Stage 3: Show calculation of Thevenin resistance
 - Stage 4: Show Thevenin equivalent circuit
-- Stage 5: Connect same load to both; show identical currents and voltages
-
-Canvas layout:
+- Stage 5: Connect same load to both; show identical currents and voltages</p>
+<p>Canvas layout:
 - Top half (250px): Original circuit and Thevenin equivalent side by side
-- Bottom half (200px): I-V characteristic curves overlaid (should match perfectly)
-
-Visual elements:
+- Bottom half (200px): I-V characteristic curves overlaid (should match perfectly)</p>
+<p>Visual elements:
 - Original circuit with internal components
 - Thevenin equivalent: simple Vth in series with Rth
 - Terminal points clearly marked
 - Load resistor that can be connected to either
-- I-V plot showing both circuits trace the same line
-
-Interactive controls:
+- I-V plot showing both circuits trace the same line</p>
+<p>Interactive controls:
 - Button: "Find Vth" (animates open-circuit measurement)
 - Button: "Find Rth" (animates resistance calculation)
 - Button: "Connect Load" (attaches test load to both circuits)
 - Slider: Load resistance value
-- Display: Current through load, voltage across load (both circuits)
-
-Behavior:
+- Display: Current through load, voltage across load (both circuits)</p>
+<p>Behavior:
 - When load connected, both circuits show identical readings
 - Varying load resistance shows same I-V relationship
 - I-V plot builds point by point as load varies
-- Both curves overlap perfectly
-
-Implementation: p5.js with dual circuit visualization and synchronized I-V plotting
+- Both curves overlap perfectly</p>
+<p>Implementation: p5.js with dual circuit visualization and synchronized I-V plotting</p>
 </details>
-
 <h3 id="finding-the-thevenin-equivalent">Finding the Thevenin Equivalent</h3>
 <p>There are several methods to find <span class="arithmatex">\(V_{Th}\)</span> and <span class="arithmatex">\(R_{Th}\)</span>:</p>
 <p><strong>Method 1: Direct Calculation</strong></p>
@@ -3435,58 +3400,46 @@ Implementation: p5.js with dual circuit visualization and synchronized I-V plott
 <h4 id="diagram-thevenin-step-by-step-solver">Diagram: Thevenin Step-by-Step Solver</h4>
 <iframe src="../../sims/thevenin-solver/main.html" width="100%" height="550px" scrolling="no"></iframe>
 
-<details markdown="1">
+<details>
 <summary>Thevenin Equivalent Solver MicroSim</summary>
-Type: microsim
-
-Purpose: Guide students through finding Thevenin equivalent step-by-step
-
-Bloom Level: Apply (L3)
-Bloom Verb: calculate
-
-Learning Objective: Students will calculate Thevenin voltage and resistance for a given circuit using the systematic zeroing-and-measuring approach.
-
-Instructional Rationale: Interactive step-through with circuit transformation visualization shows what "zeroing sources" looks like and how resistance is measured.
-
-Data Visibility Requirements:
+<p>Type: microsim</p>
+<p>Purpose: Guide students through finding Thevenin equivalent step-by-step</p>
+<p>Bloom Level: Apply (L3)
+Bloom Verb: calculate</p>
+<p>Learning Objective: Students will calculate Thevenin voltage and resistance for a given circuit using the systematic zeroing-and-measuring approach.</p>
+<p>Instructional Rationale: Interactive step-through with circuit transformation visualization shows what "zeroing sources" looks like and how resistance is measured.</p>
+<p>Data Visibility Requirements:
 - Stage 1: Show original circuit with load marked
 - Stage 2: Remove load, show open-circuit voltage measurement
 - Stage 3: Show voltage sources replaced by short circuits
 - Stage 4: Show current sources replaced by open circuits
 - Stage 5: Calculate Rth from resulting resistor network
-- Stage 6: Display complete Thevenin equivalent
-
-Canvas layout:
+- Stage 6: Display complete Thevenin equivalent</p>
+<p>Canvas layout:
 - Main area (500px): Circuit that transforms at each step
-- Side panel (150px): Calculation summary
-
-Visual elements:
+- Side panel (150px): Calculation summary</p>
+<p>Visual elements:
 - Original circuit with highlighted load terminals
 - Visual transformation: voltage source becoming wire, current source becoming gap
 - Resistance combination shown step by step
-- Final Thevenin equivalent highlighted
-
-Interactive controls:
+- Final Thevenin equivalent highlighted</p>
+<p>Interactive controls:
 - Button: "Next Step"
 - Button: "Previous Step"
 - Adjustable source and resistor values
 - Display: Vth and Rth values
-- Button: "Verify" connects test load to compare
-
-Default circuit:
+- Button: "Verify" connects test load to compare</p>
+<p>Default circuit:
 - 12V voltage source
 - 4 resistors in bridge-like configuration
-- Two output terminals
-
-Behavior:
+- Two output terminals</p>
+<p>Behavior:
 - Each step shows transformation with explanation
 - Sources visually change (voltage source dims and shows short, current source shows gap)
 - Equivalent resistance calculation walks through series/parallel
-- Final answer verified by comparing original and equivalent with test load
-
-Implementation: p5.js with animated circuit transformation
+- Final answer verified by comparing original and equivalent with test load</p>
+<p>Implementation: p5.js with animated circuit transformation</p>
 </details>
-
 <h2 id="nortons-theorem-thevenins-alter-ego">Norton's Theorem: Thevenin's Alter Ego</h2>
 <p>If Thevenin's theorem gives you a voltage source with a series resistor, <strong>Norton's theorem</strong> gives you the dual: a current source with a parallel resistor. Same idea, different flavor.</p>
 <blockquote>
@@ -3516,53 +3469,42 @@ Implementation: p5.js with animated circuit transformation
 <h4 id="diagram-thevenin-norton-duality">Diagram: Thevenin-Norton Duality</h4>
 <iframe src="../../sims/thevenin-norton-duality/main.html" width="100%" height="400px" scrolling="no"></iframe>
 
-<details markdown="1">
+<details>
 <summary>Thevenin-Norton Conversion MicroSim</summary>
-Type: microsim
-
-Purpose: Demonstrate equivalence between Thevenin and Norton representations
-
-Bloom Level: Understand (L2)
-Bloom Verb: compare
-
-Learning Objective: Students will compare Thevenin and Norton equivalent circuits and convert between them using the relationship In = Vth/Rth.
-
-Instructional Rationale: Side-by-side display with conversion animation helps students see that these are two representations of the same thing.
-
-Canvas layout:
+<p>Type: microsim</p>
+<p>Purpose: Demonstrate equivalence between Thevenin and Norton representations</p>
+<p>Bloom Level: Understand (L2)
+Bloom Verb: compare</p>
+<p>Learning Objective: Students will compare Thevenin and Norton equivalent circuits and convert between them using the relationship In = Vth/Rth.</p>
+<p>Instructional Rationale: Side-by-side display with conversion animation helps students see that these are two representations of the same thing.</p>
+<p>Canvas layout:
 - Left (275px): Thevenin equivalent circuit
 - Center (50px): Conversion arrows
 - Right (275px): Norton equivalent circuit
-- Bottom (100px): Shared I-V characteristic plot
-
-Visual elements:
+- Bottom (100px): Shared I-V characteristic plot</p>
+<p>Visual elements:
 - Thevenin: Vth voltage source in series with Rth
 - Norton: In current source in parallel with Rn
 - Animated conversion showing relationship
-- I-V plot that's identical for both
-
-Interactive controls:
+- I-V plot that's identical for both</p>
+<p>Interactive controls:
 - Slider: Vth value (1V to 20V)
 - Slider: Rth/Rn value (100Ω to 10kΩ)
 - Display: In calculated automatically
 - Button: "Animate Conversion"
-- Display: Both circuits' behavior with same test load
-
-Default parameters:
+- Display: Both circuits' behavior with same test load</p>
+<p>Default parameters:
 - Vth = 10V
 - Rth = Rn = 1kΩ
-- In = 10mA
-
-Behavior:
+- In = 10mA</p>
+<p>Behavior:
 - Changing Vth updates In = Vth/Rth
 - Changing R updates In
 - Animation shows conceptual transformation
 - Test load shows identical behavior
-- I-V plots overlap perfectly
-
-Implementation: p5.js with dual circuit display and synchronized parameters
+- I-V plots overlap perfectly</p>
+<p>Implementation: p5.js with dual circuit display and synchronized parameters</p>
 </details>
-
 <h2 id="source-transformation-the-quick-conversion">Source Transformation: The Quick Conversion</h2>
 <p>We can extend the Thevenin-Norton relationship to any voltage or current source with a resistor. <strong>Source transformation</strong> is the ability to convert:</p>
 <ul>
@@ -3602,50 +3544,39 @@ Implementation: p5.js with dual circuit display and synchronized parameters
 <h4 id="diagram-source-transformation-practice">Diagram: Source Transformation Practice</h4>
 <iframe src="../../sims/source-transformation/main.html" width="100%" height="450px" scrolling="no"></iframe>
 
-<details markdown="1">
+<details>
 <summary>Source Transformation MicroSim</summary>
-Type: microsim
-
-Purpose: Practice converting between voltage and current source representations
-
-Bloom Level: Apply (L3)
-Bloom Verb: use
-
-Learning Objective: Students will use source transformation to convert circuits between voltage-source and current-source representations while maintaining equivalent behavior.
-
-Instructional Rationale: Interactive transformation with immediate visual feedback reinforces that these are equivalent representations.
-
-Canvas layout:
+<p>Type: microsim</p>
+<p>Purpose: Practice converting between voltage and current source representations</p>
+<p>Bloom Level: Apply (L3)
+Bloom Verb: use</p>
+<p>Learning Objective: Students will use source transformation to convert circuits between voltage-source and current-source representations while maintaining equivalent behavior.</p>
+<p>Instructional Rationale: Interactive transformation with immediate visual feedback reinforces that these are equivalent representations.</p>
+<p>Canvas layout:
 - Top (250px): Original and transformed circuits side by side
-- Bottom (150px): Verification showing both drive same load identically
-
-Visual elements:
+- Bottom (150px): Verification showing both drive same load identically</p>
+<p>Visual elements:
 - Original circuit: Either Vs with series R, or Is with parallel R
 - Transformed circuit: The equivalent
 - Animated transformation showing relationship
-- Load connection showing identical behavior
-
-Interactive controls:
+- Load connection showing identical behavior</p>
+<p>Interactive controls:
 - Radio buttons: Start with voltage source or current source
 - Slider: Source value (voltage or current)
 - Slider: Resistance value
 - Button: "Transform!"
 - Display: Calculated equivalent values
-- Load slider to verify equivalence
-
-Default parameters:
+- Load slider to verify equivalence</p>
+<p>Default parameters:
 - Voltage source: 12V with 3kΩ series resistor
-- Equivalent: 4mA current source with 3kΩ parallel resistor
-
-Behavior:
+- Equivalent: 4mA current source with 3kΩ parallel resistor</p>
+<p>Behavior:
 - Transform button triggers animated conversion
 - Values update automatically
 - Load verification shows identical IL and VL for both
-- Can transform back and forth
-
-Implementation: p5.js with animated circuit transformation
+- Can transform back and forth</p>
+<p>Implementation: p5.js with animated circuit transformation</p>
 </details>
-
 <h2 id="maximum-power-transfer-getting-the-most-bang-for-your-buck">Maximum Power Transfer: Getting the Most Bang for Your Buck</h2>
 <p>Here's a question with practical implications: given a source (with internal resistance), what load resistance extracts the maximum possible power?</p>
 <p>The answer, derived from calculus but intuitive once you see it:</p>
@@ -3670,38 +3601,30 @@ Implementation: p5.js with animated circuit transformation
 <h4 id="diagram-maximum-power-transfer-curve">Diagram: Maximum Power Transfer Curve</h4>
 <iframe src="../../sims/max-power-transfer/main.html" width="100%" height="500px" scrolling="no"></iframe>
 
-<details markdown="1">
+<details>
 <summary>Maximum Power Transfer MicroSim</summary>
-Type: microsim
-
-Purpose: Visualize how load power varies with load resistance, peaking when RL = Rth
-
-Bloom Level: Analyze (L4)
-Bloom Verb: examine
-
-Learning Objective: Students will examine how power delivered to a load varies with load resistance and verify that maximum power occurs when RL equals Rth.
-
-Instructional Rationale: Interactive graph with movable load resistance shows the power curve and confirms the maximum point. Students can explore "what if" scenarios.
-
-Data Visibility Requirements:
+<p>Type: microsim</p>
+<p>Purpose: Visualize how load power varies with load resistance, peaking when RL = Rth</p>
+<p>Bloom Level: Analyze (L4)
+Bloom Verb: examine</p>
+<p>Learning Objective: Students will examine how power delivered to a load varies with load resistance and verify that maximum power occurs when RL equals Rth.</p>
+<p>Instructional Rationale: Interactive graph with movable load resistance shows the power curve and confirms the maximum point. Students can explore "what if" scenarios.</p>
+<p>Data Visibility Requirements:
 - Stage 1: Show source (Vth, Rth) and variable load
 - Stage 2: Plot power vs load resistance curve
 - Stage 3: Show current calculation for given RL
 - Stage 4: Show power calculation: P = I²RL
-- Stage 5: Highlight maximum at RL = Rth
-
-Canvas layout:
+- Stage 5: Highlight maximum at RL = Rth</p>
+<p>Canvas layout:
 - Left (300px): Circuit diagram with Thevenin source and load
-- Right (300px): Power vs resistance curve
-
-Visual elements:
+- Right (300px): Power vs resistance curve</p>
+<p>Visual elements:
 - Thevenin equivalent with load resistor
 - Graph: P_load vs R_load (curve with peak)
 - Vertical line at current RL value
 - Dot showing operating point on curve
-- Horizontal line at Rth showing optimal point
-
-Interactive controls:
+- Horizontal line at Rth showing optimal point</p>
+<p>Interactive controls:
 - Slider: Vth (5V to 20V)
 - Slider: Rth (100Ω to 10kΩ)
 - Slider: RL (10Ω to 100kΩ, log scale)
@@ -3709,23 +3632,19 @@ Interactive controls:
 - Display: Power to load
 - Display: Power to Rth
 - Display: Efficiency (%)
-- Button: "Jump to Maximum" sets RL = Rth
-
-Default parameters:
+- Button: "Jump to Maximum" sets RL = Rth</p>
+<p>Default parameters:
 - Vth = 12V
 - Rth = 1kΩ
-- RL = 1kΩ (at maximum)
-
-Behavior:
+- RL = 1kΩ (at maximum)</p>
+<p>Behavior:
 - Moving RL slider updates operating point on curve
 - Power curve updates if Vth or Rth change
 - Display shows power, efficiency, and comparison
 - Maximum clearly marked on curve
-- Numerical readout confirms PL = Vth²/(4Rth) at maximum
-
-Implementation: p5.js with interactive graph and circuit display
+- Numerical readout confirms PL = Vth²/(4Rth) at maximum</p>
+<p>Implementation: p5.js with interactive graph and circuit display</p>
 </details>
-
 <h3 id="when-maximum-power-transfer-matters">When Maximum Power Transfer Matters</h3>
 <p>Maximum power transfer is crucial in:</p>
 <ul>
@@ -3784,52 +3703,41 @@ Implementation: p5.js with interactive graph and circuit display
 <h4 id="diagram-input-and-output-resistance">Diagram: Input and Output Resistance</h4>
 <iframe src="../../sims/input-output-resistance/main.html" width="100%" height="450px" scrolling="no"></iframe>
 
-<details markdown="1">
+<details>
 <summary>Input/Output Resistance MicroSim</summary>
-Type: microsim
-
-Purpose: Demonstrate how input and output resistance affect signal transfer between stages
-
-Bloom Level: Analyze (L4)
-Bloom Verb: examine
-
-Learning Objective: Students will examine how input and output resistance of connected circuits form a voltage divider that affects signal transfer.
-
-Instructional Rationale: Visual representation of two stages connected shows the inherent voltage divider formed by Rout and Rin, making loading effect intuitive.
-
-Canvas layout:
+<p>Type: microsim</p>
+<p>Purpose: Demonstrate how input and output resistance affect signal transfer between stages</p>
+<p>Bloom Level: Analyze (L4)
+Bloom Verb: examine</p>
+<p>Learning Objective: Students will examine how input and output resistance of connected circuits form a voltage divider that affects signal transfer.</p>
+<p>Instructional Rationale: Visual representation of two stages connected shows the inherent voltage divider formed by Rout and Rin, making loading effect intuitive.</p>
+<p>Canvas layout:
 - Main area (500px): Two circuit blocks connected, showing internal structure
-- Bottom (100px): Calculations and display
-
-Visual elements:
+- Bottom (100px): Calculations and display</p>
+<p>Visual elements:
 - Source stage: Thevenin equivalent (Vth, Rout)
 - Load stage: Input represented as Rin
 - Connection showing voltage divider formed
-- Voltage labels: Vsource, Vat-input
-
-Interactive controls:
+- Voltage labels: Vsource, Vat-input</p>
+<p>Interactive controls:
 - Slider: Source Vth
 - Slider: Source Rout (100Ω to 10kΩ)
 - Slider: Load Rin (1kΩ to 1MΩ)
 - Display: Voltage division ratio
 - Display: Input voltage as percentage of source
-- Display: Voltage "loss" due to loading
-
-Default parameters:
+- Display: Voltage "loss" due to loading</p>
+<p>Default parameters:
 - Vth = 10V
 - Rout = 1kΩ
 - Rin = 10kΩ
-- Voltage ratio = 10/(1+10) = 90.9%
-
-Behavior:
+- Voltage ratio = 10/(1+10) = 90.9%</p>
+<p>Behavior:
 - Shows voltage divider calculation: Vin = Vth × Rin/(Rout + Rin)
 - High Rin/Rout ratio approaches 100% transfer
 - Low ratio shows significant loading
-- Rule of thumb highlight: Rin should be >10× Rout for <10% loss
-
-Implementation: p5.js with two-stage circuit visualization
+- Rule of thumb highlight: Rin should be &gt;10× Rout for &lt;10% loss</p>
+<p>Implementation: p5.js with two-stage circuit visualization</p>
 </details>
-
 <h2 id="the-loading-effect-when-circuits-misbehave">The Loading Effect: When Circuits Misbehave</h2>
 <p>The <strong>loading effect</strong> is what happens when connecting a circuit disturbs what it's supposed to measure or receive. It's the circuit equivalent of the observer effect in quantum mechanics—except entirely classical and much more annoying.</p>
 <p>Remember the voltage divider from Chapter 2? It works perfectly with no load. Connect a load, and suddenly the output voltage drops. Why? The load resistance appears in parallel with R2, reducing the effective lower resistance.</p>
@@ -3878,62 +3786,50 @@ Implementation: p5.js with two-stage circuit visualization
 <h4 id="diagram-loading-effect-demonstration">Diagram: Loading Effect Demonstration</h4>
 <iframe src="../../sims/loading-effect/main.html" width="100%" height="500px" scrolling="no"></iframe>
 
-<details markdown="1">
+<details>
 <summary>Loading Effect MicroSim</summary>
-Type: microsim
-
-Purpose: Show how connecting a load changes voltage divider output
-
-Bloom Level: Understand (L2)
-Bloom Verb: explain
-
-Learning Objective: Students will explain how connecting a load to a voltage divider changes the output voltage due to the parallel resistance combination.
-
-Instructional Rationale: Before/after comparison with clear calculation shows why loading happens and when it matters.
-
-Data Visibility Requirements:
+<p>Type: microsim</p>
+<p>Purpose: Show how connecting a load changes voltage divider output</p>
+<p>Bloom Level: Understand (L2)
+Bloom Verb: explain</p>
+<p>Learning Objective: Students will explain how connecting a load to a voltage divider changes the output voltage due to the parallel resistance combination.</p>
+<p>Instructional Rationale: Before/after comparison with clear calculation shows why loading happens and when it matters.</p>
+<p>Data Visibility Requirements:
 - Stage 1: Show unloaded voltage divider with calculated Vout
 - Stage 2: Connect load resistor
 - Stage 3: Show R2 || Rload calculation
 - Stage 4: Show new Vout with loaded calculation
-- Stage 5: Calculate percentage change in output
-
-Canvas layout:
+- Stage 5: Calculate percentage change in output</p>
+<p>Canvas layout:
 - Top (300px): Circuit with/without load (toggle)
-- Bottom (150px): Calculations and comparison
-
-Visual elements:
+- Bottom (150px): Calculations and comparison</p>
+<p>Visual elements:
 - Voltage divider R1, R2 with voltage source
 - Load resistor that can connect/disconnect
 - Parallel resistance visualization when loaded
-- Output voltage reading that changes
-
-Interactive controls:
+- Output voltage reading that changes</p>
+<p>Interactive controls:
 - Slider: R1 (1kΩ to 100kΩ)
 - Slider: R2 (1kΩ to 100kΩ)
 - Slider: Rload (1kΩ to 1MΩ)
 - Toggle: Load connected/disconnected
 - Display: Vout unloaded
 - Display: Vout loaded
-- Display: Percentage change
-
-Default parameters:
+- Display: Percentage change</p>
+<p>Default parameters:
 - Vin = 10V
 - R1 = 10kΩ
 - R2 = 10kΩ
 - Vout (unloaded) = 5V
 - Rload = 10kΩ
-- Vout (loaded) = 3.33V (33% drop!)
-
-Behavior:
+- Vout (loaded) = 3.33V (33% drop!)</p>
+<p>Behavior:
 - Toggle shows before/after comparison
 - Calculations update in real time
 - Warning when loading exceeds 10%
-- Shows R2 || Rload parallel calculation
-
-Implementation: p5.js with before/after comparison
+- Shows R2 || Rload parallel calculation</p>
+<p>Implementation: p5.js with before/after comparison</p>
 </details>
-
 <h2 id="two-port-networks-the-black-box-view">Two-Port Networks: The Black Box View</h2>
 <p>A <strong>two-port network</strong> is a circuit viewed as a black box with two pairs of terminals: an input port and an output port. We don't care what's inside—we only care about the relationships between voltages and currents at the ports.</p>
 <p>This abstraction is powerful for analyzing cascaded stages, filters, and amplifiers.</p>
@@ -3984,52 +3880,41 @@ Implementation: p5.js with before/after comparison
 <h4 id="diagram-two-port-network-concept">Diagram: Two-Port Network Concept</h4>
 <iframe src="../../sims/two-port-network/main.html" width="100%" height="400px" scrolling="no"></iframe>
 
-<details markdown="1">
+<details>
 <summary>Two-Port Network Parameters MicroSim</summary>
-Type: microsim
-
-Purpose: Introduce two-port network concept and parameter measurement
-
-Bloom Level: Understand (L2)
-Bloom Verb: describe
-
-Learning Objective: Students will describe how two-port parameters characterize the input-output relationships of a circuit without requiring knowledge of internal components.
-
-Instructional Rationale: Black-box visualization with measurement procedures shows how parameters are determined experimentally.
-
-Canvas layout:
+<p>Type: microsim</p>
+<p>Purpose: Introduce two-port network concept and parameter measurement</p>
+<p>Bloom Level: Understand (L2)
+Bloom Verb: describe</p>
+<p>Learning Objective: Students will describe how two-port parameters characterize the input-output relationships of a circuit without requiring knowledge of internal components.</p>
+<p>Instructional Rationale: Black-box visualization with measurement procedures shows how parameters are determined experimentally.</p>
+<p>Canvas layout:
 - Center (400px): Black box with input and output ports
 - Left (100px): Input port (V1, I1)
 - Right (100px): Output port (V2, I2)
-- Bottom (80px): Parameter display
-
-Visual elements:
+- Bottom (80px): Parameter display</p>
+<p>Visual elements:
 - Rectangular black box labeled "Two-Port Network"
 - Input port with V1, I1 labels and arrows
 - Output port with V2, I2 labels and arrows
 - Parameter matrix display
-- Measurement setup showing how each parameter is found
-
-Interactive controls:
+- Measurement setup showing how each parameter is found</p>
+<p>Interactive controls:
 - Button: "Measure Z11" (open output, apply V1, measure I1)
 - Button: "Measure Z22" (open input, apply V2, measure I2)
 - Button: "Measure Z21" (open output, measure V2 per I1)
 - Button: "Show internal circuit" (reveals what's inside)
-- Display: Z-parameter matrix
-
-Default parameters:
+- Display: Z-parameter matrix</p>
+<p>Default parameters:
 - Simple T-network inside (two series R, one shunt R)
-- Z-parameters calculated from component values
-
-Behavior:
+- Z-parameters calculated from component values</p>
+<p>Behavior:
 - Each measurement button animates the procedure
 - Shows what ports are open/short during measurement
 - Calculated parameters displayed in matrix form
-- Internal circuit reveal shows specific component arrangement
-
-Implementation: p5.js with animated measurement procedures
+- Internal circuit reveal shows specific component arrangement</p>
+<p>Implementation: p5.js with animated measurement procedures</p>
 </details>
-
 <h2 id="introduction-to-reactive-components">Introduction to Reactive Components</h2>
 <p>Before we leave this chapter, let's preview two components that will become central in AC analysis: capacitors and inductors. Unlike resistors, these components store energy rather than dissipate it.</p>
 <h3 id="the-capacitor-storing-charge">The Capacitor: Storing Charge</h3>
@@ -4056,50 +3941,40 @@ Implementation: p5.js with animated measurement procedures
 <h4 id="diagram-capacitor-construction-and-symbol">Diagram: Capacitor Construction and Symbol</h4>
 <iframe src="../../sims/capacitor-basics/main.html" width="100%" height="400px" scrolling="no"></iframe>
 
-<details markdown="1">
+<details>
 <summary>Capacitor Basics MicroSim</summary>
-Type: microsim
-
-Purpose: Introduce capacitor construction, symbol, and basic behavior
-
-Bloom Level: Understand (L2)
-Bloom Verb: explain
-
-Learning Objective: Students will explain how a capacitor stores energy in an electric field and describe the relationship between charge, voltage, and capacitance.
-
-Canvas layout:
+<p>Type: microsim</p>
+<p>Purpose: Introduce capacitor construction, symbol, and basic behavior</p>
+<p>Bloom Level: Understand (L2)
+Bloom Verb: explain</p>
+<p>Learning Objective: Students will explain how a capacitor stores energy in an electric field and describe the relationship between charge, voltage, and capacitance.</p>
+<p>Canvas layout:
 - Left (300px): Physical construction cross-section
-- Right (300px): Schematic symbol and I-V relationship
-
-Visual elements:
+- Right (300px): Schematic symbol and I-V relationship</p>
+<p>Visual elements:
 - Two parallel plates with dielectric between
 - Electric field lines between plates
 - Charges accumulating on plates as voltage applied
 - Schematic symbol (two parallel lines)
-- Graph showing Q vs V (linear for ideal capacitor)
-
-Interactive controls:
+- Graph showing Q vs V (linear for ideal capacitor)</p>
+<p>Interactive controls:
 - Slider: Applied voltage (0 to 10V)
 - Slider: Plate area (visualization scales)
 - Slider: Plate separation (affects capacitance)
 - Display: Capacitance value
 - Display: Stored charge
-- Display: Stored energy
-
-Default parameters:
+- Display: Stored energy</p>
+<p>Default parameters:
 - Parallel plate visualization
 - C = 10µF
-- V = 5V initially
-
-Behavior:
+- V = 5V initially</p>
+<p>Behavior:
 - Charge visualization increases with voltage
 - Field lines become denser with higher charge
 - Capacitance updates with geometry changes
-- Energy calculation: E = ½CV²
-
-Implementation: p5.js with animated charge visualization
+- Energy calculation: E = ½CV²</p>
+<p>Implementation: p5.js with animated charge visualization</p>
 </details>
-
 <h3 id="the-inductor-storing-current">The Inductor: Storing Current</h3>
 <p>An <strong>inductor</strong> stores energy in a magnetic field created by current flowing through a coil of wire.</p>
 <h4 id="inductance">Inductance</h4>
@@ -4125,50 +4000,40 @@ Implementation: p5.js with animated charge visualization
 <h4 id="diagram-inductor-construction-and-symbol">Diagram: Inductor Construction and Symbol</h4>
 <iframe src="../../sims/inductor-basics/main.html" width="100%" height="400px" scrolling="no"></iframe>
 
-<details markdown="1">
+<details>
 <summary>Inductor Basics MicroSim</summary>
-Type: microsim
-
-Purpose: Introduce inductor construction, symbol, and basic behavior
-
-Bloom Level: Understand (L2)
-Bloom Verb: explain
-
-Learning Objective: Students will explain how an inductor stores energy in a magnetic field and describe the relationship between flux, current, and inductance.
-
-Canvas layout:
+<p>Type: microsim</p>
+<p>Purpose: Introduce inductor construction, symbol, and basic behavior</p>
+<p>Bloom Level: Understand (L2)
+Bloom Verb: explain</p>
+<p>Learning Objective: Students will explain how an inductor stores energy in a magnetic field and describe the relationship between flux, current, and inductance.</p>
+<p>Canvas layout:
 - Left (300px): Physical coil with magnetic field visualization
-- Right (300px): Schematic symbol and Φ-I relationship
-
-Visual elements:
+- Right (300px): Schematic symbol and Φ-I relationship</p>
+<p>Visual elements:
 - Wire coil around core
 - Magnetic field lines through and around coil
 - Current flowing through wire (animated)
 - Schematic symbol (humps representing coil)
-- Graph showing Φ vs I (linear for ideal inductor)
-
-Interactive controls:
+- Graph showing Φ vs I (linear for ideal inductor)</p>
+<p>Interactive controls:
 - Slider: Current through inductor (0 to 1A)
 - Slider: Number of turns (visualization changes)
 - Slider: Core material (air vs iron, affects L)
 - Display: Inductance value
 - Display: Magnetic flux
-- Display: Stored energy
-
-Default parameters:
+- Display: Stored energy</p>
+<p>Default parameters:
 - Air-core inductor visualization
 - L = 10mH
-- I = 0.5A initially
-
-Behavior:
+- I = 0.5A initially</p>
+<p>Behavior:
 - Magnetic field lines appear and strengthen with current
 - More turns = more flux lines
 - Iron core significantly increases field strength
-- Energy calculation: E = ½LI²
-
-Implementation: p5.js with animated magnetic field visualization
+- Energy calculation: E = ½LI²</p>
+<p>Implementation: p5.js with animated magnetic field visualization</p>
 </details>
-
 <h3 id="capacitors-vs-inductors-a-comparison">Capacitors vs. Inductors: A Comparison</h3>
 <p>These components are duals of each other in many ways:</p>
 <table>

@@ -2348,49 +2348,39 @@ date: 2026-01-30</p>
 <h4 id="diagram-audio-amplifier-chain">Diagram: Audio Amplifier Chain</h4>
 <iframe src="../../sims/audio-amp-chain/main.html" width="100%" height="500px" scrolling="no" style="overflow: hidden;"></iframe>
 
-<details markdown="1">
+<details>
 <summary>Audio Amplifier Chain</summary>
-Type: microsim
-
-Bloom Level: Understand (L2)
-Bloom Verb: explain
-
-Learning Objective: Students will explain the function of each stage in an audio amplifier chain by observing signal levels through the system.
-
-Visual elements:
+<p>Type: microsim</p>
+<p>Bloom Level: Understand (L2)
+Bloom Verb: explain</p>
+<p>Learning Objective: Students will explain the function of each stage in an audio amplifier chain by observing signal levels through the system.</p>
+<p>Visual elements:
 - Block diagram: Mic → Preamp → Mixer → Power Amp → Speaker
 - Level meters at each stage (dBV or dBu)
 - Signal waveform display at selected stage
 - Gain annotations showing dB boost at each stage
-- Clipping indicators
-
-Interactive controls:
+- Clipping indicators</p>
+<p>Interactive controls:
 - Slider: Input signal level (simulating mic sensitivity)
 - Slider: Preamp gain
 - Slider: Master volume
 - Dropdown: Select stage to view waveform
-- Toggle: Show/hide noise floor
-
-Annotations:
+- Toggle: Show/hide noise floor</p>
+<p>Annotations:
 - Mic level: "~-50 dBV"
 - After preamp: "Line level ~0 dBV"
-- Power amp output: "X watts into 8Ω"
-
-Clipping demonstration:
+- Power amp output: "X watts into 8Ω"</p>
+<p>Clipping demonstration:
 - Overdrive preamp to show soft clipping
-- Overdrive power amp to show hard clipping
-
-Default parameters:
+- Overdrive power amp to show hard clipping</p>
+<p>Default parameters:
 - Typical vocal recording chain
-- Signal levels showing healthy headroom
-
-Canvas layout:
+- Signal levels showing healthy headroom</p>
+<p>Canvas layout:
 - Signal chain diagram: 600 × 350 pixels
-- Control area: 100 pixels below
-
-Implementation: p5.js
+- Control area: 100 pixels below</p>
+<p>Implementation: p5.js</p>
 </details>
-
 <h2 id="signal-to-noise-ratio">Signal-to-Noise Ratio</h2>
 <p><strong>Signal-to-noise ratio (SNR)</strong> measures how much louder the desired signal is compared to the unwanted noise:</p>
 <div class="arithmatex">\[SNR = 20\log_{10}\left(\frac{V_{signal}}{V_{noise}}\right) \text{ dB}\]</div>
@@ -2517,52 +2507,42 @@ Implementation: p5.js
 <h4 id="diagram-distortion-types-visualizer">Diagram: Distortion Types Visualizer</h4>
 <iframe src="../../sims/distortion-types/main.html" width="100%" height="550px" scrolling="no" style="overflow: hidden;"></iframe>
 
-<details markdown="1">
+<details>
 <summary>Distortion Types Visualizer</summary>
-Type: microsim
-
-Bloom Level: Analyze (L4)
-Bloom Verb: compare
-
-Learning Objective: Students will compare different types of audio distortion by observing waveform changes and spectral effects.
-
-Visual elements:
+<p>Type: microsim</p>
+<p>Bloom Level: Analyze (L4)
+Bloom Verb: compare</p>
+<p>Learning Objective: Students will compare different types of audio distortion by observing waveform changes and spectral effects.</p>
+<p>Visual elements:
 - Input waveform (pure sine)
 - Output waveform (with distortion)
 - Frequency spectrum showing added harmonics
 - THD percentage display
-- IMD product identification (for two-tone test)
-
-Interactive controls:
+- IMD product identification (for two-tone test)</p>
+<p>Interactive controls:
 - Dropdown: Distortion type (none, soft clip, hard clip, asymmetric, IMD)
 - Slider: Input level (drive into distortion)
 - Slider: Distortion amount (for adjustable types)
 - Toggle: Single tone vs two-tone (for IMD)
-- Audio playback option (if available)
-
-For each distortion type:
+- Audio playback option (if available)</p>
+<p>For each distortion type:
 - Waveform showing the specific effect
 - Spectrum showing added frequencies
-- THD calculation
-
-Annotations:
+- THD calculation</p>
+<p>Annotations:
 - "Harmonic content added" for THD
 - "Non-harmonic products" for IMD
-- "Clipping at rails" for hard clipping
-
-Default parameters:
+- "Clipping at rails" for hard clipping</p>
+<p>Default parameters:
 - Soft clipping
 - Moderate drive level
-- 1 kHz test tone
-
-Canvas layout:
+- 1 kHz test tone</p>
+<p>Canvas layout:
 - Waveforms: 300 × 200 pixels (stacked)
 - Spectrum: 300 × 300 pixels (side)
-- Control area: 100 pixels below
-
-Implementation: p5.js
+- Control area: 100 pixels below</p>
+<p>Implementation: p5.js</p>
 </details>
-
 <h2 id="measuring-audio-quality">Measuring Audio Quality</h2>
 <p><strong>Key audio measurements:</strong></p>
 <table>

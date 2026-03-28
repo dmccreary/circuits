@@ -2395,51 +2395,41 @@ date: 2026-01-30</p>
 <h4 id="diagram-harmonic-content-explorer">Diagram: Harmonic Content Explorer</h4>
 <iframe src="../../sims/harmonic-explorer/main.html" width="100%" height="550px" scrolling="no" style="overflow: hidden;"></iframe>
 
-<details markdown="1">
+<details>
 <summary>Harmonic Content Explorer</summary>
-Type: microsim
-
-Bloom Level: Understand (L2)
-Bloom Verb: explain
-
-Learning Objective: Students will explain how combining harmonics creates different waveforms by observing the synthesis process step by step.
-
-Visual elements:
+<p>Type: microsim</p>
+<p>Bloom Level: Understand (L2)
+Bloom Verb: explain</p>
+<p>Learning Objective: Students will explain how combining harmonics creates different waveforms by observing the synthesis process step by step.</p>
+<p>Visual elements:
 - Top plot: Resulting waveform (sum of harmonics)
 - Middle: Individual harmonics shown as separate traces
 - Bottom: Frequency spectrum (bar chart of harmonic amplitudes)
-- Toggle between "building up" and "complete" views
-
-Interactive controls:
+- Toggle between "building up" and "complete" views</p>
+<p>Interactive controls:
 - Sliders: Amplitude of harmonics 1-7 (0 to 100%)
 - Preset buttons: Square wave, Triangle wave, Sawtooth, Pure sine
 - Slider: Number of harmonics to include
 - Button: Add next harmonic (step-through)
-- Display: Formula showing sum
-
-Step-through mode:
+- Display: Formula showing sum</p>
+<p>Step-through mode:
 - Start with fundamental only
 - "Add 3rd harmonic" button adds next component
 - Watch waveform become more complex
-- Observe spectrum grow
-
-Waveform presets (with correct harmonic ratios):
+- Observe spectrum grow</p>
+<p>Waveform presets (with correct harmonic ratios):
 - Square: 1, 0, 1/3, 0, 1/5, 0, 1/7... (odd harmonics)
 - Triangle: 1, 0, 1/9, 0, 1/25... (odd harmonics, 1/n²)
-- Sawtooth: 1, 1/2, 1/3, 1/4... (all harmonics, 1/n)
-
-Default parameters:
+- Sawtooth: 1, 1/2, 1/3, 1/4... (all harmonics, 1/n)</p>
+<p>Default parameters:
 - Square wave preset
-- First 7 harmonics
-
-Canvas layout:
+- First 7 harmonics</p>
+<p>Canvas layout:
 - Waveform/components: 600 × 350 pixels
 - Spectrum: 600 × 100 pixels (below)
-- Control area: 100 pixels below
-
-Implementation: p5.js
+- Control area: 100 pixels below</p>
+<p>Implementation: p5.js</p>
 </details>
-
 <h2 id="spectrum-the-frequency-domain-view">Spectrum: The Frequency Domain View</h2>
 <p>The <strong>spectrum</strong> (or <strong>frequency spectrum</strong>) shows the amplitude (and optionally phase) of each frequency component in a signal.</p>
 <p><strong>Spectrum plot axes:</strong></p>
@@ -2483,47 +2473,38 @@ Implementation: p5.js
 <h4 id="diagram-time-domain-to-frequency-domain">Diagram: Time Domain to Frequency Domain</h4>
 <iframe src="../../sims/time-to-frequency/main.html" width="100%" height="500px" scrolling="no" style="overflow: hidden;"></iframe>
 
-<details markdown="1">
+<details>
 <summary>Time Domain to Frequency Domain</summary>
-Type: microsim
-
-Bloom Level: Analyze (L4)
-Bloom Verb: examine
-
-Learning Objective: Students will examine the relationship between waveform shape and spectral content by observing how modifications in one domain affect the other.
-
-Visual elements:
+<p>Type: microsim</p>
+<p>Bloom Level: Analyze (L4)
+Bloom Verb: examine</p>
+<p>Learning Objective: Students will examine the relationship between waveform shape and spectral content by observing how modifications in one domain affect the other.</p>
+<p>Visual elements:
 - Left panel: Time domain waveform
 - Right panel: Frequency spectrum (bar chart)
 - Arrows connecting harmonics to their spectral lines
-- Animation option showing Fourier decomposition
-
-Interactive controls:
+- Animation option showing Fourier decomposition</p>
+<p>Interactive controls:
 - Dropdown: Waveform type (sine, square, triangle, sawtooth, pulse)
 - Slider: Fundamental frequency (affects spectral line spacing)
 - Slider: Duty cycle (for pulse waveform)
 - Toggle: Show/hide individual harmonics on time plot
-- Toggle: Linear/dB scale for spectrum
-
-Observations highlighted:
+- Toggle: Linear/dB scale for spectrum</p>
+<p>Observations highlighted:
 - Pure sine → single spectral line
 - Square wave → odd harmonics, 1/n amplitude
 - Sawtooth → all harmonics, 1/n amplitude
-- Narrower pulse → wider spectrum
-
-Default parameters:
+- Narrower pulse → wider spectrum</p>
+<p>Default parameters:
 - Square wave
 - f₀ = 100 Hz
-- Display up to 10th harmonic
-
-Canvas layout:
+- Display up to 10th harmonic</p>
+<p>Canvas layout:
 - Time plot: 300 × 350 pixels
 - Spectrum: 300 × 350 pixels
-- Control area: 100 pixels below
-
-Implementation: p5.js
+- Control area: 100 pixels below</p>
+<p>Implementation: p5.js</p>
 </details>
-
 <h2 id="waveform-symmetry-and-its-effects">Waveform Symmetry and Its Effects</h2>
 <p>The symmetry of a waveform dramatically simplifies its Fourier series by eliminating certain terms.</p>
 <h3 id="even-symmetry">Even Symmetry</h3>

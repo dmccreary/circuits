@@ -2565,54 +2565,44 @@
 <h4 id="diagram-water-flow-analogy-for-electric-current">Diagram: Water Flow Analogy for Electric Current</h4>
 <iframe src="../../sims/water-flow-analogy/main.html" width="100%" height="450px" scrolling="no"></iframe>
 
-<details markdown="1">
+<details>
 <summary>Water Flow Analogy for Electric Current</summary>
-Type: microsim
-
-Bloom Level: Understand (L2)
-Bloom Verb: Compare, explain
-
-Learning Objective: Students will be able to explain how electric current flow is analogous to water flow in pipes, comparing pressure to voltage and flow rate to current.
-
-Visual Elements:
+<p>Type: microsim</p>
+<p>Bloom Level: Understand (L2)
+Bloom Verb: Compare, explain</p>
+<p>Learning Objective: Students will be able to explain how electric current flow is analogous to water flow in pipes, comparing pressure to voltage and flow rate to current.</p>
+<p>Visual Elements:
 - Split screen showing water pipe system (top) and electrical circuit (bottom)
 - Water pipe with visible water particles/droplets flowing
 - Electrical wire with animated electrons (small dots) drifting
 - Pressure gauge on water system corresponding to voltmeter on circuit
 - Flow meter on water system corresponding to ammeter on circuit
-- Pump on water system corresponding to battery in circuit
-
-Interactive Controls:
+- Pump on water system corresponding to battery in circuit</p>
+<p>Interactive Controls:
 - Slider: "Pump Pressure / Battery Voltage" (1-12 units)
 - Slider: "Pipe Diameter / Wire Gauge" (narrow to wide)
 - Toggle: Show/Hide particle animation
-- Button: Reset to defaults
-
-Default Parameters:
+- Button: Reset to defaults</p>
+<p>Default Parameters:
 - Pressure/Voltage: 6 units
 - Pipe/Wire: Medium
-- Animation: On
-
-Behavior:
+- Animation: On</p>
+<p>Behavior:
 - Increasing pressure/voltage increases flow rate in both systems proportionally
 - Wider pipe/wire allows more flow for same pressure
 - Particles move slowly but field effect is instant
 - Display numerical values for flow rate and current
-- Show that turning on "pump" instantly affects flow at outlet
-
-Canvas Layout:
+- Show that turning on "pump" instantly affects flow at outlet</p>
+<p>Canvas Layout:
 - Width: responsive to container
 - Height: 400px
 - Top half: water system
 - Bottom half: electrical equivalent
-- Right panel: controls and readouts
-
-Instructional Rationale: The water analogy is a classic tool for understanding current flow because students have intuitive experience with water pressure and flow. This side-by-side comparison reinforces the abstract electrical concepts with concrete physical analogs.
-
-Implementation: p5.js with particle system for water/electron animation
-Link to Microsim: [Water Flow Analogy](../../sims/water-flow-analogy/index.md)
+- Right panel: controls and readouts</p>
+<p>Instructional Rationale: The water analogy is a classic tool for understanding current flow because students have intuitive experience with water pressure and flow. This side-by-side comparison reinforces the abstract electrical concepts with concrete physical analogs.</p>
+<p>Implementation: p5.js with particle system for water/electron animation
+Link to Microsim: <a href="../../sims/water-flow-analogy/">Water Flow Analogy</a></p>
 </details>
-
 <h3 id="conventional-current-vs-electron-flow">Conventional Current vs. Electron Flow</h3>
 <p>Here's a historical quirk that causes endless confusion: <strong>conventional current</strong> flows from positive to negative, but electrons actually flow from negative to positive. Why? Because when scientists first defined current direction, they didn't know electrons existed. They guessed that positive charges were moving, and they guessed wrong. By the time we figured out the truth, the convention was too deeply embedded to change.</p>
 <p>For circuit analysis, we use conventional current (positive to negative), and everything works out mathematically. Just remember:</p>
@@ -2700,51 +2690,41 @@ Link to Microsim: [Water Flow Analogy](../../sims/water-flow-analogy/index.md)
 <h4 id="diagram-power-triangle-visualization">Diagram: Power Triangle Visualization</h4>
 <iframe src="../../sims/power-triangle/main.html" width="100%" height="400px" scrolling="no" style="overflow: hidden;"></iframe>
 
-<details markdown="1">
+<details>
 <summary>Power Triangle Visualization</summary>
-Type: infographic
-
-Bloom Level: Apply (L3)
-Bloom Verb: Calculate, use
-
-Learning Objective: Students will be able to use the power triangle to quickly identify which formula to use for calculating power, voltage, current, or resistance.
-
-Visual Elements:
+<p>Type: infographic</p>
+<p>Bloom Level: Apply (L3)
+Bloom Verb: Calculate, use</p>
+<p>Learning Objective: Students will be able to use the power triangle to quickly identify which formula to use for calculating power, voltage, current, or resistance.</p>
+<p>Visual Elements:
 - Large triangle divided into sections
 - Top section: P (Power)
 - Bottom left section: V (Voltage)
 - Bottom right section: I (Current)
 - Below triangle: R (Resistance) relationships
-- Highlighting system to show which formula applies
-
-Interactive Elements:
+- Highlighting system to show which formula applies</p>
+<p>Interactive Elements:
 - Click on any variable to "cover" it and reveal the formula to solve for it
 - Hover over formulas to see them enlarged
 - Input fields to enter known values
 - Calculate button to solve for unknown
-- Display of result with units
-
-Layout:
+- Display of result with units</p>
+<p>Layout:
 - Center: Interactive triangle centered at 30% of canvasWidth
 - Right side: Calculator panel using right 30% of the canvasWidth
-- Bottom: Formula reference showing all three forms of power equation
-
-Color Scheme:
+- Bottom: Formula reference showing all three forms of power equation</p>
+<p>Color Scheme:
 - Power (P): Gold/Yellow
 - Voltage (V): Blue
 - Current (I): Green
-- Resistance (R): Orange
-
-Default State:
+- Resistance (R): Orange</p>
+<p>Default State:
 - No variable covered
 - All formulas visible
-- Empty input fields
-
-Instructional Rationale: The "cover the variable you want" trick is a classic mnemonic for Ohm's law and power relationships. This interactive version lets students practice the technique while also performing calculations.
-
-Implementation: p5.js 
+- Empty input fields</p>
+<p>Instructional Rationale: The "cover the variable you want" trick is a classic mnemonic for Ohm's law and power relationships. This interactive version lets students practice the technique while also performing calculations.</p>
+<p>Implementation: p5.js </p>
 </details>
-
 <h3 id="a-note-on-energy-units">A Note on Energy Units</h3>
 <p>Your electricity bill doesn't list energy in joules—it uses <strong>kilowatt-hours (kWh)</strong>. One kilowatt-hour is the energy consumed when using 1000 watts for one hour:</p>
 <p><span class="arithmatex">\(1 \text{ kWh} = 1000 \text{ W} \times 3600 \text{ s} = 3.6 \times 10^6 \text{ J} = 3.6 \text{ MJ}\)</span></p>
@@ -2835,22 +2815,18 @@ Implementation: p5.js
 <h4 id="diagram-ground-symbol-reference">Diagram: Ground Symbol Reference</h4>
 <iframe src="../../sims/ground-symbols/main.html" width="100%" height="350px" scrolling="no" style="overflow: hidden;"></iframe>
 
-<details markdown="1">
+<details>
 <summary>Ground Symbol Reference Guide</summary>
-Type: infographic
-
-Bloom Level: Remember (L1)
-Bloom Verb: Identify, recognize
-
-Learning Objective: Students will be able to identify and distinguish between different ground symbols used in circuit schematics.
-
-Visual Elements:
+<p>Type: infographic</p>
+<p>Bloom Level: Remember (L1)
+Bloom Verb: Identify, recognize</p>
+<p>Learning Objective: Students will be able to identify and distinguish between different ground symbols used in circuit schematics.</p>
+<p>Visual Elements:
 - Grid of 4-6 common ground symbols
 - Each symbol clearly drawn with proper proportions
 - Label below each symbol with name and typical use
-- Brief description of when each type is used
-
-Ground Symbols to Include:
+- Brief description of when each type is used</p>
+<p>Ground Symbols to Include:
 1. Earth Ground (three decreasing horizontal lines)
    - Use: Power systems, safety grounds, building wiring
 2. Chassis Ground (three lines with chassis rectangle)
@@ -2860,28 +2836,22 @@ Ground Symbols to Include:
 4. Digital Ground (may have "DGND" label)
    - Use: Digital circuit reference
 5. Analog Ground (may have "AGND" label)
-   - Use: Sensitive analog circuits
-
-Interactive Elements:
+   - Use: Sensitive analog circuits</p>
+<p>Interactive Elements:
 - Hover over each symbol for expanded description
 - Click to see example circuit using that ground type
-- Quiz mode: Symbol appears, student identifies type
-
-Layout:
+- Quiz mode: Symbol appears, student identifies type</p>
+<p>Layout:
 - 2x3 grid of ground symbols
 - Clean white background
-- Consistent sizing for all symbols
-
-Color Scheme:
+- Consistent sizing for all symbols</p>
+<p>Color Scheme:
 - Symbols in black
 - Labels in dark gray
-- Hover highlights in blue
-
-Instructional Rationale: Recognizing ground symbols is essential for reading schematics. This reference provides quick visual recognition practice.
-
-Implementation: p5.js with hover detection
+- Hover highlights in blue</p>
+<p>Instructional Rationale: Recognizing ground symbols is essential for reading schematics. This reference provides quick visual recognition practice.</p>
+<p>Implementation: p5.js with hover detection</p>
 </details>
-
 <h2 id="circuit-schematic-symbols-the-language-of-circuits">Circuit Schematic Symbols: The Language of Circuits</h2>
 <p>Just as musicians read sheet music, electrical engineers read <strong>circuit schematics</strong>. These diagrams use standardized symbols to represent components and their connections. Learning these symbols is like learning an alphabet—once you know them, you can read any circuit diagram.</p>
 <p>Here are the essential symbols you'll encounter in this course:</p>
@@ -2939,31 +2909,26 @@ Implementation: p5.js with hover detection
 <h4 id="diagram-interactive-circuit-symbol-flashcards">Diagram: Interactive Circuit Symbol Flashcards</h4>
 <iframe src="../../sims/circuit-symbol-flashcards/main.html" width="100%" height="482px" scrolling="no" style="overflow: hidden;"></iframe>
 
-<details markdown="1">
+<details>
 <summary>Circuit Symbol Flashcard Trainer</summary>
-Type: microsim
-
-Bloom Level: Remember (L1)
-Bloom Verb: Recall, identify
-
-Learning Objective: Students will be able to identify common circuit schematic symbols and recall their names and functions.
-
-Visual Elements:
+<p>Type: microsim</p>
+<p>Bloom Level: Remember (L1)
+Bloom Verb: Recall, identify</p>
+<p>Learning Objective: Students will be able to identify common circuit schematic symbols and recall their names and functions.</p>
+<p>Visual Elements:
 - Large flashcard area showing symbol
 - Card flip animation revealing answer
 - Progress indicator showing cards completed
 - Score tracker for quiz mode
-- Symbol drawn in clean black lines on white background
-
-Interactive Controls:
+- Symbol drawn in clean black lines on white background</p>
+<p>Interactive Controls:
 - Button: "Flip Card" (reveals answer)
 - Button: "Next Card" (shows new symbol)
 - Button: "Previous Card" (review previous)
 - Toggle: "Quiz Mode" (hide answers until flip)
 - Dropdown: Select category (All, Sources, Passive, Connections)
-- Button: "Shuffle Deck"
-
-Symbol Set (minimum 15 symbols):
+- Button: "Shuffle Deck"</p>
+<p>Symbol Set (minimum 15 symbols):
 1. Resistor (US style)
 2. Resistor (EU style)
 3. Capacitor (non-polarized)
@@ -2979,34 +2944,28 @@ Symbol Set (minimum 15 symbols):
 13. Wire crossing (no connection)
 14. Wire junction (connection/node)
 15. Switch (SPST)
-16. Operational Amplifier
-
-Default Parameters:
+16. Operational Amplifier</p>
+<p>Default Parameters:
 - Quiz mode: Off
 - Category: All
-- Start with card 1
-
-Behavior:
+- Start with card 1</p>
+<p>Behavior:
 - Cards cycle through all symbols in category
 - In quiz mode, answer hidden until flip
 - Tracks correct/incorrect in quiz mode
 - Shuffle randomizes order
-- Shows name, symbol, and one-sentence description
-
-Canvas Layout:
+- Shows name, symbol, and one-sentence description</p>
+<p>Canvas Layout:
 - Width: responsive
 - Height: 400px
 - Center: Large flashcard (300x200px)
 - Bottom: Navigation controls
-- Top right: Progress/Score
-
-Instructional Rationale: Flashcards are proven effective for memorizing symbol recognition, which is a pure recall task. Interactive digital flashcards allow self-paced practice with immediate feedback.
-
-Implementation: p5.js with card flip animation and celebration animations upon completions
+- Top right: Progress/Score</p>
+<p>Instructional Rationale: Flashcards are proven effective for memorizing symbol recognition, which is a pure recall task. Interactive digital flashcards allow self-paced practice with immediate feedback.</p>
+<p>Implementation: p5.js with card flip animation and celebration animations upon completions
 Use the src/circuits-js-lib/p5-circuit-lib.js to draw the symbols.
-If you need to create a new symbol, add it to the src/circuits-js-lib/p5-circuit-lib.js
+If you need to create a new symbol, add it to the src/circuits-js-lib/p5-circuit-lib.js</p>
 </details>
-
 <h2 id="nodes-and-branches-circuit-anatomy">Nodes and Branches: Circuit Anatomy</h2>
 <p>To analyze circuits, we need vocabulary for describing their structure. Two fundamental concepts are <strong>nodes</strong> and <strong>branches</strong>.</p>
 <p>A <strong>node</strong> is any point where two or more circuit elements connect. Think of it as a junction or intersection in the circuit. All points that are connected by ideal wire (zero resistance) form a single node, even if they look like multiple points in the schematic.</p>
@@ -3025,24 +2984,20 @@ If you need to create a new symbol, add it to the src/circuits-js-lib/p5-circuit
 <h4 id="diagram-node-and-branch-identification-trainer">Diagram: Node and Branch Identification Trainer</h4>
 <iframe src="../../sims/node-branch-trainer/main.html" width="100%" height="500px" scrolling="no" style="overflow: hidden;"></iframe>
 
-<details markdown="1">
+<details>
 <summary>Node and Branch Identification Trainer</summary>
-Type: microsim
-
-Bloom Level: Understand (L2)
-Bloom Verb: Identify, classify
-
-Learning Objective: Students will be able to identify and count nodes and branches in circuit schematics, distinguishing between apparent visual junctions and true electrical nodes.
-
-Visual Elements:
+<p>Type: microsim</p>
+<p>Bloom Level: Understand (L2)
+Bloom Verb: Identify, classify</p>
+<p>Learning Objective: Students will be able to identify and count nodes and branches in circuit schematics, distinguishing between apparent visual junctions and true electrical nodes.</p>
+<p>Visual Elements:
 - Circuit schematic display area (left side)
 - Multiple example circuits of increasing complexity
 - Highlighted nodes (when identified correctly)
 - Highlighted branches (different color from nodes)
 - Counters showing node count and branch count
-- Feedback messages for correct/incorrect identification
-
-Interactive Controls:
+- Feedback messages for correct/incorrect identification</p>
+<p>Interactive Controls:
 - Click on schematic to mark nodes (places a dot)
 - Drag to trace branches (draws highlight line)
 - Button: "Check Answer"
@@ -3050,47 +3005,38 @@ Interactive Controls:
 - Button: "Next Circuit"
 - Button: "Previous Circuit"
 - Dropdown: Difficulty (Easy/Medium/Hard)
-- Button: "Clear Markings"
-
-Circuit Examples (progressive difficulty):
+- Button: "Clear Markings"</p>
+<p>Circuit Examples (progressive difficulty):
 Easy:
 1. Single resistor with voltage source (2 nodes, 2 branches)
 2. Two resistors in series with source (2 nodes, 2 branches - tricky!)
-3. Two resistors in parallel with source (2 nodes, 3 branches)
-
-Medium:
+3. Two resistors in parallel with source (2 nodes, 3 branches)</p>
+<p>Medium:
 4. Three resistors mixed (3 nodes, 4 branches)
 5. Voltage source with 3 parallel resistors (2 nodes, 4 branches)
-6. Ladder network (4 nodes, 5 branches)
-
-Hard:
+6. Ladder network (4 nodes, 5 branches)</p>
+<p>Hard:
 7. Bridge circuit (4 nodes, 6 branches)
-8. Complex network (5+ nodes)
-
-Default Parameters:
+8. Complex network (5+ nodes)</p>
+<p>Default Parameters:
 - Difficulty: Easy
 - Start with circuit 1
-- No markings
-
-Behavior:
+- No markings</p>
+<p>Behavior:
 - Clicking places/removes node marker
 - Dragging creates branch trace
 - Check Answer compares to correct count
 - Show Solution reveals all nodes (gold) and branches (blue)
 - Score tracking across circuits
-- Hints available after two wrong attempts
-
-Canvas Layout:
+- Hints available after two wrong attempts</p>
+<p>Canvas Layout:
 - Width: responsive
 - Height: 450px
 - Left 60%: Circuit display
-- Right 40%: Controls, counters, feedback
-
-Instructional Rationale: Students often struggle with the concept that wires connecting components form a single node. This interactive trainer provides practice with immediate feedback, reinforcing the abstract concept through hands-on identification.
-
-Implementation: p5.js with clickable regions and path drawing
+- Right 40%: Controls, counters, feedback</p>
+<p>Instructional Rationale: Students often struggle with the concept that wires connecting components form a single node. This interactive trainer provides practice with immediate feedback, reinforcing the abstract concept through hands-on identification.</p>
+<p>Implementation: p5.js with clickable regions and path drawing</p>
 </details>
-
 <h2 id="open-circuits-and-short-circuits-the-extremes">Open Circuits and Short Circuits: The Extremes</h2>
 <p>Two special circuit conditions that every engineer must understand are <strong>open circuits</strong> and <strong>short circuits</strong>. These represent the extreme cases of resistance.</p>
 <p>An <strong>open circuit</strong> has infinite resistance—no current can flow. This happens when there's a break in the circuit path, like a switch in the off position or a wire that's been cut. In an open circuit:</p>
@@ -3162,56 +3108,46 @@ Implementation: p5.js with clickable regions and path drawing
 <h4 id="diagram-power-dissipation-calculator">Diagram: Power Dissipation Calculator</h4>
 <iframe src="../../sims/power-dissipation-calc/main.html" width="100%" height="400px" scrolling="no" style="overflow: hidden;"></iframe>
 
-<details markdown="1">
+<details>
 <summary>Power Dissipation Calculator</summary>
-Type: microsim
-
-Bloom Level: Apply (L3)
-Bloom Verb: Calculate, solve
-
-Learning Objective: Students will be able to calculate power dissipation in resistors using any combination of known values (V, I, R) and determine if a resistor's power rating is adequate.
-
-Visual Elements:
+<p>Type: microsim</p>
+<p>Bloom Level: Apply (L3)
+Bloom Verb: Calculate, solve</p>
+<p>Learning Objective: Students will be able to calculate power dissipation in resistors using any combination of known values (V, I, R) and determine if a resistor's power rating is adequate.</p>
+<p>Visual Elements:
 - Resistor symbol in center with current arrow and voltage labels
 - Three input/output displays for V, I, R
 - Large power readout showing calculated P
 - Visual thermometer or heat indicator showing "temperature"
 - Power rating selector with color-coded safety indicator
-- Warning indicator when power exceeds rating
-
-Interactive Controls:
+- Warning indicator when power exceeds rating</p>
+<p>Interactive Controls:
 - Input field: Voltage (V) - with unit selector (V, mV)
 - Input field: Current (I) - with unit selector (A, mA, μA)
 - Input field: Resistance (R) - with unit selector (Ω, kΩ, MΩ)
 - Dropdown: Power rating (1/8W, 1/4W, 1/2W, 1W, 2W, 5W)
-- Radio buttons: Select which two values to input (V&I, V&R, or I&R)
-- Button: Calculate
-
-Behavior:
+- Radio buttons: Select which two values to input (V&amp;I, V&amp;R, or I&amp;R)
+- Button: Calculate</p>
+<p>Behavior:
 - User selects which two values to input
 - Third value and power are calculated automatically
 - Thermometer rises proportionally to power
-- If calculated power > rating, show red warning and "hot" animation
-- If power < 50% of rating, show green "safe" indicator
+- If calculated power &gt; rating, show red warning and "hot" animation
+- If power &lt; 50% of rating, show green "safe" indicator
 - If power 50-100% of rating, show yellow "caution"
-- Display all three forms of power equation with current values substituted
-
-Default Parameters:
+- Display all three forms of power equation with current values substituted</p>
+<p>Default Parameters:
 - V = 5V, R = 1kΩ (calculate I and P)
-- Power rating: 1/4W
-
-Canvas Layout:
+- Power rating: 1/4W</p>
+<p>Canvas Layout:
 - Width: responsive
 - Height: 350px
 - Center: Circuit visualization with resistor
 - Left: Input controls
-- Right: Results and safety indicator
-
-Instructional Rationale: Power calculations are a core skill, and connecting them to real-world consequences (overheating) motivates careful attention. The safety indicator bridges theory to practical engineering concerns.
-
-Implementation: p5.js with input validation and animated heat indicator
+- Right: Results and safety indicator</p>
+<p>Instructional Rationale: Power calculations are a core skill, and connecting them to real-world consequences (overheating) motivates careful attention. The safety indicator bridges theory to practical engineering concerns.</p>
+<p>Implementation: p5.js with input validation and animated heat indicator</p>
 </details>
-
 <h2 id="si-units-for-circuits-speaking-the-language">SI Units for Circuits: Speaking the Language</h2>
 <p>Throughout this course (and your entire career in electrical engineering), you'll use the <strong>International System of Units (SI)</strong>. Consistency in units prevents errors and allows engineers worldwide to communicate precisely.</p>
 <p>Here's your essential reference table for electrical quantities:</p>

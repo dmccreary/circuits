@@ -2513,55 +2513,45 @@ date: 2026-01-30</p>
 <h4 id="diagram-oscilloscope-interface-guide">Diagram: Oscilloscope Interface Guide</h4>
 <iframe src="../../sims/oscilloscope-guide/main.html" width="100%" height="550px" scrolling="no" style="overflow: hidden;"></iframe>
 
-<details markdown="1">
+<details>
 <summary>Oscilloscope Interface Guide</summary>
-Type: microsim
-
-Bloom Level: Apply (L3)
-Bloom Verb: use
-
-Learning Objective: Students will use oscilloscope controls to properly display and measure a waveform.
-
-Visual elements:
+<p>Type: microsim</p>
+<p>Bloom Level: Apply (L3)
+Bloom Verb: use</p>
+<p>Learning Objective: Students will use oscilloscope controls to properly display and measure a waveform.</p>
+<p>Visual elements:
 - Simulated oscilloscope display with graticule
 - Waveform that responds to control changes
 - Control panel mimicking real oscilloscope
 - Measurement readouts (frequency, Vpp, Vavg)
-- Trigger level indicator
-
-Interactive controls:
+- Trigger level indicator</p>
+<p>Interactive controls:
 - Slider: Time/div (1μs to 1s, decades)
 - Slider: Volts/div (10mV to 10V, 1-2-5 sequence)
 - Slider: Trigger level
 - Radio: Trigger source (CH1, CH2, External)
 - Radio: Trigger edge (Rising, Falling)
 - Toggle: AC/DC coupling
-- Slider: Vertical position
-
-Input signal controls:
+- Slider: Vertical position</p>
+<p>Input signal controls:
 - Dropdown: Waveform (sine, square, triangle)
 - Slider: Frequency (10Hz to 100kHz)
 - Slider: Amplitude
-- Slider: DC offset
-
-Goals/exercises:
+- Slider: DC offset</p>
+<p>Goals/exercises:
 - "Display exactly 2 cycles"
 - "Measure the peak-to-peak voltage"
-- "Find the frequency using cursors"
-
-Default parameters:
+- "Find the frequency using cursors"</p>
+<p>Default parameters:
 - 1 kHz sine wave, 2 Vpp
 - Time/div: 500 μs
-- Volts/div: 1 V
-
-Canvas layout:
+- Volts/div: 1 V</p>
+<p>Canvas layout:
 - Scope display: 500 × 400 pixels
 - Controls panel: 200 × 400 pixels (side)
-- Control area: 100 pixels below
-
-Implementation: p5.js
+- Control area: 100 pixels below</p>
+<p>Implementation: p5.js</p>
 </details>
-
 <h3 id="function-generator">Function Generator</h3>
 <p>The <strong>function generator</strong> produces standard waveforms for testing circuits:</p>
 <p><strong>Output waveforms:</strong></p>

@@ -2560,48 +2560,39 @@ date: 2026-01-30</p>
 <h4 id="diagram-sinusoidal-waveform-anatomy">Diagram: Sinusoidal Waveform Anatomy</h4>
 <iframe src="../../sims/sinusoid-anatomy/main.html" width="100%" height="500px" scrolling="no" style="overflow: hidden;"></iframe>
 
-<details markdown="1">
+<details>
 <summary>Sinusoidal Waveform Anatomy</summary>
-Type: microsim
-
-Bloom Level: Understand (L2)
-Bloom Verb: explain
-
-Learning Objective: Students will explain the relationship between sinusoidal parameters (amplitude, frequency, phase) and the resulting waveform shape.
-
-Visual elements:
+<p>Type: microsim</p>
+<p>Bloom Level: Understand (L2)
+Bloom Verb: explain</p>
+<p>Learning Objective: Students will explain the relationship between sinusoidal parameters (amplitude, frequency, phase) and the resulting waveform shape.</p>
+<p>Visual elements:
 - Main plot: Sinusoidal waveform v(t) vs time
 - Amplitude markers: Peak-to-peak, peak, RMS shown as horizontal lines
 - Period marker: Arrow spanning one complete cycle
 - Phase reference: Vertical line at t=0 showing phase offset
 - Mathematical formula displayed and updated in real-time
-- Zero crossings highlighted
-
-Interactive controls:
+- Zero crossings highlighted</p>
+<p>Interactive controls:
 - Slider: Amplitude Vm (1V to 10V)
 - Slider: Frequency f (1Hz to 100Hz, or period T)
 - Slider: Phase φ (-180° to +180°)
 - Toggle: Show/hide RMS level
 - Toggle: Show sine or cosine reference
-- Display: Current formula with values
-
-Annotations:
+- Display: Current formula with values</p>
+<p>Annotations:
 - "Period T = 1/f" spanning one cycle
 - "Peak Vm" at maximum point
-- "Phase shift" showing offset from reference
-
-Default parameters:
+- "Phase shift" showing offset from reference</p>
+<p>Default parameters:
 - Vm = 5V
 - f = 10Hz
-- φ = 0°
-
-Canvas layout:
+- φ = 0°</p>
+<p>Canvas layout:
 - Plot area: 600 × 350 pixels
-- Control area: 100 pixels below
-
-Implementation: p5.js
+- Control area: 100 pixels below</p>
+<p>Implementation: p5.js</p>
 </details>
-
 <h3 id="amplitude-measurements">Amplitude Measurements</h3>
 <p>Different applications require different ways of characterizing amplitude:</p>
 <p><strong>Peak Value (<span class="arithmatex">\(V_p\)</span> or <span class="arithmatex">\(V_m\)</span>):</strong> The maximum instantaneous value from zero
@@ -2710,49 +2701,40 @@ Implementation: p5.js
 <h4 id="diagram-phase-relationship-visualizer">Diagram: Phase Relationship Visualizer</h4>
 <iframe src="../../sims/phase-relationship/main.html" width="100%" height="450px" scrolling="no" style="overflow: hidden;"></iframe>
 
-<details markdown="1">
+<details>
 <summary>Phase Relationship Visualizer</summary>
-Type: microsim
-
-Bloom Level: Understand (L2)
-Bloom Verb: compare
-
-Learning Objective: Students will compare two sinusoidal signals with different phase relationships and interpret leading/lagging terminology.
-
-Visual elements:
+<p>Type: microsim</p>
+<p>Bloom Level: Understand (L2)
+Bloom Verb: compare</p>
+<p>Learning Objective: Students will compare two sinusoidal signals with different phase relationships and interpret leading/lagging terminology.</p>
+<p>Visual elements:
 - Dual waveform plot showing two signals (blue and red)
 - Reference signal (blue): v₁(t) = Vm sin(ωt)
 - Phase-shifted signal (red): v₂(t) = Vm sin(ωt + φ)
 - Phase angle marked between corresponding points
 - Phasor diagram showing both signals as rotating vectors
-- "Leads" or "Lags" label indicating relationship
-
-Interactive controls:
+- "Leads" or "Lags" label indicating relationship</p>
+<p>Interactive controls:
 - Slider: Phase difference φ (-180° to +180°)
 - Button: Quick select: 0°, 90°, 180°, -90°
 - Toggle: Show/hide phasor diagram
 - Toggle: Animate phasor rotation
-- Display: Phase relationship description
-
-Visual feedback:
-- φ > 0: "Signal 2 LEADS signal 1 by φ°"
-- φ < 0: "Signal 2 LAGS signal 1 by |φ|°"
+- Display: Phase relationship description</p>
+<p>Visual feedback:
+- φ &gt; 0: "Signal 2 LEADS signal 1 by φ°"
+- φ &lt; 0: "Signal 2 LAGS signal 1 by |φ|°"
 - φ = 0: "Signals are IN PHASE"
-- φ = ±180°: "Signals are in ANTIPHASE"
-
-Default parameters:
+- φ = ±180°: "Signals are in ANTIPHASE"</p>
+<p>Default parameters:
 - φ = 45° (signal 2 leads)
 - Same amplitude for both signals
-- f = 5 Hz for visible animation
-
-Canvas layout:
+- f = 5 Hz for visible animation</p>
+<p>Canvas layout:
 - Waveform plot: 400 × 300 pixels
 - Phasor diagram: 200 × 300 pixels (side)
-- Control area: 100 pixels below
-
-Implementation: p5.js
+- Control area: 100 pixels below</p>
+<p>Implementation: p5.js</p>
 </details>
-
 <h2 id="signals-the-language-of-information">Signals: The Language of Information</h2>
 <p>A <strong>signal</strong> is any quantity that varies with time and conveys information. Signals are everywhere:</p>
 <ul>
@@ -2815,46 +2797,37 @@ Implementation: p5.js
 <h4 id="diagram-dc-and-ac-component-separator">Diagram: DC and AC Component Separator</h4>
 <iframe src="../../sims/dc-ac-separator/main.html" width="100%" height="450px" scrolling="no" style="overflow: hidden;"></iframe>
 
-<details markdown="1">
+<details>
 <summary>DC and AC Component Separator</summary>
-Type: microsim
-
-Bloom Level: Understand (L2)
-Bloom Verb: classify
-
-Learning Objective: Students will classify signal components as DC or AC by observing how a composite signal can be separated into its constant and varying parts.
-
-Visual elements:
+<p>Type: microsim</p>
+<p>Bloom Level: Understand (L2)
+Bloom Verb: classify</p>
+<p>Learning Objective: Students will classify signal components as DC or AC by observing how a composite signal can be separated into its constant and varying parts.</p>
+<p>Visual elements:
 - Top plot: Original composite signal v(t) = V_DC + Vm sin(ωt)
 - Middle plot: DC component only (horizontal line at V_DC)
 - Bottom plot: AC component only (sinusoid centered at zero)
 - Visual arrows showing extraction
-- Coupling capacitor icon showing "blocks DC, passes AC"
-
-Interactive controls:
+- Coupling capacitor icon showing "blocks DC, passes AC"</p>
+<p>Interactive controls:
 - Slider: DC offset V_DC (0 to 5V)
 - Slider: AC amplitude Vm (0 to 5V)
 - Slider: Frequency f (1Hz to 20Hz)
 - Toggle: Show/hide component labels
-- Display: Calculated values for DC and AC RMS
-
-Annotations:
+- Display: Calculated values for DC and AC RMS</p>
+<p>Annotations:
 - "Average value = DC component"
 - "Oscillation around average = AC component"
-- Formula showing v(t) = V_DC + v_AC(t)
-
-Default parameters:
+- Formula showing v(t) = V_DC + v_AC(t)</p>
+<p>Default parameters:
 - V_DC = 2.5V
 - Vm = 2V
-- f = 5Hz
-
-Canvas layout:
+- f = 5Hz</p>
+<p>Canvas layout:
 - Three stacked plot areas: 600 × 120 pixels each
-- Control area: 100 pixels below
-
-Implementation: p5.js
+- Control area: 100 pixels below</p>
+<p>Implementation: p5.js</p>
 </details>
-
 <h2 id="time-domain-and-frequency-domain-two-perspectives">Time Domain and Frequency Domain: Two Perspectives</h2>
 <p>Every signal can be viewed from two complementary perspectives:</p>
 <p><strong>Time Domain:</strong> Shows how the signal varies over time. The x-axis is time, and you see the actual waveform shape.</p>
@@ -2897,52 +2870,41 @@ Implementation: p5.js
 <h4 id="diagram-time-domain-vs-frequency-domain">Diagram: Time Domain vs Frequency Domain</h4>
 <iframe src="../../sims/time-frequency-domain/main.html" width="100%" height="500px" scrolling="no" style="overflow: hidden;"></iframe>
 
-<details markdown="1">
+<details>
 <summary>Time Domain vs Frequency Domain</summary>
-Type: microsim
-
-Bloom Level: Understand (L2)
-Bloom Verb: explain
-
-Learning Objective: Students will explain how time domain waveforms correspond to frequency domain spectra by observing simple sinusoids and their spectral representations.
-
-Visual elements:
+<p>Type: microsim</p>
+<p>Bloom Level: Understand (L2)
+Bloom Verb: explain</p>
+<p>Learning Objective: Students will explain how time domain waveforms correspond to frequency domain spectra by observing simple sinusoids and their spectral representations.</p>
+<p>Visual elements:
 - Left panel: Time domain plot v(t) vs t
 - Right panel: Frequency domain spectrum |V(f)| vs f
 - For composite signals: show individual components in different colors
 - Spectral lines with amplitude markers
-- Animation showing how adding sinusoids builds complex waves
-
-Step-through mode:
+- Animation showing how adding sinusoids builds complex waves</p>
+<p>Step-through mode:
 - Stage 1: Single sinusoid → single spectral line
 - Stage 2: Two sinusoids → two spectral lines
 - Stage 3: Three sinusoids → three lines, complex time waveform
-- Stage 4: Many sinusoids → approaching square wave
-
-Interactive controls:
+- Stage 4: Many sinusoids → approaching square wave</p>
+<p>Interactive controls:
 - Dropdown: Signal type (single sine, two sines, square wave approximation)
 - Slider: Fundamental frequency f₁ (1-20 Hz)
 - Slider: Number of harmonics (for square wave)
 - Button: Step through / Animate
-- Toggle: Show individual components
-
-Annotations:
+- Toggle: Show individual components</p>
+<p>Annotations:
 - "Time domain shows SHAPE"
-- "Frequency domain shows CONTENT"
-
-Default parameters:
+- "Frequency domain shows CONTENT"</p>
+<p>Default parameters:
 - Single sinusoid at 5 Hz
-- Step-through mode active
-
-Canvas layout:
+- Step-through mode active</p>
+<p>Canvas layout:
 - Two side-by-side plots: 300 × 350 pixels each
-- Control area: 100 pixels below
-
-Instructional Rationale: Step-through helps students see the one-to-one correspondence between time and frequency representations.
-
-Implementation: p5.js
+- Control area: 100 pixels below</p>
+<p>Instructional Rationale: Step-through helps students see the one-to-one correspondence between time and frequency representations.</p>
+<p>Implementation: p5.js</p>
 </details>
-
 <h2 id="complex-numbers-your-new-best-friend">Complex Numbers: Your New Best Friend</h2>
 <p>If you've been dreading complex numbers, prepare for a surprise: they're going to make your life <em>easier</em>. Complex numbers provide a compact way to represent both magnitude and phase in a single mathematical object.</p>
 <p><strong>Definition:</strong> A complex number <span class="arithmatex">\(z\)</span> has a real part and an imaginary part:
@@ -3017,53 +2979,43 @@ Implementation: p5.js
 <h4 id="diagram-complex-number-visualizer">Diagram: Complex Number Visualizer</h4>
 <iframe src="../../sims/complex-number-viz/main.html" width="100%" height="500px" scrolling="no" style="overflow: hidden;"></iframe>
 
-<details markdown="1">
+<details>
 <summary>Complex Number Visualizer</summary>
-Type: microsim
-
-Bloom Level: Apply (L3)
-Bloom Verb: calculate
-
-Learning Objective: Students will calculate complex number conversions between rectangular and polar forms using the complex plane visualization.
-
-Visual elements:
+<p>Type: microsim</p>
+<p>Bloom Level: Apply (L3)
+Bloom Verb: calculate</p>
+<p>Learning Objective: Students will calculate complex number conversions between rectangular and polar forms using the complex plane visualization.</p>
+<p>Visual elements:
 - Complex plane with real (x) and imaginary (y) axes
 - Point representing complex number z
 - Vector from origin to point showing magnitude
 - Angle arc showing θ
 - Projections onto real and imaginary axes
-- Both rectangular and polar forms displayed
-
-Interactive controls:
+- Both rectangular and polar forms displayed</p>
+<p>Interactive controls:
 - Mode toggle: "Enter rectangular" vs "Enter polar"
 - Rectangular mode: Sliders for a (-5 to 5) and b (-5 to 5)
 - Polar mode: Sliders for r (0 to 7) and θ (-180° to 180°)
 - Button: Generate random number (quiz mode)
-- Display: Both forms shown with live updates
-
-Conversion formulas shown:
+- Display: Both forms shown with live updates</p>
+<p>Conversion formulas shown:
 - r = √(a² + b²) with calculation
 - θ = tan⁻¹(b/a) with quadrant adjustment
 - a = r cos(θ) with calculation
-- b = r sin(θ) with calculation
-
-Visual feedback:
+- b = r sin(θ) with calculation</p>
+<p>Visual feedback:
 - Dotted lines showing projections
 - Color coding: real part (blue), imaginary part (green)
-- Magnitude shown as red vector
-
-Default parameters:
+- Magnitude shown as red vector</p>
+<p>Default parameters:
 - z = 3 + j4 (classic 3-4-5 triangle)
-- Shows r = 5, θ = 53.13°
-
-Canvas layout:
+- Shows r = 5, θ = 53.13°</p>
+<p>Canvas layout:
 - Complex plane: 400 × 400 pixels
 - Control/display panel: 200 × 400 pixels (side)
-- Control area: 100 pixels below
-
-Implementation: p5.js
+- Control area: 100 pixels below</p>
+<p>Implementation: p5.js</p>
 </details>
-
 <h3 id="eulers-formula-the-bridge-between-worlds">Euler's Formula: The Bridge Between Worlds</h3>
 <p><strong>Euler's formula</strong> is one of the most beautiful equations in mathematics:</p>
 <div class="arithmatex">\[e^{j\theta} = \cos\theta + j\sin\theta\]</div>
@@ -3107,53 +3059,42 @@ Implementation: p5.js
 <h4 id="diagram-eulers-formula-on-the-unit-circle">Diagram: Euler's Formula on the Unit Circle</h4>
 <iframe src="../../sims/euler-circle/main.html" width="100%" height="450px" scrolling="no" style="overflow: hidden;"></iframe>
 
-<details markdown="1">
+<details>
 <summary>Euler's Formula on the Unit Circle</summary>
-Type: microsim
-
-Bloom Level: Understand (L2)
-Bloom Verb: explain
-
-Learning Objective: Students will explain how Euler's formula relates rotating phasors to sinusoidal projections by observing the unit circle animation.
-
-Visual elements:
+<p>Type: microsim</p>
+<p>Bloom Level: Understand (L2)
+Bloom Verb: explain</p>
+<p>Learning Objective: Students will explain how Euler's formula relates rotating phasors to sinusoidal projections by observing the unit circle animation.</p>
+<p>Visual elements:
 - Unit circle on complex plane
 - Rotating phasor e^(jωt) as animated vector
 - Projection onto real axis: cos(ωt)
 - Projection onto imaginary axis: sin(ωt)
 - Side plots showing cos and sin waveforms being traced
-- Current angle θ displayed
-
-Step-through or animation mode:
+- Current angle θ displayed</p>
+<p>Step-through or animation mode:
 - Step through key angles: 0°, 30°, 45°, 60°, 90°, 180°, 270°, 360°
-- Or continuous rotation at adjustable speed
-
-Interactive controls:
+- Or continuous rotation at adjustable speed</p>
+<p>Interactive controls:
 - Button: Step / Animate
 - Slider: Rotation speed (when animating)
 - Button: Reset to 0°
 - Toggle: Show/hide projection waveforms
-- Display: e^(jθ) = cos(θ) + j·sin(θ) with values
-
-Visual annotations:
+- Display: e^(jθ) = cos(θ) + j·sin(θ) with values</p>
+<p>Visual annotations:
 - "Real part = cos(θ)" on horizontal projection
 - "Imaginary part = sin(θ)" on vertical projection
-- Formula: e^(jθ) = cos(θ) + j sin(θ)
-
-Default parameters:
+- Formula: e^(jθ) = cos(θ) + j sin(θ)</p>
+<p>Default parameters:
 - Step mode starting at θ = 0°
-- Unit magnitude (r = 1)
-
-Canvas layout:
+- Unit magnitude (r = 1)</p>
+<p>Canvas layout:
 - Unit circle: 350 × 350 pixels
 - Side waveform plots: 250 × 175 pixels (stacked)
-- Control area: 100 pixels below
-
-Instructional Rationale: Step-through reveals the fundamental connection between rotating vectors and sinusoidal waveforms.
-
-Implementation: p5.js
+- Control area: 100 pixels below</p>
+<p>Instructional Rationale: Step-through reveals the fundamental connection between rotating vectors and sinusoidal waveforms.</p>
+<p>Implementation: p5.js</p>
 </details>
-
 <h2 id="signal-amplitude-beyond-peak-values">Signal Amplitude: Beyond Peak Values</h2>
 <p>We've already introduced peak, peak-to-peak, RMS, and average values. Now let's look at two ratios that characterize waveform shape:</p>
 <h3 id="crest-factor">Crest Factor</h3>
@@ -3296,50 +3237,40 @@ Implementation: p5.js
 <h4 id="diagram-gain-and-decibel-converter">Diagram: Gain and Decibel Converter</h4>
 <iframe src="../../sims/gain-db-converter/main.html" width="100%" height="400px" scrolling="no" style="overflow: hidden;"></iframe>
 
-<details markdown="1">
+<details>
 <summary>Gain and Decibel Converter</summary>
-Type: microsim
-
-Bloom Level: Apply (L3)
-Bloom Verb: calculate
-
-Learning Objective: Students will calculate conversions between linear gain and decibel notation for voltage and power gains.
-
-Visual elements:
+<p>Type: microsim</p>
+<p>Bloom Level: Apply (L3)
+Bloom Verb: calculate</p>
+<p>Learning Objective: Students will calculate conversions between linear gain and decibel notation for voltage and power gains.</p>
+<p>Visual elements:
 - Input signal representation (fixed amplitude)
 - Output signal representation (scaled by gain)
 - Visual comparison of input vs output amplitudes
 - Logarithmic scale showing dB relationship
-- Bidirectional conversion display
-
-Interactive controls:
+- Bidirectional conversion display</p>
+<p>Interactive controls:
 - Toggle: Enter as "Linear gain" or "Decibels"
 - Slider: Gain value (0.001 to 1000, logarithmic)
 - Toggle: Voltage gain or Power gain mode
-- Display: Both linear and dB values
-
-Calculations shown:
+- Display: Both linear and dB values</p>
+<p>Calculations shown:
 - Voltage: dB = 20 log₁₀(A_V)
 - Power: dB = 10 log₁₀(A_P)
-- Inverse formulas for conversion
-
-Quick reference displayed:
+- Inverse formulas for conversion</p>
+<p>Quick reference displayed:
 - ×2 = +6 dB (voltage), +3 dB (power)
 - ×10 = +20 dB (voltage), +10 dB (power)
-- ×0.5 = -6 dB (voltage), -3 dB (power)
-
-Default parameters:
+- ×0.5 = -6 dB (voltage), -3 dB (power)</p>
+<p>Default parameters:
 - Voltage gain mode
-- A_V = 10 (20 dB)
-
-Canvas layout:
+- A_V = 10 (20 dB)</p>
+<p>Canvas layout:
 - Signal visualization: 300 × 200 pixels
 - Conversion display: 300 × 200 pixels
-- Control area: 100 pixels below
-
-Implementation: p5.js
+- Control area: 100 pixels below</p>
+<p>Implementation: p5.js</p>
 </details>
-
 <h2 id="worked-example-characterizing-an-ac-signal">Worked Example: Characterizing an AC Signal</h2>
 <p>Let's put it all together with a practical example.</p>
 <p><strong>Problem:</strong> A voltage signal is measured as:

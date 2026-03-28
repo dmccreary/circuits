@@ -2388,46 +2388,37 @@ date: 2026-01-30</p>
 <h4 id="diagram-instantaneous-power-oscillation">Diagram: Instantaneous Power Oscillation</h4>
 <iframe src="../../sims/instantaneous-power/main.html" width="100%" height="500px" scrolling="no" style="overflow: hidden;"></iframe>
 
-<details markdown="1">
+<details>
 <summary>Instantaneous Power Oscillation</summary>
-Type: microsim
-
-Bloom Level: Understand (L2)
-Bloom Verb: explain
-
-Learning Objective: Students will explain how instantaneous power oscillates and can go negative, representing energy returning to the source.
-
-Visual elements:
+<p>Type: microsim</p>
+<p>Bloom Level: Understand (L2)
+Bloom Verb: explain</p>
+<p>Learning Objective: Students will explain how instantaneous power oscillates and can go negative, representing energy returning to the source.</p>
+<p>Visual elements:
 - Top plot: v(t) and i(t) waveforms
 - Bottom plot: p(t) = v(t)×i(t) instantaneous power
 - Shading: Positive power (green) and negative power (red)
 - Average power line shown as horizontal dashed line
 - Phase angle between v and i indicated
-- Current time marker synchronized across both plots
-
-Interactive controls:
+- Current time marker synchronized across both plots</p>
+<p>Interactive controls:
 - Slider: Phase angle θ between v and i (0° to 90°)
 - Slider: Current magnitude (affects power scale)
 - Toggle: Show/hide average power line
 - Toggle: Show/hide shaded regions
-- Display: Average power calculation
-
-Annotations for different phase angles:
+- Display: Average power calculation</p>
+<p>Annotations for different phase angles:
 - θ = 0°: "All positive - resistive load"
 - θ = 45°: "Some energy returns to source"
-- θ = 90°: "Average power = 0, all reactive"
-
-Default parameters:
+- θ = 90°: "Average power = 0, all reactive"</p>
+<p>Default parameters:
 - θ = 30° (typical inductive load)
-- Vm = 10V, Im = 5A
-
-Canvas layout:
+- Vm = 10V, Im = 5A</p>
+<p>Canvas layout:
 - Dual stacked plots: 600 × 200 pixels each
-- Control area: 100 pixels below
-
-Implementation: p5.js
+- Control area: 100 pixels below</p>
+<p>Implementation: p5.js</p>
 </details>
-
 <h2 id="average-power-what-actually-gets-used">Average Power: What Actually Gets Used</h2>
 <p><strong>Average power</strong> (also called real power or active power) is the time-averaged value of instantaneous power over one complete cycle:</p>
 <div class="arithmatex">\[P_{avg} = \frac{1}{T}\int_0^T p(t) \, dt\]</div>
@@ -2634,53 +2625,43 @@ Implementation: p5.js
 <h4 id="diagram-interactive-power-triangle">Diagram: Interactive Power Triangle</h4>
 <iframe src="../../sims/power-triangle/main.html" width="100%" height="500px" scrolling="no" style="overflow: hidden;"></iframe>
 
-<details markdown="1">
+<details>
 <summary>Interactive Power Triangle</summary>
-Type: microsim
-
-Bloom Level: Apply (L3)
-Bloom Verb: calculate
-
-Learning Objective: Students will calculate power quantities from the power triangle relationship and observe how power factor affects the relationship between P, Q, and S.
-
-Visual elements:
+<p>Type: microsim</p>
+<p>Bloom Level: Apply (L3)
+Bloom Verb: calculate</p>
+<p>Learning Objective: Students will calculate power quantities from the power triangle relationship and observe how power factor affects the relationship between P, Q, and S.</p>
+<p>Visual elements:
 - Power triangle with P, Q, S labeled
 - Phase angle θ shown with arc
 - Color coding: P (green), Q (red for inductive/blue for capacitive), S (purple)
 - Phasor diagram showing V and I relationship (linked)
-- Numerical values displayed on triangle sides
-
-Interactive controls:
+- Numerical values displayed on triangle sides</p>
+<p>Interactive controls:
 - Mode toggle: "Enter P and Q" vs "Enter S and θ"
 - Slider: P or S (depending on mode)
 - Slider: Q or θ (depending on mode)
 - Toggle: Inductive/Capacitive load
-- Display: All calculated values
-
-Calculations displayed:
+- Display: All calculated values</p>
+<p>Calculations displayed:
 - S = √(P² + Q²)
 - Power factor = P/S = cos(θ)
 - θ = tan⁻¹(Q/P)
-- Current = S/V (for given V)
-
-Visual feedback:
+- Current = S/V (for given V)</p>
+<p>Visual feedback:
 - Triangle reshapes with parameter changes
 - Q above horizontal for inductive (lagging)
-- Q below horizontal for capacitive (leading)
-
-Default parameters:
+- Q below horizontal for capacitive (leading)</p>
+<p>Default parameters:
 - P = 800W
 - Q = 600 VAR (inductive)
 - S = 1000 VA
-- PF = 0.8 lagging
-
-Canvas layout:
+- PF = 0.8 lagging</p>
+<p>Canvas layout:
 - Triangle display: 450 × 350 pixels
-- Control area: 100 pixels below
-
-Implementation: p5.js
+- Control area: 100 pixels below</p>
+<p>Implementation: p5.js</p>
 </details>
-
 <h2 id="power-factor-leading-and-lagging">Power Factor: Leading and Lagging</h2>
 <p><strong>Power factor</strong> (PF) is the cosine of the phase angle between voltage and current:</p>
 <div class="arithmatex">\[PF = \cos\theta = \frac{P}{S}\]</div>
@@ -2766,57 +2747,47 @@ New: <span class="arithmatex">\(\theta_2 = \cos^{-1}(0.95) = 18.19°\)</span>, <
 <h4 id="diagram-power-factor-correction-simulator">Diagram: Power Factor Correction Simulator</h4>
 <iframe src="../../sims/pf-correction/main.html" width="100%" height="550px" scrolling="no" style="overflow: hidden;"></iframe>
 
-<details markdown="1">
+<details>
 <summary>Power Factor Correction Simulator</summary>
-Type: microsim
-
-Bloom Level: Apply (L3)
-Bloom Verb: solve
-
-Learning Objective: Students will solve for the required capacitance to correct power factor and observe the resulting reduction in line current.
-
-Visual elements:
+<p>Type: microsim</p>
+<p>Bloom Level: Apply (L3)
+Bloom Verb: solve</p>
+<p>Learning Objective: Students will solve for the required capacitance to correct power factor and observe the resulting reduction in line current.</p>
+<p>Visual elements:
 - Circuit diagram showing load with parallel correction capacitor
 - Before/after power triangles side by side
 - Current phasor diagram showing reduction
 - Ammeter showing line current before and after
-- Savings calculation display
-
-Interactive controls:
+- Savings calculation display</p>
+<p>Interactive controls:
 - Slider: Real power P (1kW to 100kW)
 - Slider: Original power factor (0.5 to 0.95)
 - Slider: Target power factor (0.9 to 1.0)
 - Input: Supply voltage (120V, 240V, 480V options)
 - Input: Frequency (50Hz or 60Hz)
-- Button: Calculate correction
-
-Calculations displayed:
+- Button: Calculate correction</p>
+<p>Calculations displayed:
 - Q_old and Q_new
 - Required Q_C
 - Required capacitance C
 - Current reduction percentage
-- Power loss reduction (I²R savings)
-
-Visual feedback:
+- Power loss reduction (I²R savings)</p>
+<p>Visual feedback:
 - Power triangle shrinks vertically (Q reduction)
 - S vector shortens
 - Current magnitude decreases
-- "Savings: X% current reduction" highlighted
-
-Default parameters:
+- "Savings: X% current reduction" highlighted</p>
+<p>Default parameters:
 - P = 10 kW
 - PF_old = 0.7 lagging
 - PF_new = 0.95 lagging
-- V = 240V, f = 60Hz
-
-Canvas layout:
+- V = 240V, f = 60Hz</p>
+<p>Canvas layout:
 - Circuit/triangles: 450 × 400 pixels
 - Current display: 150 × 400 pixels
-- Control area: 100 pixels below
-
-Implementation: p5.js
+- Control area: 100 pixels below</p>
+<p>Implementation: p5.js</p>
 </details>
-
 <h2 id="power-in-circuit-elements">Power in Circuit Elements</h2>
 <p>Each passive component has a distinct power behavior:</p>
 <h3 id="power-in-resistors">Power in Resistors</h3>
@@ -2867,51 +2838,41 @@ Implementation: p5.js
 <h4 id="diagram-power-flow-in-r-l-c">Diagram: Power Flow in R, L, C</h4>
 <iframe src="../../sims/power-flow-rlc/main.html" width="100%" height="500px" scrolling="no" style="overflow: hidden;"></iframe>
 
-<details markdown="1">
+<details>
 <summary>Power Flow in R, L, C</summary>
-Type: microsim
-
-Bloom Level: Understand (L2)
-Bloom Verb: explain
-
-Learning Objective: Students will explain the difference in power behavior between resistors, capacitors, and inductors by observing energy flow patterns.
-
-Visual elements:
+<p>Type: microsim</p>
+<p>Bloom Level: Understand (L2)
+Bloom Verb: explain</p>
+<p>Learning Objective: Students will explain the difference in power behavior between resistors, capacitors, and inductors by observing energy flow patterns.</p>
+<p>Visual elements:
 - Three circuits side by side: Pure R, Pure C, Pure L
 - Each with animated energy flow arrows
 - Instantaneous power plots below each circuit
 - Energy storage indicators (E-field for C, B-field for L)
-- Heat dissipation indicator for R
-
-Interactive controls:
+- Heat dissipation indicator for R</p>
+<p>Interactive controls:
 - Slider: Frequency (affects L and C reactance)
 - Slider: Component value (R, L, or C)
 - Toggle: Animate energy flow
 - Toggle: Show all three or focus on one
-- Display: P and Q for each element
-
-Animation behavior:
+- Display: P and Q for each element</p>
+<p>Animation behavior:
 - R: Steady energy flow to heat
 - C: Energy pulses back and forth, average = 0
 - L: Energy pulses back and forth, average = 0
-- Arrows show energy direction, thickness shows magnitude
-
-Visual annotations:
+- Arrows show energy direction, thickness shows magnitude</p>
+<p>Visual annotations:
 - R: "Energy → Heat (P = I²R, Q = 0)"
-- C: "Energy ↔ E-field (P = 0, Q < 0)"
-- L: "Energy ↔ B-field (P = 0, Q > 0)"
-
-Default parameters:
+- C: "Energy ↔ E-field (P = 0, Q &lt; 0)"
+- L: "Energy ↔ B-field (P = 0, Q &gt; 0)"</p>
+<p>Default parameters:
 - ω = 1000 rad/s
-- Visible animation speed
-
-Canvas layout:
+- Visible animation speed</p>
+<p>Canvas layout:
 - Three-panel display: 600 × 350 pixels
-- Control area: 100 pixels below
-
-Implementation: p5.js
+- Control area: 100 pixels below</p>
+<p>Implementation: p5.js</p>
 </details>
-
 <h2 id="rms-power-calculations">RMS Power Calculations</h2>
 <p>Since AC power involves time-varying quantities, we use RMS values to simplify calculations:</p>
 <p><strong>For any load with impedance Z:</strong></p>

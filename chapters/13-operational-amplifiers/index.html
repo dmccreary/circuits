@@ -2765,51 +2765,41 @@ date: 2026-01-30</p>
 <h4 id="diagram-op-amp-golden-rules-visualizer">Diagram: Op-Amp Golden Rules Visualizer</h4>
 <iframe src="../../sims/opamp-golden-rules/main.html" width="100%" height="500px" scrolling="no" style="overflow: hidden;"></iframe>
 
-<details markdown="1">
+<details>
 <summary>Op-Amp Golden Rules Visualizer</summary>
-Type: microsim
-
-Bloom Level: Understand (L2)
-Bloom Verb: explain
-
-Learning Objective: Students will explain how the golden rules (virtual short, no input current) emerge from negative feedback by observing voltage and current values in an inverting amplifier.
-
-Visual elements:
+<p>Type: microsim</p>
+<p>Bloom Level: Understand (L2)
+Bloom Verb: explain</p>
+<p>Learning Objective: Students will explain how the golden rules (virtual short, no input current) emerge from negative feedback by observing voltage and current values in an inverting amplifier.</p>
+<p>Visual elements:
 - Inverting amplifier circuit with labeled nodes
 - Voltage values displayed at each node (V+, V−, Vout)
 - Current arrows showing direction and magnitude (zero into inputs)
 - "Virtual ground" label when V− ≈ 0
-- Input difference (V+ − V−) shown approaching zero
-
-Interactive controls:
+- Input difference (V+ − V−) shown approaching zero</p>
+<p>Interactive controls:
 - Slider: Input voltage Vin (-5V to +5V)
 - Slider: Rf/Ri ratio (1 to 100)
 - Toggle: Show ideal vs real op-amp (with finite gain)
-- Display: V+, V−, |V+ - V−|, input currents
-
-Step-through mode:
+- Display: V+, V−, |V+ - V−|, input currents</p>
+<p>Step-through mode:
 - Step 1: "Apply input voltage"
 - Step 2: "Feedback forces V− toward V+"
 - Step 3: "With V+ = 0, V− becomes virtual ground"
-- Step 4: "Output settles at -Vin × Rf/Ri"
-
-Annotations:
+- Step 4: "Output settles at -Vin × Rf/Ri"</p>
+<p>Annotations:
 - "V+ = V− (virtual short)"
 - "I+ = I− = 0 (no input current)"
-- "Virtual ground when V+ is grounded"
-
-Default parameters:
+- "Virtual ground when V+ is grounded"</p>
+<p>Default parameters:
 - Vin = 1V
 - Ri = 10kΩ, Rf = 100kΩ
-- Gain = -10
-
-Canvas layout:
+- Gain = -10</p>
+<p>Canvas layout:
 - Circuit diagram: 450 × 350 pixels
-- Control area: 100 pixels below
-
-Implementation: p5.js
+- Control area: 100 pixels below</p>
+<p>Implementation: p5.js</p>
 </details>
-
 <h2 id="fundamental-op-amp-configurations">Fundamental Op-Amp Configurations</h2>
 <h3 id="inverting-amplifier">Inverting Amplifier</h3>
 <p>The <strong>inverting amplifier</strong> is the most common op-amp configuration. Input connects through Ri to the inverting input; feedback resistor Rf connects from output to inverting input.</p>
@@ -2887,45 +2877,36 @@ Implementation: p5.js
 <h4 id="diagram-basic-op-amp-configurations">Diagram: Basic Op-Amp Configurations</h4>
 <iframe src="../../sims/opamp-configurations/main.html" width="100%" height="550px" scrolling="no" style="overflow: hidden;"></iframe>
 
-<details markdown="1">
+<details>
 <summary>Basic Op-Amp Configurations</summary>
-Type: microsim
-
-Bloom Level: Apply (L3)
-Bloom Verb: calculate
-
-Learning Objective: Students will calculate gain for inverting, non-inverting, and follower configurations by selecting resistor values.
-
-Visual elements:
+<p>Type: microsim</p>
+<p>Bloom Level: Apply (L3)
+Bloom Verb: calculate</p>
+<p>Learning Objective: Students will calculate gain for inverting, non-inverting, and follower configurations by selecting resistor values.</p>
+<p>Visual elements:
 - Three circuit diagrams side by side (inverting, non-inverting, follower)
 - Input and output waveforms for selected configuration
 - Gain calculation shown step-by-step
-- Phase relationship indicated
-
-Interactive controls:
+- Phase relationship indicated</p>
+<p>Interactive controls:
 - Radio buttons: Select configuration
 - Slider: Ri (1kΩ to 100kΩ)
 - Slider: Rf (1kΩ to 1MΩ)
 - Slider: Input voltage (sinusoidal amplitude)
-- Display: Calculated gain, input/output relationship
-
-For each configuration:
+- Display: Calculated gain, input/output relationship</p>
+<p>For each configuration:
 - Circuit schematic with component values
 - Gain formula with calculation
-- Output waveform with correct amplitude and phase
-
-Default parameters:
+- Output waveform with correct amplitude and phase</p>
+<p>Default parameters:
 - Inverting: Ri = 10kΩ, Rf = 100kΩ → Gain = -10
 - Non-inverting: Ri = 10kΩ, Rf = 90kΩ → Gain = +10
-- Follower: Gain = 1
-
-Canvas layout:
+- Follower: Gain = 1</p>
+<p>Canvas layout:
 - Circuit/waveform display: 600 × 400 pixels
-- Control area: 100 pixels below
-
-Implementation: p5.js
+- Control area: 100 pixels below</p>
+<p>Implementation: p5.js</p>
 </details>
-
 <h2 id="arithmetic-circuits">Arithmetic Circuits</h2>
 <h3 id="summing-amplifier">Summing Amplifier</h3>
 <p>The <strong>summing amplifier</strong> adds multiple input signals. Each input has its own input resistor connected to the virtual ground at V−.</p>

@@ -2976,45 +2976,35 @@
 <h4 id="diagram-resistor-physical-structure">Diagram: Resistor Physical Structure</h4>
 <iframe src="../../sims/resistor-physical-structure/main.html" width="100%" height="400px" scrolling="no"></iframe>
 
-<details markdown="1">
+<details>
 <summary>Resistor Physical Structure Diagram</summary>
-Type: diagram
-
-Purpose: Show the internal construction of a through-hole resistor
-
-Bloom Level: Remember (L1)
-Bloom Verb: identify
-
-Learning Objective: Students will identify the physical parts of a resistor and understand how construction affects performance.
-
-Components to show:
+<p>Type: diagram</p>
+<p>Purpose: Show the internal construction of a through-hole resistor</p>
+<p>Bloom Level: Remember (L1)
+Bloom Verb: identify</p>
+<p>Learning Objective: Students will identify the physical parts of a resistor and understand how construction affects performance.</p>
+<p>Components to show:
 - Ceramic or fiberglass core (cylindrical, center)
 - Resistive element layer (carbon or metal film wrapped around core)
 - End caps with leads (metal connections at each end)
 - Protective coating (outer epoxy layer)
-- Color bands (4-5 bands showing value encoding)
-
-Visual style: Cross-section cutaway view showing internal layers
-
-Labels:
+- Color bands (4-5 bands showing value encoding)</p>
+<p>Visual style: Cross-section cutaway view showing internal layers</p>
+<p>Labels:
 - "Ceramic Core" pointing to center
 - "Resistive Film" pointing to the wrapped layer
 - "End Caps" pointing to metal connections
 - "Color Bands" pointing to surface markings
-- "Leads" pointing to wire extensions
-
-Color scheme:
+- "Leads" pointing to wire extensions</p>
+<p>Color scheme:
 - Tan/beige for ceramic core
 - Dark gray for resistive film
 - Silver for end caps
-- Various colors for bands
-
-Interactive features:
-- Hover over each layer to see description and function
-
-Implementation: p5.js with layered drawing and hover detection
+- Various colors for bands</p>
+<p>Interactive features:
+- Hover over each layer to see description and function</p>
+<p>Implementation: p5.js with layered drawing and hover detection</p>
 </details>
-
 <h2 id="ohms-law-the-e-mc2-of-circuits">Ohm's Law: The E = mc² of Circuits</h2>
 <p>If physics has <span class="arithmatex">\(E = mc^2\)</span>, then electrical engineering has Ohm's Law. It's equally fundamental, considerably more practical for everyday use, and thankfully much easier to derive.</p>
 <p>Georg Simon Ohm discovered this relationship in 1827, and engineers have been grateful ever since. (Students taking their first circuits exam, perhaps less so.)</p>
@@ -3042,45 +3032,34 @@ Implementation: p5.js with layered drawing and hover detection
 <h4 id="diagram-ohms-law-triangle">Diagram: Ohm's Law Triangle</h4>
 <iframe src="../../sims/ohms-law-triangle/main.html" width="100%" height="350px" scrolling="no"></iframe>
 
-<details markdown="1">
+<details>
 <summary>Ohm's Law Triangle Interactive</summary>
-Type: microsim
-
-Purpose: Help students quickly recall all three forms of Ohm's Law
-
-Bloom Level: Remember (L1)
-Bloom Verb: recall
-
-Learning Objective: Students will recall all three forms of Ohm's Law and use the triangle as a mnemonic device.
-
-Instructional Rationale: The triangle mnemonic provides a visual memory aid. Clicking to "cover" variables reinforces the relationship between the three forms through active recall practice.
-
-Canvas layout:
+<p>Type: microsim</p>
+<p>Purpose: Help students quickly recall all three forms of Ohm's Law</p>
+<p>Bloom Level: Remember (L1)
+Bloom Verb: recall</p>
+<p>Learning Objective: Students will recall all three forms of Ohm's Law and use the triangle as a mnemonic device.</p>
+<p>Instructional Rationale: The triangle mnemonic provides a visual memory aid. Clicking to "cover" variables reinforces the relationship between the three forms through active recall practice.</p>
+<p>Canvas layout:
 - Drawing area: 400x250 for triangle visualization
-- Control area: 100px height for instructions
-
-Visual elements:
+- Control area: 100px height for instructions</p>
+<p>Visual elements:
 - Large triangle divided into top section (V) and bottom two sections (I and R)
 - V in top section
 - I and R in bottom sections, separated by multiplication symbol
-- Horizontal line separates V from I×R (represents division)
-
-Interactive controls:
+- Horizontal line separates V from I×R (represents division)</p>
+<p>Interactive controls:
 - Click on V: highlights V, shows formula V = I × R
 - Click on I: highlights I, shows formula I = V / R
 - Click on R: highlights R, shows formula R = V / I
-- Each click displays the corresponding formula prominently
-
-Default state: All three visible, no formula displayed
-
-Behavior:
+- Each click displays the corresponding formula prominently</p>
+<p>Default state: All three visible, no formula displayed</p>
+<p>Behavior:
 - Clicking a variable "covers" it visually (dims or hides)
 - The resulting formula appears below the triangle
-- Reset after 3 seconds or when another variable is clicked
-
-Implementation: p5.js with click detection on triangle regions
+- Reset after 3 seconds or when another variable is clicked</p>
+<p>Implementation: p5.js with click detection on triangle regions</p>
 </details>
-
 <h3 id="applying-ohms-law-a-simple-example">Applying Ohm's Law: A Simple Example</h3>
 <p>Let's put this to work immediately. Suppose you have a 9V battery connected to a 1000Ω (1kΩ) resistor. How much current flows?</p>
 <p>Using Ohm's Law:</p>
@@ -3089,49 +3068,38 @@ Implementation: p5.js with click detection on triangle regions
 <h4 id="diagram-ohms-law-calculator">Diagram: Ohm's Law Calculator</h4>
 <iframe src="../../sims/ohms-law-calculator/main.html" width="100%" height="450px" scrolling="no"></iframe>
 
-<details markdown="1">
+<details>
 <summary>Ohm's Law Calculator MicroSim</summary>
-Type: microsim
-
-Purpose: Allow students to experiment with different voltage and resistance values to see resulting current
-
-Bloom Level: Apply (L3)
-Bloom Verb: calculate
-
-Learning Objective: Students will apply Ohm's Law to calculate current, voltage, or resistance given the other two quantities.
-
-Instructional Rationale: Parameter exploration with immediate visual feedback helps students develop intuition for the relationships between V, I, and R. Seeing the formula update in real-time reinforces the mathematical relationship.
-
-Canvas layout:
+<p>Type: microsim</p>
+<p>Purpose: Allow students to experiment with different voltage and resistance values to see resulting current</p>
+<p>Bloom Level: Apply (L3)
+Bloom Verb: calculate</p>
+<p>Learning Objective: Students will apply Ohm's Law to calculate current, voltage, or resistance given the other two quantities.</p>
+<p>Instructional Rationale: Parameter exploration with immediate visual feedback helps students develop intuition for the relationships between V, I, and R. Seeing the formula update in real-time reinforces the mathematical relationship.</p>
+<p>Canvas layout:
 - Top section (300px): Circuit diagram with battery, resistor, and ammeter
 - Middle section (100px): Calculation display showing V = I × R with current values
-- Bottom section (100px): Slider controls
-
-Visual elements:
+- Bottom section (100px): Slider controls</p>
+<p>Visual elements:
 - Simple circuit schematic with battery (left), resistor (top), ammeter (right)
 - Animated current flow (small dots moving through circuit)
 - Digital displays showing V, I, and R values
-- Speed of animated dots proportional to current
-
-Interactive controls:
+- Speed of animated dots proportional to current</p>
+<p>Interactive controls:
 - Slider: Voltage (1V to 24V, default 9V)
 - Slider: Resistance (100Ω to 10kΩ, logarithmic scale, default 1kΩ)
-- Display: Calculated current with appropriate units (mA or A)
-
-Default parameters:
+- Display: Calculated current with appropriate units (mA or A)</p>
+<p>Default parameters:
 - Voltage: 9V
 - Resistance: 1000Ω
-- Initial state: Animation stopped
-
-Behavior:
+- Initial state: Animation stopped</p>
+<p>Behavior:
 - Current updates instantly as sliders change
 - Animation speed reflects relative current magnitude
 - Formula display shows actual calculation: "9V ÷ 1000Ω = 9mA"
-- Warning indicator if current exceeds 1A (getting into power territory)
-
-Implementation: p5.js with sliders and animated circuit visualization
+- Warning indicator if current exceeds 1A (getting into power territory)</p>
+<p>Implementation: p5.js with sliders and animated circuit visualization</p>
 </details>
-
 <h2 id="power-in-resistive-circuits">Power in Resistive Circuits</h2>
 <p>Current flowing through a resistor converts electrical energy into heat. The rate of this energy conversion is <strong>power</strong>, measured in watts (W). This matters because resistors have power ratings—exceed them, and you'll get a dramatic (and smoky) demonstration of why specifications exist.</p>
 <h4 id="power-equation">Power Equation</h4>
@@ -3287,52 +3255,41 @@ Implementation: p5.js with sliders and animated circuit visualization
 <h4 id="diagram-resistor-color-code-reader">Diagram: Resistor Color Code Reader</h4>
 <iframe src="../../sims/resistor-color-code/main.html" width="100%" height="500px" scrolling="no"></iframe>
 
-<details markdown="1">
+<details>
 <summary>Resistor Color Code Interactive</summary>
-Type: microsim
-
-Purpose: Teach students to read and decode resistor color bands
-
-Bloom Level: Apply (L3)
-Bloom Verb: use
-
-Learning Objective: Students will use the resistor color code to determine resistance values from band colors, and select appropriate band colors for a desired resistance.
-
-Instructional Rationale: Interactive practice with immediate feedback is more effective than memorization tables. The bidirectional nature (colors→value and value→colors) reinforces understanding.
-
-Canvas layout:
+<p>Type: microsim</p>
+<p>Purpose: Teach students to read and decode resistor color bands</p>
+<p>Bloom Level: Apply (L3)
+Bloom Verb: use</p>
+<p>Learning Objective: Students will use the resistor color code to determine resistance values from band colors, and select appropriate band colors for a desired resistance.</p>
+<p>Instructional Rationale: Interactive practice with immediate feedback is more effective than memorization tables. The bidirectional nature (colors→value and value→colors) reinforces understanding.</p>
+<p>Canvas layout:
 - Top section (200px): Large resistor image with selectable color bands
 - Middle section (100px): Decoded value display and calculation breakdown
-- Bottom section (150px): Color selection palette and mode toggle
-
-Visual elements:
+- Bottom section (150px): Color selection palette and mode toggle</p>
+<p>Visual elements:
 - Large horizontal resistor body (beige/tan)
 - Four or five clickable color band regions
 - Color palette showing all possible band colors
-- Formula breakdown: "X Y × 10^Z = Value"
-
-Interactive controls:
+- Formula breakdown: "X Y × 10^Z = Value"</p>
+<p>Interactive controls:
 - Click on band position to select it
 - Click on color in palette to apply to selected band
 - Toggle: 4-band vs 5-band mode
 - Display: Calculated resistance with tolerance range
 - Button: "Random" generates a random valid resistor for practice
-- Button: "Quiz Mode" hides the calculated value until user submits answer
-
-Default parameters:
+- Button: "Quiz Mode" hides the calculated value until user submits answer</p>
+<p>Default parameters:
 - 4-band mode
-- Brown-Black-Red-Gold (1kΩ ±5%)
-
-Behavior:
+- Brown-Black-Red-Gold (1kΩ ±5%)</p>
+<p>Behavior:
 - Clicking a band highlights it
 - Selecting a color updates that band
 - Resistance value updates in real-time
 - Invalid combinations (like gold as digit 1) are prevented
-- Shows tolerance range: "1kΩ ±5% (950Ω to 1050Ω)"
-
-Implementation: p5.js with click regions and color selection
+- Shows tolerance range: "1kΩ ±5% (950Ω to 1050Ω)"</p>
+<p>Implementation: p5.js with click regions and color selection</p>
 </details>
-
 <h3 id="resistor-tolerance">Resistor Tolerance</h3>
 <p>No resistor is perfect. Manufacturing processes introduce small variations, so a "1kΩ resistor" might actually measure 980Ω or 1015Ω. The <strong>tolerance</strong> specification tells you the expected range.</p>
 <p>A 1kΩ resistor with ±5% tolerance (gold band) will be somewhere between 950Ω and 1050Ω. For most applications, this is fine. For precision circuits (like measurement equipment or audio filters), you'll want ±1% (brown band) or better.</p>
@@ -3405,60 +3362,48 @@ Implementation: p5.js with click regions and color selection
 <h4 id="diagram-series-circuit-analysis">Diagram: Series Circuit Analysis</h4>
 <iframe src="../../sims/series-circuit/main.html" width="100%" height="500px" scrolling="no"></iframe>
 
-<details markdown="1">
+<details>
 <summary>Series Circuit MicroSim</summary>
-Type: microsim
-
-Purpose: Demonstrate current continuity and voltage division in series circuits
-
-Bloom Level: Understand (L2)
-Bloom Verb: explain
-
-Learning Objective: Students will explain how current remains constant throughout a series circuit while voltage divides across components proportionally to their resistance.
-
-Instructional Rationale: Step-through analysis with concrete values helps students trace current and voltage through each component, building understanding of series circuit behavior before abstract formula manipulation.
-
-Data Visibility Requirements:
+<p>Type: microsim</p>
+<p>Purpose: Demonstrate current continuity and voltage division in series circuits</p>
+<p>Bloom Level: Understand (L2)
+Bloom Verb: explain</p>
+<p>Learning Objective: Students will explain how current remains constant throughout a series circuit while voltage divides across components proportionally to their resistance.</p>
+<p>Instructional Rationale: Step-through analysis with concrete values helps students trace current and voltage through each component, building understanding of series circuit behavior before abstract formula manipulation.</p>
+<p>Data Visibility Requirements:
 - Stage 1: Show source voltage and resistor values
 - Stage 2: Show total resistance calculation
 - Stage 3: Show current calculation using Ohm's Law
 - Stage 4: Show voltage across each resistor
-- Stage 5: Verify KVL (voltages sum to source)
-
-Canvas layout:
+- Stage 5: Verify KVL (voltages sum to source)</p>
+<p>Canvas layout:
 - Left section (400px): Circuit schematic with three series resistors
-- Right section (200px): Calculation panel showing values
-
-Visual elements:
+- Right section (200px): Calculation panel showing values</p>
+<p>Visual elements:
 - Battery/voltage source at left
 - Three resistors in series loop (R1, R2, R3)
 - Animated current flow (dots moving through circuit)
 - Voltage labels across each component
-- Ammeter symbol showing current value
-
-Interactive controls:
+- Ammeter symbol showing current value</p>
+<p>Interactive controls:
 - Slider: Source voltage (1V to 20V, default 12V)
 - Slider: R1 value (100Ω to 2kΩ, default 1kΩ)
 - Slider: R2 value (100Ω to 2kΩ, default 2kΩ)
 - Slider: R3 value (100Ω to 2kΩ, default 1kΩ)
 - Button: Step through analysis
-- Checkbox: Show current animation
-
-Default parameters:
+- Checkbox: Show current animation</p>
+<p>Default parameters:
 - Vs = 12V
 - R1 = 1kΩ, R2 = 2kΩ, R3 = 1kΩ
-- Animation off initially
-
-Behavior:
+- Animation off initially</p>
+<p>Behavior:
 - Total resistance updates: R_total = R1 + R2 + R3
 - Current calculates: I = Vs / R_total
 - Individual voltages calculate: V1 = I×R1, V2 = I×R2, V3 = I×R3
 - KVL verification shows V1 + V2 + V3 = Vs
-- Animation speed proportional to current magnitude
-
-Implementation: p5.js with animated circuit and step-through controls
+- Animation speed proportional to current magnitude</p>
+<p>Implementation: p5.js with animated circuit and step-through controls</p>
 </details>
-
 <h2 id="parallel-circuits-multiple-paths">Parallel Circuits: Multiple Paths</h2>
 <p>When components connect across the same two nodes, sharing the same voltage, they're in <strong>parallel</strong>. Think of parallel lanes on a highway: traffic (current) divides among them, but they all connect the same two points.</p>
 <p>Key properties of parallel circuits:</p>
@@ -3482,59 +3427,47 @@ Implementation: p5.js with animated circuit and step-through controls
 <h4 id="diagram-parallel-circuit-analysis">Diagram: Parallel Circuit Analysis</h4>
 <iframe src="../../sims/parallel-circuit/main.html" width="100%" height="500px" scrolling="no"></iframe>
 
-<details markdown="1">
+<details>
 <summary>Parallel Circuit MicroSim</summary>
-Type: microsim
-
-Purpose: Demonstrate voltage equality and current division in parallel circuits
-
-Bloom Level: Understand (L2)
-Bloom Verb: explain
-
-Learning Objective: Students will explain how voltage remains equal across all branches of a parallel circuit while current divides inversely proportional to resistance.
-
-Instructional Rationale: Visualization of current splitting at nodes helps students understand why more current flows through lower resistance paths, connecting to physical intuition about "easier paths."
-
-Data Visibility Requirements:
+<p>Type: microsim</p>
+<p>Purpose: Demonstrate voltage equality and current division in parallel circuits</p>
+<p>Bloom Level: Understand (L2)
+Bloom Verb: explain</p>
+<p>Learning Objective: Students will explain how voltage remains equal across all branches of a parallel circuit while current divides inversely proportional to resistance.</p>
+<p>Instructional Rationale: Visualization of current splitting at nodes helps students understand why more current flows through lower resistance paths, connecting to physical intuition about "easier paths."</p>
+<p>Data Visibility Requirements:
 - Stage 1: Show source voltage and resistor values
 - Stage 2: Show each branch current calculation
 - Stage 3: Show total current (sum of branches)
 - Stage 4: Show equivalent resistance calculation
-- Stage 5: Verify total current = Vs / R_eq
-
-Canvas layout:
+- Stage 5: Verify total current = Vs / R_eq</p>
+<p>Canvas layout:
 - Left section (400px): Circuit schematic with three parallel resistors
-- Right section (200px): Calculation panel
-
-Visual elements:
+- Right section (200px): Calculation panel</p>
+<p>Visual elements:
 - Battery/voltage source on left
 - Three parallel resistor branches
 - Animated current flow showing branching at nodes
 - Current labels on each branch
-- Common voltage labeled across each resistor
-
-Interactive controls:
+- Common voltage labeled across each resistor</p>
+<p>Interactive controls:
 - Slider: Source voltage (1V to 20V, default 12V)
 - Slider: R1 value (500Ω to 5kΩ, default 1kΩ)
 - Slider: R2 value (500Ω to 5kΩ, default 2kΩ)
 - Slider: R3 value (500Ω to 5kΩ, default 3kΩ)
 - Checkbox: Show current animation
-- Display: Equivalent resistance
-
-Default parameters:
+- Display: Equivalent resistance</p>
+<p>Default parameters:
 - Vs = 12V
-- R1 = 1kΩ, R2 = 2kΩ, R3 = 3kΩ
-
-Behavior:
+- R1 = 1kΩ, R2 = 2kΩ, R3 = 3kΩ</p>
+<p>Behavior:
 - Branch currents: I1 = Vs/R1, I2 = Vs/R2, I3 = Vs/R3
 - Total current: I_total = I1 + I2 + I3
 - Equivalent resistance calculated and displayed
 - Animation shows current splitting proportionally at nodes
-- Thicker animated paths for higher current branches
-
-Implementation: p5.js with branching current animation
+- Thicker animated paths for higher current branches</p>
+<p>Implementation: p5.js with branching current animation</p>
 </details>
-
 <h2 id="series-parallel-circuits-the-real-world">Series-Parallel Circuits: The Real World</h2>
 <p>Most practical circuits aren't purely series or purely parallel—they're combinations. Analyzing these <strong>series-parallel circuits</strong> requires breaking them down systematically.</p>
 <p>The strategy:</p>
@@ -3548,62 +3481,50 @@ Implementation: p5.js with branching current animation
 <h4 id="diagram-series-parallel-analysis">Diagram: Series-Parallel Analysis</h4>
 <iframe src="../../sims/series-parallel-circuit/main.html" width="100%" height="550px" scrolling="no"></iframe>
 
-<details markdown="1">
+<details>
 <summary>Series-Parallel Circuit Analysis MicroSim</summary>
-Type: microsim
-
-Purpose: Guide students through systematic analysis of combined series-parallel circuits
-
-Bloom Level: Analyze (L4)
-Bloom Verb: examine
-
-Learning Objective: Students will analyze series-parallel circuits by systematically identifying and reducing series and parallel combinations to find equivalent resistance.
-
-Instructional Rationale: Step-by-step reduction with visual circuit transformation shows students the process of simplification. Each step maintains circuit equivalence while reducing complexity.
-
-Data Visibility Requirements:
+<p>Type: microsim</p>
+<p>Purpose: Guide students through systematic analysis of combined series-parallel circuits</p>
+<p>Bloom Level: Analyze (L4)
+Bloom Verb: examine</p>
+<p>Learning Objective: Students will analyze series-parallel circuits by systematically identifying and reducing series and parallel combinations to find equivalent resistance.</p>
+<p>Instructional Rationale: Step-by-step reduction with visual circuit transformation shows students the process of simplification. Each step maintains circuit equivalence while reducing complexity.</p>
+<p>Data Visibility Requirements:
 - Stage 1: Original circuit with all resistor values
 - Stage 2: Identify first reducible group (highlight)
 - Stage 3: Show calculation for that group
 - Stage 4: Redraw circuit with equivalent resistor
 - Stage 5-N: Repeat until single equivalent
-- Final: Calculate total current, then work backward for individual values
-
-Canvas layout:
+- Final: Calculate total current, then work backward for individual values</p>
+<p>Canvas layout:
 - Main area (500px): Circuit diagram that transforms at each step
 - Side panel (150px): Step-by-step calculation log
-- Bottom (80px): Navigation controls
-
-Visual elements:
+- Bottom (80px): Navigation controls</p>
+<p>Visual elements:
 - Circuit with R1 in series with parallel combination of (R2 || R3)
 - Additional R4 in series after the parallel section
 - Highlighting to show current reduction step
-- Intermediate equivalent resistor replaces reduced section
-
-Interactive controls:
+- Intermediate equivalent resistor replaces reduced section</p>
+<p>Interactive controls:
 - Button: "Next Step" advances the reduction
 - Button: "Previous Step" goes back
 - Button: "Reset" returns to original circuit
 - Slider: Each resistor value adjustable
-- Display: Running calculation log
-
-Default circuit:
+- Display: Running calculation log</p>
+<p>Default circuit:
 - Vs = 24V
 - R1 = 2kΩ (in series)
 - R2 = 6kΩ, R3 = 3kΩ (in parallel with each other)
-- R4 = 1kΩ (in series)
-
-Solution steps:
+- R4 = 1kΩ (in series)</p>
+<p>Solution steps:
 1. Identify R2 || R3 parallel combination
 2. Calculate: R23 = (6k × 3k)/(6k + 3k) = 2kΩ
 3. Redraw with R23 replacing R2,R3
 4. Add series resistances: R_total = 2k + 2k + 1k = 5kΩ
 5. Total current: I = 24V / 5kΩ = 4.8mA
-6. Work backward for individual voltages
-
-Implementation: p5.js with step-based circuit redrawing
+6. Work backward for individual voltages</p>
+<p>Implementation: p5.js with step-based circuit redrawing</p>
 </details>
-
 <h2 id="the-voltage-divider-a-circuit-youll-build-a-thousand-times">The Voltage Divider: A Circuit You'll Build a Thousand Times</h2>
 <p>Take two resistors in series, connect them to a voltage source, and tap the middle point. Congratulations—you've built a <strong>voltage divider</strong>, one of the most useful circuits in electronics.</p>
 <p>The voltage at the middle point is a fraction of the source voltage, determined by the resistance ratio.</p>
@@ -3630,53 +3551,42 @@ Implementation: p5.js with step-based circuit redrawing
 <h4 id="diagram-voltage-divider-calculator">Diagram: Voltage Divider Calculator</h4>
 <iframe src="../../sims/voltage-divider/main.html" width="100%" height="450px" scrolling="no"></iframe>
 
-<details markdown="1">
+<details>
 <summary>Voltage Divider MicroSim</summary>
-Type: microsim
-
-Purpose: Allow students to design voltage dividers for specific output voltages
-
-Bloom Level: Apply (L3)
-Bloom Verb: implement
-
-Learning Objective: Students will implement voltage divider circuits to produce specific output voltages and understand the effect of resistor ratio on output.
-
-Instructional Rationale: Bidirectional interaction (adjust resistors to see output, or specify output to see required resistors) builds deeper understanding than one-way calculation.
-
-Canvas layout:
+<p>Type: microsim</p>
+<p>Purpose: Allow students to design voltage dividers for specific output voltages</p>
+<p>Bloom Level: Apply (L3)
+Bloom Verb: implement</p>
+<p>Learning Objective: Students will implement voltage divider circuits to produce specific output voltages and understand the effect of resistor ratio on output.</p>
+<p>Instructional Rationale: Bidirectional interaction (adjust resistors to see output, or specify output to see required resistors) builds deeper understanding than one-way calculation.</p>
+<p>Canvas layout:
 - Left (350px): Circuit schematic
-- Right (250px): Calculator interface
-
-Visual elements:
+- Right (250px): Calculator interface</p>
+<p>Visual elements:
 - Voltage source connected to series R1-R2
 - Output tap between R1 and R2 (to ground)
 - Voltage labels at input and output
-- Visual representation of voltage "dropping" across R1
-
-Interactive controls:
+- Visual representation of voltage "dropping" across R1</p>
+<p>Interactive controls:
 - Slider: Input voltage (1V to 24V, default 12V)
 - Slider: R1 value (100Ω to 100kΩ, log scale)
 - Slider: R2 value (100Ω to 100kΩ, log scale)
 - Display: Output voltage calculated
 - Display: Ratio R2/(R1+R2) as percentage
 - Mode toggle: "Find Vout" vs "Find R2 for target Vout"
-- Target Vout slider (active in second mode)
-
-Default parameters:
+- Target Vout slider (active in second mode)</p>
+<p>Default parameters:
 - Vin = 12V
 - R1 = 10kΩ
 - R2 = 10kΩ
-- Vout = 6V (calculated)
-
-Behavior:
+- Vout = 6V (calculated)</p>
+<p>Behavior:
 - Real-time Vout calculation as sliders move
 - In "Find R2" mode, calculates required R2 for target Vout given Vin and R1
-- Warning if required R2 is impractical (<10Ω or >10MΩ)
-- Shows loading effect warning if connected load resistance mentioned
-
-Implementation: p5.js with dual-mode calculator
+- Warning if required R2 is impractical (&lt;10Ω or &gt;10MΩ)
+- Shows loading effect warning if connected load resistance mentioned</p>
+<p>Implementation: p5.js with dual-mode calculator</p>
 </details>
-
 <h3 id="voltage-divider-loading-effect">Voltage Divider Loading Effect</h3>
 <p>Here's a trap that catches beginners: voltage dividers work perfectly when nothing is connected to the output. Connect a load (which has its own resistance), and the output voltage drops.</p>
 <p>The load resistance appears in parallel with R2, reducing the effective lower resistance. For a voltage divider to work well, the load resistance must be much larger than R2—typically 10× larger or more.</p>
@@ -3724,50 +3634,39 @@ In a current divider, current through a branch increases when the <em>other</em>
 <h4 id="diagram-linear-vs-nonlinear-behavior">Diagram: Linear vs Nonlinear Behavior</h4>
 <iframe src="../../sims/linear-vs-nonlinear/main.html" width="100%" height="400px" scrolling="no"></iframe>
 
-<details markdown="1">
+<details>
 <summary>Linear vs Nonlinear I-V Characteristics</summary>
-Type: chart
-
-Purpose: Contrast linear (resistor) and nonlinear (diode) current-voltage relationships
-
-Bloom Level: Understand (L2)
-Bloom Verb: compare
-
-Learning Objective: Students will compare the linear I-V characteristic of a resistor with the nonlinear characteristic of a diode to understand why linearity simplifies analysis.
-
-Chart type: Line chart with two curves
-
-X-axis: Voltage (-2V to +2V)
-Y-axis: Current (-20mA to +20mA)
-
-Data series:
+<p>Type: chart</p>
+<p>Purpose: Contrast linear (resistor) and nonlinear (diode) current-voltage relationships</p>
+<p>Bloom Level: Understand (L2)
+Bloom Verb: compare</p>
+<p>Learning Objective: Students will compare the linear I-V characteristic of a resistor with the nonlinear characteristic of a diode to understand why linearity simplifies analysis.</p>
+<p>Chart type: Line chart with two curves</p>
+<p>X-axis: Voltage (-2V to +2V)
+Y-axis: Current (-20mA to +20mA)</p>
+<p>Data series:
 1. Resistor (R = 100Ω): Straight line through origin, slope = 1/R
-   - Points: (-2V, -20mA), (-1V, -10mA), (0V, 0mA), (1V, 10mA), (2V, 20mA)
-
-2. Diode (ideal exponential): Curved line showing exponential behavior
-   - Minimal current for negative voltage
-   - Sharp rise above ~0.6V
-   - Points follow I = Is(e^(V/Vt) - 1) approximation
-
-Title: "I-V Characteristics: Resistor vs Diode"
-
-Annotations:
+   - Points: (-2V, -20mA), (-1V, -10mA), (0V, 0mA), (1V, 10mA), (2V, 20mA)</p>
+<ol>
+<li>Diode (ideal exponential): Curved line showing exponential behavior</li>
+<li>Minimal current for negative voltage</li>
+<li>Sharp rise above ~0.6V</li>
+<li>Points follow I = Is(e^(V/Vt) - 1) approximation</li>
+</ol>
+<p>Title: "I-V Characteristics: Resistor vs Diode"</p>
+<p>Annotations:
 - Label on resistor line: "Linear: I = V/R"
 - Label on diode curve: "Nonlinear: exponential relationship"
-- Highlight the 0.6V "knee" of the diode curve
-
-Interactive features:
+- Highlight the 0.6V "knee" of the diode curve</p>
+<p>Interactive features:
 - Slider to change resistor value and see slope change
 - Toggle to show/hide diode curve
-- Hover to see exact values
-
-Color scheme:
+- Hover to see exact values</p>
+<p>Color scheme:
 - Blue for resistor (linear)
-- Orange for diode (nonlinear)
-
-Implementation: p5.js or Chart.js with interactive elements
+- Orange for diode (nonlinear)</p>
+<p>Implementation: p5.js or Chart.js with interactive elements</p>
 </details>
-
 <h2 id="potentiometers-variable-resistance">Potentiometers: Variable Resistance</h2>
 <p>A <strong>potentiometer</strong> (or "pot") is a three-terminal resistor with an adjustable center tap. Turn the knob (or slide the lever), and you change the resistance ratio—and therefore the voltage at the wiper terminal.</p>
 <p>Potentiometers are essentially adjustable voltage dividers. They're used for:</p>
@@ -3787,54 +3686,43 @@ Implementation: p5.js or Chart.js with interactive elements
 <h4 id="diagram-potentiometer-as-voltage-divider">Diagram: Potentiometer as Voltage Divider</h4>
 <iframe src="../../sims/potentiometer/main.html" width="100%" height="400px" scrolling="no"></iframe>
 
-<details markdown="1">
+<details>
 <summary>Potentiometer MicroSim</summary>
-Type: microsim
-
-Purpose: Demonstrate how potentiometer position creates a variable voltage divider
-
-Bloom Level: Apply (L3)
-Bloom Verb: demonstrate
-
-Learning Objective: Students will demonstrate how adjusting a potentiometer changes the voltage divider ratio and output voltage.
-
-Instructional Rationale: Direct manipulation of a virtual potentiometer with immediate voltage feedback builds intuition for this common component.
-
-Canvas layout:
+<p>Type: microsim</p>
+<p>Purpose: Demonstrate how potentiometer position creates a variable voltage divider</p>
+<p>Bloom Level: Apply (L3)
+Bloom Verb: demonstrate</p>
+<p>Learning Objective: Students will demonstrate how adjusting a potentiometer changes the voltage divider ratio and output voltage.</p>
+<p>Instructional Rationale: Direct manipulation of a virtual potentiometer with immediate voltage feedback builds intuition for this common component.</p>
+<p>Canvas layout:
 - Left (300px): Physical potentiometer representation with rotating knob
-- Right (300px): Equivalent circuit schematic showing variable R1 and R2
-
-Visual elements:
+- Right (300px): Equivalent circuit schematic showing variable R1 and R2</p>
+<p>Visual elements:
 - Circular potentiometer body with knob indicator
 - Three terminals labeled
 - Equivalent circuit showing two resistors with moving tap
 - Output voltage display
-- Resistance values for "upper" and "lower" portions
-
-Interactive controls:
+- Resistance values for "upper" and "lower" portions</p>
+<p>Interactive controls:
 - Draggable knob (0° to 300° rotation)
 - Slider alternative for precise control
 - Display: Position as percentage (0% to 100%)
 - Display: Upper resistance, lower resistance, output voltage
 - Input voltage slider (1V to 12V)
-- Total potentiometer value selector (1kΩ, 10kΩ, 100kΩ)
-
-Default parameters:
+- Total potentiometer value selector (1kΩ, 10kΩ, 100kΩ)</p>
+<p>Default parameters:
 - Total resistance: 10kΩ
 - Position: 50%
 - Input voltage: 5V
-- Output: 2.5V
-
-Behavior:
+- Output: 2.5V</p>
+<p>Behavior:
 - Knob rotation changes position percentage
 - Upper R = Total × (1 - position)
 - Lower R = Total × position
 - Output voltage = Vin × position (for unloaded divider)
-- Real-time update of all values
-
-Implementation: p5.js with rotational input and circuit visualization
+- Real-time update of all values</p>
+<p>Implementation: p5.js with rotational input and circuit visualization</p>
 </details>
-
 <h2 id="wire-resistance-the-overlooked-reality">Wire Resistance: The Overlooked Reality</h2>
 <p>In ideal circuit analysis, we assume wires have zero resistance. In reality, every wire has some resistance, determined by:</p>
 <h4 id="wire-resistance-formula">Wire Resistance Formula</h4>

@@ -3069,51 +3069,40 @@
 <h4 id="diagram-time-constant-visualization">Diagram: Time Constant Visualization</h4>
 <iframe src="../../sims/time-constant/main.html" width="100%" height="450px" scrolling="no"></iframe>
 
-<details markdown="1">
+<details>
 <summary>Time Constant Visualization MicroSim</summary>
-Type: microsim
-
-Purpose: Demonstrate how the time constant affects the speed of transient response
-
-Bloom Level: Understand (L2)
-Bloom Verb: explain
-
-Learning Objective: Students will explain how changing R and C (or L and R) affects the circuit's response speed and relate the time constant to the percentage completion at different times.
-
-Instructional Rationale: Interactive adjustment of R and C with real-time waveform updates builds intuition for how component values control response speed.
-
-Canvas layout:
+<p>Type: microsim</p>
+<p>Purpose: Demonstrate how the time constant affects the speed of transient response</p>
+<p>Bloom Level: Understand (L2)
+Bloom Verb: explain</p>
+<p>Learning Objective: Students will explain how changing R and C (or L and R) affects the circuit's response speed and relate the time constant to the percentage completion at different times.</p>
+<p>Instructional Rationale: Interactive adjustment of R and C with real-time waveform updates builds intuition for how component values control response speed.</p>
+<p>Canvas layout:
 - Left (400px): Exponential response curve with time markers
-- Right (200px): Component value controls and calculations
-
-Visual elements:
+- Right (200px): Component value controls and calculations</p>
+<p>Visual elements:
 - Exponential curve rising from 0 to final value
 - Vertical dashed lines at τ, 2τ, 3τ, 4τ, 5τ
 - Horizontal lines at 63.2%, 86.5%, 95%, 98.2%, 99.3%
 - Current time marker that can be dragged
-- Percent complete display
-
-Interactive controls:
+- Percent complete display</p>
+<p>Interactive controls:
 - Slider: Resistance (100Ω to 100kΩ)
 - Slider: Capacitance (1µF to 1000µF)
 - Display: Calculated τ value
 - Display: Settling time (5τ)
-- Draggable time marker shows instantaneous value
-
-Default parameters:
+- Draggable time marker shows instantaneous value</p>
+<p>Default parameters:
 - R = 1kΩ, C = 100µF
 - τ = 100ms
-- 5τ = 500ms
-
-Behavior:
+- 5τ = 500ms</p>
+<p>Behavior:
 - Changing R or C recalculates τ and rescales time axis
 - Curve shape stays the same, time scale changes
 - Dragging marker shows value and % complete at that time
-- Highlights the "shape is constant, scale changes" insight
-
-Implementation: p5.js with interactive curve and markers
+- Highlights the "shape is constant, scale changes" insight</p>
+<p>Implementation: p5.js with interactive curve and markers</p>
 </details>
-
 <h2 id="rc-charging-building-up-the-electric-field">RC Charging: Building Up the Electric Field</h2>
 <p>When you connect a capacitor to a voltage source through a resistor, the capacitor charges exponentially.</p>
 <h3 id="the-setup">The Setup</h3>
@@ -3148,59 +3137,47 @@ Implementation: p5.js with interactive curve and markers
 <h4 id="diagram-rc-charging-circuit">Diagram: RC Charging Circuit</h4>
 <iframe src="../../sims/rc-charging/main.html" width="100%" height="500px" scrolling="no"></iframe>
 
-<details markdown="1">
+<details>
 <summary>RC Charging MicroSim</summary>
-Type: microsim
-
-Purpose: Visualize RC charging with simultaneous voltage and current waveforms
-
-Bloom Level: Understand (L2)
-Bloom Verb: explain
-
-Learning Objective: Students will explain the complementary relationship between capacitor voltage (rising) and circuit current (falling) during charging, and relate both to the time constant.
-
-Instructional Rationale: Animated charge flow synchronized with voltage/current graphs connects the abstract exponential math to physical electron movement.
-
-Data Visibility Requirements:
+<p>Type: microsim</p>
+<p>Purpose: Visualize RC charging with simultaneous voltage and current waveforms</p>
+<p>Bloom Level: Understand (L2)
+Bloom Verb: explain</p>
+<p>Learning Objective: Students will explain the complementary relationship between capacitor voltage (rising) and circuit current (falling) during charging, and relate both to the time constant.</p>
+<p>Instructional Rationale: Animated charge flow synchronized with voltage/current graphs connects the abstract exponential math to physical electron movement.</p>
+<p>Data Visibility Requirements:
 - Stage 1: Show circuit with switch open, initial conditions
 - Stage 2: Close switch, show initial current surge
 - Stage 3: Display voltage rising, current falling exponentially
 - Stage 4: Mark τ points on both curves
-- Stage 5: Show final steady state (V=Vs, I=0)
-
-Canvas layout:
+- Stage 5: Show final steady state (V=Vs, I=0)</p>
+<p>Canvas layout:
 - Top (250px): Circuit schematic with animated current flow
-- Bottom (250px): Dual graphs (Vc and I vs time)
-
-Visual elements:
+- Bottom (250px): Dual graphs (Vc and I vs time)</p>
+<p>Visual elements:
 - Battery, switch, resistor, capacitor in loop
 - Animated electrons flowing (speed proportional to current)
 - Capacitor with charge level indicator
 - Two synchronized graphs: Vc rising, I falling
-- Time markers at τ intervals
-
-Interactive controls:
+- Time markers at τ intervals</p>
+<p>Interactive controls:
 - Slider: Source voltage (1V to 20V)
 - Slider: Resistance (1kΩ to 100kΩ)
 - Slider: Capacitance (1µF to 100µF)
 - Button: "Close Switch" starts animation
 - Button: "Reset" returns to initial state
-- Display: τ, I_initial, current values
-
-Default parameters:
+- Display: τ, I_initial, current values</p>
+<p>Default parameters:
 - Vs = 10V, R = 10kΩ, C = 10µF
-- τ = 100ms
-
-Behavior:
+- τ = 100ms</p>
+<p>Behavior:
 - Switch closure triggers animation
 - Electron animation slows as current decreases
 - Graphs build in real-time
 - Pausing shows instantaneous values
-- Can restart with different parameters
-
-Implementation: p5.js with particle animation and synchronized graphing
+- Can restart with different parameters</p>
+<p>Implementation: p5.js with particle animation and synchronized graphing</p>
 </details>
-
 <h2 id="rc-discharging-releasing-the-energy">RC Discharging: Releasing the Energy</h2>
 <p>Now consider a charged capacitor (initial voltage <span class="arithmatex">\(V_0\)</span>) connected across a resistor. The capacitor discharges through the resistor.</p>
 <p><strong>Initial condition</strong>: <span class="arithmatex">\(V_C(0) = V_0\)</span> (capacitor starts charged)</p>
@@ -3229,48 +3206,38 @@ Implementation: p5.js with particle animation and synchronized graphing
 <h4 id="diagram-rc-discharging">Diagram: RC Discharging</h4>
 <iframe src="../../sims/rc-discharging/main.html" width="100%" height="450px" scrolling="no"></iframe>
 
-<details markdown="1">
+<details>
 <summary>RC Discharging MicroSim</summary>
-Type: microsim
-
-Purpose: Visualize RC discharge and energy dissipation
-
-Bloom Level: Apply (L3)
-Bloom Verb: calculate
-
-Learning Objective: Students will calculate the voltage at any time during discharge and determine how long it takes to reach a specified voltage level.
-
-Canvas layout:
+<p>Type: microsim</p>
+<p>Purpose: Visualize RC discharge and energy dissipation</p>
+<p>Bloom Level: Apply (L3)
+Bloom Verb: calculate</p>
+<p>Learning Objective: Students will calculate the voltage at any time during discharge and determine how long it takes to reach a specified voltage level.</p>
+<p>Canvas layout:
 - Top: Circuit with discharging capacitor
-- Bottom: Voltage decay curve with energy calculation
-
-Visual elements:
+- Bottom: Voltage decay curve with energy calculation</p>
+<p>Visual elements:
 - Capacitor with decreasing charge indicator
 - Resistor with heat glow (intensity = power)
 - Exponential decay curve
-- Energy remaining vs energy dissipated bar chart
-
-Interactive controls:
+- Energy remaining vs energy dissipated bar chart</p>
+<p>Interactive controls:
 - Slider: Initial voltage (1V to 20V)
 - Slider: Resistance (1kΩ to 100kΩ)
 - Slider: Capacitance (1µF to 100µF)
 - Button: "Start Discharge"
 - Input: Target voltage, calculates time to reach
-- Display: Current V, I, E_remaining, E_dissipated
-
-Default parameters:
+- Display: Current V, I, E_remaining, E_dissipated</p>
+<p>Default parameters:
 - V0 = 10V, R = 10kΩ, C = 10µF
-- τ = 100ms
-
-Behavior:
+- τ = 100ms</p>
+<p>Behavior:
 - Real-time discharge animation
 - Heat glow on resistor fades as current decreases
 - Energy bar chart shows transfer from C to R (heat)
-- Can input target voltage and get time
-
-Implementation: p5.js with energy visualization
+- Can input target voltage and get time</p>
+<p>Implementation: p5.js with energy visualization</p>
 </details>
-
 <h2 id="the-universal-form-step-response">The Universal Form: Step Response</h2>
 <p>Both charging and discharging (and indeed all first-order transients) follow a universal pattern. The <strong>step response</strong> describes how any first-order circuit responds to a sudden change in input.</p>
 <h4 id="general-step-response-formula">General Step Response Formula</h4>
@@ -3362,50 +3329,39 @@ Implementation: p5.js with energy visualization
 <h4 id="diagram-rl-circuit-response">Diagram: RL Circuit Response</h4>
 <iframe src="../../sims/rl-charging/main.html" width="100%" height="500px" scrolling="no"></iframe>
 
-<details markdown="1">
+<details>
 <summary>RL Circuit Response MicroSim</summary>
-Type: microsim
-
-Purpose: Compare RL energizing and de-energizing transients
-
-Bloom Level: Understand (L2)
-Bloom Verb: compare
-
-Learning Objective: Students will compare RL and RC circuit behavior, recognizing that RL current behaves like RC voltage (and vice versa).
-
-Instructional Rationale: Side-by-side RL and RC comparison highlights the duality between the circuit types.
-
-Canvas layout:
+<p>Type: microsim</p>
+<p>Purpose: Compare RL energizing and de-energizing transients</p>
+<p>Bloom Level: Understand (L2)
+Bloom Verb: compare</p>
+<p>Learning Objective: Students will compare RL and RC circuit behavior, recognizing that RL current behaves like RC voltage (and vice versa).</p>
+<p>Instructional Rationale: Side-by-side RL and RC comparison highlights the duality between the circuit types.</p>
+<p>Canvas layout:
 - Top (250px): RL circuit with magnetic field visualization
-- Bottom (250px): Current and voltage waveforms
-
-Visual elements:
+- Bottom (250px): Current and voltage waveforms</p>
+<p>Visual elements:
 - Inductor with animated magnetic field lines
 - Field intensity proportional to current
 - Dual graphs: IL and VL vs time
-- Flyback diode option for de-energizing
-
-Interactive controls:
+- Flyback diode option for de-energizing</p>
+<p>Interactive controls:
 - Slider: Source voltage (1V to 20V)
 - Slider: Resistance (10Ω to 1kΩ)
 - Slider: Inductance (1mH to 100mH)
 - Button: "Energize" / "De-energize"
 - Toggle: Include flyback diode
-- Display: τ, I_final, current values
-
-Default parameters:
+- Display: τ, I_final, current values</p>
+<p>Default parameters:
 - Vs = 12V, R = 100Ω, L = 10mH
-- τ = 100µs
-
-Behavior:
+- τ = 100µs</p>
+<p>Behavior:
 - Magnetic field animation strengthens with current
 - Energizing: current rises, voltage falls
 - De-energizing: current falls, shows voltage spike without diode
-- With flyback diode, spike is clamped
-
-Implementation: p5.js with magnetic field visualization
+- With flyback diode, spike is clamped</p>
+<p>Implementation: p5.js with magnetic field visualization</p>
 </details>
-
 <h2 id="initial-and-final-conditions-the-key-to-every-problem">Initial and Final Conditions: The Key to Every Problem</h2>
 <p>The secret to transient analysis is finding the <strong>initial conditions</strong> (values at <span class="arithmatex">\(t = 0^+\)</span>) and <strong>final conditions</strong> (values at <span class="arithmatex">\(t = \infty\)</span>). Once you have these, the exponential formula does the rest.</p>
 <h3 id="finding-initial-conditions-t-0">Finding Initial Conditions (<span class="arithmatex">\(t = 0^+\)</span>)</h3>
@@ -3433,57 +3389,45 @@ Implementation: p5.js with magnetic field visualization
 <h4 id="diagram-initial-and-final-conditions">Diagram: Initial and Final Conditions</h4>
 <iframe src="../../sims/initial-final-conditions/main.html" width="100%" height="500px" scrolling="no"></iframe>
 
-<details markdown="1">
+<details>
 <summary>Initial and Final Conditions MicroSim</summary>
-Type: microsim
-
-Purpose: Practice finding initial and final conditions for various switching scenarios
-
-Bloom Level: Apply (L3)
-Bloom Verb: solve
-
-Learning Objective: Students will solve for initial and final conditions given a circuit with a switch, then predict the transient response.
-
-Instructional Rationale: Step-by-step guided analysis with visual circuit transformation (C→open, L→short) builds systematic problem-solving skills.
-
-Data Visibility Requirements:
+<p>Type: microsim</p>
+<p>Purpose: Practice finding initial and final conditions for various switching scenarios</p>
+<p>Bloom Level: Apply (L3)
+Bloom Verb: solve</p>
+<p>Learning Objective: Students will solve for initial and final conditions given a circuit with a switch, then predict the transient response.</p>
+<p>Instructional Rationale: Step-by-step guided analysis with visual circuit transformation (C→open, L→short) builds systematic problem-solving skills.</p>
+<p>Data Visibility Requirements:
 - Stage 1: Show original circuit with switch position
-- Stage 2: Analyze circuit for t < 0 to find pre-switch values
+- Stage 2: Analyze circuit for t &lt; 0 to find pre-switch values
 - Stage 3: Apply continuity rules to get t = 0+ values
 - Stage 4: Show equivalent circuit at t = ∞
-- Stage 5: Display complete solution with formula
-
-Canvas layout:
+- Stage 5: Display complete solution with formula</p>
+<p>Canvas layout:
 - Left (350px): Circuit that transforms to show analysis steps
-- Right (250px): Solution panel
-
-Visual elements:
+- Right (250px): Solution panel</p>
+<p>Visual elements:
 - Circuit with switch (toggleable)
 - Capacitor/inductor highlighted for condition analysis
 - Equivalent circuits at t=0+ and t=∞
-- Formula with calculated values filled in
-
-Interactive controls:
+- Formula with calculated values filled in</p>
+<p>Interactive controls:
 - Button: "Step Through Analysis"
 - Multiple circuit presets to practice
 - Display: Initial value, final value, τ
-- Show/hide solution option
-
-Example circuits:
+- Show/hide solution option</p>
+<p>Example circuits:
 1. Simple RC charging from zero
 2. RC with initial charge
 3. RL energizing
-4. Thevenin equivalent with RC
-
-Behavior:
+4. Thevenin equivalent with RC</p>
+<p>Behavior:
 - Each step highlights relevant circuit portion
 - Shows capacitor becoming open / inductor becoming short
 - Formula populates with specific values
-- Final curve displayed
-
-Implementation: p5.js with step-through circuit analysis
+- Final curve displayed</p>
+<p>Implementation: p5.js with step-through circuit analysis</p>
 </details>
-
 <h2 id="natural-and-forced-response">Natural and Forced Response</h2>
 <p>The complete response of a first-order circuit can be viewed as the sum of two components:</p>
 <h3 id="natural-response">Natural Response</h3>
@@ -3532,42 +3476,33 @@ Implementation: p5.js with step-through circuit analysis
 <h4 id="diagram-practical-rcrl-applications">Diagram: Practical RC/RL Applications</h4>
 <iframe src="../../sims/rc-rl-applications/main.html" width="100%" height="450px" scrolling="no"></iframe>
 
-<details markdown="1">
+<details>
 <summary>RC/RL Applications MicroSim</summary>
-Type: microsim
-
-Purpose: Explore practical applications of RC and RL timing
-
-Bloom Level: Apply (L3)
-Bloom Verb: design
-
-Learning Objective: Students will design RC or RL circuits to achieve specific timing requirements.
-
-Canvas layout:
+<p>Type: microsim</p>
+<p>Purpose: Explore practical applications of RC and RL timing</p>
+<p>Bloom Level: Apply (L3)
+Bloom Verb: design</p>
+<p>Learning Objective: Students will design RC or RL circuits to achieve specific timing requirements.</p>
+<p>Canvas layout:
 - Top: Application selector with circuit schematic
-- Bottom: Parameter adjustment and timing verification
-
-Applications included:
+- Bottom: Parameter adjustment and timing verification</p>
+<p>Applications included:
 1. Camera flash charging time
 2. Simple timer circuit
 3. Relay protection
-4. Audio coupling capacitor
-
-Interactive controls:
+4. Audio coupling capacitor</p>
+<p>Interactive controls:
 - Dropdown: Select application
 - Sliders: Adjust R, C, or L values
 - Display: Calculated timing parameters
-- Target input: Enter desired time/frequency
-
-Behavior:
+- Target input: Enter desired time/frequency</p>
+<p>Behavior:
 - Each application shows relevant circuit
 - Adjusting components shows effect on timing
 - Can input target and calculate required values
-- Shows practical component value ranges
-
-Implementation: p5.js with application-specific visualizations
+- Shows practical component value ranges</p>
+<p>Implementation: p5.js with application-specific visualizations</p>
 </details>
-
 <h2 id="the-exponential-response-a-deeper-look">The Exponential Response: A Deeper Look</h2>
 <p>The exponential function <span class="arithmatex">\(e^{-t/\tau}\)</span> appears throughout physics and engineering. Here's why it's natural for circuits:</p>
 <h3 id="the-differential-equation">The Differential Equation</h3>
@@ -3586,41 +3521,32 @@ Implementation: p5.js with application-specific visualizations
 <h4 id="diagram-exponential-properties">Diagram: Exponential Properties</h4>
 <iframe src="../../sims/exponential-properties/main.html" width="100%" height="400px" scrolling="no"></iframe>
 
-<details markdown="1">
+<details>
 <summary>Exponential Properties MicroSim</summary>
-Type: microsim
-
-Purpose: Visualize mathematical properties of the exponential response
-
-Bloom Level: Analyze (L4)
-Bloom Verb: examine
-
-Learning Objective: Students will examine the exponential function's properties, including the tangent-line interpretation and the constant-ratio property.
-
-Canvas layout:
-- Main area: Exponential curve with interactive tangent line
-
-Visual elements:
+<p>Type: microsim</p>
+<p>Purpose: Visualize mathematical properties of the exponential response</p>
+<p>Bloom Level: Analyze (L4)
+Bloom Verb: examine</p>
+<p>Learning Objective: Students will examine the exponential function's properties, including the tangent-line interpretation and the constant-ratio property.</p>
+<p>Canvas layout:
+- Main area: Exponential curve with interactive tangent line</p>
+<p>Visual elements:
 - Rising or falling exponential curve
 - Draggable point on curve
 - Tangent line at that point
 - Shows intercept at t + τ
-- Annotations of mathematical properties
-
-Interactive controls:
+- Annotations of mathematical properties</p>
+<p>Interactive controls:
 - Drag point along curve
 - Toggle: Rising vs falling exponential
 - Display: Slope at current point
-- Display: Value, time to final
-
-Behavior:
+- Display: Value, time to final</p>
+<p>Behavior:
 - Tangent line always intercepts final value at t + τ
 - Moving point shows this property holds everywhere
-- Displays the derivative relationship
-
-Implementation: p5.js with draggable curve analysis
+- Displays the derivative relationship</p>
+<p>Implementation: p5.js with draggable curve analysis</p>
 </details>
-
 <h2 id="summary-and-key-takeaways">Summary and Key Takeaways</h2>
 <p>You've mastered the fundamentals of transient analysis. Here's what you now understand:</p>
 <p><strong>The Big Picture:</strong></p>

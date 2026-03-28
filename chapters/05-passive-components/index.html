@@ -3413,54 +3413,43 @@
 <h4 id="diagram-parallel-plate-capacitor-structure">Diagram: Parallel Plate Capacitor Structure</h4>
 <iframe src="../../sims/parallel-plate-capacitor/main.html" width="100%" height="450px" scrolling="no"></iframe>
 
-<details markdown="1">
+<details>
 <summary>Parallel Plate Capacitor MicroSim</summary>
-Type: microsim
-
-Purpose: Visualize how plate area, separation, and dielectric affect capacitance
-
-Bloom Level: Understand (L2)
-Bloom Verb: explain
-
-Learning Objective: Students will explain how changing physical parameters affects capacitance value and understand the role of the dielectric material.
-
-Instructional Rationale: Interactive manipulation of physical parameters with real-time capacitance calculation builds intuition for the C = εA/d relationship.
-
-Canvas layout:
+<p>Type: microsim</p>
+<p>Purpose: Visualize how plate area, separation, and dielectric affect capacitance</p>
+<p>Bloom Level: Understand (L2)
+Bloom Verb: explain</p>
+<p>Learning Objective: Students will explain how changing physical parameters affects capacitance value and understand the role of the dielectric material.</p>
+<p>Instructional Rationale: Interactive manipulation of physical parameters with real-time capacitance calculation builds intuition for the C = εA/d relationship.</p>
+<p>Canvas layout:
 - Left (350px): Visual representation of parallel plates with dielectric
-- Right (250px): Parameter controls and calculations
-
-Visual elements:
+- Right (250px): Parameter controls and calculations</p>
+<p>Visual elements:
 - Two parallel plates shown in perspective
 - Electric field lines between plates
 - Dielectric material (colored region) between plates
 - Charge symbols (+ and -) on plate surfaces
-- Dimension labels for area and separation
-
-Interactive controls:
+- Dimension labels for area and separation</p>
+<p>Interactive controls:
 - Slider: Plate area (1 cm² to 100 cm²)
 - Slider: Plate separation (0.1 mm to 10 mm)
 - Dropdown: Dielectric material (air, paper, ceramic, etc.)
 - Display: Calculated capacitance
 - Display: Electric field strength
-- Display: Stored energy at given voltage
-
-Default parameters:
+- Display: Stored energy at given voltage</p>
+<p>Default parameters:
 - Area = 10 cm²
 - Separation = 1 mm
 - Dielectric = Air (εr = 1)
-- Applied voltage = 10V
-
-Behavior:
+- Applied voltage = 10V</p>
+<p>Behavior:
 - Plate visualization scales with area
 - Separation shown visually
 - Field line density changes with charge
 - Capacitance updates in real-time
-- Energy calculation: E = ½CV²
-
-Implementation: p5.js with 3D perspective drawing
+- Energy calculation: E = ½CV²</p>
+<p>Implementation: p5.js with 3D perspective drawing</p>
 </details>
-
 <h2 id="capacitor-energy-storage">Capacitor Energy Storage</h2>
 <p>Unlike resistors that dissipate energy as heat, capacitors <strong>store</strong> energy in their electric field. This energy can be recovered—which is why capacitors are used in camera flashes, defibrillators, and power supply filtering.</p>
 <h4 id="capacitor-energy">Capacitor Energy</h4>
@@ -3498,55 +3487,44 @@ Implementation: p5.js with 3D perspective drawing
 <h4 id="diagram-capacitor-charging-visualization">Diagram: Capacitor Charging Visualization</h4>
 <iframe src="../../sims/capacitor-charging/main.html" width="100%" height="450px" scrolling="no"></iframe>
 
-<details markdown="1">
+<details>
 <summary>Capacitor Charging Animation MicroSim</summary>
-Type: microsim
-
-Purpose: Visualize charge accumulation and energy storage during capacitor charging
-
-Bloom Level: Understand (L2)
-Bloom Verb: describe
-
-Learning Objective: Students will describe how charge accumulates on capacitor plates during charging and explain the relationship between voltage, charge, and stored energy.
-
-Instructional Rationale: Animated charge flow and accumulation makes the abstract concept of energy storage concrete and visual.
-
-Canvas layout:
+<p>Type: microsim</p>
+<p>Purpose: Visualize charge accumulation and energy storage during capacitor charging</p>
+<p>Bloom Level: Understand (L2)
+Bloom Verb: describe</p>
+<p>Learning Objective: Students will describe how charge accumulates on capacitor plates during charging and explain the relationship between voltage, charge, and stored energy.</p>
+<p>Instructional Rationale: Animated charge flow and accumulation makes the abstract concept of energy storage concrete and visual.</p>
+<p>Canvas layout:
 - Main area (400px): Capacitor with animated charge flow
-- Right panel (200px): Real-time graphs of V, I, E
-
-Visual elements:
+- Right panel (200px): Real-time graphs of V, I, E</p>
+<p>Visual elements:
 - Capacitor plates with accumulating + and - charges
 - Wire connecting to voltage source
 - Animated charge carriers (electrons) flowing
 - Growing electric field lines between plates
-- Three stacked graphs: voltage, current, energy vs time
-
-Interactive controls:
+- Three stacked graphs: voltage, current, energy vs time</p>
+<p>Interactive controls:
 - Slider: Applied voltage (1V to 20V)
 - Slider: Capacitance (1µF to 1000µF)
 - Slider: Series resistance (100Ω to 10kΩ)
 - Button: "Charge" starts charging animation
 - Button: "Discharge" reverses process
-- Button: "Reset" clears charge
-
-Default parameters:
+- Button: "Reset" clears charge</p>
+<p>Default parameters:
 - V = 10V
 - C = 100µF
 - R = 1kΩ
-- τ = RC = 100ms
-
-Behavior:
+- τ = RC = 100ms</p>
+<p>Behavior:
 - Charges animate flowing onto plates
 - Plate charge symbols increase over time
 - Voltage rises exponentially toward applied voltage
 - Current starts high, decays exponentially
 - Energy grows as ½CV²
-- Time constant τ = RC shown on graphs
-
-Implementation: p5.js with particle animation and real-time graphing
+- Time constant τ = RC shown on graphs</p>
+<p>Implementation: p5.js with particle animation and real-time graphing</p>
 </details>
-
 <h2 id="capacitors-in-series-and-parallel">Capacitors in Series and Parallel</h2>
 <p>Just like resistors, capacitors can be combined. But here's the twist: <strong>the formulas are backwards</strong> compared to resistors.</p>
 <h3 id="capacitors-in-series">Capacitors in Series</h3>
@@ -3612,50 +3590,39 @@ Implementation: p5.js with particle animation and real-time graphing
 <h4 id="diagram-series-and-parallel-capacitors">Diagram: Series and Parallel Capacitors</h4>
 <iframe src="../../sims/capacitor-combinations/main.html" width="100%" height="450px" scrolling="no"></iframe>
 
-<details markdown="1">
+<details>
 <summary>Capacitor Combinations MicroSim</summary>
-Type: microsim
-
-Purpose: Compare series and parallel capacitor combinations with interactive calculation
-
-Bloom Level: Apply (L3)
-Bloom Verb: calculate
-
-Learning Objective: Students will calculate equivalent capacitance for series and parallel combinations and predict how total capacitance changes when adding capacitors.
-
-Instructional Rationale: Side-by-side comparison with the same capacitor values in series vs parallel makes the "opposite of resistors" relationship clear.
-
-Canvas layout:
+<p>Type: microsim</p>
+<p>Purpose: Compare series and parallel capacitor combinations with interactive calculation</p>
+<p>Bloom Level: Apply (L3)
+Bloom Verb: calculate</p>
+<p>Learning Objective: Students will calculate equivalent capacitance for series and parallel combinations and predict how total capacitance changes when adding capacitors.</p>
+<p>Instructional Rationale: Side-by-side comparison with the same capacitor values in series vs parallel makes the "opposite of resistors" relationship clear.</p>
+<p>Canvas layout:
 - Top half: Series configuration with calculation
 - Bottom half: Parallel configuration with calculation
-- Side panel: Comparison summary
-
-Visual elements:
+- Side panel: Comparison summary</p>
+<p>Visual elements:
 - Schematic symbols for capacitors
 - Value labels on each capacitor
 - Equivalent single capacitor representation
-- Calculation steps shown
-
-Interactive controls:
+- Calculation steps shown</p>
+<p>Interactive controls:
 - Slider: C1 value (1µF to 100µF)
 - Slider: C2 value (1µF to 100µF)
 - Slider: C3 value (1µF to 100µF)
 - Toggle: Show/hide C3 (two vs three capacitors)
 - Display: Series equivalent
-- Display: Parallel equivalent
-
-Default parameters:
-- C1 = 10µF, C2 = 20µF, C3 = 30µF
-
-Behavior:
+- Display: Parallel equivalent</p>
+<p>Default parameters:
+- C1 = 10µF, C2 = 20µF, C3 = 30µF</p>
+<p>Behavior:
 - Real-time calculation updates
 - Visual comparison of equivalent size
 - Shows step-by-step calculation
-- Highlights that series < smallest, parallel = sum
-
-Implementation: p5.js with dual circuit display
+- Highlights that series &lt; smallest, parallel = sum</p>
+<p>Implementation: p5.js with dual circuit display</p>
 </details>
-
 <h2 id="inductor-energy-storage">Inductor Energy Storage</h2>
 <p>While capacitors store energy in electric fields, <strong>inductors</strong> store energy in magnetic fields. An inductor is typically a coil of wire—current flowing through creates a magnetic field that stores energy.</p>
 <h4 id="inductor-energy">Inductor Energy</h4>
@@ -3810,53 +3777,42 @@ Implementation: p5.js with dual circuit display
 <h4 id="diagram-mutual-inductance-visualization">Diagram: Mutual Inductance Visualization</h4>
 <iframe src="../../sims/mutual-inductance/main.html" width="100%" height="450px" scrolling="no"></iframe>
 
-<details markdown="1">
+<details>
 <summary>Mutual Inductance MicroSim</summary>
-Type: microsim
-
-Purpose: Visualize magnetic field coupling between two inductors
-
-Bloom Level: Understand (L2)
-Bloom Verb: explain
-
-Learning Objective: Students will explain how changing current in one coil induces voltage in a nearby coil through magnetic coupling.
-
-Instructional Rationale: Animated magnetic field lines linking two coils makes the abstract concept of mutual inductance visible.
-
-Canvas layout:
+<p>Type: microsim</p>
+<p>Purpose: Visualize magnetic field coupling between two inductors</p>
+<p>Bloom Level: Understand (L2)
+Bloom Verb: explain</p>
+<p>Learning Objective: Students will explain how changing current in one coil induces voltage in a nearby coil through magnetic coupling.</p>
+<p>Instructional Rationale: Animated magnetic field lines linking two coils makes the abstract concept of mutual inductance visible.</p>
+<p>Canvas layout:
 - Main area (450px): Two coils with animated magnetic field
-- Side panel (150px): Voltage and current displays
-
-Visual elements:
+- Side panel (150px): Voltage and current displays</p>
+<p>Visual elements:
 - Two coils shown in cross-section
 - Animated magnetic field lines
 - Field lines that link both coils highlighted differently
 - Current direction arrows
-- Induced voltage indicator on second coil
-
-Interactive controls:
+- Induced voltage indicator on second coil</p>
+<p>Interactive controls:
 - Slider: Current in coil 1 (0 to 1A, with time variation)
 - Slider: Coil separation (affects coupling)
 - Slider: Coil alignment (affects coupling)
 - Toggle: Iron core vs air core
 - Display: Coupling coefficient k
 - Display: Mutual inductance M
-- Display: Induced voltage V2
-
-Default parameters:
+- Display: Induced voltage V2</p>
+<p>Default parameters:
 - L1 = L2 = 10mH
 - Separation: medium
-- Air core initially
-
-Behavior:
+- Air core initially</p>
+<p>Behavior:
 - Changing I1 creates animated field line changes
 - V2 spikes when I1 changes rapidly
 - Coupling coefficient updates with geometry
-- Iron core dramatically increases coupling
-
-Implementation: p5.js with animated field line visualization
+- Iron core dramatically increases coupling</p>
+<p>Implementation: p5.js with animated field line visualization</p>
 </details>
-
 <h2 id="real-vs-ideal-components">Real vs. Ideal Components</h2>
 <p>So far we've treated components as ideal: perfect capacitors, perfect inductors, lossless resistors. Reality is messier.</p>
 <h3 id="parasitic-elements">Parasitic Elements</h3>
@@ -3904,48 +3860,38 @@ Implementation: p5.js with animated field line visualization
 <h4 id="diagram-real-vs-ideal-capacitor">Diagram: Real vs Ideal Capacitor</h4>
 <iframe src="../../sims/real-capacitor-model/main.html" width="100%" height="400px" scrolling="no"></iframe>
 
-<details markdown="1">
+<details>
 <summary>Real Capacitor Model MicroSim</summary>
-Type: microsim
-
-Purpose: Show how ESR and ESL affect capacitor behavior at different frequencies
-
-Bloom Level: Analyze (L4)
-Bloom Verb: compare
-
-Learning Objective: Students will compare ideal and real capacitor behavior, identifying the frequency ranges where parasitic elements dominate.
-
-Canvas layout:
+<p>Type: microsim</p>
+<p>Purpose: Show how ESR and ESL affect capacitor behavior at different frequencies</p>
+<p>Bloom Level: Analyze (L4)
+Bloom Verb: compare</p>
+<p>Learning Objective: Students will compare ideal and real capacitor behavior, identifying the frequency ranges where parasitic elements dominate.</p>
+<p>Canvas layout:
 - Left (300px): Ideal vs real equivalent circuit
-- Right (300px): Impedance vs frequency plot
-
-Visual elements:
+- Right (300px): Impedance vs frequency plot</p>
+<p>Visual elements:
 - Ideal capacitor: single C symbol
 - Real capacitor: C with series ESR and ESL
 - Bode-style impedance magnitude plot
-- Frequency markers for different regions
-
-Interactive controls:
+- Frequency markers for different regions</p>
+<p>Interactive controls:
 - Slider: Capacitance value
 - Slider: ESR value (1mΩ to 1Ω)
 - Slider: ESL value (1nH to 100nH)
 - Display: Self-resonant frequency
-- Display: Impedance at selected frequency
-
-Default parameters:
+- Display: Impedance at selected frequency</p>
+<p>Default parameters:
 - C = 10µF
 - ESR = 50mΩ
-- ESL = 10nH
-
-Behavior:
+- ESL = 10nH</p>
+<p>Behavior:
 - Impedance plot shows V-shape (capacitive, minimum at SRF, then inductive)
 - Self-resonant frequency calculated: f = 1/(2π√(LC))
 - ESR sets minimum impedance at resonance
-- Above SRF, capacitor acts like inductor!
-
-Implementation: p5.js with frequency response plotting
+- Above SRF, capacitor acts like inductor!</p>
+<p>Implementation: p5.js with frequency response plotting</p>
 </details>
-
 <h3 id="real-inductor-model">Real Inductor Model</h3>
 <p>Real inductors have:</p>
 <ul>
@@ -4044,53 +3990,42 @@ Implementation: p5.js with frequency response plotting
 <h4 id="diagram-signal-parameters-visualization">Diagram: Signal Parameters Visualization</h4>
 <iframe src="../../sims/signal-parameters/main.html" width="100%" height="500px" scrolling="no"></iframe>
 
-<details markdown="1">
+<details>
 <summary>Signal Parameters Interactive MicroSim</summary>
-Type: microsim
-
-Purpose: Visualize amplitude, frequency, period, and phase on a sinusoidal waveform
-
-Bloom Level: Remember (L1)
-Bloom Verb: identify
-
-Learning Objective: Students will identify amplitude, period, frequency, and phase angle on a sinusoidal waveform display.
-
-Instructional Rationale: Interactive manipulation of each parameter with immediate visual feedback builds familiarity with signal terminology.
-
-Canvas layout:
+<p>Type: microsim</p>
+<p>Purpose: Visualize amplitude, frequency, period, and phase on a sinusoidal waveform</p>
+<p>Bloom Level: Remember (L1)
+Bloom Verb: identify</p>
+<p>Learning Objective: Students will identify amplitude, period, frequency, and phase angle on a sinusoidal waveform display.</p>
+<p>Instructional Rationale: Interactive manipulation of each parameter with immediate visual feedback builds familiarity with signal terminology.</p>
+<p>Canvas layout:
 - Main area (500px): Waveform display with labeled measurements
-- Bottom (100px): Parameter controls
-
-Visual elements:
+- Bottom (100px): Parameter controls</p>
+<p>Visual elements:
 - Sinusoidal waveform
 - Amplitude marked with vertical arrows
 - Period marked with horizontal bracket
 - Phase shown by position relative to reference
 - Reference sinusoid (dotted) for phase comparison
-- Grid with time and voltage markings
-
-Interactive controls:
+- Grid with time and voltage markings</p>
+<p>Interactive controls:
 - Slider: Amplitude (0.1 to 10V)
 - Slider: Frequency (1Hz to 1000Hz, log scale)
 - Slider: Phase angle (-180° to +180°)
 - Checkbox: Show reference signal (zero phase)
 - Display: Period (calculated)
-- Display: Angular frequency (calculated)
-
-Default parameters:
+- Display: Angular frequency (calculated)</p>
+<p>Default parameters:
 - Amplitude = 5V
 - Frequency = 100Hz
-- Phase = 0°
-
-Behavior:
+- Phase = 0°</p>
+<p>Behavior:
 - Waveform updates in real-time
 - Measurement labels update automatically
 - Reference signal enables phase comparison
-- Zooms to show 2-3 complete cycles regardless of frequency
-
-Implementation: p5.js with annotated waveform display
+- Zooms to show 2-3 complete cycles regardless of frequency</p>
+<p>Implementation: p5.js with annotated waveform display</p>
 </details>
-
 <h3 id="peak-peak-to-peak-and-average-values">Peak, Peak-to-Peak, and Average Values</h3>
 <p>Different applications need different ways to describe signal magnitude:</p>
 <h4 id="peak-value">Peak Value</h4>
@@ -4149,50 +4084,39 @@ Implementation: p5.js with annotated waveform display
 <h4 id="diagram-rms-explanation">Diagram: RMS Explanation</h4>
 <iframe src="../../sims/rms-calculation/main.html" width="100%" height="450px" scrolling="no"></iframe>
 
-<details markdown="1">
+<details>
 <summary>RMS Value Demonstration MicroSim</summary>
-Type: microsim
-
-Purpose: Show why RMS relates to equivalent DC power dissipation
-
-Bloom Level: Understand (L2)
-Bloom Verb: explain
-
-Learning Objective: Students will explain why RMS voltage determines power delivery in AC circuits and calculate RMS from peak values.
-
-Instructional Rationale: Side-by-side AC and DC circuits showing equal power delivery makes the RMS concept tangible.
-
-Canvas layout:
+<p>Type: microsim</p>
+<p>Purpose: Show why RMS relates to equivalent DC power dissipation</p>
+<p>Bloom Level: Understand (L2)
+Bloom Verb: explain</p>
+<p>Learning Objective: Students will explain why RMS voltage determines power delivery in AC circuits and calculate RMS from peak values.</p>
+<p>Instructional Rationale: Side-by-side AC and DC circuits showing equal power delivery makes the RMS concept tangible.</p>
+<p>Canvas layout:
 - Top left: AC circuit with sinusoidal source
 - Top right: DC circuit with RMS-equivalent source
-- Bottom: Power waveforms comparison
-
-Visual elements:
+- Bottom: Power waveforms comparison</p>
+<p>Visual elements:
 - AC circuit: sinusoidal source, resistor, power waveform (always positive, double frequency)
 - DC circuit: DC source at Vrms, resistor, constant power line
 - Average power lines on both showing equality
-- Instantaneous and average power displayed
-
-Interactive controls:
+- Instantaneous and average power displayed</p>
+<p>Interactive controls:
 - Slider: Peak voltage (1V to 20V)
 - Slider: Resistance (100Ω to 10kΩ)
 - Display: Vrms calculated
 - Display: Average power (should match for both circuits)
-- Animation: Time-varying waveforms
-
-Default parameters:
+- Animation: Time-varying waveforms</p>
+<p>Default parameters:
 - Vpeak = 10V (Vrms = 7.07V)
-- R = 1kΩ
-
-Behavior:
+- R = 1kΩ</p>
+<p>Behavior:
 - AC power oscillates between 0 and Vpeak²/R
 - DC power is constant at Vrms²/R
 - Average AC power equals DC power (proof of RMS concept)
-- Shows P = V²/R calculation for both
-
-Implementation: p5.js with dual circuit animation
+- Shows P = V²/R calculation for both</p>
+<p>Implementation: p5.js with dual circuit animation</p>
 </details>
-
 <h2 id="audio-frequency-fundamentals">Audio Frequency Fundamentals</h2>
 <p>Since this is a circuits course with audio emphasis, let's establish the frequency ranges we care about.</p>
 <h3 id="human-hearing-range">Human Hearing Range</h3>
@@ -4331,48 +4255,38 @@ Implementation: p5.js with dual circuit animation
 <h4 id="diagram-decibel-scale-interactive">Diagram: Decibel Scale Interactive</h4>
 <iframe src="../../sims/decibel-scale/main.html" width="100%" height="400px" scrolling="no"></iframe>
 
-<details markdown="1">
+<details>
 <summary>Decibel Scale Calculator MicroSim</summary>
-Type: microsim
-
-Purpose: Convert between linear ratios and decibels, with audio examples
-
-Bloom Level: Apply (L3)
-Bloom Verb: calculate
-
-Learning Objective: Students will calculate decibel values from voltage and power ratios and interpret common dB levels in audio contexts.
-
-Canvas layout:
+<p>Type: microsim</p>
+<p>Purpose: Convert between linear ratios and decibels, with audio examples</p>
+<p>Bloom Level: Apply (L3)
+Bloom Verb: calculate</p>
+<p>Learning Objective: Students will calculate decibel values from voltage and power ratios and interpret common dB levels in audio contexts.</p>
+<p>Canvas layout:
 - Left (300px): Ratio to dB converter
-- Right (300px): dB scale with audio reference levels
-
-Visual elements:
+- Right (300px): dB scale with audio reference levels</p>
+<p>Visual elements:
 - Slider for linear ratio input
 - dB calculation display
 - Vertical dB scale with labeled reference points
-- Audio examples at each level (whisper, conversation, concert, etc.)
-
-Interactive controls:
+- Audio examples at each level (whisper, conversation, concert, etc.)</p>
+<p>Interactive controls:
 - Slider: Linear ratio (0.001 to 1000, log scale)
 - Radio: Voltage ratio or Power ratio
 - Display: Calculated dB value
 - Reverse calculator: Input dB, get ratio
-- Display: Audio SPL reference examples
-
-Default parameters:
+- Display: Audio SPL reference examples</p>
+<p>Default parameters:
 - Ratio = 2
 - Mode = voltage ratio
-- Result = +6 dB
-
-Behavior:
+- Result = +6 dB</p>
+<p>Behavior:
 - Real-time calculation both directions
 - Shows 10log vs 20log difference
 - Reference scale shows common audio levels
-- Color coding for dangerous SPL levels
-
-Implementation: p5.js with interactive calculator
+- Color coding for dangerous SPL levels</p>
+<p>Implementation: p5.js with interactive calculator</p>
 </details>
-
 <h2 id="practical-applications">Practical Applications</h2>
 <h3 id="application-1-bypass-capacitor-selection">Application 1: Bypass Capacitor Selection</h3>
 <p>Your microcontroller needs bypass capacitors to filter power supply noise. You need to filter frequencies from 1 MHz to 100 MHz.</p>
