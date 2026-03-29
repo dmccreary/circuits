@@ -27,8 +27,8 @@ const DRAW_TOP = 60;
 let nodeY;
 
 function setup() {
-    canvasW = min(windowWidth - 4, 680);
-    createCanvas(canvasW, canvasH).parent('main');
+    canvasW = max(400, min(floor(document.querySelector('main').getBoundingClientRect().width), 680));
+    createCanvas(canvasW, canvasH).parent(document.querySelector('main'));
     textFont('Arial');
     nodeY = DRAW_TOP + 120;
     cx = canvasW / 2;
@@ -323,7 +323,7 @@ function touchEnded() {
 }
 
 function windowResized() {
-    canvasW = min(windowWidth - 4, 680);
+    canvasW = max(400, min(floor(document.querySelector('main').getBoundingClientRect().width), 680));
     resizeCanvas(canvasW, canvasH);
     cx = canvasW / 2;
     buildSliders();

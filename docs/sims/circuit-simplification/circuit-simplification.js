@@ -64,7 +64,7 @@ function setup() {
 }
 
 function updateCanvasSize() {
-    containerWidth = min(windowWidth - 20, 960);
+    containerWidth = min(floor(document.querySelector('main').getBoundingClientRect().width), 960);
     containerWidth = max(containerWidth, 560);
 }
 

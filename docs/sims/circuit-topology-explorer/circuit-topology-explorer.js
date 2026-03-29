@@ -42,16 +42,16 @@ const colHover = [241, 245, 249];
 let circuits = [];
 
 function setup() {
-    canvasWidth = min(windowWidth - 40, 800);
+    canvasWidth = min(floor(document.querySelector('main').getBoundingClientRect().width), 800);
     const canvas = createCanvas(canvasWidth, canvasHeight);
-    canvas.parent('main');
+    canvas.parent(document.querySelector('main'));
     textFont('Arial');
     buildCircuits();
     setupControls();
 }
 
 function windowResized() {
-    canvasWidth = min(windowWidth - 40, 800);
+    canvasWidth = min(floor(document.querySelector('main').getBoundingClientRect().width), 800);
     resizeCanvas(canvasWidth, canvasHeight);
     buildCircuits();
     setupControls();

@@ -58,9 +58,9 @@ const BTN_R = 8;
 let arrowPhase = 0;
 
 function setup() {
-    canvasWidth = min(windowWidth, 700);
+    canvasWidth = min(floor(document.querySelector('main').getBoundingClientRect().width), 700);
     let cnv = createCanvas(canvasWidth, canvasHeight);
-    cnv.parent('main');
+    cnv.parent(document.querySelector('main'));
     textFont('Arial');
 
     computeLayout();
@@ -526,7 +526,7 @@ function mouseMoved() {
 }
 
 function windowResized() {
-    canvasWidth = min(windowWidth, 700);
+    canvasWidth = min(floor(document.querySelector('main').getBoundingClientRect().width), 700);
     resizeCanvas(canvasWidth, canvasHeight);
     computeLayout();
 

@@ -43,15 +43,15 @@ let animProgress = 0;
 let animTarget = -1;
 
 function setup() {
-    canvasWidth = min(windowWidth - 20, 900);
+    canvasWidth = min(floor(document.querySelector('main').getBoundingClientRect().width), 900);
     let cnv = createCanvas(canvasWidth, canvasHeight);
-    cnv.parent('main');
+    cnv.parent(document.querySelector('main'));
     textFont('Arial');
     initControls();
 }
 
 function windowResized() {
-    canvasWidth = min(windowWidth - 20, 900);
+    canvasWidth = min(floor(document.querySelector('main').getBoundingClientRect().width), 900);
     resizeCanvas(canvasWidth, canvasHeight);
     initControls();
 }
