@@ -66,7 +66,7 @@ Think of it like a highway interchange. If 1000 cars per hour enter from the nor
 
 #### Diagram: KCL Node Visualization
 
-<iframe src="../../sims/kcl-node-viz/main.html" width="100%" height="500px" scrolling="no"></iframe>
+<iframe src="../../sims/kirchhoffs-law/main.html" width="100%" height="560px" scrolling="no" style="overflow: hidden;"></iframe>
 
 <details markdown="1">
 <summary>KCL Node Visualization MicroSim</summary>

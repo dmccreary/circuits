@@ -141,7 +141,7 @@ The **phase response** \(\phi(\omega)\) tells us the phase shift at each frequen
 
 #### Diagram: Magnitude and Phase Response Viewer
 
-<iframe src="../../sims/frequency-response-viewer/main.html" width="100%" height="550px" scrolling="no" style="overflow: hidden;"></iframe>
+<iframe src="../../sims/filter-frequency-response/main.html" width="100%" height="550px" scrolling="no" style="overflow: hidden;"></iframe>
 
 <details markdown="1">
 <summary>Magnitude and Phase Response Viewer</summary>

@@ -109,7 +109,7 @@ Notice that the undamped natural frequency \(\omega_0\) is the same for both con
 
 #### Diagram: Series vs Parallel RLC Configuration
 
-<iframe src="../../sims/series-parallel-rlc/main.html" width="100%" height="450px" scrolling="no" style="overflow: hidden;"></iframe>
+<iframe src="../../sims/rlc-circuit/main.html" width="100%" height="670px" scrolling="no" style="overflow: hidden;"></iframe>
 
 <details markdown="1">
 <summary>Series vs Parallel RLC Configuration</summary>
@@ -199,7 +199,7 @@ The natural frequency depends only on the energy storage elements (L and C), not
 
 #### Diagram: Natural Frequency Calculator
 
-<iframe src="../../sims/natural-frequency-calc/main.html" width="100%" height="400px" scrolling="no" style="overflow: hidden;"></iframe>
+<iframe src="../../sims/natural-frequency-calculator/main.html" width="100%" height="500px" scrolling="no" style="overflow: hidden;"></iframe>
 
 <details markdown="1">
 <summary>Natural Frequency Calculator</summary>
