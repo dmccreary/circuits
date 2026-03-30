@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Power Dissipation Calculator</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+<style>
+  body { margin: 0; background: #e8eaf0; display: flex; justify-content: center; padding: 10px; font-family: Arial, sans-serif; }
+  canvas { border-radius: 8px; box-shadow: 0 4px 16px rgba(0,0,0,0.18); }
+</style>
+</head>
+<body>
+<script>
+// ============================================================
+// Power Dissipation Calculator MicroSim
+// Bloom L3 – Calculate power, determine resistor safety
+// ============================================================
+
+const CW = 820, CH = 390;
+
+// ---- UI state ----
+// mode: 'VI' | 'VR' | 'IR'
+let mode = 'VR';
+const RATINGS = [0.125, 0.25, 0.5, 1, 2, 5];
+const RATING_LABELS = ['1/8 W', '1/4 W', '1/2 W', '1 W', '2 W', '5 W'];
+let ratingIdx = 1; // 1/4W default
+
+// Current computed values
+let V = 5, I = 0.005, R = 1000, P = 0.025;
+
+// Animation
+let heatAnim = 0; // 0–1 for shimmer
+
+// ---- DOM inputs ----
+let inpV, inpI, inpR;
+let selVu, selIu, selRu; // unit selectors
+
+// Unit multipliers
+const V_UNITS  = ['V', 'mV'];
+const I_UNITS  = ['A', 'mA', 'μA'];
+const R_UNITS  = ['Ω', 'kΩ', 'MΩ'];
+const V_MULT   = [1, 1e-3];
+const I_MULT   = [1, 1e-3, 1e-6];
+const R_MULT   = [1, 1e3, 1e6];
+
+// Mode radio buttons (canvas-based)
+const MODES = ['V & I', 'V & R', 'I & R'];
+const MODE_KEYS = ['VI', 'VR', 'IR'];
+
+// Rating buttons (canvas-based)
+let modeBtns = [], ratingBtns = [], calcBtn = {};
+
+new p5(function(p) {
+
+  p.setup = function() {
+    const cnv = p.createCanvas(CW, CH);
+    p.textFont('Arial');
+    createDOMInputs(cnv);
+    buildButtons();
+    recalculate();
+  };
+
+  // ---- DOM inputs (HTML overlaid on canvas) ----
+  function createDOMInputs(cnv) {
+    const parent = cnv.parent() || document.body;
+    const el = cnv.elt;
+    const wrap = document.createElement('div');
+    wrap.style.cssText = 'position:relative; display:inline-block;';
+    el.parentNode.insertBefore(wrap, el);
+    wrap.appendChild(el);
+
+    function inp(id, val, w) {
+      const e = document.createElement('input');
+      e.id = id; e.type = 'text'; e.value = val;
+      e.style.cssText = `position:absolute; width:${w}px; height:24px; font-size:14px;
+        border:2px solid #9ab; border-radius:4px; padding:0 4px; box-sizing:border-box;
+        background:#fff; outline:none;`;
+      wrap.appendChild(e);
+      e.addEventListener('change', recalculate);
+      e.addEventListener('keyup', e2 => { if(e2.key==='Enter') recalculate(); });
+      return e;
+    }
+    function sel(id, opts, w) {
+      const e = document.createElement('select');
+      e.id = id;
+      e.style.cssText = `position:absolute; width:${w}px; height:26px; font-size:13px;
+        border:2px solid #9ab; border-radius:4px; background:#fff; cursor:pointer;`;
+      opts.forEach((o,i) => { const op=document.createElement('option'); op.value=i; op.text=o; e.appendChild(op); });
+      wrap.appendChild(e);
+      e.addEventListener('change', recalculate);
+      return e;
+    }
+
+    // Positions: left panel x~20-200, inputs at y~95,145,195
+    inpV  = inp('inpV',  '5',    58); posEl(inpV,  46, 95);
+    selVu = sel('selVu', V_UNITS, 46); posEl(selVu, 108, 94);
+
+    inpI  = inp('inpI',  '5',    58); posEl(inpI,  46, 145);
+    selIu = sel('selIu', I_UNITS, 46); posEl(selIu, 108, 144);
+
+    inpR  = inp('inpR',  '1',    58); posEl(inpR,  46, 195);
+    selRu = sel('selRu', R_UNITS, 46); posEl(selRu, 108, 194);
+    // default: R in kΩ
+    selRu.selectedIndex = 1;
+
+    updateInputEnabled();
+  }
+
+  function posEl(el, x, y) {
+    el.style.left = x + 'px';
+    el.style.top  = y + 'px';
+  }
+
+  function updateInputEnabled() {
+    inpV.disabled  = (mode === 'IR');
+    inpI.disabled  = (mode === 'VR');
+    inpR.disabled  = (mode === 'VI');
+    [inpV, inpI, inpR].forEach(el => {
+      el.style.background = el.disabled ? '#e8e8e8' : '#fff';
+      el.style.color      = el.disabled ? '#999'    : '#222';
+    });
+  }
+
+  function getVal(inp, selEl, mults) {
+    const v = parseFloat(inp.value);
+    if (isNaN(v) || v < 0) return NaN;
+    return v * mults[parseInt(selEl.value)];
+  }
+
+  function recalculate() {
+    updateInputEnabled();
+    let vv = getVal(inpV, selVu, V_MULT);
+    let iv = getVal(inpI, selIu, I_MULT);
+    let rv = getVal(inpR, selRu, R_MULT);
+
+    if (mode === 'VR') {
+      if (!isNaN(vv) && !isNaN(rv) && rv > 0) {
+        V = vv; R = rv; I = V/R; P = V*V/R;
+        setOutput(inpI, selIu, I_MULT, I_UNITS, I);
+      }
+    } else if (mode === 'VI') {
+      if (!isNaN(vv) && !isNaN(iv) && iv > 0) {
+        V = vv; I = iv; R = V/I; P = V*I;
+        setOutput(inpR, selRu, R_MULT, R_UNITS, R);
+      }
+    } else { // IR
+      if (!isNaN(iv) && !isNaN(rv) && rv > 0 && iv > 0) {
+        I = iv; R = rv; V = I*R; P = I*I*R;
+        setOutput(inpV, selVu, V_MULT, V_UNITS, V);
+      }
+    }
+  }
+
+  function setOutput(inp, selEl, mults, units, val) {
+    // Pick best unit
+    let best = 0;
+    for (let i = mults.length-1; i >= 0; i--) {
+      if (val / mults[i] >= 0.1) { best = i; break; }
+    }
+    selEl.selectedIndex = best;
+    const disp = val / mults[best];
+    inp.value = +disp.toPrecision(4);
+  }
+
+  function buildButtons() {
+    // Mode radio buttons: left panel, y~240
+    modeBtns = MODES.map((lbl, i) => ({
+      label: lbl, key: MODE_KEYS[i],
+      x: 18 + i*52, y: 250, w: 48, h: 26,
+    }));
+    // Rating buttons: left panel, y~300
+    ratingBtns = RATINGS.map((r, i) => ({
+      label: RATING_LABELS[i], val: r,
+      x: 14 + i*51, y: 300, w: 47, h: 26,
+    }));
+    // Calculate button
+    calcBtn = { x: 20, y: 340, w: 120, h: 30 };
+  }
+
+  // ---- Draw ----
+  p.draw = function() {
+    p.background(232, 234, 240);
+    heatAnim = (heatAnim + p.deltaTime * 0.003) % (2 * Math.PI);
+
+    drawLeftPanel();
+    drawCircuitCenter();
+    drawResultsPanel();
+  };
+
+  // ================ LEFT PANEL ================
+  function drawLeftPanel() {
+    // Background
+    p.fill(220, 225, 242); p.noStroke();
+    p.rect(0, 0, 175, CH, 0, 8, 8, 0);
+
+    p.fill(30, 30, 60); p.noStroke();
+    p.textSize(14); p.textStyle(p.BOLD);
+    p.textAlign(p.LEFT, p.TOP);
+    p.text('Inputs', 18, 14);
+    p.textStyle(p.NORMAL);
+
+    // V label
+    drawInputRow('Voltage  V =', 18, 78,  mode === 'IR', '(calculated)');
+    drawInputRow('Current  I =', 18, 128, mode === 'VR', '(calculated)');
+    drawInputRow('Resistance R=', 18, 178, mode === 'VI', '(calculated)');
+
+    // Mode buttons
+    p.textSize(12); p.fill(50,50,80); p.textAlign(p.LEFT,p.TOP);
+    p.text('Input mode:', 18, 238);
+    for (const b of modeBtns) {
+      const active = b.key === mode;
+      p.fill(active ? [50,90,200] : [150,160,200]);
+      p.noStroke(); p.rect(b.x, b.y, b.w, b.h, 5);
+      p.fill(255); p.textSize(11); p.textAlign(p.CENTER,p.CENTER);
+      p.text(b.label, b.x+b.w/2, b.y+b.h/2);
+    }
+
+    // Rating buttons
+    p.fill(50,50,80); p.textSize(12); p.textAlign(p.LEFT,p.TOP);
+    p.text('Power rating:', 18, 288);
+    for (const b of ratingBtns) {
+      const active = RATINGS[ratingIdx] === b.val;
+      p.fill(active ? [160,80,20] : [170,140,110]);
+      p.noStroke(); p.rect(b.x, b.y, b.w, b.h, 5);
+      p.fill(255); p.textSize(10); p.textAlign(p.CENTER,p.CENTER);
+      p.text(b.label, b.x+b.w/2, b.y+b.h/2);
+    }
+
+    // Calc button
+    p.fill(40,130,70); p.noStroke();
+    p.rect(calcBtn.x, calcBtn.y, calcBtn.w, calcBtn.h, 7);
+    p.fill(255); p.textSize(13); p.textAlign(p.CENTER,p.CENTER);
+    p.text('Calculate', calcBtn.x+calcBtn.w/2, calcBtn.y+calcBtn.h/2);
+  }
+
+  function drawInputRow(label, x, y, disabled, hint) {
+    p.textSize(12); p.textAlign(p.LEFT,p.TOP);
+    p.fill(disabled ? 120 : 30, disabled ? 120 : 30, disabled ? 140 : 60);
+    p.noStroke();
+    p.text(label, x, y);
+    if (disabled) {
+      p.fill(100,100,130); p.textSize(10); p.textStyle(p.ITALIC);
+      p.text(hint, x + 2, y + 15);
+      p.textStyle(p.NORMAL);
+    }
+  }
+
+  // ================ CIRCUIT CENTER ================
+  function drawCircuitCenter() {
+    const cx = 390, cy = 175, rw = 120, rh = 70;
+    const lx = cx - 180, rx = cx + 180;
+    const ty = cy - 90, by = cy + 90;
+
+    // Panel bg
+    p.fill(250,252,255); p.noStroke();
+    p.rect(180, 10, 420, CH-20, 8);
+
+    // ---- Resistor body ----
+    const safety = getSafety();
+    const resistorColor = safety === 'over'    ? [200, 40, 40]
+                        : safety === 'caution' ? [180,120,  0]
+                        :                        [20,  20, 20];
+
+    // Heat shimmer if over
+    if (safety === 'over') {
+      for (let i = 0; i < 4; i++) {
+        const sx = cx - 40 + i*26 + Math.sin(heatAnim + i) * 5;
+        const sy = cy - rh/2 - 22 - Math.abs(Math.sin(heatAnim*1.5 + i)) * 14;
+        p.noStroke(); p.fill(255, 80 + i*40, 0, 120);
+        p.ellipse(sx, sy, 10, 18);
+      }
+    }
+
+    // Wires
+    p.stroke(...resistorColor); p.strokeWeight(2.5); p.noFill();
+    p.line(lx, cy, cx-60, cy); // left wire
+    p.line(cx+60, cy, rx, cy);  // right wire
+    p.line(lx, ty, lx, cy);     // left top
+    p.line(lx, by, lx, cy);     // left bottom — wait, draw as rect
+    // Actually draw a simple loop: top rail, bottom rail
+    p.line(lx, ty, rx, ty);
+    p.line(lx, by, rx, by);
+    p.line(lx, ty, lx, by);
+    p.line(rx, ty, rx, by);
+
+    // Voltage source on left
+    drawVSource(p, lx, ty, by, safety);
+
+    // Resistor zigzag
+    drawResistorH(p, cx, cy, 60, 14, resistorColor, safety);
+
+    // Labels on wires
+    const pct = isFinite(P) && P > 0 ? Math.min(P / RATINGS[ratingIdx], 1.5) : 0;
+    const wireAlpha = 80 + pct * 80;
+    p.stroke(50, 80, 200, wireAlpha); sw(p, 2.5 + pct*2);
+    p.line(lx, ty, rx, ty); // redraw top wire with current color
+    p.line(lx, by, rx, by); // bottom wire
+
+    // Voltage label (top wire)
+    p.noStroke(); p.fill(20,20,120); p.textSize(13); p.textAlign(p.CENTER,p.BOTTOM);
+    p.text('+ ' + fmtVal(V, 'V'), cx, ty - 6);
+
+    // Current arrow on top wire
+    drawArrow(p, cx-50, ty, cx+50, ty, [50,80,200]);
+    p.noStroke(); p.fill(50,80,200); p.textSize(12); p.textAlign(p.CENTER,p.BOTTOM);
+    p.text('I = ' + fmtVal(I, 'A'), cx, ty - 22);
+
+    // R label below resistor
+    p.fill(...resistorColor); p.textSize(13); p.textAlign(p.CENTER,p.TOP);
+    p.text('R = ' + fmtVal(R, 'Ω'), cx, cy + 28);
+  }
+
+  function drawVSource(p, x, ty, by, safety) {
+    const cy = (ty+by)/2, r = 28;
+    const col = safety === 'over' ? [200,40,40] : [20,20,20];
+    p.stroke(...col); sw(p,2.5); p.noFill();
+    p.line(x, ty, x, cy-r);
+    p.line(x, cy+r, x, by);
+    p.circle(x, cy, r*2);
+    p.noStroke(); p.fill(...col); p.textSize(14); p.textAlign(p.CENTER,p.CENTER);
+    p.text('+', x, cy - r*0.38);
+    p.text('−', x, cy + r*0.42);
+    p.textSize(12); p.textAlign(p.RIGHT,p.CENTER);
+    p.text(fmtVal(V,'V'), x - r - 6, cy);
+  }
+
+  function drawResistorH(p, cx, cy, hw, hh, col, safety) {
+    const n = 8;
+    p.stroke(...col); sw(p, 2.5); p.noFill();
+    p.line(cx-hw-18, cy, cx-hw, cy);
+    p.line(cx+hw, cy, cx+hw+18, cy);
+    p.beginShape();
+    p.vertex(cx-hw, cy);
+    for (let i=0; i<n; i++) {
+      const x = cx-hw + (2*hw)/n*(i+0.5);
+      p.vertex(x, cy + (i%2===0? -hh : hh));
+    }
+    p.vertex(cx+hw, cy);
+    p.endShape();
+
+    // Glow when warm
+    if (safety !== 'safe') {
+      const alpha = safety==='over' ? 80 + Math.sin(heatAnim*3)*40 : 40;
+      p.stroke(220, 80, 0, alpha); sw(p, 6);
+      p.beginShape();
+      p.vertex(cx-hw, cy);
+      for (let i=0; i<n; i++) {
+        const x = cx-hw + (2*hw)/n*(i+0.5);
+        p.vertex(x, cy + (i%2===0? -hh : hh));
+      }
+      p.vertex(cx+hw, cy);
+      p.endShape();
+    }
+  }
+
+  function drawArrow(p, x1, y, x2, _y2, col) {
+    p.stroke(...col); sw(p, 2); p.noFill();
+    const mx = (x1+x2)/2;
+    p.line(mx-12, y-8, mx+12, y-8);
+    p.fill(...col); p.noStroke();
+    p.triangle(mx+12, y-8, mx+6, y-14, mx+18, y-14);
+  }
+
+  // ================ RESULTS PANEL ================
+  function drawResultsPanel() {
+    const px = 610, pw = CW - px - 10, py = 10;
+
+    p.fill(218, 225, 245); p.noStroke();
+    p.rect(px, py, pw, CH-20, 8);
+
+    p.fill(30,30,60); p.textSize(14); p.textStyle(p.BOLD);
+    p.textAlign(p.LEFT,p.TOP);
+    p.text('Results', px+12, py+12);
+    p.textStyle(p.NORMAL);
+
+    // Large P readout
+    const safety = getSafety();
+    const pColor = safety==='over'    ? [200,30,30]
+                 : safety==='caution' ? [160,100,0]
+                 :                      [20,140,50];
+
+    p.fill(...pColor); p.textSize(13); p.textAlign(p.LEFT,p.TOP);
+    p.text('Power:', px+12, py+38);
+    p.textSize(28); p.textStyle(p.BOLD);
+    p.text(fmtVal(P,'W'), px+12, py+54);
+    p.textStyle(p.NORMAL);
+
+    // Thermometer
+    drawThermometer(p, px+155, py+20, 22, 140);
+
+    // Safety badge
+    drawSafetyBadge(p, px+12, py+100, pw-30, safety);
+
+    // Equations
+    p.fill(40,40,80); p.textSize(11); p.textAlign(p.LEFT,p.TOP);
+    p.textStyle(p.BOLD); p.text('Equations:', px+12, py+170);
+    p.textStyle(p.NORMAL);
+    const eqs = [
+      `P = V × I  =  ${fmtVal(V,'V')} × ${fmtVal(I,'A')}  =  ${fmtVal(P,'W')}`,
+      `P = V²/R  =  ${fmtVal(V,'V')}² / ${fmtVal(R,'Ω')}  =  ${fmtVal(P,'W')}`,
+      `P = I²×R  =  ${fmtVal(I,'A')}² × ${fmtVal(R,'Ω')}  =  ${fmtVal(P,'W')}`,
+    ];
+    eqs.forEach((eq,i) => {
+      p.fill(50,50,100); p.textSize(10); p.textAlign(p.LEFT,p.TOP);
+      p.text(eq, px+12, py+188+i*18);
+    });
+
+    // Rating info
+    p.fill(80,60,20); p.textSize(11);
+    p.text(`Rating: ${RATING_LABELS[ratingIdx]}  (${RATINGS[ratingIdx]}W)`, px+12, py+248);
+    const pct = Math.min(P/RATINGS[ratingIdx]*100, 999);
+    p.text(`Usage: ${isFinite(pct)?pct.toFixed(0):'—'}% of rating`, px+12, py+264);
+  }
+
+  function drawThermometer(p, x, y, w, h) {
+    const safety = getSafety();
+    const pct = isFinite(P) && RATINGS[ratingIdx] > 0
+      ? Math.min(P / RATINGS[ratingIdx], 1.5) : 0;
+    const fillH = (h - 20) * Math.min(pct, 1.0);
+
+    const bulbR = w/2 + 3;
+    const stemW = w;
+    const stemH = h;
+    const stemX = x - stemW/2;
+    const stemY = y;
+    const bulbY = y + stemH;
+
+    // Outer stem
+    p.fill(220); p.stroke(120); sw(p,1.5);
+    p.rect(stemX, stemY, stemW, stemH, stemW/2);
+    // Outer bulb
+    p.fill(220); p.circle(x, bulbY + bulbR*0.6, bulbR*2);
+
+    // Fluid
+    const fluidCol = safety==='over'    ? [220,40,40]
+                   : safety==='caution' ? [200,140,0]
+                   :                      [30,150,60];
+    p.fill(...fluidCol); p.noStroke();
+    // Bulb fill
+    p.circle(x, bulbY + bulbR*0.6, bulbR*2 - 4);
+    // Stem fill
+    if (fillH > 0) {
+      p.rect(stemX+2, stemY + stemH - fillH, stemW-4, fillH + 2, (stemW-4)/2);
+    }
+
+    // Tick marks
+    p.stroke(80); sw(p,1);
+    for (let t=0; t<=4; t++) {
+      const ty2 = stemY + stemH - (stemH-10)*t/4;
+      p.line(x+stemW/2+2, ty2, x+stemW/2+8, ty2);
+      p.noStroke(); p.fill(60); p.textSize(8); p.textAlign(p.LEFT,p.CENTER);
+      p.text(t*25+'%', x+stemW/2+10, ty2);
+      p.stroke(80);
+    }
+
+    // Shimmer when over
+    if (safety === 'over') {
+      for (let i=0;i<3;i++) {
+        const wx = x + Math.sin(heatAnim*2+i*2)*5;
+        const wy = stemY - 10 - i*12 - Math.abs(Math.sin(heatAnim+i))*8;
+        p.noStroke(); p.fill(255,100,0, 140 - i*30);
+        p.ellipse(wx, wy, 8, 14);
+      }
+    }
+
+    // Label
+    p.noStroke(); p.fill(60); p.textSize(10); p.textAlign(p.CENTER,p.TOP);
+    p.text('Load', x, bulbY + bulbR*1.5 + 2);
+  }
+
+  function drawSafetyBadge(p, x, y, w, safety) {
+    const cols = {
+      safe:    { bg:[20,160,50],   fg:[255,255,255], text:'✓  SAFE',    sub:'< 50% of rating' },
+      caution: { bg:[200,140,0],   fg:[255,255,255], text:'⚠  CAUTION', sub:'50–100% of rating' },
+      over:    { bg:[200,30,30],   fg:[255,255,255], text:'✗  OVERLOAD', sub:'Exceeds power rating!' },
+    };
+    const c = cols[safety];
+    const pulse = safety==='over' ? Math.sin(heatAnim*4)*0.15 : 0;
+    const h = 40;
+    p.fill(...c.bg.map(v=>Math.min(255,v*(1+pulse)))); p.noStroke();
+    p.rect(x, y, w, h, 8);
+    p.fill(...c.fg); p.textSize(14); p.textStyle(p.BOLD); p.textAlign(p.CENTER,p.CENTER);
+    p.text(c.text, x+w/2, y+h/2-6);
+    p.textStyle(p.NORMAL); p.textSize(10);
+    p.text(c.sub, x+w/2, y+h/2+10);
+  }
+
+  function getSafety() {
+    if (!isFinite(P) || P <= 0) return 'safe';
+    const ratio = P / RATINGS[ratingIdx];
+    if (ratio > 1.0) return 'over';
+    if (ratio >= 0.5) return 'caution';
+    return 'safe';
+  }
+
+  // ---- Formatting ----
+  function fmtVal(v, unit) {
+    if (!isFinite(v)) return '—';
+    let disp, u;
+    if (unit === 'V') {
+      if (Math.abs(v) >= 1)      { disp=v;       u='V'; }
+      else                       { disp=v*1e3;    u='mV'; }
+    } else if (unit === 'A') {
+      if (Math.abs(v) >= 1)      { disp=v;       u='A'; }
+      else if (Math.abs(v)>=1e-3){ disp=v*1e3;   u='mA'; }
+      else                       { disp=v*1e6;   u='μA'; }
+    } else if (unit === 'Ω') {
+      if (Math.abs(v) >= 1e6)    { disp=v/1e6;   u='MΩ'; }
+      else if (Math.abs(v)>=1e3) { disp=v/1e3;   u='kΩ'; }
+      else                       { disp=v;        u='Ω'; }
+    } else if (unit === 'W') {
+      if (Math.abs(v) >= 1)      { disp=v;       u='W'; }
+      else if (Math.abs(v)>=1e-3){ disp=v*1e3;   u='mW'; }
+      else                       { disp=v*1e6;   u='μW'; }
+    }
+    return (+disp.toPrecision(4)) + ' ' + u;
+  }
+
+  function sw(p2, w) { p2.strokeWeight(w); }
+
+  // ---- Input handling ----
+  p.mousePressed = function() {
+    const mx=p.mouseX, my=p.mouseY;
+
+    // Mode buttons
+    for (const b of modeBtns) {
+      if (mx>=b.x && mx<=b.x+b.w && my>=b.y && my<=b.y+b.h) {
+        mode = b.key; recalculate(); return;
+      }
+    }
+    // Rating buttons
+    for (let i=0; i<ratingBtns.length; i++) {
+      const b = ratingBtns[i];
+      if (mx>=b.x && mx<=b.x+b.w && my>=b.y && my<=b.y+b.h) {
+        ratingIdx = i; return;
+      }
+    }
+    // Calc button
+    if (mx>=calcBtn.x && mx<=calcBtn.x+calcBtn.w && my>=calcBtn.y && my<=calcBtn.y+calcBtn.h) {
+      recalculate();
+    }
+  };
+
+}); // end p5
+</script>
+</body>
+</html>
