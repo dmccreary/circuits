@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+<title>Series-Parallel Circuit Analysis</title>
+<script src="https://cdn.jsdelivr.net/npm/p5@1.11.7/lib/p5.js"></script>
+<script src="../circuit-lib/circuit-lib.js"></script>
+<style>
+  body { margin: 0; padding: 0; background: #e8eaf0; }
+  canvas { display: block; }
+</style>
+</head>
+<body>
+<main></main>
+<script>
+// ============================================================
+// Series-Parallel Circuit Analysis MicroSim
+// Chapter 2 – Bloom L4 (Analyze): examine series-parallel
+//   circuits by systematic reduction to equivalent resistance
+//
+// Topology: Vs → R1(series) → [R2 ∥ R3](parallel) → R4(series)
+//
+// 6-stage step-through:
+//   1  Original circuit with all values
+//   2  Identify R2 ∥ R3 parallel group (highlight)
+//   3  Replace R2∥R3 with R23 (simplified circuit)
+//   4  All series: R_total = R1 + R23 + R4
+//   5  I_total = Vs / R_total
+//   6  Work backward: voltage drops + branch currents
+// ============================================================
+
+// ── Canvas & layout ────────────────────────────────────────
+const CW       = 680;
+const circuitH = 400;    // schematic + side panel height
+const controlH = 150;    // bottom controls
+const CH       = circuitH + controlH;  // 550
+const PANEL_X  = 455;    // schematic | log panel divider
+
+let lineWidth = 2;   // used by circuit-lib.js
+
+// ── Schematic geometry ─────────────────────────────────────
+// Rectangular loop: battery on left, top rail, bottom rail
+const TOP_Y  = 112;   // top bus rail
+const BOT_Y  = 262;   // bottom bus rail
+const PAR_Y  = 197;   // parallel lower path (R3)
+const BAT_CX = 65;    // battery symbol x
+const BAT_CY = 187;   // battery centre y  = (TOP_Y+BOT_Y)/2
+const BAT_R  = 28;    // battery symbol radius
+
+// Key x-positions along the top rail
+const R1_XL  = 98;    // R1 left  endpoint
+const R1_XR  = 200;   // R1 right endpoint = Node A
+const AX     = 200;   // Node A
+const PAR_XR = 340;   // Parallel right = Node B
+const BX     = 340;   // Node B
+const R4_XR  = 435;   // R4 right endpoint
+const RC_X   = 435;   // right corner
+
+// Resistor bounding boxes (x, y, w, h) for drawResistor HORIZONTAL
+// Center y of horizontal resistor = y + h/2
+const RH_H   = 38;    // resistor height
+const R1_Y   = TOP_Y  - RH_H / 2;   // 93
+const R2_Y   = TOP_Y  - RH_H / 2;   // 93  (on top rail)
+const R3_Y   = PAR_Y  - RH_H / 2;   // 178 (on lower rail)
+const R4_Y   = TOP_Y  - RH_H / 2;   // 93
+
+// R2/R3/R23 share same x-span: AX → PAR_XR = 200..340  (width 140)
+// R4: BX → R4_XR = 340..435  (width 95)
+
+// ── Circuit values ─────────────────────────────────────────
+let Vs  = 24;     // V,  1–40
+let R1v = 2000;   // Ω, 500–5000
+let R2v = 6000;   // Ω, 500–10000
+let R3v = 3000;   // Ω, 500–10000
+let R4v = 1000;   // Ω, 500–5000
+
+// Derived values (recomputed by recalculate())
+let R23, R_total, I_total, V1, V23, V4, I2, I3;
+
+function recalculate() {
+    R23     = (R2v * R3v) / (R2v + R3v);
+    R_total = R1v + R23 + R4v;
+    I_total = Vs / R_total;
+    V1      = I_total * R1v;
+    V23     = I_total * R23;
+    V4      = I_total * R4v;
+    I2      = V23 / R2v;
+    I3      = V23 / R3v;
+}
+
+// ── Stage control ──────────────────────────────────────────
+let stage    = 1;
+const NSTAGE = 6;
+
+// ── Animation ─────────────────────────────────────────────
+let isAnimating = false;
+
+// ── Slider layout ──────────────────────────────────────────
+const SL_LM = 245;
+const SL_X  = SL_LM;
+const SL_W  = CW - SL_LM - 18;   // ≈ 417px
+
+const SL_VS = circuitH + 42;
+const SL_R1 = circuitH + 66;
+const SL_R2 = circuitH + 90;
+const SL_R3 = circuitH + 114;
+const SL_R4 = circuitH + 138;    // thumb bottom = 138+9 = 147 < controlH=150 ✓
+
+// ── Buttons ────────────────────────────────────────────────
+const BY     = circuitH + 10;
+const PREV_B = { x: 10,  y: BY, w: 90,  h: 26 };
+const NEXT_B = { x: 165, y: BY, w: 90,  h: 26 };
+const ANIM_B = { x: 390, y: BY, w: 120, h: 26 };
+const RSET_B = { x: 520, y: BY, w: 75,  h: 26 };
+
+let dragSlider = null;
+
+// ══════════════════════════════════════════════════════════
+// SETUP
+// ══════════════════════════════════════════════════════════
+function setup() {
+    createCanvas(CW, CH).parent(select('main').elt);
+    textFont('Arial');
+    recalculate();
+}
+
+// ══════════════════════════════════════════════════════════
+// DRAW
+// ══════════════════════════════════════════════════════════
+function draw() {
+    if (isAnimating && stage >= 5) animationTime += deltaTime;
+    background(232, 234, 240);
+    drawSchematic();
+    drawLogPanel();
+    drawControls();
+}
+
+// ──────────────────────────────────────────────────────────
+// FORMAT HELPERS
+// ──────────────────────────────────────────────────────────
+function fmtV(v)  { return v.toFixed(2) + ' V'; }
+function fmtI(v)  { return (v * 1000).toFixed(2) + ' mA'; }
+function fmtR(v) {
+    return v >= 1000 ? (v / 1000).toFixed(1) + ' kΩ' : v.toFixed(0) + ' Ω';
+}
+
+// ══════════════════════════════════════════════════════════
+// SCHEMATIC
+// ══════════════════════════════════════════════════════════
+function drawSchematic() {
+    // Background
+    fill(252, 252, 255); noStroke();
+    rect(0, 0, PANEL_X, circuitH, 8, 0, 0, 8);
+
+    // Title — reflects current stage
+    const titles = [
+        '', 'Original Circuit', 'Identify Parallel Group',
+        'Replace R2∥R3 with R23', 'Find Total Resistance',
+        'Calculate Total Current', 'Work Backward'
+    ];
+    fill(20, 30, 80); textSize(13); textStyle(BOLD);
+    textAlign(CENTER, TOP);
+    text(titles[stage], PANEL_X / 2, 8);
+    textStyle(NORMAL);
+
+    // Node labels A and B (always visible)
+    fill(50, 50, 50); textSize(11); noStroke();
+    textAlign(CENTER, BOTTOM);
+    text('A', AX, TOP_Y - 3);
+    text('B', BX, TOP_Y - 3);
+
+    // ── Draw the correct circuit variant ────────────────────
+    if (stage <= 2) drawOriginalCircuit();
+    else            drawSimplifiedCircuit();
+
+    // ── Stage-specific overlays ──────────────────────────────
+    if (stage === 2)           drawParallelHighlight();
+    if (stage >= 3 && stage <= 3) drawR23Highlight();
+    if (stage >= 4)            drawRtotalAnnotation();
+    if (stage >= 5)            drawCurrentAnnotation();
+    if (stage >= 6)            drawVoltageAnnotations();
+}
+
+// ─────────────────────────────────────────────────────────
+// Original circuit: R1 series, R2∥R3 parallel, R4 series
+// ─────────────────────────────────────────────────────────
+function drawOriginalCircuit() {
+    drawBattery();
+
+    // Top rail wire: battery+ to R1
+    wire(BAT_CX, TOP_Y, R1_XL, TOP_Y);
+
+    // R1
+    stroke(0); noFill();
+    drawResistor(R1_XL, R1_Y, R1_XR - R1_XL, RH_H, lineWidth, HORIZONTAL,
+        'R1 = ' + fmtR(R1v), TOP);
+
+    // Vertical drop at Node A (top to lower rail)
+    wire(AX, TOP_Y, AX, PAR_Y);
+
+    // R2 on top path
+    stroke(0); noFill();
+    drawResistor(AX, R2_Y, PAR_XR - AX, RH_H, lineWidth, HORIZONTAL,
+        'R2 = ' + fmtR(R2v), TOP);
+
+    // R3 on lower path
+    stroke(0); noFill();
+    drawResistor(AX, R3_Y, PAR_XR - AX, RH_H, lineWidth, HORIZONTAL,
+        'R3 = ' + fmtR(R3v), BOTTOM);
+
+    // Vertical drop at Node B (lower rail back up to top)
+    wire(BX, PAR_Y, BX, TOP_Y);
+
+    // R4
+    stroke(0); noFill();
+    drawResistor(BX, R4_Y, R4_XR - BX, RH_H, lineWidth, HORIZONTAL,
+        'R4 = ' + fmtR(R4v), TOP);
+
+    // Right corner and bottom rail
+    wire(RC_X, TOP_Y, RC_X, BOT_Y);
+    wire(BAT_CX, BOT_Y, RC_X, BOT_Y);
+
+    // Junction dots
+    jdot(BAT_CX, TOP_Y); jdot(BAT_CX, BOT_Y);
+    jdot(AX, TOP_Y); jdot(AX, PAR_Y);
+    jdot(BX, TOP_Y); jdot(BX, PAR_Y);
+    jdot(RC_X, TOP_Y);
+}
+
+// ─────────────────────────────────────────────────────────
+// Simplified circuit: R1 — R23 — R4 all in series
+// ─────────────────────────────────────────────────────────
+function drawSimplifiedCircuit() {
+    drawBattery();
+
+    // Main series path – animated in stages 5+
+    const spd = constrain(I_total * 18, 0.003, 0.6);
+    if (isAnimating && stage >= 5) {
+        lineWidth = 3;
+        // Battery+ to R1
+        drawAnimatedWire(BAT_CX, TOP_Y, R1_XL, TOP_Y, spd, 0.85);
+        // R1 to R23 to R4 (whole top rail via resistor midpoints)
+        drawAnimatedWire(R1_XL, TOP_Y, AX, TOP_Y, spd, 0.85);
+        drawAnimatedWire(AX, TOP_Y, PAR_XR, TOP_Y, spd, 0.85);
+        drawAnimatedWire(PAR_XR, TOP_Y, R4_XR, TOP_Y, spd, 0.85);
+        // Right corner & bottom rail back to battery-
+        drawAnimatedWire(RC_X, TOP_Y, RC_X, BOT_Y, spd, 0.85);
+        drawAnimatedWire(RC_X, BOT_Y, BAT_CX, BOT_Y, spd, 0.85);
+        drawAnimatedWire(BAT_CX, BOT_Y, BAT_CX, TOP_Y, spd, 0.85);
+        lineWidth = 2;
+    } else {
+        wire(BAT_CX, TOP_Y, R1_XL, TOP_Y);
+        wire(RC_X, TOP_Y, RC_X, BOT_Y);
+        wire(BAT_CX, BOT_Y, RC_X, BOT_Y);
+    }
+
+    // R1
+    stroke(0); noFill();
+    drawResistor(R1_XL, R1_Y, R1_XR - R1_XL, RH_H, lineWidth, HORIZONTAL,
+        'R1 = ' + fmtR(R1v), TOP);
+
+    // R23 (equivalent, drawn in teal to distinguish)
+    const r23col = [0, 130, 120];
+    stroke(r23col[0], r23col[1], r23col[2]); noFill();
+    drawResistor(AX, R2_Y, PAR_XR - AX, RH_H, lineWidth, HORIZONTAL,
+        'R23 = ' + fmtR(R23), TOP);
+    stroke(0);
+
+    // R4
+    stroke(0); noFill();
+    drawResistor(BX, R4_Y, R4_XR - BX, RH_H, lineWidth, HORIZONTAL,
+        'R4 = ' + fmtR(R4v), TOP);
+
+    // Junction dots
+    jdot(BAT_CX, TOP_Y); jdot(BAT_CX, BOT_Y);
+    jdot(AX, TOP_Y);
+    jdot(BX, TOP_Y);
+    jdot(RC_X, TOP_Y);
+}
+
+// ─────────────────────────────────────────────────────────
+// Stage 2: highlight the parallel R2∥R3 group
+// ─────────────────────────────────────────────────────────
+function drawParallelHighlight() {
+    const bx = AX - 10, by = TOP_Y - 28;
+    const bw = (PAR_XR - AX) + 20, bh = (PAR_Y - TOP_Y) + RH_H / 2 + 22;
+
+    // Dashed highlight box
+    noFill(); stroke(220, 120, 0); strokeWeight(2);
+    drawingContext.setLineDash([7, 4]);
+    rect(bx, by, bw, bh, 5);
+    drawingContext.setLineDash([]);
+
+    // Re-draw R2 and R3 in orange to stand out
+    stroke(220, 120, 0); noFill();
+    drawResistor(AX, R2_Y, PAR_XR - AX, RH_H, lineWidth, HORIZONTAL,
+        'R2 = ' + fmtR(R2v), TOP);
+    drawResistor(AX, R3_Y, PAR_XR - AX, RH_H, lineWidth, HORIZONTAL,
+        'R3 = ' + fmtR(R3v), BOTTOM);
+    stroke(0);
+
+    // Label above the highlight box
+    noStroke(); fill(200, 90, 0);
+    textSize(11); textStyle(BOLD); textAlign(CENTER, BOTTOM);
+    text('PARALLEL GROUP', bx + bw / 2, by - 2);
+    text('R2 ∥ R3', bx + bw / 2, by - 14);
+    textStyle(NORMAL);
+}
+
+// ─────────────────────────────────────────────────────────
+// Stage 3: highlight R23 as the newly placed equivalent
+// ─────────────────────────────────────────────────────────
+function drawR23Highlight() {
+    const bx = AX - 10, by = TOP_Y - 30;
+    const bw = (PAR_XR - AX) + 20, bh = 56;
+
+    noFill(); stroke(0, 160, 140); strokeWeight(2);
+    drawingContext.setLineDash([6, 4]);
+    rect(bx, by, bw, bh, 5);
+    drawingContext.setLineDash([]);
+
+    // Callout showing the formula
+    fill(230, 250, 248); stroke(0, 160, 140); strokeWeight(1);
+    rect(bx + 5, by + bh + 4, bw - 10, 44, 4);
+    noStroke(); fill(0, 110, 100);
+    textSize(10); textAlign(CENTER, TOP);
+    text('R2 ∥ R3 = (R2 × R3) / (R2 + R3)', bx + bw / 2, by + bh + 8);
+    text('= (' + fmtR(R2v) + ' × ' + fmtR(R3v) + ')', bx + bw / 2, by + bh + 20);
+
+    fill(0, 120, 110); textStyle(BOLD);
+    text('R23 = ' + fmtR(R23), bx + bw / 2, by + bh + 34);
+    textStyle(NORMAL);
+}
+
+// ─────────────────────────────────────────────────────────
+// Stage 4+: total resistance annotation above top rail
+// ─────────────────────────────────────────────────────────
+function drawRtotalAnnotation() {
+    if (stage < 4) return;
+    const y = TOP_Y - 52;
+    noStroke(); fill(80, 20, 140);
+    textSize(10); textStyle(BOLD); textAlign(CENTER, BOTTOM);
+    text('R_total = R1 + R23 + R4 = ' + fmtR(R1v) + ' + ' + fmtR(R23) +
+         ' + ' + fmtR(R4v) + ' = ' + fmtR(R_total), PANEL_X / 2, y);
+    textStyle(NORMAL);
+}
+
+// ─────────────────────────────────────────────────────────
+// Stage 5+: current arrow and I_total label
+// ─────────────────────────────────────────────────────────
+function drawCurrentAnnotation() {
+    // Arrow on bottom rail going left
+    const ax = (BAT_CX + RC_X) / 2, ay = BOT_Y + 12;
+    noStroke(); fill(30, 100, 30);
+    triangle(ax + 12, ay - 4, ax - 2, ay, ax + 12, ay + 4);
+    textSize(11); textStyle(BOLD); textAlign(RIGHT, CENTER);
+    fill(30, 100, 30);
+    text('I = ' + fmtI(I_total), ax + 16, ay + 1);
+    textStyle(NORMAL);
+}
+
+// ─────────────────────────────────────────────────────────
+// Stage 6: voltage drop labels + branch current callout
+// ─────────────────────────────────────────────────────────
+function drawVoltageAnnotations() {
+    noStroke(); textSize(11); textAlign(CENTER, TOP);
+
+    // V across R1
+    fill(160, 40, 40);
+    text('V1=' + fmtV(V1), (R1_XL + R1_XR) / 2, TOP_Y + 5);
+
+    // V across R23
+    fill(0, 110, 100);
+    text('V23=' + fmtV(V23), (AX + PAR_XR) / 2, TOP_Y + 5);
+
+    // V across R4
+    fill(40, 40, 180);
+    text('V4=' + fmtV(V4), (BX + R4_XR) / 2, TOP_Y + 5);
+
+    // Branch current callout box (below main circuit)
+    const bx = AX - 5, by = BOT_Y + 26, bw = PAR_XR - AX + 10, bh = 60;
+    fill(240, 248, 240); stroke(0, 140, 80); strokeWeight(1);
+    rect(bx, by, bw, bh, 4);
+    noStroke(); fill(0, 100, 60); textSize(10); textAlign(LEFT, TOP);
+    text('Back in original circuit:', bx + 5, by + 4);
+    text('I2 = V23/R2 = ' + fmtI(I2), bx + 5, by + 18);
+    text('I3 = V23/R3 = ' + fmtI(I3), bx + 5, by + 31);
+    textStyle(BOLD);
+    text('I2 + I3 = ' + fmtI(I2 + I3) + '  ✓', bx + 5, by + 44);
+    textStyle(NORMAL);
+}
+
+// ─────────────────────────────────────────────────────────
+// Shared drawing helpers
+// ─────────────────────────────────────────────────────────
+function drawBattery() {
+    // Lead wires
+    wire(BAT_CX, TOP_Y, BAT_CX, BAT_CY - BAT_R);
+    wire(BAT_CX, BAT_CY + BAT_R, BAT_CX, BOT_Y);
+
+    // White patch + circle
+    fill(252, 252, 255); noStroke();
+    rect(BAT_CX - BAT_R - 2, BAT_CY - BAT_R - 2,
+         (BAT_R + 2) * 2, (BAT_R + 2) * 2);
+    fill(252, 252, 255); stroke(0); strokeWeight(2);
+    circle(BAT_CX, BAT_CY, BAT_R * 2);
+
+    // + and −
+    strokeWeight(1.8); stroke(40, 120, 40);
+    line(BAT_CX - 7, BAT_CY - 10, BAT_CX + 7, BAT_CY - 10);
+    line(BAT_CX,     BAT_CY - 16, BAT_CX,     BAT_CY - 4);
+    line(BAT_CX - 7, BAT_CY + 10, BAT_CX + 7, BAT_CY + 10);
+
+    // Vs label
+    noStroke(); fill(20, 60, 160);
+    textSize(13); textStyle(BOLD); textAlign(RIGHT, CENTER);
+    text('Vs', BAT_CX - BAT_R - 5, BAT_CY - 8);
+    textStyle(NORMAL); textSize(12);
+    text(fmtV(Vs), BAT_CX - BAT_R - 5, BAT_CY + 11);
+}
+
+function wire(x1, y1, x2, y2) {
+    stroke(0); strokeWeight(2); line(x1, y1, x2, y2);
+}
+
+function jdot(x, y) {
+    fill(0); noStroke(); circle(x, y, 7);
+}
+
+// ══════════════════════════════════════════════════════════
+// LOG PANEL – step-by-step cumulative calculation reveal
+// ══════════════════════════════════════════════════════════
+function drawLogPanel() {
+    const px = PANEL_X, pw = CW - PANEL_X;
+    const lx = px + 9, lw = pw - 14;
+
+    // Background
+    fill(233, 237, 252); noStroke();
+    rect(px, 0, pw, circuitH, 0, 8, 8, 0);
+
+    // Title bar
+    fill(50, 70, 160); noStroke();
+    rect(px, 0, pw, 24, 0, 8, 0, 0);
+    fill(255); textSize(11); textStyle(BOLD); textAlign(CENTER, CENTER);
+    text('SOLUTION LOG  Stage ' + stage + '/' + NSTAGE,
+         px + pw / 2, 12);
+    textStyle(NORMAL);
+
+    let y = 32;
+
+    // ── Stage 1: Circuit given ────────────────────────────
+    pLabel('CIRCUIT VALUES', lx, y);             y += 13;
+    pRow('Vs  = ' + fmtV(Vs), lx,   y, [20, 60, 160]);   y += 13;
+    pRow('R1  = ' + fmtR(R1v), lx,  y, [100, 30, 30]);   y += 13;
+    pRow('R2  = ' + fmtR(R2v), lx,  y, [180, 90,  0]);   y += 13;
+    pRow('R3  = ' + fmtR(R3v), lx,  y, [180, 90,  0]);   y += 13;
+    pRow('R4  = ' + fmtR(R4v), lx,  y, [40, 40, 180]);   y += 17;
+
+    if (stage < 2) return;
+    pDivider(lx, y, lw); y += 8;
+
+    // ── Stage 2: Identify parallel group ─────────────────
+    pLabel('STEP 1: PARALLEL GROUP', lx, y);     y += 13;
+    pRow('R2 ∥ R3 → can be reduced', lx, y, [180, 90, 0]); y += 17;
+
+    if (stage < 3) return;
+    pDivider(lx, y, lw); y += 8;
+
+    // ── Stage 3: Compute R23 ──────────────────────────────
+    pLabel('STEP 2: REDUCE R2 ∥ R3', lx, y);    y += 13;
+    pRow('R23 = R2·R3 / (R2+R3)', lx,    y, [50, 50, 50]); y += 13;
+    pRow('    = (' + fmtR(R2v) + ' × ' + fmtR(R3v) + ')',        lx+4, y, [60,60,60]); y += 13;
+    pRow('      / (' + fmtR(R2v) + ' + ' + fmtR(R3v) + ')', lx+4, y, [60,60,60]); y += 13;
+    noStroke(); fill(0, 120, 100); textSize(11); textStyle(BOLD); textAlign(LEFT, TOP);
+    text('R23 = ' + fmtR(R23), lx, y); textStyle(NORMAL);  y += 17;
+
+    if (stage < 4) return;
+    pDivider(lx, y, lw); y += 8;
+
+    // ── Stage 4: R_total (series) ─────────────────────────
+    pLabel('STEP 3: TOTAL RESISTANCE', lx, y);   y += 13;
+    pRow('R_tot = R1 + R23 + R4', lx,  y, [50, 50, 50]); y += 13;
+    pRow('     = ' + fmtR(R1v) + ' + ' + fmtR(R23) + ' + ' + fmtR(R4v), lx+4, y, [50,50,50]); y += 13;
+    noStroke(); fill(80, 20, 140); textSize(11); textStyle(BOLD); textAlign(LEFT, TOP);
+    text('R_tot = ' + fmtR(R_total), lx, y); textStyle(NORMAL); y += 17;
+
+    if (stage < 5) return;
+    pDivider(lx, y, lw); y += 8;
+
+    // ── Stage 5: I_total ──────────────────────────────────
+    pLabel('STEP 4: TOTAL CURRENT', lx, y);      y += 13;
+    pRow('I = Vs / R_tot', lx,          y, [50, 50, 50]); y += 13;
+    pRow('  = ' + fmtV(Vs) + ' / ' + fmtR(R_total), lx+4, y, [50,50,50]); y += 13;
+    fill(190, 55, 10); noStroke(); rect(lx, y, lw, 17, 3);
+    fill(255); textSize(11); textStyle(BOLD); textAlign(LEFT, TOP);
+    text('I = ' + fmtI(I_total), lx + 4, y + 2); textStyle(NORMAL); y += 21;
+
+    if (stage < 6) return;
+    pDivider(lx, y, lw); y += 8;
+
+    // ── Stage 6: Work backward ────────────────────────────
+    pLabel('STEP 5: WORK BACKWARD', lx, y);      y += 13;
+    pRow('V_R1 = I·R1  = ' + fmtV(V1),  lx, y, [100, 30, 30]); y += 13;
+    pRow('V_R23= I·R23 = ' + fmtV(V23), lx, y, [0, 100, 90]);  y += 13;
+    pRow('V_R4 = I·R4  = ' + fmtV(V4),  lx, y, [40, 40, 180]); y += 13;
+    // KVL check
+    const vsum = V1 + V23 + V4;
+    const ok = Math.abs(vsum - Vs) < 0.001;
+    fill(ok ? color(0,140,0) : color(200,0,0)); noStroke();
+    rect(lx, y, lw, 17, 3);
+    fill(255); textSize(11); textStyle(BOLD); textAlign(LEFT, TOP);
+    text('V1+V23+V4 = ' + fmtV(vsum) + (ok ? '  ✓' : '  !'), lx + 4, y + 2);
+    textStyle(NORMAL); y += 21;
+
+    pDivider(lx, y, lw); y += 8;
+    pLabel('BRANCH CURRENTS', lx, y);            y += 13;
+    pRow('I2 = V23/R2 = ' + fmtI(I2), lx, y, [180, 90,  0]); y += 13;
+    pRow('I3 = V23/R3 = ' + fmtI(I3), lx, y, [180, 90,  0]); y += 13;
+    noStroke(); fill(0, 130, 60); textSize(11); textStyle(BOLD); textAlign(LEFT, TOP);
+    text('I2+I3 = ' + fmtI(I2+I3) + '  ✓', lx, y);
+    textStyle(NORMAL);
+}
+
+function pLabel(txt, x, y) {
+    noStroke(); fill(0, 100, 0);
+    textSize(10); textStyle(BOLD); textAlign(LEFT, TOP);
+    text(txt, x, y); textStyle(NORMAL);
+}
+
+function pRow(txt, x, y, col) {
+    noStroke(); fill(col[0], col[1], col[2]);
+    textSize(11); textAlign(LEFT, TOP);
+    text(txt, x, y);
+}
+
+function pDivider(x, y, w) {
+    stroke(175, 180, 215); strokeWeight(1); line(x, y, x + w, y);
+}
+
+// ══════════════════════════════════════════════════════════
+// CONTROLS
+// ══════════════════════════════════════════════════════════
+function drawControls() {
+    fill(218, 224, 240); noStroke();
+    rect(0, circuitH, CW, controlH, 0, 0, 8, 8);
+
+    // Stage buttons
+    drawBtn(PREV_B, '◀ Prev Step',
+        stage > 1 ? [70, 90, 175] : [150, 155, 180]);
+
+    noStroke(); fill(25, 35, 100);
+    textSize(12); textStyle(BOLD); textAlign(CENTER, CENTER);
+    text('Stage ' + stage + '/' + NSTAGE,
+         (PREV_B.x + PREV_B.w + NEXT_B.x) / 2, BY + PREV_B.h / 2);
+    textStyle(NORMAL);
+
+    drawBtn(NEXT_B, 'Next Step ▶',
+        stage < NSTAGE ? [70, 90, 175] : [150, 155, 180]);
+    drawBtn(ANIM_B,
+        isAnimating ? '■ Stop Animation' : '▶ Animate (Stage 5+)',
+        isAnimating ? [150, 50, 50] : [50, 125, 55]);
+    drawBtn(RSET_B, '↺ Reset', [100, 105, 135]);
+
+    // Sliders
+    drawSlider('Source Voltage (Vs):', Vs,  1,     40,    SL_VS, fmtV(Vs));
+    drawSlider('R1 (Ω):',             R1v, 500,   5000,  SL_R1, fmtR(R1v));
+    drawSlider('R2 (Ω):',             R2v, 500,   10000, SL_R2, fmtR(R2v));
+    drawSlider('R3 (Ω):',             R3v, 500,   10000, SL_R3, fmtR(R3v));
+    drawSlider('R4 (Ω):',             R4v, 500,   5000,  SL_R4, fmtR(R4v));
+}
+
+function drawBtn(b, lbl, col) {
+    fill(col[0], col[1], col[2]); noStroke();
+    rect(b.x, b.y, b.w, b.h, 5);
+    fill(255); textSize(11); textStyle(BOLD); textAlign(CENTER, CENTER);
+    text(lbl, b.x + b.w / 2, b.y + b.h / 2);
+    textStyle(NORMAL);
+}
+
+function drawSlider(label, val, mn, mx, cy, dispVal) {
+    const t  = (val - mn) / (mx - mn);
+    const tx = SL_X + SL_W * t;
+
+    noStroke(); fill(35, 45, 100);
+    textSize(11); textAlign(RIGHT, CENTER);
+    text(label + '  ' + dispVal, SL_X - 8, cy);
+
+    fill(178, 183, 210); noStroke(); rect(SL_X, cy - 4, SL_W, 8, 4);
+    fill(70, 110, 200); rect(SL_X, cy - 4, SL_W * t, 8, 4);
+    fill(255); stroke(75, 110, 200); strokeWeight(2);
+    circle(tx, cy, 18);
+}
+
+// ══════════════════════════════════════════════════════════
+// INPUT
+// ══════════════════════════════════════════════════════════
+function mousePressed() {
+    if (inBtn(PREV_B) && stage > 1)      { stage--; return; }
+    if (inBtn(NEXT_B) && stage < NSTAGE) { stage++; return; }
+    if (inBtn(ANIM_B)) { isAnimating = !isAnimating; return; }
+    if (inBtn(RSET_B)) {
+        Vs = 24; R1v = 2000; R2v = 6000; R3v = 3000; R4v = 1000;
+        stage = 1; isAnimating = false; animationTime = 0;
+        recalculate(); return;
+    }
+    startSliderDrag();
+}
+
+function mouseDragged() { if (dragSlider) applySliderDrag(); }
+function mouseReleased() { dragSlider = null; }
+
+function inBtn(b) {
+    return mouseX >= b.x && mouseX <= b.x + b.w &&
+           mouseY >= b.y && mouseY <= b.y + b.h;
+}
+
+const SLIDER_DEFS = [
+    { key: 'vs', cy: SL_VS, mn: 1,   mx: 40    },
+    { key: 'r1', cy: SL_R1, mn: 500, mx: 5000  },
+    { key: 'r2', cy: SL_R2, mn: 500, mx: 10000 },
+    { key: 'r3', cy: SL_R3, mn: 500, mx: 10000 },
+    { key: 'r4', cy: SL_R4, mn: 500, mx: 5000  },
+];
+
+function startSliderDrag() {
+    for (const s of SLIDER_DEFS) {
+        if (mouseX >= SL_X - 12 && mouseX <= SL_X + SL_W + 12 &&
+            mouseY >= s.cy - 14  && mouseY <= s.cy + 14) {
+            dragSlider = s.key;
+            applySliderDrag();
+            return;
+        }
+    }
+}
+
+function applySliderDrag() {
+    const s   = SLIDER_DEFS.find(d => d.key === dragSlider);
+    if (!s) return;
+    const t   = constrain((mouseX - SL_X) / SL_W, 0, 1);
+    const raw = s.mn + t * (s.mx - s.mn);
+    if (s.key === 'vs') {
+        Vs = round(raw * 10) / 10;
+    } else {
+        const step = s.mx > 5000 ? 200 : 100;
+        const r = round(raw / step) * step;
+        if (s.key === 'r1') R1v = constrain(r, s.mn, s.mx);
+        if (s.key === 'r2') R2v = constrain(r, s.mn, s.mx);
+        if (s.key === 'r3') R3v = constrain(r, s.mn, s.mx);
+        if (s.key === 'r4') R4v = constrain(r, s.mn, s.mx);
+    }
+    recalculate();
+}
+</script>
+</body>
+</html>
