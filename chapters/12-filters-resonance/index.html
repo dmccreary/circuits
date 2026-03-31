@@ -12,7 +12,7 @@
         <meta name="author" content="Dan McCreary">
       
       
-        <link rel="canonical" href="https://dmccreary.github.io/circuits/chapters/12-filters-resonance/">
+        <link rel="canonical" href="https://nati-123.github.io/circuits/chapters/12-filters-resonance/">
       
       
         <link rel="prev" href="../11-frequency-response-bode/">
@@ -181,7 +181,7 @@
     
     
       <div class="md-header__source">
-        <a href="https://github.com/dmccreary/circuits" title="Go to repository" class="md-source" data-md-component="source">
+        <a href="https://github.com/Nati-123/circuits" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
@@ -226,7 +226,7 @@
   </label>
   
     <div class="md-nav__source">
-      <a href="https://github.com/dmccreary/circuits" title="Go to repository" class="md-source" data-md-component="source">
+      <a href="https://github.com/Nati-123/circuits" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
@@ -1398,6 +1398,16 @@
       
         
       
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
     
     
     
@@ -2412,7 +2422,7 @@
 
 
   
-    <a href="https://github.com/dmccreary/circuits/blob/master/docs/chapters/12-filters-resonance/index.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+    <a href="https://github.com/Nati-123/circuits/blob/master/docs/chapters/12-filters-resonance/index.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
     </a>
@@ -2536,46 +2546,37 @@ Use standard value R = 1.5 kΩ → actual <span class="arithmatex">\(f_c = 1.06\
 <h4 id="diagram-first-order-filter-comparison">Diagram: First-Order Filter Comparison</h4>
 <iframe src="../../sims/first-order-filters/main.html" width="100%" height="550px" scrolling="no" style="overflow: hidden;"></iframe>
 
-<details markdown="1">
+<details>
 <summary>First-Order Filter Comparison</summary>
-Type: microsim
-
-Bloom Level: Analyze (L4)
-Bloom Verb: compare
-
-Learning Objective: Students will compare RC and RL implementations of low-pass and high-pass filters by observing their frequency responses with the same cutoff frequency.
-
-Visual elements:
+<p>Type: microsim</p>
+<p>Bloom Level: Analyze (L4)
+Bloom Verb: compare</p>
+<p>Learning Objective: Students will compare RC and RL implementations of low-pass and high-pass filters by observing their frequency responses with the same cutoff frequency.</p>
+<p>Visual elements:
 - Four circuits: RC LP, RC HP, RL LP, RL HP
 - Bode magnitude plot showing all four responses overlaid
 - Cutoff frequency marker shared by all
-- Component values displayed for each circuit
-
-Interactive controls:
+- Component values displayed for each circuit</p>
+<p>Interactive controls:
 - Slider: Target cutoff frequency (100 Hz to 10 kHz)
 - Toggle: Show RC only / RL only / All
 - Toggle: Normalize component values
 - Display: Calculated R, C, L for each circuit
-- Input: Fix R or C/L value
-
-Observations highlighted:
+- Input: Fix R or C/L value</p>
+<p>Observations highlighted:
 - "Same cutoff, same response shape"
 - "RC more practical at audio frequencies"
-- "RL used in power applications"
-
-Default parameters:
+- "RL used in power applications"</p>
+<p>Default parameters:
 - f_c = 1 kHz
 - R = 1 kΩ for all
-- C = 159 nF, L = 159 mH (calculated)
-
-Canvas layout:
+- C = 159 nF, L = 159 mH (calculated)</p>
+<p>Canvas layout:
 - Circuit schematics: 400 × 200 pixels (top)
 - Bode plot: 600 × 250 pixels (bottom)
-- Control area: 100 pixels below
-
-Implementation: p5.js
+- Control area: 100 pixels below</p>
+<p>Implementation: p5.js</p>
 </details>
-
 <h2 id="second-order-filters-adding-resonance">Second-Order Filters: Adding Resonance</h2>
 <p><strong>Second-order filters</strong> contain two reactive elements and produce -40 dB/decade roll-off. They can exhibit resonance, producing a peak in the response.</p>
 <p><strong>Key parameters:</strong></p>
@@ -2639,50 +2640,41 @@ Implementation: p5.js
 <h4 id="diagram-second-order-filter-designer">Diagram: Second-Order Filter Designer</h4>
 <iframe src="../../sims/second-order-filter/main.html" width="100%" height="550px" scrolling="no" style="overflow: hidden;"></iframe>
 
-<details markdown="1">
+<details>
 <summary>Second-Order Filter Designer</summary>
-Type: microsim
-
-Bloom Level: Apply (L3)
-Bloom Verb: design
-
-Learning Objective: Students will design second-order RLC filters by specifying center frequency and Q, then observing the resulting component values and frequency response.
-
-Visual elements:
+<p>Type: microsim</p>
+<p>Bloom Level: Apply (L3)
+Bloom Verb: design</p>
+<p>Learning Objective: Students will design second-order RLC filters by specifying center frequency and Q, then observing the resulting component values and frequency response.</p>
+<p>Visual elements:
 - Circuit schematic (series RLC)
 - Bode magnitude and phase plots
 - Peak height indicator for underdamped responses
 - Bandwidth markers on plot
-- Component values display
-
-Interactive controls:
+- Component values display</p>
+<p>Interactive controls:
 - Slider: Center frequency f₀ (100 Hz to 100 kHz, log)
 - Slider: Q factor (0.5 to 20)
 - Radio: Filter type (LP, HP, BP)
 - Toggle: Fix L or Fix C for design
 - Input: Fixed component value
-- Button: Calculate components
-
-Design calculations displayed:
+- Button: Calculate components</p>
+<p>Design calculations displayed:
 - LC = 1/(2πf₀)²
 - R = 2πf₀L/Q (or R = Q/(2πf₀C))
 - BW = f₀/Q
-- Peak height (dB) if Q > 0.707
-
-Default parameters:
+- Peak height (dB) if Q &gt; 0.707</p>
+<p>Default parameters:
 - f₀ = 1 kHz
 - Q = 5 (narrow band-pass)
 - L = 10 mH (fixed)
-- Calculated: C = 2.53 μF, R = 12.6 Ω
-
-Canvas layout:
+- Calculated: C = 2.53 μF, R = 12.6 Ω</p>
+<p>Canvas layout:
 - Circuit/specs: 250 × 400 pixels
 - Bode plots: 350 × 400 pixels
-- Control area: 100 pixels below
-
-Implementation: p5.js
+- Control area: 100 pixels below</p>
+<p>Implementation: p5.js</p>
 </details>
-
 <h2 id="passive-vs-active-filters">Passive vs. Active Filters</h2>
 <h3 id="passive-filters">Passive Filters</h3>
 <p><strong>Passive filters</strong> use only resistors, capacitors, and inductors—no power supply or amplification.</p>
@@ -2925,47 +2917,38 @@ Implementation: p5.js
 <h4 id="diagram-audio-signal-chain">Diagram: Audio Signal Chain</h4>
 <iframe src="../../sims/audio-signal-chain/main.html" width="100%" height="500px" scrolling="no" style="overflow: hidden;"></iframe>
 
-<details markdown="1">
+<details>
 <summary>Audio Signal Chain</summary>
-Type: microsim
-
-Bloom Level: Understand (L2)
-Bloom Verb: explain
-
-Learning Objective: Students will explain the signal levels and gain stages in a typical audio system from microphone to speaker.
-
-Visual elements:
+<p>Type: microsim</p>
+<p>Bloom Level: Understand (L2)
+Bloom Verb: explain</p>
+<p>Learning Objective: Students will explain the signal levels and gain stages in a typical audio system from microphone to speaker.</p>
+<p>Visual elements:
 - Signal flow diagram: Mic → Preamp → Tone Control → Power Amp → Speaker
 - Level meters at each stage showing dBV or dBu
 - Gain stages with amplification/attenuation values
 - Frequency response modification at tone control
-- Headroom indication at each stage
-
-Interactive controls:
+- Headroom indication at each stage</p>
+<p>Interactive controls:
 - Slider: Input level (mic sensitivity)
 - Slider: Preamp gain (20-60 dB)
 - Slider: Bass adjustment (±12 dB)
 - Slider: Treble adjustment (±12 dB)
 - Slider: Volume (power amp gain)
-- Display: Level at each stage
-
-Annotations:
+- Display: Level at each stage</p>
+<p>Annotations:
 - "Mic level: ~-50 dBV"
 - "Line level: ~0 dBV"
 - "Power amp output: Watts to speaker"
-- Clipping indicator if any stage overloads
-
-Default parameters:
+- Clipping indicator if any stage overloads</p>
+<p>Default parameters:
 - Typical vocal recording chain
-- Moderate levels with good headroom
-
-Canvas layout:
+- Moderate levels with good headroom</p>
+<p>Canvas layout:
 - Signal chain diagram: 600 × 350 pixels
-- Control area: 100 pixels below
-
-Implementation: p5.js
+- Control area: 100 pixels below</p>
+<p>Implementation: p5.js</p>
 </details>
-
 <h2 id="amplifier-gain-in-filter-circuits">Amplifier Gain in Filter Circuits</h2>
 <p>When using active filters, <strong>amplifier gain</strong> becomes a design parameter alongside cutoff frequency.</p>
 <p><strong>First-order active low-pass (inverting):</strong>
