@@ -109,7 +109,8 @@ The numbered sequence below shows the recommended learning order. Each concept d
 | 12 | Delta-wye transformation | Step 2 |
 | 13 | Equivalent resistance &amp; circuit simplification | Steps 10–12 |
 
-</div>
+
+<iframe src="../../sims/kirchhoffs-law/main.html" width="100%" height="560px" scrolling="no" style="overflow: hidden;"></iframe>
 
 ---
 
