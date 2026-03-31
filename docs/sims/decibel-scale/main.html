@@ -14,218 +14,235 @@
 <script>
 // Decibel Scale MicroSim
 // Chapter 5: Passive Components
-// Ratio-to-dB converter + vertical audio SPL reference scale
+// Left: ratio↔dB calculator  |  Right: vertical audio SPL reference scale
 
 const CANVAS_WIDTH   = 670;
-const DRAW_HEIGHT    = 360;
-const CONTROL_HEIGHT = 40;
+const DRAW_HEIGHT    = 400;
+const CONTROL_HEIGHT = 80;
 const CANVAS_HEIGHT  = DRAW_HEIGHT + CONTROL_HEIGHT;
 
-const CALC_W  = 290;
-const SCALE_X = CALC_W + 10;
-const SCALE_W = CANVAS_WIDTH - SCALE_X - 8;
+// Panel split
+const CALC_W  = 280;
+const SCALE_X = CALC_W + 8;
+const SCALE_W = CANVAS_WIDTH - SCALE_X - 6;
 
-// Audio SPL reference levels (dB SPL, label, color category)
+// Audio SPL reference levels [dB, short label]
 const AUDIO_REFS = [
-    [130, "Jet engine (pain threshold)", color(180,0,0)],
-    [120, "Threshold of pain", color(200,20,20)],
-    [110, "Power tools", color(220,60,0)],
-    [100, "Jackhammer / concert", color(220,100,0)],
-    [ 90, "Motorcycle", color(200,140,0)],
-    [ 80, "Busy restaurant", color(180,160,0)],
-    [ 70, "Normal conversation", color(100,160,0)],
-    [ 60, "Office / AC hum", color(40,160,40)],
-    [ 50, "Quiet office", color(40,160,100)],
-    [ 40, "Library", color(40,140,180)],
-    [ 30, "Whisper (1m)", color(40,100,200)],
-    [ 20, "Recording studio", color(80,80,200)],
-    [ 10, "Breathing", color(120,80,180)],
-    [  0, "Threshold of hearing", color(160,60,160)],
+    [130, "Jet engine"],
+    [120, "Pain threshold"],
+    [110, "Power tools"],
+    [100, "Concert / jackhammer"],
+    [ 90, "Motorcycle"],
+    [ 85, "Hearing damage risk"],
+    [ 80, "Busy restaurant"],
+    [ 70, "Conversation"],
+    [ 60, "Office"],
+    [ 50, "Quiet office"],
+    [ 40, "Library"],
+    [ 30, "Whisper"],
+    [ 20, "Studio"],
+    [  0, "Hearing threshold"],
 ];
 
 let ratioSlider, dbSlider;
-let mode = "voltage"; // "voltage" or "power"
-let voltBtn  = { x: 0, y: 0, w: 90, h: 22 };
-let powerBtn = { x: 0, y: 0, w: 90, h: 22 };
+let mode = "voltage";
+let voltBtn  = { x: 10,  y: 38, w: 90, h: 22 };
+let powerBtn = { x: 108, y: 38, w: 90, h: 22 };
 
 function setup() {
     let cnv = createCanvas(CANVAS_WIDTH, CANVAS_HEIGHT);
     cnv.parent(document.body);
     textFont('monospace');
 
-    // Ratio slider: 0–100 mapped to log ratio 0.001–1000
+    // Sliders go in the control strip below the draw area
+    let sy = DRAW_HEIGHT + 14;
+
     ratioSlider = createSlider(0, 100, 50, 1);
-    ratioSlider.position(20, DRAW_HEIGHT - 78);
-    ratioSlider.size(CALC_W - 30);
-    ratioSlider.style('cursor','pointer');
+    ratioSlider.position(140, sy);
+    ratioSlider.size(180);
+    ratioSlider.style('cursor', 'pointer');
 
-    // dB slider: -60 to +60
     dbSlider = createSlider(-60, 60, 6, 1);
-    dbSlider.position(20, DRAW_HEIGHT - 42);
-    dbSlider.size(CALC_W - 30);
-    dbSlider.style('cursor','pointer');
-
-    voltBtn.x  = CALC_W / 2 - 96; voltBtn.y  = 38;
-    powerBtn.x = CALC_W / 2 + 4;  powerBtn.y = 38;
-    voltBtn.w  = 90; voltBtn.h = 22;
-    powerBtn.w = 90; powerBtn.h = 22;
+    dbSlider.position(140, sy + 36);
+    dbSlider.size(180);
+    dbSlider.style('cursor', 'pointer');
 }
 
 function draw() {
-    // Ratio from slider (log mapped)
-    let ratio = pow(10, map(ratioSlider.value(), 0, 100, -3, 3)); // 0.001–1000
-    let dbFromRatio = mode === "voltage" ? 20 * log(ratio) / log(10) : 10 * log(ratio) / log(10);
-
-    // Ratio from dB slider
-    let dbVal = dbSlider.value();
-    let ratioFromDb = mode === "voltage" ? pow(10, dbVal / 20) : pow(10, dbVal / 10);
+    let ratio       = pow(10, map(ratioSlider.value(), 0, 100, -3, 3));
+    let dbFromRatio = mode === "voltage" ? 20 * log(ratio) / log(10)
+                                         : 10 * log(ratio) / log(10);
+    let dbVal       = dbSlider.value();
+    let ratioFromDb = mode === "voltage" ? pow(10, dbVal / 20)
+                                         : pow(10, dbVal / 10);
 
     background(240);
     drawCalculator(ratio, dbFromRatio, dbVal, ratioFromDb);
-    drawScale();
-    drawBottomBar();
+    drawScale(dbVal);
+    drawControls(ratio, dbVal);
 }
 
+// ---- Left panel: calculator ----
 function drawCalculator(ratio, dbFromRatio, dbVal, ratioFromDb) {
     fill(255); stroke(180); strokeWeight(1);
-    rect(4, 4, CALC_W - 4, DRAW_HEIGHT - 8, 6);
+    rect(4, 4, CALC_W - 6, DRAW_HEIGHT - 8, 6);
 
+    // Title
     noStroke(); fill(40); textSize(12); textAlign(CENTER);
     text("dB Calculator", CALC_W / 2, 22);
 
     // Mode buttons
-    for (let [btn, label, isActive] of [
-        [voltBtn,  "Voltage",  mode==="voltage"],
-        [powerBtn, "Power",    mode==="power"]
+    for (let [btn, label, active] of [
+        [voltBtn,  "Voltage", mode === "voltage"],
+        [powerBtn, "Power",   mode === "power"]
     ]) {
-        fill(isActive ? color(60,120,200) : color(210));
-        stroke(isActive ? color(40,90,170) : color(160));
-        strokeWeight(1);
+        fill(active ? color(60,120,200) : color(210));
+        stroke(active ? color(40,90,170) : color(160)); strokeWeight(1);
         rect(btn.x, btn.y, btn.w, btn.h, 4);
-        noStroke(); fill(isActive ? 255 : 40);
-        textSize(10); textAlign(CENTER,CENTER);
-        text(label, btn.x + btn.w/2, btn.y + btn.h/2);
+        noStroke(); fill(active ? 255 : 40);
+        textSize(10); textAlign(CENTER, CENTER);
+        text(label, btn.x + btn.w / 2, btn.y + btn.h / 2);
     }
 
-    // Formula display
+    // Formula
     noStroke(); fill(80); textSize(10); textAlign(CENTER);
-    if (mode === "voltage") {
-        text("dB = 20 · log₁₀(V₂/V₁)", CALC_W/2, 78);
-    } else {
-        text("dB = 10 · log₁₀(P₂/P₁)", CALC_W/2, 78);
-    }
+    text(mode === "voltage" ? "dB = 20 · log₁₀(ratio)"
+                            : "dB = 10 · log₁₀(ratio)", CALC_W / 2, 76);
 
-    // ---- Forward: ratio → dB ----
-    fill(250,248,230); stroke(200,180,100); strokeWeight(1);
-    rect(10, 96, CALC_W - 18, 90, 4);
+    // ---- Forward box: ratio → dB ----
+    fill(255, 252, 235); stroke(200, 180, 100); strokeWeight(1);
+    rect(10, 88, CALC_W - 18, 104, 4);
 
-    noStroke(); fill(100,80,0); textSize(11); textAlign(LEFT);
-    text("Ratio → dB", 18, 114);
+    noStroke(); fill(100, 80, 0); textSize(11); textAlign(LEFT);
+    text("Ratio  →  dB", 18, 106);
 
     fill(60); textSize(10);
-    text("Ratio: " + ratio.toFixed(4), 18, 132);
-    text("= " + dbFromRatio.toFixed(2) + " dB", 18, 148);
+    text("Ratio input: " + formatRatio(ratio), 18, 124);
+    text("Result:      " + dbFromRatio.toFixed(2) + " dB", 18, 142);
 
-    // Color code
-    let dbColor = dbFromRatio > 0 ? color(0,150,0) : color(150,0,0);
-    fill(dbColor); textSize(14); textAlign(CENTER);
+    let dbColor = dbFromRatio >= 0 ? color(0, 140, 0) : color(160, 0, 0);
+    fill(dbColor); textSize(20); textAlign(CENTER);
     let sign = dbFromRatio >= 0 ? "+" : "";
-    text(sign + dbFromRatio.toFixed(1) + " dB", CALC_W/2, 174);
+    text(sign + dbFromRatio.toFixed(1) + " dB", CALC_W / 2, 174);
 
-    // Quick reference rules
-    noStroke(); fill(80); textSize(9); textAlign(LEFT);
-    text("×2 voltage → " + (mode==="voltage" ? "+6" : "+3") + " dB", 18, 188);
+    // Hint
+    noStroke(); fill(120); textSize(9); textAlign(LEFT);
+    text("← use Ratio slider below", 18, 188);
 
-    // ---- Reverse: dB → ratio ----
-    fill(230,248,255); stroke(100,160,200); strokeWeight(1);
-    rect(10, 200, CALC_W - 18, 80, 4);
+    // ---- Reverse box: dB → ratio ----
+    fill(235, 248, 255); stroke(100, 160, 200); strokeWeight(1);
+    rect(10, 202, CALC_W - 18, 90, 4);
 
-    noStroke(); fill(0,60,120); textSize(11); textAlign(LEFT);
-    text("dB → Ratio", 18, 218);
+    noStroke(); fill(0, 60, 130); textSize(11); textAlign(LEFT);
+    text("dB  →  Ratio", 18, 220);
+
     fill(60); textSize(10);
-    text("Input: " + dbVal + " dB", 18, 236);
-    text("Ratio: " + ratioFromDb.toFixed(4), 18, 252);
-    fill(0,80,160); textSize(13); textAlign(CENTER);
-    text("× " + ratioFromDb.toFixed(3), CALC_W/2, 272);
+    text("dB input:  " + dbVal + " dB", 18, 238);
+    text("Result:    × " + ratioFromDb.toFixed(4), 18, 256);
 
-    // ---- Common dB reference table ----
-    let tableY = 294;
-    fill(250); stroke(200); strokeWeight(1);
-    rect(10, tableY, CALC_W - 18, 52, 4);
-    noStroke(); fill(60); textSize(9); textAlign(LEFT);
-    text("Common references:", 16, tableY + 12);
+    fill(0, 80, 160); textSize(16); textAlign(CENTER);
+    text("× " + ratioFromDb.toFixed(3), CALC_W / 2, 280);
+
+    noStroke(); fill(120); textSize(9); textAlign(LEFT);
+    text("← use dB slider below", 18, 290);
+
+    // ---- Quick reference table ----
+    fill(248); stroke(200); strokeWeight(1);
+    rect(10, 304, CALC_W - 18, 82, 4);
+
+    noStroke(); fill(60); textSize(10); textAlign(LEFT);
+    text("Quick reference:", 18, 320);
+
     let refs = mode === "voltage"
-        ? ["+6dB=×2V", "+20dB=×10V", "-6dB=÷2V", "+0dB=×1"]
-        : ["+3dB=×2P", "+10dB=×10P", "-3dB=÷2P", "+0dB=×1"];
-    for (let i = 0; i < refs.length; i++) {
-        let rx = 14 + (i % 2) * 130, ry = tableY + 26 + floor(i / 2) * 14;
-        fill(i < 2 ? color(0,120,0) : color(150,0,0));
-        text(refs[i], rx, ry);
-    }
+        ? [["+6 dB", "× 2 voltage"], ["+20 dB", "× 10 voltage"],
+           ["-6 dB", "÷ 2 voltage"], [" 0 dB",  "× 1 (no change)"]]
+        : [["+3 dB", "× 2 power"],   ["+10 dB", "× 10 power"],
+           ["-3 dB", "÷ 2 power"],   [" 0 dB",  "× 1 (no change)"]];
 
-    // Slider labels
-    noStroke(); fill(50); textSize(10); textAlign(LEFT);
-    text("Ratio: " + ratio.toFixed(3), 16, DRAW_HEIGHT - 90);
-    text("dB:    " + dbVal, 16, DRAW_HEIGHT - 55);
+    for (let i = 0; i < refs.length; i++) {
+        let col = i < 2 ? color(0,120,0) : i === 3 ? color(80,80,80) : color(160,0,0);
+        let rx = 18, ry = 336 + i * 14;
+        fill(col); textSize(9.5);
+        text(refs[i][0] + "  =  " + refs[i][1], rx, ry);
+    }
 }
 
-function drawScale() {
-    let px = SCALE_X, py = 4, pw = SCALE_W - 4, ph = DRAW_HEIGHT - 8;
+// ---- Right panel: SPL scale ----
+function drawScale(dbVal) {
+    let px = SCALE_X, py = 4, pw = SCALE_W - 2, ph = DRAW_HEIGHT - 8;
     fill(255); stroke(180); strokeWeight(1);
     rect(px, py, pw, ph, 6);
 
     noStroke(); fill(40); textSize(11); textAlign(CENTER);
-    text("Audio SPL Reference", px + pw/2, py + 16);
+    text("Audio SPL Reference", px + pw / 2, py + 16);
 
-    let scaleX = px + 14, scaleY = py + 28;
-    let scaleH = ph - 44;
-    let barW   = 14;
+    let barX  = px + 16;
+    let barY  = py + 28;
+    let barH  = ph - 44;
+    let barW  = 16;
 
-    // Draw vertical scale bar
-    for (let i = 0; i < scaleH; i++) {
-        let db = map(i, 0, scaleH, 130, 0);
-        let c  = getDbColor(db);
-        stroke(c); strokeWeight(1);
-        line(scaleX, scaleY + i, scaleX + barW, scaleY + i);
+    // Gradient bar
+    for (let i = 0; i <= barH; i++) {
+        let db = map(i, 0, barH, 130, 0);
+        stroke(getDbColor(db)); strokeWeight(1);
+        line(barX, barY + i, barX + barW, barY + i);
     }
+    // Bar border
+    noFill(); stroke(120); strokeWeight(1);
+    rect(barX, barY, barW, barH);
 
     // Reference labels
-    for (let [db, label, col] of AUDIO_REFS) {
-        let y = map(db, 130, 0, scaleY, scaleY + scaleH);
+    for (let [db, label] of AUDIO_REFS) {
+        let y   = map(db, 130, 0, barY, barY + barH);
+        let col = getDbColor(db);
         // Tick
-        stroke(80); strokeWeight(1);
-        line(scaleX + barW, y, scaleX + barW + 5, y);
-        // Label
-        noStroke(); fill(col); textSize(8.5); textAlign(LEFT);
-        text(db + " dB  " + label, scaleX + barW + 8, y + 3);
+        stroke(col); strokeWeight(1.5);
+        line(barX + barW, y, barX + barW + 6, y);
+        // dB number
+        noStroke(); fill(col); textSize(9); textAlign(LEFT);
+        text(db + " —", barX + barW + 8, y + 3);
+        // Label (slightly indented)
+        fill(80); textSize(8.5);
+        text(label, barX + barW + 36, y + 3);
     }
 
-    // Cursor: highlight the current dB value from slider
-    let dbVal = dbSlider.value();
-    // Treat as SPL for visual context only
-    let cursorDb = constrain(dbVal + 70, 0, 130); // shift so 0dB ratio = 70dB SPL
-    let cy = map(cursorDb, 130, 0, scaleY, scaleY + scaleH);
-    stroke(40); strokeWeight(2); noFill();
-    line(scaleX - 4, cy, scaleX + barW + 4, cy);
-    noStroke(); fill(40); textSize(9); textAlign(LEFT);
-    text("◀ " + dbVal + " dB", scaleX + barW + 8, cy - 2);
+    // Cursor line at current dB slider value (mapped to SPL)
+    let splEquiv = constrain(dbVal + 70, 0, 130);
+    let cy = map(splEquiv, 130, 0, barY, barY + barH);
+    stroke(30); strokeWeight(2);
+    line(barX - 6, cy, barX + barW + 6, cy);
+    noStroke(); fill(30); textSize(9); textAlign(RIGHT);
+    text("▶", barX - 8, cy + 3);
 }
 
 function getDbColor(db) {
     if (db >= 120) return color(200, 0, 0);
-    if (db >= 100) return color(220, 80, 0);
-    if (db >= 85)  return color(220, 160, 0);
-    if (db >= 70)  return color(160, 200, 0);
-    if (db >= 50)  return color(0, 180, 80);
+    if (db >= 100) return color(220, 70, 0);
+    if (db >= 85)  return color(220, 150, 0);
+    if (db >= 70)  return color(130, 190, 0);
+    if (db >= 50)  return color(0, 170, 80);
     if (db >= 30)  return color(0, 120, 200);
-    return color(80, 80, 200);
+    return color(80, 80, 210);
 }
 
-function drawBottomBar() {
+// ---- Controls ----
+function drawControls(ratio, dbVal) {
     fill(245); stroke(180); strokeWeight(1);
     rect(0, DRAW_HEIGHT, CANVAS_WIDTH, CONTROL_HEIGHT);
-    noStroke(); fill(80); textSize(10); textAlign(CENTER);
-    text("Slide 'Ratio' or 'dB' sliders above to update both calculators  |  Toggle Voltage / Power mode", CANVAS_WIDTH/2, DRAW_HEIGHT + 24);
+
+    noStroke(); fill(50); textSize(11); textAlign(RIGHT);
+    text("Ratio: " + formatRatio(ratio), 135, DRAW_HEIGHT + 26);
+    text("dB:    " + dbVal,              135, DRAW_HEIGHT + 62);
+
+    noStroke(); fill(100); textSize(10); textAlign(LEFT);
+    text("Mode: " + (mode === "voltage" ? "Voltage  (20·log)" : "Power  (10·log)"), 340, DRAW_HEIGHT + 44);
+}
+
+function formatRatio(r) {
+    if (r >= 100)  return r.toFixed(1);
+    if (r >= 10)   return r.toFixed(2);
+    if (r >= 1)    return r.toFixed(3);
+    return r.toFixed(4);
 }
 
 function mousePressed() {
@@ -233,7 +250,8 @@ function mousePressed() {
     if (inBtn(powerBtn)) mode = "power";
 }
 function inBtn(b) {
-    return mouseX>=b.x && mouseX<=b.x+b.w && mouseY>=b.y && mouseY<=b.y+b.h;
+    return mouseX >= b.x && mouseX <= b.x + b.w &&
+           mouseY >= b.y && mouseY <= b.y + b.h;
 }
 </script>
 </body>
