@@ -700,7 +700,7 @@ Voltage dividers are everywhere:
 
 #### Diagram: Voltage Divider Calculator
 
-<iframe src="../../sims/voltage-divider/main.html" width="100%" height="450px" scrolling="no"></iframe>
+<iframe src="../../sims/voltage-divider/main.html" width="100%" height="522px" scrolling="no"></iframe>
 
 <details markdown="1">
 <summary>Voltage Divider MicroSim</summary>
@@ -816,7 +816,7 @@ Not all components are linear (diodes and transistors aren't), but resistive cir
 
 #### Diagram: Linear vs Nonlinear Behavior
 
-<iframe src="../../sims/linear-vs-nonlinear/main.html" width="100%" height="400px" scrolling="no"></iframe>
+<iframe src="../../sims/iv-characteristics/main.html" width="100%" height="510px" scrolling="no"></iframe>
 
 <details markdown="1">
 <summary>Linear vs Nonlinear I-V Characteristics</summary>
