@@ -51,6 +51,7 @@ nav:
     - Op-Amp Configurations: sims/opamp-configurations/index.md
     - Kirchhoff's Laws: sims/kirchhoffs-law/index.md
     - Ohm's Law Triangle: sims/ohms-triangle/index.md
+    - Series Circuit Analysis: sims/series-circuit/index.md
     - prompts/circuit-similarity/index.md
     - prompts/top-100-circuits/top-100-circuits.md
     - sims/circuit-similarity/index.md
