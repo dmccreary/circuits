@@ -54,6 +54,7 @@ nav:
     - Series Circuit Analysis: sims/series-circuit/index.md
     - Parallel Circuit Analysis: sims/parallel-circuit/index.md
     - Series-Parallel Circuit Analysis: sims/series-parallel-circuit/index.md
+    - Voltage Divider Calculator: sims/voltage-divider/index.md
     - prompts/circuit-similarity/index.md
     - prompts/top-100-circuits/top-100-circuits.md
     - sims/circuit-similarity/index.md
