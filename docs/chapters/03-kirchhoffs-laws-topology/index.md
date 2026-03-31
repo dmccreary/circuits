@@ -1,20 +1,43 @@
 ---
-title: Kirchhoff's Laws and Circuit Topology
-description: Master the conservation laws and systematic methods for analyzing any circuit
+title: Chapter 3 — Kirchhoff's Laws and Circuit Topology
+description: Conservation laws and systematic methods for analyzing any electrical circuit including KCL, KVL, node voltage, mesh current, and delta-wye transformation
 generated_by: claude skill chapter-content-generator
 date: 2026-01-30
-version: 0.03
+version: 0.05
 ---
 
-# Kirchhoff's Laws and Circuit Topology
+<div class="unit1-styled" markdown>
 
-## Summary
+# Chapter 3 — Kirchhoff's Laws and Circuit Topology
 
+<details class="video-overview">
+<summary><strong>Chapter Overview</strong> (click to expand)</summary>
+
+This chapter introduces Kirchhoff's Voltage Law (KVL) and Kirchhoff's Current Law (KCL), the two fundamental conservation laws that govern all electrical circuits. Published by Gustav Kirchhoff in 1845, these laws provide the mathematical framework needed to analyze circuits of any complexity.
+
+While Ohm's Law describes the behavior of individual components, Kirchhoff's Laws describe what happens at connections — where currents meet at nodes and voltages distribute around loops. Combined with systematic methods, these laws make it possible to solve any linear DC circuit.
+
+The chapter covers circuit topology concepts including nodes, branches, loops, and meshes, then develops two powerful systematic techniques: the node voltage method and the mesh current method. Special cases involving supernodes and supermeshes are addressed, along with the superposition principle for multi-source circuits. The chapter concludes with delta-wye transformations and circuit simplification strategies.
+
+**Key Takeaways**
+
+1. Kirchhoff's Current Law (KCL) enforces conservation of charge at every node, and Kirchhoff's Voltage Law (KVL) enforces conservation of energy around every closed loop.
+2. The node voltage method and mesh current method provide systematic procedures that can solve any linear circuit, with the choice between them depending on circuit topology.
+3. Delta-wye transformations convert between equivalent resistor configurations, enabling simplification of circuits that cannot be reduced by series and parallel rules alone.
+
+</details>
+
+<h2 style="color: #5A3EED !important; border-bottom: 2px solid #5A3EED; padding-bottom: 0.3rem; font-weight: 700; margin-top: 2rem;">Summary</h2>
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 20px 24px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<p style="color: #333; line-height: 1.85; font-size: 1.02rem; margin: 0;">
 This chapter introduces Kirchhoff's Voltage Law (KVL) and Kirchhoff's Current Law (KCL), the two fundamental conservation laws that govern all electrical circuits. Students will learn about circuit topology concepts including loops, meshes, and the systematic methods for analyzing complex circuits. The chapter covers node voltage and mesh current methods, including techniques for handling special cases like supernodes and supermeshes. By the end of this chapter, students will have the tools to systematically analyze any DC circuit using matrix-based techniques.
+</p>
+</div>
 
-## Concepts Covered
+<h2 style="color: #5A3EED !important; border-bottom: 2px solid #5A3EED; padding-bottom: 0.3rem; font-weight: 700; margin-top: 2rem;">Concepts Covered</h2>
 
-This chapter covers the following 17 concepts from the learning graph:
+<div style="background: #F8F6FF; border: 2px solid #D4C8FF; border-radius: 12px; padding: 20px 24px; margin: 1rem 0;" markdown>
 
 1. Kirchhoff's Voltage Law
 2. Kirchhoff's Current Law
@@ -34,363 +57,349 @@ This chapter covers the following 17 concepts from the learning graph:
 16. Delta-Wye Transformation
 17. Circuit Simplification
 
-## Prerequisites
-
-This chapter builds on concepts from:
-
-- [Chapter 1: Electric Charge and Basic Circuit Quantities](../01-electric-charge-basic-quantities/index.md)
-- [Chapter 2: Ohm's Law and Basic Circuit Configurations](../02-ohms-law-basic-configurations/index.md)
+</div>
 
 ---
 
-## Introduction: The Laws That Rule Them All
+<h2 style="color: #5A3EED !important; border-bottom: 2px solid #5A3EED; padding-bottom: 0.3rem; font-weight: 700; margin-top: 2rem;">Prerequisites</h2>
 
-If Ohm's Law gave you a single spell in your circuit wizard's toolkit, Kirchhoff's Laws give you the entire spellbook. Named after German physicist Gustav Kirchhoff (who published them in 1845 when he was just 21 years old—no pressure), these two laws are so fundamental that they work for *every* circuit, no matter how complicated. They're the circuit equivalent of conservation of energy and conservation of mass, and once you internalize them, you'll see circuits in a whole new way.
+<div markdown style="background: #F8F6FF; border: 2px solid #D4C8FF; border-radius: 12px; padding: 20px 24px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
 
-Here's the deal: while Ohm's Law tells you about individual components, Kirchhoff's Laws tell you about *connections*. They're the rules that govern what happens when things come together at junctions and travel around loops. With these laws plus a systematic approach, you can crack any circuit problem. That's not hyperbole—that's the superpower we're unlocking today.
+Before beginning this chapter, students should have:
 
-## Kirchhoff's Current Law (KCL): What Goes In Must Come Out
+- Understanding of electric charge, voltage, current, power, and resistance (Chapter 1)
+- Mastery of Ohm's Law, series and parallel circuits, and voltage/current dividers (Chapter 2)
+- Familiarity with circuit schematic symbols and conventions
 
-Let's start with the friendlier of the two laws. **Kirchhoff's Current Law** states:
+</div>
 
-!!! tip "Kirchhoff's Current Law (KCL)"
-    The algebraic sum of all currents entering and leaving a node equals zero.
+---
 
-In equation form:
+<h2 style="color: #5A3EED !important; border-bottom: 2px solid #5A3EED; padding-bottom: 0.3rem; font-weight: 700; margin-top: 2rem;">Concept Map</h2>
 
-$$\sum_{k=1}^{n} i_k = 0$$
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 0.6rem;">
+The diagram below shows how Chapter 3 concepts build upon each other. <strong>Hover</strong> over a concept to see its connections. <strong>Click</strong> to open its description, MicroSim, or section.
+</p>
 
-Or equivalently: the current flowing into a node equals the current flowing out.
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 8px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe src="../../sims/concept-map-ch3/main.html" width="100%" height="590px" scrolling="no" style="border:none; border-radius:8px; overflow:hidden;"></iframe>
+</div>
 
-Think of it like a highway interchange. If 1000 cars per hour enter from the north and 400 enter from the east, then 1400 cars per hour must leave (split between the south and west exits). Cars don't just appear or vanish—and neither does charge. This is conservation of charge in action.
+<h2 style="color: #5A3EED !important; border-bottom: 2px solid #5A3EED; padding-bottom: 0.3rem; font-weight: 700; margin-top: 2rem;">Learning Dependency Graph</h2>
 
-#### Diagram: KCL Node Visualization
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
+The numbered sequence below shows the recommended learning order. Each concept depends on the ones above it.
+</p>
+
+<div style="background: #F8F6FF; border: 2px solid #D4C8FF; border-radius: 12px; padding: 20px 24px; margin: 1rem 0;" markdown>
+
+| Step | Concept | Depends On |
+|------|---------|------------|
+| 1 | Electric charge, voltage, current, resistance | Prerequisites (Ch 1) |
+| 2 | Ohm's Law, series &amp; parallel circuits | Step 1 (Ch 2) |
+| 3 | Nodes, branches — circuit topology | Steps 1–2 |
+| 4 | Loops and meshes | Step 3 |
+| 5 | **KCL** — conservation of charge at nodes | Steps 3–4 |
+| 6 | **KVL** — conservation of energy around loops | Steps 3–4 |
+| 7 | Node voltage method | Step 5 (KCL) |
+| 8 | Mesh current method | Step 6 (KVL) |
+| 9 | Supernode &amp; supermesh techniques | Steps 7–8 |
+| 10 | Superposition principle | Steps 5–6 (linearity) |
+| 11 | Matrix methods (systematic solving) | Steps 7–8 |
+| 12 | Delta-wye transformation | Step 2 |
+| 13 | Equivalent resistance &amp; circuit simplification | Steps 10–12 |
+
 
 <iframe src="../../sims/kirchhoffs-law/main.html" width="100%" height="560px" scrolling="no" style="overflow: hidden;"></iframe>
 
-<details markdown="1">
-<summary>KCL Node Visualization MicroSim</summary>
-Type: microsim
+---
 
-Bloom Level: Understand (L2)
-Bloom Verb: Explain
+<h2 id="31-kirchhoffs-current-law" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">3.1 Kirchhoff's Current Law (KCL)</h2>
 
-Learning Objective: Students will explain how currents at a node must sum to zero by observing animated current flow and manipulating input values.
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
+<strong style="color: #333;">Kirchhoff's Current Law</strong> is a direct consequence of the conservation of electric charge. It states that the algebraic sum of all currents entering and leaving any node in a circuit must equal zero. Every coulomb of charge that arrives at a node must also depart — charge cannot accumulate at a junction.
+</p>
 
-Visual Elements:
-- Central node (large circle) with 4 branches extending outward
-- Animated current particles (electrons) flowing along each branch
-- Color-coded arrows: green for current entering, red for current leaving
-- Real-time display showing sum of currents at node
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
 
-Interactive Controls:
-- Four sliders (one per branch) to set current magnitude (-5A to +5A)
-- Positive values = current entering node, negative = current leaving
-- Toggle to switch between "engineer's view" (conventional current) and "physicist's view" (electron flow)
+$$\sum_{k=1}^{n} i_k = 0$$
 
-Behavior:
-- Particle animation speed proportional to current magnitude
-- Direction reverses based on sign
-- Running total displayed: "ΣI = X A"
-- When sum ≠ 0, warning indicator shows "KCL Violated!"
-- When sum = 0, success indicator shows "KCL Satisfied ✓"
+</div>
 
-Canvas: 600x400 with controls below
-Default values: I1=3A, I2=2A, I3=-4A, I4=-1A (sums to zero)
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.5rem;">
+Equivalently, the total current flowing into a node equals the total current flowing out. By convention, currents entering a node are assigned positive signs and currents leaving are assigned negative signs. Consistent application of this sign convention ensures correct results.
+</p>
 
-Instructional Rationale: Interactive parameter adjustment lets students build intuition about current conservation by experimenting with different combinations and immediately seeing whether KCL is satisfied.
+<h4 style="color: #5A3EED; font-weight: 700; margin-top: 2rem; margin-bottom: 0.8rem;">Diagram: KCL Node Visualization</h4>
 
-Implementation: p5.js with canvas-based controls
-</details>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe src="../../sims/kcl-node-viz/main.html" width="100%" height="500px" scrolling="no" style="border:none; border-radius:8px; overflow:hidden;"></iframe>
+</div>
 
-### Applying KCL: A Practical Example
+<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Applying KCL</h3>
 
-Consider a node where three wires meet. If $I_1 = 5$ A flows in and $I_2 = 3$ A flows in, how much current flows out through the third wire?
+<div style="background: #FFF7DD; border: 2px solid #F0D87A; border-radius: 10px; padding: 24px; margin: 1.5rem 0;" markdown>
+<p style="color: #B8860B; font-weight: 700; font-size: 1.08rem; margin-top: 0; margin-bottom: 14px;">Example — KCL at a Three-Wire Node</p>
 
-By KCL: $I_1 + I_2 + I_3 = 0$
+<p style="color: #555; line-height: 1.75;">
+Consider a node where three wires meet. If <span class="arithmatex">\(I_1 = 5\)</span> A flows in and <span class="arithmatex">\(I_2 = 3\)</span> A flows in, determine the current through the third wire.
+</p>
 
-If we define currents entering as positive: $5 + 3 + I_3 = 0$
+<p style="color: #555; line-height: 1.75;">
+By KCL: <span class="arithmatex">\(I_1 + I_2 + I_3 = 0\)</span>
+</p>
 
-Therefore: $I_3 = -8$ A (the negative sign tells us it flows *out*)
+<p style="color: #555; line-height: 1.75;">
+Defining currents entering as positive: <span class="arithmatex">\(5 + 3 + I_3 = 0\)</span>
+</p>
+
+<p style="color: #555; line-height: 1.75; margin-bottom: 1rem;">
+Therefore: <span class="arithmatex">\(I_3 = -8\)</span> A — the negative sign indicates current flows <strong>out</strong> of the node.
+</p>
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 10px 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
 
 | Current | Direction | Value |
 |---------|-----------|-------|
 | $I_1$ | Into node | +5 A |
 | $I_2$ | Into node | +3 A |
-| $I_3$ | Out of node | -8 A |
+| $I_3$ | Out of node | −8 A |
 | **Sum** | — | **0 A** |
 
-See? Conservation of charge isn't just a nice idea—it's a calculation tool.
+</div>
+</div>
 
-## Kirchhoff's Voltage Law (KVL): Around and Around We Go
+---
 
-**Kirchhoff's Voltage Law** is the loop counterpart to KCL:
+<h2 id="32-kirchhoffs-voltage-law" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">3.2 Kirchhoff's Voltage Law (KVL)</h2>
 
-!!! tip "Kirchhoff's Voltage Law (KVL)"
-    The algebraic sum of all voltages around any closed loop equals zero.
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
+<strong style="color: #333;">Kirchhoff's Voltage Law</strong> is a consequence of conservation of energy. It states that the algebraic sum of all voltages around any closed loop in a circuit must equal zero. When traversing a closed path, voltage rises from sources are exactly balanced by voltage drops across resistive elements.
+</p>
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
 
 $$\sum_{k=1}^{n} v_k = 0$$
 
-Picture yourself walking around a hiking trail that returns to where you started. You might go uphill (gaining potential energy) and downhill (losing it), but when you complete the loop and return to your starting point, your net elevation change is zero. Voltage works the same way—it's electrical potential, and what goes up must come down (around any closed path).
+</div>
 
-Here's the hiking analogy made explicit:
+<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Sign Convention for KVL</h3>
 
-- **Voltage sources** are like escalators—they lift you up (or down)
-- **Resistors** are like stairs going down—current through them causes a voltage *drop*
-- The total rise equals the total fall around any loop
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1rem;">
+Correct application of KVL requires a consistent sign convention. The standard approach is:
+</p>
 
-### The Sign Convention Dance
+<ul style="list-style: none; padding-left: 0.8rem; margin: 0.8rem 0 1.2rem 0;">
+<li style="margin-bottom: 0.9rem; line-height: 1.75; color: #333;"><span style="color: #5A3EED; font-weight: 700; margin-right: 0.5rem;">&#9679;</span> <strong>Choose a traversal direction</strong> for the loop (clockwise is conventional)</li>
+<li style="margin-bottom: 0.9rem; line-height: 1.75; color: #333;"><span style="color: #5A3EED; font-weight: 700; margin-right: 0.5rem;">&#9679;</span> <strong>For voltage sources:</strong> Entering the negative terminal and exiting the positive terminal constitutes a voltage rise (+V). The reverse constitutes a drop (−V).</li>
+<li style="margin-bottom: 0.9rem; line-height: 1.75; color: #333;"><span style="color: #5A3EED; font-weight: 700; margin-right: 0.5rem;">&#9679;</span> <strong>For resistors:</strong> Traversing in the direction of current flow produces a voltage drop (−IR). Traversing against current flow produces a rise (+IR).</li>
+</ul>
 
-KVL requires careful attention to signs. Here's the standard approach:
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.5rem;">
+The same physical circuit will yield the correct result regardless of which traversal direction is chosen, provided signs are applied consistently throughout.
+</p>
 
-1. **Pick a direction** to traverse the loop (clockwise is traditional)
-2. **For voltage sources:** If you enter the negative terminal and exit the positive, that's a voltage *rise* (+V). The opposite is a *drop* (−V).
-3. **For resistors:** If you traverse in the direction of current flow, it's a *drop* (−IR). Against current flow, it's a *rise* (+IR).
+<h4 style="color: #5A3EED; font-weight: 700; margin-top: 2rem; margin-bottom: 0.8rem;">Diagram: KVL Loop Walkthrough</h4>
 
-It's a bit like keeping track of credits and debits in your bank account. Mix them up and you'll get nonsensical answers—but stay consistent and everything balances perfectly.
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe src="../../sims/kvl-loop-walkthrough/main.html" width="100%" height="520px" scrolling="no" style="border:none; border-radius:8px; overflow:hidden;"></iframe>
+</div>
 
-#### Diagram: KVL Loop Walkthrough
+<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">KVL Example: Single Loop Circuit</h3>
 
-<iframe src="../../sims/kvl-loop-walkthrough/main.html" width="100%" height="520px" scrolling="no"></iframe>
+<div style="background: #FFF7DD; border: 2px solid #F0D87A; border-radius: 10px; padding: 24px; margin: 1.5rem 0;" markdown>
+<p style="color: #B8860B; font-weight: 700; font-size: 1.08rem; margin-top: 0; margin-bottom: 14px;">Example — KVL in a Series Resistor Circuit</p>
 
-<details markdown="1">
-<summary>KVL Loop Walkthrough MicroSim</summary>
-Type: microsim
+<p style="color: #555; line-height: 1.75;">
+Consider a circuit with a 12V battery and three series resistors: <span class="arithmatex">\(R_1 = 2\Omega\)</span>, <span class="arithmatex">\(R_2 = 3\Omega\)</span>, <span class="arithmatex">\(R_3 = 1\Omega\)</span>.
+</p>
 
-Bloom Level: Understand (L2)
-Bloom Verb: Explain
+<p style="color: #555; line-height: 1.75;">
+First, determine the current using Ohm's Law:
+</p>
 
-Learning Objective: Students will explain the KVL sign convention by stepping through a loop element by element, observing voltage rises and drops.
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 10px 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
 
-Visual Elements:
-- Simple circuit with one voltage source (12V) and three resistors (R1=2Ω, R2=3Ω, R3=1Ω)
-- Loop path highlighted with directional arrow
-- Current annotation showing I = 2A
-- Each component has a voltage label that updates
-- Running sum display showing cumulative voltage as you traverse
+$$I = \frac{V_{source}}{R_{total}} = \frac{12\text{V}}{2+3+1\;\Omega} = \frac{12\text{V}}{6\;\Omega} = 2\text{A}$$
 
-Interactive Controls:
-- "Next Element" button to step through loop
-- "Reset" button to start over
-- "Auto-walk" toggle for continuous stepping
-- Direction toggle: clockwise vs counterclockwise
+</div>
 
-Behavior:
-- Start at one corner of the loop
-- Each step highlights current element and shows:
-  - Whether entering +/- terminal (for source)
-  - Whether traversing with/against current (for resistor)
-  - Voltage contribution (+V or -V)
-  - Running sum
-- Final step shows sum = 0V with celebration effect
+<p style="color: #555; line-height: 1.75;">
+Apply KVL starting at the battery's negative terminal, going clockwise:
+</p>
 
-Data Visibility:
-- Stage 1: Start at node A, sum = 0V
-- Stage 2: Through battery (rise), sum = +12V
-- Stage 3: Through R1 (drop), sum = +12 - 4 = +8V
-- Stage 4: Through R2 (drop), sum = +8 - 6 = +2V
-- Stage 5: Through R3 (drop), sum = +2 - 2 = 0V ✓
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 10px 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
 
-Canvas: 600x420 with 100px control area
-Default: Clockwise direction
+$$+12\text{V} - (2\text{A})(2\;\Omega) - (2\text{A})(3\;\Omega) - (2\text{A})(1\;\Omega) = 0$$
 
-Instructional Rationale: Step-through approach is appropriate for the Understand level because students need to see each voltage contribution individually before understanding why the sum equals zero.
+$$+12\text{V} - 4\text{V} - 6\text{V} - 2\text{V} = 0 \quad \checkmark$$
 
-Implementation: p5.js with canvas-based controls
-</details>
+</div>
 
-### KVL Example: A Single Loop Circuit
+<p style="color: #555; line-height: 1.75; margin-bottom: 0;">
+The 12V supplied by the battery is entirely dissipated across the three resistors, confirming conservation of energy.
+</p>
+</div>
 
-Consider a circuit with a 12V battery and three resistors: $R_1 = 2\Omega$, $R_2 = 3\Omega$, $R_3 = 1\Omega$, all in series.
+---
 
-First, find the current using Ohm's Law:
+<h2 id="33-circuit-topology" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">3.3 Circuit Topology</h2>
 
-$$I = \frac{V_{source}}{R_{total}} = \frac{12V}{2+3+1\Omega} = \frac{12V}{6\Omega} = 2A$$
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
+<strong style="color: #333;">Circuit topology</strong> is the study of how components are interconnected, independent of component type or value. Topological analysis determines the number of independent equations required to fully solve a circuit.
+</p>
 
-Now apply KVL starting at the battery's negative terminal, going clockwise:
-
-$$+12V - (2A)(2\Omega) - (2A)(3\Omega) - (2A)(1\Omega) = 0$$
-
-$$+12V - 4V - 6V - 2V = 0$$ ✓
-
-The math checks out. The battery provides 12V, and that energy is dissipated across the three resistors.
-
-## Circuit Topology: The Shape of the Circuit
-
-Now that you know the laws, let's talk about the *structure* of circuits. **Circuit topology** is the study of how components are connected—independent of what those components actually are. It's like looking at a subway map: you care about which stations connect to which, not whether the train is red or blue.
-
-The key topological concepts are:
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 24px 28px; margin: 1.5rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
 
 | Term | Definition |
 |------|------------|
 | **Node** | A point where two or more components connect |
 | **Branch** | A path containing a single component between two nodes |
 | **Loop** | Any closed path through a circuit |
-| **Mesh** | A loop that contains no other loops inside it |
+| **Mesh** | A loop that contains no other loops within it (a minimal loop) |
 
-Think of a **mesh** as a loop that's "minimal"—you can't break it down into smaller loops. In a circuit with multiple meshes, each mesh is like a cell in a honeycomb.
+</div>
 
-### Counting Components: The Topology Formula
+<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">The Topology Formula</h3>
 
-Here's a neat relationship that governs circuit topology:
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1rem;">
+The relationship between branches, nodes, and independent meshes is given by:
+</p>
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
 
 $$b = n - 1 + m$$
 
-Where:
-- $b$ = number of branches
-- $n$ = number of nodes
-- $m$ = number of independent meshes
+</div>
 
-This tells you how many independent equations you'll need. For KCL, you get $n-1$ independent equations (one node is redundant—the last equation just repeats information from the others). For KVL, you get $m$ independent equations.
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
+where <span class="arithmatex">\(b\)</span> is the number of branches, <span class="arithmatex">\(n\)</span> is the number of nodes, and <span class="arithmatex">\(m\)</span> is the number of independent meshes. KCL yields <span class="arithmatex">\(n-1\)</span> independent equations and KVL yields <span class="arithmatex">\(m\)</span> independent equations.
+</p>
 
-#### Diagram: Circuit Topology Explorer
+<h4 style="color: #5A3EED; font-weight: 700; margin-top: 2rem; margin-bottom: 0.8rem;">Diagram: Circuit Topology Explorer</h4>
 
-<iframe src="../../sims/circuit-topology-explorer/main.html" width="100%" height="550px" scrolling="no"></iframe>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe src="../../sims/circuit-topology-explorer/main.html" width="100%" height="550px" scrolling="no" style="border:none; border-radius:8px; overflow:hidden;"></iframe>
+</div>
 
-<details markdown="1">
-<summary>Circuit Topology Explorer MicroSim</summary>
-Type: microsim
+---
 
-Bloom Level: Analyze (L4)
-Bloom Verb: Differentiate
+<h2 id="34-node-voltage-method" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">3.4 The Node Voltage Method</h2>
 
-Learning Objective: Students will differentiate between nodes, branches, loops, and meshes by identifying them in various circuit configurations.
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
+The <strong style="color: #333;">node voltage method</strong> is a systematic procedure for circuit analysis that minimizes the number of unknowns by working with node voltages rather than individual branch currents. For a circuit with <span class="arithmatex">\(n\)</span> nodes, this method requires <span class="arithmatex">\(n-1\)</span> equations.
+</p>
 
-Visual Elements:
-- Circuit schematic with labeled nodes (A, B, C, D...)
-- Components drawn between nodes (resistors, sources)
-- Highlighting system: nodes=circles, branches=lines, loops=colored outlines, meshes=filled regions
-- Counter display showing: nodes, branches, loops, meshes
-- Topology formula verification: b = n - 1 + m
+<ul style="list-style: none; padding-left: 0.8rem; margin: 0.8rem 0 1.2rem 0;">
+<li style="margin-bottom: 0.9rem; line-height: 1.75; color: #333;"><span style="color: #5A3EED; font-weight: 700; margin-right: 0.5rem;">&#9679;</span> <strong>Step 1:</strong> Select a <strong>reference node</strong> (ground) — typically the node with the most connections</li>
+<li style="margin-bottom: 0.9rem; line-height: 1.75; color: #333;"><span style="color: #5A3EED; font-weight: 700; margin-right: 0.5rem;">&#9679;</span> <strong>Step 2:</strong> Define voltages at all other nodes relative to the reference</li>
+<li style="margin-bottom: 0.9rem; line-height: 1.75; color: #333;"><span style="color: #5A3EED; font-weight: 700; margin-right: 0.5rem;">&#9679;</span> <strong>Step 3:</strong> Write KCL equations at each non-reference node</li>
+<li style="margin-bottom: 0.9rem; line-height: 1.75; color: #333;"><span style="color: #5A3EED; font-weight: 700; margin-right: 0.5rem;">&#9679;</span> <strong>Step 4:</strong> Solve the resulting system of equations</li>
+</ul>
 
-Interactive Controls:
-- Dropdown to select example circuit (3 options: simple loop, two-mesh, bridge circuit)
-- Checkboxes to show/hide: nodes, branches, loops, meshes
-- "Identify Elements" mode where clicking highlights element type
-- Verify button to check topology formula
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.5rem;">
+All branch currents can subsequently be derived from the solved node voltages using Ohm's Law.
+</p>
 
-Behavior:
-- When "Show Nodes" checked, circles appear at junctions
-- When "Show Branches" checked, components highlight with count
-- When "Show Loops" checked, all possible closed paths outlined
-- When "Show Meshes" checked, innermost loops filled with semi-transparent color
-- Formula display updates to show current counts
+<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">The Reference Node</h3>
 
-Sample Circuits:
-1. Simple: 1 source, 2 resistors in series (1 mesh)
-2. Two-mesh: 1 source, 3 resistors forming 2 meshes
-3. Bridge: Classic Wheatstone bridge (3 meshes)
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
+The <strong style="color: #333;">reference node</strong> serves as the zero-potential point against which all other node voltages are measured. The assignment is arbitrary — it does not need to connect to physical earth ground. It is simply the datum point for voltage measurements within the circuit.
+</p>
 
-Canvas: 650x450 with 100px control area
+<div style="background: #E7F7E7; border: 2px solid #81C784; border-radius: 12px; padding: 24px 28px; margin: 1.5rem 0; box-shadow: 0 2px 8px rgba(56,142,60,0.08);">
+<p style="color: #2E7D32; font-weight: 700; font-size: 1.08rem; margin-top: 0; margin-bottom: 10px;">Reference Node Selection Guidelines</p>
+<p style="color: #333; line-height: 1.75; margin-bottom: 0;">
+Choose the node with the greatest number of connections to minimize the number of required equations. If a ground symbol is present in the schematic, use that node. The negative terminal of a voltage source is often a convenient choice.
+</p>
+</div>
 
-Instructional Rationale: Analysis-level objective requires students to distinguish between similar concepts. Interactive highlighting lets them verify their understanding of each topological element.
+<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Node Voltage Example</h3>
 
-Implementation: p5.js with canvas-based controls
-</details>
+<div style="background: #FFF7DD; border: 2px solid #F0D87A; border-radius: 10px; padding: 24px; margin: 1.5rem 0;" markdown>
+<p style="color: #B8860B; font-weight: 700; font-size: 1.08rem; margin-top: 0; margin-bottom: 14px;">Example — Two-Node Circuit</p>
 
-## The Node Voltage Method: Choose Your Reference
+<p style="color: #555; line-height: 1.75;">
+Consider a circuit with a 10V source, three nodes (A, B, and reference ground), and resistors connecting them.
+</p>
 
-The **Node Voltage Method** is a systematic way to analyze circuits by:
+<p style="color: #555; line-height: 1.75;">
+<strong>Step 1:</strong> Label the reference node (ground = 0V)
+</p>
 
-1. Selecting a **reference node** (ground)
-2. Defining voltages at all other nodes relative to ground
-3. Writing KCL equations at each non-reference node
-4. Solving the resulting system of equations
+<p style="color: #555; line-height: 1.75;">
+<strong>Step 2:</strong> Define node voltages <span class="arithmatex">\(V_A\)</span> and <span class="arithmatex">\(V_B\)</span>
+</p>
 
-Why use node voltages? Because it minimizes the number of unknowns. Instead of tracking individual currents through every branch, you track $n-1$ node voltages, and all currents can be derived from those.
+<p style="color: #555; line-height: 1.75;">
+<strong>Step 3:</strong> Write KCL at each non-reference node:
+</p>
 
-### Setting Up the Reference Node
-
-The **reference node** is your circuit's "sea level"—all other voltages are measured relative to it. Choose wisely:
-
-- Pick a node with many connections (fewer equations needed)
-- If there's a ground symbol, use that
-- The negative terminal of a power supply is often convenient
-
-!!! note "Ground Isn't Always Dirt"
-    The "ground" in circuit analysis is just a reference point with 0V potential. It doesn't have to connect to literal earth ground—it's just where we've decided to start measuring from.
-
-### Node Voltage Example
-
-Consider a circuit with a 10V source, three nodes (A, B, ground), and resistors connecting them.
-
-**Step 1:** Label the reference node (ground = 0V)
-
-**Step 2:** Define node voltages $V_A$ and $V_B$
-
-**Step 3:** Write KCL at each node:
-
+<p style="color: #555; line-height: 1.75;">
 At node A (assuming all currents leaving):
+</p>
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 10px 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
+
 $$\frac{V_A - 10}{R_1} + \frac{V_A - V_B}{R_2} = 0$$
 
+</div>
+
+<p style="color: #555; line-height: 1.75;">
 At node B:
+</p>
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 10px 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
+
 $$\frac{V_B - V_A}{R_2} + \frac{V_B - 0}{R_3} = 0$$
 
-**Step 4:** Solve the system. With specific values, this becomes straightforward algebra (or matrix operations for larger circuits).
+</div>
 
-### The Supernode: When Voltage Sources Get Tricky
+<p style="color: #555; line-height: 1.75; margin-bottom: 0;">
+<strong>Step 4:</strong> Solve the system for <span class="arithmatex">\(V_A\)</span> and <span class="arithmatex">\(V_B\)</span>, then derive all branch currents using Ohm's Law.
+</p>
+</div>
 
-What happens when a voltage source connects two non-reference nodes? You can't write the usual KCL equation because you don't know the current through an ideal voltage source.
+<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">The Supernode Technique</h3>
 
-Enter the **supernode**: treat the voltage source and its two nodes as a single "super" entity. Write KCL around the entire supernode (currents entering must equal currents leaving), and add a constraint equation for the voltage source.
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
+When a voltage source connects two non-reference nodes, the standard KCL equation cannot be written directly because the current through an ideal voltage source is unknown. The <strong style="color: #333;">supernode</strong> technique resolves this situation.
+</p>
 
-#### Diagram: Supernode Analysis
+<ul style="list-style: none; padding-left: 0.8rem; margin: 0.8rem 0 1.2rem 0;">
+<li style="margin-bottom: 0.9rem; line-height: 1.75; color: #333;"><span style="color: #5A3EED; font-weight: 700; margin-right: 0.5rem;">&#9679;</span> Enclose the voltage source and its two connected nodes within a single boundary</li>
+<li style="margin-bottom: 0.9rem; line-height: 1.75; color: #333;"><span style="color: #5A3EED; font-weight: 700; margin-right: 0.5rem;">&#9679;</span> Write a KCL equation for the entire supernode (total current entering = total current leaving)</li>
+<li style="margin-bottom: 0.9rem; line-height: 1.75; color: #333;"><span style="color: #5A3EED; font-weight: 700; margin-right: 0.5rem;">&#9679;</span> Add a constraint equation relating the two node voltages through the voltage source value</li>
+</ul>
 
-<iframe src="../../sims/supernode-analysis/main.html" width="100%" height="480px" scrolling="no"></iframe>
+<h4 style="color: #5A3EED; font-weight: 700; margin-top: 2rem; margin-bottom: 0.8rem;">Diagram: Supernode Analysis</h4>
 
-<details markdown="1">
-<summary>Supernode Analysis MicroSim</summary>
-Type: microsim
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe src="../../sims/supernode-analysis/main.html" width="100%" height="480px" scrolling="no" style="border:none; border-radius:8px; overflow:hidden;"></iframe>
+</div>
 
-Bloom Level: Apply (L3)
-Bloom Verb: Solve
+---
 
-Learning Objective: Students will solve circuits containing voltage sources between non-reference nodes using the supernode technique.
+<h2 id="35-mesh-current-method" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">3.5 The Mesh Current Method</h2>
 
-Visual Elements:
-- Circuit with voltage source between two nodes (creating supernode situation)
-- Dashed boundary line encircling the supernode region
-- Node voltage labels at each node
-- Current arrows showing flow into/out of supernode
-- Equation panel showing KCL for supernode + constraint equation
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
+The <strong style="color: #333;">mesh current method</strong> takes the complementary approach to node voltages. Instead of defining node voltages and deriving currents, this method assigns a circulating current to each mesh and writes KVL equations. For a circuit with <span class="arithmatex">\(m\)</span> meshes, exactly <span class="arithmatex">\(m\)</span> equations are required. This method is particularly efficient when the circuit has many nodes but few meshes.
+</p>
 
-Interactive Controls:
-- Slider: Voltage source value (1V to 20V)
-- Slider: R1, R2, R3 values (100Ω to 10kΩ)
-- Toggle: Show/hide supernode boundary
-- "Solve" button to calculate and display node voltages
-- "Show Work" button to display step-by-step solution
+<ul style="list-style: none; padding-left: 0.8rem; margin: 0.8rem 0 1.2rem 0;">
+<li style="margin-bottom: 0.9rem; line-height: 1.75; color: #333;"><span style="color: #5A3EED; font-weight: 700; margin-right: 0.5rem;">&#9679;</span> <strong>Step 1:</strong> Assign a <strong>mesh current</strong> to each mesh (conventionally all clockwise)</li>
+<li style="margin-bottom: 0.9rem; line-height: 1.75; color: #333;"><span style="color: #5A3EED; font-weight: 700; margin-right: 0.5rem;">&#9679;</span> <strong>Step 2:</strong> Write KVL equations around each mesh</li>
+<li style="margin-bottom: 0.9rem; line-height: 1.75; color: #333;"><span style="color: #5A3EED; font-weight: 700; margin-right: 0.5rem;">&#9679;</span> <strong>Step 3:</strong> Solve for the mesh currents</li>
+<li style="margin-bottom: 0.9rem; line-height: 1.75; color: #333;"><span style="color: #5A3EED; font-weight: 700; margin-right: 0.5rem;">&#9679;</span> <strong>Step 4:</strong> Derive branch currents and voltages as needed</li>
+</ul>
 
-Behavior:
-- Supernode boundary highlights when toggle enabled
-- Current arrows update magnitude based on solved values
-- Equation panel shows:
-  1. Supernode KCL equation
-  2. Constraint equation (V1 - V2 = Vsource)
-  3. Solved values for all node voltages
-- Warning if impossible configuration entered
+<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Mesh Current Sign Convention</h3>
 
-Canvas: 600x380 with 100px control area
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1rem;">
+When two meshes share a branch, the actual branch current is determined by the combination of both mesh currents:
+</p>
 
-Instructional Rationale: Apply-level objective benefits from parameter exploration where students can modify circuit values and see how the supernode technique produces solutions.
-
-Implementation: p5.js with canvas-based controls
-</details>
-
-## The Mesh Current Method: Going Around in Circles
-
-The **Mesh Current Method** takes the opposite approach from node voltages. Instead of defining node voltages and deriving currents, you:
-
-1. Assign a **mesh current** to each mesh (usually all clockwise)
-2. Write KVL equations around each mesh
-3. Solve for the mesh currents
-4. Derive branch currents and voltages as needed
-
-For a circuit with $m$ meshes, you write $m$ equations. This method shines when you have many nodes but few meshes.
-
-### Mesh Current Sign Convention
-
-Here's the key insight: when two meshes share a branch, the actual current through that branch is the *difference* of the two mesh currents. If both mesh currents flow in the same direction through the shared branch, they add; if opposite, they subtract.
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 24px 28px; margin: 1.5rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
 
 | Situation | Branch Current |
 |-----------|---------------|
@@ -398,410 +407,330 @@ Here's the key insight: when two meshes share a branch, the actual current throu
 | Meshes 1 and 2 share branch, same direction | $I_1 + I_2$ |
 | Meshes 1 and 2 share branch, opposite direction | $I_1 - I_2$ |
 
-### Mesh Analysis Example
+</div>
 
-Consider a two-mesh circuit. Define mesh currents $I_1$ (left mesh, clockwise) and $I_2$ (right mesh, clockwise).
+<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Mesh Analysis Example</h3>
 
-**Mesh 1 (left):**
+<div style="background: #FFF7DD; border: 2px solid #F0D87A; border-radius: 10px; padding: 24px; margin: 1.5rem 0;" markdown>
+<p style="color: #B8860B; font-weight: 700; font-size: 1.08rem; margin-top: 0; margin-bottom: 14px;">Example — Two-Mesh Circuit</p>
+
+<p style="color: #555; line-height: 1.75;">
+Define mesh currents <span class="arithmatex">\(I_1\)</span> (left mesh, clockwise) and <span class="arithmatex">\(I_2\)</span> (right mesh, clockwise).
+</p>
+
+<p style="color: #555; line-height: 1.75;">
+<strong>Mesh 1 (left):</strong>
+</p>
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 10px 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
+
 $$V_s - I_1 R_1 - (I_1 - I_2)R_2 = 0$$
 
-**Mesh 2 (right):**
+</div>
+
+<p style="color: #555; line-height: 1.75;">
+<strong>Mesh 2 (right):</strong>
+</p>
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 10px 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
+
 $$-(I_2 - I_1)R_2 - I_2 R_3 = 0$$
 
+</div>
+
+<p style="color: #555; line-height: 1.75;">
 Rearranging into matrix form:
+</p>
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 10px 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
 
 $$\begin{bmatrix} R_1 + R_2 & -R_2 \\ -R_2 & R_2 + R_3 \end{bmatrix} \begin{bmatrix} I_1 \\ I_2 \end{bmatrix} = \begin{bmatrix} V_s \\ 0 \end{bmatrix}$$
 
-Beautiful symmetry! The main diagonal has the sum of resistors in each mesh; the off-diagonal terms show the shared resistors (with negative signs).
+</div>
 
-### The Supermesh: When Current Sources Get Tricky
+<p style="color: #555; line-height: 1.75; margin-bottom: 0;">
+The resistance matrix is symmetric: the main diagonal contains the sum of resistances in each mesh, and the off-diagonal entries contain the negative of shared resistances.
+</p>
+</div>
 
-Just as voltage sources cause trouble for node voltage analysis, current sources cause trouble for mesh analysis—you can't write a normal KVL equation for a branch with an ideal current source (what's the voltage drop across a current source? It depends on the circuit!).
+<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">The Supermesh Technique</h3>
 
-The solution is the **supermesh**:
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
+When a current source is shared between two meshes, a standard KVL equation cannot be written for the branch containing the current source because the voltage across an ideal current source is unknown. The <strong style="color: #333;">supermesh</strong> technique resolves this by:
+</p>
 
-1. Combine the two meshes that share the current source into one "super" loop
-2. Write KVL around the supermesh (skipping the current source)
-3. Add a constraint equation relating the two mesh currents via the current source value
+<ul style="list-style: none; padding-left: 0.8rem; margin: 0.8rem 0 1.2rem 0;">
+<li style="margin-bottom: 0.9rem; line-height: 1.75; color: #333;"><span style="color: #5A3EED; font-weight: 700; margin-right: 0.5rem;">&#9679;</span> Combining the two meshes that share the current source into a single outer loop</li>
+<li style="margin-bottom: 0.9rem; line-height: 1.75; color: #333;"><span style="color: #5A3EED; font-weight: 700; margin-right: 0.5rem;">&#9679;</span> Writing KVL around the supermesh (excluding the current source branch)</li>
+<li style="margin-bottom: 0.9rem; line-height: 1.75; color: #333;"><span style="color: #5A3EED; font-weight: 700; margin-right: 0.5rem;">&#9679;</span> Adding a constraint equation relating the two mesh currents through the current source value</li>
+</ul>
 
-#### Diagram: Mesh vs. Supermesh Comparison
+<h4 style="color: #5A3EED; font-weight: 700; margin-top: 2rem; margin-bottom: 0.8rem;">Diagram: Mesh vs. Supermesh Comparison</h4>
 
-<iframe src="../../sims/mesh-supermesh-compare/main.html" width="100%" height="520px" scrolling="no"></iframe>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe src="../../sims/mesh-supermesh-compare/main.html" width="100%" height="520px" scrolling="no" style="border:none; border-radius:8px; overflow:hidden;"></iframe>
+</div>
 
-<details markdown="1">
-<summary>Mesh vs Supermesh Comparison MicroSim</summary>
-Type: microsim
+---
 
-Bloom Level: Analyze (L4)
-Bloom Verb: Compare
+<h2 id="36-superposition-principle" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">3.6 The Superposition Principle</h2>
 
-Learning Objective: Students will compare standard mesh analysis with supermesh analysis by observing how current sources change the solution approach.
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
+The <strong style="color: #333;">superposition principle</strong> provides a divide-and-conquer approach for circuits with multiple independent sources. In a linear circuit, the response at any point equals the algebraic sum of the responses caused by each source acting alone, with all other independent sources deactivated.
+</p>
 
-Visual Elements:
-- Side-by-side circuit displays
-- Left: Standard two-mesh circuit (resistors only)
-- Right: Same topology but with current source replacing one resistor
-- Mesh current annotations (I1, I2)
-- Supermesh boundary (dashed line) on right circuit
-- Equation display panel below each circuit
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1rem;">
+Deactivating sources means:
+</p>
 
-Interactive Controls:
-- Toggle: Standard mesh / Supermesh mode
-- Sliders: Component values (R1, R2, R3, Vs, Is)
-- "Show Equations" button to display KVL equations
-- "Solve" button to compute mesh currents
+<ul style="list-style: none; padding-left: 0.8rem; margin: 0.8rem 0 1.2rem 0;">
+<li style="margin-bottom: 0.9rem; line-height: 1.75; color: #333;"><span style="color: #5A3EED; font-weight: 700; margin-right: 0.5rem;">&#9679;</span> <strong>Voltage sources</strong> → Replace with a short circuit (0V, wire)</li>
+<li style="margin-bottom: 0.9rem; line-height: 1.75; color: #333;"><span style="color: #5A3EED; font-weight: 700; margin-right: 0.5rem;">&#9679;</span> <strong>Current sources</strong> → Replace with an open circuit (0A, break)</li>
+</ul>
 
-Behavior:
-- In standard mode: shows two KVL equations
-- In supermesh mode: shows supermesh KVL + constraint equation
-- Solved currents displayed with direction arrows
-- Comparison panel shows why supermesh is needed
+<div style="background: #FFF8E1; border-left: 4px solid #F0D87A; border-radius: 8px; padding: 16px 20px; margin: 1rem 0;">
+<strong style="color: #B8860B;">Key Insight — Linearity Requirement:</strong> Superposition is valid because Ohm's Law is linear — voltage and current are proportional, and responses from multiple sources combine additively. This principle does not apply to circuits containing nonlinear elements such as diodes.
+</div>
 
-Canvas: 700x420 with 100px control area
+<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Superposition Example</h3>
 
-Instructional Rationale: Comparative visualization helps students understand when and why the supermesh technique is necessary by contrasting it with standard mesh analysis.
+<div style="background: #FFF7DD; border: 2px solid #F0D87A; border-radius: 10px; padding: 24px; margin: 1.5rem 0;" markdown>
+<p style="color: #B8860B; font-weight: 700; font-size: 1.08rem; margin-top: 0; margin-bottom: 14px;">Example — Two-Source Circuit</p>
 
-Implementation: p5.js with canvas-based controls
-</details>
+<p style="color: #555; line-height: 1.75;">
+Consider a circuit with a 12V voltage source and a 2A current source. To find the current through resistor <span class="arithmatex">\(R\)</span>:
+</p>
 
-## The Superposition Principle: One Source at a Time
+<ul style="list-style: none; padding-left: 0.8rem; margin: 0.5rem 0;">
+<li style="margin-bottom: 0.5rem; line-height: 1.75; color: #333;"><span style="color: #5A3EED; font-weight: 700; margin-right: 0.5rem;">&#9679;</span> <strong>Step 1:</strong> Deactivate the current source (open circuit). Solve for <span class="arithmatex">\(I_R'\)</span> due to the voltage source alone.</li>
+<li style="margin-bottom: 0.5rem; line-height: 1.75; color: #333;"><span style="color: #5A3EED; font-weight: 700; margin-right: 0.5rem;">&#9679;</span> <strong>Step 2:</strong> Deactivate the voltage source (short circuit). Solve for <span class="arithmatex">\(I_R''\)</span> due to the current source alone.</li>
+<li style="margin-bottom: 0.5rem; line-height: 1.75; color: #333;"><span style="color: #5A3EED; font-weight: 700; margin-right: 0.5rem;">&#9679;</span> <strong>Step 3:</strong> Combine: <span class="arithmatex">\(I_R = I_R' + I_R''\)</span></li>
+</ul>
 
-When a circuit has multiple sources, the **superposition principle** offers a divide-and-conquer approach:
+<p style="color: #555; line-height: 1.75; margin-bottom: 0;">
+If the two contributions flow in opposite directions, algebraic addition accounts for the sign difference automatically.
+</p>
+</div>
 
-!!! tip "Superposition Principle"
-    In a linear circuit with multiple sources, the response (voltage or current) at any point is the algebraic sum of the responses caused by each source acting alone, with all other sources turned off.
+<h4 style="color: #5A3EED; font-weight: 700; margin-top: 2rem; margin-bottom: 0.8rem;">Diagram: Superposition Principle Demonstrator</h4>
 
-"Turning off" sources means:
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe src="../../sims/superposition-demo/main.html" width="100%" height="550px" scrolling="no" style="border:none; border-radius:8px; overflow:hidden;"></iframe>
+</div>
 
-- **Voltage sources** → Replace with a short circuit (wire)
-- **Current sources** → Replace with an open circuit (break)
+---
 
-### Why Superposition Works
+<h2 id="37-load-and-equivalent-resistance" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">3.7 Load Resistance and Equivalent Resistance</h2>
 
-Superposition works because Ohm's Law is *linear*—doubling the voltage doubles the current, and responses add up predictably. This doesn't work for circuits with nonlinear elements (like diodes), but for resistors and independent sources, it's magic.
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
+<strong style="color: #333;">Load resistance</strong> (<span class="arithmatex">\(R_L\)</span>) is the resistance of the component or subsystem being powered by a circuit. The remainder of the circuit exists to deliver energy to this load.
+</p>
 
-### Superposition Example
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
+<strong style="color: #333;">Equivalent resistance</strong> (<span class="arithmatex">\(R_{eq}\)</span>) reduces a complex resistor network to a single resistance value that draws the same current from the source as the original network.
+</p>
 
-Consider a circuit with a 12V voltage source and a 2A current source. To find the current through resistor $R$:
-
-**Step 1:** Turn off current source (open circuit). Solve for $I_R'$ due to voltage source only.
-
-**Step 2:** Turn off voltage source (short circuit). Solve for $I_R''$ due to current source only.
-
-**Step 3:** Total current: $I_R = I_R' + I_R''$
-
-Watch the signs! If the two contributions flow in opposite directions, they'll subtract.
-
-#### Diagram: Superposition Principle Demonstrator
-
-<iframe src="../../sims/superposition-demo/main.html" width="100%" height="550px" scrolling="no"></iframe>
-
-<details markdown="1">
-<summary>Superposition Principle Demonstrator MicroSim</summary>
-Type: microsim
-
-Bloom Level: Apply (L3)
-Bloom Verb: Calculate
-
-Learning Objective: Students will calculate the total response in a multi-source circuit by applying superposition, analyzing each source's contribution separately.
-
-Visual Elements:
-- Main circuit with two sources (voltage and current)
-- Three views: Original, Source 1 only, Source 2 only
-- Current through target resistor highlighted in each view
-- Bar chart showing individual contributions and total
-
-Interactive Controls:
-- Slider: Voltage source value (0-20V)
-- Slider: Current source value (0-5A)
-- Slider: Resistor values (100Ω-10kΩ)
-- View selector: Original / V-source only / I-source only / Comparison
-- "Calculate" button to solve each case
-
-Behavior:
-- In "V-source only" view: current source replaced with open circuit
-- In "I-source only" view: voltage source replaced with short circuit
-- Comparison view shows all three side-by-side
-- Running calculation: I_total = I' + I''
-- Color-coded arrows show current direction in each case
-- Bar chart shows magnitude and sign of each contribution
-
-Canvas: 700x450 with 100px control area
-
-Instructional Rationale: Application-level learning benefits from calculator-style interaction where students set parameters and observe how superposition combines individual contributions.
-
-Implementation: p5.js with canvas-based controls
-</details>
-
-## Load Resistance and Equivalent Resistance
-
-Two more concepts before we tackle the transformation tricks:
-
-**Load resistance** ($R_L$) is the resistance of whatever you're trying to power—your lamp, motor, or phone. The rest of the circuit exists to deliver power to the load.
-
-**Equivalent resistance** ($R_{eq}$) simplifies complex networks into a single resistor that draws the same current from the source. We covered series and parallel equivalents in Chapter 2, but some configurations can't be reduced using those rules alone.
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 24px 28px; margin: 1.5rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
 
 | Configuration | Formula |
 |---------------|---------|
-| Series | $R_{eq} = R_1 + R_2 + ... + R_n$ |
-| Parallel | $\frac{1}{R_{eq}} = \frac{1}{R_1} + \frac{1}{R_2} + ... + \frac{1}{R_n}$ |
-| Mixed | Combine step by step |
-| Delta-Wye? | Keep reading... |
+| Series | $R_{eq} = R_1 + R_2 + \cdots + R_n$ |
+| Parallel | $\frac{1}{R_{eq}} = \frac{1}{R_1} + \frac{1}{R_2} + \cdots + \frac{1}{R_n}$ |
+| Mixed | Combine step by step using series and parallel rules |
 
-## Delta and Wye Configurations: The Shape Shifters
+</div>
 
-Some resistor networks form patterns that can't be simplified by series/parallel rules. Enter the **delta** (Δ, also called "pi" π) and **wye** (Y, also called "T") configurations.
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.5rem;">
+Some resistor configurations — notably bridge circuits — cannot be reduced using series and parallel rules alone. These require the <strong style="color: #333;">delta-wye transformation</strong> described in the next section.
+</p>
 
-**Delta configuration:** Three resistors connected in a triangle (each resistor connects two nodes directly)
+---
 
-**Wye configuration:** Three resistors meeting at a common central node (like a Mercedes logo)
+<h2 id="38-delta-and-wye-configurations" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">3.8 Delta and Wye Configurations</h2>
 
-These two configurations can be electrically equivalent—from the outside, they behave identically, even though they look different inside.
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
+Two three-terminal resistor configurations frequently appear in circuit analysis:
+</p>
 
-### Delta-Wye Transformation Formulas
+<ul style="list-style: none; padding-left: 0.8rem; margin: 0.8rem 0 1.2rem 0;">
+<li style="margin-bottom: 0.9rem; line-height: 1.75; color: #333;"><span style="color: #5A3EED; font-weight: 700; margin-right: 0.5rem;">&#9679;</span> <strong>Delta configuration</strong> (Δ, also called pi π) — three resistors connected in a triangle, where each resistor directly connects two of the three terminals</li>
+<li style="margin-bottom: 0.9rem; line-height: 1.75; color: #333;"><span style="color: #5A3EED; font-weight: 700; margin-right: 0.5rem;">&#9679;</span> <strong>Wye configuration</strong> (Y, also called T) — three resistors that share a common central node, with each resistor extending to one of the three terminals</li>
+</ul>
 
-To convert from **Delta to Wye**:
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.5rem;">
+These two configurations can be made electrically equivalent — from the external terminals, they exhibit identical behavior despite having different internal structures.
+</p>
 
-$$R_1 = \frac{R_a R_b}{R_a + R_b + R_c}$$
+<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Delta-to-Wye Transformation</h3>
 
-$$R_2 = \frac{R_b R_c}{R_a + R_b + R_c}$$
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1rem;">
+Each wye resistor equals the product of the two adjacent delta resistors divided by the sum of all three delta resistors:
+</p>
 
-$$R_3 = \frac{R_a R_c}{R_a + R_b + R_c}$$
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
 
-To convert from **Wye to Delta**:
+$$R_1 = \frac{R_a R_b}{R_a + R_b + R_c} \qquad R_2 = \frac{R_b R_c}{R_a + R_b + R_c} \qquad R_3 = \frac{R_a R_c}{R_a + R_b + R_c}$$
 
-$$R_a = \frac{R_1 R_2 + R_2 R_3 + R_1 R_3}{R_3}$$
+</div>
 
-$$R_b = \frac{R_1 R_2 + R_2 R_3 + R_1 R_3}{R_1}$$
+<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Wye-to-Delta Transformation</h3>
 
-$$R_c = \frac{R_1 R_2 + R_2 R_3 + R_1 R_3}{R_2}$$
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1rem;">
+Each delta resistor equals the sum of all pairwise products of wye resistors divided by the opposite wye resistor:
+</p>
 
-Memory trick: For delta-to-wye, each Y resistor equals (product of adjacent Δ resistors) / (sum of all Δ resistors).
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
 
-#### Diagram: Delta-Wye Transformation Calculator
+$$R_a = \frac{R_1 R_2 + R_2 R_3 + R_1 R_3}{R_3} \qquad R_b = \frac{R_1 R_2 + R_2 R_3 + R_1 R_3}{R_1} \qquad R_c = \frac{R_1 R_2 + R_2 R_3 + R_1 R_3}{R_2}$$
 
-<iframe src="../../sims/delta-wye-transform/main.html" width="100%" height="520px" scrolling="no"></iframe>
+</div>
 
-<details markdown="1">
-<summary>Delta-Wye Transformation Calculator MicroSim</summary>
-Type: microsim
+<h4 style="color: #5A3EED; font-weight: 700; margin-top: 2rem; margin-bottom: 0.8rem;">Diagram: Delta-Wye Transformation Calculator</h4>
 
-Bloom Level: Apply (L3)
-Bloom Verb: Calculate
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe src="../../sims/delta-wye-transform/main.html" width="100%" height="520px" scrolling="no" style="border:none; border-radius:8px; overflow:hidden;"></iframe>
+</div>
 
-Learning Objective: Students will calculate equivalent resistor values when converting between delta and wye configurations using the transformation formulas.
+<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">When to Use Delta-Wye Transformation</h3>
 
-Visual Elements:
-- Left side: Delta configuration with labeled resistors Ra, Rb, Rc
-- Right side: Wye configuration with labeled resistors R1, R2, R3
-- Node labels (A, B, C) matching between configurations
-- Animated morphing transition showing transformation
-- Formula display showing calculation steps
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1rem;">
+Delta-wye transformation is most applicable in these situations:
+</p>
 
-Interactive Controls:
-- Mode toggle: Delta→Wye or Wye→Delta
-- Three sliders for input resistor values (1Ω to 100Ω)
-- "Transform" button to calculate and animate
-- "Show Formulas" toggle to display math
+<ul style="list-style: none; padding-left: 0.8rem; margin: 0.8rem 0 1.2rem 0;">
+<li style="margin-bottom: 0.9rem; line-height: 1.75; color: #333;"><span style="color: #5A3EED; font-weight: 700; margin-right: 0.5rem;">&#9679;</span> <strong>Bridge circuits</strong> (such as the Wheatstone bridge) where a resistor cannot be classified as series or parallel</li>
+<li style="margin-bottom: 0.9rem; line-height: 1.75; color: #333;"><span style="color: #5A3EED; font-weight: 700; margin-right: 0.5rem;">&#9679;</span> <strong>Complex networks</strong> that resist simplification through series and parallel reduction alone</li>
+<li style="margin-bottom: 0.9rem; line-height: 1.75; color: #333;"><span style="color: #5A3EED; font-weight: 700; margin-right: 0.5rem;">&#9679;</span> <strong>Three-phase power systems</strong> encountered in later chapters</li>
+</ul>
 
-Behavior:
-- Enter three resistor values on input side
-- Press Transform to:
-  1. Display calculation steps
-  2. Animate the configuration morphing
-  3. Show resulting resistor values
-- Verification: equivalent resistance measured from any two terminals should match
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.5rem;">
+After performing the transformation, standard series and parallel reduction rules can be applied to complete the simplification.
+</p>
 
-Default values:
-- Delta mode: Ra=30Ω, Rb=60Ω, Rc=90Ω
-- Expected Wye: R1=10Ω, R2=30Ω, R3=15Ω (verify these)
+---
 
-Canvas: 650x420 with 100px control area
+<h2 id="39-circuit-simplification" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">3.9 Circuit Simplification</h2>
 
-Instructional Rationale: Calculator-style interface with formula visibility supports Apply-level learning by letting students verify their hand calculations and build confidence with the formulas.
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
+<strong style="color: #333;">Circuit simplification</strong> reduces a complex circuit to its simplest equivalent form using a systematic strategy:
+</p>
 
-Implementation: p5.js with canvas-based controls
-</details>
+<ul style="list-style: none; padding-left: 0.8rem; margin: 0.8rem 0 1.2rem 0;">
+<li style="margin-bottom: 0.9rem; line-height: 1.75; color: #333;"><span style="color: #5A3EED; font-weight: 700; margin-right: 0.5rem;">&#9679;</span> <strong>Step 1:</strong> Identify series or parallel resistor groups</li>
+<li style="margin-bottom: 0.9rem; line-height: 1.75; color: #333;"><span style="color: #5A3EED; font-weight: 700; margin-right: 0.5rem;">&#9679;</span> <strong>Step 2:</strong> Combine them step by step using the appropriate formulas</li>
+<li style="margin-bottom: 0.9rem; line-height: 1.75; color: #333;"><span style="color: #5A3EED; font-weight: 700; margin-right: 0.5rem;">&#9679;</span> <strong>Step 3:</strong> Apply delta-wye transformation if no further series/parallel reductions are possible</li>
+<li style="margin-bottom: 0.9rem; line-height: 1.75; color: #333;"><span style="color: #5A3EED; font-weight: 700; margin-right: 0.5rem;">&#9679;</span> <strong>Step 4:</strong> Repeat until a single equivalent resistance remains</li>
+</ul>
 
-### When to Use Delta-Wye
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 24px 28px; margin: 1.5rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
 
-Delta-wye transformation is most useful for:
+| Technique | Formula |
+|-----------|---------|
+| Series combination | $R_{eq} = R_1 + R_2$ |
+| Parallel combination | $R_{eq} = \frac{R_1 R_2}{R_1 + R_2}$ |
+| Delta-wye transformation | See Section 3.8 |
+| Source transformations | Covered in Chapter 4 |
 
-1. **Bridge circuits** (like the Wheatstone bridge)—the "middle" resistor can't be classified as series or parallel
-2. **Complex networks** where no amount of series/parallel reduction simplifies things
-3. **Three-phase power systems** (we'll encounter these in later chapters)
+</div>
 
-The trick: transform one configuration to the other, then standard series/parallel rules work again.
+<div style="background: #FFF8E1; border-left: 4px solid #F0D87A; border-radius: 8px; padding: 16px 20px; margin: 1rem 0;">
+<strong style="color: #B8860B;">Key Insight — Simplification Priority:</strong> Always attempt series and parallel reduction before resorting to delta-wye transformation. The simpler methods are less prone to computational error and should be exhausted first.
+</div>
 
-## Circuit Simplification: Putting It All Together
+<h4 style="color: #5A3EED; font-weight: 700; margin-top: 2rem; margin-bottom: 0.8rem;">Diagram: Circuit Simplification Step-by-Step</h4>
 
-**Circuit simplification** is the art of reducing a complex circuit to its simplest equivalent form. Your toolkit now includes:
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe src="../../sims/circuit-simplification/main.html" width="100%" height="580px" scrolling="no" style="border:none; border-radius:8px; overflow:hidden;"></iframe>
+</div>
 
-1. **Series combinations:** $R_{eq} = R_1 + R_2$
-2. **Parallel combinations:** $R_{eq} = \frac{R_1 R_2}{R_1 + R_2}$
-3. **Delta-wye transformations** for stubborn configurations
-4. **Source transformations** (we'll cover these in Chapter 4)
+---
 
-The strategy:
+<h2 id="310-choosing-an-analysis-method" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">3.10 Choosing an Analysis Method</h2>
 
-1. Look for obviously series or parallel groups
-2. Combine them step by step
-3. If stuck, try a delta-wye transformation
-4. Repeat until you have one equivalent resistor
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
+With multiple analysis techniques available, the choice of method depends on the circuit characteristics:
+</p>
 
-!!! warning "Don't Transform Everything"
-    Delta-wye transformation is powerful but often overkill. Always try series/parallel reduction first—it's simpler and less error-prone.
-
-#### Diagram: Circuit Simplification Step-by-Step
-
-<iframe src="../../sims/circuit-simplification/main.html" width="100%" height="580px" scrolling="no"></iframe>
-
-<details markdown="1">
-<summary>Circuit Simplification Step-by-Step MicroSim</summary>
-Type: microsim
-
-Bloom Level: Analyze (L4)
-Bloom Verb: Deconstruct
-
-Learning Objective: Students will deconstruct complex circuits by identifying series, parallel, and delta-wye reduction opportunities in the correct order.
-
-Visual Elements:
-- Complex circuit diagram (bridge circuit with 5+ resistors)
-- Step counter showing current simplification stage
-- Highlighted regions showing next simplification opportunity
-- Equivalent circuit view updating with each step
-- Log panel showing each simplification operation
-
-Interactive Controls:
-- "Next Step" button to advance simplification
-- "Previous Step" to go back
-- "Auto-simplify" toggle for animation
-- "Hint" button to highlight next reducible section
-- Speed slider for auto mode
-- Circuit selector (3 example circuits of varying complexity)
-
-Behavior:
-- Each step:
-  1. Highlights the components being combined
-  2. Shows the formula being applied
-  3. Animates the combination into single equivalent
-  4. Updates resistance value
-- Continues until single equivalent resistance reached
-- Final step shows Req with original circuit comparison
-
-Simplification stages for bridge circuit:
-1. Identify that direct series/parallel fails
-2. Choose a delta to convert to wye
-3. Perform delta-to-wye transformation
-4. Now series combinations possible
-5. Then parallel combinations
-6. Final series combination → Req
-
-Canvas: 700x480 with 100px control area
-
-Instructional Rationale: Step-through deconstruction supports Analysis-level learning by making the decision process visible—students see why each simplification is chosen and how it enables further reductions.
-
-Implementation: p5.js with canvas-based controls
-</details>
-
-## Choosing Your Method: A Decision Guide
-
-With multiple analysis techniques available, how do you choose? Here's a practical guide:
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 24px 28px; margin: 1.5rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
 
 | Circuit Characteristic | Recommended Method |
 |-----------------------|-------------------|
 | Few nodes, many meshes | Node Voltage Method |
 | Few meshes, many nodes | Mesh Current Method |
 | Multiple independent sources | Superposition (then either method) |
-| Need just one current/voltage | Simplification + Ohm's Law |
+| Need only one current or voltage | Simplification + Ohm's Law |
 | Bridge or complex topology | Delta-Wye transformation first |
-| Voltage source between nodes | Supernode technique |
-| Current source in mesh | Supermesh technique |
+| Voltage source between non-reference nodes | Supernode technique |
+| Current source shared between meshes | Supermesh technique |
 
-When in doubt? The mesh current method and node voltage method both work for any circuit—pick the one with fewer equations based on your mesh/node count.
+</div>
 
-## Systematic Analysis: The Matrix Approach
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.5rem;">
+Both the node voltage method and the mesh current method can solve any planar circuit. Select the method that produces fewer simultaneous equations based on the circuit's node and mesh count.
+</p>
 
-For larger circuits, organizing your equations into matrix form makes computation tractable (and lets you use calculators or computers).
+---
 
-For node voltage with $n-1$ unknowns:
+<h2 id="311-matrix-approach" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">3.11 Systematic Analysis: The Matrix Approach</h2>
+
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
+For larger circuits, organizing the system of equations into matrix form enables efficient computation. The two standard matrix formulations are:
+</p>
+
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 0.8rem;">
+<strong style="color: #333;">Node voltage formulation</strong> with <span class="arithmatex">\(n-1\)</span> unknowns:
+</p>
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
 
 $$\mathbf{G} \mathbf{V} = \mathbf{I}$$
 
-Where $\mathbf{G}$ is the conductance matrix, $\mathbf{V}$ is the vector of node voltages, and $\mathbf{I}$ is the vector of source currents.
+</div>
 
-For mesh currents with $m$ unknowns:
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
+where <span class="arithmatex">\(\mathbf{G}\)</span> is the conductance matrix, <span class="arithmatex">\(\mathbf{V}\)</span> is the node voltage vector, and <span class="arithmatex">\(\mathbf{I}\)</span> is the source current vector.
+</p>
+
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 0.8rem;">
+<strong style="color: #333;">Mesh current formulation</strong> with <span class="arithmatex">\(m\)</span> unknowns:
+</p>
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
 
 $$\mathbf{R} \mathbf{I} = \mathbf{V}$$
 
-Where $\mathbf{R}$ is the resistance matrix, $\mathbf{I}$ is the vector of mesh currents, and $\mathbf{V}$ is the vector of source voltages.
+</div>
 
-Both matrices have beautiful properties:
-- **Symmetric** (for circuits with only passive elements)
-- **Main diagonal** entries are positive sums
-- **Off-diagonal** entries are negative shared values
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
+where <span class="arithmatex">\(\mathbf{R}\)</span> is the resistance matrix, <span class="arithmatex">\(\mathbf{I}\)</span> is the mesh current vector, and <span class="arithmatex">\(\mathbf{V}\)</span> is the source voltage vector.
+</p>
 
-!!! note "Why Matrices Matter"
-    Yes, you could solve three simultaneous equations by hand. But when circuits have 10, 20, or 100 nodes, matrices and linear algebra become essential. This is why your calculus course included matrices!
+<div style="background: #E7F7E7; border: 2px solid #81C784; border-radius: 12px; padding: 24px 28px; margin: 1.5rem 0; box-shadow: 0 2px 8px rgba(56,142,60,0.08);">
+<p style="color: #2E7D32; font-weight: 700; font-size: 1.08rem; margin-top: 0; margin-bottom: 10px;">Matrix Properties</p>
+<p style="color: #333; line-height: 1.75; margin-bottom: 0;">
+For circuits containing only passive elements and independent sources, both matrices are <strong>symmetric</strong> (the matrix equals its transpose). Main diagonal entries are positive sums of connected conductances or resistances. Off-diagonal entries are the negatives of shared conductances or resistances.
+</p>
+</div>
 
-#### Diagram: Matrix Equation Builder
+<h4 style="color: #5A3EED; font-weight: 700; margin-top: 2rem; margin-bottom: 0.8rem;">Diagram: Matrix Equation Builder</h4>
 
-<iframe src="../../sims/matrix-equation-builder/main.html" width="100%" height="550px" scrolling="no"></iframe>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe src="../../sims/matrix-equation-builder/main.html" width="100%" height="550px" scrolling="no" style="border:none; border-radius:8px; overflow:hidden;"></iframe>
+</div>
 
-<details markdown="1">
-<summary>Matrix Equation Builder MicroSim</summary>
-Type: microsim
+---
 
-Bloom Level: Apply (L3)
-Bloom Verb: Implement
+<h2 style="color: #5A3EED !important; border-bottom: 2px solid #5A3EED; padding-bottom: 0.3rem; font-weight: 700; margin-top: 2rem;">Chapter Summary</h2>
 
-Learning Objective: Students will implement the systematic matrix formulation for node voltage or mesh current analysis by constructing the coefficient matrix from circuit parameters.
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 20px 24px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<p style="color: #333; line-height: 1.85; font-size: 1.02rem; margin: 0;">
+This chapter covered the fundamental laws and systematic methods for analyzing any DC circuit. Kirchhoff's Current Law enforces conservation of charge at nodes, while Kirchhoff's Voltage Law enforces conservation of energy around loops. Circuit topology — nodes, branches, loops, and meshes — determines the structure of analysis equations. The node voltage method and mesh current method provide systematic procedures that work for any linear circuit, with supernodes and supermeshes handling special source configurations. The superposition principle decomposes multi-source circuits into single-source problems. Delta-wye transformations enable simplification of circuits that cannot be reduced by series and parallel rules alone.
+</p>
+</div>
 
-Visual Elements:
-- Circuit schematic with numbered nodes/meshes
-- Matrix display showing G or R matrix formation
-- Color-coded highlighting linking matrix entries to circuit elements
-- Solution vector display
+<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Key Equations Reference</h3>
 
-Interactive Controls:
-- Method toggle: Node Voltage / Mesh Current
-- Adjustable circuit (3-4 nodes/meshes)
-- "Build Matrix" step-by-step mode
-- "Solve" button to compute final values
-- "Show Correspondence" toggle to highlight which circuit elements contribute to which matrix entries
-
-Behavior:
-- Building mode walks through matrix construction:
-  - Main diagonal: sum of connected conductances/resistances
-  - Off-diagonal: shared conductances/resistances (negative)
-  - RHS vector: source contributions
-- Solution mode performs matrix inversion
-- Results displayed back on circuit diagram
-
-Canvas: 700x450 with 100px control area
-
-Instructional Rationale: Implementation-focused interaction helps students understand the systematic construction rules by building matrices element by element and seeing the correspondence with circuit topology.
-
-Implementation: p5.js with canvas-based controls
-</details>
-
-## Summary: Your Circuit Analysis Superpower
-
-You've just acquired some serious capabilities:
-
-- **Kirchhoff's Current Law (KCL):** Currents at a node sum to zero
-- **Kirchhoff's Voltage Law (KVL):** Voltages around a loop sum to zero
-- **Circuit topology:** Nodes, branches, loops, and meshes
-- **Node Voltage Method:** Systematic analysis using node voltages
-- **Mesh Current Method:** Systematic analysis using mesh currents
-- **Supernodes and Supermeshes:** Handling tricky source placements
-- **Superposition:** Analyzing multi-source circuits one source at a time
-- **Delta-Wye Transformation:** Converting between equivalent configurations
-- **Circuit Simplification:** Reducing complexity step by step
-
-With these tools, you can analyze *any* DC circuit. That's not an exaggeration—Kirchhoff's laws plus systematic methods cover every case. You've graduated from "hope and hunt" to "systematic and certain."
-
-### Key Equations Reference
+<div style="background: #F8F6FF; border: 2px solid #D4C8FF; border-radius: 12px; padding: 20px 24px; margin: 1rem 0;" markdown>
 
 | Concept | Equation |
 |---------|----------|
@@ -811,35 +740,37 @@ With these tools, you can analyze *any* DC circuit. That's not an exaggeration�
 | Delta→Wye | $R_Y = \frac{R_{\Delta,adj1} \cdot R_{\Delta,adj2}}{\sum R_\Delta}$ |
 | Wye→Delta | $R_\Delta = \frac{\sum (R_Y \text{ products})}{R_{Y,opposite}}$ |
 
-### What's Next?
+</div>
 
-In Chapter 4, we'll add more tools to your kit: Thévenin and Norton equivalent circuits, source transformations, and maximum power transfer. These let you simplify circuits even further and answer practical questions like "How do I get the most power to my load?"
+<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">What's Next</h3>
 
-But first, practice! Work through problems using both node voltage and mesh current methods. Try the delta-wye transformation on bridge circuits. The more you use these tools, the more automatic they become—until analyzing circuits feels less like work and more like second nature.
-
-That's the superpower: seeing any circuit and knowing exactly how to crack it open.
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.5rem;">
+Chapter 4 introduces additional analysis tools: Thévenin and Norton equivalent circuits, source transformations, and the maximum power transfer theorem. These techniques enable further circuit simplification and address practical questions about optimal power delivery to loads.
+</p>
 
 ---
 
 ??? question "Chapter 3 Review: Test Your Understanding"
-    1. At a node with four wires, if currents of 3A, -5A, and 4A flow through three of them (positive = into node), what current flows through the fourth wire?
+    1. At a node with four wires, if currents of 3A, −5A, and 4A flow through three of them (positive = into node), what current flows through the fourth wire?
 
     2. In a loop with a 9V battery and two resistors (3Ω and 6Ω), what is the current?
 
     3. When should you use a supernode?
 
-    4. What's the difference between a loop and a mesh?
+    4. What is the difference between a loop and a mesh?
 
-    5. If you have a circuit with 4 nodes and 6 branches, how many independent meshes does it have?
+    5. If a circuit has 4 nodes and 6 branches, how many independent meshes does it have?
 
     **Answers:**
 
-    1. By KCL: 3 + (-5) + 4 + I₄ = 0, so I₄ = -2A (flows out of node)
+    1. By KCL: 3 + (−5) + 4 + I₄ = 0, so I₄ = −2A (flows out of node)
 
     2. I = V/(R₁+R₂) = 9V/9Ω = 1A
 
     3. When a voltage source connects two non-reference nodes
 
-    4. A mesh is a loop that contains no other loops inside it (minimal loop)
+    4. A mesh is a loop that contains no other loops inside it (a minimal loop)
 
-    5. Using b = n - 1 + m: 6 = 4 - 1 + m, so m = 3 meshes
+    5. Using b = n − 1 + m: 6 = 4 − 1 + m, so m = 3 meshes
+
+</div>
