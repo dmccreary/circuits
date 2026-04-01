@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+<title>RC Time Constant Visualization</title>
+<script src="https://cdn.jsdelivr.net/npm/p5@1.11.7/lib/p5.js"></script>
+<style>
+  body { margin: 0; padding: 0; background: #e8eaf0; }
+  canvas { display: block; }
+</style>
+</head>
+<body>
+<main></main>
+<script>
+// ============================================================
+// RC Time Constant Visualization MicroSim
+// Chapter 6 – Bloom L2 (Understand)
+// Demonstrate how τ = RC controls transient response speed.
+// Key insight: curve shape is constant; only time scale changes.
+// ============================================================
+
+// ── Canvas & layout ────────────────────────────────────────
+const CW       = 640;
+const graphH   = 410;   // schematic panel height
+const controlH = 115;   // slider area
+const CH       = graphH + controlH;   // 525
+const PANEL_X  = 440;   // divider: graph | info panel
+
+// ── Plot area (within left panel) ─────────────────────────
+const ML = 62, MR = 12, MT = 50, MB = 68;
+const PLOT_X = ML;
+const PLOT_Y = MT;
+const PLOT_W = PANEL_X - ML - MR;   // 366
+const PLOT_H = graphH  - MT - MB;   // 292
+
+// ── Component defaults ─────────────────────────────────────
+let R   = 1000;     // Ω  (1 kΩ)
+let C   = 100e-6;   // F  (100 µF)
+let tau;            // RC time constant (seconds)
+
+// ── Draggable time marker ──────────────────────────────────
+let markerFrac = 0.6;   // 0 = 0, 1 = 5τ
+let isDraggingMarker = false;
+
+// ── Slider layout (bottom control area) ───────────────────
+const SL_LM = 230;
+const SL_X  = SL_LM;
+const SL_W  = CW - SL_LM - 22;
+const SL_R_Y = graphH + 40;
+const SL_C_Y = graphH + 80;
+let dragSlider = null;
+
+// ── τ-multiple colours ─────────────────────────────────────
+const TC = [
+    [210, 50,  50 ],   // 1τ  red
+    [200, 115,  0 ],   // 2τ  orange
+    [ 40, 155,  40],   // 3τ  green
+    [  0, 125, 175],   // 4τ  teal
+    [120,  50, 185],   // 5τ  purple
+];
+const PCT = [63.2, 86.5, 95.0, 98.2, 99.3];
+
+// ══════════════════════════════════════════════════════════
+// SETUP
+// ══════════════════════════════════════════════════════════
+function setup() {
+    createCanvas(CW, CH).parent(select('main').elt);
+    textFont('Arial');
+    recalculate();
+}
+
+function recalculate() { tau = R * C; }
+
+// ══════════════════════════════════════════════════════════
+// DRAW
+// ══════════════════════════════════════════════════════════
+function draw() {
+    background(232, 234, 240);
+    drawGraph();
+    drawInfoPanel();
+    drawControls();
+}
+
+// ── Format helpers ─────────────────────────────────────────
+function fmtR(r) {
+    if (r >= 1000) {
+        let k = r / 1000;
+        return (Number.isInteger(k) ? k.toFixed(0) : k.toFixed(1)) + ' kΩ';
+    }
+    return r.toFixed(0) + ' Ω';
+}
+function fmtC(c) {
+    let uf = c * 1e6;
+    if (uf >= 1000) return (uf / 1000).toFixed(1) + ' mF';
+    if (uf >= 10)   return uf.toFixed(0) + ' µF';
+    return uf.toFixed(1) + ' µF';
+}
+function fmtTime(t) {
+    if (t >= 1)    return t.toFixed(2) + ' s';
+    if (t >= 0.001) {
+        let ms = t * 1000;
+        return (ms >= 100 ? ms.toFixed(0) : ms.toFixed(1)) + ' ms';
+    }
+    return (t * 1e6).toFixed(0) + ' µs';
+}
+
+// ── Coordinate helpers ─────────────────────────────────────
+function valToY(v) { return PLOT_Y + PLOT_H * (1 - v); }          // v: 0–1
+function fracToX(f) { return PLOT_X + f * PLOT_W; }               // f: 0–1 (0=0, 1=5τ)
+
+// ══════════════════════════════════════════════════════════
+// GRAPH
+// ══════════════════════════════════════════════════════════
+function drawGraph() {
+    // Panel background
+    fill(252, 252, 255); noStroke();
+    rect(0, 0, PANEL_X, graphH, 8, 0, 0, 8);
+
+    // Title
+    fill(20, 30, 80); textSize(13); textStyle(BOLD);
+    textAlign(CENTER, TOP);
+    text('RC Circuit — Time Constant  τ = RC', PANEL_X / 2, 8);
+    textStyle(NORMAL);
+
+    // Plot background
+    fill(247, 249, 255); stroke(185, 195, 215); strokeWeight(1);
+    rect(PLOT_X, PLOT_Y, PLOT_W, PLOT_H);
+
+    // ── Horizontal % reference lines ──────────────────────
+    for (let i = 0; i < 5; i++) {
+        let py = valToY(PCT[i] / 100);
+        stroke(TC[i][0], TC[i][1], TC[i][2], 130); strokeWeight(0.8);
+        drawingContext.setLineDash([5, 5]);
+        line(PLOT_X + 1, py, PLOT_X + PLOT_W - 1, py);
+        drawingContext.setLineDash([]);
+        fill(TC[i][0], TC[i][1], TC[i][2]); noStroke();
+        textSize(9); textAlign(RIGHT, CENTER);
+        text(PCT[i].toFixed(1) + '%', PLOT_X - 3, py);
+    }
+
+    // ── Vertical τ-multiple dashed lines ──────────────────
+    for (let i = 0; i < 5; i++) {
+        let px = fracToX((i + 1) / 5);
+        stroke(TC[i][0], TC[i][1], TC[i][2], 150); strokeWeight(1.2);
+        drawingContext.setLineDash([7, 5]);
+        line(px, PLOT_Y + 1, px, PLOT_Y + PLOT_H - 1);
+        drawingContext.setLineDash([]);
+        // τ label
+        fill(TC[i][0], TC[i][1], TC[i][2]); noStroke();
+        textSize(10); textAlign(CENTER, TOP);
+        text(i === 0 ? 'τ' : (i + 1) + 'τ', px, PLOT_Y + PLOT_H + 3);
+        // Actual time label below
+        textSize(9);
+        text(fmtTime((i + 1) * tau), px, PLOT_Y + PLOT_H + 17);
+    }
+
+    // ── Exponential charging curve ─────────────────────────
+    stroke(30, 80, 210); strokeWeight(2.5); noFill();
+    beginShape();
+    for (let px = 0; px <= PLOT_W; px++) {
+        let tNorm = (px / PLOT_W) * 5;   // 0 to 5 (τ units)
+        let v     = 1 - exp(-tNorm);
+        vertex(PLOT_X + px, valToY(v));
+    }
+    endShape();
+
+    // ── Dot at each τ multiple on the curve ───────────────
+    for (let i = 0; i < 5; i++) {
+        let v  = 1 - exp(-(i + 1));
+        let px = fracToX((i + 1) / 5);
+        let py = valToY(v);
+        fill(TC[i][0], TC[i][1], TC[i][2]);
+        stroke(255); strokeWeight(1.5);
+        circle(px, py, 10);
+    }
+
+    // ── Draggable time marker ─────────────────────────────
+    let mX   = fracToX(markerFrac);
+    let mT5  = markerFrac * 5;          // τ units, 0–5
+    let mV   = 1 - exp(-mT5);
+    let mY   = valToY(mV);
+    let mPct = mV * 100;
+
+    // Vertical line
+    stroke(50, 50, 50); strokeWeight(1.8);
+    line(mX, PLOT_Y, mX, PLOT_Y + PLOT_H);
+
+    // Horizontal crosshair to y-axis
+    stroke(50, 50, 50, 150); strokeWeight(1);
+    drawingContext.setLineDash([3, 4]);
+    line(PLOT_X, mY, mX, mY);
+    drawingContext.setLineDash([]);
+
+    // Dot on curve
+    fill(255, 90, 0); stroke(255); strokeWeight(2);
+    circle(mX, mY, 14);
+
+    // Drag handle (downward triangle at top of marker)
+    fill(50, 50, 50); noStroke();
+    triangle(mX - 9, PLOT_Y - 1, mX + 9, PLOT_Y - 1, mX, PLOT_Y + 12);
+
+    // Callout box (flip side if near right edge)
+    let lblW = 96, lblH = 34, pad = 6;
+    let lblX = mX + 14;
+    if (lblX + lblW > PLOT_X + PLOT_W - 2) lblX = mX - lblW - 10;
+    let lblY = constrain(mY - lblH / 2, PLOT_Y + 2, PLOT_Y + PLOT_H - lblH - 2);
+    fill(255, 245, 218); stroke(205, 130, 50); strokeWeight(1);
+    rect(lblX, lblY, lblW, lblH, 3);
+    noStroke();
+    fill(175, 55, 0); textSize(11); textStyle(BOLD); textAlign(LEFT, TOP);
+    text(mPct.toFixed(1) + '% of Vf', lblX + pad, lblY + 4);
+    fill(60, 60, 60); textStyle(NORMAL); textSize(10);
+    text('t = ' + fmtTime(markerFrac * 5 * tau), lblX + pad, lblY + 19);
+
+    // ── Axes ────────────────────────────────────────────────
+    stroke(30, 30, 30); strokeWeight(2);
+    line(PLOT_X, PLOT_Y, PLOT_X, PLOT_Y + PLOT_H);           // y-axis
+    line(PLOT_X, PLOT_Y + PLOT_H, PLOT_X + PLOT_W, PLOT_Y + PLOT_H); // x-axis
+
+    // Origin label
+    fill(50, 50, 50); noStroke(); textSize(9); textAlign(CENTER, TOP);
+    text('0', PLOT_X, PLOT_Y + PLOT_H + 3);
+
+    // Y-axis ticks + labels
+    for (let pct = 0; pct <= 100; pct += 20) {
+        let py = valToY(pct / 100);
+        stroke(30, 30, 30); strokeWeight(1);
+        line(PLOT_X - 5, py, PLOT_X, py);
+        fill(50, 50, 50); noStroke(); textSize(9); textAlign(RIGHT, CENTER);
+        text(pct + '%', PLOT_X - 7, py);
+    }
+
+    // Rotated y-axis title
+    push();
+    translate(13, PLOT_Y + PLOT_H / 2);
+    rotate(-HALF_PI);
+    fill(40, 40, 40); noStroke(); textSize(11); textAlign(CENTER, CENTER);
+    text('Voltage (% of final value)', 0, 0);
+    pop();
+
+    // X-axis title (with τ value)
+    fill(40, 40, 40); noStroke(); textSize(11); textAlign(CENTER, TOP);
+    text('Time   (τ = ' + fmtTime(tau) + ')', PLOT_X + PLOT_W / 2, PLOT_Y + PLOT_H + 38);
+
+    // Drag hint below graph
+    fill(100, 110, 145); noStroke(); textSize(9); textAlign(CENTER, TOP);
+    text('▲ drag the orange marker to explore values', PANEL_X / 2, PLOT_Y + PLOT_H + 55);
+}
+
+// ══════════════════════════════════════════════════════════
+// INFO PANEL (right 200 px)
+// ══════════════════════════════════════════════════════════
+function drawInfoPanel() {
+    const px = PANEL_X, pw = CW - PANEL_X;   // pw = 200
+    const lx = px + 10;
+    const rw = pw - 16;
+
+    // Background
+    fill(233, 237, 252); noStroke();
+    rect(px, 0, pw, graphH, 0, 8, 8, 0);
+
+    // Title bar
+    fill(50, 70, 160); noStroke();
+    rect(px, 0, pw, 24, 0, 8, 0, 0);
+    fill(255); textSize(11); textStyle(BOLD); textAlign(CENTER, CENTER);
+    text('CIRCUIT INFO', px + pw / 2, 12);
+    textStyle(NORMAL);
+
+    let y = 32;
+
+    // ── Component values ──────────────────────────────────
+    iLabel('COMPONENTS', lx, y); y += 15;
+    iKV('R', fmtR(R), lx, y, [200, 70, 10]); y += 15;
+    iKV('C', fmtC(C), lx, y, [10, 100, 200]); y += 18;
+
+    iDiv(lx, rw, y); y += 10;
+
+    // ── Time constant ─────────────────────────────────────
+    iLabel('TIME CONSTANT', lx, y); y += 15;
+    fill(125, 20, 155); noStroke();
+    textSize(13); textStyle(BOLD); textAlign(LEFT, TOP);
+    text('τ = RC', lx, y); y += 16;
+    fill(100, 0, 130);
+    text('  = ' + fmtTime(tau), lx, y); y += 16;
+    textStyle(NORMAL);
+    fill(60, 60, 60); textSize(10); textAlign(LEFT, TOP);
+    text('5τ = ' + fmtTime(5 * tau), lx, y); y += 14;
+    text('(fully settled)', lx, y); y += 18;
+
+    iDiv(lx, rw, y); y += 10;
+
+    // ── % table ───────────────────────────────────────────
+    iLabel('% AT EACH τ', lx, y); y += 14;
+    for (let i = 0; i < 5; i++) {
+        let c = TC[i];
+        fill(c[0], c[1], c[2]); noStroke();
+        textSize(10); textAlign(LEFT, TOP);
+        text((i + 1) + 'τ  →  ' + PCT[i] + '%', lx, y);
+        fill(100, 100, 100); textSize(9);
+        text('(' + fmtTime((i + 1) * tau) + ')', lx + 85, y + 1);
+        y += 14;
+    }
+    y += 6;
+
+    iDiv(lx, rw, y); y += 10;
+
+    // ── Marker readout ────────────────────────────────────
+    iLabel('AT MARKER', lx, y); y += 15;
+    let mT5  = markerFrac * 5;
+    let mV   = 1 - exp(-mT5);
+    let mPct = mV * 100;
+
+    fill(255, 80, 0); noStroke();
+    textSize(11); textStyle(BOLD); textAlign(LEFT, TOP);
+    text('t = ' + fmtTime(markerFrac * 5 * tau), lx, y); y += 15;
+    text(mPct.toFixed(1) + '% of Vfinal', lx, y); y += 18;
+    textStyle(NORMAL);
+
+    iDiv(lx, rw, y); y += 10;
+
+    // ── Key insight box ───────────────────────────────────
+    fill(224, 235, 255); stroke(100, 130, 210); strokeWeight(1);
+    rect(lx - 2, y, rw, 80, 4);
+    noStroke();
+    fill(30, 50, 140); textSize(10); textStyle(BOLD); textAlign(LEFT, TOP);
+    text('Key Insight:', lx + 2, y + 5);
+    textStyle(NORMAL); fill(40, 50, 80); textSize(9);
+    text('The curve SHAPE never changes.', lx + 2, y + 19);
+    text('Only the TIME SCALE shifts.', lx + 2, y + 31);
+    text('Large R or C → large τ', lx + 2, y + 45);
+    text('                   → slow response.', lx + 2, y + 57);
+    text('Small R or C → fast response.', lx + 2, y + 69);
+}
+
+function iLabel(t, x, y) {
+    noStroke(); fill(0, 100, 0);
+    textSize(10); textStyle(BOLD); textAlign(LEFT, TOP);
+    text(t, x, y); textStyle(NORMAL);
+}
+function iKV(lbl, val, x, y, col) {
+    fill(60, 60, 60); noStroke(); textSize(11); textStyle(BOLD); textAlign(LEFT, TOP);
+    text(lbl + ' = ', x, y);
+    fill(col[0], col[1], col[2]);
+    text(val, x + 32, y);
+    textStyle(NORMAL);
+}
+function iDiv(x, rw, y) {
+    stroke(175, 180, 215); strokeWeight(1); line(x, y, x + rw, y);
+}
+
+// ══════════════════════════════════════════════════════════
+// CONTROLS (bottom)
+// ══════════════════════════════════════════════════════════
+function drawControls() {
+    fill(218, 224, 240); noStroke();
+    rect(0, graphH, CW, controlH, 0, 0, 8, 8);
+
+    // Hint text
+    fill(70, 80, 110); noStroke(); textSize(10); textAlign(CENTER, TOP);
+    text('Adjust R and C — watch τ change and the time axis rescale',
+         CW / 2, graphH + 10);
+
+    drawSlider('Resistance (R):', R,       100, 100000, SL_R_Y, fmtR(R),  true);
+    drawSlider('Capacitance (C):', C*1e6,  1,   1000,   SL_C_Y, fmtC(C),  true);
+}
+
+function drawSlider(label, val, mn, mx, cy, dispVal, isLog) {
+    let t = isLog ?
+        (log(val) - log(mn)) / (log(mx) - log(mn)) :
+        (val - mn) / (mx - mn);
+    let tx = SL_X + SL_W * t;
+
+    noStroke(); fill(40, 50, 120); textSize(11); textAlign(RIGHT, CENTER);
+    text(label + '  ' + dispVal, SL_X - 8, cy);
+
+    fill(178, 183, 210); noStroke(); rect(SL_X, cy - 4, SL_W, 8, 4);
+    fill(70, 110, 200); rect(SL_X, cy - 4, SL_W * t, 8, 4);
+    fill(255); stroke(75, 110, 200); strokeWeight(2);
+    circle(tx, cy, 18);
+}
+
+// ══════════════════════════════════════════════════════════
+// INPUT
+// ══════════════════════════════════════════════════════════
+function mousePressed() {
+    // Marker: click anywhere in plot area
+    if (mouseX >= PLOT_X && mouseX <= PLOT_X + PLOT_W &&
+        mouseY >= PLOT_Y - 14 && mouseY <= PLOT_Y + PLOT_H) {
+        isDraggingMarker = true;
+        markerFrac = constrain((mouseX - PLOT_X) / PLOT_W, 0, 1);
+        return;
+    }
+    checkSliders();
+}
+
+function mouseDragged() {
+    if (isDraggingMarker) {
+        markerFrac = constrain((mouseX - PLOT_X) / PLOT_W, 0, 1);
+        return;
+    }
+    if (dragSlider) applySlider();
+}
+
+function mouseReleased() {
+    isDraggingMarker = false;
+    dragSlider = null;
+}
+
+function checkSliders() {
+    let defs = [
+        { key: 'r', cy: SL_R_Y },
+        { key: 'c', cy: SL_C_Y },
+    ];
+    for (let s of defs) {
+        if (mouseX >= SL_X - 12 && mouseX <= SL_X + SL_W + 12 &&
+            mouseY >= s.cy - 14  && mouseY <= s.cy + 14) {
+            dragSlider = s.key;
+            applySlider();
+            return;
+        }
+    }
+}
+
+function applySlider() {
+    let t = constrain((mouseX - SL_X) / SL_W, 0, 1);
+    if (dragSlider === 'r') {
+        // Log scale: 100 Ω → 100 kΩ
+        let raw = exp(log(100) + t * (log(100000) - log(100)));
+        if      (raw >= 10000) R = round(raw / 1000) * 1000;
+        else if (raw >= 1000)  R = round(raw /  100) *  100;
+        else                   R = round(raw /   10) *   10;
+        R = constrain(R, 100, 100000);
+    } else {
+        // Log scale: 1 µF → 1000 µF
+        let cuf = exp(log(1) + t * (log(1000) - log(1)));
+        if      (cuf >= 100) cuf = round(cuf / 10) * 10;
+        else if (cuf >= 10)  cuf = round(cuf);
+        else                 cuf = round(cuf * 10) / 10;
+        C = constrain(cuf, 1, 1000) * 1e-6;
+    }
+    recalculate();
+}
+</script>
+</body>
+</html>

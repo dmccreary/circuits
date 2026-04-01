@@ -120,7 +120,7 @@ After one time constant ($t = \tau$), the circuit has completed approximately **
 
 #### Diagram: Time Constant Visualization
 
-<iframe src="../../sims/time-constant/main.html" width="100%" height="450px" scrolling="no"></iframe>
+<iframe src="../../sims/time-constant/main.html" width="100%" height="530px" scrolling="no"></iframe>
 
 <details markdown="1">
 <summary>Time Constant Visualization MicroSim</summary>
