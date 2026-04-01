@@ -303,7 +303,7 @@ The discharging curve is a pure exponential decay—the simplest transient respo
 
 #### Diagram: RC Discharging
 
-<iframe src="../../sims/rc-discharging/main.html" width="100%" height="450px" scrolling="no"></iframe>
+<iframe src="../../sims/rc-discharging/main.html" width="100%" height="550px" scrolling="no"></iframe>
 
 <details markdown="1">
 <summary>RC Discharging MicroSim</summary>
