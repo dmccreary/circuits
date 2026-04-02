@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+<title>RC/RL Applications MicroSim</title>
+<script src="https://cdn.jsdelivr.net/npm/p5@1.11.7/lib/p5.js"></script>
+<style>
+  body { margin: 0; padding: 0; background: #e8eaf0; }
+  canvas { display: block; }
+</style>
+</head>
+<body>
+<main></main>
+<script>
+// ============================================================
+// RC/RL Applications MicroSim
+// Chapter 6 – Bloom L3 (Apply / Design)
+// Four real-world timing circuits: flash, timer, relay, audio
+// ============================================================
+
+const CW     = 640;
+const TAB_H  = 44;    // application selector row
+const MAIN_H = 225;   // schematic (left) + graph (right)
+const SL_H   = 125;   // two component sliders + target slider
+const RES_H  = 98;    // results + solve-for display
+const CH     = TAB_H + MAIN_H + SL_H + RES_H;   // 492
+
+// Left / right split inside the MAIN area
+const SCH_W  = 320;             // schematic panel width
+const GRF_X  = SCH_W + 8;      // graph panel starts here
+const GRF_W  = CW - GRF_X - 5; // ≈307
+
+// Slider geometry
+const SL_LM  = 252;             // left margin (label area)
+const SL_X   = SL_LM + 4;
+const SL_W   = CW - SL_X - 18;
+const SL_Y0  = TAB_H + MAIN_H; // top of slider area
+
+// Results area
+const RES_Y  = SL_Y0 + SL_H;
+
+// ── App state ──────────────────────────────────────────────
+let appIdx   = 0;
+let slR      = [0, 0, 0, 0];   // R slider fractions  [0..1]
+let slB      = [0, 0, 0, 0];   // C or L slider fractions
+let slT      = [0, 0, 0, 0];   // target slider fractions
+let dragId   = null;            // 'r' | 'b' | 't' | null
+let isAnim   = false;
+let animT    = 0;
+
+// ── Application definitions ────────────────────────────────
+// rLog / bLog / tLog are [lo, hi] as log10 of SI value
+const APPS = [
+  {
+    name:    "Camera Flash",
+    // R: charging resistor  100Ω..100kΩ
+    rLabel:  "Charge R",   rLog: [2, 5],
+    // B: flash capacitor  100µF..10mF
+    bLabel:  "Flash C",    bLog: [-4, -2],   bIsL: false,
+    formula: "t₉₈% = 5 × R × C",
+    timing(R, B)   { return 5 * R * B; },    // → seconds
+    tLabel:  "Charge time", tUnit: "s",
+    tLog:    [-1, 1.3],     // 0.1 s .. 20 s
+    solveR(t, B)   { return t / (5 * B); },
+    solveB(t, R)   { return t / (5 * R); },
+    gType:   "charge",
+    notes: [
+      "τ = RC → charges to 63% per time constant",
+      "5τ = 5RC → 99.3% fully charged",
+      "Smaller R = faster charge, more heat",
+      "Typical: R=500Ω, C=330µF → t≈0.8 s"
+    ]
+  },
+  {
+    name:    "Timer (555)",
+    // R: 1kΩ..1MΩ
+    rLabel:  "Timing R",   rLog: [3, 6],
+    // B: timing cap  1µF..100µF
+    bLabel:  "Timing C",   bLog: [-6, -4],   bIsL: false,
+    formula: "t = 1.1 × R × C",
+    timing(R, B)   { return 1.1 * R * B; },  // → seconds
+    tLabel:  "Pulse width", tUnit: "s",
+    tLog:    [-3, 1],       // 1 ms .. 10 s
+    solveR(t, B)   { return t / (1.1 * B); },
+    solveB(t, R)   { return t / (1.1 * R); },
+    gType:   "pulse",
+    notes: [
+      "555 monostable: trigger → output HIGH for t",
+      "Output returns LOW after exactly t = 1.1RC",
+      "Used for debouncing, delays, pulse stretching",
+      "Typical: R=100kΩ, C=10µF → t≈1.1 s"
+    ]
+  },
+  {
+    name:    "Relay Protect",
+    // R: coil resistance  10Ω..1kΩ
+    rLabel:  "Coil R",     rLog: [1, 3],
+    // B: coil inductance  1mH..1H
+    bLabel:  "Coil L",     bLog: [-3, 0],    bIsL: true,
+    formula: "τ = L / R",
+    timing(R, B)   { return B / R; },        // → seconds (τ)
+    tLabel:  "Decay τ",   tUnit: "ms",
+    tLog:    [-4, -1],      // 0.1 ms .. 100 ms  (in seconds)
+    solveR(t, B)   { return B / t; },
+    solveB(t, R)   { return t * R; },
+    gType:   "decay",
+    notes: [
+      "Relay coil stores energy: E = ½LI²",
+      "Opening switch → large inductive voltage spike",
+      "Freewheeling diode provides safe current path",
+      "Spike energy dissipates with τ = L/R"
+    ]
+  },
+  {
+    name:    "Audio Coupling",
+    // R: load  1kΩ..100kΩ
+    rLabel:  "Load R",     rLog: [3, 5],
+    // B: coupling cap  100nF..100µF
+    bLabel:  "Coupling C", bLog: [-7, -4],   bIsL: false,
+    formula: "f_c = 1 / (2πRC)",
+    timing(R, B)   { return 1 / (2 * Math.PI * R * B); },  // → Hz
+    tLabel:  "Cutoff f_c", tUnit: "Hz",
+    tLog:    [0, 4],        // 1 Hz .. 10 kHz
+    solveR(t, B)   { return 1 / (2 * Math.PI * t * B); },
+    solveB(t, R)   { return 1 / (2 * Math.PI * t * R); },
+    gType:   "bode",
+    notes: [
+      "Blocks DC bias; passes AC audio above f_c",
+      "High-pass filter: –3 dB at f = f_c",
+      "For full hi-fi range: f_c < 20 Hz",
+      "For voice only: f_c ≤ 300 Hz acceptable"
+    ]
+  }
+];
+
+// ── Helpers: log-scale slider mapping ─────────────────────
+function lf(logV, rng) { return constrain((logV - rng[0]) / (rng[1] - rng[0]), 0, 1); }
+function fv(frac, rng) { return pow(10, rng[0] + frac * (rng[1] - rng[0])); }
+
+// ══════════════════════════════════════════════════════════
+// SETUP
+// ══════════════════════════════════════════════════════════
+function setup() {
+  createCanvas(CW, CH).parent(select('main').elt);
+  textFont('Arial');
+
+  // Camera flash: R=1kΩ, C=1000µF  → t = 5s
+  slR[0] = lf(3.0,  APPS[0].rLog);
+  slB[0] = lf(-3.0, APPS[0].bLog);
+  slT[0] = lf(log10(5 * 1e3 * 1e-3), APPS[0].tLog);   // 5 s
+
+  // 555 Timer: R=100kΩ, C=10µF → t≈1.1s
+  slR[1] = lf(5.0,  APPS[1].rLog);
+  slB[1] = lf(-5.0, APPS[1].bLog);
+  slT[1] = lf(log10(1.1 * 1e5 * 1e-5), APPS[1].tLog); // 1.1 s
+
+  // Relay: R=100Ω, L=100mH → τ=1ms
+  slR[2] = lf(2.0,   APPS[2].rLog);
+  slB[2] = lf(-1.0,  APPS[2].bLog);
+  slT[2] = lf(log10(0.001), APPS[2].tLog);             // 1 ms
+
+  // Audio: R=10kΩ, C=1µF → fc≈15.9Hz
+  slR[3] = lf(4.0,   APPS[3].rLog);
+  slB[3] = lf(-6.0,  APPS[3].bLog);
+  slT[3] = lf(log10(1 / (2 * Math.PI * 1e4 * 1e-6)), APPS[3].tLog);
+}
+
+function log10(x) { return Math.log10(x); }
+
+// ══════════════════════════════════════════════════════════
+// MAIN DRAW
+// ══════════════════════════════════════════════════════════
+function draw() {
+  background(232, 234, 240);
+
+  const app = APPS[appIdx];
+  const R   = fv(slR[appIdx], app.rLog);
+  const B   = fv(slB[appIdx], app.bLog);
+  const cur = app.timing(R, B);
+  const tgt = fv(slT[appIdx], app.tLog);
+
+  if (isAnim) animT += deltaTime / 1000;
+
+  drawTabs();
+  drawSchematicPanel(app, R, B, cur);
+  drawGraphPanel(app, R, B, cur);
+  drawSliderPanel(app, R, B, tgt);
+  drawResultsPanel(app, R, B, cur, tgt);
+}
+
+// ══════════════════════════════════════════════════════════
+// TABS
+// ══════════════════════════════════════════════════════════
+function drawTabs() {
+  const tw = CW / APPS.length;
+  for (let i = 0; i < APPS.length; i++) {
+    const tx = i * tw;
+    const active = (i === appIdx);
+    fill(active ? 255 : color(205, 210, 228));
+    stroke(180); strokeWeight(1);
+    rect(tx, 0, tw, TAB_H, i === 0 ? [4,0,0,4] : i === APPS.length-1 ? [0,4,4,0] : 0);
+    fill(active ? color(40, 60, 160) : 80);
+    noStroke(); textAlign(CENTER, CENTER); textSize(11);
+    text(APPS[i].name, tx + tw / 2, TAB_H / 2);
+  }
+}
+
+// ══════════════════════════════════════════════════════════
+// SCHEMATIC PANEL
+// ══════════════════════════════════════════════════════════
+function drawSchematicPanel(app, R, B, cur) {
+  fill(255); stroke(190); strokeWeight(1);
+  rect(5, TAB_H + 2, SCH_W - 8, MAIN_H - 4, 4);
+
+  // Animate button (lower-left of panel)
+  const bx = 14, by = TAB_H + MAIN_H - 27, bw = 92, bh = 22;
+  fill(isAnim ? color(195, 218, 255) : 228); stroke(160); strokeWeight(1);
+  rect(bx, by, bw, bh, 4);
+  fill(40); noStroke(); textAlign(CENTER, CENTER); textSize(10);
+  text(isAnim ? "■ Stop" : "▶ Animate", bx + bw / 2, by + bh / 2);
+
+  // Dispatch schematic
+  const sx = 14, sy = TAB_H + 8, sw = SCH_W - 22, sh = MAIN_H - 40;
+  switch (appIdx) {
+    case 0: drawFlashSch(sx, sy, sw, sh, R, B, cur); break;
+    case 1: drawTimerSch(sx, sy, sw, sh, R, B, cur); break;
+    case 2: drawRelaySch(sx, sy, sw, sh, R, B, cur); break;
+    case 3: drawAudioSch(sx, sy, sw, sh, R, B, cur); break;
+  }
+}
+
+// ── FLASH schematic ────────────────────────────────────────
+function drawFlashSch(x, y, w, h, R, B, cur) {
+  const lx = x + 10, rx = x + w - 15;
+  const ty = y + 14, by = y + h - 10;
+  const mid = (ty + by) / 2;
+  const nodeX = lx + (rx - lx) * 0.48;
+
+  strokeWeight(2); stroke(40);
+  // outer loop
+  line(lx, ty, rx, ty);
+  line(lx, by, rx, by);
+  line(rx, ty, rx, by);
+  // left arm: battery
+  line(lx, ty, lx, mid - 28);
+  line(lx, mid + 28, lx, by);
+  drawBat(lx, mid, 28, "Vs");
+
+  // top wire: switch then R then node
+  drawSW(lx + 28, ty, lx + 50, ty, appIdx === 0 && isAnim);
+  drawResH(nodeX - 28, ty, 28, "R=" + fmtOhm(R));
+
+  // node to cap to GND
+  line(nodeX, ty, nodeX, mid - 20);
+  line(nodeX, mid + 20, nodeX, by);
+  drawCapV(nodeX, mid, 20, fmtFarad(B));
+
+  // charging indicator on cap
+  const charged = isAnim ? min(1, animT / cur) : 0.6;
+  fill(60, 110, 200, 70); noStroke();
+  const barH = 36 * charged;
+  rect(nodeX + 4, mid + 20 - barH, 10, barH);
+  fill(60, 110, 200); noStroke(); textSize(8); textAlign(LEFT, CENTER);
+  text((charged * 100).toFixed(0) + "%", nodeX + 16, mid + 6);
+
+  // flash lamp (right side)
+  line(nodeX, ty, rx, ty);
+  drawFlashLamp(rx - 2, mid, isAnim && charged > 0.9);
+
+  // labels
+  fill(60, 60, 180); noStroke(); textSize(9); textAlign(LEFT, TOP);
+  text("RC Charging Circuit", x, y);
+  fill(80); textSize(8); textAlign(LEFT, TOP);
+  text("τ = " + fmtTime(R * B) + "  →  t₉₈% = " + fmtTime(cur), x, y + h - 8);
+}
+
+// ── TIMER schematic ─────────────────────────────────────────
+function drawTimerSch(x, y, w, h, R, B, cur) {
+  // 555 chip block (right)
+  const chipX = x + w * 0.52, chipY = y + 14;
+  const chipW = w * 0.38, chipH = h - 24;
+
+  fill(245, 242, 210); stroke(100); strokeWeight(1.5);
+  rect(chipX, chipY, chipW, chipH, 4);
+  fill(80); noStroke(); textSize(10); textAlign(CENTER, CENTER);
+  text("555", chipX + chipW / 2, chipY + chipH * 0.35);
+  textSize(8); text("Timer", chipX + chipW / 2, chipY + chipH * 0.5);
+
+  // RC network (left)
+  const rcX = x + 15, vsY = y + 14, gndY = y + h - 10;
+  const rcMid = (vsY + gndY) / 2;
+
+  // Vs label and wire down
+  fill(80); noStroke(); textSize(9); textAlign(CENTER, BOTTOM);
+  text("+Vs", rcX, vsY - 2);
+  strokeWeight(2); stroke(40);
+  line(rcX, vsY, rcX, vsY + 10);
+  // R down to cap
+  drawResV(rcX, vsY + 10 + 28, 28, "R=" + fmtOhm(R));
+  const capCY = vsY + 10 + 28 + 28 + 24;
+  drawCapV(rcX, capCY, 24, fmtFarad(B));
+  stroke(40);
+  line(rcX, vsY + 10 + 28 + 28, rcX, capCY - 24);
+  line(rcX, capCY + 24, rcX, gndY);
+  drawGnd(rcX, gndY);
+
+  // Wire to threshold pin on 555
+  const juncY = capCY - 24;
+  stroke(60, 110, 200); strokeWeight(1.5);
+  line(rcX, juncY, chipX, juncY);
+  // dot at junction
+  fill(60, 110, 200); noStroke(); circle(rcX, juncY, 6);
+  fill(60, 110, 200); textSize(8); textAlign(LEFT, CENTER);
+  text("THR", chipX + 2, juncY);
+  text("2/3 Vs", chipX + 2, juncY + 9);
+
+  // Trigger input
+  const trgY = chipY + chipH * 0.72;
+  stroke(60, 150, 60); strokeWeight(1.5);
+  line(x, trgY, chipX, trgY);
+  fill(60, 150, 60); noStroke(); textSize(8); textAlign(RIGHT, CENTER);
+  text("TRIG ▶", chipX - 2, trgY);
+
+  // Output + LED
+  const outY = chipY + chipH * 0.4;
+  stroke(200, 120, 0); strokeWeight(2);
+  line(chipX + chipW, outY, chipX + chipW + 22, outY);
+  const ledOn = isAnim && (animT % (cur * 2.2) < cur);
+  drawLED(chipX + chipW + 30, outY, ledOn);
+  fill(200, 120, 0); noStroke(); textSize(8); textAlign(LEFT, CENTER);
+  text("OUT", chipX + chipW + 2, outY - 5);
+
+  // Labels
+  fill(60, 60, 180); noStroke(); textSize(9); textAlign(LEFT, TOP);
+  text("555 Monostable Timer", x, y);
+  fill(80); textSize(8); textAlign(LEFT, TOP);
+  text("t = 1.1RC = " + fmtTime(cur), x, y + h - 8);
+}
+
+// ── RELAY schematic ─────────────────────────────────────────
+function drawRelaySch(x, y, w, h, R, B, cur) {
+  const lx = x + 10, rx = x + w - 15;
+  const ty = y + 14, by = y + h - 10;
+  const mid = (ty + by) / 2;
+  const coilX = (lx + rx) / 2 - 10;
+  const diodeX = coilX + 55;
+
+  strokeWeight(2); stroke(40);
+  line(lx, ty, rx, ty);
+  line(lx, by, rx, by);
+  // Left: battery
+  line(lx, ty, lx, mid - 28);
+  line(lx, mid + 28, lx, by);
+  drawBat(lx, mid, 28, "Vs");
+  // Switch (top wire, controlled opening)
+  drawSW(lx + 28, ty, lx + 50, ty, !isAnim || animT % (cur * 8) < cur * 5);
+
+  // Coil (RL in right arm)
+  line(coilX, ty, coilX, mid - 45);
+  line(coilX, mid + 45, coilX, by);
+  line(rx, ty, rx, by);
+  // Connect coil bottom to right wire via R
+  drawIndV(coilX, mid - 12, 33, fmtHenry(B));
+  drawResV(coilX, mid + 30, 15, fmtOhm(R));
+  stroke(40); line(coilX, mid - 12 + 33, coilX, mid + 30 - 15);
+  line(coilX, mid + 30 + 15, coilX, mid + 45);
+  line(coilX, mid - 45, coilX, ty);
+
+  // Freewheeling diode (vertical arm on right)
+  stroke(200, 60, 60); strokeWeight(2);
+  line(diodeX, ty, diodeX, mid - 14);
+  line(diodeX, mid + 14, diodeX, by);
+  drawDiodeV(diodeX, mid);
+  fill(200, 60, 60); noStroke(); textSize(8); textAlign(LEFT, CENTER);
+  text("Flyback\nDiode", diodeX + 6, mid);
+
+  // Spike animation
+  if (isAnim && animT % (cur * 8) > cur * 5 && animT % (cur * 8) < cur * 5 + cur) {
+    fill(255, 60, 60, 200); noStroke(); textSize(12); textAlign(CENTER, CENTER);
+    text("⚡", coilX - 25, ty + 10);
+    fill(255, 60, 60, 160); textSize(9);
+    text("V spike!", coilX - 40, ty + 22);
+  }
+
+  fill(60, 60, 180); noStroke(); textSize(9); textAlign(LEFT, TOP);
+  text("RL Relay with Flyback Protection", x, y);
+  fill(80); textSize(8); textAlign(LEFT, TOP);
+  text("τ = L/R = " + fmtTime(cur) + "  (spike decay)", x, y + h - 8);
+}
+
+// ── AUDIO schematic ─────────────────────────────────────────
+function drawAudioSch(x, y, w, h, R, B, cur) {
+  const my = y + h / 2;
+  const nodeX = x + w * 0.55;
+  const capCX = x + w * 0.28;
+  const gndY  = y + h - 10;
+
+  strokeWeight(2); stroke(40);
+  // Input wire to cap
+  line(x + 5, my, capCX - 22, my);
+  // Coupling cap
+  drawCapH(capCX, my, 22, fmtFarad(B));
+  // Cap to node
+  line(capCX + 22, my, nodeX, my);
+  // Node to output
+  line(nodeX, my, x + w - 10, my);
+  // Load R from node to GND
+  line(nodeX, my, nodeX, my + 22);
+  drawResV(nodeX, my + 22 + 20, 20, fmtOhm(R));
+  line(nodeX, my + 22 + 40, nodeX, gndY);
+  drawGnd(nodeX, gndY);
+
+  // Input/output labels
+  fill(80); noStroke(); textSize(9); textAlign(RIGHT, CENTER);
+  text("IN", x + 8, my - 6);
+  textAlign(LEFT, CENTER);
+  text("OUT →", x + w - 8, my - 6);
+
+  // Audio-band labels
+  fill(120); textSize(8); textAlign(CENTER, BOTTOM);
+  text("f < f_c blocked", capCX, my - 10);
+  text("f > f_c passes", nodeX + 30, my - 10);
+
+  // Animated sine wave on input (low-freq = blocked)
+  const phase = isAnim ? animT * 3 : 0;
+  noFill(); stroke(60, 150, 60, 180); strokeWeight(1.5);
+  beginShape();
+  for (let i = 0; i <= 40; i++) {
+    vertex(x + 8 + i * 2.5, my + sin(i * 0.5 + phase) * 10);
+  }
+  endShape();
+
+  // Sine on output (high-freq = passes, full amplitude)
+  stroke(60, 110, 200, 200); strokeWeight(1.5);
+  beginShape();
+  for (let i = 0; i <= 28; i++) {
+    vertex(nodeX + 4 + i * 2.8, my + sin(i * 0.5 + phase) * 8);
+  }
+  endShape();
+
+  // Junction dot
+  fill(40); noStroke(); circle(nodeX, my, 6);
+
+  fill(60, 60, 180); noStroke(); textSize(9); textAlign(LEFT, TOP);
+  text("RC High-Pass Coupling Filter", x, y);
+  fill(80); textSize(8); textAlign(LEFT, TOP);
+  text("f_c = " + fmtHz(cur) + "  (–3 dB cutoff)", x, y + h - 8);
+}
+
+// ══════════════════════════════════════════════════════════
+// GRAPH PANEL
+// ══════════════════════════════════════════════════════════
+function drawGraphPanel(app, R, B, cur) {
+  fill(250, 252, 255); stroke(190); strokeWeight(1);
+  rect(GRF_X - 2, TAB_H + 2, GRF_W + 4, MAIN_H - 4, 4);
+
+  // Formula
+  fill(40, 60, 180); noStroke(); textSize(11); textAlign(LEFT, TOP);
+  text(app.formula, GRF_X + 5, TAB_H + 7);
+
+  const gx = GRF_X + 6, gy = TAB_H + 25;
+  const gw = GRF_W - 10, gh = MAIN_H - 75;
+
+  switch (app.gType) {
+    case "charge": drawExponentialGraph(gx, gy, gw, gh, cur, false, R, B); break;
+    case "pulse":  drawPulseGraph(gx, gy, gw, gh, cur); break;
+    case "decay":  drawExponentialGraph(gx, gy, gw, gh, cur, true, R, B); break;
+    case "bode":   drawBodeGraph(gx, gy, gw, gh, cur); break;
+  }
+
+  // Notes beneath graph
+  const ny = gy + gh + 5;
+  fill(80); noStroke(); textSize(8); textAlign(LEFT, TOP);
+  for (let i = 0; i < app.notes.length; i++) {
+    const lineY = ny + i * 11;
+    if (lineY > TAB_H + MAIN_H - 4) break;
+    text("• " + app.notes[i], GRF_X + 4, lineY);
+  }
+}
+
+// ── Exponential charge / decay graph ──────────────────────
+function drawExponentialGraph(gx, gy, gw, gh, cur, isDecay, R, B) {
+  // Compute τ (natural time constant)
+  // charge: cur = 5RC → τ = RC = cur/5
+  // timer:  cur = 1.1RC → τ = RC ≈ cur/1.1
+  // decay:  cur = L/R  → τ = cur (timing returns τ directly)
+  const tau = isDecay ? cur : (appIdx === 1 ? cur / 1.1 : cur / 5);
+  const tMax = 5 * tau;
+
+  // Axes
+  stroke(120); strokeWeight(1.5);
+  line(gx, gy, gx, gy + gh);
+  line(gx, gy + gh, gx + gw, gy + gh);
+
+  // y-axis label
+  push(); fill(80); noStroke(); textSize(8); textAlign(CENTER, CENTER);
+  translate(gx - 12, gy + gh / 2); rotate(-HALF_PI);
+  text(isDecay ? "I_L / I₀" : "V_C / Vs", 0, 0); pop();
+
+  // x-axis label
+  fill(80); noStroke(); textSize(8); textAlign(CENTER, TOP);
+  text("Time (τ = " + fmtTime(tau) + ")", gx + gw / 2, gy + gh + 4);
+
+  // Horizontal grid lines at 25%, 50%, 75%, 100%
+  stroke(220); strokeWeight(0.8);
+  for (let p = 1; p <= 4; p++) {
+    const py = gy + gh - (p / 4) * gh;
+    line(gx, py, gx + gw, py);
+    fill(150); noStroke(); textAlign(RIGHT, CENTER); textSize(7);
+    text((p * 25) + "%", gx - 2, py);
+  }
+
+  // Vertical τ tick marks
+  for (let i = 1; i <= 5; i++) {
+    const tx = gx + (i / 5) * gw;
+    stroke(200); strokeWeight(0.8);
+    line(tx, gy, tx, gy + gh);
+    fill(150); noStroke(); textAlign(CENTER, TOP); textSize(7);
+    text(i + "τ", tx, gy + gh + 4);
+  }
+
+  // Exponential curve
+  stroke(55, 105, 210); strokeWeight(2.5); noFill();
+  beginShape();
+  for (let px = 0; px <= gw; px += 2) {
+    const t = (px / gw) * tMax;
+    const v = isDecay ? exp(-t / tau) : (1 - exp(-t / tau));
+    vertex(gx + px, gy + gh - v * gh);
+  }
+  endShape();
+
+  // Animated dot
+  if (isAnim) {
+    const tCur = (animT * 0.6) % (tMax * 1.3);
+    if (tCur <= tMax) {
+      const v = isDecay ? exp(-tCur / tau) : (1 - exp(-tCur / tau));
+      fill(215, 50, 50); noStroke();
+      circle(gx + (tCur / tMax) * gw, gy + gh - v * gh, 9);
+    }
+  }
+
+  // τ reference lines
+  const tauX  = gx + gw / 5;
+  const vTau  = isDecay ? exp(-1) : (1 - exp(-1));
+  stroke(200, 110, 0); strokeWeight(1);
+  setLineDash([3, 3]);
+  line(tauX, gy, tauX, gy + gh - vTau * gh);
+  line(gx, gy + gh - vTau * gh, tauX, gy + gh - vTau * gh);
+  setLineDash([]);
+  fill(200, 110, 0); noStroke(); textSize(8); textAlign(LEFT, BOTTOM);
+  text(isDecay ? "36.8%" : "63.2%", tauX + 2, gy + gh - vTau * gh - 1);
+}
+
+// ── Pulse graph for 555 timer ──────────────────────────────
+function drawPulseGraph(gx, gy, gw, gh, t_pulse) {
+  // Axes
+  stroke(120); strokeWeight(1.5);
+  line(gx, gy, gx, gy + gh);
+  line(gx, gy + gh, gx + gw, gy + gh);
+
+  fill(80); noStroke(); textSize(8); textAlign(CENTER, TOP);
+  text("Time", gx + gw / 2, gy + gh + 4);
+
+  const rowH = gh / 2 - 5;
+  const r1y  = gy + 5;           // trigger row top
+  const r2y  = gy + gh / 2 + 5; // output row top
+  const low  = 28, high = 6;    // y offsets within row
+
+  // Row labels
+  fill(80); noStroke(); textAlign(RIGHT, CENTER); textSize(8);
+  text("TRG", gx - 2, r1y + (low + high) / 2);
+  text("OUT", gx - 2, r2y + (low + high) / 2);
+
+  // Trigger: narrow negative pulse at t0
+  const t0 = gx + 22;
+  stroke(60, 160, 60); strokeWeight(2);
+  line(gx, r1y + low, t0, r1y + low);
+  line(t0, r1y + low, t0, r1y + high);
+  line(t0, r1y + high, t0 + 7, r1y + high);
+  line(t0 + 7, r1y + high, t0 + 7, r1y + low);
+  line(t0 + 7, r1y + low, gx + gw, r1y + low);
+
+  // Output: HIGH pulse of width proportional to t_pulse
+  const pulseW = min(gw - t0 - 20, (gw * 0.7));
+  stroke(55, 110, 210); strokeWeight(2);
+  line(gx, r2y + low, t0 + 7, r2y + low);
+  line(t0 + 7, r2y + low, t0 + 7, r2y + high);
+  line(t0 + 7, r2y + high, t0 + 7 + pulseW, r2y + high);
+  line(t0 + 7 + pulseW, r2y + high, t0 + 7 + pulseW, r2y + low);
+  line(t0 + 7 + pulseW, r2y + low, gx + gw, r2y + low);
+
+  // Duration annotation
+  fill(55, 110, 210); noStroke(); textSize(8); textAlign(CENTER, BOTTOM);
+  text("t = 1.1RC = " + fmtTime(t_pulse), t0 + 7 + pulseW / 2, r2y + high - 1);
+
+  stroke(55, 110, 210); strokeWeight(1);
+  line(t0 + 7, r2y + low + 6, t0 + 7 + pulseW, r2y + low + 6);
+  line(t0 + 7, r2y + low + 2, t0 + 7, r2y + low + 10);
+  line(t0 + 7 + pulseW, r2y + low + 2, t0 + 7 + pulseW, r2y + low + 10);
+
+  // Animated cursor line
+  if (isAnim) {
+    const phase = animT % (t_pulse * 2.5);
+    const cx = t0 + 7 + constrain((phase / t_pulse) * pulseW, 0, pulseW);
+    stroke(215, 50, 50); strokeWeight(1.5);
+    line(cx, r2y + high - 2, cx, r2y + low + 2);
+    fill(215, 50, 50); noStroke(); circle(cx, r2y + high + (low - high) / 2, 7);
+  }
+}
+
+// ── Bode plot ──────────────────────────────────────────────
+function drawBodeGraph(gx, gy, gw, gh, fc) {
+  const fMin = 1, fMax = 1e5;
+  const dBlo = -30, dBhi = 3;
+
+  // Axes
+  stroke(120); strokeWeight(1.5);
+  line(gx, gy, gx, gy + gh);
+  line(gx, gy + gh, gx + gw, gy + gh);
+
+  // axis labels
+  fill(80); noStroke(); textSize(8); textAlign(CENTER, TOP);
+  text("Frequency (Hz, log scale)", gx + gw / 2, gy + gh + 4);
+  push(); fill(80); noStroke(); textSize(8); textAlign(CENTER, CENTER);
+  translate(gx - 12, gy + gh / 2); rotate(-HALF_PI);
+  text("Gain (dB)", 0, 0); pop();
+
+  // Decade grid
+  const lMin = Math.log10(fMin), lMax = Math.log10(fMax);
+  const lbls = ["1", "10", "100", "1k", "10k", "100k"];
+  for (let d = 0; d <= 5; d++) {
+    const px = gx + (d / 5) * gw;
+    stroke(210); strokeWeight(0.8);
+    line(px, gy, px, gy + gh);
+    fill(150); noStroke(); textAlign(CENTER, TOP); textSize(7);
+    text(lbls[d], px, gy + gh + 4);
+  }
+  // dB grid
+  for (let db = -30; db <= 0; db += 10) {
+    const py = gy + (dBhi - db) / (dBhi - dBlo) * gh;
+    stroke(210); strokeWeight(0.8);
+    line(gx, py, gx + gw, py);
+    fill(150); noStroke(); textAlign(RIGHT, CENTER); textSize(7);
+    text(db + "dB", gx - 2, py);
+  }
+
+  // Audio band shading (20 Hz – 20 kHz)
+  const af1 = gx + (Math.log10(20) - lMin) / (lMax - lMin) * gw;
+  const af2 = gx + (Math.log10(20000) - lMin) / (lMax - lMin) * gw;
+  fill(100, 200, 100, 25); noStroke();
+  rect(af1, gy, af2 - af1, gh);
+  fill(50, 160, 50); noStroke(); textSize(7); textAlign(CENTER, TOP);
+  text("Audio band", (af1 + af2) / 2, gy + 2);
+
+  // Gain curve
+  stroke(55, 105, 210); strokeWeight(2.5); noFill();
+  beginShape();
+  for (let px = 0; px <= gw; px++) {
+    const f  = pow(10, lMin + (px / gw) * (lMax - lMin));
+    const H  = f / sqrt(f * f + fc * fc);
+    const db = 20 * Math.log10(max(H, 1e-8));
+    const sy = gy + (dBhi - db) / (dBhi - dBlo) * gh;
+    if (sy >= gy && sy <= gy + gh) vertex(gx + px, sy);
+  }
+  endShape();
+
+  // fc marker
+  const fcPx = gx + (Math.log10(max(fc, fMin)) - lMin) / (lMax - lMin) * gw;
+  const db3Py = gy + (dBhi - (-3)) / (dBhi - dBlo) * gh;
+  stroke(215, 60, 60); strokeWeight(1.5);
+  setLineDash([4, 3]);
+  if (fcPx >= gx && fcPx <= gx + gw) line(fcPx, gy, fcPx, gy + gh);
+  line(gx, db3Py, gx + gw, db3Py);
+  setLineDash([]);
+  fill(215, 60, 60); noStroke(); textSize(8);
+  if (fcPx >= gx && fcPx < gx + gw - 30) {
+    textAlign(LEFT, BOTTOM);
+    text("f_c=" + fmtHz(fc), fcPx + 2, db3Py - 1);
+  }
+  textAlign(LEFT, TOP); text("–3 dB", gx + 2, db3Py + 1);
+}
+
+// ══════════════════════════════════════════════════════════
+// SLIDERS
+// ══════════════════════════════════════════════════════════
+function drawSliderPanel(app, R, B, tgt) {
+  fill(225, 228, 240); noStroke();
+  rect(0, SL_Y0, CW, SL_H);
+  stroke(200); strokeWeight(1);
+  line(0, SL_Y0, CW, SL_Y0);
+
+  const y1 = SL_Y0 + 26;
+  const y2 = SL_Y0 + 65;
+  const y3 = SL_Y0 + 100;
+
+  const rStr = fmtOhm(R);
+  const bStr = app.bIsL ? fmtHenry(B) : fmtFarad(B);
+  const tStr = formatTiming(tgt, app);
+
+  oneSlider(y1, slR[appIdx], app.rLabel + ": " + rStr,        'r', [55, 90, 200]);
+  oneSlider(y2, slB[appIdx], app.bLabel + ": " + bStr,        'b', [50, 155, 70]);
+  oneSlider(y3, slT[appIdx], "Target " + app.tLabel + ": " + tStr, 't', [185, 80, 40]);
+}
+
+function oneSlider(y, frac, label, which, col) {
+  fill(...col); noStroke(); textAlign(RIGHT, CENTER); textSize(10);
+  text(label, SL_X - 6, y);
+
+  fill(200); stroke(175); strokeWeight(1.5);
+  rect(SL_X, y - 5, SL_W, 10, 5);
+  fill(...col, 170); noStroke();
+  if (frac > 0) rect(SL_X, y - 5, frac * SL_W, 10, 5);
+
+  const hx = SL_X + frac * SL_W;
+  fill(255); stroke(...col); strokeWeight(2.2);
+  circle(hx, y, 17);
+  fill(...col); noStroke(); circle(hx, y, 6);
+}
+
+// ══════════════════════════════════════════════════════════
+// RESULTS
+// ══════════════════════════════════════════════════════════
+function drawResultsPanel(app, R, B, cur, tgt) {
+  fill(245, 248, 255); noStroke();
+  rect(0, RES_Y, CW, RES_H);
+  stroke(200); strokeWeight(1);
+  line(0, RES_Y, CW, RES_Y);
+
+  const curStr = formatTiming(cur, app);
+  const tgtStr = formatTiming(tgt, app);
+
+  // Current value
+  fill(40); noStroke(); textSize(12); textAlign(LEFT, TOP);
+  text("Current " + app.tLabel + ":  ", 18, RES_Y + 10);
+  fill(55, 110, 210); textSize(13);
+  text(curStr, 18 + textWidth("Current " + app.tLabel + ":  "), RES_Y + 9);
+
+  // Divider
+  stroke(215); strokeWeight(1);
+  line(10, RES_Y + 32, CW - 10, RES_Y + 32);
+
+  // Solve-for header
+  fill(185, 80, 40); noStroke(); textSize(10); textAlign(LEFT, TOP);
+  text("Target: " + tgtStr + "   →  Required components:", 18, RES_Y + 37);
+
+  const sR = app.solveR(tgt, B);
+  const sB = app.solveB(tgt, R);
+  const rOK = sR >= pow(10, app.rLog[0]) && sR <= pow(10, app.rLog[1]);
+  const bOK = sB >= pow(10, app.bLog[0]) && sB <= pow(10, app.bLog[1]);
+  const bName = app.bIsL ? "L" : "C";
+
+  fill(rOK ? color(20, 130, 20) : color(180, 45, 45));
+  noStroke(); textSize(10); textAlign(LEFT, TOP);
+  text("Set R = " + fmtOhm(sR) +
+    "  (keep " + bName + " fixed)" +
+    (rOK ? "" : "  ✗ outside component range"), 36, RES_Y + 52);
+
+  fill(bOK ? color(20, 130, 20) : color(180, 45, 45));
+  text("Set " + bName + " = " +
+    (app.bIsL ? fmtHenry(sB) : fmtFarad(sB)) +
+    "  (keep R fixed)" +
+    (bOK ? "" : "  ✗ outside component range"), 36, RES_Y + 66);
+
+  // Quick hint
+  const tooHigh = cur > tgt;
+  fill(120); textSize(9); textAlign(LEFT, TOP);
+  const hint = app.tUnit === "Hz"
+    ? (tooHigh ? "f_c too high → increase R or C" : "f_c too low → decrease R or C")
+    : (tooHigh ? "Time too long → decrease R or " + bName : "Time too short → increase R or " + bName);
+  text("Hint: " + hint, 18, RES_Y + 81);
+}
+
+// ══════════════════════════════════════════════════════════
+// CIRCUIT COMPONENT SYMBOLS
+// ══════════════════════════════════════════════════════════
+function drawBat(x, cy, hh, label) {
+  stroke(40); strokeWeight(2);
+  line(x, cy - hh, x, cy - 6); line(x, cy + 6, x, cy + hh);
+  line(x - 10, cy - 6, x + 10, cy - 6);  // + plate (long)
+  line(x - 6,  cy + 6, x + 6,  cy + 6);  // – plate (short)
+  fill(80); noStroke(); textSize(8); textAlign(LEFT, CENTER);
+  text("+", x + 12, cy - 8); text("–", x + 12, cy + 8);
+  fill(100); textAlign(RIGHT, CENTER); text(label || "Vs", x - 14, cy);
+}
+
+function drawSW(x1, y, x2, y2, closed) {
+  // pivot at x1, end contact at x2
+  fill(255); stroke(40); strokeWeight(2);
+  circle(x1, y, 5); circle(x2, y, 5);
+  stroke(40);
+  if (closed) { line(x1, y, x2, y); }
+  else        { line(x1, y, x2, y - 14); }
+  fill(100); noStroke(); textSize(8); textAlign(CENTER, TOP);
+  text("SW", (x1 + x2) / 2, y + 4);
+}
+
+function drawResH(cx, y, hw, label) {
+  stroke(40); strokeWeight(2);
+  line(cx - hw, y, cx - hw + 4, y);
+  line(cx + hw - 4, y, cx + hw, y);
+  const segs = 8, seg = (hw * 2 - 8) / segs;
+  let xp = cx - hw + 4;
+  for (let i = 0; i < segs; i++) {
+    const ny = y + (i % 2 === 0 ? -7 : 7);
+    line(xp, y, xp + seg / 2, ny);
+    line(xp + seg / 2, ny, xp + seg, y);
+    xp += seg;
+  }
+  fill(60); noStroke(); textAlign(CENTER, BOTTOM); textSize(8);
+  text(label, cx, y - 9);
+}
+
+function drawResV(cx, cy, hh, label) {
+  stroke(40); strokeWeight(2);
+  line(cx, cy - hh, cx, cy - hh + 4);
+  line(cx, cy + hh - 4, cx, cy + hh);
+  const segs = 8, seg = (hh * 2 - 8) / segs;
+  let yp = cy - hh + 4;
+  for (let i = 0; i < segs; i++) {
+    const nx = cx + (i % 2 === 0 ? -7 : 7);
+    line(cx, yp, nx, yp + seg / 2);
+    line(nx, yp + seg / 2, cx, yp + seg);
+    yp += seg;
+  }
+  fill(60); noStroke(); textAlign(LEFT, CENTER); textSize(8);
+  text(label, cx + 10, cy);
+}
+
+function drawCapH(cx, y, hw, label) {
+  stroke(40); strokeWeight(2);
+  line(cx - hw, y, cx - 5, y); line(cx + 5, y, cx + hw, y);
+  line(cx - 5, y - 11, cx - 5, y + 11);
+  line(cx + 5, y - 11, cx + 5, y + 11);
+  fill(60); noStroke(); textAlign(CENTER, BOTTOM); textSize(8);
+  text(label, cx, y - 13);
+}
+
+function drawCapV(cx, cy, hh, label) {
+  stroke(40); strokeWeight(2);
+  line(cx, cy - hh, cx, cy - 5); line(cx, cy + 5, cx, cy + hh);
+  line(cx - 11, cy - 5, cx + 11, cy - 5);
+  line(cx - 11, cy + 5, cx + 11, cy + 5);
+  fill(60); noStroke(); textAlign(LEFT, CENTER); textSize(8);
+  text(label, cx + 14, cy);
+}
+
+function drawIndV(cx, cy, hh, label) {
+  stroke(40); strokeWeight(2);
+  line(cx, cy - hh, cx, cy - hh + 4);
+  line(cx, cy + hh - 4, cx, cy + hh);
+  const n = 4, arcH = (hh * 2 - 8) / n;
+  let ay = cy - hh + 4;
+  for (let i = 0; i < n; i++) {
+    noFill(); arc(cx, ay + arcH / 2, 18, arcH * 1.35, PI, 0);
+    ay += arcH;
+  }
+  fill(60); noStroke(); textAlign(LEFT, CENTER); textSize(8);
+  text(label, cx + 12, cy);
+}
+
+function drawDiodeV(cx, cy) {
+  stroke(200, 60, 60); strokeWeight(2);
+  // anode at top, cathode at bottom (freewheeling direction: top to bottom)
+  line(cx, cy - 14, cx, cy - 2);
+  fill(200, 60, 60); noStroke();
+  triangle(cx - 8, cy - 2, cx + 8, cy - 2, cx, cy + 12);
+  stroke(200, 60, 60); strokeWeight(2); noFill();
+  line(cx - 8, cy + 12, cx + 8, cy + 12);
+  line(cx, cy + 12, cx, cy + 20);
+}
+
+function drawGnd(x, y) {
+  stroke(40); strokeWeight(2);
+  line(x, y, x, y + 5);
+  line(x - 12, y + 5, x + 12, y + 5);
+  line(x - 8, y + 9, x + 8, y + 9);
+  line(x - 4, y + 13, x + 4, y + 13);
+}
+
+function drawFlashLamp(cx, cy, glowing) {
+  stroke(glowing ? color(255, 220, 0) : color(150)); strokeWeight(2);
+  noFill(); circle(cx, cy, 20);
+  stroke(glowing ? color(230, 200, 0) : color(130));
+  line(cx - 5, cy - 5, cx + 5, cy + 5);
+  line(cx + 5, cy - 5, cx - 5, cy + 5);
+  if (glowing) {
+    fill(255, 240, 100, 80 + sin(animT * 6) * 30); noStroke();
+    circle(cx, cy, 34);
+    fill(255, 240, 0, 100); circle(cx, cy, 22);
+  }
+}
+
+function drawLED(cx, cy, on) {
+  stroke(on ? color(220, 160, 20) : color(160)); strokeWeight(2);
+  fill(on ? color(255, 240, 80) : color(200));
+  circle(cx, cy, 14);
+  if (on) {
+    fill(255, 240, 60, 120); noStroke();
+    circle(cx, cy, 22);
+  }
+}
+
+// ══════════════════════════════════════════════════════════
+// FORMAT HELPERS
+// ══════════════════════════════════════════════════════════
+function fmtOhm(r) {
+  if (r >= 1e6)  return (r / 1e6).toPrecision(3) + " MΩ";
+  if (r >= 1000) return (r / 1000).toPrecision(3) + " kΩ";
+  return r.toPrecision(3) + " Ω";
+}
+function fmtFarad(c) {
+  if (c >= 1e-3) return (c * 1e3).toPrecision(3) + " mF";
+  if (c >= 1e-6) return (c * 1e6).toPrecision(3) + " µF";
+  if (c >= 1e-9) return (c * 1e9).toPrecision(3) + " nF";
+  return (c * 1e12).toPrecision(3) + " pF";
+}
+function fmtHenry(l) {
+  if (l >= 1)    return l.toPrecision(3) + " H";
+  if (l >= 1e-3) return (l * 1e3).toPrecision(3) + " mH";
+  return (l * 1e6).toPrecision(3) + " µH";
+}
+function fmtHz(f) {
+  if (f >= 1000) return (f / 1000).toPrecision(3) + " kHz";
+  return f.toPrecision(3) + " Hz";
+}
+function fmtTime(t) {
+  if (t >= 1)    return t.toPrecision(3) + " s";
+  if (t >= 1e-3) return (t * 1e3).toPrecision(3) + " ms";
+  return (t * 1e6).toPrecision(3) + " µs";
+}
+function formatTiming(val, app) {
+  if (app.tUnit === "Hz")  return fmtHz(val);
+  if (app.tUnit === "ms")  return fmtTime(val);   // relay τ stored as seconds
+  return fmtTime(val);
+}
+
+function setLineDash(arr) { drawingContext.setLineDash(arr); }
+
+// ══════════════════════════════════════════════════════════
+// MOUSE INTERACTION
+// ══════════════════════════════════════════════════════════
+function mousePressed() {
+  // Tab clicks
+  const tw = CW / APPS.length;
+  if (mouseY < TAB_H) {
+    const i = floor(mouseX / tw);
+    if (i >= 0 && i < APPS.length && i !== appIdx) {
+      appIdx = i; isAnim = false; animT = 0;
+    }
+    return;
+  }
+
+  // Animate button
+  const bx = 14, by = TAB_H + MAIN_H - 27, bw = 92, bh = 22;
+  if (mouseX >= bx && mouseX <= bx + bw && mouseY >= by && mouseY <= by + bh) {
+    isAnim = !isAnim;
+    if (isAnim) animT = 0;
+    return;
+  }
+
+  // Sliders
+  const ys     = [SL_Y0 + 26, SL_Y0 + 65, SL_Y0 + 100];
+  const ids    = ['r', 'b', 't'];
+  for (let i = 0; i < 3; i++) {
+    if (abs(mouseY - ys[i]) < 14 && mouseX >= SL_X - 12 && mouseX <= SL_X + SL_W + 12) {
+      dragId = ids[i];
+      applySlider(dragId, mouseX);
+      return;
+    }
+  }
+}
+
+function mouseDragged() {
+  if (dragId) applySlider(dragId, mouseX);
+}
+
+function mouseReleased() { dragId = null; }
+
+function applySlider(id, mx) {
+  const f = constrain((mx - SL_X) / SL_W, 0, 1);
+  if      (id === 'r') slR[appIdx] = f;
+  else if (id === 'b') slB[appIdx] = f;
+  else                 slT[appIdx] = f;
+}
+
+</script>
+</body>
+</html>
