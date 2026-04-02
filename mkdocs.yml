@@ -68,6 +68,16 @@ nav:
     - Phasor Circuit Solver: sims/phasor-circuit-solver/index.md
     - Resonance Comparison: sims/resonance-comparison/index.md
     - Bandwidth and Selectivity: sims/bandwidth-selectivity/index.md
+    - Signal Parameters: sims/signal-parameters/index.md
+    - RMS Calculation: sims/rms-calculation/index.md
+    - Decibel Scale: sims/decibel-scale/index.md
+    - Capacitor Charging: sims/capacitor-charging/index.md
+    - Capacitor Combinations: sims/capacitor-combinations/index.md
+    - Parallel Plate Capacitor: sims/parallel-plate-capacitor/index.md
+    - Real Capacitor Model: sims/real-capacitor-model/index.md
+    - Mutual Inductance: sims/mutual-inductance/index.md
+    - Current Meter: sims/current-meter/index.md
+    - Learning Graph Viewer: sims/graph-viewer/index.md
     - prompts/circuit-similarity/index.md
     - prompts/top-100-circuits/top-100-circuits.md
     - sims/circuit-similarity/index.md
@@ -88,6 +98,7 @@ nav:
        - Introduction: old-sections/60-transistors/index.md
        - LED Driver Circuit: old-sections/60-transistors/led-circuit.md
     - MOSFETs: old-sections/70-mosfet/index.md
+    - Frequency Response: old-sections/10-frequency-response/index.md
   
   - Learning Graph:
     - Introduction: learning-graph/index.md
@@ -97,6 +108,7 @@ nav:
     - Concept Taxonomy: learning-graph/concept-taxonomy.md
     - Taxonomy Distribution: learning-graph/taxonomy-distribution.md
     - Chapter Metrics: learning-graph/chapter-metrics.md
+    - Book Metrics: learning-graph/book-metrics.md
     - FAQ Quality Report: learning-graph/faq-quality-report.md
 
   - Sample Prompts:
@@ -133,6 +145,8 @@ nav:
     - Metaphors and Stories: prompts/metaphors-and-stories.md
     - Glossary Terms: prompts/glossary-terms.md
     - Similarity Plot: prompts/similarity-plot/index.md
+    - Circuit Diagram Skill: prompts/circuit-diagram-skill.md
+    - Generate Chapter Content: prompts/generate-chapter-content.md
   
     - Component Tests:
       - Introduction: sims/components.md
@@ -148,7 +162,10 @@ nav:
       - Animated Wire: sims/animated-wire/index.md
       - Wire: sims/wire/index.md
 
-  - FAQ: faq.md
+  - FAQ:
+    - General FAQ: faq.md
+    - Circuits FAQ: faq/index.md
+    - Series and Parallel: faq/series-and-parallel/index.md
 
   - Glossary: glossary.md
   - How We Built This Site: how-we-built-this-site.md
