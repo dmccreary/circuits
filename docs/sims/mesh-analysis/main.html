@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+  <title>Mesh Analysis Step-Through</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.7/p5.min.js"></script>
+  <script src="../circuit-lib/circuit-lib.js"></script>
+  <style>
+    body { margin: 0; background: #f0f0f0; display: flex; justify-content: center; }
+    canvas { display: block; }
+  </style>
+</head>
+<body>
+<main></main>
+<script>
+// Mesh Analysis Step-Through MicroSim
+// Two-mesh circuit with shared resistor R2.
+//
+// Circuit: Vs1=10V  R1=1kΩ  R2=2kΩ(shared)  R3=1kΩ  Vs2=5V
+// KVL Mesh 1:  (R1+R2)·I1 − R2·I2 = Vs1  →  3I1 − 2I2 = Vs1
+// KVL Mesh 2: −R2·I1 + (R2+R3)·I2 = Vs2  → −2I1 + 3I2 = Vs2
+// Solution (Vs1=10,Vs2=5): I1=8mA, I2=7mA, I_R2=I1−I2=1mA
+//
+// Bloom Level: Apply (L3) — solve for mesh currents using KVL
+
+// ── Canvas layout ─────────────────────────────────────────────────────────────
+const CW     = 660;
+const DRAW_H = 460;
+const CTRL_H = 130;
+const CH     = DRAW_H + CTRL_H;  // 590
+
+// ── Panel split ───────────────────────────────────────────────────────────────
+const CIRC_W = 490;
+const EQ_X   = 498;
+const EQ_W   = CW - EQ_X - 4;   // ~158px
+
+// ── Circuit node positions ────────────────────────────────────────────────────
+const A_X    = 60;    // left side (Vs1)
+const B_X    = 255;   // middle junction
+const C_X    = 440;   // right side (Vs2)
+const TOP_Y  = 100;   // top rail y
+const GND_Y  = 365;   // ground rail y
+const SRC_CY = 232;   // voltage source circle center y
+const SRC_R  = 25;    // voltage source circle radius
+
+// ── Fixed resistor values (kΩ) ────────────────────────────────────────────────
+const R1 = 1, R2 = 2, R3 = 1;
+
+// ── Adjustable source values ──────────────────────────────────────────────────
+let vs1 = 10;   // V (Mesh 1 source)
+let vs2 = 5;    // V (Mesh 2 source)
+
+// ── Computed mesh/branch currents (mA) ───────────────────────────────────────
+let I1, I2, I_R1, I_R2, I_R3;
+
+// ── Step state ────────────────────────────────────────────────────────────────
+let currentStep = 1;
+const TOTAL_STEPS = 6;
+
+// ── Mesh loop animation ───────────────────────────────────────────────────────
+let isAnimating = false;
+let animTime    = 0;
+
+// ── Canvas-based controls ─────────────────────────────────────────────────────
+let btnPrev, btnNext, btnReset, btnAnim;
+
+// ── Canvas-based sliders ──────────────────────────────────────────────────────
+const SL_LEFT = 155;   // label area width (left of slider)
+const SL_W    = CIRC_W - SL_LEFT - 25;  // slider track width
+let slVs1 = { y: 0, val: 10, min: 1,  max: 20, dragging: false };
+let slVs2 = { y: 0, val: 5,  min: 0,  max: 15, dragging: false };
+
+// ── Orientation constants (not in circuit-lib.js) ─────────────────────────────
+const HORIZONTAL = 0;
+const VERTICAL   = 1;
+
+// ── lineWidth global required by circuit-lib.js ───────────────────────────────
+let lineWidth = 2;
+
+// ── Mesh colors ───────────────────────────────────────────────────────────────
+const COL_M1   = [30,  100, 220];   // blue  — Mesh 1
+const COL_M2   = [200, 50,  50];    // red   — Mesh 2
+const COL_SH   = [160, 60,  200];   // purple — shared R2
+
+// ─────────────────────────────────────────────────────────────────────────────
+function computeCurrents() {
+  // Cramer's rule: det = (R1+R2)(R2+R3) − R2² = 3·3 − 4 = 5
+  I1   = ((R2+R3)*vs1 + R2*vs2) / 5;   // mA
+  I2   = (R2*vs1 + (R1+R2)*vs2) / 5;   // mA
+  I_R1 = I1;
+  I_R2 = I1 - I2;
+  I_R3 = I2;
+}
+
+function setup() {
+  const canvas = createCanvas(CW, CH);
+  canvas.parent(document.querySelector('main') || document.body);
+  computeCurrents();
+
+  const BY = DRAW_H + 14;
+  const BH = 28;
+  btnPrev  = { x: 15,  y: BY, w: 90,  h: BH, label: '← Prev' };
+  btnNext  = { x: 115, y: BY, w: 110, h: BH, label: 'Next Step →' };
+  btnReset = { x: 235, y: BY, w: 70,  h: BH, label: 'Reset' };
+  btnAnim  = { x: 315, y: BY, w: 130, h: BH, label: '▶ Animate Loops' };
+
+  slVs1.y = DRAW_H + 62;
+  slVs2.y = DRAW_H + 100;
+
+  describe('Mesh analysis step-through: six steps from loop assignment to branch current calculation', LABEL);
+}
+
+function draw() {
+  background(240);
+
+  // Update animation time
+  if (isAnimating) animTime += deltaTime * 0.001;
+
+  // Update slider values
+  vs1 = slVs1.val;
+  vs2 = slVs2.val;
+  computeCurrents();
+
+  // ── Drawing region ──
+  fill('aliceblue');
+  stroke('silver'); strokeWeight(1);
+  rect(0, 0, CW, DRAW_H);
+
+  // ── Equation panel background ──
+  fill(255, 255, 220);
+  stroke('#ccc'); strokeWeight(1);
+  rect(EQ_X - 3, 5, EQ_W + 3, DRAW_H - 10, 6);
+
+  // ── Control strip ──
+  fill(245);
+  stroke('silver'); strokeWeight(1);
+  rect(0, DRAW_H, CW, CTRL_H);
+
+  // ── Panel divider ──
+  stroke(200); strokeWeight(1);
+  line(CIRC_W, 10, CIRC_W, DRAW_H - 10);
+
+  // ── Title ──
+  fill(30); noStroke();
+  textFont('sans-serif'); textSize(17); textAlign(CENTER, TOP);
+  text('Mesh Analysis — Two-Mesh Circuit', CIRC_W / 2, 8);
+
+  // ── Layers ──
+  drawStepHighlights();
+  drawCircuit();
+  drawMeshLoops();
+  drawEquationPanel();
+  drawControls();
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// CIRCUIT DRAWING
+// ─────────────────────────────────────────────────────────────────────────────
+
+function drawCircuit() {
+  stroke(0); strokeWeight(lineWidth); noFill();
+
+  // ── Vs1 (left arm) ──
+  line(A_X, TOP_Y,      A_X, SRC_CY - SRC_R);
+  line(A_X, SRC_CY + SRC_R, A_X, GND_Y);
+  noFill(); stroke(0); strokeWeight(lineWidth);
+  circle(A_X, SRC_CY, SRC_R * 2);
+  fill(0); noStroke();
+  textFont('sans-serif'); textSize(15); textAlign(CENTER, CENTER);
+  text('+', A_X, SRC_CY - 10);
+  text('−', A_X, SRC_CY + 10);
+  textSize(12); textAlign(LEFT, CENTER);
+  text('Vs1=' + vs1 + 'V', A_X + SRC_R + 6, SRC_CY);
+
+  // ── Vs2 (right arm) ──
+  stroke(0); strokeWeight(lineWidth); noFill();
+  line(C_X, TOP_Y,      C_X, SRC_CY - SRC_R);
+  line(C_X, SRC_CY + SRC_R, C_X, GND_Y);
+  noFill(); stroke(0); strokeWeight(lineWidth);
+  circle(C_X, SRC_CY, SRC_R * 2);
+  fill(0); noStroke();
+  textFont('sans-serif'); textSize(15); textAlign(CENTER, CENTER);
+  text('+', C_X, SRC_CY - 14);
+  text('−', C_X, SRC_CY + 14);
+  textSize(12); textAlign(RIGHT, CENTER);
+  text('Vs2=' + vs2 + 'V', C_X - SRC_R - 6, SRC_CY);
+
+  stroke(0); strokeWeight(lineWidth); noFill();
+
+  // ── Top rail: A → R1 → B ──
+  line(A_X, TOP_Y, A_X + 25, TOP_Y);
+  drawResistor(A_X + 25, TOP_Y - 20, 140, 40, lineWidth, HORIZONTAL, 'R1=1k\u03A9', TOP);
+  line(A_X + 25 + 140, TOP_Y, B_X, TOP_Y);
+
+  // ── Top rail: B → R3 → C ──
+  line(B_X, TOP_Y, B_X + 15, TOP_Y);
+  drawResistor(B_X + 15, TOP_Y - 20, 130, 40, lineWidth, HORIZONTAL, 'R3=1k\u03A9', TOP);
+  line(B_X + 15 + 130, TOP_Y, C_X, TOP_Y);
+
+  // ── R2 vertical: B → GND (shared resistor) ──
+  // Draw in purple to signal shared status (on highlighted steps)
+  if (currentStep === 2 || currentStep === 3 || currentStep === 4) {
+    stroke(COL_SH[0], COL_SH[1], COL_SH[2]);
+    strokeWeight(lineWidth + 1);
+  } else {
+    stroke(0); strokeWeight(lineWidth);
+  }
+  drawResistor(B_X - 12, TOP_Y, 24, GND_Y - TOP_Y, lineWidth, VERTICAL, '', RIGHT);
+  // R2 label at top-right of resistor, clear of the top rail wire
+  fill(currentStep === 2 || currentStep === 3 || currentStep === 4 ?
+       color(COL_SH[0], COL_SH[1], COL_SH[2]) : color(0));
+  noStroke(); textFont('sans-serif'); textSize(12); textAlign(LEFT, TOP);
+  text('R2=2k\u03A9', B_X + 16, TOP_Y + 22);
+
+  stroke(0); strokeWeight(lineWidth);
+
+  // ── Bottom ground rail ──
+  line(A_X, GND_Y, C_X, GND_Y);
+
+  // ── GND symbols ──
+  drawGND(A_X, GND_Y);
+  drawGND(B_X, GND_Y);
+  drawGND(C_X, GND_Y);
+
+  // ── B junction dot ──
+  fill(40, 80, 210); noStroke();
+  circle(B_X, TOP_Y, 14);
+
+  // ── Node labels ──
+  if (currentStep === 1) {
+    fill(30); noStroke();
+    textFont('sans-serif'); textSize(12); textAlign(CENTER, BOTTOM);
+    // Mesh labels drawn in drawMeshLoops
+  }
+
+  // ── Voltage polarity markers on R2 (steps 2-3) ──
+  if (currentStep === 2) {
+    // Mesh 1 current flows DOWN through R2; top is +, bottom is −
+    fill(COL_SH[0], COL_SH[1], COL_SH[2]); noStroke();
+    textSize(14); textAlign(RIGHT, CENTER);
+    text('+', B_X - 16, TOP_Y + 20);
+    text('−', B_X - 16, GND_Y - 20);
+  }
+  if (currentStep === 3) {
+    // Mesh 2 sees R2 opposing: top is −, bottom is +
+    fill(COL_SH[0], COL_SH[1], COL_SH[2]); noStroke();
+    textSize(14); textAlign(RIGHT, CENTER);
+    text('−', B_X - 16, TOP_Y + 20);
+    text('+', B_X - 16, GND_Y - 20);
+  }
+
+  // ── Branch current arrows and labels (step 6) ──
+  if (currentStep === 6) {
+    drawBranchCurrentArrows();
+  }
+}
+
+function drawGND(x, y) {
+  stroke(0); strokeWeight(lineWidth);
+  line(x, y,       x,      y + 10);
+  line(x - 14, y + 10, x + 14, y + 10);
+  line(x - 9,  y + 17, x + 9,  y + 17);
+  line(x - 4,  y + 23, x + 4,  y + 23);
+}
+
+function drawBranchCurrentArrows() {
+  // I_R1 rightward above R1
+  drawArrow(A_X + 65, TOP_Y - 44, A_X + 120, TOP_Y - 44, color(80, 80, 80));
+  // I_R3 rightward above R3
+  drawArrow(B_X + 45, TOP_Y - 44, B_X + 100, TOP_Y - 44, color(80, 80, 80));
+  // I_R2 through R2 — drawn inside Mesh 2 loop, left of center label
+  let R2_AX = B_X + 42;
+  if (I_R2 >= 0) {
+    drawArrow(R2_AX, TOP_Y + 105, R2_AX, TOP_Y + 155, color(COL_SH[0], COL_SH[1], COL_SH[2]));
+  } else {
+    drawArrow(R2_AX, TOP_Y + 155, R2_AX, TOP_Y + 105, color(COL_SH[0], COL_SH[1], COL_SH[2]));
+  }
+
+  fill(50); noStroke(); textFont('sans-serif'); textSize(11); textAlign(CENTER, CENTER);
+  text(nf(abs(I_R1), 1, 1)+'mA', A_X + 90, TOP_Y - 57);
+  text(nf(abs(I_R3), 1, 1)+'mA', B_X + 72, TOP_Y - 57);
+  fill(COL_SH[0], COL_SH[1], COL_SH[2]);
+  text(nf(abs(I_R2), 1, 1)+'mA', R2_AX + 22, TOP_Y + 130);
+}
+
+function drawArrow(x1, y1, x2, y2, col) {
+  push();
+  stroke(col); fill(col); strokeWeight(1.5);
+  line(x1, y1, x2, y2);
+  let ang = atan2(y2 - y1, x2 - x1);
+  translate(x2, y2);
+  rotate(ang);
+  triangle(0, 0, -10, -5, -10, 5);
+  pop();
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// MESH LOOP VISUALIZATION
+// ─────────────────────────────────────────────────────────────────────────────
+
+function drawMeshLoops() {
+  // Mesh 1 loop — centered between A and B
+  const M1_CX = (A_X + B_X) / 2;   // 177.5
+  const M2_CX = (B_X + C_X) / 2;   // 367.5
+  const M_CY  = (TOP_Y + GND_Y) / 2; // 232.5
+  const RX = 65, RY = 90;
+
+  // Determine which meshes to show based on step
+  let showM1 = (currentStep !== 3);  // hide M1 loop on step 3 to focus M2
+  let showM2 = (currentStep !== 2);  // hide M2 loop on step 2 to focus M1
+  // Always show both on steps 1, 4, 5, 6
+
+  if (showM1) {
+    let alpha = (currentStep === 2 || currentStep === 4 || currentStep === 5 || currentStep === 6) ? 220 : 140;
+    drawMeshLoop(M1_CX, M_CY, RX, RY, 'I\u2081', COL_M1, alpha);
+    // Animated dot
+    if (isAnimating) drawMeshDot(M1_CX, M_CY, RX, RY, animTime, 0, COL_M1);
+  }
+
+  if (showM2) {
+    let alpha = (currentStep === 3 || currentStep === 4 || currentStep === 5 || currentStep === 6) ? 220 : 140;
+    drawMeshLoop(M2_CX, M_CY, RX, RY, 'I\u2082', COL_M2, alpha);
+    if (isAnimating) drawMeshDot(M2_CX, M_CY, RX, RY, animTime, PI, COL_M2);
+  }
+
+  // Labels with current values (steps 5-6)
+  if (currentStep >= 5) {
+    noStroke();
+    fill(COL_M1[0], COL_M1[1], COL_M1[2]);
+    textFont('sans-serif'); textSize(12); textAlign(CENTER, CENTER);
+    text(nf(I1, 1, 1) + ' mA', M1_CX, M_CY + 20);
+    fill(COL_M2[0], COL_M2[1], COL_M2[2]);
+    text(nf(I2, 1, 1) + ' mA', M2_CX, M_CY + 20);
+  }
+}
+
+function drawMeshLoop(cx, cy, rx, ry, label, col, alpha) {
+  push();
+  noFill();
+  stroke(col[0], col[1], col[2], alpha);
+  strokeWeight(2);
+  ellipse(cx, cy, rx * 2, ry * 2);
+  // CW arrowhead at top — pointing right
+  fill(col[0], col[1], col[2], alpha);
+  noStroke();
+  triangle(cx + 8, cy - ry, cx - 4, cy - ry - 6, cx - 4, cy - ry + 6);
+  // Label in center
+  textFont('sans-serif');
+  textSize(16); textStyle(BOLD); textAlign(CENTER, CENTER);
+  text(label, cx, cy - 15);
+  textStyle(NORMAL);
+  pop();
+}
+
+function drawMeshDot(cx, cy, rx, ry, t, offset, col) {
+  // Small dot moving CW around the ellipse
+  let angle = t * TWO_PI + offset;   // positive = CW in screen coords (y-down)
+  let dotX = cx + rx * cos(angle);
+  let dotY = cy + ry * sin(angle);
+  fill(col[0], col[1], col[2]); noStroke();
+  circle(dotX, dotY, 10);
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// STEP HIGHLIGHTS
+// ─────────────────────────────────────────────────────────────────────────────
+
+function drawStepHighlights() {
+  noStroke();
+  switch (currentStep) {
+    case 1:
+      // Highlight both mesh regions lightly
+      fill(30, 100, 220, 18);
+      rect(A_X - 10, TOP_Y - 15, B_X - A_X + 20, GND_Y - TOP_Y + 25, 8);
+      fill(200, 50, 50, 18);
+      rect(B_X - 10, TOP_Y - 15, C_X - B_X + 20, GND_Y - TOP_Y + 25, 8);
+      break;
+    case 2:
+      // Highlight Mesh 1 loop components (R1, R2, Vs1)
+      fill(30, 100, 220, 35);
+      rect(A_X - 10, TOP_Y - 15, B_X - A_X + 20, GND_Y - TOP_Y + 25, 8);
+      break;
+    case 3:
+      // Highlight Mesh 2 loop components (R3, R2, Vs2)
+      fill(200, 50, 50, 35);
+      rect(B_X - 10, TOP_Y - 15, C_X - B_X + 20, GND_Y - TOP_Y + 25, 8);
+      break;
+    case 4:
+      // Both loops — matrix context
+      fill(100, 50, 180, 25);
+      rect(A_X - 10, TOP_Y - 15, C_X - A_X + 20, GND_Y - TOP_Y + 25, 8);
+      break;
+    case 5:
+      // Green highlight on the mesh loops
+      fill(0, 180, 80, 40);
+      rect(A_X - 10, TOP_Y - 15, C_X - A_X + 20, GND_Y - TOP_Y + 25, 8);
+      break;
+    case 6:
+      // Orange highlight on R2 (the shared branch)
+      fill(255, 140, 0, 60);
+      rect(B_X - 18, TOP_Y - 10, 36, GND_Y - TOP_Y + 20, 6);
+      break;
+  }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// EQUATION PANEL
+// ─────────────────────────────────────────────────────────────────────────────
+
+function drawEquationPanel() {
+  const px = EQ_X + 5;
+  let   py = 22;
+  const lh = 20;
+
+  const titles = [
+    'Step 1: Assign Meshes',
+    'Step 2: KVL for Mesh 1',
+    'Step 3: KVL for Mesh 2',
+    'Step 4: System of Eqs.',
+    'Step 5: Solve',
+    'Step 6: Branch Currents'
+  ];
+
+  fill(20, 55, 160); noStroke();
+  textFont('sans-serif'); textSize(12); textStyle(BOLD); textAlign(LEFT, TOP);
+  text(titles[currentStep - 1], px, py);
+  textStyle(NORMAL); py += 26;
+
+  stroke(190); strokeWeight(1);
+  line(px, py, EQ_X + EQ_W - 6, py);
+  noStroke(); py += 10;
+
+  textFont('monospace'); textSize(10); textAlign(LEFT, TOP);
+
+  let vs1s = nf(vs1, 1, 0);
+  let vs2s = nf(vs2, 1, 0);
+  let I1s  = nf(I1,  1, 1);
+  let I2s  = nf(I2,  1, 1);
+
+  switch (currentStep) {
+    case 1:
+      eqLines(px, py, lh, [
+        ['k', 'Two CW mesh currents:'],
+        ['b', 'I\u2081 (Mesh 1, blue)'],
+        ['r', 'I\u2082 (Mesh 2, red)'],
+        ['w', ''],
+        ['k', 'Shared component:'],
+        ['p', 'R2=2k\u03A9 carries'],
+        ['p', 'both I\u2081 and I\u2082'],
+        ['w', ''],
+        ['d', 'Net current in R2:'],
+        ['p', 'I\u2081 \u2212 I\u2082 (if I\u2081>I\u2082)'],
+        ['w', ''],
+        ['k', 'Circuit values:'],
+        ['d', 'Vs1=' + vs1s + 'V  Vs2=' + vs2s + 'V'],
+        ['d', 'R1=1k  R2=2k  R3=1k'],
+      ]);
+      break;
+
+    case 2:
+      eqLines(px, py, lh, [
+        ['k', 'KVL Mesh 1 (CW):'],
+        ['d', 'Sum drops = 0'],
+        ['w', ''],
+        ['b', '\u2212Vs1+R1\u00B7I\u2081'],
+        ['b', '  +R2\u00B7(I\u2081\u2212I\u2082)=0'],
+        ['w', ''],
+        ['d', 'Rearranged:'],
+        ['b', '(R1+R2)I\u2081\u2212R2\u00B7I\u2082'],
+        ['b', '  = Vs1'],
+        ['w', ''],
+        ['G', '\u25BA Eq.(1):'],
+        ['G', '  3I\u2081 \u2212 2I\u2082 = ' + vs1s],
+      ]);
+      break;
+
+    case 3:
+      eqLines(px, py, lh, [
+        ['k', 'KVL Mesh 2 (CW):'],
+        ['d', 'Sum drops = 0'],
+        ['w', ''],
+        ['r', '\u2212Vs2+R3\u00B7I\u2082'],
+        ['r', '  +R2\u00B7(I\u2082\u2212I\u2081)=0'],
+        ['w', ''],
+        ['d', 'Rearranged:'],
+        ['r', '\u2212R2\u00B7I\u2081+(R2+R3)I\u2082'],
+        ['r', '  = Vs2'],
+        ['w', ''],
+        ['G', '\u25BA Eq.(2):'],
+        ['G', '  \u22122I\u2081 + 3I\u2082 = ' + vs2s],
+      ]);
+      break;
+
+    case 4:
+      eqLines(px, py, lh, [
+        ['k', 'Matrix form AX=b:'],
+        ['w', ''],
+        ['n', '| 3  \u22122| |I\u2081|'],
+        ['n', '|\u22122   3| |I\u2082|'],
+        ['n', ''],
+        ['n', '  = |' + vs1s + '|'],
+        ['n', '    |' + vs2s + '|'],
+        ['w', ''],
+        ['d', 'Determinant:'],
+        ['d', '3\u00B73 \u2212 (\u22122)(\u22122) = 5'],
+      ]);
+      break;
+
+    case 5:
+      eqLines(px, py, lh, [
+        ['k', 'Cramer\'s Rule:'],
+        ['w', ''],
+        ['d', 'I\u2081=(3Vs1+2Vs2)/5'],
+        ['b', '  =(3\u00D7'+vs1s+'+2\u00D7'+vs2s+')/5'],
+        ['G', '  = ' + I1s + ' mA'],
+        ['w', ''],
+        ['d', 'I\u2082=(2Vs1+3Vs2)/5'],
+        ['r', '  =(2\u00D7'+vs1s+'+3\u00D7'+vs2s+')/5'],
+        ['G', '  = ' + I2s + ' mA'],
+      ]);
+      break;
+
+    case 6: {
+      let IR2s = nf(abs(I_R2), 1, 1);
+      let IR2dir = I_R2 >= 0 ? '\u2193 down' : '\u2191 up';
+      eqLines(px, py, lh, [
+        ['k', 'I = mesh current(s)'],
+        ['w', ''],
+        ['b', 'I_R1 = I\u2081'],
+        ['b', '     = ' + nf(I_R1,1,1) + ' mA'],
+        ['w', ''],
+        ['p', 'I_R2 = I\u2081 \u2212 I\u2082'],
+        ['p', '     = '+nf(I1,1,1)+'\u2212'+nf(I2,1,1)],
+        ['p', '     = ' + nf(I_R2,1,1) + ' mA ' + IR2dir],
+        ['w', ''],
+        ['r', 'I_R3 = I\u2082'],
+        ['r', '     = ' + nf(I_R3,1,1) + ' mA'],
+      ]);
+      break;
+    }
+  }
+}
+
+function eqLines(px, py, lh, lines) {
+  for (let [c, t] of lines) {
+    if      (c === 'b') fill(COL_M1[0], COL_M1[1], COL_M1[2]);
+    else if (c === 'r') fill(COL_M2[0], COL_M2[1], COL_M2[2]);
+    else if (c === 'p') fill(COL_SH[0], COL_SH[1], COL_SH[2]);
+    else if (c === 'n') fill(0, 40, 160);
+    else if (c === 'G') { fill(0, 130, 30); textStyle(BOLD); }
+    else if (c === 'g') fill(0, 130, 30);
+    else if (c === 'd') fill(60);
+    else if (c === 'k') { fill(30); textStyle(BOLD); }
+    else fill(240);  // 'w' = blank
+    noStroke(); text(t, px, py);
+    textStyle(NORMAL);
+    py += lh;
+  }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// CONTROLS
+// ─────────────────────────────────────────────────────────────────────────────
+
+function drawControls() {
+  // Row 1 buttons
+  drawBtn(btnPrev,  currentStep > 1);
+  drawBtn(btnNext,  currentStep < TOTAL_STEPS);
+  drawBtn(btnReset, true);
+  // Animate toggle
+  let animLabel = isAnimating ? '⏸ Stop Loops' : '▶ Animate Loops';
+  drawBtn({...btnAnim, label: animLabel}, true, isAnimating ? color(30,140,70) : null);
+
+  // Step indicator
+  fill(70); noStroke(); textFont('sans-serif'); textSize(13); textAlign(CENTER, CENTER);
+  text('Step ' + currentStep + ' / ' + TOTAL_STEPS, CW - 55, DRAW_H + 28);
+
+  // Row 2: Vs1 slider
+  drawSliderRow('Vs1:', slVs1, SL_LEFT, SL_W, DRAW_H + 62, 'V',
+                color(COL_M1[0], COL_M1[1], COL_M1[2]));
+
+  // Row 3: Vs2 slider
+  drawSliderRow('Vs2:', slVs2, SL_LEFT, SL_W, DRAW_H + 100, 'V',
+                color(COL_M2[0], COL_M2[1], COL_M2[2]));
+}
+
+function drawSliderRow(label, sl, leftX, w, y, suffix, col) {
+  let t = (sl.val - sl.min) / (sl.max - sl.min);
+  let hx = leftX + t * w;
+
+  // Label + value (right-aligned before track)
+  fill(40); noStroke();
+  textFont('sans-serif'); textSize(13); textAlign(RIGHT, CENTER);
+  text(label + ' ' + sl.val + suffix, leftX - 8, y);
+
+  // Track
+  stroke(180); strokeWeight(3); noFill();
+  line(leftX, y, leftX + w, y);
+
+  // Handle
+  fill(col); noStroke();
+  circle(hx, y, 16);
+}
+
+function drawBtn(b, enabled, overrideColor) {
+  let bg = overrideColor ? overrideColor :
+           (enabled ? color(55, 115, 200) : color(175));
+  fill(bg);
+  stroke(enabled ? color(35, 85, 165) : color(145));
+  strokeWeight(1);
+  rect(b.x, b.y, b.w, b.h, 5);
+  fill(255); noStroke();
+  textFont('sans-serif'); textSize(12); textAlign(CENTER, CENTER);
+  text(b.label, b.x + b.w / 2, b.y + b.h / 2);
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// INTERACTION
+// ─────────────────────────────────────────────────────────────────────────────
+
+function mousePressed() {
+  if (inBtn(btnPrev) && currentStep > 1)           { currentStep--; return; }
+  if (inBtn(btnNext) && currentStep < TOTAL_STEPS) { currentStep++; return; }
+  if (inBtn(btnReset))  { currentStep = 1; isAnimating = false; animTime = 0; return; }
+  if (inBtn(btnAnim))   { isAnimating = !isAnimating; return; }
+
+  // Slider hit detection
+  checkSliderPress(slVs1, SL_LEFT, SL_W, DRAW_H + 62);
+  checkSliderPress(slVs2, SL_LEFT, SL_W, DRAW_H + 100);
+}
+
+function mouseDragged() {
+  updateSliderDrag(slVs1, SL_LEFT, SL_W);
+  updateSliderDrag(slVs2, SL_LEFT, SL_W);
+}
+
+function mouseReleased() {
+  slVs1.dragging = false;
+  slVs2.dragging = false;
+}
+
+function checkSliderPress(sl, trackX, trackW, trackY) {
+  let t = (sl.val - sl.min) / (sl.max - sl.min);
+  let hx = trackX + t * trackW;
+  if (dist(mouseX, mouseY, hx, trackY) < 14) sl.dragging = true;
+}
+
+function updateSliderDrag(sl, trackX, trackW) {
+  if (!sl.dragging) return;
+  let t = constrain((mouseX - trackX) / trackW, 0, 1);
+  sl.val = Math.round(sl.min + t * (sl.max - sl.min));
+}
+
+function inBtn(b) {
+  return mouseX >= b.x && mouseX <= b.x + b.w &&
+         mouseY >= b.y && mouseY <= b.y + b.h;
+}
+</script>
+</body>
+</html>

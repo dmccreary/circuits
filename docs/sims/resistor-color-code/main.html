@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Resistor Color Code</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+<style>
+  body { margin: 0; background: #e8eaf0; display: flex; justify-content: center; padding: 10px; font-family: Arial, sans-serif; }
+  canvas { border-radius: 8px; box-shadow: 0 4px 16px rgba(0,0,0,0.18); }
+</style>
+</head>
+<body>
+<script>
+// ============================================================
+// Resistor Color Code MicroSim
+// Bloom L3 – Use color code to read / set resistor values
+// ============================================================
+
+const CW = 820, CH = 480;
+
+// ---- Color code data ----
+// Index 0–9 = digit colors, 10=gold(×0.1), 11=silver(×0.01)
+const COLORS = [
+  { name:'Black',  hex:'#1a1a1a', digit:0, mult:1,      tol: null  },
+  { name:'Brown',  hex:'#8B4513', digit:1, mult:10,     tol: 1     },
+  { name:'Red',    hex:'#CC2200', digit:2, mult:100,    tol: 2     },
+  { name:'Orange', hex:'#E86000', digit:3, mult:1e3,    tol: null  },
+  { name:'Yellow', hex:'#D4B000', digit:4, mult:1e4,    tol: null  },
+  { name:'Green',  hex:'#1A7A1A', digit:5, mult:1e5,    tol: 0.5   },
+  { name:'Blue',   hex:'#0044CC', digit:6, mult:1e6,    tol: 0.25  },
+  { name:'Violet', hex:'#7700AA', digit:7, mult:1e7,    tol: 0.1   },
+  { name:'Gray',   hex:'#666666', digit:8, mult:1e8,    tol: 0.05  },
+  { name:'White',  hex:'#EEEEEE', digit:9, mult:1e9,    tol: null  },
+  { name:'Gold',   hex:'#C8A000', digit:null, mult:0.1, tol: 5     },
+  { name:'Silver', hex:'#A8A8A8', digit:null, mult:0.01,tol: 10    },
+];
+
+// Valid tolerance indices for band 4 (4-band) or band 5 (5-band)
+const TOL_VALID = [1,2,5,6,7,8,10,11]; // Brown,Red,Green,Blue,Violet,Gray,Gold,Silver
+
+// Default: Brown-Black-Red-Gold = 1kΩ ±5%
+let bands4 = [1, 0, 2, 10];     // 4-band indices
+let bands5 = [1, 0, 0, 2, 10];  // 5-band indices
+let is5band = false;
+let selectedBand = 0;            // which band is active
+let quizMode = false;
+let quizSubmitted = false;
+let quizAnswer = '';
+
+function getBands() { return is5band ? bands5 : bands4; }
+function setBand(i, ci) { if (is5band) bands5[i]=ci; else bands4[i]=ci; }
+
+function calcValue() {
+  const b = getBands();
+  const n = is5band ? 5 : 4;
+  let val;
+  if (is5band) {
+    val = (COLORS[b[0]].digit*100 + COLORS[b[1]].digit*10 + COLORS[b[2]].digit) * COLORS[b[3]].mult;
+  } else {
+    val = (COLORS[b[0]].digit*10 + COLORS[b[1]].digit) * COLORS[b[2]].mult;
+  }
+  const tolPct = COLORS[b[n-1]].tol;
+  return { val, tolPct };
+}
+
+function fmtR(v) {
+  if (!isFinite(v) || v < 0) return '—';
+  if (v >= 1e9)  return +(v/1e9).toPrecision(4) + ' GΩ';
+  if (v >= 1e6)  return +(v/1e6).toPrecision(4) + ' MΩ';
+  if (v >= 1e3)  return +(v/1e3).toPrecision(4) + ' kΩ';
+  return +v.toPrecision(4) + ' Ω';
+}
+
+function randomResistor() {
+  // Pick a valid E12 value
+  const e12 = [10,12,15,18,22,27,33,39,47,56,68,82];
+  const base = e12[Math.floor(Math.random()*e12.length)];
+  const exp  = Math.floor(Math.random()*6); // 0–5 → ×1 to ×100000
+  const raw  = base * Math.pow(10, exp);
+  // Encode
+  if (is5band) {
+    const d1=Math.floor(base/100)%10, d2=Math.floor(base/10)%10, d3=base%10;
+    const mi = COLORS.findIndex(c=>c.mult===Math.pow(10,exp));
+    if (mi<0) return;
+    bands5 = [d1,d2,d3, mi, 10]; // gold tol
+  } else {
+    const d1=Math.floor(base/10), d2=base%10;
+    const mi = COLORS.findIndex(c=>c.mult===Math.pow(10,exp+1));
+    if (mi<0) return;
+    bands4 = [d1,d2, mi, 10];
+  }
+}
+
+// ---- Layout constants ----
+const RES_CX = 410, RES_CY = 130, RES_W = 380, RES_H = 80;
+const BAND_W = 26;
+// Band x-centers within resistor
+function bandX(i) {
+  const n = is5band ? 5 : 4;
+  const start = RES_CX - RES_W/2 + 55;
+  const end   = RES_CX + RES_W/2 - 55;
+  const gap   = (end - start) / (n - 1);
+  return start + i * gap;
+}
+
+// Palette layout: row of 12 swatches below resistor
+const PAL_Y = 310, PAL_SWATCH = 48, PAL_GAP = 4;
+const PAL_TOTAL = 12;
+function palX(i) {
+  const totalW = PAL_TOTAL * PAL_SWATCH + (PAL_TOTAL-1)*PAL_GAP;
+  const startX = (CW - totalW) / 2;
+  return startX + i*(PAL_SWATCH+PAL_GAP);
+}
+
+// Buttons
+const BTN = {
+  band4:  { x:20,  y:20,  w:80,  h:30 },
+  band5:  { x:108, y:20,  w:80,  h:30 },
+  random: { x:CW-200, y:20, w:90, h:30 },
+  quiz:   { x:CW-102, y:20, w:90, h:30 },
+};
+
+new p5(function(p) {
+
+  p.setup = function() {
+    p.createCanvas(CW, CH);
+    p.textFont('Arial');
+  };
+
+  p.draw = function() {
+    p.background(232, 234, 240);
+    drawToolbar();
+    drawResistor();
+    drawDecodePanel();
+    drawPalette();
+    if (quizMode) drawQuizOverlay();
+  };
+
+  // ---- Toolbar ----
+  function drawToolbar() {
+    drawBtn(BTN.band4, '4-Band', !is5band, [60,100,180], [120,140,200]);
+    drawBtn(BTN.band5, '5-Band',  is5band, [60,100,180], [120,140,200]);
+    drawBtn(BTN.random,'Random ⟳', false, [40,130,70],  [70,170,100]);
+    drawBtn(BTN.quiz,  quizMode ? 'Quiz: ON':'Quiz Mode', quizMode, [140,60,180],[170,100,210]);
+
+    p.noStroke(); p.fill(30,30,60); p.textSize(14); p.textStyle(p.BOLD);
+    p.textAlign(p.CENTER,p.CENTER);
+    p.text('Resistor Color Code', CW/2, 35);
+    p.textStyle(p.NORMAL);
+  }
+
+  function drawBtn(b, lbl, active, activeCol, inactiveCol) {
+    p.fill(...(active ? activeCol : inactiveCol)); p.noStroke();
+    p.rect(b.x, b.y, b.w, b.h, 6);
+    p.fill(255); p.textSize(12); p.textAlign(p.CENTER,p.CENTER);
+    p.text(lbl, b.x+b.w/2, b.y+b.h/2);
+  }
+
+  // ---- Resistor ----
+  function drawResistor() {
+    const x = RES_CX - RES_W/2, y = RES_CY - RES_H/2;
+
+    // Lead wires
+    p.stroke(160); p.strokeWeight(3); p.noFill();
+    p.line(x - 40, RES_CY, x, RES_CY);
+    p.line(x + RES_W, RES_CY, x + RES_W + 40, RES_CY);
+
+    // Body shadow
+    p.noStroke(); p.fill(0,0,0,30);
+    p.rect(x+3, y+4, RES_W, RES_H, 12);
+
+    // Body (beige)
+    p.fill(230, 210, 170); p.noStroke();
+    p.rect(x, y, RES_W, RES_H, 12);
+
+    // Body highlight strip
+    p.fill(255,255,255,60); p.noStroke();
+    p.rect(x+8, y+6, RES_W-16, RES_H*0.35, 6);
+
+    // Draw bands
+    const n = is5band ? 5 : 4;
+    const bands = getBands();
+    for (let i=0; i<n; i++) {
+      const bx = bandX(i);
+      const ci = bands[i];
+      const col = hexToRGB(COLORS[ci].hex);
+      const active = i === selectedBand;
+
+      // Band rectangle clipped to body
+      const bTop = y, bBot = y + RES_H;
+      p.fill(...col); p.noStroke();
+      p.rect(bx - BAND_W/2, bTop+2, BAND_W, RES_H-4);
+
+      // Selection highlight
+      if (active) {
+        p.stroke(255,220,0); p.strokeWeight(3); p.noFill();
+        p.rect(bx - BAND_W/2 - 2, bTop, BAND_W+4, RES_H, 2);
+        // Arrow above
+        p.noStroke(); p.fill(255,220,0);
+        p.triangle(bx-8, bTop-8, bx+8, bTop-8, bx, bTop-1);
+      }
+
+      // Band label below resistor
+      const bright = isLight(col);
+      p.noStroke(); p.fill(50,50,80); p.textSize(10);
+      p.textAlign(p.CENTER,p.BOTTOM);
+      const lbl = i < n-1 ? (i===n-2 && !is5band || i===n-2 && is5band ? '×mult' : `D${i+1}`) : 'Tol';
+      // Instead, show band position letter
+      const posLabel = is5band
+        ? ['D₁','D₂','D₃','×','Tol'][i]
+        : ['D₁','D₂','×','Tol'][i];
+      p.text(posLabel, bx, y - 4);
+
+      // Color name below body
+      p.textSize(9); p.fill(60,40,20); p.textAlign(p.CENTER,p.TOP);
+      p.text(COLORS[ci].name, bx, y + RES_H + 4);
+    }
+
+    // End caps
+    p.fill(200,180,140); p.noStroke();
+    p.rect(x, y, 14, RES_H, 12, 0, 0, 12);
+    p.rect(x+RES_W-14, y, 14, RES_H, 0, 12, 12, 0);
+  }
+
+  // ---- Decode panel ----
+  function drawDecodePanel() {
+    const { val, tolPct } = calcValue();
+    const b = getBands();
+    const n = is5band ? 5 : 4;
+
+    // Panel bg
+    p.fill(218,225,245); p.noStroke();
+    p.rect(10, 235, CW-20, 60, 8);
+
+    // Formula breakdown
+    let formula, result;
+    if (is5band) {
+      const d1=COLORS[b[0]].digit, d2=COLORS[b[1]].digit, d3=COLORS[b[2]].digit;
+      const m=COLORS[b[3]].mult;
+      formula = `(${d1}${d2}${d3}) × ${fmtR(m)} = `;
+    } else {
+      const d1=COLORS[b[0]].digit, d2=COLORS[b[1]].digit;
+      const m=COLORS[b[2]].mult;
+      formula = `(${d1}${d2}) × ${fmtR(m)} = `;
+    }
+
+    const tolStr = tolPct != null ? `±${tolPct}%` : '±?%';
+    const lo = val*(1 - (tolPct||0)/100), hi = val*(1 + (tolPct||0)/100);
+    const rangeStr = tolPct != null ? `Range: ${fmtR(lo)} – ${fmtR(hi)}` : '';
+
+    p.noStroke(); p.textAlign(p.LEFT,p.CENTER);
+
+    // Formula
+    p.fill(50,50,100); p.textSize(15);
+    p.text(formula, 24, 265);
+    const fw = p.textWidth(formula);
+
+    // Value (large)
+    p.fill(20,20,100); p.textSize(20); p.textStyle(p.BOLD);
+    p.text(fmtR(val), 24+fw, 265);
+    p.textStyle(p.NORMAL);
+    const vw = p.textWidth(fmtR(val));
+
+    // Tolerance
+    p.fill(130,60,20); p.textSize(15);
+    p.text('  ' + tolStr, 24+fw+vw, 265);
+
+    // Range
+    if (rangeStr) {
+      p.fill(80,80,110); p.textSize(12);
+      p.textAlign(p.RIGHT,p.CENTER);
+      p.text(rangeStr, CW-24, 265);
+    }
+
+    // Selected band hint
+    const bandName = (is5band ? ['D₁','D₂','D₃','Multiplier','Tolerance'] : ['Digit 1','Digit 2','Multiplier','Tolerance'])[selectedBand];
+    p.fill(60,60,130); p.textSize(12); p.textAlign(p.LEFT, p.CENTER);
+    p.text(`Selected: Band ${selectedBand+1} (${bandName}) — click a color below`, 24, 285);
+  }
+
+  // ---- Palette ----
+  function drawPalette() {
+    const n = is5band ? 5 : 4;
+    const lastBand = selectedBand === n-1; // tolerance band
+
+    p.noStroke(); p.fill(40,40,70); p.textSize(12);
+    p.textAlign(p.LEFT,p.TOP);
+    p.text('Color palette  (click to apply to selected band):', (CW - (PAL_TOTAL*(PAL_SWATCH+PAL_GAP)-PAL_GAP))/2, PAL_Y - 20);
+
+    for (let i=0; i<COLORS.length; i++) {
+      const c = COLORS[i];
+      const sx = palX(i), sy = PAL_Y;
+      const col = hexToRGB(c.hex);
+
+      // Validity check
+      let valid = true;
+      if (lastBand) {
+        valid = TOL_VALID.includes(i);
+      } else {
+        // Digit bands: gold/silver not valid as digit
+        valid = c.digit !== null;
+      }
+
+      // Dim invalid colors
+      const alpha = valid ? 255 : 60;
+      p.fill(...col, alpha); p.noStroke();
+      p.rect(sx, sy, PAL_SWATCH, PAL_SWATCH, 6);
+
+      // Selected check
+      const currentBandColor = getBands()[selectedBand];
+      if (currentBandColor === i) {
+        p.stroke(255,220,0); p.strokeWeight(3); p.noFill();
+        p.rect(sx-2, sy-2, PAL_SWATCH+4, PAL_SWATCH+4, 7);
+      }
+
+      // Digit / indicator inside swatch
+      if (valid && c.digit !== null) {
+        const bright = isLight(col);
+        p.noStroke(); p.fill(bright ? 0 : 255, bright ? 0 : 255, bright ? 0 : 255, alpha);
+        p.textSize(14); p.textStyle(p.BOLD); p.textAlign(p.CENTER,p.CENTER);
+        p.text(c.digit, sx+PAL_SWATCH/2, sy+PAL_SWATCH/2 - 4);
+        p.textStyle(p.NORMAL);
+      }
+
+      // Color name below swatch
+      p.noStroke(); p.fill(40,40,70, alpha); p.textSize(9);
+      p.textAlign(p.CENTER,p.TOP);
+      p.text(c.name, sx+PAL_SWATCH/2, sy+PAL_SWATCH+3);
+
+      // Small tolerance label if applicable
+      if (lastBand && c.tol != null) {
+        p.fill(100,60,0, alpha); p.textSize(8); p.textAlign(p.CENTER,p.BOTTOM);
+        p.text('±'+c.tol+'%', sx+PAL_SWATCH/2, sy+PAL_SWATCH);
+      }
+    }
+  }
+
+  // ---- Quiz overlay ----
+  function drawQuizOverlay() {
+    const { val, tolPct } = calcValue();
+    const py = 235;
+
+    // Mask the value display
+    if (!quizSubmitted) {
+      p.fill(218,225,245); p.noStroke();
+      p.rect(10, py, CW-20, 60, 8);
+      p.fill(60,60,140); p.textSize(15); p.textAlign(p.CENTER,p.CENTER);
+      p.text('What is the resistance? (Quiz Mode — click Submit to reveal)', CW/2, py+30);
+
+      // Simple text input simulation (just show reveal button)
+      p.fill(40,130,70); p.noStroke();
+      p.rect(CW/2-60, py+36, 120, 28, 6);
+      p.fill(255); p.textSize(13); p.textAlign(p.CENTER,p.CENTER);
+      p.text('Reveal Answer', CW/2, py+50);
+    } else {
+      // Show answer with highlight
+      p.fill(200,240,200); p.noStroke();
+      p.rect(10, py, CW-20, 60, 8);
+      p.fill(20,120,20); p.textSize(18); p.textStyle(p.BOLD); p.textAlign(p.CENTER,p.CENTER);
+      p.text(`Answer: ${fmtR(val)} ±${tolPct}%`, CW/2, py+22);
+      p.textStyle(p.NORMAL); p.textSize(13); p.fill(30,80,30);
+      const lo=val*(1-(tolPct||0)/100), hi=val*(1+(tolPct||0)/100);
+      p.text(`Range: ${fmtR(lo)} – ${fmtR(hi)}`, CW/2, py+44);
+    }
+  }
+
+  // ---- Input ----
+  p.mousePressed = function() {
+    const mx=p.mouseX, my=p.mouseY;
+
+    // Toolbar buttons
+    if (inBtn(BTN.band4)) { is5band=false; selectedBand=Math.min(selectedBand,3); quizSubmitted=false; return; }
+    if (inBtn(BTN.band5)) { is5band=true;  quizSubmitted=false; return; }
+    if (inBtn(BTN.random)){ randomResistor(); quizSubmitted=false; return; }
+    if (inBtn(BTN.quiz))  { quizMode=!quizMode; quizSubmitted=false; return; }
+
+    // Quiz reveal button
+    if (quizMode && !quizSubmitted) {
+      const py=235;
+      if (mx>=CW/2-60 && mx<=CW/2+60 && my>=py+36 && my<=py+64) {
+        quizSubmitted=true; return;
+      }
+    }
+
+    // Band click (above resistor area: y 65–200)
+    const n = is5band ? 5 : 4;
+    if (my >= RES_CY - RES_H/2 - 20 && my <= RES_CY + RES_H/2 + 25) {
+      for (let i=0; i<n; i++) {
+        const bx = bandX(i);
+        if (mx >= bx - BAND_W/2 - 8 && mx <= bx + BAND_W/2 + 8) {
+          selectedBand = i; return;
+        }
+      }
+    }
+
+    // Palette click
+    if (my >= PAL_Y && my <= PAL_Y + PAL_SWATCH) {
+      for (let i=0; i<COLORS.length; i++) {
+        const sx = palX(i);
+        if (mx >= sx && mx <= sx+PAL_SWATCH) {
+          const lastBand = selectedBand === n-1;
+          const c = COLORS[i];
+          // Validate
+          if (lastBand && !TOL_VALID.includes(i)) return;
+          if (!lastBand && c.digit === null) return;
+          setBand(selectedBand, i);
+          quizSubmitted = false;
+          // Advance to next band automatically
+          if (selectedBand < n-1) selectedBand++;
+          return;
+        }
+      }
+    }
+  };
+
+  function inBtn(b) {
+    return p.mouseX>=b.x && p.mouseX<=b.x+b.w && p.mouseY>=b.y && p.mouseY<=b.y+b.h;
+  }
+
+  // ---- Helpers ----
+  function hexToRGB(hex) {
+    const r=parseInt(hex.slice(1,3),16);
+    const g=parseInt(hex.slice(3,5),16);
+    const b=parseInt(hex.slice(5,7),16);
+    return [r,g,b];
+  }
+  function isLight(rgb) {
+    return (rgb[0]*299 + rgb[1]*587 + rgb[2]*114) / 1000 > 140;
+  }
+
+}); // end p5
+</script>
+</body>
+</html>
