@@ -75,6 +75,45 @@ Before beginning this chapter, students should have:
 
 ---
 
+<h2 style="color: #5A3EED !important; border-bottom: 2px solid #5A3EED; padding-bottom: 0.3rem; font-weight: 700; margin-top: 2rem;">Concept Map</h2>
+
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 0.6rem;">
+The diagram below shows how Chapter 3 concepts build upon each other. <strong>Hover</strong> over a concept to see its connections. <strong>Click</strong> to open its description, MicroSim, or section.
+</p>
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 8px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe src="../../sims/concept-map-ch3/main.html" width="100%" height="590px" scrolling="no" style="border:none; border-radius:8px; overflow:hidden;"></iframe>
+</div>
+
+<h2 style="color: #5A3EED !important; border-bottom: 2px solid #5A3EED; padding-bottom: 0.3rem; font-weight: 700; margin-top: 2rem;">Learning Dependency Graph</h2>
+
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
+The numbered sequence below shows the recommended learning order. Each concept depends on the ones above it.
+</p>
+
+<div style="background: #F8F6FF; border: 2px solid #D4C8FF; border-radius: 12px; padding: 20px 24px; margin: 1rem 0;" markdown>
+
+| Step | Concept | Depends On |
+|------|---------|------------|
+| 1 | Electric charge, voltage, current, resistance | Prerequisites (Ch 1) |
+| 2 | Ohm's Law, series &amp; parallel circuits | Step 1 (Ch 2) |
+| 3 | Nodes, branches — circuit topology | Steps 1–2 |
+| 4 | Loops and meshes | Step 3 |
+| 5 | **KCL** — conservation of charge at nodes | Steps 3–4 |
+| 6 | **KVL** — conservation of energy around loops | Steps 3–4 |
+| 7 | Node voltage method | Step 5 (KCL) |
+| 8 | Mesh current method | Step 6 (KVL) |
+| 9 | Supernode &amp; supermesh techniques | Steps 7–8 |
+| 10 | Superposition principle | Steps 5–6 (linearity) |
+| 11 | Matrix methods (systematic solving) | Steps 7–8 |
+| 12 | Delta-wye transformation | Step 2 |
+| 13 | Equivalent resistance &amp; circuit simplification | Steps 10–12 |
+
+
+<iframe src="../../sims/kirchhoffs-law/main.html" width="100%" height="560px" scrolling="no" style="overflow: hidden;"></iframe>
+
+---
+
 <h2 id="31-kirchhoffs-current-law" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">3.1 Kirchhoff's Current Law (KCL)</h2>
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">

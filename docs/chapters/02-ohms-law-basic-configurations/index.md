@@ -77,7 +77,7 @@ Real resistors come in various forms, but the most common type you'll encounter 
 
 #### Diagram: Resistor Physical Structure
 
-<iframe src="../../sims/resistor-physical-structure/main.html" width="100%" height="400px" scrolling="no"></iframe>
+<iframe src="../../sims/resistor/main.html" width="100%" height="530px" scrolling="no" style="overflow: hidden;"></iframe>
 
 <details markdown="1">
 <summary>Resistor Physical Structure Diagram</summary>
@@ -151,7 +151,7 @@ Many students find the "Ohm's Law Triangle" helpful for remembering the three fo
 
 #### Diagram: Ohm's Law Triangle
 
-<iframe src="../../sims/ohms-law-triangle/main.html" width="100%" height="350px" scrolling="no"></iframe>
+<iframe src="../../sims/ohms-triangle/main.html" width="100%" height="560px" scrolling="no" style="overflow: hidden;"></iframe>
 
 <details markdown="1">
 <summary>Ohm's Law Triangle Interactive</summary>
@@ -204,7 +204,7 @@ Nine milliamps. That's enough current to light an LED, run a small sensor, or gi
 
 #### Diagram: Ohm's Law Calculator
 
-<iframe src="../../sims/ohms-law-calculator/main.html" width="100%" height="450px" scrolling="no"></iframe>
+<iframe src="../../sims/ohms-triangle/main.html" width="100%" height="560px" scrolling="no" style="overflow: hidden;"></iframe>
 
 <details markdown="1">
 <summary>Ohm's Law Calculator MicroSim</summary>
@@ -700,7 +700,7 @@ Voltage dividers are everywhere:
 
 #### Diagram: Voltage Divider Calculator
 
-<iframe src="../../sims/voltage-divider/main.html" width="100%" height="450px" scrolling="no"></iframe>
+<iframe src="../../sims/voltage-divider/main.html" width="100%" height="522px" scrolling="no"></iframe>
 
 <details markdown="1">
 <summary>Voltage Divider MicroSim</summary>
@@ -816,7 +816,7 @@ Not all components are linear (diodes and transistors aren't), but resistive cir
 
 #### Diagram: Linear vs Nonlinear Behavior
 
-<iframe src="../../sims/linear-vs-nonlinear/main.html" width="100%" height="400px" scrolling="no"></iframe>
+<iframe src="../../sims/iv-characteristics/main.html" width="100%" height="510px" scrolling="no"></iframe>
 
 <details markdown="1">
 <summary>Linear vs Nonlinear I-V Characteristics</summary>

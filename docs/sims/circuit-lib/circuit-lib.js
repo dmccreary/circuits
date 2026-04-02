@@ -299,17 +299,11 @@ function drawSwitch(x, y, len, isClosed, orientation) {
   }
 }
 
-function drawResistor(x, y, rwidth, rheight, lineWidth, orientation, label) {
+function drawResistor(x, y, rwidth, rheight, lineWidth, orientation, label, labelPosition) {
   push(); // Save drawing state
-  
-  // Light gray background
-  fill(230);
-  stroke('gray');
-  strokeWeight(1);
-  rect(x, y, rwidth, rheight);
-  
-  // Set stroke properties for the resistor - should be a parameter?
-  strokeWeight(2);
+
+  // Set stroke properties for the resistor
+  strokeWeight(lineWidth || 2);
   stroke('black');
   noFill();
   
@@ -345,25 +339,41 @@ function drawResistor(x, y, rwidth, rheight, lineWidth, orientation, label) {
     vertex(x + rwidth - endWireLength, halfHeight);
     endShape();
     
-    // Draw label below resistor
-    fill('black');
-    noStroke();
-    textAlign(CENTER, TOP);
-    textSize(14);
-    text(label, x + rwidth / 2, y + rheight + 5);
-    
+    // Draw label with position support
+    if (label) {
+      fill('black');
+      noStroke();
+      textSize(12);
+      let cx = x + rwidth / 2;
+      let halfHeight = y + rheight / 2;
+      if (labelPosition === LEFT) {
+        textAlign(RIGHT, CENTER);
+        text(label, x - 4, halfHeight);
+      } else if (labelPosition === RIGHT) {
+        textAlign(LEFT, CENTER);
+        text(label, x + rwidth + 4, halfHeight);
+      } else if (labelPosition === BOTTOM) {
+        textAlign(CENTER, TOP);
+        text(label, cx, y + rheight + 3);
+      } else {
+        // TOP is default
+        textAlign(CENTER, BOTTOM);
+        text(label, cx, y - 3);
+      }
+    }
+
   } else if (orientation === VERTICAL) {
     let halfWidth = x + rwidth / 2;
     endWireLength = rheight * endWirePercent;
     peakHeight = rwidth / 3;
     peakWidth = (rheight - 2 * endWireLength) / peaks;
-    
+
     // Top end wire
     line(halfWidth, y, halfWidth, y + endWireLength);
-    
+
     // Bottom end wire
     line(halfWidth, y + rheight - endWireLength, halfWidth, y + rheight);
-    
+
     // Zigzag pattern
     beginShape();
     noFill();
@@ -371,19 +381,34 @@ function drawResistor(x, y, rwidth, rheight, lineWidth, orientation, label) {
     for (let i = 0; i <= peaks - 1; i++) {
       let yPos = y + endWireLength + i * peakWidth + peakWidth / 2;
       let xPos = (i % 2 === 0) ?
-        halfWidth - peakHeight : 
+        halfWidth - peakHeight :
         halfWidth + peakHeight;
       vertex(xPos, yPos);
     }
     vertex(halfWidth, y + rheight - endWireLength);
     endShape();
-    
-    // Draw label to the right of resistor
-    fill('black');
-    noStroke();
-    textAlign(LEFT, CENTER);
-    textSize(14);
-    text(label, x + rwidth + 10, y + rheight / 2);
+
+    // Draw label with position support
+    if (label) {
+      fill('black');
+      noStroke();
+      textSize(12);
+      let cy = y + rheight / 2;
+      if (labelPosition === TOP) {
+        textAlign(CENTER, BOTTOM);
+        text(label, halfWidth, y - 3);
+      } else if (labelPosition === BOTTOM) {
+        textAlign(CENTER, TOP);
+        text(label, halfWidth, y + rheight + 3);
+      } else if (labelPosition === RIGHT) {
+        textAlign(LEFT, CENTER);
+        text(label, x + rwidth + 4, cy);
+      } else {
+        // LEFT is default for vertical
+        textAlign(RIGHT, CENTER);
+        text(label, x - 4, cy);
+      }
+    }
   }
   
   pop(); // Restore drawing state

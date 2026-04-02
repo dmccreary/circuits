@@ -51,6 +51,11 @@ nav:
     - Op-Amp Configurations: sims/opamp-configurations/index.md
     - Kirchhoff's Laws: sims/kirchhoffs-law/index.md
     - Ohm's Law Triangle: sims/ohms-triangle/index.md
+    - Series Circuit Analysis: sims/series-circuit/index.md
+    - Parallel Circuit Analysis: sims/parallel-circuit/index.md
+    - Series-Parallel Circuit Analysis: sims/series-parallel-circuit/index.md
+    - Voltage Divider Calculator: sims/voltage-divider/index.md
+    - I-V Characteristics: sims/iv-characteristics/index.md
     - prompts/circuit-similarity/index.md
     - prompts/top-100-circuits/top-100-circuits.md
     - sims/circuit-similarity/index.md

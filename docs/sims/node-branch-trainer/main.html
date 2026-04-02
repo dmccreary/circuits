@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Circuit Node & Branch Identifier</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+<style>
+  body { margin: 0; background: #e8eaf0; display: flex; justify-content: center; padding: 10px; }
+  canvas { border-radius: 8px; box-shadow: 0 4px 16px rgba(0,0,0,0.18); }
+</style>
+</head>
+<body>
+<script>
+// ============================================================
+// Circuit Node & Branch Identifier MicroSim
+// Bloom L2 – Identify and classify nodes and branches
+// ============================================================
+const CW = 820, CH = 490;
+const CIRC_W = 490, CTRL_X = 498;
+
+// ---- Palette ----
+const C = {
+  bg:          [232, 234, 240],
+  circBg:      [255, 255, 255],
+  ctrlBg:      [220, 225, 240],
+  wire:        [30,  30,  30],
+  comp:        [20,  20,  20],
+  potNode:     [180, 180, 180],
+  markedNode:  [230, 150,  0],
+  correctNode: [200, 130,  0],
+  wrongNode:   [210,  50,  50],
+  markedBranch:[50, 110, 230],
+  correctBranch:[20, 80, 200],
+  wrongBranch: [210,  50,  50],
+  dimBranch:   [200, 200, 200],
+  text:        [20,  20,  40],
+  hint:        [80,  80, 130],
+  success:     [20, 150,  50],
+  failure:     [200,  30,  30],
+  neutral:     [50,  80, 180],
+};
+
+// ---- Drawing helpers (all take p5 instance p) ----
+
+function sw(p, w) { p.strokeWeight(w); }
+
+function setWire(p)  { p.stroke(...C.wire); sw(p, 2.5); p.noFill(); }
+function setComp(p)  { p.stroke(...C.comp); sw(p, 2.5); p.noFill(); }
+
+function wireH(p, x1, x2, y) { setWire(p); p.line(x1, y, x2, y); }
+function wireV(p, x, y1, y2) { setWire(p); p.line(x, y1, x, y2); }
+
+function resistorV(p, cx, y1, y2, lbl) {
+  const cy = (y1+y2)/2, rh = 38, rw = 13, n = 6;
+  setComp(p);
+  p.line(cx, y1, cx, cy-rh);
+  p.line(cx, cy+rh, cx, y2);
+  p.beginShape();
+  p.vertex(cx, cy-rh);
+  for (let i=0;i<n;i++){
+    const yy = cy-rh + (2*rh)/(n)*(i+0.5);
+    p.vertex(cx + (i%2===0?rw:-rw), yy);
+  }
+  p.vertex(cx, cy+rh);
+  p.endShape();
+  if(lbl){ p.noStroke(); p.fill(...C.comp); p.textSize(13); p.textAlign(p.LEFT,p.CENTER); p.text(lbl, cx+18, cy); }
+}
+
+function resistorH(p, x1, x2, cy, lbl) {
+  const cx=(x1+x2)/2, rw=38, rh=12, n=6;
+  setComp(p);
+  p.line(x1, cy, cx-rw, cy);
+  p.line(cx+rw, cy, x2, cy);
+  p.beginShape();
+  p.vertex(cx-rw, cy);
+  for(let i=0;i<n;i++){
+    const xx = cx-rw + (2*rw)/n*(i+0.5);
+    p.vertex(xx, cy + (i%2===0?-rh:rh));
+  }
+  p.vertex(cx+rw, cy);
+  p.endShape();
+  if(lbl){ p.noStroke(); p.fill(...C.comp); p.textSize(13); p.textAlign(p.CENTER,p.BOTTOM); p.text(lbl, cx, cy-16); }
+}
+
+function vsourceV(p, cx, y1, y2, lbl) {
+  const cy=(y1+y2)/2, r=28;
+  setComp(p);
+  p.line(cx, y1, cx, cy-r);
+  p.line(cx, cy+r, cx, y2);
+  p.circle(cx, cy, r*2);
+  p.noStroke(); p.fill(...C.comp); p.textSize(14); p.textAlign(p.CENTER,p.CENTER);
+  p.text('+', cx, cy-r*0.38);
+  p.text('−', cx, cy+r*0.42);
+  if(lbl){ p.textSize(12); p.textAlign(p.RIGHT,p.CENTER); p.text(lbl, cx-r-6, cy); }
+}
+
+function vsourceH(p, x1, x2, cy, lbl) {
+  const cx=(x1+x2)/2, r=28;
+  setComp(p);
+  p.line(x1, cy, cx-r, cy);
+  p.line(cx+r, cy, x2, cy);
+  p.circle(cx, cy, r*2);
+  p.noStroke(); p.fill(...C.comp); p.textSize(14); p.textAlign(p.CENTER,p.CENTER);
+  p.text('+', cx+r*0.38, cy);
+  p.text('−', cx-r*0.42, cy);
+  if(lbl){ p.textSize(12); p.textAlign(p.CENTER,p.BOTTOM); p.text(lbl, cx, cy-r-4); }
+}
+
+function junctionDot(p, x, y) {
+  p.noStroke(); p.fill(...C.wire); p.circle(x, y, 8);
+}
+
+function resistorDiag(p, x1, y1, x2, y2, label) {
+  // Diagonal resistor: draw line + small label box at midpoint
+  p.line(x1, y1, x2, y2);
+  const mx=(x1+x2)/2, my=(y1+y2)/2;
+  p.fill(255,255,255,220); p.noStroke();
+  p.rect(mx-20, my-11, 40, 22, 4);
+  p.fill(...C.comp); p.textSize(12); p.textAlign(p.CENTER,p.CENTER);
+  p.text(label, mx, my);
+}
+
+// ---- Highlight helpers ----
+function withBranchColor(p, id, markedBranches, solutionMode, drawFn) {
+  const marked = markedBranches.has(id);
+  if (solutionMode || marked) {
+    const col = solutionMode ? C.correctBranch : C.markedBranch;
+    p.push();
+    p.stroke(...col); sw(p,4); p.fill(...col);
+    drawFn();
+    p.pop();
+  } else {
+    drawFn();
+  }
+}
+
+// ============================================================
+// CIRCUIT DEFINITIONS
+// ============================================================
+// Each circuit: { id, difficulty, title, subtitle, nodeCount, branchCount,
+//   hint, explanation,
+//   draw(p, markedNodes, markedBranches, solutionMode),
+//   potentialNodes: [{id,x,y}],
+//   correctNodeIds: [...],
+//   potentialBranches: [{id,x,y}]  (all branches are "correct")
+// }
+
+function buildCircuits() {
+  return [
+
+  // ====================== EASY ==========================
+
+  // 1. Simple loop: V + R  (2N, 2B)
+  {
+    id:1, difficulty:'Easy',
+    title:'Simple Loop',
+    subtitle:'V Source + 1 Resistor',
+    nodeCount:2, branchCount:2,
+    hint:'The entire top wire is ONE node. The entire bottom wire is another.',
+    explanation:'Node A = top rail, Node B = bottom rail. Branches: V₁ and R₁.',
+    draw(p, mN, mB, sol) {
+      wireH(p, 90, 410, 90);
+      wireH(p, 90, 410, 360);
+      withBranchColor(p,'b_v1',mB,sol,()=>vsourceV(p,90,90,360,'V₁'));
+      withBranchColor(p,'b_r1',mB,sol,()=>resistorV(p,410,90,360,'R₁'));
+    },
+    potentialNodes:[
+      {id:'n_top', x:250, y:90},
+      {id:'n_bot', x:250, y:360},
+    ],
+    correctNodeIds:['n_top','n_bot'],
+    potentialBranches:[
+      {id:'b_v1', x:90,  y:225},
+      {id:'b_r1', x:410, y:225},
+    ],
+  },
+
+  // 2. Series V+R1+R2  (2N, 2B – TRICKY midpoint)
+  {
+    id:2, difficulty:'Easy',
+    title:'Series Circuit',
+    subtitle:'V Source + 2 Series Resistors',
+    nodeCount:2, branchCount:2,
+    hint:'Two elements meeting at a point does NOT make an essential node. Look for where 3+ branches come together.',
+    explanation:'Only 2 essential nodes: top-left (V₁+/R₁) and bottom-left (V₁−/wire). The junction between R₁ and R₂ is NOT essential — just a wire kink.',
+    draw(p, mN, mB, sol) {
+      // Top path: R1 then R2
+      withBranchColor(p,'b_r1r2',mB,sol,()=>{
+        resistorH(p, 90, 250, 90, 'R₁');
+        resistorH(p, 250, 410, 90, 'R₂');
+      });
+      withBranchColor(p,'b_v1',mB,sol,()=>vsourceV(p,90,90,360,'V₁'));
+      wireV(p, 410, 90, 360);
+      wireH(p, 90, 410, 360);
+    },
+    potentialNodes:[
+      {id:'n_A',  x:90,  y:90},   // CORRECT
+      {id:'n_mid',x:250, y:90},   // WRONG – tricky!
+      {id:'n_Bt', x:410, y:90},   // wrong
+      {id:'n_C',  x:90,  y:360},  // CORRECT
+      {id:'n_D',  x:410, y:360},  // wrong
+    ],
+    correctNodeIds:['n_A','n_C'],
+    potentialBranches:[
+      {id:'b_v1',   x:90,  y:225},
+      {id:'b_r1r2', x:250, y:65},
+    ],
+  },
+
+  // 3. Parallel V+R1||R2  (2N, 3B)
+  {
+    id:3, difficulty:'Easy',
+    title:'Parallel Circuit',
+    subtitle:'V Source + 2 Parallel Resistors',
+    nodeCount:2, branchCount:3,
+    hint:'All components share the same two nodes. Count each separate path as one branch.',
+    explanation:'Top rail = Node A, bottom rail = Node B. Three branches: V₁, R₁, R₂.',
+    draw(p, mN, mB, sol) {
+      wireH(p, 90, 410, 90);
+      wireH(p, 90, 410, 360);
+      withBranchColor(p,'b_v1',mB,sol,()=>vsourceV(p,90,90,360,'V₁'));
+      withBranchColor(p,'b_r1',mB,sol,()=>resistorV(p,250,90,360,'R₁'));
+      withBranchColor(p,'b_r2',mB,sol,()=>resistorV(p,410,90,360,'R₂'));
+    },
+    potentialNodes:[
+      {id:'n_top', x:250, y:90},
+      {id:'n_bot', x:250, y:360},
+    ],
+    correctNodeIds:['n_top','n_bot'],
+    potentialBranches:[
+      {id:'b_v1', x:90,  y:225},
+      {id:'b_r1', x:250, y:225},
+      {id:'b_r2', x:410, y:225},
+    ],
+  },
+
+  // ====================== MEDIUM ========================
+
+  // 4. Mixed: V + R1 series to junction, then R2||R3  (3N, 4B)
+  {
+    id:4, difficulty:'Medium',
+    title:'Series-Parallel Mix',
+    subtitle:'3 Nodes, 4 Branches',
+    nodeCount:3, branchCount:4,
+    hint:'Find where 3 elements meet — that junction is an essential node.',
+    explanation:'Node A (top-left where V₁ and R₁ meet), Node B (top-middle junction of R₁, R₂, R₃), Node C (bottom rail). Branches: V₁, R₁, R₂, R₃.',
+    draw(p, mN, mB, sol) {
+      // A(90,90): V1+, R1 left
+      // B(250,90): R1 right, R2 top, R3 top (via short wire to 410,90)
+      // C: bottom rail (90-410, y=360)
+      withBranchColor(p,'b_v1',mB,sol,()=>vsourceV(p,90,90,360,'V₁'));
+      withBranchColor(p,'b_r1',mB,sol,()=>resistorH(p,90,250,90,'R₁'));
+      withBranchColor(p,'b_r2',mB,sol,()=>resistorV(p,250,90,360,'R₂'));
+      withBranchColor(p,'b_r3',mB,sol,()=>resistorV(p,410,90,360,'R₃'));
+      wireH(p,250,410,90); // short wire B → top of R3
+      wireH(p,90,410,360); // bottom rail
+      junctionDot(p,250,90);
+    },
+    potentialNodes:[
+      {id:'n_A', x:90,  y:90},
+      {id:'n_B', x:250, y:90},
+      {id:'n_C', x:250, y:360},
+    ],
+    correctNodeIds:['n_A','n_B','n_C'],
+    potentialBranches:[
+      {id:'b_v1', x:90,  y:225},
+      {id:'b_r1', x:170, y:65},
+      {id:'b_r2', x:250, y:225},
+      {id:'b_r3', x:410, y:225},
+    ],
+  },
+
+  // 5. V + 3 parallel resistors  (2N, 4B)
+  {
+    id:5, difficulty:'Medium',
+    title:'Three Parallel Branches',
+    subtitle:'V Source + 3 Parallel Resistors',
+    nodeCount:2, branchCount:4,
+    hint:'All four components share the same top and bottom nodes.',
+    explanation:'Only 2 nodes despite 4 components! Every element is directly between Node A (top) and Node B (bottom).',
+    draw(p, mN, mB, sol) {
+      wireH(p, 90, 410, 90);
+      wireH(p, 90, 410, 360);
+      withBranchColor(p,'b_v1',mB,sol,()=>vsourceV(p,90,90,360,'V₁'));
+      withBranchColor(p,'b_r1',mB,sol,()=>resistorV(p,200,90,360,'R₁'));
+      withBranchColor(p,'b_r2',mB,sol,()=>resistorV(p,305,90,360,'R₂'));
+      withBranchColor(p,'b_r3',mB,sol,()=>resistorV(p,410,90,360,'R₃'));
+    },
+    potentialNodes:[
+      {id:'n_top', x:250, y:90},
+      {id:'n_bot', x:250, y:360},
+    ],
+    correctNodeIds:['n_top','n_bot'],
+    potentialBranches:[
+      {id:'b_v1', x:90,  y:225},
+      {id:'b_r1', x:200, y:225},
+      {id:'b_r2', x:305, y:225},
+      {id:'b_r3', x:410, y:225},
+    ],
+  },
+
+  // 6. T-Network ladder  (4N, 5B)
+  {
+    id:6, difficulty:'Medium',
+    title:'T-Network Ladder',
+    subtitle:'4 Nodes, 5 Branches',
+    nodeCount:4, branchCount:5,
+    hint:'Follow each wire: T-junctions on the top rail are separate nodes.',
+    explanation:'Node A (top-left), Node B (top-center T-junction), Node D (top-right). Node C = entire bottom rail. Branches: V₁, R₁, R₂, R₃, R₄.',
+    draw(p, mN, mB, sol) {
+      // A(90,90)─R1─B(250,90)─R3─D(410,90)
+      //    |            |            |
+      //   V1           R2           R4
+      //    |            |            |
+      // C(90,360)──bottom rail──(410,360)
+      withBranchColor(p,'b_v1',mB,sol,()=>vsourceV(p,90,90,360,'V₁'));
+      withBranchColor(p,'b_r1',mB,sol,()=>resistorH(p,90,250,90,'R₁'));
+      withBranchColor(p,'b_r2',mB,sol,()=>resistorV(p,250,90,360,'R₂'));
+      withBranchColor(p,'b_r3',mB,sol,()=>resistorH(p,250,410,90,'R₃'));
+      withBranchColor(p,'b_r4',mB,sol,()=>resistorV(p,410,90,360,'R₄'));
+      wireH(p,90,410,360); // bottom rail (node C)
+      junctionDot(p,250,90);
+    },
+    potentialNodes:[
+      {id:'n_A', x:90,  y:90},
+      {id:'n_B', x:250, y:90},
+      {id:'n_D', x:410, y:90},
+      {id:'n_C', x:250, y:360},
+    ],
+    correctNodeIds:['n_A','n_B','n_D','n_C'],
+    potentialBranches:[
+      {id:'b_v1', x:90,  y:225},
+      {id:'b_r1', x:170, y:65},
+      {id:'b_r2', x:250, y:225},
+      {id:'b_r3', x:330, y:65},
+      {id:'b_r4', x:410, y:225},
+    ],
+  },
+
+  // ====================== HARD ==========================
+
+  // 7. Wheatstone bridge  (4N, 6B)
+  {
+    id:7, difficulty:'Hard',
+    title:'Bridge Circuit',
+    subtitle:'Wheatstone Bridge – 4 Nodes, 6 Branches',
+    nodeCount:4, branchCount:6,
+    hint:'The center bridge element connects two INTERIOR nodes — each with 3 branches meeting.',
+    explanation:'Nodes: A(top), B(left), C(right), D(bottom). Six branches: V₁(A-D external), R₁(A-B), R₂(A-C), R₃(B-D), R₄(C-D), R₅(B-C bridge).',
+    draw(p, mN, mB, sol) {
+      // Diamond: A=top(250,80), B=left(110,230), C=right(390,230), D=bottom(250,380)
+      // V1 on far left: x=45
+      const A={x:250,y:80}, B={x:110,y:230}, C={x:390,y:230}, D={x:250,y:380};
+      junctionDot(p,A.x,A.y); junctionDot(p,B.x,B.y);
+      junctionDot(p,C.x,C.y); junctionDot(p,D.x,D.y);
+      // V1 with external wires
+      withBranchColor(p,'b_v1',mB,sol,()=>vsourceV(p,45,80,380,'V₁'));
+      setWire(p);
+      p.line(45,80,A.x,A.y); p.line(45,380,D.x,D.y);
+      // Diagonal arms
+      withBranchColor(p,'b_r1',mB,sol,()=>resistorDiag(p,A.x,A.y,B.x,B.y,'R₁'));
+      withBranchColor(p,'b_r2',mB,sol,()=>resistorDiag(p,A.x,A.y,C.x,C.y,'R₂'));
+      withBranchColor(p,'b_r3',mB,sol,()=>resistorDiag(p,B.x,B.y,D.x,D.y,'R₃'));
+      withBranchColor(p,'b_r4',mB,sol,()=>resistorDiag(p,C.x,C.y,D.x,D.y,'R₄'));
+      // Bridge resistor (horizontal)
+      withBranchColor(p,'b_r5',mB,sol,()=>resistorH(p,B.x,C.x,B.y,'R₅'));
+    },
+    potentialNodes:[
+      {id:'n_A', x:250, y:80},
+      {id:'n_B', x:110, y:230},
+      {id:'n_C', x:390, y:230},
+      {id:'n_D', x:250, y:380},
+    ],
+    correctNodeIds:['n_A','n_B','n_C','n_D'],
+    potentialBranches:[
+      {id:'b_v1', x:45,  y:230},
+      {id:'b_r1', x:180, y:155},
+      {id:'b_r2', x:320, y:155},
+      {id:'b_r3', x:180, y:305},
+      {id:'b_r4', x:320, y:305},
+      {id:'b_r5', x:250, y:222},
+    ],
+  },
+
+  // 8. Bridge + center tap  (5N, 7B)
+  {
+    id:8, difficulty:'Hard',
+    title:'Bridge with Center Node',
+    subtitle:'5 Nodes, 7 Branches',
+    nodeCount:5, branchCount:7,
+    hint:'Like the bridge circuit, but the bridge element is split — there\'s a 5th node in the middle.',
+    explanation:'Nodes: A(top), B(left), C(right), D(bottom), E(center). E splits the bridge into R₅(B-E) and R₆(E-C), plus R₇(E-D). 7 branches total.',
+    draw(p, mN, mB, sol) {
+      // Same diamond as circuit 7 but with center node E=(250,230)
+      const A={x:250,y:80}, B={x:110,y:230}, C={x:390,y:230}, D={x:250,y:380}, E={x:250,y:230};
+      junctionDot(p,A.x,A.y); junctionDot(p,B.x,B.y);
+      junctionDot(p,C.x,C.y); junctionDot(p,D.x,D.y); junctionDot(p,E.x,E.y);
+      // V1 external left
+      withBranchColor(p,'b_v1',mB,sol,()=>vsourceV(p,45,80,380,'V₁'));
+      setWire(p);
+      p.line(45,80,A.x,A.y); p.line(45,380,D.x,D.y);
+      // Diagonal arms (same as bridge)
+      withBranchColor(p,'b_r1',mB,sol,()=>resistorDiag(p,A.x,A.y,B.x,B.y,'R₁'));
+      withBranchColor(p,'b_r2',mB,sol,()=>resistorDiag(p,A.x,A.y,C.x,C.y,'R₂'));
+      withBranchColor(p,'b_r3',mB,sol,()=>resistorDiag(p,B.x,B.y,D.x,D.y,'R₃'));
+      withBranchColor(p,'b_r4',mB,sol,()=>resistorDiag(p,C.x,C.y,D.x,D.y,'R₄'));
+      // Split bridge: R5 (B→E), R6 (E→C), R7 (E→D)
+      withBranchColor(p,'b_r5',mB,sol,()=>resistorH(p,B.x,E.x,E.y,'R₅'));
+      withBranchColor(p,'b_r6',mB,sol,()=>resistorH(p,E.x,C.x,E.y,'R₆'));
+      withBranchColor(p,'b_r7',mB,sol,()=>resistorV(p,E.x,E.y,D.y,'R₇'));
+    },
+    potentialNodes:[
+      {id:'n_A', x:250, y:80},
+      {id:'n_B', x:110, y:230},
+      {id:'n_C', x:390, y:230},
+      {id:'n_D', x:250, y:380},
+      {id:'n_E', x:250, y:230},
+    ],
+    correctNodeIds:['n_A','n_B','n_C','n_D','n_E'],
+    potentialBranches:[
+      {id:'b_v1', x:45,  y:230},
+      {id:'b_r1', x:180, y:155},
+      {id:'b_r2', x:320, y:155},
+      {id:'b_r3', x:180, y:305},
+      {id:'b_r4', x:320, y:305},
+      {id:'b_r5', x:180, y:222},
+      {id:'b_r6', x:320, y:222},
+      {id:'b_r7', x:250, y:305},
+    ],
+  },
+
+  ]; // end circuits array
+}
+
+// ============================================================
+// SKETCH
+// ============================================================
+new p5(function(p) {
+
+  const circuits = buildCircuits();
+  const DIFFICULTIES = ['Easy','Medium','Hard'];
+
+  let circIdx = 0;
+  let markedNodes   = new Set();
+  let markedBranches = new Set();
+  let showSolution  = false;
+  let feedback = '';
+  let feedbackColor = [50, 80, 180];
+  let score = {correct:0, total:0};
+  let checkedOnce = false;
+  let difficulty = 'Easy';
+
+  // ---- Button definitions ----
+  let buttons = [];
+  let diffBtns = [];
+
+  function makeBtn(label, x, y, w, h, col, fn) {
+    return {label, x, y, w, h, col, fn, hovered:false};
+  }
+
+  p.setup = function() {
+    p.createCanvas(CW, CH);
+    p.textFont('Arial');
+    buildButtons();
+  };
+
+  function buildButtons() {
+    const bx = CTRL_X + 10;
+    buttons = [
+      makeBtn('Check Answer', bx, 310, 150, 36, [40,140,70],  doCheck),
+      makeBtn('Show Solution',bx+160, 310, 145, 36, [120,60,160], doSolution),
+      makeBtn('Clear',        bx,     356, 70,  30, [140,80,40],  doClear),
+      makeBtn('← Prev',       bx+80,  356, 70,  30, [70,90,160],  doPrev),
+      makeBtn('Next →',       bx+160, 356, 70,  30, [70,90,160],  doNext),
+    ];
+    diffBtns = DIFFICULTIES.map((d, i) =>
+      makeBtn(d, bx + i*100, 260, 90, 28, [70,100,170], () => setDifficulty(d))
+    );
+  }
+
+  function filteredCircuits() {
+    return circuits.filter(c => c.difficulty === difficulty);
+  }
+  function currentCircuit() {
+    const fc = filteredCircuits();
+    return fc[circIdx % fc.length];
+  }
+
+  function setDifficulty(d) {
+    difficulty = d; circIdx = 0; resetState();
+  }
+  function resetState() {
+    markedNodes   = new Set();
+    markedBranches = new Set();
+    showSolution  = false; feedback = ''; checkedOnce = false;
+  }
+  function doClear()   { resetState(); }
+  function doPrev()    { circIdx = (circIdx - 1 + filteredCircuits().length) % filteredCircuits().length; resetState(); }
+  function doNext()    { circIdx = (circIdx + 1) % filteredCircuits().length; resetState(); }
+  function doSolution(){ showSolution = true; feedback = currentCircuit().explanation; feedbackColor = C.hint; }
+
+  function doCheck() {
+    const c = currentCircuit();
+    checkedOnce = true;
+    const correctSet = new Set(c.correctNodeIds);
+    const totalNodes = c.potentialNodes.length;
+    // Node accuracy: how many marked match correct
+    let nCorrect=0, nWrong=0;
+    for(const id of markedNodes) {
+      if(correctSet.has(id)) nCorrect++; else nWrong++;
+    }
+    const nMissed = c.correctNodeIds.length - nCorrect;
+    const bCorrect = markedBranches.size;
+    const bExpected = c.potentialBranches.length;
+    const nodesOK = nCorrect === c.nodeCount && nWrong === 0 && nMissed === 0;
+    const branchOK = bCorrect === bExpected;
+
+    if (nodesOK && branchOK) {
+      feedback = '✓ Perfect! ' + c.nodeCount + ' nodes and ' + c.branchCount + ' branches correctly identified.';
+      feedbackColor = C.success;
+      score.correct++; score.total++;
+    } else {
+      let msg = '';
+      if (!nodesOK) {
+        if (nWrong > 0) msg += 'Some marked nodes are NOT essential nodes. ';
+        if (nMissed > 0) msg += 'You missed ' + nMissed + ' essential node(s). ';
+      }
+      if (!branchOK) {
+        if (bCorrect < bExpected) msg += 'You only marked ' + bCorrect + ' of ' + bExpected + ' branches. ';
+        else msg += 'Too many branches marked. ';
+      }
+      feedback = '✗ ' + msg.trim();
+      feedbackColor = C.failure;
+      score.total++;
+    }
+  }
+
+  p.draw = function() {
+    p.background(...C.bg);
+    drawCircuitPanel();
+    drawControlPanel();
+  };
+
+  function drawCircuitPanel() {
+    p.fill(...C.circBg);
+    p.noStroke();
+    p.rect(0, 0, CIRC_W, CH, 0, 8, 8, 0);
+
+    const c = currentCircuit();
+
+    // Title
+    p.noStroke(); p.fill(...C.text);
+    p.textSize(16); p.textStyle(p.BOLD);
+    p.textAlign(p.LEFT, p.TOP);
+    p.text(c.title + ' — ' + c.subtitle, 14, 12);
+    p.textStyle(p.NORMAL);
+
+    // Draw circuit
+    p.push();
+    c.draw(p, markedNodes, markedBranches, showSolution);
+    p.pop();
+
+    // Draw potential node dots
+    p.textSize(12); p.textAlign(p.CENTER, p.CENTER);
+    for (const n of c.potentialNodes) {
+      const marked = markedNodes.has(n.id);
+      const correct = showSolution && c.correctNodeIds.includes(n.id);
+      const wrong = checkedOnce && !showSolution && marked && !c.correctNodeIds.includes(n.id);
+      const rightAndMarked = checkedOnce && !showSolution && marked && c.correctNodeIds.includes(n.id);
+
+      if (correct) {
+        p.noStroke(); p.fill(...C.correctNode);
+        p.circle(n.x, n.y, 20);
+        p.fill(255); p.textSize(10); p.text('N', n.x, n.y);
+      } else if (wrong) {
+        p.noStroke(); p.fill(...C.wrongNode);
+        p.circle(n.x, n.y, 20);
+        p.fill(255); p.textSize(11); p.text('✗', n.x, n.y);
+      } else if (marked) {
+        p.noStroke(); p.fill(...C.markedNode);
+        p.circle(n.x, n.y, 20);
+        p.fill(255); p.textSize(10); p.text('N', n.x, n.y);
+      } else {
+        // Unclicked dot
+        p.stroke(150); sw(p,1.5); p.fill(235);
+        p.circle(n.x, n.y, 16);
+        p.noStroke(); p.fill(150); p.textSize(10);
+        p.text('?', n.x, n.y);
+      }
+    }
+
+    // Draw branch click targets (small markers)
+    for (const b of c.potentialBranches) {
+      const marked = markedBranches.has(b.id);
+      const correct = showSolution;
+      if (correct) {
+        // Already highlighted via withBranchColor
+      } else if (marked) {
+        p.noStroke(); p.fill(50, 100, 220, 80);
+        p.circle(b.x, b.y, 24);
+      } else {
+        p.stroke(100,140,220,160); sw(p,1.5); p.fill(200,220,255,80);
+        p.circle(b.x, b.y, 20);
+        p.noStroke(); p.fill(80,120,200); p.textSize(10); p.textAlign(p.CENTER,p.CENTER);
+        p.text('B', b.x, b.y);
+      }
+    }
+
+    // Legend
+    drawLegend(p);
+  }
+
+  function drawLegend(p) {
+    const lx=14, ly=CH-52;
+    p.textSize(11); p.textAlign(p.LEFT,p.CENTER);
+    p.noStroke(); p.fill(...C.markedNode); p.circle(lx+8,ly,16);
+    p.fill(...C.text); p.text('Node (click ?)', lx+18, ly);
+    p.fill(50,100,220,120); p.noStroke(); p.circle(lx+148,ly,16);
+    p.fill(...C.text); p.text('Branch (click B)', lx+158, ly);
+    p.fill(...C.correctNode); p.circle(lx+8,ly+20,16);
+    p.fill(...C.text); p.text('Correct node', lx+18, ly+20);
+    p.fill(...C.markedBranch,160); p.noStroke(); p.rect(lx+140,ly+12,20,5,2);
+    p.fill(...C.text); p.text('Correct branch', lx+166, ly+20);
+  }
+
+  function drawControlPanel() {
+    const c = currentCircuit();
+    p.fill(...C.ctrlBg); p.noStroke();
+    p.rect(CTRL_X, 0, CW-CTRL_X, CH, 8, 0, 0, 8);
+
+    const bx = CTRL_X + 10;
+
+    // Header
+    p.noStroke(); p.fill(...C.text);
+    p.textSize(15); p.textStyle(p.BOLD);
+    p.textAlign(p.LEFT, p.TOP);
+    p.text('Node & Branch Counter', bx, 12);
+    p.textStyle(p.NORMAL);
+
+    // Circuit index
+    const fc = filteredCircuits();
+    p.textSize(12); p.fill(80,80,120);
+    p.text('Circuit ' + (circIdx+1) + ' of ' + fc.length + ' (' + difficulty + ')', bx, 34);
+
+    // Score
+    p.fill(...C.text); p.textSize(13); p.textAlign(p.LEFT,p.TOP);
+    p.text('Score: ' + score.correct + ' / ' + score.total, bx+170, 34);
+
+    // Counts display
+    p.textSize(13);
+    const markedN = markedNodes.size;
+    const markedB = markedBranches.size;
+    const nColor = checkedOnce ? (markedN===c.nodeCount?[20,150,50]:[200,50,50]) : C.text;
+    const bColor = checkedOnce ? (markedB===c.potentialBranches.length?[20,150,50]:[200,50,50]) : C.text;
+
+    p.fill(50,50,80); p.text('You marked:', bx, 58);
+    p.fill(...nColor);
+    p.textSize(22); p.textStyle(p.BOLD);
+    p.text(markedN, bx+20, 75);
+    p.textSize(13); p.textStyle(p.NORMAL);
+    p.fill(60,60,100); p.text('nodes   (expected: ' + c.nodeCount + ')', bx+42, 82);
+
+    p.fill(...bColor);
+    p.textSize(22); p.textStyle(p.BOLD);
+    p.text(markedB, bx+20, 105);
+    p.textSize(13); p.textStyle(p.NORMAL);
+    p.fill(60,60,100); p.text('branches (expected: ' + c.branchCount + ')', bx+42, 112);
+
+    // Hint
+    p.textSize(11); p.fill(90,90,130); p.textAlign(p.LEFT,p.TOP);
+    p.textStyle(p.ITALIC);
+    const hintLines = wrapText(c.hint, 290);
+    p.text('Hint: ' + hintLines, bx, 138, 295, 60);
+    p.textStyle(p.NORMAL);
+
+    // Difficulty selector
+    p.fill(...C.text); p.textSize(12);
+    p.text('Difficulty:', bx, 248);
+    for (const db of diffBtns) {
+      const active = db.label === difficulty;
+      p.fill(active ? [50,90,190] : [140,155,190]);
+      p.noStroke();
+      p.rect(db.x, db.y, db.w, db.h, 6);
+      p.fill(255); p.textSize(12); p.textAlign(p.CENTER,p.CENTER);
+      p.text(db.label, db.x+db.w/2, db.y+db.h/2);
+    }
+
+    // Action buttons
+    for (const btn of buttons) {
+      const hov = btn.hovered;
+      const col = btn.col.map((v,i) => hov ? Math.min(255,v+30) : v);
+      p.fill(...col); p.noStroke();
+      p.rect(btn.x, btn.y, btn.w, btn.h, 7);
+      p.fill(255); p.textSize(13); p.textAlign(p.CENTER,p.CENTER);
+      p.text(btn.label, btn.x+btn.w/2, btn.y+btn.h/2);
+    }
+
+    // Feedback
+    if (feedback) {
+      p.fill(...feedbackColor); p.textSize(12);
+      p.textAlign(p.LEFT,p.TOP);
+      p.text(feedback, bx, 398, 298, 80);
+    }
+  }
+
+  function wrapText(str, maxW) { return str; } // p5 wraps via textbox
+
+  // ---- Input handling ----
+  p.mouseMoved = function() {
+    const mx=p.mouseX, my=p.mouseY;
+    for(const b of [...buttons, ...diffBtns]) {
+      b.hovered = mx>=b.x && mx<=b.x+b.w && my>=b.y && my<=b.y+b.h;
+    }
+  };
+
+  p.mousePressed = function() {
+    const mx=p.mouseX, my=p.mouseY;
+
+    // Check control buttons
+    for(const b of buttons) {
+      if(mx>=b.x && mx<=b.x+b.w && my>=b.y && my<=b.y+b.h){ b.fn(); return; }
+    }
+    for(const b of diffBtns) {
+      if(mx>=b.x && mx<=b.x+b.w && my>=b.y && my<=b.y+b.h){ b.fn(); return; }
+    }
+
+    // Only interact with circuit area
+    if (mx > CIRC_W || showSolution) return;
+
+    const c = currentCircuit();
+
+    // Check node clicks
+    for(const n of c.potentialNodes) {
+      const d = p.dist(mx,my,n.x,n.y);
+      if(d < 18) {
+        if(markedNodes.has(n.id)) markedNodes.delete(n.id);
+        else markedNodes.add(n.id);
+        checkedOnce = false; feedback = '';
+        return;
+      }
+    }
+
+    // Check branch clicks
+    for(const b of c.potentialBranches) {
+      const d = p.dist(mx,my,b.x,b.y);
+      if(d < 22) {
+        if(markedBranches.has(b.id)) markedBranches.delete(b.id);
+        else markedBranches.add(b.id);
+        checkedOnce = false; feedback = '';
+        return;
+      }
+    }
+  };
+
+}); // end p5
+</script>
+</body>
+</html>

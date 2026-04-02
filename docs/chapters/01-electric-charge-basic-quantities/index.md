@@ -149,6 +149,10 @@ For circuit analysis, we use conventional current (positive to negative), and ev
 
 Don't let this keep you up at night. Pick one convention and stick with it. We'll use conventional current throughout this course.
 
+#### Simulation: Animated Wire with Electron Flow
+
+<iframe src="../../sims/animated-wire/main.html" width="100%" height="500px" scrolling="no" style="overflow: hidden;"></iframe>
+
 ## Voltage: The Electrical "Push"
 
 If current is the flow of charge, **voltage** is what makes charges want to flow in the first place. Voltage is the *electrical potential difference* between two points—it's the "pressure" that pushes charges through a circuit.
@@ -572,6 +576,10 @@ Instructional Rationale: Students often struggle with the concept that wires con
 Implementation: p5.js with clickable regions and path drawing
 </details>
 
+#### Simulation: Simple Circuit with Switch and Light Bulb
+
+<iframe src="../../sims/light-bulb/main.html" width="100%" height="500px" scrolling="no" style="overflow: hidden;"></iframe>
+
 ## Open Circuits and Short Circuits: The Extremes
 
 Two special circuit conditions that every engineer must understand are **open circuits** and **short circuits**. These represent the extreme cases of resistance.
@@ -598,6 +606,10 @@ The humor in "short circuit" is that there's nothing humorous about it—it can 
 | Open Circuit | ∞ (infinite) | 0 | Any value |
 | Short Circuit | 0 | Limited by rest of circuit | 0 |
 | Normal Operation | Finite, non-zero | Finite, non-zero | Finite, non-zero |
+
+#### Simulation: Switch Control — Open and Closed Circuits
+
+<iframe src="../../sims/animated-switches/main.html" width="100%" height="540px" scrolling="no" style="overflow: hidden;"></iframe>
 
 ## Power Dissipation: Where the Energy Goes
 

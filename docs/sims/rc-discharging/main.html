@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>RC Discharging MicroSim</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.7/p5.min.js"></script>
+  <style>
+    body { margin: 0; background: #f0f0f0; display: flex; justify-content: center; }
+    canvas { display: block; }
+  </style>
+</head>
+<body>
+<script>
+// RC Discharging MicroSim
+// Shows capacitor discharging through a resistor:
+//   V(t) = V0 * exp(-t/tau), tau = R*C
+//   I(t) = V(t)/R
+//   E_remaining = 0.5*C*V(t)^2
+//   E_dissipated = E_total - E_remaining
+
+// ─── Canvas layout ───────────────────────────────────────────────────────────
+const CW        = 680;
+const CIRC_H    = 185;   // circuit diagram section height
+const GRAPH_H   = 200;   // voltage graph + energy bar height
+const CTRL_H    = 145;   // controls section height
+const CH        = CIRC_H + GRAPH_H + CTRL_H;  // 530
+
+// ─── Circuit drawing coords ───────────────────────────────────────────────────
+const SPLIT_X   = 430;   // left = circuit/graph, right = info panels
+
+// Circuit loop geometry (centered in left half)
+const CX        = SPLIT_X / 2;   // 215
+const TOP_Y     = 38;
+const BOT_Y     = CIRC_H - 30;   // 155
+const LEFT_X    = 70;
+const RIGHT_X   = 360;
+
+// Capacitor block (left vertical arm)
+const CAP_X     = LEFT_X;
+const CAP_CY    = (TOP_Y + BOT_Y) / 2;   // center y
+const CAP_W     = 44;
+const CAP_H     = 80;
+
+// Resistor block (right vertical arm)
+const RES_X     = RIGHT_X - 20;
+const RES_CY    = (TOP_Y + BOT_Y) / 2;
+const RES_W     = 36;
+const RES_H     = 80;
+
+// ─── Graph margins (graph section starts at y = CIRC_H) ──────────────────────
+const GM_L      = 58;
+const GM_R      = 16;
+const GM_T      = 28;
+const GM_B      = 48;
+const GRAPH_W   = SPLIT_X - GM_L - GM_R;   // ~356
+const GRAPH_PH  = GRAPH_H - GM_T - GM_B;   // ~124
+
+// ─── Animation ───────────────────────────────────────────────────────────────
+let simFrac     = 0;      // 0..1 → 0..5τ
+let isRunning   = false;
+let animTime    = 0;      // accumulated ms while running
+const SIM_REAL_MS = 5000; // 5 real seconds = 5τ
+
+// ─── Slider state ────────────────────────────────────────────────────────────
+// V0: 1..20 V  (linear)
+// R:  1k..100k Ω (log)
+// C:  1..100 µF  (log)
+let V0val = 10;   // volts
+let Rval  = 10;   // kΩ
+let Cval  = 10;   // µF
+
+// Derived
+function getTau() { return (Rval * 1000) * (Cval * 1e-6); }  // seconds
+
+// ─── Slider layout ───────────────────────────────────────────────────────────
+const SL_LEFT   = 260;   // label right edge
+const SL_X      = 265;   // track start x
+const SL_W      = 200;   // track width
+const SL_Y0     = CIRC_H + GRAPH_H + 18;  // first slider y
+const SL_DY     = 30;    // spacing between sliders
+
+let sliders = []; // filled in setup
+
+// Button geometry
+const BTN_X     = 16;
+const BTN_Y     = CIRC_H + GRAPH_H + 14;
+const BTN_W     = 110;
+const BTN_H     = 28;
+
+const RST_X     = BTN_X;
+const RST_Y     = BTN_Y + BTN_H + 8;
+
+// ─── Colors ──────────────────────────────────────────────────────────────────
+const COL_CAP_CHARGE  = [50, 120, 220];
+const COL_CAP_EMPTY   = [200, 215, 235];
+const COL_RES_COOL    = [80,  80,  80];
+const COL_RES_HOT     = [255, 140, 0];
+const COL_CURVE       = [30, 120, 200];
+const COL_E_REM       = [50, 120, 220];
+const COL_E_DIS       = [230, 100, 20];
+
+// ─── Dragging for graph marker ────────────────────────────────────────────────
+let markerFrac  = 0;
+let dragging    = false;
+
+// ─── p5 setup ────────────────────────────────────────────────────────────────
+function setup() {
+  createCanvas(CW, CH);
+  textFont('Arial');
+  buildSliders();
+}
+
+function buildSliders() {
+  sliders = [
+    { label:'V₀ (V)',   min:1,   max:20,  val:V0val, log:false, suffix:' V',
+      y: SL_Y0 },
+    { label:'R (kΩ)',   min:1,   max:100, val:Rval,  log:true,  suffix:' kΩ',
+      y: SL_Y0 + SL_DY },
+    { label:'C (µF)',   min:1,   max:100, val:Cval,  log:true,  suffix:' µF',
+      y: SL_Y0 + 2*SL_DY },
+  ];
+}
+
+// ─── Main draw ───────────────────────────────────────────────────────────────
+function draw() {
+  // Advance animation
+  if (isRunning) {
+    animTime += deltaTime;
+    simFrac = constrain(animTime / SIM_REAL_MS, 0, 1);
+    if (simFrac >= 1) { isRunning = false; }
+  }
+
+  // Sync slider vals
+  V0val = sliders[0].val;
+  Rval  = sliders[1].val;
+  Cval  = sliders[2].val;
+
+  let tau   = getTau();          // seconds
+  let tNow  = simFrac * 5 * tau; // physical time
+  let V     = V0val * exp(-tNow / tau);
+  let I     = V / (Rval * 1000);
+  let P     = V * I;
+  let Etot  = 0.5 * (Cval * 1e-6) * V0val * V0val;
+  let Erem  = 0.5 * (Cval * 1e-6) * V * V;
+  let Edis  = Etot - Erem;
+  let chargeFrac = V / V0val;   // 0..1
+
+  // ── Backgrounds ──────────────────────────────────────────────────────────
+  background(248);
+
+  // Section dividers
+  stroke(200); strokeWeight(1);
+  line(0, CIRC_H, CW, CIRC_H);
+  line(0, CIRC_H + GRAPH_H, CW, CIRC_H + GRAPH_H);
+  line(SPLIT_X, 0, SPLIT_X, CIRC_H + GRAPH_H);
+
+  // ── Section headers ───────────────────────────────────────────────────────
+  noStroke(); fill(60);
+  textSize(12); textAlign(LEFT, TOP);
+  text('RC Discharge Circuit', 8, 6);
+  text('Voltage vs. Time', GM_L, CIRC_H + 5);
+
+  // ── Draw circuit section ──────────────────────────────────────────────────
+  drawCircuitSection(chargeFrac, V, I, P, tau, tNow);
+
+  // ── Draw right info panel (top half) ─────────────────────────────────────
+  drawInfoPanel(V, I, P, Erem, Edis, Etot, tau, tNow);
+
+  // ── Draw graph section ────────────────────────────────────────────────────
+  drawGraphSection(tau, V0val, simFrac);
+
+  // ── Draw energy bar (right of graph section) ──────────────────────────────
+  drawEnergyBar(Erem, Edis, Etot);
+
+  // ── Controls ─────────────────────────────────────────────────────────────
+  drawControls(tau);
+}
+
+// ─── Circuit Section ─────────────────────────────────────────────────────────
+function drawCircuitSection(chargeFrac, V, I, P, tau, tNow) {
+  // Wires: top, bottom, (cap side and res side handled by component drawing)
+  stroke(30); strokeWeight(2);
+  // top wire LEFT_X..RIGHT_X
+  line(LEFT_X, TOP_Y, RIGHT_X, TOP_Y);
+  // bottom wire LEFT_X..RIGHT_X
+  line(LEFT_X, BOT_Y, RIGHT_X, BOT_Y);
+  // left vertical top to cap top
+  line(LEFT_X, TOP_Y, LEFT_X, CAP_CY - CAP_H/2);
+  // left vertical bottom from cap bottom
+  line(LEFT_X, CAP_CY + CAP_H/2, LEFT_X, BOT_Y);
+  // right vertical top to res top
+  line(RIGHT_X, TOP_Y, RIGHT_X, RES_CY - RES_H/2);
+  // right vertical bottom from res bottom
+  line(RIGHT_X, RES_CY + RES_H/2, RIGHT_X, BOT_Y);
+
+  // Current direction arrows when discharging (clockwise: top→right→bottom→left)
+  if (chargeFrac > 0.01) {
+    let arrowAlpha = map(chargeFrac, 0, 1, 40, 200);
+    drawCurrentArrow((LEFT_X + RIGHT_X)/2, TOP_Y - 1, true, arrowAlpha);  // top, rightward
+    drawCurrentArrow((LEFT_X + RIGHT_X)/2, BOT_Y + 1, false, arrowAlpha); // bottom, leftward
+  }
+
+  // ── Capacitor (left vertical arm) ─────────────────────────────────────────
+  drawCapacitorSymbol(LEFT_X, CAP_CY, CAP_W, CAP_H, chargeFrac, V, V0val);
+
+  // ── Resistor with heat glow (right vertical arm) ──────────────────────────
+  drawResistorWithHeat(RIGHT_X, RES_CY, RES_W, RES_H, P, V0val, Rval);
+
+  // ── Switch label top-center ───────────────────────────────────────────────
+  noStroke(); fill(70); textSize(11); textAlign(CENTER, BOTTOM);
+  text('(switch closed — discharging)', (LEFT_X + RIGHT_X)/2, TOP_Y - 3);
+}
+
+function drawCurrentArrow(cx, y, rightward, alpha) {
+  let aw = 10;
+  let dir = rightward ? 1 : -1;
+  fill(30, 140, 30, alpha);
+  noStroke();
+  beginShape();
+  vertex(cx + dir * aw,     y);
+  vertex(cx - dir * aw/2,   y - 5);
+  vertex(cx - dir * aw/2,   y + 5);
+  endShape(CLOSE);
+}
+
+// Draws a capacitor centered at (cx, cy) — vertical orientation
+function drawCapacitorSymbol(cx, cy, w, h, chargeFrac, V, V0) {
+  let plateH    = w * 0.7;
+  let gapH      = 12;
+  let wireTop   = cy - h/2;
+  let wireBot   = cy + h/2;
+  let plateTopY = cy - gapH/2;
+  let plateBotY = cy + gapH/2;
+
+  // Fill indicator: blue rectangle between plates, height = chargeFrac * gapH area (visual bar)
+  // We'll show charge as fill inside the capacitor body
+  let fillH = map(chargeFrac, 0, 1, 0, h * 0.4);
+  let [cr, cg, cb] = lerpColor3(COL_CAP_EMPTY, COL_CAP_CHARGE, chargeFrac);
+
+  // Background body (light)
+  noStroke(); fill(240);
+  rect(cx - w/2, cy - h*0.45, w, h * 0.9);
+
+  // Charge fill (bottom-up inside body)
+  fill(cr, cg, cb, 180);
+  rect(cx - w/2, cy + h*0.45 - fillH, w, fillH);
+
+  // Plates
+  stroke(40); strokeWeight(3);
+  line(cx - plateH/2, plateTopY, cx + plateH/2, plateTopY);
+  line(cx - plateH/2, plateBotY, cx + plateH/2, plateBotY);
+
+  // Lead wires to plates
+  strokeWeight(2);
+  line(cx, wireTop, cx, plateTopY);
+  line(cx, plateBotY, cx, wireBot);
+
+  // Voltage label
+  noStroke(); fill(30); textSize(11); textAlign(CENTER, CENTER);
+  text('C', cx, cy);
+  textSize(10);
+  fill(COL_CURVE[0], COL_CURVE[1], COL_CURVE[2]);
+  text(nf(V, 1, 2) + ' V', cx, cy + 20);
+
+  // +/- symbols
+  fill(30); textSize(12); textAlign(CENTER, CENTER);
+  text('+', cx - w/2 - 10, cy - 12);
+  text('−', cx - w/2 - 10, cy + 12);
+}
+
+// Draws a vertical resistor centered at (cx, cy) with heat glow
+function drawResistorWithHeat(cx, cy, w, h, P, V0, Rval) {
+  let P0 = (V0 * V0) / (Rval * 1000);   // max power
+  let heatFrac = (P0 > 0) ? constrain(P / P0, 0, 1) : 0;
+  let glowR = heatFrac * heatFrac;       // squared for perceptual effect
+
+  // Heat glow (concentric ellipses)
+  if (glowR > 0.01) {
+    noStroke();
+    for (let r = 3; r >= 1; r--) {
+      let a = map(r, 1, 3, 80, 20) * glowR;
+      fill(255, 120, 0, a);
+      ellipse(cx, cy, w * (1 + r * 0.5), h * (1 + r * 0.3));
+    }
+  }
+
+  // White background mask
+  noStroke(); fill(248);
+  rect(cx - w/2 - 2, cy - h/2, w + 4, h);
+
+  // Resistor body (vertical zigzag)
+  let [cr, cg, cb] = lerpColor3(COL_RES_COOL, COL_RES_HOT, heatFrac);
+  stroke(cr, cg, cb); strokeWeight(2); noFill();
+
+  let ew = h * 0.15;   // end wire length
+  let peaks = 6;
+  let peakH_px = w / 3;
+  let zigH = (h - 2 * ew) / peaks;
+
+  // Lead wires
+  line(cx, cy - h/2, cx, cy - h/2 + ew);
+  line(cx, cy + h/2 - ew, cx, cy + h/2);
+
+  // Zigzag
+  beginShape();
+  noFill();
+  vertex(cx, cy - h/2 + ew);
+  for (let i = 0; i < peaks; i++) {
+    let yp = cy - h/2 + ew + (i + 0.5) * zigH;
+    let xp = (i % 2 === 0) ? cx - peakH_px : cx + peakH_px;
+    vertex(xp, yp);
+  }
+  vertex(cx, cy + h/2 - ew);
+  endShape();
+
+  // Label
+  noStroke(); fill(30); textSize(10); textAlign(LEFT, CENTER);
+  text('R', cx + w/2 + 6, cy);
+
+  // Power label
+  fill(200, 80, 0); textSize(9);
+  text(nf(P * 1000, 1, 2) + ' mW', cx + w/2 + 6, cy + 13);
+}
+
+// ─── Right info panel ─────────────────────────────────────────────────────────
+function drawInfoPanel(V, I, P, Erem, Edis, Etot, tau, tNow) {
+  let px = SPLIT_X + 10;
+  let pw = CW - SPLIT_X - 10;
+  let py = 8;
+
+  // Panel header
+  noStroke(); fill(240); rect(px - 4, py, pw + 2, CIRC_H + GRAPH_H - 16);
+  fill(50); textSize(12); textAlign(LEFT, TOP);
+  text('Live Measurements', px, py + 2);
+
+  // Live values
+  let items = [
+    ['Time',    nf(tNow * 1000, 1, 1) + ' ms'],
+    ['Voltage', nf(V, 1, 3) + ' V'],
+    ['Current', nf(I * 1000, 1, 3) + ' mA'],
+    ['Power',   nf(P * 1000, 1, 3) + ' mW'],
+    ['τ = RC',  nf(tau * 1000, 1, 1) + ' ms'],
+    ['5τ',      nf(5 * tau * 1000, 1, 0) + ' ms'],
+  ];
+
+  let iy = py + 20;
+  for (let [k, v] of items) {
+    fill(80); textSize(10); textAlign(LEFT, TOP);
+    text(k, px, iy);
+    fill(20); textAlign(RIGHT, TOP);
+    text(v, px + pw - 8, iy);
+    iy += 18;
+  }
+
+  // Separator
+  stroke(210); strokeWeight(1);
+  line(px, iy + 2, px + pw - 4, iy + 2);
+  iy += 8;
+
+  // Energy values
+  noStroke(); fill(50); textSize(11); textAlign(LEFT, TOP);
+  text('Energy', px, iy);
+  iy += 16;
+
+  let energyItems = [
+    ['E total',  nf(Etot * 1e6, 1, 2) + ' µJ', [60, 60, 60]],
+    ['E stored', nf(Erem * 1e6, 1, 2) + ' µJ', COL_E_REM],
+    ['E dissip', nf(Edis * 1e6, 1, 2) + ' µJ', COL_E_DIS],
+  ];
+  for (let [k, v, col] of energyItems) {
+    fill(80); textSize(10); textAlign(LEFT, TOP);
+    text(k, px, iy);
+    fill(col[0], col[1], col[2]); textAlign(RIGHT, TOP);
+    text(v, px + pw - 8, iy);
+    iy += 17;
+  }
+
+  // τ multiples table
+  stroke(210); strokeWeight(1);
+  line(px, iy + 4, px + pw - 4, iy + 4);
+  iy += 10;
+
+  noStroke(); fill(50); textSize(11); textAlign(LEFT, TOP);
+  text('V at nτ', px, iy); iy += 14;
+
+  let tauRows = [
+    [1, 36.8], [2, 13.5], [3, 5.0], [4, 1.8], [5, 0.7]
+  ];
+  for (let [n, pct] of tauRows) {
+    let vAtN = V0val * pct / 100;
+    fill(80); textSize(9); textAlign(LEFT, TOP);
+    text(n + 'τ  ' + pct + '%', px, iy);
+    fill(40); textAlign(RIGHT, TOP);
+    text(nf(vAtN, 1, 2) + ' V', px + pw - 8, iy);
+    iy += 14;
+  }
+
+  // Key insight box
+  iy += 4;
+  fill(255, 250, 220); stroke(200, 180, 80); strokeWeight(1);
+  rect(px - 2, iy, pw + 2, 42);
+  noStroke(); fill(80, 60, 0); textSize(9); textAlign(LEFT, TOP);
+  textLeading(13);
+  text('At t = τ, voltage falls to\n36.8% of initial.\nAt t = 5τ, fully discharged.', px + 2, iy + 4);
+}
+
+// ─── Voltage graph ─────────────────────────────────────────────────────────────
+function drawGraphSection(tau, V0, simFrac) {
+  let gx = GM_L;
+  let gy = CIRC_H + GM_T;
+
+  // Graph background
+  fill(255); stroke(180); strokeWeight(1);
+  rect(gx, gy, GRAPH_W, GRAPH_PH);
+
+  // Grid lines (horizontal: 25%, 50%, 75%, 100%)
+  for (let v = 0.25; v <= 1.0; v += 0.25) {
+    let yy = gy + GRAPH_PH * (1 - v);
+    stroke(220); strokeWeight(1);
+    line(gx, yy, gx + GRAPH_W, yy);
+    noStroke(); fill(130); textSize(9); textAlign(RIGHT, CENTER);
+    text(nf(v * V0val, 1, 0) + 'V', gx - 3, yy);
+  }
+
+  // τ markers (dashed vertical lines)
+  let tauColors = [[210,50,50],[200,115,0],[40,155,40],[0,125,175],[120,50,185]];
+  for (let n = 1; n <= 5; n++) {
+    let xf = n / 5;
+    let xx = gx + GRAPH_W * xf;
+    let tc = tauColors[n-1];
+    stroke(tc[0], tc[1], tc[2], 160); strokeWeight(1);
+    drawDashedLine(xx, gy, xx, gy + GRAPH_PH, 4, 4);
+    noStroke(); fill(tc[0], tc[1], tc[2]); textSize(9); textAlign(CENTER, BOTTOM);
+    text(n + 'τ', xx, gy - 2);
+  }
+
+  // Exponential curve
+  stroke(COL_CURVE[0], COL_CURVE[1], COL_CURVE[2]); strokeWeight(2.5); noFill();
+  beginShape();
+  for (let px2 = 0; px2 <= GRAPH_W; px2++) {
+    let tf = px2 / GRAPH_W;      // fraction of 5τ
+    let vf = exp(-5 * tf);       // V/V0
+    vertex(gx + px2, gy + GRAPH_PH * (1 - vf));
+  }
+  endShape();
+
+  // Simulation progress marker (vertical line)
+  let markerX = gx + GRAPH_W * simFrac;
+  stroke(50); strokeWeight(1.5);
+  line(markerX, gy, markerX, gy + GRAPH_PH);
+
+  // Dot on curve
+  let vAtFrac = exp(-5 * simFrac);
+  let dotY = gy + GRAPH_PH * (1 - vAtFrac);
+  fill(COL_CURVE[0], COL_CURVE[1], COL_CURVE[2]); noStroke();
+  circle(markerX, dotY, 9);
+
+  // Axes labels
+  noStroke(); fill(60); textSize(10); textAlign(CENTER, TOP);
+  text('Time (0 → 5τ)', gx + GRAPH_W / 2, gy + GRAPH_PH + 4);
+  push();
+  translate(gx - 42, gy + GRAPH_PH / 2);
+  rotate(-HALF_PI);
+  textAlign(CENTER, CENTER); text('Voltage (V)', 0, 0);
+  pop();
+
+  // x-axis origin label
+  textAlign(CENTER, TOP); fill(100); textSize(9);
+  text('0', gx, gy + GRAPH_PH + 4);
+}
+
+function drawDashedLine(x1, y1, x2, y2, dashLen, gapLen) {
+  let d = dist(x1, y1, x2, y2);
+  let total = dashLen + gapLen;
+  let steps = floor(d / total);
+  for (let i = 0; i < steps; i++) {
+    let t1 = (i * total) / d;
+    let t2 = (i * total + dashLen) / d;
+    line(lerp(x1, x2, t1), lerp(y1, y2, t1),
+         lerp(x1, x2, t2), lerp(y1, y2, t2));
+  }
+}
+
+// ─── Energy bar (right of graph area) ────────────────────────────────────────
+function drawEnergyBar(Erem, Edis, Etot) {
+  let bx    = SPLIT_X + 10;
+  let by    = CIRC_H + GM_T;
+  let bw    = CW - SPLIT_X - 20;
+  let bh    = GRAPH_PH;
+
+  // Header
+  noStroke(); fill(50); textSize(11); textAlign(CENTER, BOTTOM);
+  text('Energy', bx + bw/2, by - 2);
+
+  // Background
+  fill(240); stroke(200); strokeWeight(1);
+  rect(bx, by, bw, bh);
+
+  // Stacked bar: blue (remaining) on top, orange (dissipated) on bottom
+  // Total bar = bh. E_rem fraction on top, E_dis fraction below.
+  let remFrac = (Etot > 0) ? Erem / Etot : 0;
+  let disFrac = 1 - remFrac;
+
+  let remH = bh * remFrac;
+  let disH = bh * disFrac;
+
+  // Dissipated (bottom, grows)
+  noStroke(); fill(COL_E_DIS[0], COL_E_DIS[1], COL_E_DIS[2]);
+  rect(bx, by + bh - disH, bw, disH);
+
+  // Remaining (top, shrinks)
+  fill(COL_E_REM[0], COL_E_REM[1], COL_E_REM[2]);
+  rect(bx, by, bw, remH);
+
+  // Border
+  noFill(); stroke(180); strokeWeight(1);
+  rect(bx, by, bw, bh);
+
+  // Labels
+  noStroke();
+  if (remH > 18) {
+    fill(255); textSize(9); textAlign(CENTER, CENTER);
+    text('Stored', bx + bw/2, by + remH/2);
+    if (remH > 32) {
+      text(nf(Erem * 1e6, 1, 1) + 'µJ', bx + bw/2, by + remH/2 + 11);
+    }
+  }
+  if (disH > 18) {
+    fill(255); textSize(9); textAlign(CENTER, CENTER);
+    text('Heat', bx + bw/2, by + bh - disH/2);
+    if (disH > 32) {
+      text(nf(Edis * 1e6, 1, 1) + 'µJ', bx + bw/2, by + bh - disH/2 + 11);
+    }
+  }
+}
+
+// ─── Controls ─────────────────────────────────────────────────────────────────
+function drawControls(tau) {
+  let cy0 = CIRC_H + GRAPH_H;
+  fill(238); noStroke();
+  rect(0, cy0, CW, CTRL_H);
+  stroke(200); strokeWeight(1);
+  line(0, cy0, CW, cy0);
+
+  // Start/Stop button
+  let btnLabel = isRunning ? 'Stop' : (simFrac >= 1 ? 'Replay' : 'Start Discharge');
+  drawButton(BTN_X, BTN_Y, BTN_W, BTN_H, btnLabel, isRunning ? [200,60,60] : [50,140,50]);
+
+  // Reset button
+  drawButton(RST_X, RST_Y, BTN_W, BTN_H, 'Reset', [80, 80, 160]);
+
+  // Progress bar
+  let pbX = BTN_X; let pbY = RST_Y + BTN_H + 8;
+  let pbW = BTN_W; let pbH = 8;
+  fill(220); stroke(180); strokeWeight(1);
+  rect(pbX, pbY, pbW, pbH);
+  fill(50, 120, 200); noStroke();
+  rect(pbX, pbY, pbW * simFrac, pbH);
+  noStroke(); fill(60); textSize(9); textAlign(LEFT, TOP);
+  text(nf(simFrac * 100, 1, 0) + '%  (t = ' + nf(simFrac * 5 * tau * 1000, 1, 1) + ' ms)', pbX, pbY + 10);
+
+  // Sliders
+  for (let s of sliders) {
+    drawSlider(s);
+  }
+
+  // τ display
+  noStroke(); fill(60); textSize(11); textAlign(LEFT, TOP);
+  let tauStr = 'τ = RC = ' + nf(tau * 1000, 1, 1) + ' ms  |  5τ = ' + nf(5 * tau * 1000, 1, 0) + ' ms';
+  text(tauStr, SL_X, cy0 + CTRL_H - 18);
+}
+
+function drawButton(x, y, w, h, label, col) {
+  fill(col[0], col[1], col[2]); stroke(100); strokeWeight(1);
+  rect(x, y, w, h, 4);
+  fill(255); noStroke(); textSize(11); textAlign(CENTER, CENTER);
+  text(label, x + w/2, y + h/2);
+}
+
+function drawSlider(s) {
+  let y = s.y;
+  // Label + value (right-aligned before track)
+  noStroke(); fill(50); textSize(11); textAlign(RIGHT, CENTER);
+  let valStr = s.log ? nf(s.val, 1, 1) : nf(s.val, 1, 0);
+  text(s.label + '  ' + valStr + s.suffix, SL_X - 8, y);
+
+  // Track
+  stroke(180); strokeWeight(2); fill(255);
+  line(SL_X, y, SL_X + SL_W, y);
+
+  // Thumb position
+  let t = sliderFrac(s);
+  let tx = SL_X + t * SL_W;
+
+  // Thumb
+  fill(50, 100, 200); stroke(80); strokeWeight(1);
+  circle(tx, y, 14);
+}
+
+function sliderFrac(s) {
+  if (s.log) {
+    return (log(s.val) - log(s.min)) / (log(s.max) - log(s.min));
+  } else {
+    return (s.val - s.min) / (s.max - s.min);
+  }
+}
+
+function fracToVal(s, frac) {
+  frac = constrain(frac, 0, 1);
+  if (s.log) {
+    return exp(lerp(log(s.min), log(s.max), frac));
+  } else {
+    return lerp(s.min, s.max, frac);
+  }
+}
+
+// ─── Mouse interaction ────────────────────────────────────────────────────────
+function mousePressed() {
+  // Start/Stop button
+  if (inRect(mouseX, mouseY, BTN_X, BTN_Y, BTN_W, BTN_H)) {
+    if (simFrac >= 1) { resetSim(); }
+    isRunning = !isRunning;
+    return;
+  }
+  // Reset button
+  if (inRect(mouseX, mouseY, RST_X, RST_Y, BTN_W, BTN_H)) {
+    resetSim();
+    return;
+  }
+  // Sliders
+  for (let s of sliders) {
+    if (abs(mouseY - s.y) < 12 && mouseX >= SL_X - 8 && mouseX <= SL_X + SL_W + 8) {
+      s._dragging = true;
+    }
+  }
+}
+
+function mouseDragged() {
+  for (let s of sliders) {
+    if (s._dragging) {
+      let frac = (mouseX - SL_X) / SL_W;
+      let raw = fracToVal(s, frac);
+      // Round nicely
+      if (s.log) {
+        s.val = constrain(round(raw * 10) / 10, s.min, s.max);
+      } else {
+        s.val = constrain(round(raw), s.min, s.max);
+      }
+      resetSim();
+    }
+  }
+}
+
+function mouseReleased() {
+  for (let s of sliders) { s._dragging = false; }
+}
+
+function resetSim() {
+  isRunning = false;
+  animTime  = 0;
+  simFrac   = 0;
+}
+
+function inRect(mx, my, x, y, w, h) {
+  return mx >= x && mx <= x + w && my >= y && my <= y + h;
+}
+
+// ─── Utility: linear interpolate between two RGB triples ─────────────────────
+function lerpColor3(a, b, t) {
+  return [
+    lerp(a[0], b[0], t),
+    lerp(a[1], b[1], t),
+    lerp(a[2], b[2], t),
+  ];
+}
+</script>
+</body>
+</html>
