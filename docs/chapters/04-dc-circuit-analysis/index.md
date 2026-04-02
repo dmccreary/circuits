@@ -274,7 +274,7 @@ where:
 
 #### Diagram: Thevenin Equivalent Concept
 
-<iframe src="../../sims/thevenin-concept/main.html" width="100%" height="450px" scrolling="no"></iframe>
+<iframe src="../../sims/thevenin-concept/main.html" width="100%" height="545px" scrolling="no"></iframe>
 
 <details markdown="1">
 <summary>Thevenin Equivalent Concept MicroSim</summary>
