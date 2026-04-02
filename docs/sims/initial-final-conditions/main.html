@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+<title>Initial and Final Conditions MicroSim</title>
+<script src="https://cdn.jsdelivr.net/npm/p5@1.11.7/lib/p5.js"></script>
+<style>
+  body { margin: 0; padding: 0; background: #e8eaf0; }
+  canvas { display: block; }
+</style>
+</head>
+<body>
+<main></main>
+<script>
+// ============================================================
+// Initial & Final Conditions MicroSim
+// Chapter 6 – Bloom L3 (Apply)
+// Step-through analysis: find V(0-), V(0+), V(∞), then τ.
+// Four circuit presets: RC charge, RC w/ initial V, RL energize,
+// Thevenin-RC.
+// ============================================================
+
+// ── Canvas & layout ────────────────────────────────────────
+const CW       = 640;
+const circH    = 260;   // circuit diagram area
+const graphH   = 175;   // response curve area
+const ctrlH    = 100;   // button / preset area
+const CH       = circH + graphH + ctrlH;  // 535
+
+const LEFT_W   = 380;   // circuit panel width
+const RIGHT_X  = LEFT_W + 10;
+const RIGHT_W  = CW - RIGHT_X;
+
+// ── Step system ───────────────────────────────────────────
+// 0 = original circuit (switch shown)
+// 1 = t<0 steady-state  (cap→open, ind→short)
+// 2 = t=0+ continuity   (highlight stored element, show value)
+// 3 = t=∞ steady-state  (cap→open, ind→short after switch)
+// 4 = complete solution with formula
+let step = 0;
+const NUM_STEPS = 5;
+
+// ── Preset circuits ───────────────────────────────────────
+// Each preset defines component values and how to draw each stage.
+const PRESETS = [
+  {
+    name: "RC Charging\n(zero initial)",
+    // Vs --R-- node --C-- GND, switch opens at t=0 connecting Vs
+    Vs: 12, R: 10000, C: 100e-6, L: null,
+    v0: 0,      // initial capacitor voltage (V(0-))
+    vInf: 12,   // final capacitor voltage (V(∞))
+    tau() { return this.R * this.C; },
+    // text descriptions per stage
+    stage: [
+      "Original Circuit\nSwitch closes at t = 0\nCapacitor initially uncharged.",
+      "t < 0  (Switch Open)\nCapacitor → OPEN CIRCUIT\nNo current flows.\nV_C(0⁻) = 0 V",
+      "t = 0⁺  (Continuity)\nCapacitor voltage cannot\njump instantaneously.\nV_C(0⁺) = V_C(0⁻) = 0 V",
+      "t → ∞  (Steady State)\nCapacitor → OPEN CIRCUIT\nNo current flows.\nV_C(∞) = V_S = 12 V",
+      "Complete Solution\nV_C(t) = V_∞ + (V_0 − V_∞)e^(−t/τ)\nV_C(t) = 12(1 − e^(−t/τ))\nτ = RC = 1.0 s"
+    ],
+    formula: "V_C(t) = 12(1 − e^{−t/τ})"
+  },
+  {
+    name: "RC with\nInitial Charge",
+    Vs: 12, R: 10000, C: 100e-6, L: null,
+    v0: 8,
+    vInf: 12,
+    tau() { return this.R * this.C; },
+    stage: [
+      "Original Circuit\nSwitch closes at t = 0\nCapacitor pre-charged to 8 V.",
+      "t < 0  (Switch Open)\nCapacitor → OPEN CIRCUIT\nV_C(0⁻) = 8 V  (pre-charged)",
+      "t = 0⁺  (Continuity)\nCapacitor voltage cannot\njump instantaneously.\nV_C(0⁺) = V_C(0⁻) = 8 V",
+      "t → ∞  (Steady State)\nCapacitor → OPEN CIRCUIT\nV_C(∞) = V_S = 12 V",
+      "Complete Solution\nV_C(t) = V_∞ + (V_0 − V_∞)e^(−t/τ)\nV_C(t) = 12 − 4e^(−t/τ)\nτ = RC = 1.0 s"
+    ],
+    formula: "V_C(t) = 12 − 4e^{−t/τ}"
+  },
+  {
+    name: "RL Energizing",
+    Vs: 12, R: 6, C: null, L: 0.6,
+    v0: 0,    // initial inductor current (I_L(0-))
+    vInf: 2,  // final inductor current I_∞ = Vs/R
+    tau() { return this.L / this.R; },
+    stage: [
+      "Original Circuit\nSwitch closes at t = 0\nInductor initially de-energized.",
+      "t < 0  (Switch Open)\nInductor → SHORT CIRCUIT\nNo current (open loop).\nI_L(0⁻) = 0 A",
+      "t = 0⁺  (Continuity)\nInductor current cannot\njump instantaneously.\nI_L(0⁺) = I_L(0⁻) = 0 A",
+      "t → ∞  (Steady State)\nInductor → SHORT CIRCUIT\nI_L(∞) = V_S / R = 2 A",
+      "Complete Solution\nI_L(t) = I_∞ + (I_0 − I_∞)e^(−t/τ)\nI_L(t) = 2(1 − e^(−t/τ))\nτ = L/R = 0.1 s"
+    ],
+    formula: "I_L(t) = 2(1 − e^{−t/τ})"
+  },
+  {
+    name: "Thevenin\nRC Circuit",
+    Vs: 20, R: 8000, C: 50e-6, L: null,
+    v0: 0,
+    vInf: 12,  // Vth across C at steady state
+    tau() { return this.R * this.C; },
+    stage: [
+      "Original Circuit\nVoltage divider + RC load.\nSwitch closes at t = 0.",
+      "t < 0  (Switch Open)\nCapacitor → OPEN CIRCUIT\nFind Thevenin: V_th = 12 V\nR_th = 8 kΩ",
+      "t = 0⁺  (Continuity)\nCapacitor voltage cannot\njump instantaneously.\nV_C(0⁺) = V_C(0⁻) = 0 V",
+      "t → ∞  (Steady State)\nCapacitor → OPEN CIRCUIT\nV_C(∞) = V_th = 12 V",
+      "Complete Solution\nV_C(t) = V_∞(1 − e^(−t/τ))\nV_C(t) = 12(1 − e^(−t/τ))\nτ = R_th·C = 0.4 s"
+    ],
+    formula: "V_C(t) = 12(1 − e^{−t/τ})"
+  }
+];
+
+let preset = 0;   // active preset index
+
+// ── Buttons ───────────────────────────────────────────────
+// Defined after setup() knows canvas coords; built in setup()
+let btnStep, btnReset;
+let presetBtns = [];
+
+// canvas-based button helper  {x,y,w,h,label,action}
+function makeBtn(x, y, w, h, label, action) {
+  return { x, y, w, h, label, action, hover: false };
+}
+
+// ── Animation for final step ──────────────────────────────
+let animTime   = 0;
+let isAnimating = false;
+
+// ─────────────────────────────────────────────────────────
+function setup() {
+  createCanvas(CW, CH).parent(select('main').elt);
+  textFont('monospace');
+
+  const bY = circH + graphH + 18;
+  btnStep  = makeBtn(10, bY, 170, 32, "Step Through Analysis ▶", () => {
+    step = (step + 1) % NUM_STEPS;
+    if (step === 4) { isAnimating = true; animTime = 0; }
+    else             { isAnimating = false; }
+  });
+  btnReset = makeBtn(190, bY, 100, 32, "Reset", () => {
+    step = 0; isAnimating = false; animTime = 0;
+  });
+
+  // Preset buttons arranged as 2×2 grid in bottom-right corner
+  const pw = 100, ph = 28, pgap = 8;
+  const pStartX = CW - 2*(pw+pgap) + pgap;
+  const pStartY = bY - 2;
+  for (let i = 0; i < PRESETS.length; i++) {
+    const col = i % 2, row = Math.floor(i / 2);
+    presetBtns.push(makeBtn(
+      pStartX + col*(pw+pgap), pStartY + row*(ph+6),
+      pw, ph, PRESETS[i].name.split('\n')[0],
+      () => { preset = i; step = 0; isAnimating = false; animTime = 0; }
+    ));
+  }
+}
+
+// ─────────────────────────────────────────────────────────
+function draw() {
+  background(232, 234, 240);
+
+  const p = PRESETS[preset];
+  if (isAnimating && step === 4) animTime += deltaTime / 1000;
+
+  // ── circuit panel ─────────────────────────────────────
+  fill(255); stroke(180);
+  rect(5, 5, LEFT_W - 10, circH - 10, 6);
+  drawCircuit(p);
+
+  // ── solution panel ────────────────────────────────────
+  fill(245, 248, 255); stroke(180);
+  rect(RIGHT_X, 5, RIGHT_W - 5, circH - 10, 6);
+  drawSolutionPanel(p);
+
+  // ── graph panel ───────────────────────────────────────
+  fill(255); stroke(180);
+  rect(5, circH, CW - 10, graphH - 4, 6);
+  drawGraph(p);
+
+  // ── controls ──────────────────────────────────────────
+  fill(220); noStroke();
+  rect(0, circH + graphH, CW, ctrlH);
+  drawControls(p);
+}
+
+// ─────────────────────────────────────────────────────────
+// CIRCUIT DRAWING
+// ─────────────────────────────────────────────────────────
+function drawCircuit(p) {
+  const isRL = (p.L !== null);
+
+  // Layout constants for the circuit loop
+  const cx  = LEFT_W / 2 - 10;
+  const top = 35, bot = circH - 35;
+  const lx  = 60, rx  = LEFT_W - 80;
+  const mid = (top + bot) / 2;
+
+  // Colors based on step highlights
+  const hiColor   = color(220, 60, 60);
+  const dimColor  = color(180);
+  const normColor = color(40);
+
+  strokeWeight(2.5);
+
+  // ── Step label ───────────────────────────────────────
+  fill(60); noStroke(); textSize(11); textAlign(LEFT, TOP);
+  text("Step " + (step + 1) + " / " + NUM_STEPS, 18, 14);
+
+  // ── Draw the circuit for the current step ─────────────
+  // Switch position: step 0 → open (t<0 implied); step 1+ show state
+
+  // Top wire: lx→rx
+  stroke(normColor); line(lx, top, rx, top);
+
+  // Bottom wire: lx→rx
+  stroke(normColor); line(lx, bot, rx, bot);
+
+  // ── Left arm: voltage source ──────────────────────────
+  strokeWeight(2.5);
+  stroke(step === 3 || step === 4 ? normColor : normColor);
+  // vertical wires
+  line(lx, top, lx, mid - 30);
+  line(lx, mid + 30, lx, bot);
+  // battery symbol
+  drawBatterySymbol(lx, mid, 30, p.Vs);
+
+  // ── Switch (top-right corner) ─────────────────────────
+  drawSwitch(rx, top, step);
+
+  // ── Right arm: R ──────────────────────────────────────
+  const rhiR = (step >= 1);
+  stroke(rhiR ? normColor : normColor); strokeWeight(2.5);
+  // vertical wire above and below resistor
+  line(rx, top + 20, rx, mid - 30);
+  line(rx, mid + 30, rx, bot);
+  drawResistorSym(rx, mid, 28, true, "R=" + fmtR(p.R));
+
+  // ── Bottom arm: capacitor or inductor ─────────────────
+  const capBot = bot;
+  const storeX = (lx + rx) / 2;
+  const hiStore = (step === 1 || step === 2 || step === 3);
+
+  stroke(hiStore ? hiColor : normColor); strokeWeight(hiStore ? 3 : 2.5);
+  line(lx, bot, storeX - 28, bot);
+  line(storeX + 28, bot, rx, bot);
+
+  if (isRL) {
+    drawInductorSym(storeX, bot, 50, false,
+      step === 1 ? "L (→ short)" :
+      step === 3 ? "L (→ short)" :
+      "L=" + p.L + "H",
+      hiStore ? hiColor : normColor);
+    if (step === 1 || step === 3) {
+      // draw short circuit line over inductor
+      stroke(color(0, 150, 60)); strokeWeight(3);
+      line(storeX - 28, bot, storeX + 28, bot);
+      fill(0, 150, 60); noStroke(); textSize(9); textAlign(CENTER, BOTTOM);
+      text("SHORT", storeX, bot - 4);
+    }
+  } else {
+    drawCapacitorSym(storeX, bot, 40, false,
+      step === 1 ? "C (→ open)" :
+      step === 3 ? "C (→ open)" :
+      "C=" + fmtC(p.C),
+      hiStore ? hiColor : normColor);
+    if (step === 1 || step === 3) {
+      // draw break (open circuit) over cap
+      stroke(color(200, 100, 0)); strokeWeight(2.5);
+      line(storeX - 28, bot, storeX - 8, bot);
+      line(storeX + 8, bot, storeX + 28, bot);
+      fill(200, 100, 0); noStroke(); textSize(9); textAlign(CENTER, BOTTOM);
+      text("OPEN", storeX, bot - 4);
+    }
+  }
+
+  // ── Stored energy annotation ──────────────────────────
+  if (step === 2) {
+    fill(220, 60, 60); noStroke();
+    textSize(11); textAlign(CENTER, TOP);
+    const label = isRL
+      ? "I_L(0⁺) = " + p.v0.toFixed(1) + " A"
+      : "V_C(0⁺) = " + p.v0.toFixed(1) + " V";
+    text(label, storeX, bot + 8);
+  }
+  if (step === 3) {
+    const isRL2 = (p.L !== null);
+    fill(0, 120, 60); noStroke();
+    textSize(11); textAlign(CENTER, TOP);
+    const label2 = isRL2
+      ? "I_L(∞) = " + p.vInf.toFixed(1) + " A"
+      : "V_C(∞) = " + p.vInf.toFixed(1) + " V";
+    text(label2, storeX, bot + 8);
+  }
+
+  // ── Step description text ─────────────────────────────
+  // drawn in solution panel instead
+}
+
+// ─────────────────────────────────────────────────────────
+// SOLUTION PANEL (right side)
+// ─────────────────────────────────────────────────────────
+function drawSolutionPanel(p) {
+  const px = RIGHT_X + 10;
+  const py = 16;
+  const lh = 16;
+
+  fill(40); noStroke(); textAlign(LEFT, TOP);
+
+  // Title
+  textSize(12); fill(60, 60, 180);
+  text("Analysis", px, py);
+  fill(40); textSize(10);
+
+  const lines = p.stage[step].split('\n');
+  for (let i = 0; i < lines.length; i++) {
+    // highlight key value lines
+    const ln = lines[i];
+    if (ln.includes('=') && (ln.includes('V') || ln.includes('I') || ln.includes('τ'))) {
+      fill(180, 40, 40);
+    } else if (ln.startsWith('t') || ln.startsWith('Step')) {
+      fill(60, 60, 180);
+    } else {
+      fill(40);
+    }
+    text(ln, px, py + 22 + i * lh);
+  }
+
+  // Summary table after step 0
+  if (step >= 2) {
+    const ty = py + 22 + lines.length * lh + 10;
+    fill(100); textSize(9);
+    text("─────────────────", px, ty);
+    fill(60, 60, 180); textSize(10);
+    text("Summary so far:", px, ty + 12);
+    fill(40); textSize(10);
+    const isRL = (p.L !== null);
+    const var_ = isRL ? "I_L" : "V_C";
+    if (step >= 2) text(var_ + "(0⁺) = " + p.v0.toFixed(1) + (isRL ? " A" : " V"), px, ty + 26);
+    if (step >= 3) text(var_ + "(∞)  = " + p.vInf.toFixed(1) + (isRL ? " A" : " V"), px, ty + 40);
+    if (step >= 3) text("τ      = " + fmtTau(p.tau()), px, ty + 54);
+    if (step >= 4) { fill(180, 40, 40); text(p.formula, px, ty + 68); }
+  }
+}
+
+// ─────────────────────────────────────────────────────────
+// GRAPH
+// ─────────────────────────────────────────────────────────
+function drawGraph(p) {
+  const ML = 55, MR = 20, MT = 22, MB = 30;
+  const gx = 5 + ML, gy = circH + MT;
+  const gw = CW - 10 - ML - MR, gh = graphH - 4 - MT - MB;
+
+  // Axes
+  stroke(120); strokeWeight(1.5);
+  line(gx, gy, gx, gy + gh);         // y-axis
+  line(gx, gy + gh, gx + gw, gy + gh); // x-axis
+
+  // Labels
+  fill(80); noStroke(); textSize(10); textAlign(CENTER, TOP);
+  text("Time (multiples of τ)", gx + gw/2, gy + gh + 16);
+  textAlign(RIGHT, CENTER); textSize(10);
+  const isRL = (p.L !== null);
+  push(); translate(gx - 40, gy + gh/2); rotate(-HALF_PI);
+  text(isRL ? "I_L(t)  [A]" : "V_C(t)  [V]", 0, 0);
+  pop();
+
+  // x tick marks (0 to 5τ)
+  stroke(180); strokeWeight(1);
+  for (let i = 0; i <= 5; i++) {
+    const tx = gx + (i / 5) * gw;
+    line(tx, gy + gh, tx, gy + gh + 4);
+    fill(80); noStroke(); textAlign(CENTER, TOP); textSize(9);
+    text(i + "τ", tx, gy + gh + 6);
+  }
+
+  // y tick marks
+  const yMax = Math.max(p.vInf, p.v0) * 1.15 || 1;
+  for (let i = 0; i <= 4; i++) {
+    const val = (i / 4) * yMax;
+    const ty  = gy + gh - (val / yMax) * gh;
+    stroke(200); line(gx - 4, ty, gx + gw, ty);
+    fill(80); noStroke(); textAlign(RIGHT, CENTER); textSize(9);
+    text(val.toFixed(1), gx - 6, ty);
+  }
+
+  // Only draw curve from step 1 onward
+  if (step === 0) {
+    fill(120); noStroke(); textAlign(CENTER, CENTER); textSize(11);
+    text("(Press 'Step Through Analysis' to see the response curve)", gx + gw/2, gy + gh/2);
+    return;
+  }
+
+  // Draw exponential response curve
+  const tau = p.tau();
+  const v0  = p.v0, vInf = p.vInf;
+  const tMax = 5 * tau;
+
+  stroke(60, 110, 200); strokeWeight(2.5); noFill();
+  beginShape();
+  for (let px2 = 0; px2 <= gw; px2 += 2) {
+    const t  = (px2 / gw) * tMax;
+    const v  = vInf + (v0 - vInf) * exp(-t / tau);
+    const sy = gy + gh - (v / yMax) * gh;
+    vertex(gx + px2, sy);
+  }
+  endShape();
+
+  // Animate a dot on the curve (step 4)
+  if (step === 4 && isAnimating) {
+    const tCurrent = (animTime % (5.5 * tau));
+    const frac     = min(tCurrent / tMax, 1);
+    const v        = vInf + (v0 - vInf) * exp(-tCurrent / tau);
+    const dotX     = gx + frac * gw;
+    const dotY     = gy + gh - (v / yMax) * gh;
+    fill(220, 60, 60); noStroke();
+    circle(dotX, dotY, 10);
+  }
+
+  // Reference lines: v0 and vInf
+  stroke(200, 100, 0); strokeWeight(1); setLineDash([4, 4]);
+  const yV0   = gy + gh - (v0   / yMax) * gh;
+  const yVInf = gy + gh - (vInf / yMax) * gh;
+  if (step >= 2) line(gx, yV0,   gx + gw, yV0);
+  if (step >= 3) line(gx, yVInf, gx + gw, yVInf);
+  setLineDash([]);
+
+  // Labels for reference lines
+  if (step >= 2) {
+    fill(200, 100, 0); noStroke(); textAlign(LEFT, BOTTOM); textSize(9);
+    const lab0 = isRL ? "I(0⁺)=" + v0.toFixed(1) : "V(0⁺)=" + v0.toFixed(1);
+    text(lab0, gx + 2, yV0 - 2);
+  }
+  if (step >= 3) {
+    fill(0, 140, 60); noStroke(); textAlign(LEFT, TOP); textSize(9);
+    const labInf = isRL ? "I(∞)=" + vInf.toFixed(1) : "V(∞)=" + vInf.toFixed(1);
+    text(labInf, gx + 2, yVInf + 2);
+  }
+
+  strokeWeight(1);
+}
+
+// ─────────────────────────────────────────────────────────
+// CONTROLS
+// ─────────────────────────────────────────────────────────
+function drawControls(p) {
+  // Step/Reset buttons
+  drawBtn(btnStep);
+  drawBtn(btnReset);
+
+  // Preset buttons label
+  fill(80); noStroke(); textSize(10); textAlign(RIGHT, TOP);
+  text("Presets:", CW - 2*(108+8) + 2, circH + graphH + 10);
+  for (const b of presetBtns) drawBtn(b, b.action === (() => {}) || preset === PRESETS.findIndex(pr => pr.name.split('\n')[0] === b.label));
+
+  // Step indicator dots
+  const dotY = circH + graphH + ctrlH - 18;
+  for (let i = 0; i < NUM_STEPS; i++) {
+    const dx = 310 + i * 24;
+    if (i === step) { fill(60, 110, 200); } else { fill(180); }
+    noStroke(); circle(dx, dotY, 12);
+    fill(255); textSize(8); textAlign(CENTER, CENTER);
+    text(i + 1, dx, dotY);
+  }
+  fill(80); textSize(9); textAlign(LEFT, CENTER);
+  text("Steps:", 275, dotY);
+}
+
+function drawBtn(b, active) {
+  const isActive = (active === undefined)
+    ? false
+    : active;
+  const isPreset = (active !== undefined);
+
+  if (b.hover) { fill(200, 215, 255); }
+  else if (isPreset && preset === presetBtns.indexOf(b)) { fill(180, 200, 240); }
+  else { fill(230); }
+
+  stroke(160); strokeWeight(1); rect(b.x, b.y, b.w, b.h, 5);
+  fill(40); noStroke(); textAlign(CENTER, CENTER); textSize(10);
+  text(b.label, b.x + b.w/2, b.y + b.h/2);
+}
+
+// ─────────────────────────────────────────────────────────
+// CIRCUIT COMPONENT SYMBOLS
+// ─────────────────────────────────────────────────────────
+function drawBatterySymbol(x, cy, halfH, volts) {
+  strokeWeight(2.5); stroke(40);
+  line(x, cy - halfH, x, cy - 6);
+  line(x, cy + 6,     x, cy + halfH);
+  // + plate (longer)
+  stroke(40); strokeWeight(2);
+  line(x - 10, cy - 6, x + 10, cy - 6);
+  // - plate (shorter)
+  line(x - 6,  cy + 6, x + 6,  cy + 6);
+  // +/- labels
+  fill(60, 60, 180); noStroke(); textSize(9); textAlign(LEFT, CENTER);
+  text("+", x + 12, cy - 8);
+  textAlign(LEFT, CENTER);
+  text("−", x + 12, cy + 8);
+  // voltage label
+  fill(80); textSize(10); textAlign(RIGHT, CENTER);
+  text("V_S=" + volts + "V", x - 14, cy);
+}
+
+function drawSwitch(x, y, step) {
+  // switch is on the top wire at corner rx,top
+  const sx = x - 50, ex = x;
+  stroke(40); strokeWeight(2.5);
+  // pivot point
+  const pivX = sx + 10;
+  // draw short circle at pivot
+  fill(255); circle(pivX, y, 5);
+  fill(255); circle(ex - 5, y, 5);
+
+  if (step === 0) {
+    // open switch: angled line
+    stroke(40);
+    line(pivX, y, ex - 10, y - 16);
+    // label
+    fill(80); noStroke(); textSize(9); textAlign(CENTER, TOP);
+    text("SW (opens t=0)", (sx + ex)/2, y + 5);
+  } else {
+    // closed switch: straight line
+    stroke(40);
+    line(pivX, y, ex - 5, y);
+    fill(0, 150, 60); noStroke(); textSize(9); textAlign(CENTER, TOP);
+    text("SW closed (t≥0)", (sx + ex)/2, y + 5);
+  }
+}
+
+function drawResistorSym(x, cy, halfH, vert, label) {
+  const w = 14;
+  stroke(40); strokeWeight(2);
+  if (vert) {
+    line(x, cy - halfH, x, cy - halfH + 4);
+    line(x, cy + halfH - 4, x, cy + halfH);
+    // zigzag
+    let yy = cy - halfH + 4;
+    const seg = (halfH * 2 - 8) / 8;
+    for (let i = 0; i < 8; i++) {
+      const nx = (i % 2 === 0) ? x + w : x - w;
+      line(x + (i % 2 === 0 ? -w : w), yy, nx, yy + seg);
+      yy += seg;
+    }
+    // label
+    fill(60); noStroke(); textSize(9); textAlign(LEFT, CENTER);
+    text(label, x + w + 4, cy);
+  }
+}
+
+function drawCapacitorSym(cx, y, halfW, horiz, label, col) {
+  stroke(col || color(40)); strokeWeight(2);
+  if (!horiz) {
+    // horizontal capacitor on bottom wire
+    line(cx - halfW, y, cx - 4, y);
+    line(cx + 4,     y, cx + halfW, y);
+    // two vertical plates
+    line(cx - 4, y - 14, cx - 4, y + 14);
+    line(cx + 4, y - 14, cx + 4, y + 14);
+    // label below
+    fill(col || color(60)); noStroke(); textSize(9); textAlign(CENTER, BOTTOM);
+    text(label, cx, y - 16);
+  }
+}
+
+function drawInductorSym(cx, y, halfW, horiz, label, col) {
+  stroke(col || color(40)); strokeWeight(2);
+  if (!horiz) {
+    // arcs on bottom wire
+    line(cx - halfW, y, cx - halfW + 4, y);
+    line(cx + halfW - 4, y, cx + halfW, y);
+    const arcW = (halfW * 2 - 8) / 4;
+    for (let i = 0; i < 4; i++) {
+      const ax = cx - halfW + 4 + i * arcW + arcW/2;
+      noFill(); arc(ax, y, arcW, arcW * 1.5, PI, 0);
+    }
+    // label
+    fill(col || color(60)); noStroke(); textSize(9); textAlign(CENTER, BOTTOM);
+    text(label, cx, y - 12);
+  }
+}
+
+// ─────────────────────────────────────────────────────────
+// INTERACTION
+// ─────────────────────────────────────────────────────────
+function mouseMoved() {
+  updateHovers(mouseX, mouseY);
+}
+function mouseDragged() {
+  updateHovers(mouseX, mouseY);
+}
+function mousePressed() {
+  const allBtns = [btnStep, btnReset, ...presetBtns];
+  for (const b of allBtns) {
+    if (inBtn(b, mouseX, mouseY)) { b.action(); return; }
+  }
+}
+
+function updateHovers(mx, my) {
+  const allBtns = [btnStep, btnReset, ...presetBtns];
+  for (const b of allBtns) b.hover = inBtn(b, mx, my);
+}
+function inBtn(b, mx, my) {
+  return mx >= b.x && mx <= b.x + b.w && my >= b.y && my <= b.y + b.h;
+}
+
+// ─────────────────────────────────────────────────────────
+// UTILITIES
+// ─────────────────────────────────────────────────────────
+function setLineDash(arr) {
+  // p5.js doesn't expose setLineDash natively; use drawingContext
+  drawingContext.setLineDash(arr);
+}
+function fmtR(r) {
+  return r >= 1000 ? (r/1000).toFixed(0) + "kΩ" : r.toFixed(0) + "Ω";
+}
+function fmtC(c) {
+  return c >= 1e-3 ? (c*1e3).toFixed(0) + "mF"
+       : c >= 1e-6 ? (c*1e6).toFixed(0) + "µF"
+       : (c*1e9).toFixed(0) + "nF";
+}
+function fmtTau(tau) {
+  return tau >= 1   ? tau.toFixed(2) + " s"
+       : tau >= 0.001 ? (tau*1e3).toFixed(1) + " ms"
+       : (tau*1e6).toFixed(1) + " µs";
+}
+
+</script>
+</body>
+</html>
