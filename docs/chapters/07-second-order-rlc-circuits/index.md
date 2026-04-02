@@ -1,12 +1,10 @@
-# Second-Order Circuits and RLC Behavior
+<div class="chapter-styled" markdown>
 
-## Summary
+# Chapter 7 — Second-Order Circuits and RLC Behavior
 
-This chapter extends transient analysis to second-order circuits containing resistors, inductors, and capacitors (RLC). Students will learn how these circuits can exhibit oscillatory behavior and how the damping ratio determines whether the response is overdamped, underdamped, or critically damped. The chapter introduces the natural frequency concept and analyzes both series and parallel RLC configurations. Understanding second-order systems prepares students for analyzing resonant circuits and filters.
+<h2 style="color: #5A3EED !important; border-bottom: 2px solid #5A3EED; padding-bottom: 0.3rem; font-weight: 700; margin-top: 2rem;">Concepts Covered</h2>
 
-## Concepts Covered
-
-This chapter covers the following 10 concepts from the learning graph:
+<div class="concepts-box" markdown>
 
 1. Second-Order Circuits
 2. RLC Circuit
@@ -19,18 +17,17 @@ This chapter covers the following 10 concepts from the learning graph:
 9. Resonant Frequency
 10. Quality Factor
 
-## Prerequisites
+</div>
 
-This chapter builds on concepts from:
+<h2 style="color: #5A3EED !important; border-bottom: 2px solid #5A3EED; padding-bottom: 0.3rem; font-weight: 700; margin-top: 2rem;">Prerequisites</h2>
 
-- [Chapter 5: Passive Components: Resistors, Capacitors, and Inductors](../05-passive-components/index.md)
-- [Chapter 6: Transient Analysis of RC and RL Circuits](../06-transient-analysis-rc-rl/index.md)
+<div class="prereq-box" markdown>
 
----
-title: Second-Order Circuits and RLC Behavior
-description: Explore oscillatory circuits with resistors, inductors, and capacitors including damping, resonance, and quality factor
-generated_by: chapter-content-generator v0.03
-date: 2026-01-30
+- **Chapter 5:** Passive Components: Resistors, Capacitors, and Inductors
+- **Chapter 6:** Transient Analysis of RC and RL Circuits
+
+</div>
+
 ---
 
 ## Introduction: When Circuits Get Dramatic
@@ -109,47 +106,55 @@ Notice that the undamped natural frequency \(\omega_0\) is the same for both con
 
 #### Diagram: Series vs Parallel RLC Configuration
 
-<iframe src="../../sims/rlc-circuit/main.html" width="100%" height="670px" scrolling="no" style="overflow: hidden;"></iframe>
-
-<details markdown="1">
-<summary>Series vs Parallel RLC Configuration</summary>
-Type: microsim
-
-Bloom Level: Understand (L2)
-Bloom Verb: compare
-
-Learning Objective: Students will compare the mathematical differences between series and parallel RLC circuits by observing how component arrangement affects damping and impedance.
-
-Visual elements:
-- Split canvas showing series RLC (left) and parallel RLC (right)
-- Animated current flow in series circuit
-- Animated voltage indication in parallel circuit
-- Real-time equations displayed below each circuit
-- Parameter values shown for R, L, and C
-
-Interactive controls:
-- Slider: Resistance R (10Ω to 1000Ω)
-- Slider: Inductance L (1mH to 100mH)
-- Slider: Capacitance C (0.1μF to 10μF)
-- Toggle: Show/hide damping coefficient calculation
-- Toggle: Show/hide natural frequency calculation
-
-Display panels:
-- Series circuit: α = R/2L, ω₀ = 1/√(LC)
-- Parallel circuit: α = 1/2RC, ω₀ = 1/√(LC)
-- Comparison: "Same ω₀, different damping!"
-
-Default parameters:
-- R = 100Ω
-- L = 10mH
-- C = 1μF
-
-Canvas layout:
-- Drawing area: 600 × 350 pixels
-- Control area: 100 pixels below
-
-Implementation: p5.js with circuit component library
-</details>
+<div class="msim-box"><button class="msim-btn" onclick="toggleFS(this)">⛶ Fullscreen</button>
+<div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:8px;">
+<label style="font-size:0.9em;">R (Ω): <input type="range" id="rlcR" min="1" max="200" value="20" step="1" oninput="drawRLC()"><strong id="rlcRv">20</strong></label>
+<label style="font-size:0.9em;">L (mH): <input type="range" id="rlcL" min="1" max="200" value="100" step="1" oninput="drawRLC()"><strong id="rlcLv">100</strong></label>
+<label style="font-size:0.9em;">C (μF): <input type="range" id="rlcC" min="1" max="200" value="100" step="1" oninput="drawRLC()"><strong id="rlcCv">100</strong></label>
+</div>
+<canvas id="rlcCanvas" width="690" height="360"></canvas>
+<div id="rlcInfo" style="font-size:0.9em;margin-top:6px;padding:8px;background:#F8F6FF;border-radius:6px;"></div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+<style>
+.msim-box{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:12px;margin:1rem 0;position:relative;transition:all 0.3s ease;}
+.msim-box.msim-fs{position:fixed!important;top:0;left:0;width:100vw!important;height:100vh!important;z-index:9999;border-radius:0;overflow-y:auto;padding:20px 30px;box-sizing:border-box;}
+.msim-btn{position:absolute;top:8px;right:8px;padding:4px 12px;border:1px solid #5A3EED;border-radius:4px;background:#F8F6FF;color:#5A3EED;cursor:pointer;font-size:0.8em;font-weight:600;z-index:10;}
+.msim-btn:hover{background:#5A3EED;color:#fff;}
+.msim-box.msim-fs .msim-btn{position:fixed;top:12px;right:12px;}
+</style>
+<script>
+function toggleFS(btn){var box=btn.closest('.msim-box');box.classList.toggle('msim-fs');btn.textContent=box.classList.contains('msim-fs')?'✕ Back to Doc':'⛶ Fullscreen';}
+</script>
+<script>
+var rlcChart=null;
+function stepResp(alpha,w0,t){
+  var z=alpha/w0;
+  if(Math.abs(z-1)<0.01){return 1-(1+w0*t)*Math.exp(-w0*t);}
+  if(z<1){var wd=w0*Math.sqrt(1-z*z);return 1-(1/Math.sqrt(1-z*z))*Math.exp(-alpha*t)*Math.sin(wd*t+Math.acos(z));}
+  var d=Math.sqrt(alpha*alpha-w0*w0),s1=-alpha+d,s2=-alpha-d;
+  return 1+s2/(s1-s2)*Math.exp(s1*t)+s1/(s2-s1)*Math.exp(s2*t);
+}
+function dampLabel(z){return Math.abs(z-1)<0.02?'Crit. Damped':z<1?'Underdamped':'Overdamped';}
+function drawRLC(){
+  var R=+document.getElementById('rlcR').value,Lm=+document.getElementById('rlcL').value,Cu=+document.getElementById('rlcC').value;
+  document.getElementById('rlcRv').textContent=R;document.getElementById('rlcLv').textContent=Lm;document.getElementById('rlcCv').textContent=Cu;
+  var L=Lm*1e-3,C=Cu*1e-6,w0=1/Math.sqrt(L*C);
+  var aS=R/(2*L),aP=1/(2*R*C),zS=aS/w0,zP=aP/w0;
+  var tMax=Math.max(5/aS,5/aP,6*Math.PI/w0);tMax=Math.min(tMax,2);
+  var N=300,labels=[],sD=[],pD=[],ssLine=[];
+  for(var i=0;i<=N;i++){var t=i*tMax/N;labels.push((t*1000).toFixed(1));sD.push(stepResp(aS,w0,t));pD.push(stepResp(aP,w0,t));ssLine.push(1);}
+  var datasets=[
+    {label:'Series (ζₛ='+zS.toFixed(3)+', '+dampLabel(zS)+')',data:sD,borderColor:'#5A3EED',borderWidth:2.5,pointRadius:0,fill:false},
+    {label:'Parallel (ζₚ='+zP.toFixed(3)+', '+dampLabel(zP)+')',data:pD,borderColor:'#E53935',borderWidth:2.5,pointRadius:0,fill:false},
+    {label:'Steady State = 1',data:ssLine,borderColor:'#D4A017',borderWidth:1,borderDash:[6,4],pointRadius:0,fill:false}
+  ];
+  if(rlcChart){rlcChart.data.labels=labels;rlcChart.data.datasets=datasets;rlcChart.options.plugins.title.text='Series vs Parallel RLC Step Response';rlcChart.update();}
+  else{rlcChart=new Chart(document.getElementById('rlcCanvas'),{type:'line',data:{labels:labels,datasets:datasets},options:{responsive:true,animation:{duration:0},plugins:{title:{display:true,text:'Series vs Parallel RLC Step Response',font:{size:15},color:'#333'},legend:{labels:{font:{size:11}}}},scales:{x:{title:{display:true,text:'Time (ms)',font:{size:12}},ticks:{maxTicksLimit:10,font:{size:10}}},y:{title:{display:true,text:'Normalized Voltage',font:{size:12}},min:-0.3,max:2.0,ticks:{font:{size:10}}}}}});}
+  document.getElementById('rlcInfo').innerHTML='<b>ω₀ = '+(w0).toFixed(1)+' rad/s</b> &nbsp;|&nbsp; <span style="color:#5A3EED">Series: αₛ='+aS.toFixed(1)+', ζₛ='+zS.toFixed(3)+'</span> &nbsp;|&nbsp; <span style="color:#E53935">Parallel: αₚ='+aP.toFixed(1)+', ζₚ='+zP.toFixed(3)+'</span>';
+}
+drawRLC();
+</script>
 
 ## The Characteristic Equation: Finding the Roots
 
@@ -199,45 +204,68 @@ The natural frequency depends only on the energy storage elements (L and C), not
 
 #### Diagram: Natural Frequency Calculator
 
-<iframe src="../../sims/natural-frequency-calculator/main.html" width="100%" height="500px" scrolling="no" style="overflow: hidden;"></iframe>
-
-<details markdown="1">
-<summary>Natural Frequency Calculator</summary>
-Type: microsim
-
-Bloom Level: Apply (L3)
-Bloom Verb: calculate
-
-Learning Objective: Students will calculate natural frequency from inductance and capacitance values and observe the inverse square root relationship.
-
-Visual elements:
-- Large display showing f₀ in Hz and ω₀ in rad/s
-- Graphical representation of L and C as physical components
-- Log-log plot showing f₀ vs LC product
-- Current point highlighted on curve
-
-Interactive controls:
-- Slider: Inductance L (0.1mH to 100mH, logarithmic)
-- Slider: Capacitance C (0.01μF to 100μF, logarithmic)
-- Display: LC product value
-- Display: Period T = 1/f₀
-
-Calculation display:
-- Show step-by-step: ω₀ = 1/√(LC) = 1/√(value) = result
-- Convert to Hz: f₀ = ω₀/2π = result
-
-Default parameters:
-- L = 10mH
-- C = 1μF
-- Expected f₀ ≈ 1,592 Hz
-
-Canvas layout:
-- Calculator display: 300 × 200 pixels (top)
-- Log-log plot: 300 × 150 pixels (bottom)
-- Control area: 100 pixels below
-
-Implementation: p5.js
-</details>
+<div class="msim-box"><button class="msim-btn" onclick="toggleFS(this)">⛶ Fullscreen</button>
+<div style="display:flex;gap:16px;flex-wrap:wrap;margin-bottom:6px;">
+<label style="font-size:0.9em;">L (mH): <input type="range" id="nfL" min="0.1" max="100" value="10" step="0.1" oninput="updateNF()"> <strong id="nfLval">10.0</strong></label>
+<label style="font-size:0.9em;">C (μF): <input type="range" id="nfC" min="0.01" max="100" value="1" step="0.01" oninput="updateNF()"> <strong id="nfCval">1.00</strong></label>
+</div>
+<div id="nfResult" style="padding:10px;background:#F8F6FF;border-radius:8px;margin-bottom:8px;font-size:0.95em;"></div>
+<canvas id="nfRawCanvas" width="690" height="250" style="display:block;width:100%;border-radius:6px;"></canvas>
+</div>
+<script>
+function updateNF(){
+  var Lm=+document.getElementById('nfL').value,Cu=+document.getElementById('nfC').value;
+  document.getElementById('nfLval').textContent=Lm.toFixed(1);
+  document.getElementById('nfCval').textContent=Cu.toFixed(2);
+  var L=Lm*1e-3,C=Cu*1e-6,w0=1/Math.sqrt(L*C),f0=w0/(2*Math.PI),T=1/f0;
+  var tUnit='ms',tDiv=1000;if(T<0.001){tUnit='μs';tDiv=1e6;}
+  document.getElementById('nfResult').innerHTML=
+    '<b>Formula:</b> ω₀ = 1/√(LC) = 1/√('+(L*C).toExponential(3)+') = <span style="color:#5A3EED;font-size:1.15em"><b>'+w0.toFixed(1)+' rad/s</b></span><br>'+
+    '<b>f₀</b> = ω₀/(2π) = <span style="color:#D4A017;font-size:1.15em"><b>'+f0.toFixed(1)+' Hz</b></span> &nbsp;|&nbsp; <b>T</b> = '+(T*tDiv).toFixed(3)+' '+tUnit+'<br>'+
+    '<b>L</b> = '+Lm+' mH &nbsp;|&nbsp; <b>C</b> = '+Cu+' μF';
+  // Draw with raw Canvas 2D
+  var cv=document.getElementById('nfRawCanvas'),ctx=cv.getContext('2d');
+  var W=cv.width,H=cv.height,ml=55,mr=15,mt=30,mb=35,pw=W-ml-mr,ph=H-mt-mb;
+  ctx.clearRect(0,0,W,H);
+  // Background
+  ctx.fillStyle='#FAFAFA';ctx.fillRect(ml,mt,pw,ph);
+  // Grid
+  ctx.strokeStyle='#E8E8E8';ctx.lineWidth=1;
+  for(var g=0;g<=4;g++){var gy=mt+g*ph/4;ctx.beginPath();ctx.moveTo(ml,gy);ctx.lineTo(ml+pw,gy);ctx.stroke();}
+  for(var g=0;g<=6;g++){var gx=ml+g*pw/6;ctx.beginPath();ctx.moveTo(gx,mt);ctx.lineTo(gx,mt+ph);ctx.stroke();}
+  // Axes
+  ctx.strokeStyle='#333';ctx.lineWidth=1.5;
+  ctx.beginPath();ctx.moveTo(ml,mt);ctx.lineTo(ml,mt+ph);ctx.lineTo(ml+pw,mt+ph);ctx.stroke();
+  // Zero line
+  var zeroY=mt+ph/2;
+  ctx.strokeStyle='#ccc';ctx.lineWidth=1;ctx.setLineDash([4,4]);
+  ctx.beginPath();ctx.moveTo(ml,zeroY);ctx.lineTo(ml+pw,zeroY);ctx.stroke();
+  ctx.setLineDash([]);
+  // Plot waveform
+  var tMax=3*T;
+  ctx.strokeStyle='#5A3EED';ctx.lineWidth=2.5;ctx.beginPath();
+  for(var i=0;i<=300;i++){
+    var t=i*tMax/300,x=ml+i*pw/300,y=zeroY-Math.cos(w0*t)*(ph/2-5);
+    if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);
+  }
+  ctx.stroke();
+  // Labels
+  ctx.fillStyle='#333';ctx.font='12px Arial';ctx.textAlign='center';
+  ctx.fillText('Time ('+tUnit+')',ml+pw/2,H-3);
+  // X ticks
+  ctx.font='10px Arial';
+  for(var g=0;g<=6;g++){var tv=(g*tMax/6*tDiv).toFixed(1);ctx.fillText(tv,ml+g*pw/6,mt+ph+14);}
+  // Y ticks
+  ctx.textAlign='right';
+  ctx.fillText('1.0',ml-4,mt+8);ctx.fillText('0',ml-4,zeroY+4);ctx.fillText('-1.0',ml-4,mt+ph+2);
+  // Y label
+  ctx.save();ctx.translate(12,mt+ph/2);ctx.rotate(-Math.PI/2);ctx.textAlign='center';ctx.font='12px Arial';ctx.fillText('Amplitude',0,0);ctx.restore();
+  // Title
+  ctx.fillStyle='#333';ctx.font='bold 13px Arial';ctx.textAlign='center';
+  ctx.fillText('Undamped Oscillation at f₀ = '+f0.toFixed(1)+' Hz  (T = '+(T*tDiv).toFixed(2)+' '+tUnit+')',W/2,18);
+}
+updateNF();
+</script>
 
 ## Damping Ratio: How Quickly the Drama Fades
 
@@ -292,50 +320,33 @@ Think of overdamped response like a door closer that's been adjusted too tight�
 
 #### Diagram: Overdamped Step Response
 
-<iframe src="../../sims/overdamped-response/main.html" width="100%" height="450px" scrolling="no" style="overflow: hidden;"></iframe>
-
-<details markdown="1">
-<summary>Overdamped Step Response</summary>
-Type: microsim
-
-Bloom Level: Understand (L2)
-Bloom Verb: explain
-
-Learning Objective: Students will explain how overdamped circuits return to equilibrium without oscillation by observing the sum of two exponential decays.
-
-Visual elements:
-- Main plot: Response x(t) vs time
-- Two separate exponential components shown as dashed lines
-- Sum shown as solid line
-- Final value shown as horizontal dashed line
-- Annotations showing s₁ and s₂ values
-
-Step-through mode:
-- Stage 1: Show the two roots s₁ and s₂ on number line
-- Stage 2: Show first exponential e^(s₁t) - fast decay
-- Stage 3: Show second exponential e^(s₂t) - slow decay
-- Stage 4: Show sum forming the total response
-- Stage 5: Highlight that no zero crossings occur
-
-Interactive controls:
-- Slider: Damping ratio ζ (1.1 to 3.0)
-- Button: Next Step / Previous Step
-- Button: Animate continuous
-- Display: Root values s₁ and s₂
-- Display: Settling time estimate
-
-Default parameters:
-- ζ = 1.5
-- ω₀ = 1000 rad/s (for visualization scaling)
-
-Canvas layout:
-- Plot area: 600 × 300 pixels
-- Control area: 100 pixels below
-
-Instructional Rationale: Step-through reveals how the two exponential components combine to create the overdamped response, making the mathematics visible.
-
-Implementation: p5.js
-</details>
+<div class="msim-box"><button class="msim-btn" onclick="toggleFS(this)">⛶ Fullscreen</button>
+<div style="display:flex;gap:16px;flex-wrap:wrap;margin-bottom:6px;">
+<label style="font-size:0.9em;">ζ: <input type="range" id="odZ" min="1.05" max="5" value="2" step="0.05" oninput="drawOD()"> <strong id="odZv">2.00</strong></label>
+<label style="font-size:0.9em;">ω₀: <input type="range" id="odW" min="1" max="20" value="5" step="0.5" oninput="drawOD()"> <strong id="odWv">5.0</strong></label>
+</div>
+<canvas id="overdampedCanvas" width="690" height="320"></canvas>
+<div id="odInfo" style="font-size:0.85em;margin-top:4px;color:#555;"></div>
+</div>
+<script>
+var odChart=null;
+function drawOD(){
+  var z=+document.getElementById('odZ').value,w0=+document.getElementById('odW').value;
+  document.getElementById('odZv').textContent=z.toFixed(2);document.getElementById('odWv').textContent=w0.toFixed(1);
+  var a=z*w0,d=Math.sqrt(a*a-w0*w0),s1=-a+d,s2=-a-d;
+  var tMax=5/Math.abs(s1),N=250,labels=[],data=[],ssLine=[];
+  for(var i=0;i<=N;i++){var t=i*tMax/N;labels.push(t.toFixed(3));
+    data.push(1+s2/(s1-s2)*Math.exp(s1*t)+s1/(s2-s1)*Math.exp(s2*t));ssLine.push(1);}
+  var ds=[
+    {label:'Overdamped Response (ζ='+z.toFixed(2)+')',data:data,borderColor:'#5A3EED',borderWidth:2.5,pointRadius:0,fill:false},
+    {label:'Steady State = 1',data:ssLine,borderColor:'#D4A017',borderWidth:1,borderDash:[6,4],pointRadius:0,fill:false}
+  ];
+  if(odChart){odChart.data.labels=labels;odChart.data.datasets=ds;odChart.update();}
+  else{odChart=new Chart(document.getElementById('overdampedCanvas'),{type:'line',data:{labels:labels,datasets:ds},options:{responsive:true,animation:{duration:0},plugins:{title:{display:true,text:'Overdamped Step Response',font:{size:14},color:'#333'},legend:{labels:{font:{size:11}}}},scales:{x:{title:{display:true,text:'Time (s)'},ticks:{maxTicksLimit:10,font:{size:10}}},y:{title:{display:true,text:'Voltage (V)'},min:0,max:1.15}}}});}
+  document.getElementById('odInfo').innerHTML='s₁ = '+s1.toFixed(2)+' &nbsp;|&nbsp; s₂ = '+s2.toFixed(2)+' &nbsp;|&nbsp; α = '+a.toFixed(2)+' &nbsp;|&nbsp; No oscillation — two real negative roots';
+}
+drawOD();
+</script>
 
 ## Underdamped Response: The Exciting One
 
@@ -380,48 +391,37 @@ Notice that light damping barely affects the frequency, but heavy damping signif
 
 #### Diagram: Underdamped Oscillation Anatomy
 
-<iframe src="../../sims/underdamped-oscillation/main.html" width="100%" height="500px" scrolling="no" style="overflow: hidden;"></iframe>
-
-<details markdown="1">
-<summary>Underdamped Oscillation Anatomy</summary>
-Type: microsim
-
-Bloom Level: Analyze (L4)
-Bloom Verb: examine
-
-Learning Objective: Students will examine the components of underdamped response including the envelope, oscillation frequency, and overshoot.
-
-Visual elements:
-- Main plot: Response x(t) vs time with oscillations
-- Upper envelope: +Ce^(-αt) shown as dashed line
-- Lower envelope: -Ce^(-αt) shown as dashed line
-- Period markers showing T_d = 2π/ω_d
-- First peak (overshoot) highlighted and labeled
-- Settling band (±2% of final value) shown as shaded region
-
-Interactive controls:
-- Slider: Damping ratio ζ (0.05 to 0.95)
-- Slider: Natural frequency ω₀ (100 to 10,000 rad/s)
-- Toggle: Show/hide envelope
-- Toggle: Show/hide period markers
-- Display: Calculated values (ω_d, T_d, overshoot %)
-
-Calculations displayed:
-- ω_d = ω₀√(1-ζ²)
-- T_d = 2π/ω_d
-- Overshoot = e^(-πζ/√(1-ζ²)) × 100%
-- Settling time ≈ 4/α
-
-Default parameters:
-- ζ = 0.3
-- ω₀ = 1000 rad/s
-
-Canvas layout:
-- Plot area: 600 × 350 pixels
-- Control area: 100 pixels below
-
-Implementation: p5.js
-</details>
+<div class="msim-box"><button class="msim-btn" onclick="toggleFS(this)">⛶ Fullscreen</button>
+<div style="display:flex;gap:16px;flex-wrap:wrap;margin-bottom:6px;">
+<label style="font-size:0.9em;">ζ: <input type="range" id="udZ" min="0.02" max="0.95" value="0.2" step="0.02" oninput="drawUD()"> <strong id="udZv">0.20</strong></label>
+<label style="font-size:0.9em;">ω₀: <input type="range" id="udW" min="1" max="20" value="5" step="0.5" oninput="drawUD()"> <strong id="udWv">5.0</strong></label>
+</div>
+<canvas id="underdampedCanvas" width="690" height="340"></canvas>
+<div id="udInfo" style="font-size:0.85em;margin-top:4px;padding:6px;background:#FFF8E1;border-radius:6px;"></div>
+</div>
+<script>
+var udChart=null;
+function drawUD(){
+  var z=+document.getElementById('udZ').value,w0=+document.getElementById('udW').value;
+  document.getElementById('udZv').textContent=z.toFixed(2);document.getElementById('udWv').textContent=w0.toFixed(1);
+  var a=z*w0,wd=w0*Math.sqrt(1-z*z),phi=Math.acos(z);
+  var os=100*Math.exp(-Math.PI*z/Math.sqrt(1-z*z)),ts=4/(z*w0);
+  var tMax=Math.max(ts*1.5,8/a),N=350,labels=[],resp=[],envU=[],envL=[],ssLine=[];
+  for(var i=0;i<=N;i++){var t=i*tMax/N;labels.push(t.toFixed(3));
+    var e=Math.exp(-a*t)/Math.sqrt(1-z*z);
+    resp.push(1-e*Math.sin(wd*t+phi));envU.push(1+e);envL.push(1-e);ssLine.push(1);}
+  var ds=[
+    {label:'Response (ζ='+z.toFixed(2)+')',data:resp,borderColor:'#5A3EED',borderWidth:2.5,pointRadius:0,fill:false},
+    {label:'Decay Envelope',data:envU,borderColor:'#D4A017',borderWidth:1.5,borderDash:[6,4],pointRadius:0,fill:false},
+    {label:'',data:envL,borderColor:'#D4A017',borderWidth:1.5,borderDash:[6,4],pointRadius:0,fill:false},
+    {label:'Steady State',data:ssLine,borderColor:'#43A047',borderWidth:1,borderDash:[4,4],pointRadius:0,fill:false}
+  ];
+  if(udChart){udChart.data.labels=labels;udChart.data.datasets=ds;udChart.options.plugins.title.text='Underdamped Oscillation Anatomy';udChart.update();}
+  else{udChart=new Chart(document.getElementById('underdampedCanvas'),{type:'line',data:{labels:labels,datasets:ds},options:{responsive:true,animation:{duration:0},plugins:{title:{display:true,text:'Underdamped Oscillation Anatomy',font:{size:14},color:'#333'},legend:{labels:{font:{size:10},filter:function(item){return item.text!=='';}}}},scales:{x:{title:{display:true,text:'Time (s)'},ticks:{maxTicksLimit:10,font:{size:10}}},y:{title:{display:true,text:'Voltage (V)'},min:-0.4,max:2.2}}}});}
+  document.getElementById('udInfo').innerHTML='<b>Overshoot:</b> <span style="color:#E53935">'+os.toFixed(1)+'%</span> &nbsp;|&nbsp; <b>Settling Time (2%):</b> '+ts.toFixed(3)+' s &nbsp;|&nbsp; <b>ω_d:</b> '+wd.toFixed(2)+' rad/s &nbsp;|&nbsp; <b>f_d:</b> '+(wd/(2*Math.PI)).toFixed(2)+' Hz';
+}
+drawUD();
+</script>
 
 ### Overshoot and Settling Time
 
@@ -477,51 +477,37 @@ Critical damping is often the design target for:
 
 #### Diagram: Three Damping Regimes Comparison
 
-<iframe src="../../sims/damping-comparison/main.html" width="100%" height="500px" scrolling="no" style="overflow: hidden;"></iframe>
-
-<details markdown="1">
-<summary>Three Damping Regimes Comparison</summary>
-Type: microsim
-
-Bloom Level: Analyze (L4)
-Bloom Verb: compare
-
-Learning Objective: Students will compare overdamped, critically damped, and underdamped responses to understand the trade-offs in damping selection.
-
-Visual elements:
-- Single plot showing three response curves simultaneously
-- Underdamped: Blue curve with oscillations
-- Critically damped: Green curve (optimal path)
-- Overdamped: Red curve (slow approach)
-- Target/final value shown as horizontal line
-- Time axis with settling time markers for each
-- Settling band (±2%) shown as shaded region
-
-Interactive controls:
-- Master slider: Natural frequency ω₀ (sets timescale)
-- Slider: Underdamped ζ (0.1 to 0.9)
-- Slider: Overdamped ζ (1.1 to 3.0)
-- Button: Reset to defaults
-- Toggle: Show/hide settling times
-- Toggle: Show/hide overshoot measurement
-
-Annotations:
-- "Fastest to settle" arrow pointing to critically damped curve
-- "Overshoot" measurement on underdamped curve
-- "Sluggish" label on overdamped curve
-
-Default parameters:
-- ω₀ = 1000 rad/s
-- Underdamped ζ = 0.3
-- Overdamped ζ = 2.0
-- Critically damped ζ = 1.0 (fixed reference)
-
-Canvas layout:
-- Plot area: 600 × 350 pixels
-- Control area: 100 pixels below
-
-Implementation: p5.js
-</details>
+<div class="msim-box"><button class="msim-btn" onclick="toggleFS(this)">⛶ Fullscreen</button>
+<div style="display:flex;gap:16px;flex-wrap:wrap;margin-bottom:6px;">
+<label style="font-size:0.9em;">ω₀: <input type="range" id="dcW" min="1" max="20" value="5" step="0.5" oninput="drawDC()"> <strong id="dcWv">5.0</strong></label>
+<label style="font-size:0.9em;">ζ (under): <input type="range" id="dcZu" min="0.05" max="0.9" value="0.2" step="0.05" oninput="drawDC()"> <strong id="dcZuv">0.20</strong></label>
+<label style="font-size:0.9em;">ζ (over): <input type="range" id="dcZo" min="1.5" max="5" value="3" step="0.1" oninput="drawDC()"> <strong id="dcZov">3.0</strong></label>
+</div>
+<canvas id="dampingCanvas" width="690" height="340"></canvas>
+</div>
+<script>
+var dcChart=null;
+function drawDC(){
+  var w0=+document.getElementById('dcW').value,zu=+document.getElementById('dcZu').value,zo=+document.getElementById('dcZo').value;
+  document.getElementById('dcWv').textContent=w0.toFixed(1);document.getElementById('dcZuv').textContent=zu.toFixed(2);document.getElementById('dcZov').textContent=zo.toFixed(1);
+  var tMax=Math.max(4/(zu*w0),4/w0,4/(zo*w0)),N=300,labels=[],under=[],cr=[],over=[],ss=[];
+  for(var i=0;i<=N;i++){var t=i*tMax/N;labels.push(t.toFixed(3));
+    var au=zu*w0,wdu=w0*Math.sqrt(1-zu*zu);
+    under.push(1-(1/Math.sqrt(1-zu*zu))*Math.exp(-au*t)*Math.sin(wdu*t+Math.acos(zu)));
+    cr.push(1-(1+w0*t)*Math.exp(-w0*t));
+    var ao=zo*w0,d=Math.sqrt(ao*ao-w0*w0),s1=-ao+d,s2=-ao-d;
+    over.push(1+s2/(s1-s2)*Math.exp(s1*t)+s1/(s2-s1)*Math.exp(s2*t));ss.push(1);}
+  var ds=[
+    {label:'Underdamped (ζ='+zu.toFixed(2)+') — oscillates',data:under,borderColor:'#5A3EED',borderWidth:2.5,pointRadius:0,fill:false},
+    {label:'Critically Damped (ζ=1.0) — fastest, no overshoot',data:cr,borderColor:'#D4A017',borderWidth:2.5,pointRadius:0,fill:false},
+    {label:'Overdamped (ζ='+zo.toFixed(1)+') — slow, no oscillation',data:over,borderColor:'#E53935',borderWidth:2.5,pointRadius:0,fill:false},
+    {label:'Steady State',data:ss,borderColor:'#999',borderWidth:1,borderDash:[4,4],pointRadius:0,fill:false}
+  ];
+  if(dcChart){dcChart.data.labels=labels;dcChart.data.datasets=ds;dcChart.update();}
+  else{dcChart=new Chart(document.getElementById('dampingCanvas'),{type:'line',data:{labels:labels,datasets:ds},options:{responsive:true,animation:{duration:0},plugins:{title:{display:true,text:'Three Damping Regimes Comparison',font:{size:14},color:'#333'},legend:{labels:{font:{size:10}}}},scales:{x:{title:{display:true,text:'Time (s)'},ticks:{maxTicksLimit:10,font:{size:10}}},y:{title:{display:true,text:'Voltage (V)'},min:-0.3,max:2.0}}}});}
+}
+drawDC();
+</script>
 
 ## Resonant Frequency: When Circuits Sing
 
@@ -559,56 +545,37 @@ With no losses (R = 0), this would continue forever. With resistance, some energ
 
 #### Diagram: Series RLC Resonance Explorer
 
-<iframe src="../../sims/series-resonance/main.html" width="100%" height="500px" scrolling="no" style="overflow: hidden;"></iframe>
-
-<details markdown="1">
-<summary>Series RLC Resonance Explorer</summary>
-Type: microsim
-
-Bloom Level: Apply (L3)
-Bloom Verb: demonstrate
-
-Learning Objective: Students will demonstrate resonance in a series RLC circuit by finding the frequency where current is maximized and impedance is minimized.
-
-Visual elements:
-- Left panel: Circuit diagram with animated current flow
-- Center panel: Impedance magnitude |Z| vs frequency plot
-- Right panel: Current magnitude |I| vs frequency plot
-- Vertical line showing current frequency position
-- Resonance peak clearly marked
-- Phase angle display
-
-Interactive controls:
-- Slider: Driving frequency f (0.1× to 10× resonant frequency)
-- Slider: Resistance R (10Ω to 1000Ω)
-- Slider: Inductance L (1mH to 100mH)
-- Slider: Capacitance C (0.1μF to 10μF)
-- Button: "Jump to Resonance"
-- Display: f₀, current frequency, |Z|, |I|
-
-Calculations shown:
-- f₀ = 1/(2π√(LC))
-- At current frequency: X_L = ωL, X_C = 1/ωC
-- |Z| = √(R² + (X_L - X_C)²)
-- |I| = V/|Z|
-
-Observations highlighted:
-- At resonance: X_L = X_C, so Z = R
-- Below resonance: Capacitive (X_C > X_L)
-- Above resonance: Inductive (X_L > X_C)
-
-Default parameters:
-- R = 100Ω
-- L = 10mH
-- C = 1μF
-- f₀ ≈ 1592 Hz
-
-Canvas layout:
-- Drawing area: 600 × 350 pixels
-- Control area: 100 pixels below
-
-Implementation: p5.js
-</details>
+<div class="msim-box"><button class="msim-btn" onclick="toggleFS(this)">⛶ Fullscreen</button>
+<div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:6px;">
+<label style="font-size:0.9em;">R (Ω): <input type="range" id="resR" min="1" max="200" value="10" step="1" oninput="drawRes()"> <strong id="resRv">10</strong></label>
+<label style="font-size:0.9em;">L (mH): <input type="range" id="resL" min="1" max="100" value="10" step="1" oninput="drawRes()"> <strong id="resLv">10</strong></label>
+<label style="font-size:0.9em;">C (μF): <input type="range" id="resC" min="0.1" max="10" value="1" step="0.1" oninput="drawRes()"> <strong id="resCv">1.0</strong></label>
+</div>
+<canvas id="resonanceCanvas" width="690" height="340"></canvas>
+<div id="resInfo" style="font-size:0.9em;margin-top:4px;padding:6px;background:#F8F6FF;border-radius:6px;"></div>
+</div>
+<script>
+var resChart=null;
+function drawRes(){
+  var R=+document.getElementById('resR').value,Lm=+document.getElementById('resL').value,Cu=+document.getElementById('resC').value;
+  document.getElementById('resRv').textContent=R;document.getElementById('resLv').textContent=Lm;document.getElementById('resCv').textContent=Cu.toFixed(1);
+  var L=Lm*1e-3,C=Cu*1e-6,f0=1/(2*Math.PI*Math.sqrt(L*C)),Q=(1/R)*Math.sqrt(L/C),BW=f0/Q;
+  var fMin=f0*0.05,fMax=f0*20,N=350,labels=[],mag=[],db3Line=[];
+  var peak=0;
+  for(var i=0;i<=N;i++){var f=fMin*Math.pow(fMax/fMin,i/N);labels.push(f.toFixed(0));
+    var XL=2*Math.PI*f*L,XC=1/(2*Math.PI*f*C),H=1/Math.sqrt(R*R+(XL-XC)*(XL-XC));
+    if(H>peak)peak=H;mag.push(H);}
+  for(var i=0;i<mag.length;i++){mag[i]/=peak;db3Line.push(0.707);}
+  var ds=[
+    {label:'Normalized |I/V|',data:mag,borderColor:'#5A3EED',borderWidth:2.5,pointRadius:0,fill:false},
+    {label:'-3dB (0.707)',data:db3Line,borderColor:'#E53935',borderWidth:1,borderDash:[5,5],pointRadius:0,fill:false}
+  ];
+  if(resChart){resChart.data.labels=labels;resChart.data.datasets=ds;resChart.update();}
+  else{resChart=new Chart(document.getElementById('resonanceCanvas'),{type:'line',data:{labels:labels,datasets:ds},options:{responsive:true,animation:{duration:0},plugins:{title:{display:true,text:'Series RLC Resonance Explorer',font:{size:14},color:'#333'},legend:{labels:{font:{size:10}}}},scales:{x:{title:{display:true,text:'Frequency (Hz)'},ticks:{maxTicksLimit:10,font:{size:10}}},y:{title:{display:true,text:'Normalized |I|'},min:0,max:1.15}}}});}
+  document.getElementById('resInfo').innerHTML='<b style="color:#5A3EED">f₀ = '+f0.toFixed(1)+' Hz</b> &nbsp;|&nbsp; <b style="color:#D4A017">Q = '+Q.toFixed(2)+'</b> &nbsp;|&nbsp; <b>BW = '+BW.toFixed(1)+' Hz</b> &nbsp;|&nbsp; f_low ≈ '+(f0-BW/2).toFixed(1)+' Hz, f_high ≈ '+(f0+BW/2).toFixed(1)+' Hz';
+}
+drawRes();
+</script>
 
 ## Quality Factor: How Sharp is the Resonance?
 
@@ -666,52 +633,37 @@ Notice that Q has opposite relationships with R for series vs. parallel circuits
 
 #### Diagram: Quality Factor and Bandwidth
 
-<iframe src="../../sims/quality-factor/main.html" width="100%" height="500px" scrolling="no" style="overflow: hidden;"></iframe>
-
-<details markdown="1">
-<summary>Quality Factor and Bandwidth</summary>
-Type: microsim
-
-Bloom Level: Analyze (L4)
-Bloom Verb: examine
-
-Learning Objective: Students will examine how quality factor affects resonance sharpness and bandwidth by observing frequency response curves.
-
-Visual elements:
-- Main plot: Normalized magnitude response vs frequency (log scale)
-- Multiple curves showing different Q values (5, 10, 20, 50)
-- 3dB points marked on each curve
-- Bandwidth arrows connecting 3dB points
-- Peak labeled with Q value
-
-Interactive controls:
-- Slider: Quality factor Q (1 to 100)
-- Slider: Resonant frequency f₀ (100 Hz to 10 kHz)
-- Toggle: Show/hide multiple Q curves for comparison
-- Toggle: Linear/Log frequency scale
-- Display: Calculated bandwidth BW = f₀/Q
-
-Calculations displayed:
-- BW = f₀/Q
-- Lower 3dB frequency: f₁ = f₀/√(1 + 1/4Q²) - f₀/2Q
-- Upper 3dB frequency: f₂ = f₀/√(1 + 1/4Q²) + f₀/2Q
-- Damping ratio: ζ = 1/2Q
-
-Visual annotations:
-- "Sharper peak = Higher Q"
-- "Narrower bandwidth = Better selectivity"
-- 3dB = 0.707 of peak value shown
-
-Default parameters:
-- Q = 10
-- f₀ = 1 kHz
-
-Canvas layout:
-- Plot area: 600 × 350 pixels
-- Control area: 100 pixels below
-
-Implementation: p5.js
-</details>
+<div class="msim-box"><button class="msim-btn" onclick="toggleFS(this)">⛶ Fullscreen</button>
+<div style="display:flex;gap:16px;flex-wrap:wrap;margin-bottom:6px;">
+<label style="font-size:0.9em;">Highlight Q: <input type="range" id="qfQ" min="1" max="100" value="10" step="1" oninput="drawQF()"> <strong id="qfQv">10</strong></label>
+<label style="font-size:0.9em;">f₀ (Hz): <input type="range" id="qfF" min="100" max="10000" value="1000" step="100" oninput="drawQF()"> <strong id="qfFv">1000</strong></label>
+</div>
+<canvas id="qfactorCanvas" width="690" height="340"></canvas>
+<div id="qfInfo" style="font-size:0.9em;margin-top:4px;padding:6px;background:#FFF8E1;border-radius:6px;"></div>
+</div>
+<script>
+var qfChart=null;
+function drawQF(){
+  var Qh=+document.getElementById('qfQ').value,f0=+document.getElementById('qfF').value;
+  document.getElementById('qfQv').textContent=Qh;document.getElementById('qfFv').textContent=f0;
+  var fMin=f0*0.1,fMax=f0*10,N=300,labels=[];
+  var fixedQ=[{q:2,c:'#E5393588'},{q:10,c:'#43A04788'},{q:50,c:'#FF980088'}];
+  var ds=fixedQ.map(function(qo){var data=[];
+    for(var i=0;i<=N;i++){var f=fMin*Math.pow(fMax/fMin,i/N);if(qo===fixedQ[0])labels.push(f.toFixed(0));
+      var r=f/f0-f0/f;data.push(1/Math.sqrt(1+qo.q*qo.q*r*r));}
+    return{label:'Q='+qo.q,data:data,borderColor:qo.c,borderWidth:1.5,pointRadius:0,fill:false};});
+  // Highlighted Q
+  var hData=[],db3=[];
+  for(var i=0;i<=N;i++){var f=fMin*Math.pow(fMax/fMin,i/N),r=f/f0-f0/f;hData.push(1/Math.sqrt(1+Qh*Qh*r*r));db3.push(0.707);}
+  ds.push({label:'Highlight Q='+Qh,data:hData,borderColor:'#5A3EED',borderWidth:3,pointRadius:0,fill:false});
+  ds.push({label:'-3dB (0.707)',data:db3,borderColor:'#E53935',borderWidth:1,borderDash:[5,5],pointRadius:0,fill:false});
+  if(qfChart){qfChart.data.labels=labels;qfChart.data.datasets=ds;qfChart.update();}
+  else{qfChart=new Chart(document.getElementById('qfactorCanvas'),{type:'line',data:{labels:labels,datasets:ds},options:{responsive:true,animation:{duration:0},plugins:{title:{display:true,text:'Quality Factor and Bandwidth',font:{size:14},color:'#333'},legend:{labels:{font:{size:10}}}},scales:{x:{title:{display:true,text:'Frequency (Hz)'},ticks:{maxTicksLimit:10,font:{size:10}}},y:{title:{display:true,text:'Normalized Response'},min:0,max:1.1}}}});}
+  var BW=f0/Qh;
+  document.getElementById('qfInfo').innerHTML='<b style="color:#5A3EED">Q = '+Qh+'</b> &nbsp;→&nbsp; <b>BW = '+BW.toFixed(1)+' Hz</b> &nbsp;|&nbsp; ζ = '+(1/(2*Qh)).toFixed(4)+' &nbsp;|&nbsp; Higher Q = sharper peak, narrower bandwidth';
+}
+drawQF();
+</script>
 
 ## Pulse Response: Ringing and Transients
 
@@ -740,48 +692,36 @@ When an underdamped RLC circuit receives a pulse:
 
 #### Diagram: Pulse Response and Ringing
 
-<iframe src="../../sims/pulse-ringing/main.html" width="100%" height="450px" scrolling="no" style="overflow: hidden;"></iframe>
-
-<details markdown="1">
-<summary>Pulse Response and Ringing</summary>
-Type: microsim
-
-Bloom Level: Apply (L3)
-Bloom Verb: demonstrate
-
-Learning Objective: Students will demonstrate how pulse width and damping affect ringing in RLC circuits.
-
-Visual elements:
-- Top plot: Input pulse signal
-- Bottom plot: Circuit response with ringing
-- Overlay showing damped oscillations
-- Pulse edges aligned between plots
-- Ringing peaks counted and labeled
-
-Interactive controls:
-- Slider: Pulse width (0.1× to 5× natural period)
-- Slider: Damping ratio ζ (0.05 to 0.9)
-- Slider: Natural frequency ω₀
-- Button: Send single pulse
-- Button: Continuous pulses
-- Display: Number of ringing cycles visible
-
-Observations highlighted:
-- Pulse width = T_d/2: "Maximum ringing - resonant excitation"
-- High ζ: "Quick settling, minimal overshoot"
-- Low ζ: "Extended ringing, many oscillations"
-
-Default parameters:
-- ζ = 0.2
-- Pulse width = T_d (one natural period)
-- ω₀ = 1000 rad/s
-
-Canvas layout:
-- Two plot areas: 600 × 175 pixels each
-- Control area: 100 pixels below
-
-Implementation: p5.js
-</details>
+<div class="msim-box"><button class="msim-btn" onclick="toggleFS(this)">⛶ Fullscreen</button>
+<div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:6px;">
+<label style="font-size:0.9em;">ζ: <input type="range" id="prZ" min="0.02" max="0.5" value="0.1" step="0.02" oninput="drawPR()"> <strong id="prZv">0.10</strong></label>
+<label style="font-size:0.9em;">ω₀: <input type="range" id="prW" min="5" max="30" value="10" step="1" oninput="drawPR()"> <strong id="prWv">10</strong></label>
+<label style="font-size:0.9em;">Pulse (s): <input type="range" id="prP" min="0.1" max="2" value="0.5" step="0.05" oninput="drawPR()"> <strong id="prPv">0.50</strong></label>
+</div>
+<canvas id="pulseCanvas" width="690" height="340"></canvas>
+<div id="prInfo" style="font-size:0.85em;margin-top:4px;color:#555;"></div>
+</div>
+<script>
+var prChart=null;
+function drawPR(){
+  var z=+document.getElementById('prZ').value,w0=+document.getElementById('prW').value,pw=+document.getElementById('prP').value;
+  document.getElementById('prZv').textContent=z.toFixed(2);document.getElementById('prWv').textContent=w0;document.getElementById('prPv').textContent=pw.toFixed(2);
+  var a=z*w0,wd=w0*Math.sqrt(1-z*z),phi=Math.acos(z);
+  function stp(t){if(t<0)return 0;return 1-(1/Math.sqrt(1-z*z))*Math.exp(-a*t)*Math.sin(wd*t+phi);}
+  var tMax=Math.max(pw+5/a,3),N=400,labels=[],pulse=[],resp=[],zero=[];
+  for(var i=0;i<=N;i++){var t=i*tMax/N;labels.push(t.toFixed(3));
+    pulse.push(t>=0&&t<=pw?1:0);resp.push(stp(t)-stp(t-pw));zero.push(0);}
+  var ds=[
+    {label:'Input Pulse',data:pulse,borderColor:'#D4A017',borderWidth:2,pointRadius:0,fill:false,stepped:true},
+    {label:'RLC Output (ringing)',data:resp,borderColor:'#5A3EED',borderWidth:2.5,pointRadius:0,fill:false},
+    {label:'',data:zero,borderColor:'#ccc',borderWidth:0.5,borderDash:[2,2],pointRadius:0,fill:false}
+  ];
+  if(prChart){prChart.data.labels=labels;prChart.data.datasets=ds;prChart.update();}
+  else{prChart=new Chart(document.getElementById('pulseCanvas'),{type:'line',data:{labels:labels,datasets:ds},options:{responsive:true,animation:{duration:0},plugins:{title:{display:true,text:'Pulse Response and Ringing',font:{size:14},color:'#333'},legend:{labels:{font:{size:10},filter:function(it){return it.text!=='';}}}},scales:{x:{title:{display:true,text:'Time (s)'},ticks:{maxTicksLimit:10,font:{size:10}}},y:{title:{display:true,text:'Amplitude'},min:-1.8,max:2.2}}}});}
+  document.getElementById('prInfo').innerHTML='ω_d = '+wd.toFixed(2)+' rad/s &nbsp;|&nbsp; Ringing period ≈ '+(2*Math.PI/wd).toFixed(3)+' s &nbsp;|&nbsp; Settling ~'+(4/a).toFixed(2)+' s after pulse ends';
+}
+drawPR();
+</script>
 
 ## Energy Exchange in RLC Circuits
 
@@ -808,52 +748,55 @@ With resistance:
 
 #### Diagram: Energy Exchange Animation
 
-<iframe src="../../sims/energy-exchange/main.html" width="100%" height="500px" scrolling="no" style="overflow: hidden;"></iframe>
-
-<details markdown="1">
-<summary>Energy Exchange Animation</summary>
-Type: microsim
-
-Bloom Level: Understand (L2)
-Bloom Verb: explain
-
-Learning Objective: Students will explain how energy oscillates between the capacitor's electric field and the inductor's magnetic field in an RLC circuit.
-
-Visual elements:
-- Circuit diagram showing RLC with animated current
-- Capacitor energy bar (blue) - electric field representation
-- Inductor energy bar (red) - magnetic field representation
-- Total energy bar (gray) - decreasing over time
-- Phase indicator showing voltage and current relationship
-- Energy vs time plot showing oscillation
-
-Step-through mode for conceptual understanding:
-- Stage 1: "Capacitor fully charged" - all energy in E-field
-- Stage 2: "Current rising" - energy transferring to L
-- Stage 3: "Inductor at max current" - all energy in B-field
-- Stage 4: "Current falling" - energy returning to C (opposite polarity)
-- Stage 5: "Cycle completes" - back to initial state (with losses)
-
-Interactive controls:
-- Button: Step / Auto-animate
-- Slider: Damping (0 for ideal LC, up to 0.5)
-- Slider: Animation speed
-- Toggle: Show/hide energy plot
-- Display: Current W_C, W_L, W_total values
-
-Default parameters:
-- Light damping (ζ = 0.1) to show both oscillation and decay
-- Initial condition: Capacitor fully charged
-
-Canvas layout:
-- Circuit and energy bars: 400 × 300 pixels
-- Energy plot: 200 × 300 pixels (side)
-- Control area: 100 pixels below
-
-Instructional Rationale: Step-through mode helps students understand energy conservation and transfer without the distraction of continuous animation.
-
-Implementation: p5.js
-</details>
+<div class="msim-box"><button class="msim-btn" onclick="toggleFS(this)">⛶ Fullscreen</button>
+<div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:6px;align-items:center;">
+<label style="font-size:0.9em;">ζ: <input type="range" id="enZ" min="0.02" max="0.5" value="0.1" step="0.02" oninput="resetEn()"> <strong id="enZv">0.10</strong></label>
+<label style="font-size:0.9em;">ω₀: <input type="range" id="enW" min="2" max="15" value="5" step="0.5" oninput="resetEn()"> <strong id="enWv">5.0</strong></label>
+<button id="enBtn" onclick="toggleEn()" style="padding:4px 14px;border:1px solid #5A3EED;border-radius:4px;background:#F8F6FF;color:#5A3EED;cursor:pointer;font-weight:600;">▶ Play</button>
+</div>
+<canvas id="energyCanvas" width="690" height="350"></canvas>
+<div style="display:flex;gap:20px;margin-top:6px;">
+<div style="flex:1;text-align:center;padding:8px;background:#E3F2FD;border-radius:6px;"><strong>Capacitor E<sub>C</sub></strong><br><span id="enEc" style="font-size:1.3em;color:#1565C0;">100%</span></div>
+<div style="flex:1;text-align:center;padding:8px;background:#FFF3E0;border-radius:6px;"><strong>Inductor E<sub>L</sub></strong><br><span id="enEl" style="font-size:1.3em;color:#E65100;">0%</span></div>
+<div style="flex:1;text-align:center;padding:8px;background:#FFEBEE;border-radius:6px;"><strong>Dissipated</strong><br><span id="enEd" style="font-size:1.3em;color:#C62828;">0%</span></div>
+</div>
+</div>
+<script>
+var enChart=null,enAnim=null,enIdx=0,enPlaying=false;
+var enData={labels:[],ec:[],el:[],etot:[]};
+function computeEn(){
+  var z=+document.getElementById('enZ').value,w0=+document.getElementById('enW').value;
+  document.getElementById('enZv').textContent=z.toFixed(2);document.getElementById('enWv').textContent=w0.toFixed(1);
+  var a=z*w0,wd=w0*Math.sqrt(1-z*z),L=1,C=1/(w0*w0),V0=10,E0=0.5*C*V0*V0;
+  var tMax=8/a,N=400;enData={labels:[],ec:[],el:[],etot:[]};
+  for(var i=0;i<=N;i++){var t=i*tMax/N;enData.labels.push(t.toFixed(3));
+    var v=V0*Math.exp(-a*t)*Math.cos(wd*t);
+    var dvdt=V0*Math.exp(-a*t)*(-a*Math.cos(wd*t)-wd*Math.sin(wd*t));
+    var iL=C*dvdt,Ec=0.5*C*v*v/E0,El=0.5*L*iL*iL/E0;
+    enData.ec.push(Ec);enData.el.push(El);enData.etot.push(Ec+El);}
+}
+function drawEnFrame(){
+  var ec=enData.ec.slice(0,enIdx+1),el=enData.el.slice(0,enIdx+1),et=enData.etot.slice(0,enIdx+1),lb=enData.labels.slice(0,enIdx+1);
+  // Pad rest with null
+  var pad=enData.labels.length-lb.length;
+  var ds=[
+    {label:'Capacitor Energy',data:ec.concat(Array(pad).fill(null)),borderColor:'#2196F3',backgroundColor:'rgba(33,150,243,0.2)',borderWidth:2,pointRadius:0,fill:true},
+    {label:'Inductor Energy',data:el.concat(Array(pad).fill(null)),borderColor:'#FF9800',backgroundColor:'rgba(255,152,0,0.2)',borderWidth:2,pointRadius:0,fill:true},
+    {label:'Total Energy (decaying)',data:et.concat(Array(pad).fill(null)),borderColor:'#E53935',borderWidth:1.5,borderDash:[5,5],pointRadius:0,fill:false}
+  ];
+  if(enChart){enChart.data.labels=enData.labels;enChart.data.datasets=ds;enChart.update();}
+  else{enChart=new Chart(document.getElementById('energyCanvas'),{type:'line',data:{labels:enData.labels,datasets:ds},options:{responsive:true,animation:{duration:0},plugins:{title:{display:true,text:'Energy Exchange in RLC Circuit (animated)',font:{size:14},color:'#333'},legend:{labels:{font:{size:10}}}},scales:{x:{title:{display:true,text:'Time (s)'},ticks:{maxTicksLimit:10,font:{size:10}}},y:{title:{display:true,text:'Normalized Energy'},min:0,max:1.1}}}});}
+  // Update bars
+  var ecv=enData.ec[enIdx]||0,elv=enData.el[enIdx]||0,etv=enData.etot[enIdx]||1,dis=Math.max(0,1-etv);
+  document.getElementById('enEc').textContent=(ecv*100).toFixed(0)+'%';
+  document.getElementById('enEl').textContent=(elv*100).toFixed(0)+'%';
+  document.getElementById('enEd').textContent=(dis*100).toFixed(0)+'%';
+}
+function stepEn(){if(!enPlaying)return;enIdx=Math.min(enIdx+2,enData.labels.length-1);drawEnFrame();if(enIdx<enData.labels.length-1)enAnim=requestAnimationFrame(stepEn);else{enPlaying=false;document.getElementById('enBtn').textContent='↺ Replay';}}
+function toggleEn(){if(enPlaying){enPlaying=false;cancelAnimationFrame(enAnim);document.getElementById('enBtn').textContent='▶ Play';}else{if(enIdx>=enData.labels.length-1)enIdx=0;enPlaying=true;document.getElementById('enBtn').textContent='⏸ Pause';stepEn();}}
+function resetEn(){enPlaying=false;cancelAnimationFrame(enAnim);document.getElementById('enBtn').textContent='▶ Play';computeEn();enIdx=enData.labels.length-1;drawEnFrame();}
+computeEn();enIdx=enData.labels.length-1;drawEnFrame();
+</script>
 
 ## Design Applications
 
@@ -1033,3 +976,5 @@ Second-order RLC circuits introduce the rich dynamics of oscillation and resonan
 These concepts prepare you for AC analysis, where sinusoidal signals interact with resonant circuits to create the filters, tuners, and oscillators that make modern electronics possible. The dramatic behavior of second-order circuits—the ringing, the resonance, the critical balance between too much and too little damping—is where circuit analysis becomes genuinely exciting.
 
 Next chapter, we'll see how AC signals and sinusoidal analysis build on these foundations to analyze circuits in the frequency domain.
+
+</div>
