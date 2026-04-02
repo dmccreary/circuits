@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phasor Addition Visualizer</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+    <style>
+        body { margin: 0; padding: 0; background: #f0f0f0; display: flex; justify-content: center; }
+        canvas { display: block; }
+    </style>
+</head>
+<body>
+<script>
+// Phasor Addition Visualizer
+// Chapter 9: Phasors and Complex Impedance
+// Left: phasor diagram (V1, V2, Vtotal)  |  Right: time-domain waveforms
+
+const CANVAS_WIDTH   = 670;
+const DRAW_HEIGHT    = 420;
+const CONTROL_HEIGHT = 80;
+const CANVAS_HEIGHT  = DRAW_HEIGHT + CONTROL_HEIGHT;
+
+const LEFT_W  = 310;
+const RIGHT_X = LEFT_W + 8;
+const RIGHT_W = CANVAS_WIDTH - RIGHT_X - 4;
+
+let v1MagSlider, v1PhaseSlider, v2MagSlider, v2PhaseSlider;
+let showConstruction = true;
+let constrBtn = { x: 10, y: 42, w: 130, h: 22 };
+
+function setup() {
+    let cnv = createCanvas(CANVAS_WIDTH, CANVAS_HEIGHT);
+    cnv.parent(document.body);
+    textFont('monospace');
+
+    let sy = DRAW_HEIGHT + 8;
+
+    v1MagSlider = createSlider(0.5, 10, 10, 0.1);
+    v1MagSlider.position(85, sy);
+    v1MagSlider.size(110);
+    v1MagSlider.style('cursor', 'pointer');
+
+    v1PhaseSlider = createSlider(-180, 180, 0, 1);
+    v1PhaseSlider.position(85, sy + 32);
+    v1PhaseSlider.size(110);
+    v1PhaseSlider.style('cursor', 'pointer');
+
+    v2MagSlider = createSlider(0.5, 10, 10, 0.1);
+    v2MagSlider.position(350, sy);
+    v2MagSlider.size(110);
+    v2MagSlider.style('cursor', 'pointer');
+
+    v2PhaseSlider = createSlider(-180, 180, 90, 1);
+    v2PhaseSlider.position(350, sy + 32);
+    v2PhaseSlider.size(110);
+    v2PhaseSlider.style('cursor', 'pointer');
+}
+
+function draw() {
+    let Vm1 = v1MagSlider.value();
+    let ph1 = v1PhaseSlider.value() * PI / 180;
+    let Vm2 = v2MagSlider.value();
+    let ph2 = v2PhaseSlider.value() * PI / 180;
+
+    // Phasor components
+    let re1 = Vm1 * cos(ph1), im1 = Vm1 * sin(ph1);
+    let re2 = Vm2 * cos(ph2), im2 = Vm2 * sin(ph2);
+    let reT = re1 + re2,     imT = im1 + im2;
+    let VmT = sqrt(reT * reT + imT * imT);
+    let phT = atan2(imT, reT);
+
+    background(240);
+    drawPhasorDiagram(Vm1, ph1, Vm2, ph2, reT, imT, VmT, phT, re1, im1, re2, im2);
+    drawTimeDomain(Vm1, ph1, Vm2, ph2, VmT, phT);
+    drawControls(Vm1, ph1, Vm2, ph2, VmT, phT, reT, imT);
+}
+
+// ─── Left: phasor diagram ────────────────────────────────────────────────────
+function drawPhasorDiagram(Vm1, ph1, Vm2, ph2, reT, imT, VmT, phT, re1, im1, re2, im2) {
+    fill(255); stroke(180); strokeWeight(1);
+    rect(4, 4, LEFT_W - 6, DRAW_HEIGHT - 8, 6);
+
+    noStroke(); fill(40); textSize(12); textAlign(CENTER);
+    text("Phasor Diagram", LEFT_W / 2, 22);
+
+    let cx = LEFT_W / 2;
+    let cy = DRAW_HEIGHT / 2 + 10;
+    let maxMag = max(Vm1, Vm2, VmT, 1);
+    let r = min(LEFT_W, DRAW_HEIGHT) * 0.36;
+    let scale = r / maxMag;
+
+    // Axes
+    stroke(180); strokeWeight(1);
+    line(14, cy, LEFT_W - 10, cy);
+    line(cx, 32, cx, DRAW_HEIGHT - 14);
+    noStroke(); fill(120); textSize(9); textAlign(LEFT);
+    text("Re →", LEFT_W - 28, cy - 4);
+    textAlign(CENTER); text("Im ↑", cx + 12, 38);
+
+    // Unit circle guide
+    noFill(); stroke(220); strokeWeight(1);
+    drawingContext.setLineDash([3, 4]);
+    ellipse(cx, cy, r * 2, r * 2);
+    drawingContext.setLineDash([]);
+
+    // Head-to-tail construction lines (V2 placed at tip of V1)
+    if (showConstruction) {
+        let tip1x = cx + re1 * scale;
+        let tip1y = cy - im1 * scale;
+        let tip2x = tip1x + re2 * scale;
+        let tip2y = tip1y - im2 * scale;
+
+        stroke(220, 60, 180, 160); strokeWeight(1.5);
+        drawingContext.setLineDash([5, 5]);
+        line(tip1x, tip1y, tip2x, tip2y);
+        drawingContext.setLineDash([]);
+        drawArrowHead(tip1x, tip1y, tip2x, tip2y, color(220, 60, 180));
+
+        noStroke(); fill(220, 60, 180); textSize(9); textAlign(LEFT);
+        text("V₂ (translated)", tip1x + 4, tip1y - 6);
+    }
+
+    // V1 (blue)
+    let e1x = cx + re1 * scale, e1y = cy - im1 * scale;
+    stroke(30, 100, 200); strokeWeight(2.5);
+    line(cx, cy, e1x, e1y);
+    drawArrowHead(cx, cy, e1x, e1y, color(30, 100, 200));
+    noStroke(); fill(30, 100, 200); textSize(10); textAlign(LEFT);
+    let lab1 = "V₁=" + v1MagSlider.value().toFixed(1) + "∠" + v1PhaseSlider.value() + "°";
+    text(lab1, e1x + 5, e1y - 4);
+
+    // V2 (red)
+    let e2x = cx + re2 * scale, e2y = cy - im2 * scale;
+    stroke(200, 40, 40); strokeWeight(2.5);
+    line(cx, cy, e2x, e2y);
+    drawArrowHead(cx, cy, e2x, e2y, color(200, 40, 40));
+    noStroke(); fill(200, 40, 40); textSize(10); textAlign(LEFT);
+    let lab2 = "V₂=" + v2MagSlider.value().toFixed(1) + "∠" + v2PhaseSlider.value() + "°";
+    text(lab2, e2x + 5, e2y + 12);
+
+    // Vtotal (green)
+    let etx = cx + reT * scale, ety = cy - imT * scale;
+    stroke(30, 160, 60); strokeWeight(3);
+    line(cx, cy, etx, ety);
+    drawArrowHead(cx, cy, etx, ety, color(30, 160, 60));
+    noStroke(); fill(30, 160, 60); textSize(10); textAlign(LEFT);
+    let labT = "V_T=" + VmT.toFixed(2) + "∠" + degrees(phT).toFixed(1) + "°";
+    let labX = etx + 5 > LEFT_W - 60 ? etx - 80 : etx + 5;
+    text(labT, labX, ety - 4);
+
+    // Result box at bottom
+    let bx = 10, by = DRAW_HEIGHT - 78;
+    fill(240, 255, 240); stroke(130, 200, 130); strokeWeight(1);
+    rect(bx, by, LEFT_W - 18, 68, 4);
+
+    noStroke(); fill(30, 130, 50); textSize(10); textAlign(LEFT);
+    text("V_total (rectangular):", bx + 6, by + 16);
+    let imSign = imT >= 0 ? "+" : "";
+    text(reT.toFixed(3) + " " + imSign + imT.toFixed(3) + "j", bx + 6, by + 30);
+    text("V_total (polar):", bx + 6, by + 46);
+    text(VmT.toFixed(3) + " ∠ " + degrees(phT).toFixed(2) + "°", bx + 6, by + 60);
+}
+
+// ─── Right: time-domain waveforms ────────────────────────────────────────────
+function drawTimeDomain(Vm1, ph1, Vm2, ph2, VmT, phT) {
+    let px = RIGHT_X, py = 4, pw = RIGHT_W - 4, ph = DRAW_HEIGHT - 8;
+    fill(255); stroke(180); strokeWeight(1);
+    rect(px, py, pw, ph, 6);
+
+    noStroke(); fill(40); textSize(12); textAlign(CENTER);
+    text("Time Domain Verification", px + pw / 2, py + 16);
+
+    let maxMag = max(Vm1, Vm2, VmT, 1);
+    let plotH = 240;
+    let plotTop = py + 36;
+    let cy = plotTop + plotH / 2;
+    let lx = px + 18;
+    let pw2 = pw - 24;
+
+    // Axes
+    stroke(180); strokeWeight(1);
+    line(lx, plotTop, lx, plotTop + plotH);
+    line(lx, cy, lx + pw2, cy);
+    noStroke(); fill(120); textSize(9); textAlign(LEFT);
+    text("v(t)", lx + 2, plotTop + 10);
+    text("t →", lx + pw2 - 18, cy - 4);
+
+    // Draw waveforms
+    let waveData = [
+        { Vm: Vm1, phi: ph1, col: color(30, 100, 200), lbl: "v₁(t)" },
+        { Vm: Vm2, phi: ph2, col: color(200, 40, 40),  lbl: "v₂(t)" },
+        { Vm: VmT, phi: phT, col: color(30, 160, 60),  lbl: "v_T(t)" },
+    ];
+    for (let w of waveData) {
+        stroke(w.col); strokeWeight(w === waveData[2] ? 2.5 : 1.5); noFill();
+        beginShape();
+        for (let i = 0; i <= pw2; i++) {
+            let tVal = map(i, 0, pw2, 0, TWO_PI * 2);
+            let y = map(w.Vm * cos(tVal + w.phi), maxMag, -maxMag, plotTop + 4, plotTop + plotH - 4);
+            vertex(lx + i, y);
+        }
+        endShape();
+    }
+
+    // Legend
+    let ly = plotTop + plotH + 16;
+    for (let i = 0; i < waveData.length; i++) {
+        stroke(waveData[i].col); strokeWeight(2);
+        line(px + 14 + i * 96, ly, px + 34 + i * 96, ly);
+        noStroke(); fill(waveData[i].col); textSize(10); textAlign(LEFT);
+        text(waveData[i].lbl, px + 37 + i * 96, ly + 4);
+    }
+
+    // Expressions
+    noStroke(); fill(60); textSize(10); textAlign(LEFT);
+    let ph1d = degrees(ph1), ph2d = degrees(ph2), phTd = degrees(phT);
+    let ld = ly + 24;
+    fill(30, 100, 200);
+    text("v₁(t) = " + Vm1.toFixed(1) + " cos(ωt " + fmtPh(ph1d) + ")", lx, ld);
+    fill(200, 40, 40);
+    text("v₂(t) = " + Vm2.toFixed(1) + " cos(ωt " + fmtPh(ph2d) + ")", lx, ld + 16);
+    fill(30, 160, 60);
+    text("v_T(t) = " + VmT.toFixed(2) + " cos(ωt " + fmtPh(phTd) + ")", lx, ld + 32);
+
+    // Note about verification
+    noStroke(); fill(100); textSize(9); textAlign(LEFT);
+    text("v_T(t) = v₁(t) + v₂(t)  ✓  (verified by overlap)", lx, ld + 52);
+}
+
+function fmtPh(deg) {
+    if (abs(deg) < 0.1) return "";
+    return deg >= 0 ? " +" + deg.toFixed(1) + "°" : " " + deg.toFixed(1) + "°";
+}
+
+// ─── Controls ────────────────────────────────────────────────────────────────
+function drawControls(Vm1, ph1, Vm2, ph2, VmT, phT, reT, imT) {
+    fill(245); stroke(180); strokeWeight(1);
+    rect(0, DRAW_HEIGHT, CANVAS_WIDTH, CONTROL_HEIGHT);
+
+    // Construction toggle
+    let cb = constrBtn;
+    fill(showConstruction ? color(60, 120, 200) : color(180));
+    stroke(showConstruction ? color(40, 90, 160) : color(130));
+    strokeWeight(1);
+    rect(cb.x, cb.y, cb.w, cb.h, 4);
+    noStroke(); fill(showConstruction ? 255 : 50); textSize(10); textAlign(CENTER, CENTER);
+    text("Construction Lines", cb.x + cb.w / 2, cb.y + cb.h / 2);
+
+    noStroke(); fill(30, 100, 200); textSize(10); textAlign(RIGHT);
+    text("V₁ magnitude:", 80, DRAW_HEIGHT + 18);
+    text("V₁ phase:", 80, DRAW_HEIGHT + 50);
+    fill(30, 100, 200); textSize(10); textAlign(LEFT);
+    text(Vm1.toFixed(1) + " V", 200, DRAW_HEIGHT + 18);
+    text(v1PhaseSlider.value() + "°", 200, DRAW_HEIGHT + 50);
+
+    fill(200, 40, 40); textSize(10); textAlign(RIGHT);
+    text("V₂ magnitude:", 345, DRAW_HEIGHT + 18);
+    text("V₂ phase:", 345, DRAW_HEIGHT + 50);
+    fill(200, 40, 40); textSize(10); textAlign(LEFT);
+    text(Vm2.toFixed(1) + " V", 465, DRAW_HEIGHT + 18);
+    text(v2PhaseSlider.value() + "°", 465, DRAW_HEIGHT + 50);
+
+    fill(30, 160, 60); textSize(10); textAlign(LEFT);
+    text("V_total = " + VmT.toFixed(2) + " ∠ " + degrees(phT).toFixed(1) + "°", 530, DRAW_HEIGHT + 34);
+}
+
+function drawArrowHead(x1, y1, x2, y2, col) {
+    let ang = atan2(y2 - y1, x2 - x1);
+    let sz = 8;
+    fill(col); noStroke();
+    push();
+    translate(x2, y2);
+    rotate(ang);
+    triangle(0, 0, -sz, -sz / 2.5, -sz, sz / 2.5);
+    pop();
+}
+
+function mousePressed() {
+    let cb = constrBtn;
+    if (mouseX >= cb.x && mouseX <= cb.x + cb.w &&
+        mouseY >= cb.y && mouseY <= cb.y + cb.h) {
+        showConstruction = !showConstruction;
+    }
+}
+</script>
+</body>
+</html>

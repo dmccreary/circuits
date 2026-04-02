@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Series vs Parallel Resonance</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+    <style>
+        body { margin: 0; padding: 0; background: #f0f0f0; display: flex; justify-content: center; }
+        canvas { display: block; }
+    </style>
+</head>
+<body>
+<script>
+// Series vs Parallel Resonance
+// Chapter 9: Phasors and Complex Impedance
+// Two plots: |Z| vs frequency for series RLC (left) and parallel RLC (right)
+
+const CANVAS_WIDTH   = 670;
+const DRAW_HEIGHT    = 420;
+const CONTROL_HEIGHT = 80;
+const CANVAS_HEIGHT  = DRAW_HEIGHT + CONTROL_HEIGHT;
+
+// Two side-by-side plots
+const PLY = 46, PLH = 200;
+const PLX1 = 48, PLW1 = 270;
+const PLX2 = PLX1 + PLW1 + 32, PLW2 = 270;
+
+// Current plots (|I| vs f) below
+const CLY = PLY + PLH + 50, CLH = 110;
+
+let lSlider, cSlider, qSlider, fMarkSlider;
+let sweeping = false;
+let sweepF = 0;
+let sweepBtn = { x: 10, y: DRAW_HEIGHT + 28, w: 100, h: 28 };
+
+const L_VAL = 10e-3;   // 10 mH default
+const C_VAL = 1e-6;    // 1 µF default
+
+function setup() {
+    let cnv = createCanvas(CANVAS_WIDTH, CANVAS_HEIGHT);
+    cnv.parent(document.body);
+    textFont('monospace');
+
+    let sy = DRAW_HEIGHT + 8;
+
+    lSlider = createSlider(1, 100, 10, 1);   // mH
+    lSlider.position(70, sy);
+    lSlider.size(100);
+    lSlider.style('cursor', 'pointer');
+
+    cSlider = createSlider(1, 100, 1, 1);    // µF
+    cSlider.position(240, sy);
+    cSlider.size(100);
+    cSlider.style('cursor', 'pointer');
+
+    qSlider = createSlider(1, 50, 10, 1);
+    qSlider.position(410, sy);
+    qSlider.size(100);
+    qSlider.style('cursor', 'pointer');
+
+    fMarkSlider = createSlider(0, 100, 50, 0.5);
+    fMarkSlider.position(70, sy + 34);
+    fMarkSlider.size(440);
+    fMarkSlider.style('cursor', 'pointer');
+}
+
+function draw() {
+    let L  = lSlider.value() * 1e-3;
+    let C  = cSlider.value() * 1e-6;
+    let Q  = qSlider.value();
+    let f0 = 1 / (TWO_PI * sqrt(L * C));
+    let R  = (TWO_PI * f0 * L) / Q;    // derive R from Q and f0
+
+    // Sweep animation
+    if (sweeping) {
+        sweepF = (sweepF + 0.003) % 1;
+    }
+    let fMark = logMap(fMarkSlider.value(), f0 * 0.1, f0 * 10);
+
+    background(240);
+    drawPlots(L, C, R, f0, Q, fMark);
+    drawAnnotations(L, C, R, f0, Q, fMark);
+    drawControls(L, C, R, f0, Q);
+}
+
+function logMap(t, lo, hi) {
+    return lo * pow(hi / lo, t / 100);
+}
+
+// ─── Both plots ───────────────────────────────────────────────────────────────
+function drawPlots(L, C, R, f0, Q, fMark) {
+    let fMin = f0 * 0.1, fMax = f0 * 10;
+
+    drawZPlot(PLX1, PLY, PLW1, PLH, L, C, R, f0, Q, fMark, fMin, fMax, "series");
+    drawZPlot(PLX2, PLY, PLW2, PLH, L, C, R, f0, Q, fMark, fMin, fMax, "parallel");
+
+    // Current plots
+    drawIPlot(PLX1, CLY, PLW1, CLH, L, C, R, f0, Q, fMark, fMin, fMax, "series");
+    drawIPlot(PLX2, CLY, PLW2, CLH, L, C, R, f0, Q, fMark, fMin, fMax, "parallel");
+}
+
+function drawZPlot(px, py, pw, ph, L, C, R, f0, Q, fMark, fMin, fMax, type) {
+    // Background
+    fill(255); stroke(180); strokeWeight(1);
+    rect(px - 2, py - 2, pw + 6, ph + 4, 4);
+
+    // Title
+    noStroke(); fill(40); textSize(11); textAlign(CENTER);
+    text(type === "series" ? "SERIES RLC  |  Impedance" : "PARALLEL RLC  |  Impedance", px + pw / 2, py - 8);
+
+    // Compute Z values across frequency range
+    let zVals = [];
+    let fVals = [];
+    for (let i = 0; i <= pw; i++) {
+        let f = logMap(i / pw * 100, fMin, fMax);
+        let w = TWO_PI * f;
+        let XL = w * L;
+        let XC = 1 / (w * C);
+        let Z;
+        if (type === "series") {
+            Z = sqrt(R * R + (XL - XC) * (XL - XC));
+        } else {
+            // Parallel: Y = 1/R + j(1/XL - 1/XC) ... wait:
+            // Y = G + jB = 1/R + j(wC - 1/(wL))
+            let G = 1 / R;
+            let B = 1 / XC - 1 / XL;  // BC - BL
+            Z = 1 / sqrt(G * G + B * B);
+        }
+        zVals.push(Z);
+        fVals.push(f);
+    }
+
+    let zMin = min(zVals), zMax = max(zVals);
+    // For series: min at f0 (R), max at extremes
+    // For parallel: max at f0, min at extremes
+    let zLo = zMin * 0.8, zHi = zMax * 1.2;
+
+    // Grid
+    stroke(235); strokeWeight(1);
+    for (let pct of [0.25, 0.5, 0.75]) {
+        let x = px + pw * pct;
+        line(x, py, x, py + ph);
+        let y = py + ph * (1 - pct);
+        line(px, y, px + pw, y);
+    }
+
+    // Axes
+    stroke(140); strokeWeight(1.5);
+    line(px, py, px, py + ph);
+    line(px, py + ph, px + pw, py + ph);
+
+    // Curve
+    let curveCol = type === "series" ? color(200, 60, 30) : color(30, 100, 200);
+    stroke(curveCol); strokeWeight(2.5); noFill();
+    beginShape();
+    for (let i = 0; i < zVals.length; i++) {
+        let x = px + i;
+        let y = map(zVals[i], zLo, zHi, py + ph, py);
+        y = constrain(y, py, py + ph);
+        vertex(x, y);
+    }
+    endShape();
+
+    // f0 line
+    let xF0 = px + map(log(f0 / fMin) / log(fMax / fMin), 0, 1, 0, pw);
+    stroke(100, 60, 180); strokeWeight(1.5);
+    drawingContext.setLineDash([5, 4]);
+    line(xF0, py, xF0, py + ph);
+    drawingContext.setLineDash([]);
+    noStroke(); fill(100, 60, 180); textSize(9); textAlign(CENTER);
+    text("f₀", xF0, py - 2);
+
+    // fMark line
+    let xFM = px + map(log(fMark / fMin) / log(fMax / fMin), 0, 1, 0, pw);
+    if (xFM >= px && xFM <= px + pw) {
+        stroke(60); strokeWeight(2);
+        line(xFM, py, xFM, py + ph);
+        // Dot on curve
+        let idx = constrain(round(xFM - px), 0, zVals.length - 1);
+        let yDot = map(zVals[idx], zLo, zHi, py + ph, py);
+        fill(curveCol); noStroke();
+        ellipse(xFM, constrain(yDot, py, py + ph), 8, 8);
+    }
+
+    // Axis labels
+    noStroke(); fill(100); textSize(8); textAlign(CENTER);
+    text(fmtHz(fMin), px, py + ph + 12);
+    text(fmtHz(f0), xF0, py + ph + 12);
+    text(fmtHz(fMax), px + pw, py + ph + 12);
+
+    // Z annotation at f0
+    let zAtF0 = type === "series" ? R : (TWO_PI * f0 * L) * Q;
+    noStroke(); fill(curveCol); textSize(9); textAlign(LEFT);
+    let annoX = xF0 + 4, annoY = type === "series" ? py + ph - 20 : py + 18;
+    text(type === "series" ? "Z_min=" + fmtOhm(zAtF0) : "Z_max=" + fmtOhm(zAtF0), annoX, annoY);
+
+    // Y-axis label
+    noStroke(); fill(80); textSize(9);
+    push(); translate(px - 14, py + ph / 2); rotate(-HALF_PI);
+    textAlign(CENTER); text("|Z| (Ω)", 0, 0);
+    pop();
+}
+
+function drawIPlot(px, py, pw, ph, L, C, R, f0, Q, fMark, fMin, fMax, type) {
+    fill(255); stroke(180); strokeWeight(1);
+    rect(px - 2, py - 2, pw + 6, ph + 4, 4);
+
+    noStroke(); fill(60); textSize(10); textAlign(CENTER);
+    text(type === "series" ? "Current (series)" : "Current (parallel)", px + pw / 2, py - 6);
+
+    let iVals = [];
+    for (let i = 0; i <= pw; i++) {
+        let f = logMap(i / pw * 100, fMin, fMax);
+        let w = TWO_PI * f;
+        let XL = w * L, XC = 1 / (w * C);
+        let Z, I;
+        if (type === "series") {
+            Z = sqrt(R * R + (XL - XC) * (XL - XC));
+            I = 100 / Z;  // Vs = 100V
+        } else {
+            let G = 1 / R, B = 1 / XC - 1 / XL;
+            Z = 1 / sqrt(G * G + B * B);
+            I = 100 / Z;
+        }
+        iVals.push(I);
+    }
+
+    let iMax = max(iVals) * 1.1;
+    stroke(235); strokeWeight(1);
+    line(px, py + ph / 2, px + pw, py + ph / 2);
+    stroke(140); strokeWeight(1.5);
+    line(px, py, px, py + ph);
+    line(px, py + ph, px + pw, py + ph);
+
+    let curveCol = type === "series" ? color(200, 120, 0) : color(0, 160, 120);
+    stroke(curveCol); strokeWeight(2); noFill();
+    beginShape();
+    for (let i = 0; i < iVals.length; i++) {
+        vertex(px + i, map(iVals[i], 0, iMax, py + ph, py));
+    }
+    endShape();
+
+    let xF0 = px + map(log(f0 / fMin) / log(fMax / fMin), 0, 1, 0, pw);
+    stroke(100, 60, 180); strokeWeight(1); drawingContext.setLineDash([4, 3]);
+    line(xF0, py, xF0, py + ph); drawingContext.setLineDash([]);
+
+    let xFM = px + map(log(fMark / fMin) / log(fMax / fMin), 0, 1, 0, pw);
+    if (xFM >= px && xFM <= px + pw) {
+        stroke(60); strokeWeight(1.5);
+        line(xFM, py, xFM, py + ph);
+        let idx = constrain(round(xFM - px), 0, iVals.length - 1);
+        fill(curveCol); noStroke();
+        ellipse(xFM, map(iVals[idx], 0, iMax, py + ph, py), 7, 7);
+    }
+
+    noStroke(); fill(100); textSize(8); textAlign(RIGHT);
+    text(iMax.toFixed(1) + "A", px - 2, py + 6);
+    text("0A", px - 2, py + ph + 2);
+}
+
+// ─── Text annotations between plots ─────────────────────────────────────────
+function drawAnnotations(L, C, R, f0, Q, fMark) {
+    let midX = PLX1 + PLW1 + 14;
+    let midY = PLY + PLH / 2 - 10;
+
+    noStroke(); fill(60); textSize(10); textAlign(CENTER);
+    text("f₀ = " + fmtHz(f0), midX + 2, midY - 16);
+    text("Q = " + qSlider.value(), midX + 2, midY);
+
+    fill(200, 60, 30); textSize(9);
+    text("Min Z = R", midX + 2, PLY + PLH + 18);
+    fill(30, 100, 200);
+    text("Max Z = Q·XL", midX + 2, PLY + PLH + 30);
+}
+
+// ─── Controls ────────────────────────────────────────────────────────────────
+function drawControls(L, C, R, f0, Q) {
+    fill(245); stroke(180); strokeWeight(1);
+    rect(0, DRAW_HEIGHT, CANVAS_WIDTH, CONTROL_HEIGHT);
+
+    let sb = sweepBtn;
+    fill(sweeping ? color(60, 150, 60) : color(60, 100, 180));
+    stroke(sweeping ? color(40, 110, 40) : color(40, 70, 140));
+    strokeWeight(1); rect(sb.x, sb.y, sb.w, sb.h, 4);
+    noStroke(); fill(255); textSize(10); textAlign(CENTER, CENTER);
+    text(sweeping ? "Stop" : "Sweep f", sb.x + sb.w / 2, sb.y + sb.h / 2);
+
+    noStroke(); fill(50); textSize(10); textAlign(RIGHT);
+    text("L:", 65, DRAW_HEIGHT + 20);
+    text("C:", 235, DRAW_HEIGHT + 20);
+    text("Q:", 405, DRAW_HEIGHT + 20);
+    text("f marker:", 65, DRAW_HEIGHT + 52);
+
+    fill(20, 80, 180); textSize(10); textAlign(LEFT);
+    text((L * 1e3).toFixed(0) + " mH", 65, DRAW_HEIGHT + 34);
+    text((C * 1e6).toFixed(0) + " µF", 235, DRAW_HEIGHT + 34);
+    text(Q, 405, DRAW_HEIGHT + 34);
+
+    let fMark = logMap(fMarkSlider.value(), f0 * 0.1, f0 * 10);
+    text(fmtHz(fMark), 65, DRAW_HEIGHT + 64);
+
+    fill(80); textSize(10); textAlign(LEFT);
+    text("R(derived)=" + fmtOhm(R), 520, DRAW_HEIGHT + 28);
+    text("f₀=" + fmtHz(f0), 520, DRAW_HEIGHT + 48);
+}
+
+function fmtHz(f) {
+    if (f >= 1e6) return (f / 1e6).toPrecision(3) + "MHz";
+    if (f >= 1e3) return (f / 1e3).toPrecision(3) + "kHz";
+    return f.toPrecision(3) + "Hz";
+}
+function fmtOhm(x) {
+    if (x >= 1e6) return (x / 1e6).toPrecision(3) + "MΩ";
+    if (x >= 1e3) return (x / 1e3).toPrecision(3) + "kΩ";
+    return x.toPrecision(3) + "Ω";
+}
+
+function mousePressed() {
+    let sb = sweepBtn;
+    if (mouseX >= sb.x && mouseX <= sb.x + sb.w &&
+        mouseY >= sb.y && mouseY <= sb.y + sb.h) {
+        sweeping = !sweeping;
+    }
+}
+</script>
+</body>
+</html>

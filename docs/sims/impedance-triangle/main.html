@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Impedance Triangle Explorer</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+    <style>
+        body { margin: 0; padding: 0; background: #f0f0f0; display: flex; justify-content: center; }
+        canvas { display: block; }
+    </style>
+</head>
+<body>
+<script>
+// Impedance Triangle Explorer
+// Chapter 9: Phasors and Complex Impedance
+// Left: impedance triangle  |  Right: info panel + phasor diagram
+
+const CANVAS_WIDTH   = 670;
+const DRAW_HEIGHT    = 420;
+const CONTROL_HEIGHT = 80;
+const CANVAS_HEIGHT  = DRAW_HEIGHT + CONTROL_HEIGHT;
+
+const LEFT_W  = 340;
+const RIGHT_X = LEFT_W + 8;
+const RIGHT_W = CANVAS_WIDTH - RIGHT_X - 4;
+
+let rSlider, xSlider;
+
+function setup() {
+    let cnv = createCanvas(CANVAS_WIDTH, CANVAS_HEIGHT);
+    cnv.parent(document.body);
+    textFont('monospace');
+
+    let sy = DRAW_HEIGHT + 10;
+
+    rSlider = createSlider(0, 100, 30, 1);
+    rSlider.position(80, sy);
+    rSlider.size(200);
+    rSlider.style('cursor', 'pointer');
+
+    xSlider = createSlider(-100, 100, 40, 1);
+    xSlider.position(80, sy + 32);
+    xSlider.size(200);
+    xSlider.style('cursor', 'pointer');
+}
+
+function draw() {
+    let R = rSlider.value();
+    let X = xSlider.value();
+    let Zmag = sqrt(R * R + X * X);
+    let theta = atan2(X, R);  // radians
+
+    background(240);
+    drawTriangle(R, X, Zmag, theta);
+    drawInfoPanel(R, X, Zmag, theta);
+    drawControls(R, X, Zmag, theta);
+}
+
+// ─── Left: impedance triangle ────────────────────────────────────────────────
+function drawTriangle(R, X, Zmag, theta) {
+    fill(255); stroke(180); strokeWeight(1);
+    rect(4, 4, LEFT_W - 6, DRAW_HEIGHT - 8, 6);
+
+    noStroke(); fill(40); textSize(12); textAlign(CENTER);
+    text("Impedance Triangle", LEFT_W / 2, 22);
+
+    let cx = LEFT_W / 2 - 10;
+    let cy = DRAW_HEIGHT / 2 + (X >= 0 ? 60 : -60);
+    let scale = 180 / max(Zmag, 1);
+
+    // Triangle vertices
+    let origin = { x: cx - R * scale / 2, y: cy };
+    let tip_r  = { x: cx + R * scale / 2, y: cy };           // end of R
+    let tip_z  = { x: cx + R * scale / 2, y: cy - X * scale }; // end of Z (X up if inductive)
+
+    // Shaded triangle
+    let triCol = X > 0 ? color(255, 230, 200, 160) : X < 0 ? color(200, 230, 255, 160) : color(230, 255, 230, 160);
+    fill(triCol); stroke(180); strokeWeight(1);
+    triangle(origin.x, origin.y, tip_r.x, tip_r.y, tip_z.x, tip_z.y);
+
+    // R side (blue, horizontal)
+    stroke(30, 100, 200); strokeWeight(3);
+    line(origin.x, origin.y, tip_r.x, tip_r.y);
+    // Midpoint label
+    noStroke(); fill(30, 100, 200); textSize(11); textAlign(CENTER);
+    text("R = " + R + " Ω", (origin.x + tip_r.x) / 2, tip_r.y + (X >= 0 ? 16 : -6));
+
+    // X side (red/green, vertical)
+    let xCol = X > 0 ? color(200, 50, 50) : X < 0 ? color(0, 150, 80) : color(150);
+    stroke(xCol); strokeWeight(3);
+    line(tip_r.x, tip_r.y, tip_z.x, tip_z.y);
+    noStroke(); fill(xCol); textSize(11); textAlign(LEFT);
+    let xLabel = "X = " + (X >= 0 ? "+" : "") + X + " Ω";
+    text(xLabel, tip_r.x + 8, (tip_r.y + tip_z.y) / 2 + 4);
+
+    // Z hypotenuse (purple)
+    stroke(130, 30, 200); strokeWeight(3);
+    line(origin.x, origin.y, tip_z.x, tip_z.y);
+    // Arrow on Z
+    drawArrowHead(origin.x, origin.y, tip_z.x, tip_z.y, color(130, 30, 200));
+    // Z label (midpoint of hypotenuse, offset perpendicular)
+    let mx = (origin.x + tip_z.x) / 2, my = (origin.y + tip_z.y) / 2;
+    let ang = atan2(tip_z.y - origin.y, tip_z.x - origin.x);
+    noStroke(); fill(130, 30, 200); textSize(11); textAlign(CENTER);
+    let offX = -sin(ang) * 18, offY = cos(ang) * 18;
+    text("|Z| = " + Zmag.toFixed(2) + " Ω", mx + offX, my + offY);
+
+    // Phase arc at origin
+    if (Zmag > 2) {
+        let arcR = min(R * scale, 30);
+        let startA = 0, endA = -theta;  // p5 y is flipped
+        stroke(180, 120, 0); strokeWeight(1.5); noFill();
+        if (theta >= 0) {
+            arc(origin.x, origin.y, arcR * 2, arcR * 2, -theta, 0);
+        } else {
+            arc(origin.x, origin.y, arcR * 2, arcR * 2, 0, -theta);
+        }
+        noStroke(); fill(160, 100, 0); textSize(10); textAlign(LEFT);
+        let thetaDeg = degrees(theta).toFixed(1);
+        text("θ=" + thetaDeg + "°", origin.x + arcR * cos(-theta / 2) + 4,
+             origin.y + arcR * sin(-theta / 2));
+    }
+
+    // Right angle marker at tip_r
+    let sqS = 8;
+    stroke(100); strokeWeight(1); noFill();
+    rect(tip_r.x, tip_r.y - (X >= 0 ? sqS : 0), sqS, sqS);
+
+    // Type label
+    noStroke(); textSize(11); textAlign(CENTER);
+    if (X > 0) { fill(180, 60, 0); text("Inductive  (X > 0, current LAGS)", LEFT_W / 2, DRAW_HEIGHT - 54); }
+    else if (X < 0) { fill(0, 80, 160); text("Capacitive  (X < 0, current LEADS)", LEFT_W / 2, DRAW_HEIGHT - 54); }
+    else { fill(0, 120, 0); text("Purely Resistive  (X = 0)", LEFT_W / 2, DRAW_HEIGHT - 54); }
+
+    // Color legend
+    noStroke(); fill(30, 100, 200); textSize(10); textAlign(LEFT);
+    text("R (resistance)", 14, DRAW_HEIGHT - 38);
+    fill(X > 0 ? color(200, 50, 50) : color(0, 150, 80));
+    text(X > 0 ? "X (inductive reactance)" : X < 0 ? "X (capacitive reactance)" : "X (zero reactance)", 14, DRAW_HEIGHT - 24);
+    fill(130, 30, 200);
+    text("|Z| (impedance magnitude)", 14, DRAW_HEIGHT - 10);
+}
+
+// ─── Right: info panel ───────────────────────────────────────────────────────
+function drawInfoPanel(R, X, Zmag, theta) {
+    let px = RIGHT_X, py = 4, pw = RIGHT_W - 4, ph = DRAW_HEIGHT - 8;
+    fill(255); stroke(180); strokeWeight(1);
+    rect(px, py, pw, ph, 6);
+
+    noStroke(); fill(40); textSize(12); textAlign(CENTER);
+    text("Calculations", px + pw / 2, py + 18);
+
+    let lx = px + 10, lw = pw - 16;
+    let row = py + 36;
+    let rowH = 22;
+
+    // Rectangular form
+    drawBox(lx, row, lw, 52, color(235, 240, 255), color(150, 170, 220));
+    noStroke(); fill(30, 60, 180); textSize(11); textAlign(LEFT);
+    text("Rectangular form:", lx + 6, row + 16);
+    fill(50);
+    let imSign = X >= 0 ? "+" : "";
+    text("Z = " + R + " " + imSign + X + "j  Ω", lx + 6, row + 34);
+    row += 62;
+
+    // Magnitude
+    drawBox(lx, row, lw, 66, color(245, 235, 255), color(180, 140, 220));
+    noStroke(); fill(100, 30, 180); textSize(11); textAlign(LEFT);
+    text("Magnitude:", lx + 6, row + 16);
+    fill(50); textSize(10);
+    text("|Z| = √(R² + X²)", lx + 6, row + 32);
+    text("    = √(" + R + "² + " + X + "²)", lx + 6, row + 46);
+    fill(100, 30, 180); textSize(12);
+    text("    = " + Zmag.toFixed(3) + " Ω", lx + 6, row + 60);
+    row += 76;
+
+    // Phase angle
+    drawBox(lx, row, lw, 66, color(255, 248, 235), color(200, 160, 80));
+    noStroke(); fill(140, 90, 0); textSize(11); textAlign(LEFT);
+    text("Phase Angle:", lx + 6, row + 16);
+    fill(50); textSize(10);
+    text("θ = tan⁻¹(X / R)", lx + 6, row + 32);
+    text("  = tan⁻¹(" + X + " / " + R + ")", lx + 6, row + 46);
+    let thetaDeg = degrees(theta);
+    fill(140, 90, 0); textSize(12);
+    text("  = " + thetaDeg.toFixed(2) + "°", lx + 6, row + 60);
+    row += 76;
+
+    // Power factor
+    let pf = Zmag > 0 ? R / Zmag : 1;
+    let pfLead = X < 0 ? " (leading)" : X > 0 ? " (lagging)" : "";
+    drawBox(lx, row, lw, 52, color(235, 255, 240), color(120, 200, 140));
+    noStroke(); fill(30, 130, 60); textSize(11); textAlign(LEFT);
+    text("Power Factor:", lx + 6, row + 16);
+    fill(50); textSize(10);
+    text("pf = cos(θ) = R/|Z|", lx + 6, row + 32);
+    fill(30, 130, 60); textSize(11);
+    text("   = " + pf.toFixed(4) + pfLead, lx + 6, row + 46);
+    row += 62;
+
+    // Polar form
+    drawBox(lx, row, lw, 40, color(255, 240, 240), color(200, 140, 140));
+    noStroke(); fill(160, 30, 30); textSize(11); textAlign(LEFT);
+    text("Polar form:", lx + 6, row + 16);
+    fill(50);
+    text("Z = " + Zmag.toFixed(2) + " ∠ " + thetaDeg.toFixed(2) + "°", lx + 6, row + 32);
+}
+
+function drawBox(x, y, w, h, bg, bd) {
+    fill(bg); stroke(bd); strokeWeight(1);
+    rect(x, y, w, h, 4);
+}
+
+// ─── Controls ────────────────────────────────────────────────────────────────
+function drawControls(R, X, Zmag, theta) {
+    fill(245); stroke(180); strokeWeight(1);
+    rect(0, DRAW_HEIGHT, CANVAS_WIDTH, CONTROL_HEIGHT);
+
+    noStroke(); fill(30, 100, 200); textSize(11); textAlign(RIGHT);
+    text("Resistance R:", 75, DRAW_HEIGHT + 22);
+
+    let xCol = X > 0 ? color(200, 50, 50) : X < 0 ? color(0, 130, 70) : color(100);
+    fill(xCol);
+    text("Reactance X:", 75, DRAW_HEIGHT + 54);
+
+    fill(20, 80, 180); textSize(11); textAlign(LEFT);
+    text(R + " Ω", 285, DRAW_HEIGHT + 22);
+    fill(xCol);
+    text((X >= 0 ? "+" : "") + X + " Ω", 285, DRAW_HEIGHT + 54);
+
+    // Summary
+    noStroke(); fill(100, 30, 180); textSize(11); textAlign(LEFT);
+    text("|Z| = " + Zmag.toFixed(2) + " Ω    θ = " + degrees(theta).toFixed(1) + "°", 380, DRAW_HEIGHT + 28);
+    fill(30, 130, 60);
+    text("pf = " + (Zmag > 0 ? R / Zmag : 1).toFixed(3), 380, DRAW_HEIGHT + 50);
+}
+
+function drawArrowHead(x1, y1, x2, y2, col) {
+    let ang = atan2(y2 - y1, x2 - x1);
+    let sz = 9;
+    fill(col); noStroke();
+    push();
+    translate(x2, y2);
+    rotate(ang);
+    triangle(0, 0, -sz, -sz / 2.5, -sz, sz / 2.5);
+    pop();
+}
+</script>
+</body>
+</html>
