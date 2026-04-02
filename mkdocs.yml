@@ -42,6 +42,7 @@ nav:
     - Natural Frequency Calculator: sims/natural-frequency-calculator/index.md
     - RC Charging: sims/rc-charging/index.md
     - RL Energizing: sims/rl-charging/index.md
+    - Initial and Final Conditions: sims/initial-final-conditions/index.md
     - RLC Transient Response: sims/rlc-circuit/index.md
     - Filter Frequency Response: sims/filter-frequency-response/index.md
     - First-Order Filters: sims/first-order-filters/index.md
