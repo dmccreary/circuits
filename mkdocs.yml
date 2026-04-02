@@ -44,6 +44,7 @@ nav:
     - RL Energizing: sims/rl-charging/index.md
     - Initial and Final Conditions: sims/initial-final-conditions/index.md
     - RC/RL Applications: sims/rc-rl-applications/index.md
+    - Exponential Properties: sims/exponential-properties/index.md
     - RLC Transient Response: sims/rlc-circuit/index.md
     - Filter Frequency Response: sims/filter-frequency-response/index.md
     - First-Order Filters: sims/first-order-filters/index.md
