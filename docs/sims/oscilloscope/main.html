@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+<title>Oscilloscope Interface Guide MicroSim</title>
+<script src="https://cdn.jsdelivr.net/npm/p5@1.11.7/lib/p5.js"></script>
+<style>
+  body { margin: 0; padding: 0; background: #14181f; }
+  canvas { display: block; }
+</style>
+</head>
+<body>
+<main></main>
+<script>
+// ============================================================
+// Oscilloscope Interface Guide MicroSim
+// Chapter 16 – Bloom L3 (Apply)
+// Use oscilloscope controls to display and measure waveforms.
+// ============================================================
+
+const CW = 640, CH = 548;
+
+// ── Scope geometry ─────────────────────────────────────────
+const DIV   = 44;             // pixels per graticule division
+const NDIVX = 10, NDIVY = 8; // 10×8 division graticule
+const SIX   = 14, SIY = 14;  // scope inner display origin
+const SIW   = NDIVX * DIV;   // 440 px
+const SIH   = NDIVY * DIV;   // 352 px
+// Bezel (8px padding around inner)
+const SBX = 6, SBY = 6, SBW = SIW + 16, SBH = SIH + 16; // 456×368
+
+// ── Right control panel ────────────────────────────────────
+const RPX = SBX + SBW + 5;   // 467
+const RPW = CW - RPX - 4;    // 169
+const RPY = SBY, RPH = SBH;  // 6..374
+
+// Slider x-span inside right panel
+const RSX = RPX + 8, RSW = RPW - 14;  // 475, 155
+
+// ── Bottom signal-generator panel ─────────────────────────
+const BPY = SBY + SBH + 5;   // 379
+const BPH = CH - BPY;        // 169
+
+// Trigger reference: 2 divisions from left edge
+const TRIG_DIV = 2;
+
+// ── V/div and T/div discrete step tables ──────────────────
+const V_STEPS = [0.01,0.02,0.05,0.1,0.2,0.5,1,2,5,10];
+const T_STEPS = [1e-6,2e-6,5e-6,1e-5,2e-5,5e-5,
+                 1e-4,2e-4,5e-4,1e-3,2e-3,5e-3,
+                 1e-2,2e-2,5e-2,0.1,0.2,0.5,1.0];
+
+// ── State ──────────────────────────────────────────────────
+// Right-panel slider fractions (0..1)
+let slVdiv = 6 / (V_STEPS.length - 1);   // → 1 V/div
+let slTdiv = 8 / (T_STEPS.length - 1);   // → 500 µs/div
+let slVert = 0.5;   // → vert offset = 0 V
+let slTrig = 0.5;   // → trigger level = 0 V
+
+let trigEdge   = 'rising';
+let trigSource = 'CH1';
+let coupling   = 'DC';
+let isRunning  = true;
+
+// Bottom-panel slider fractions (0..1)
+let slFreq = 0.5;  // log: 10^(1+4×0.5) = 1 kHz
+let slAmp  = 0.5;  // log: 10^(-1+2×0.5) = 1 V (peak)
+let slDC   = 0.5;  // linear: 0 V
+
+let sigType = 'sine';  // 'sine' | 'square' | 'triangle'
+
+// Derived (updated each frame)
+let sigFreq = 1000, sigAmp = 1.0, sigDC = 0.0;
+let vDivIdx = 6, tDivIdx = 8;
+let trigTime = 0;
+
+// Drag tracking
+let dragId = null; // string identifying active slider
+
+// ── Accessors ──────────────────────────────────────────────
+function vDiv()       { return V_STEPS[vDivIdx]; }
+function tDiv()       { return T_STEPS[tDivIdx]; }
+function vertOffset() { return (slVert - 0.5) * NDIVY * vDiv(); }
+function trigLevel()  { return (slTrig  - 0.5) * 10; }
+
+// ── Signal math ────────────────────────────────────────────
+function rawSignal(t) {
+  const phase = ((t * sigFreq) % 1 + 1) % 1;
+  let v;
+  switch (sigType) {
+    case 'sine':
+      v = sigAmp * Math.sin(2 * Math.PI * sigFreq * t); break;
+    case 'square':
+      v = sigAmp * (phase < 0.5 ? 1 : -1); break;
+    case 'triangle':
+      v = sigAmp * (1 - 4 * Math.abs(0.5 - phase)); break;
+    default:
+      v = sigAmp * Math.sin(2 * Math.PI * sigFreq * t);
+  }
+  return v + sigDC;
+}
+
+function dispSignal(t) {
+  const v = rawSignal(t);
+  return coupling === 'AC' ? v - sigDC : v;
+}
+
+function findTrigger() {
+  const maxT = Math.max(4 / sigFreq, tDiv() * NDIVX * 1.5);
+  const dt   = 1 / (sigFreq * 500);
+  const tl   = trigLevel();
+  let prev   = rawSignal(0);
+  for (let t = dt; t <= maxT; t += dt) {
+    const v = rawSignal(t);
+    if (trigEdge === 'rising'  && prev <= tl && v > tl) return t;
+    if (trigEdge === 'falling' && prev >= tl && v < tl) return t;
+    prev = v;
+  }
+  return 0; // un-triggered
+}
+
+// Pixel → canvas y (signal v, using current scale)
+function vToY(v) {
+  return SIY + SIH / 2 - (v - vertOffset()) / vDiv() * DIV;
+}
+
+// ══════════════════════════════════════════════════════════
+// SETUP
+// ══════════════════════════════════════════════════════════
+function setup() {
+  createCanvas(CW, CH).parent(select('main').elt);
+  textFont('monospace');
+}
+
+// ══════════════════════════════════════════════════════════
+// MAIN DRAW
+// ══════════════════════════════════════════════════════════
+function draw() {
+  // Update derived values from sliders
+  sigFreq  = Math.pow(10, 1 + slFreq * 4);
+  sigAmp   = Math.pow(10, -1 + slAmp  * 2);
+  sigDC    = (slDC - 0.5) * 10;
+  vDivIdx  = Math.round(slVdiv * (V_STEPS.length - 1));
+  tDivIdx  = Math.round(slTdiv * (T_STEPS.length - 1));
+
+  if (isRunning) trigTime = findTrigger();
+
+  background(18, 22, 30);
+
+  drawScopeBezel();
+  drawGraticule();
+  drawTriggerMarker();
+  drawGroundMarker();
+  drawWaveform();
+  drawScopeOverlay();   // border glow on top of waveform
+
+  drawRightPanel();
+  drawBottomPanel();
+}
+
+// ══════════════════════════════════════════════════════════
+// SCOPE DISPLAY
+// ══════════════════════════════════════════════════════════
+function drawScopeBezel() {
+  // Outer bezel
+  fill(30, 34, 42); stroke(55, 65, 80); strokeWeight(2);
+  rect(SBX, SBY, SBW, SBH, 6);
+  // Inner screen surround
+  fill(5, 15, 8); noStroke();
+  rect(SIX - 2, SIY - 2, SIW + 4, SIH + 4, 2);
+}
+
+function drawGraticule() {
+  // Screen background
+  noStroke(); fill(6, 18, 10);
+  rect(SIX, SIY, SIW, SIH);
+
+  // Minor grid lines
+  strokeWeight(0.7);
+  for (let i = 0; i <= NDIVX; i++) {
+    const x = SIX + i * DIV;
+    const mid = (i === NDIVX / 2);
+    stroke(mid ? 55 : 32, mid ? 140 : 85, mid ? 65 : 42);
+    line(x, SIY, x, SIY + SIH);
+  }
+  for (let j = 0; j <= NDIVY; j++) {
+    const y = SIY + j * DIV;
+    const mid = (j === NDIVY / 2);
+    stroke(mid ? 55 : 32, mid ? 140 : 85, mid ? 65 : 42);
+    line(SIX, y, SIX + SIW, y);
+  }
+
+  // Small cross-hair ticks at 1/5 division intervals
+  const cx = SIX + (NDIVX / 2) * DIV;
+  const cy = SIY + (NDIVY / 2) * DIV;
+  stroke(45, 115, 55); strokeWeight(0.8);
+  for (let i = 0; i <= NDIVX * 5; i++) {
+    const x = SIX + i * DIV / 5;
+    if (i % 5 !== 0) line(x, cy - 3, x, cy + 3);
+  }
+  for (let j = 0; j <= NDIVY * 5; j++) {
+    const y = SIY + j * DIV / 5;
+    if (j % 5 !== 0) line(cx - 3, y, cx + 3, y);
+  }
+
+  // Axis border
+  stroke(60, 150, 70); strokeWeight(1);
+  noFill(); rect(SIX, SIY, SIW, SIH);
+}
+
+function drawWaveform() {
+  // Clip waveform to scope display area
+  drawingContext.save();
+  drawingContext.beginPath();
+  drawingContext.rect(SIX, SIY, SIW, SIH);
+  drawingContext.clip();
+
+  const td = tDiv();
+
+  // Three-pass phosphor glow: outer→inner
+  const passes = [
+    [0, 200, 55, 28, 5.0],
+    [30, 230, 75, 80, 2.5],
+    [145, 255, 155, 255, 1.5]
+  ];
+
+  for (const [r, g, b, a, sw] of passes) {
+    stroke(r, g, b, a);
+    strokeWeight(sw);
+    noFill();
+    beginShape();
+    for (let px = 0; px <= SIW; px++) {
+      const t = trigTime + (px - TRIG_DIV * DIV) / DIV * td;
+      const v = dispSignal(t);
+      vertex(SIX + px, vToY(v));
+    }
+    endShape();
+  }
+
+  drawingContext.restore();
+}
+
+function drawTriggerMarker() {
+  // Yellow triangle on right edge at trigger level
+  const tl  = trigLevel();
+  const ty  = vToY(tl);
+  if (ty < SIY - 2 || ty > SIY + SIH + 2) return;
+
+  const rx  = SIX + SIW;
+  fill(255, 210, 0); noStroke();
+  triangle(rx + 2, ty, rx + 10, ty - 6, rx + 10, ty + 6);
+  // Small horizontal tick on scope right edge
+  stroke(255, 210, 0); strokeWeight(1.5);
+  line(rx - 6, ty, rx, ty);
+  // Label
+  fill(255, 210, 0); noStroke();
+  textAlign(LEFT, CENTER); textSize(8); textFont('monospace');
+  text("T", rx + 12, ty);
+}
+
+function drawGroundMarker() {
+  // Cyan "G" marker on left edge at 0V (corrected for vert offset)
+  const gy = vToY(0);
+  if (gy < SIY || gy > SIY + SIH) return;
+  fill(80, 210, 255); noStroke();
+  triangle(SIX - 2, gy, SIX - 10, gy - 5, SIX - 10, gy + 5);
+  stroke(80, 210, 255); strokeWeight(1.2);
+  line(SIX, gy, SIX + 6, gy);
+  fill(80, 210, 255); noStroke();
+  textAlign(RIGHT, CENTER); textSize(8);
+  text("G", SIX - 12, gy);
+}
+
+function drawScopeOverlay() {
+  // Thin bright border over the waveform
+  noFill(); stroke(80, 170, 90); strokeWeight(1);
+  rect(SIX, SIY, SIW, SIH);
+  // Screen label (top-left of bezel)
+  fill(100, 200, 120); noStroke(); textAlign(LEFT, TOP); textSize(9);
+  text("CH1", SBX + 4, SBY + 3);
+  // Status
+  textAlign(RIGHT, TOP);
+  fill(isRunning ? color(80, 220, 100) : color(220, 160, 40));
+  text(isRunning ? "RUN" : "STOP", SBX + SBW - 4, SBY + 3);
+}
+
+// ══════════════════════════════════════════════════════════
+// RIGHT PANEL
+// ══════════════════════════════════════════════════════════
+function drawRightPanel() {
+  // Panel background
+  fill(28, 33, 44); stroke(55, 65, 80); strokeWeight(1);
+  rect(RPX, RPY, RPW, RPH, 4);
+
+  const px = RPX + 6;   // text/content x inside panel
+  let y = RPY + 8;
+
+  // ── CH1 ─────────────────────────────────────────────────
+  panelLabel("CH 1", px, y, [80, 220, 100]); y += 14;
+
+  panelSublabel("Volts/div  " + fmtVdiv(vDiv()), px, y); y += 12;
+  drawHSlider(RSX, y, RSW, slVdiv, [80, 180, 100]); y += 22;
+
+  panelSublabel("Vert pos  " + fmtV(vertOffset()) + "  offset", px, y); y += 12;
+  drawHSlider(RSX, y, RSW, slVert, [80, 180, 100]); y += 22;
+
+  panelDivider(y); y += 10;
+
+  // ── TIMEBASE ────────────────────────────────────────────
+  panelLabel("TIMEBASE", px, y, [120, 190, 255]); y += 14;
+
+  panelSublabel("Time/div  " + fmtTdiv(tDiv()), px, y); y += 12;
+  drawHSlider(RSX, y, RSW, slTdiv, [100, 160, 230]); y += 22;
+
+  panelDivider(y); y += 10;
+
+  // ── TRIGGER ─────────────────────────────────────────────
+  panelLabel("TRIGGER", px, y, [255, 215, 60]); y += 14;
+
+  panelSublabel("Level  " + fmtV(trigLevel()), px, y); y += 12;
+  drawHSlider(RSX, y, RSW, slTrig, [220, 185, 50]); y += 22;
+
+  // Edge radio buttons  (this y should equal RPY+212)
+  panelSublabel("Edge:", px, y);
+  drawRadioGroup(RPX + 42, y, ["↑ Rise", "↓ Fall"],
+    trigEdge === 'rising' ? 0 : 1, 'edge'); y += 16;
+
+  // Source radio buttons  (RPY+228)
+  panelSublabel("Src:", px, y);
+  drawRadioGroup(RPX + 30, y, ["CH1", "EXT"],
+    trigSource === 'CH1' ? 0 : 1, 'src'); y += 16;
+
+  panelDivider(y); y += 8;
+
+  // ── COUPLING ────────────────────────────────────────────
+  panelSublabel("Coupling:", px, y);
+  drawRadioGroup(RPX + 60, y, ["DC", "AC"],
+    coupling === 'DC' ? 0 : 1, 'coup'); y += 18;
+
+  panelDivider(y); y += 8;
+
+  // ── MEASUREMENTS ────────────────────────────────────────
+  panelLabel("MEASURE", px, y, [180, 200, 230]); y += 14;
+
+  const m = computeMeasurements();
+  fill(150, 240, 170); noStroke(); textAlign(LEFT, TOP); textSize(9);
+  text("Freq  " + fmtHz(m.freq),  px, y); y += 13;
+  text("Vpp   " + fmtV(m.vpp),   px, y); y += 13;
+  text("Vavg  " + fmtV(m.vavg),  px, y); y += 13;
+  text("Vrms  " + fmtV(m.vrms),  px, y); y += 13;
+
+  panelDivider(y); y += 8;
+
+  // ── RUN / STOP ──────────────────────────────────────────
+  drawPanelBtn(RPX + 8,  y, 68, 22, "AUTO",
+    false, [60, 130, 60], 'auto');
+  drawPanelBtn(RPX + 84, y, 68, 22, isRunning ? "STOP ■" : "RUN ▶",
+    false, isRunning ? [160, 80, 40] : [40, 130, 60], 'runstop');
+}
+
+// ══════════════════════════════════════════════════════════
+// BOTTOM PANEL
+// ══════════════════════════════════════════════════════════
+function drawBottomPanel() {
+  fill(22, 28, 38); stroke(55, 65, 80); strokeWeight(1);
+  rect(0, BPY, CW, BPH, 0, 0, 4, 4);
+
+  const y0 = BPY + 6;
+
+  // ── Signal Generator label ──────────────────────────────
+  fill(180, 200, 230); noStroke(); textAlign(LEFT, TOP); textSize(10);
+  text("SIGNAL GENERATOR", 10, y0);
+
+  // Waveform type buttons
+  const types = ["SINE", "SQUARE", "TRI"];
+  const typeVals = ['sine', 'square', 'triangle'];
+  for (let i = 0; i < types.length; i++) {
+    const bx = 148 + i * 54;
+    const active = (sigType === typeVals[i]);
+    fill(active ? color(70, 120, 200) : color(38, 45, 60));
+    stroke(active ? color(100, 160, 240) : color(65, 75, 95));
+    strokeWeight(1);
+    rect(bx, y0 - 1, 50, 18, 3);
+    fill(active ? 255 : 160); noStroke();
+    textAlign(CENTER, CENTER); textSize(9);
+    text(types[i], bx + 25, y0 + 8);
+  }
+
+  // ── Frequency slider ────────────────────────────────────
+  const fy = y0 + 26;
+  const fVal = Math.pow(10, 1 + slFreq * 4);
+  fill(180, 200, 230); noStroke(); textAlign(LEFT, TOP); textSize(9);
+  text("Freq  " + fmtHz(fVal), 10, fy - 1);
+  drawHSlider(110, fy + 10, CW - 120, slFreq, [120, 165, 240]); // id 'freq'
+
+  // ── Amplitude and DC offset sliders ─────────────────────
+  const ay = fy + 38;
+  const aVal = Math.pow(10, -1 + slAmp * 2);
+  const dVal = (slDC - 0.5) * 10;
+  fill(180, 200, 230); noStroke(); textAlign(LEFT, TOP); textSize(9);
+  text("Amp  " + fmtV(aVal), 10, ay - 1);
+  drawHSlider(80, ay + 10, 240, slAmp, [210, 160, 70]);   // id 'amp'
+
+  fill(180, 200, 230); noStroke(); textAlign(LEFT, TOP); textSize(9);
+  text("DC  " + fmtV(dVal), 345, ay - 1);
+  drawHSlider(400, ay + 10, 220, slDC, [200, 100, 180]);  // id 'dc'
+
+  // ── Goals / exercises ───────────────────────────────────
+  panelDivider(ay + 42);
+  const gy = ay + 50;
+  fill(160, 175, 200); noStroke(); textAlign(LEFT, TOP); textSize(9);
+  text("EXERCISES:", 10, gy);
+
+  const cycles  = tDiv() * NDIVX * sigFreq;
+  const vppDivs = (2 * sigAmp) / vDiv();
+  const m       = computeMeasurements();
+
+  drawGoal(40,  gy + 14, abs(cycles - 2) < 0.22,
+    "Display exactly 2 cycles  (Time/div = " + fmtTdiv(2 / (NDIVX * sigFreq)) + ")  ← now showing " + cycles.toFixed(1) + " cycles");
+  drawGoal(40,  gy + 28, vppDivs >= 5.9,
+    "Signal spans ≥6 divisions  (Volts/div = " + fmtVdiv(2 * sigAmp / 6) + ")  ← now " + vppDivs.toFixed(1) + " div");
+  drawGoal(40,  gy + 42, trigTime > 0,
+    "Trigger is stable  ← level=" + fmtV(trigLevel()) + "  Vpp=" + fmtV(m.vpp) + "  (keep level inside signal range)");
+}
+
+// ══════════════════════════════════════════════════════════
+// MEASUREMENTS
+// ══════════════════════════════════════════════════════════
+function computeMeasurements() {
+  const td = tDiv();
+  let vmin = Infinity, vmax = -Infinity, vsum = 0, v2sum = 0;
+  const N = SIW;
+  for (let px = 0; px < N; px++) {
+    const t = trigTime + (px - TRIG_DIV * DIV) / DIV * td;
+    const v = dispSignal(t);
+    if (v < vmin) vmin = v;
+    if (v > vmax) vmax = v;
+    vsum  += v;
+    v2sum += v * v;
+  }
+  return {
+    freq: sigFreq,
+    vpp:  vmax - vmin,
+    vavg: vsum / N,
+    vrms: Math.sqrt(v2sum / N)
+  };
+}
+
+// ══════════════════════════════════════════════════════════
+// UI DRAWING HELPERS
+// ══════════════════════════════════════════════════════════
+function drawHSlider(x, y, w, frac, col) {
+  // Track
+  fill(35, 42, 55); stroke(60, 70, 90); strokeWeight(1);
+  rect(x, y - 4, w, 8, 4);
+  // Fill
+  fill(...col, 160); noStroke();
+  if (frac > 0) rect(x, y - 4, frac * w, 8, 4);
+  // Handle
+  const hx = x + frac * w;
+  fill(225, 230, 240); stroke(...col); strokeWeight(1.8);
+  circle(hx, y, 15);
+  fill(...col); noStroke(); circle(hx, y, 5);
+}
+
+function drawRadioGroup(x, y, labels, selectedIdx, groupId) {
+  const spacing = 52;
+  for (let i = 0; i < labels.length; i++) {
+    const rx = x + i * spacing;
+    const sel = (i === selectedIdx);
+    fill(sel ? color(70, 130, 210) : color(38, 44, 58));
+    stroke(sel ? color(100, 160, 240) : color(65, 75, 95));
+    strokeWeight(1);
+    rect(rx, y, 46, 15, 3);
+    fill(sel ? 255 : 150); noStroke();
+    textAlign(CENTER, CENTER); textSize(8);
+    text(labels[i], rx + 23, y + 7.5);
+  }
+}
+
+function drawPanelBtn(x, y, w, h, label, active, col, id) {
+  fill(...col, active ? 220 : 140);
+  stroke(...col, 200); strokeWeight(1);
+  rect(x, y, w, h, 4);
+  fill(active ? 255 : 200); noStroke();
+  textAlign(CENTER, CENTER); textSize(9);
+  text(label, x + w / 2, y + h / 2);
+}
+
+function panelLabel(txt, x, y, col) {
+  fill(...col); noStroke(); textAlign(LEFT, TOP); textSize(9);
+  text(txt, x, y);
+}
+
+function panelSublabel(txt, x, y) {
+  fill(145, 165, 190); noStroke(); textAlign(LEFT, TOP); textSize(8);
+  text(txt, x, y);
+}
+
+function panelDivider(y) {
+  stroke(50, 60, 78); strokeWeight(1);
+  line(RPX + 4, y, RPX + RPW - 4, y);
+}
+
+function drawGoal(x, y, achieved, txt) {
+  fill(achieved ? color(80, 210, 100) : color(130, 140, 160));
+  noStroke(); textAlign(LEFT, TOP); textSize(8);
+  text((achieved ? "✓ " : "○ ") + txt, x, y);
+}
+
+// ══════════════════════════════════════════════════════════
+// FORMAT HELPERS
+// ══════════════════════════════════════════════════════════
+function fmtVdiv(v) {
+  if (v >= 1)   return v.toFixed(0) + " V/div";
+  if (v >= 0.1) return (v * 1000).toFixed(0) + " mV/div";
+  return (v * 1000).toFixed(0) + " mV/div";
+}
+function fmtTdiv(t) {
+  if (t >= 0.1)  return (t * 1000).toFixed(0) + " ms/div";
+  if (t >= 1e-3) return (t * 1000).toFixed(t >= 0.01 ? 0 : 1) + " ms/div";
+  if (t >= 1e-6) return (t * 1e6).toFixed(0) + " µs/div";
+  return t.toFixed(0) + " s/div";
+}
+function fmtV(v) {
+  const a = Math.abs(v);
+  const s = v < 0 ? "−" : "";
+  if (a >= 1)    return s + a.toFixed(3) + " V";
+  if (a >= 0.01) return s + (a * 1000).toFixed(1) + " mV";
+  return s + (a * 1000).toFixed(2) + " mV";
+}
+function fmtHz(f) {
+  if (f >= 1e6)  return (f / 1e6).toFixed(3) + " MHz";
+  if (f >= 1000) return (f / 1000).toFixed(3) + " kHz";
+  return f.toFixed(1) + " Hz";
+}
+
+// ══════════════════════════════════════════════════════════
+// SLIDER GEOMETRY (for hit-testing and dragging)
+// ══════════════════════════════════════════════════════════
+// Right panel sliders: all share x=RSX, w=RSW, determined by y
+// We find which slider is hit by checking y proximity.
+
+const RP_SL = [
+  { id:'vdiv',  x:RSX, w:RSW, y: RPY+40  },
+  { id:'vert',  x:RSX, w:RSW, y: RPY+74  },
+  { id:'tdiv',  x:RSX, w:RSW, y: RPY+132 },
+  { id:'trig',  x:RSX, w:RSW, y: RPY+190 },
+];
+const BP_SL = [
+  { id:'freq', x:110, w:CW-120, y: BPY+46  },
+  { id:'amp',  x:80,  w:240,    y: BPY+84  },
+  { id:'dc',   x:400, w:220,    y: BPY+84  },
+];
+
+function sliderFrac(id) {
+  switch(id) {
+    case 'vdiv': return slVdiv;
+    case 'vert': return slVert;
+    case 'tdiv': return slTdiv;
+    case 'trig': return slTrig;
+    case 'freq': return slFreq;
+    case 'amp':  return slAmp;
+    case 'dc':   return slDC;
+  }
+  return 0;
+}
+function setSliderFrac(id, f) {
+  f = constrain(f, 0, 1);
+  switch(id) {
+    case 'vdiv': slVdiv = f; break;
+    case 'vert': slVert = f; break;
+    case 'tdiv': slTdiv = f; break;
+    case 'trig': slTrig = f; break;
+    case 'freq': slFreq = f; break;
+    case 'amp':  slAmp  = f; break;
+    case 'dc':   slDC   = f; break;
+  }
+}
+
+// ══════════════════════════════════════════════════════════
+// MOUSE INTERACTION
+// ══════════════════════════════════════════════════════════
+function mousePressed() {
+  // ── Waveform type buttons (bottom panel) ────────────────
+  const ty0 = BPY + 5;
+  const typeVals = ['sine', 'square', 'triangle'];
+  for (let i = 0; i < 3; i++) {
+    const bx = 148 + i * 54;
+    if (inRect(bx, ty0 - 1, 50, 18)) { sigType = typeVals[i]; return; }
+  }
+
+  // ── Edge radios (y=212 relative to RPY=6 → abs=218) ────
+  if (inRect(RPX + 42, RPY + 210, 46, 15)) { trigEdge = 'rising';  return; }
+  if (inRect(RPX + 94, RPY + 210, 46, 15)) { trigEdge = 'falling'; return; }
+
+  // ── Source radios (abs=234) ──────────────────────────────
+  if (inRect(RPX + 30, RPY + 226, 46, 15)) { trigSource = 'CH1'; return; }
+  if (inRect(RPX + 82, RPY + 226, 46, 15)) { trigSource = 'EXT'; return; }
+
+  // ── Coupling radios (abs=258) ────────────────────────────
+  if (inRect(RPX + 60, RPY + 250, 46, 15)) { coupling = 'DC'; return; }
+  if (inRect(RPX +112, RPY + 250, 46, 15)) { coupling = 'AC'; return; }
+
+  // ── AUTO button (abs=358) ────────────────────────────────
+  if (inRect(RPX + 8, RPY + 352, 68, 22)) {
+    slTrig = 0.5; isRunning = true; return;
+  }
+  // ── RUN/STOP button ──────────────────────────────────────
+  if (inRect(RPX + 84, RPY + 352, 68, 22)) {
+    isRunning = !isRunning; return;
+  }
+
+  // ── Sliders ──────────────────────────────────────────────
+  for (const sl of [...RP_SL, ...BP_SL]) {
+    if (abs(mouseY - sl.y) < 13 && mouseX >= sl.x - 10 && mouseX <= sl.x + sl.w + 10) {
+      dragId = sl.id;
+      setSliderFrac(sl.id, (mouseX - sl.x) / sl.w);
+      return;
+    }
+  }
+}
+
+function mouseDragged() {
+  if (!dragId) return;
+  for (const sl of [...RP_SL, ...BP_SL]) {
+    if (sl.id === dragId) {
+      setSliderFrac(sl.id, (mouseX - sl.x) / sl.w);
+      return;
+    }
+  }
+}
+
+function mouseReleased() { dragId = null; }
+
+function inRect(x, y, w, h) {
+  return mouseX >= x && mouseX <= x + w && mouseY >= y && mouseY <= y + h;
+}
+
+</script>
+</body>
+</html>
