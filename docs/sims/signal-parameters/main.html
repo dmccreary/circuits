@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signal Parameters</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+    <style>
+        body { margin: 0; padding: 0; background: #f0f0f0; display: flex; justify-content: center; }
+        canvas { display: block; }
+    </style>
+</head>
+<body>
+<script>
+// Signal Parameters MicroSim
+// Chapter 5: Passive Components
+// Sinusoidal waveform with labeled amplitude, period, frequency, phase
+
+const CANVAS_WIDTH   = 670;
+const DRAW_HEIGHT    = 360;
+const CONTROL_HEIGHT = 110;
+const CANVAS_HEIGHT  = DRAW_HEIGHT + CONTROL_HEIGHT;
+
+let ampSlider, freqSlider, phaseSlider;
+let showRef = false;
+let refBtn  = { x: 0, y: 0, w: 120, h: 24 };
+
+function setup() {
+    let cnv = createCanvas(CANVAS_WIDTH, CANVAS_HEIGHT);
+    cnv.parent(document.body);
+    textFont('monospace');
+
+    let sy = DRAW_HEIGHT + 12;
+    ampSlider = createSlider(1, 100, 50, 1);      // 0.1–10 V * 0.1
+    ampSlider.position(170, sy); ampSlider.size(180); ampSlider.style('cursor','pointer');
+
+    freqSlider = createSlider(0, 100, 30, 1);     // mapped log 1–1000 Hz
+    freqSlider.position(170, sy + 30); freqSlider.size(180); freqSlider.style('cursor','pointer');
+
+    phaseSlider = createSlider(-180, 180, 0, 1);
+    phaseSlider.position(170, sy + 60); phaseSlider.size(180); phaseSlider.style('cursor','pointer');
+
+    refBtn.x = 380; refBtn.y = sy + 28; refBtn.w = 130; refBtn.h = 24;
+}
+
+function draw() {
+    let A   = ampSlider.value() * 0.1;                     // 0.1–10 V
+    let f   = pow(10, map(freqSlider.value(), 0, 100, 0, 3)); // 1–1000 Hz
+    let phi = phaseSlider.value() * PI / 180;              // radians
+    let T   = 1 / f;
+    let omega = TWO_PI * f;
+
+    background(240);
+    drawWaveform(A, f, phi, T, omega);
+    drawControls(A, f, phi, T, omega);
+}
+
+function drawWaveform(A, f, phi, T, omega) {
+    let px = 10, py = 10, pw = CANVAS_WIDTH - 20, ph = DRAW_HEIGHT - 20;
+
+    fill(255); stroke(180); strokeWeight(1);
+    rect(px, py, pw, ph, 6);
+
+    // Axis setup — show ~2.5 cycles
+    let tSpan   = 2.5 / f;
+    let plotX   = px + 55, plotY = py + 20;
+    let plotW   = pw - 70, plotH = ph - 40;
+    let midY    = plotY + plotH / 2;
+
+    // Grid
+    stroke(230); strokeWeight(0.5);
+    // Horizontal gridlines at A, A/2, 0, -A/2, -A
+    for (let frac of [-1, -0.5, 0, 0.5, 1]) {
+        let gy = map(frac, -1, 1, plotY + plotH, plotY);
+        line(plotX, gy, plotX + plotW, gy);
+    }
+    // Vertical gridlines every 0.5T
+    for (let i = 0; i <= 5; i++) {
+        let gx = map(i * 0.5 / f, 0, tSpan, plotX, plotX + plotW);
+        line(gx, plotY, gx, plotY + plotH);
+    }
+
+    // Axes
+    stroke(100); strokeWeight(1.5);
+    line(plotX, midY, plotX + plotW, midY);   // x-axis
+    line(plotX, plotY, plotX, plotY + plotH); // y-axis
+
+    // Voltage labels
+    noStroke(); fill(80); textSize(9); textAlign(RIGHT);
+    text("+"+A.toFixed(1)+"V", plotX - 2, map(1, -1, 1, plotY + plotH, plotY) + 4);
+    text("0",                  plotX - 2, midY + 4);
+    text("-"+A.toFixed(1)+"V", plotX - 2, map(-1, -1, 1, plotY + plotH, plotY) + 4);
+    text(nf(A/2, 1, 1)+"V",    plotX - 2, map(0.5, -1, 1, plotY + plotH, plotY) + 4);
+
+    // Time axis labels
+    textAlign(CENTER);
+    for (let i = 0; i <= 5; i++) {
+        let t  = i * 0.5 * T;
+        let gx = map(t, 0, tSpan, plotX, plotX + plotW);
+        text(formatTime(t), gx, plotY + plotH + 12);
+    }
+
+    // ---- Reference waveform (dotted, grey) ----
+    if (showRef) {
+        stroke(180, 180, 180); strokeWeight(1.5); noFill();
+        drawingContext.setLineDash([5, 4]);
+        beginShape();
+        for (let px2 = plotX; px2 <= plotX + plotW; px2 += 2) {
+            let t = map(px2, plotX, plotX + plotW, 0, tSpan);
+            let v = A * sin(omega * t);
+            let y = map(v, -A, A, plotY + plotH, plotY);
+            vertex(px2, y);
+        }
+        endShape();
+        drawingContext.setLineDash([]);
+        noStroke(); fill(160); textSize(9); textAlign(LEFT);
+        text("Reference (φ=0°)", plotX + 4, plotY + 14);
+    }
+
+    // ---- Main waveform ----
+    stroke(60, 120, 200); strokeWeight(2.5); noFill();
+    beginShape();
+    for (let wx = plotX; wx <= plotX + plotW; wx += 2) {
+        let t = map(wx, plotX, plotX + plotW, 0, tSpan);
+        let v = A * sin(omega * t + phi);
+        let y = map(v, -A, A, plotY + plotH, plotY);
+        vertex(wx, y);
+    }
+    endShape();
+
+    // ---- Annotation: Amplitude ----
+    // Find first peak
+    let peakT  = (PI / 2 - phi) / omega;
+    if (peakT < 0) peakT += T;
+    if (peakT <= tSpan) {
+        let peakX = map(peakT, 0, tSpan, plotX, plotX + plotW);
+        let peakY = map(A, -A, A, plotY + plotH, plotY);
+        // Vertical arrow from midY to peak
+        stroke(220, 80, 80); strokeWeight(1.5); fill(220, 80, 80);
+        drawArrowV(peakX + 18, midY, peakY);
+        noStroke(); textSize(10); textAlign(LEFT);
+        text("A=" + A.toFixed(1) + "V", peakX + 24, (midY + peakY) / 2 + 4);
+    }
+
+    // ---- Annotation: Peak-to-peak ----
+    let pp2X = map(0.4 * T, 0, tSpan, plotX, plotX + plotW);
+    if (phi === 0 || true) {
+        let topY2  = map(A, -A, A, plotY + plotH, plotY);
+        let botY2  = map(-A, -A, A, plotY + plotH, plotY);
+        // bracket on right side
+    }
+
+    // ---- Annotation: Period ----
+    // Mark one full cycle starting at first zero crossing going up
+    let t0 = (-phi) / omega;
+    if (t0 < 0) t0 += T;
+    let t1 = t0 + T;
+    if (t1 <= tSpan) {
+        let x0 = map(t0, 0, tSpan, plotX, plotX + plotW);
+        let x1 = map(t1, 0, tSpan, plotX, plotX + plotW);
+        let bracketY = plotY + plotH + 22;
+        stroke(80, 160, 80); strokeWeight(1.5); fill(80, 160, 80);
+        drawArrowH(x0, x1, bracketY);
+        noStroke(); textSize(10); textAlign(CENTER);
+        text("T = " + formatTime(T), (x0 + x1) / 2, bracketY + 14);
+    }
+
+    // ---- Annotation: Phase ----
+    if (abs(phi) > 0.05 && showRef) {
+        // Show phase offset: from ref zero crossing to signal zero crossing
+        let refX  = map(0, 0, tSpan, plotX, plotX + plotW);
+        let sigX  = map((-phi / omega + T) % T, 0, tSpan, plotX, plotX + plotW);
+        if (sigX >= plotX && sigX <= plotX + plotW) {
+            stroke(180, 80, 180); strokeWeight(1.5); fill(180, 80, 180);
+            drawArrowH(refX, sigX, midY + 20);
+            noStroke(); textSize(9); textAlign(CENTER);
+            text("φ=" + phaseSlider.value() + "°", (refX + sigX) / 2, midY + 34);
+        }
+    }
+
+    // ---- Info box ----
+    noStroke(); fill(245, 245, 255);
+    stroke(200); strokeWeight(1);
+    rect(plotX + plotW - 120, plotY + 4, 116, 64, 4);
+    noStroke(); fill(40); textSize(9); textAlign(LEFT);
+    let bx = plotX + plotW - 116, by = plotY + 16;
+    text("f   = " + formatFreq(f), bx, by);
+    text("T   = " + formatTime(T), bx, by + 12);
+    text("ω   = " + (omega).toFixed(1) + " rad/s", bx, by + 24);
+    text("φ   = " + phaseSlider.value() + "°", bx, by + 36);
+    text("Vpp = " + (2*A).toFixed(2) + " V", bx, by + 48);
+}
+
+function drawArrowV(x, y1, y2) {
+    let h = 7;
+    line(x, y1, x, y2);
+    let dir = y2 < y1 ? -1 : 1;
+    triangle(x, y2, x-h*0.6, y2-dir*h, x+h*0.6, y2-dir*h);
+    triangle(x, y1, x-h*0.6, y1+dir*h, x+h*0.6, y1+dir*h);
+}
+
+function drawArrowH(x1, x2, y) {
+    let h = 6;
+    line(x1, y, x2, y);
+    let dir = x2 > x1 ? 1 : -1;
+    // Arrow at x2
+    triangle(x2, y, x2 - dir*h, y - h*0.6, x2 - dir*h, y + h*0.6);
+    // Tick at x1
+    line(x1, y - 5, x1, y + 5);
+}
+
+function drawControls(A, f, phi, T, omega) {
+    fill(245); stroke(180); strokeWeight(1);
+    rect(0, DRAW_HEIGHT, CANVAS_WIDTH, CONTROL_HEIGHT);
+
+    noStroke(); fill(50); textSize(11); textAlign(RIGHT);
+    text("Amplitude: " + A.toFixed(1) + " V",         165, DRAW_HEIGHT + 24);
+    text("Frequency: " + formatFreq(f),                165, DRAW_HEIGHT + 54);
+    text("Phase: " + phaseSlider.value() + "°",        165, DRAW_HEIGHT + 84);
+
+    // Ref toggle
+    fill(showRef ? color(60,120,200) : color(210));
+    stroke(showRef ? color(40,90,170) : color(160));
+    strokeWeight(1);
+    rect(refBtn.x, refBtn.y, refBtn.w, refBtn.h, 4);
+    noStroke(); fill(showRef ? 255 : 40);
+    textSize(10); textAlign(CENTER, CENTER);
+    text(showRef ? "Hide Reference" : "Show Reference", refBtn.x + refBtn.w/2, refBtn.y + refBtn.h/2);
+}
+
+function mousePressed() {
+    if (mouseX >= refBtn.x && mouseX <= refBtn.x + refBtn.w &&
+        mouseY >= refBtn.y && mouseY <= refBtn.y + refBtn.h) {
+        showRef = !showRef;
+    }
+}
+
+function formatFreq(f) {
+    if (f >= 1000) return (f/1000).toFixed(2) + " kHz";
+    return f.toFixed(1) + " Hz";
+}
+function formatTime(t) {
+    if (t >= 1)    return t.toFixed(3) + " s";
+    if (t >= 1e-3) return (t*1e3).toFixed(2) + " ms";
+    return (t*1e6).toFixed(2) + " µs";
+}
+</script>
+</body>
+</html>

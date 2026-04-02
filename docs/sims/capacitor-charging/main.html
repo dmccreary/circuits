@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Capacitor Charging</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+    <style>
+        body { margin: 0; padding: 0; background: #f0f0f0; display: flex; justify-content: center; }
+        canvas { display: block; }
+    </style>
+</head>
+<body>
+<script>
+// Capacitor Charging MicroSim
+// Chapter 5: Passive Components
+// Animates charge flow, V/I/E graphs during RC charge & discharge
+
+const CANVAS_WIDTH  = 670;
+const DRAW_HEIGHT   = 370;
+const CONTROL_HEIGHT = 80;
+const CANVAS_HEIGHT  = DRAW_HEIGHT + CONTROL_HEIGHT;
+
+// Panels
+const CIRC_W  = 240;   // circuit diagram panel width
+const GRAPH_X = CIRC_W + 10;
+const GRAPH_W = CANVAS_WIDTH - GRAPH_X - 8;
+const GRAPH_PANEL_H = DRAW_HEIGHT - 10;
+const EACH_GRAPH_H  = (GRAPH_PANEL_H - 30) / 3;  // 3 stacked graphs
+
+// Simulation state
+let simTime    = 0;        // seconds elapsed in current phase
+let charging   = false;    // true = charging, false = discharging
+let running    = false;
+let Vc         = 0;        // capacitor voltage
+let history    = [];       // {t, Vc, Ic, Ec}
+const MAX_HIST = 400;
+const SIM_DT   = 0.016;   // seconds per frame (~60fps)
+const DISP_DUR = 5;       // seconds shown on graph x-axis
+
+// Particles
+let particles  = [];
+const MAX_PARTICLES = 12;
+
+// Sliders
+let voltSlider, capSlider, resSlider;
+
+// Buttons (canvas-based)
+let btnCharge   = { label: "Charge",    x: 10,  y: 0, w: 90,  h: 28, active: false };
+let btnDischarge= { label: "Discharge", x: 110, y: 0, w: 90,  h: 28, active: false };
+let btnReset    = { label: "Reset",     x: 210, y: 0, w: 70,  h: 28, active: false };
+
+function setup() {
+    let cnv = createCanvas(CANVAS_WIDTH, CANVAS_HEIGHT);
+    cnv.parent(document.body);
+    textFont('monospace');
+
+    // Buttons y position
+    let btnY = DRAW_HEIGHT + 42;
+    btnCharge.y    = btnY;
+    btnDischarge.y = btnY;
+    btnReset.y     = btnY;
+
+    // Voltage: 1–20 V
+    voltSlider = createSlider(1, 20, 10, 1);
+    voltSlider.position(170, DRAW_HEIGHT + 10);
+    voltSlider.size(150);
+    voltSlider.style('cursor', 'pointer');
+
+    // Capacitance: 10–1000 µF
+    capSlider = createSlider(10, 1000, 100, 10);
+    capSlider.position(170, DRAW_HEIGHT + 33);
+    capSlider.size(150);
+    capSlider.style('cursor', 'pointer');
+
+    // Resistance: 100–10000 Ω
+    resSlider = createSlider(100, 10000, 1000, 100);
+    resSlider.position(170, DRAW_HEIGHT + 56);
+    resSlider.size(150);
+    resSlider.style('cursor', 'pointer');
+}
+
+function draw() {
+    let Vs  = voltSlider.value();
+    let C   = capSlider.value()  * 1e-6;   // F
+    let R   = resSlider.value();            // Ω
+    let tau = R * C;                        // s
+
+    // Simulation step
+    if (running) {
+        let target = charging ? Vs : 0;
+        Vc += (target - Vc) / tau * SIM_DT;
+        let Ic = (target - Vc) / R;
+        let Ec = 0.5 * C * Vc * Vc;
+        simTime += SIM_DT;
+
+        history.push({ t: simTime, Vc, Ic: abs(Ic), Ec });
+        if (history.length > MAX_HIST) history.shift();
+
+        // Stop when settled
+        if (abs(Vc - target) < 0.001 * Vs + 1e-6) running = false;
+
+        // Spawn particles
+        if (frameCount % 4 === 0 && abs(Ic) > 1e-6) spawnParticle(Vs, Ic);
+    }
+
+    // Update particles
+    for (let p of particles) {
+        p.t += 0.02 * (charging ? 1 : -1);
+        p.alpha = map(abs(Vc - (charging ? Vs : 0)), 0, Vs, 10, 220);
+    }
+    particles = particles.filter(p => p.t >= 0 && p.t <= 1);
+
+    // ---- Draw ----
+    background(240);
+    drawCircuit(Vs, C, R, tau);
+    drawGraphs(Vs, C, tau);
+    drawControls(Vs, C, R, tau);
+}
+
+// ---- Circuit Diagram ----
+function drawCircuit(Vs, C, R, tau) {
+    fill(255); stroke(180); strokeWeight(1);
+    rect(4, 4, CIRC_W - 8, DRAW_HEIGHT - 8, 6);
+
+    noStroke(); fill(40); textSize(12); textAlign(CENTER);
+    text("RC Circuit", CIRC_W / 2, 22);
+
+    // Layout: battery left, R top, C right, wires
+    let bx = 38, by = 160, bh = 80;   // battery center
+    let rx = 120, ry = 60;             // resistor center
+    let cx = 200, cy = 185;            // capacitor center
+    let topY = 70, botY = 290;
+
+    // Wires
+    stroke(80); strokeWeight(2);
+    // top rail: battery+ -> R -> cap+
+    line(bx, by - bh/2, bx, topY);
+    line(bx, topY, cx, topY);
+    line(cx, topY, cx, cy - 28);
+    // bottom rail: battery- -> cap-
+    line(bx, by + bh/2, bx, botY);
+    line(bx, botY, cx, botY);
+    line(cx, botY, cx, cy + 28);
+
+    // R wire segment top: bx->rx->cx
+    line(bx, topY, rx - 20, topY);
+    line(rx + 20, topY, cx, topY);
+
+    // ---- Battery ----
+    noStroke(); fill(80);
+    rect(bx - 6, by - bh/2, 12, bh, 3);
+    // poles
+    stroke(60); strokeWeight(2);
+    line(bx - 10, by - bh/2 - 4, bx + 10, by - bh/2 - 4); // +
+    line(bx - 6,  by + bh/2 + 4, bx + 6,  by + bh/2 + 4); // -
+    noStroke(); fill(220, 80, 80); textSize(10); textAlign(CENTER);
+    text("+", bx, by - bh/2 - 12);
+    fill(80, 80, 220);
+    text("−", bx, by + bh/2 + 16);
+    fill(40); textSize(10);
+    text(voltSlider.value() + "V", bx, by + 4);
+
+    // ---- Resistor (zigzag) ----
+    stroke(80); strokeWeight(2); noFill();
+    beginShape();
+    let zigX = rx - 20, zigW = 40, zn = 6;
+    vertex(zigX, topY);
+    for (let i = 0; i < zn; i++) {
+        vertex(zigX + zigW * (i + 0.5) / zn, topY + (i % 2 === 0 ? -10 : 10));
+    }
+    vertex(zigX + zigW, topY);
+    endShape();
+    noStroke(); fill(40); textSize(9); textAlign(CENTER);
+    text(formatRes(resSlider.value()), rx, topY - 16);
+
+    // ---- Capacitor (parallel plates) ----
+    let plateH = 22, plateSep = 16;
+    stroke(80); strokeWeight(3);
+    line(cx - 18, cy - plateSep/2, cx + 18, cy - plateSep/2);  // top plate
+    line(cx - 18, cy + plateSep/2, cx + 18, cy + plateSep/2);  // bottom plate
+    strokeWeight(2);
+    line(cx, cy - plateSep/2, cx, topY + 1);
+    line(cx, cy + plateSep/2, cx, botY - 1);
+
+    // Charge symbols on plates (grow with Vc)
+    let nq = floor(map(Vc, 0, voltSlider.value(), 0, 4));
+    nq = constrain(nq, 0, 4);
+    noStroke(); textSize(10); textAlign(CENTER, CENTER);
+    for (let i = 0; i < nq; i++) {
+        let px = cx - 12 + i * 8;
+        fill(220, 80, 80);
+        text("+", px, cy - plateSep/2 - 8);
+        fill(80, 80, 220);
+        text("−", px, cy + plateSep/2 + 8);
+    }
+    fill(40); textSize(9); textAlign(CENTER);
+    text(formatCap(capSlider.value()*1e-6), cx + 28, cy);
+
+    // ---- Vc label ----
+    fill(50, 140, 50); textSize(10);
+    text("Vc=" + Vc.toFixed(2) + "V", cx, cy + plateSep/2 + 28);
+
+    // ---- Particles ----
+    for (let p of particles) {
+        let px = lerp(p.x1, p.x2, p.t);
+        let py = lerp(p.y1, p.y2, p.t);
+        fill(charging ? color(220,80,80,p.alpha) : color(80,80,220,p.alpha));
+        noStroke();
+        ellipse(px, py, 7, 7);
+    }
+
+    // ---- τ label ----
+    fill(120); textSize(10); textAlign(LEFT);
+    text("τ = RC = " + formatTime(tau), 8, DRAW_HEIGHT - 18);
+    text("t = " + simTime.toFixed(2) + "s", 8, DRAW_HEIGHT - 6);
+}
+
+function spawnParticle(Vs, Ic) {
+    if (particles.length >= MAX_PARTICLES) return;
+    // Animate along top wire: battery -> cap
+    particles.push({
+        x1: 38, y1: 90,
+        x2: 200, y2: 90,
+        t: 0, alpha: 200
+    });
+}
+
+// ---- Graphs ----
+function drawGraphs(Vs, C, tau) {
+    let gx = GRAPH_X, gy = 8;
+
+    fill(255); stroke(180); strokeWeight(1);
+    rect(gx - 2, gy, GRAPH_W + 2, GRAPH_PANEL_H, 6);
+
+    let labels = ["Voltage (V)", "Current (mA)", "Energy (µJ)"];
+    let colors = [color(220,80,80), color(80,80,220), color(80,160,80)];
+
+    for (let g = 0; g < 3; g++) {
+        let oy = gy + 14 + g * (EACH_GRAPH_H + 8);
+        let gh = EACH_GRAPH_H - 8;
+        let gw = GRAPH_W - 20;
+        let ox = gx + 10;
+
+        // Graph background
+        fill(250); stroke(200); strokeWeight(1);
+        rect(ox, oy, gw, gh);
+
+        // Label
+        noStroke(); fill(80); textSize(9); textAlign(LEFT);
+        text(labels[g], ox + 2, oy - 2);
+
+        if (history.length < 2) continue;
+
+        // Find max value for this graph
+        let maxVal = 1e-9;
+        for (let h of history) {
+            let v = g === 0 ? h.Vc : g === 1 ? h.Ic * 1000 : h.Ec * 1e6;
+            if (v > maxVal) maxVal = v;
+        }
+        // Sensible ceiling
+        if (g === 0) maxVal = voltSlider.value();
+        else if (g === 1) maxVal = max(maxVal, 0.1);
+        else maxVal = max(maxVal, 0.01);
+
+        // Plot
+        stroke(colors[g]); strokeWeight(1.5); noFill();
+        let tStart = history[0].t;
+        let tEnd   = history[history.length - 1].t;
+        let tRange = max(tEnd - tStart, DISP_DUR);
+
+        beginShape();
+        for (let h of history) {
+            let v = g === 0 ? h.Vc : g === 1 ? h.Ic * 1000 : h.Ec * 1e6;
+            let px = map(h.t - tStart, 0, tRange, ox, ox + gw);
+            let py = map(v, 0, maxVal, oy + gh, oy);
+            vertex(px, py);
+        }
+        endShape();
+
+        // Axis labels
+        noStroke(); fill(120); textSize(8); textAlign(RIGHT);
+        text(maxVal.toFixed(g === 0 ? 0 : 2), ox - 1, oy + 6);
+        text("0", ox - 1, oy + gh);
+    }
+
+    // Time axis label
+    noStroke(); fill(100); textSize(9); textAlign(CENTER);
+    text("Time →", gx + GRAPH_W / 2, gy + GRAPH_PANEL_H - 2);
+}
+
+// ---- Controls ----
+function drawControls(Vs, C, R, tau) {
+    fill(245); stroke(180); strokeWeight(1);
+    rect(0, DRAW_HEIGHT, CANVAS_WIDTH, CONTROL_HEIGHT);
+
+    // Slider labels
+    noStroke(); fill(50); textSize(11); textAlign(RIGHT);
+    text("Voltage: " + Vs + " V",              165, DRAW_HEIGHT + 22);
+    text("Cap: " + capSlider.value() + " µF",  165, DRAW_HEIGHT + 45);
+    text("Res: " + formatRes(R),                165, DRAW_HEIGHT + 68);
+
+    // Buttons
+    for (let btn of [btnCharge, btnDischarge, btnReset]) {
+        let isActive = (btn === btnCharge && running && charging) ||
+                       (btn === btnDischarge && running && !charging);
+        fill(isActive ? color(60,120,200) : color(210));
+        stroke(isActive ? color(40,90,170) : color(160));
+        strokeWeight(1);
+        rect(btn.x, btn.y, btn.w, btn.h, 4);
+        noStroke(); fill(isActive ? 255 : 40);
+        textSize(11); textAlign(CENTER, CENTER);
+        text(btn.label, btn.x + btn.w / 2, btn.y + btn.h / 2);
+    }
+
+    // Status
+    noStroke(); fill(80); textSize(10); textAlign(LEFT);
+    let status = running ? (charging ? "Charging..." : "Discharging...") : "Stopped";
+    text("Status: " + status + "   τ = " + formatTime(tau), 330, DRAW_HEIGHT + 56);
+}
+
+function mousePressed() {
+    let Vs = voltSlider.value();
+    if (inBtn(btnCharge)) {
+        charging = true; running = true; simTime = 0; history = []; particles = [];
+    } else if (inBtn(btnDischarge)) {
+        charging = false; running = true; simTime = 0; history = []; particles = [];
+    } else if (inBtn(btnReset)) {
+        running = false; Vc = 0; simTime = 0; history = []; particles = [];
+    }
+}
+
+function inBtn(btn) {
+    return mouseX >= btn.x && mouseX <= btn.x + btn.w &&
+           mouseY >= btn.y && mouseY <= btn.y + btn.h;
+}
+
+// ---- Formatters ----
+function formatCap(C) {
+    if (C >= 1e-3) return (C * 1e3).toFixed(1) + " mF";
+    if (C >= 1e-6) return (C * 1e6).toFixed(0) + " µF";
+    return (C * 1e9).toFixed(1) + " nF";
+}
+function formatRes(R) {
+    return R >= 1000 ? (R / 1000).toFixed(1) + " kΩ" : R + " Ω";
+}
+function formatTime(t) {
+    if (t >= 1) return t.toFixed(2) + " s";
+    return (t * 1000).toFixed(1) + " ms";
+}
+</script>
+</body>
+</html>
