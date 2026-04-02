@@ -61,6 +61,13 @@ nav:
     - Voltage Divider Calculator: sims/voltage-divider/index.md
     - I-V Characteristics: sims/iv-characteristics/index.md
     - Thevenin Equivalent Circuit: sims/thevenin-concept/index.md
+    - Phasor Transformation: sims/phasor-transform/index.md
+    - Phasor Addition: sims/phasor-addition/index.md
+    - Reactance vs Frequency: sims/reactance-frequency/index.md
+    - Impedance Triangle: sims/impedance-triangle/index.md
+    - Phasor Circuit Solver: sims/phasor-circuit-solver/index.md
+    - Resonance Comparison: sims/resonance-comparison/index.md
+    - Bandwidth and Selectivity: sims/bandwidth-selectivity/index.md
     - prompts/circuit-similarity/index.md
     - prompts/top-100-circuits/top-100-circuits.md
     - sims/circuit-similarity/index.md
