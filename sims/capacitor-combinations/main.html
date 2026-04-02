@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Capacitor Combinations</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+    <style>
+        body { margin: 0; padding: 0; background: #f0f0f0; display: flex; justify-content: center; }
+        canvas { display: block; }
+    </style>
+</head>
+<body>
+<script>
+// Capacitor Combinations MicroSim
+// Chapter 5: Passive Components
+// Side-by-side series vs parallel with step-by-step calculation
+
+const CANVAS_WIDTH  = 670;
+const DRAW_HEIGHT   = 370;
+const CONTROL_HEIGHT = 100;
+const CANVAS_HEIGHT  = DRAW_HEIGHT + CONTROL_HEIGHT;
+
+const LEFT_W  = 420;   // circuit diagrams
+const RIGHT_X = LEFT_W + 8;
+const RIGHT_W = CANVAS_WIDTH - RIGHT_X - 8;
+
+// State
+let useC3 = true;
+let c1Slider, c2Slider, c3Slider;
+let toggleBtn = { x: 0, y: 0, w: 110, h: 24 };
+
+function setup() {
+    let cnv = createCanvas(CANVAS_WIDTH, CANVAS_HEIGHT);
+    cnv.parent(document.body);
+    textFont('monospace');
+
+    let sy = DRAW_HEIGHT + 16;
+    c1Slider = createSlider(1, 100, 10, 1);
+    c1Slider.position(130, sy); c1Slider.size(140); c1Slider.style('cursor','pointer');
+
+    c2Slider = createSlider(1, 100, 20, 1);
+    c2Slider.position(130, sy + 26); c2Slider.size(140); c2Slider.style('cursor','pointer');
+
+    c3Slider = createSlider(1, 100, 30, 1);
+    c3Slider.position(130, sy + 52); c3Slider.size(140); c3Slider.style('cursor','pointer');
+
+    toggleBtn.x = 300; toggleBtn.y = sy + 52; toggleBtn.w = 110; toggleBtn.h = 24;
+}
+
+function draw() {
+    let C1 = c1Slider.value();
+    let C2 = c2Slider.value();
+    let C3 = useC3 ? c3Slider.value() : null;
+
+    // Equivalent capacitances
+    let Cseries, Cparallel;
+    if (C3 !== null) {
+        Cseries   = 1 / (1/C1 + 1/C2 + 1/C3);
+        Cparallel = C1 + C2 + C3;
+    } else {
+        Cseries   = 1 / (1/C1 + 1/C2);
+        Cparallel = C1 + C2;
+    }
+
+    background(240);
+    drawSeriesPanel(C1, C2, C3, Cseries);
+    drawParallelPanel(C1, C2, C3, Cparallel);
+    drawSummaryPanel(C1, C2, C3, Cseries, Cparallel);
+    drawControls(C1, C2, C3);
+}
+
+// ---- Series Panel (top half) ----
+function drawSeriesPanel(C1, C2, C3, Ceq) {
+    let px = 6, py = 6, pw = LEFT_W - 12, ph = DRAW_HEIGHT / 2 - 10;
+    fill(255); stroke(180); strokeWeight(1);
+    rect(px, py, pw, ph, 6);
+
+    noStroke(); fill(40); textSize(12); textAlign(LEFT);
+    text("Series Configuration", px + 10, py + 18);
+
+    // Formula label
+    fill(100); textSize(10);
+    text("1/Ceq = 1/C1 + 1/C2" + (C3 ? " + 1/C3" : ""), px + 10, py + 32);
+
+    // Draw series circuit
+    let y = py + ph / 2 + 10;
+    let x0 = px + 20, x1 = px + pw - 20;
+    let capW = 14, capH = 28;
+    let n = C3 !== null ? 3 : 2;
+    let spacing = (x1 - x0) / (n + 1);
+
+    // Wire
+    stroke(80); strokeWeight(2);
+    line(x0, y, x1, y);
+
+    // +/- terminals
+    noStroke(); fill(200,80,80); textSize(11); textAlign(CENTER);
+    text("+", x0 - 8, y + 4);
+    fill(80,80,200); text("−", x1 + 8, y + 4);
+
+    // Capacitors in series
+    let caps = [C1, C2];
+    if (C3 !== null) caps.push(C3);
+    let colors = [color(220,80,80), color(80,140,220), color(80,180,80)];
+
+    for (let i = 0; i < caps.length; i++) {
+        let cx = x0 + spacing * (i + 1);
+        // gap in wire
+        fill(255); noStroke();
+        rect(cx - capW/2 - 1, y - 2, capW + 2, 4);
+        // plates
+        stroke(colors[i]); strokeWeight(3);
+        line(cx - capW/2, y - 1, cx - capW/2, y - capH/2);
+        line(cx - capW/2, y + 1, cx - capW/2, y + capH/2);
+        line(cx + capW/2, y - 1, cx + capW/2, y - capH/2);
+        line(cx + capW/2, y + 1, cx + capW/2, y + capH/2);
+        // label
+        noStroke(); fill(colors[i]); textSize(10); textAlign(CENTER);
+        text("C" + (i+1) + "=" + caps[i] + "µ", cx, y - capH/2 - 8);
+    }
+
+    // Ceq box
+    let eqX = px + pw - 120, eqY = py + ph - 36;
+    fill(255, 250, 220); stroke(180,160,80); strokeWeight(1);
+    rect(eqX, eqY, 110, 28, 4);
+    noStroke(); fill(100,80,0); textSize(11); textAlign(CENTER);
+    text("Ceq = " + Ceq.toFixed(2) + " µF", eqX + 55, eqY + 18);
+
+    // "Series < smallest" note
+    fill(160); textSize(9); textAlign(LEFT);
+    let smallest = C3 !== null ? min(C1, C2, C3) : min(C1, C2);
+    text("Ceq < smallest (" + smallest + " µF)", px + 10, py + ph - 10);
+}
+
+// ---- Parallel Panel (bottom half) ----
+function drawParallelPanel(C1, C2, C3, Ceq) {
+    let px = 6, py = DRAW_HEIGHT / 2 + 4, pw = LEFT_W - 12, ph = DRAW_HEIGHT / 2 - 10;
+    fill(255); stroke(180); strokeWeight(1);
+    rect(px, py, pw, ph, 6);
+
+    noStroke(); fill(40); textSize(12); textAlign(LEFT);
+    text("Parallel Configuration", px + 10, py + 18);
+
+    fill(100); textSize(10);
+    text("Ceq = C1 + C2" + (C3 ? " + C3" : ""), px + 10, py + 32);
+
+    // Draw parallel circuit
+    let n = C3 !== null ? 3 : 2;
+    let railL = px + 20, railR = px + pw - 20;
+    let topRail = py + 50, botRail = py + ph - 30;
+    let capW = 14, capGap = 10;
+    let spacing = (railR - railL) / (n + 1);
+
+    // Rails
+    stroke(80); strokeWeight(2);
+    line(railL, topRail, railR, topRail);
+    line(railL, botRail, railR, botRail);
+
+    // +/- terminals
+    noStroke(); fill(200,80,80); textSize(11); textAlign(CENTER);
+    text("+", railL - 10, topRail + 4);
+    fill(80,80,200); text("−", railL - 10, botRail + 4);
+    stroke(80); strokeWeight(2);
+    line(railL, topRail, railL, botRail);
+
+    let caps = [C1, C2];
+    if (C3 !== null) caps.push(C3);
+    let colors = [color(220,80,80), color(80,140,220), color(80,180,80)];
+    let midY = (topRail + botRail) / 2;
+
+    for (let i = 0; i < caps.length; i++) {
+        let cx = railL + spacing * (i + 1);
+        // vertical wire segments
+        stroke(80); strokeWeight(2);
+        line(cx, topRail, cx, midY - capGap/2 - 1);
+        line(cx, midY + capGap/2 + 1, cx, botRail);
+        // capacitor plates
+        stroke(colors[i]); strokeWeight(3);
+        line(cx - capW/2, midY - capGap/2, cx + capW/2, midY - capGap/2);
+        line(cx - capW/2, midY + capGap/2, cx + capW/2, midY + capGap/2);
+        // label
+        noStroke(); fill(colors[i]); textSize(10); textAlign(CENTER);
+        text("C" + (i+1) + "=" + caps[i] + "µ", cx, midY - capGap/2 - 10);
+    }
+
+    // Ceq box
+    let eqX = px + pw - 120, eqY = py + ph - 36;
+    fill(220, 255, 220); stroke(80,160,80); strokeWeight(1);
+    rect(eqX, eqY, 110, 28, 4);
+    noStroke(); fill(0,100,0); textSize(11); textAlign(CENTER);
+    text("Ceq = " + Ceq.toFixed(2) + " µF", eqX + 55, eqY + 18);
+
+    // "Parallel = sum" note
+    fill(160); textSize(9); textAlign(LEFT);
+    text("Ceq = sum = " + Ceq.toFixed(2) + " µF", px + 10, py + ph - 10);
+}
+
+// ---- Summary Panel ----
+function drawSummaryPanel(C1, C2, C3, Cseries, Cparallel) {
+    let px = RIGHT_X, py = 6, pw = RIGHT_W, ph = DRAW_HEIGHT - 12;
+    fill(250); stroke(180); strokeWeight(1);
+    rect(px, py, pw, ph, 6);
+
+    noStroke(); fill(40); textSize(12); textAlign(CENTER);
+    text("Comparison", px + pw/2, py + 18);
+
+    let ry = py + 36;
+    textSize(10); textAlign(LEFT); fill(60);
+
+    let caps = [C1, C2]; if (C3 !== null) caps.push(C3);
+    let labels = ["C1", "C2", "C3"];
+    let colors = [color(220,80,80), color(80,140,220), color(80,180,80)];
+    for (let i = 0; i < caps.length; i++) {
+        fill(colors[i]);
+        text(labels[i] + " = " + caps[i] + " µF", px + 10, ry);
+        ry += 16;
+    }
+
+    ry += 10;
+    fill(180,150,0); stroke(180,150,0); strokeWeight(1);
+    line(px+8, ry-6, px+pw-8, ry-6);
+    noStroke(); textSize(10); fill(100,80,0);
+    text("Series:", px+10, ry+2); ry += 14;
+    fill(40);
+    text(Cseries.toFixed(3) + " µF", px+10, ry); ry += 20;
+
+    fill(0,120,0); textSize(10);
+    text("Parallel:", px+10, ry); ry += 14;
+    fill(40);
+    text(Cparallel.toFixed(2) + " µF", px+10, ry); ry += 22;
+
+    // Visual bar comparison
+    let maxC = max(Cparallel, C1+C2+(C3||0));
+    let barW = pw - 22;
+
+    fill(160); textSize(9); textAlign(LEFT);
+    text("Visual scale:", px+10, ry); ry += 14;
+
+    // Series bar
+    let sw = map(Cseries, 0, maxC, 0, barW);
+    fill(255,230,150); stroke(180,150,0); strokeWeight(1);
+    rect(px+10, ry, sw, 14, 2);
+    noStroke(); fill(80,60,0); textSize(9);
+    text("S", px+10+sw+3, ry+10);
+    ry += 20;
+
+    // Parallel bar
+    let pw2 = map(Cparallel, 0, maxC, 0, barW);
+    fill(180,255,180); stroke(80,160,80); strokeWeight(1);
+    rect(px+10, ry, pw2, 14, 2);
+    noStroke(); fill(0,80,0); textSize(9);
+    text("P", px+10+pw2+3, ry+10);
+    ry += 30;
+
+    // Key rule
+    fill(80); textSize(9); textAlign(LEFT);
+    text("Rule: Series < min", px+8, ry); ry+=12;
+    text("Parallel = sum", px+8, ry);
+}
+
+// ---- Controls ----
+function drawControls(C1, C2, C3) {
+    fill(245); stroke(180); strokeWeight(1);
+    rect(0, DRAW_HEIGHT, CANVAS_WIDTH, CONTROL_HEIGHT);
+
+    noStroke(); fill(50); textSize(11); textAlign(RIGHT);
+    text("C1: " + C1 + " µF", 125, DRAW_HEIGHT + 27);
+    text("C2: " + C2 + " µF", 125, DRAW_HEIGHT + 53);
+    text("C3: " + (C3 !== null ? C3 + " µF" : "off"), 125, DRAW_HEIGHT + 79);
+
+    // C3 toggle button
+    let isOn = useC3;
+    fill(isOn ? color(60,140,60) : color(180,60,60));
+    stroke(isOn ? color(40,100,40) : color(130,40,40));
+    strokeWeight(1);
+    rect(toggleBtn.x, toggleBtn.y, toggleBtn.w, toggleBtn.h, 4);
+    noStroke(); fill(255); textSize(10); textAlign(CENTER, CENTER);
+    text(isOn ? "C3: ON" : "C3: OFF", toggleBtn.x + toggleBtn.w/2, toggleBtn.y + toggleBtn.h/2);
+
+    // Step-by-step formula
+    noStroke(); fill(80); textSize(10); textAlign(LEFT);
+    let n = C3 !== null ? 3 : 2;
+    if (n === 2) {
+        text("Series: 1/Ceq = 1/"+C1+" + 1/"+C2, 430, DRAW_HEIGHT + 20);
+        text("Parallel: Ceq = "+C1+" + "+C2, 430, DRAW_HEIGHT + 36);
+    } else {
+        text("Series: 1/"+C1+" + 1/"+C2+" + 1/"+C3, 430, DRAW_HEIGHT + 20);
+        text("Parallel: "+C1+" + "+C2+" + "+C3, 430, DRAW_HEIGHT + 36);
+    }
+}
+
+function mousePressed() {
+    if (mouseX >= toggleBtn.x && mouseX <= toggleBtn.x + toggleBtn.w &&
+        mouseY >= toggleBtn.y && mouseY <= toggleBtn.y + toggleBtn.h) {
+        useC3 = !useC3;
+    }
+}
+</script>
+</body>
+</html>

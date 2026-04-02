@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parallel Plate Capacitor</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+    <style>
+        body { margin: 0; padding: 0; background: #f0f0f0; display: flex; justify-content: center; }
+        canvas { display: block; }
+    </style>
+</head>
+<body>
+<script>
+// Parallel Plate Capacitor MicroSim
+// Chapter 5: Passive Components
+// Visualizes how plate area, separation, and dielectric affect capacitance
+
+const CANVAS_WIDTH = 670;
+const DRAW_HEIGHT = 370;
+const CONTROL_HEIGHT = 130;
+const CANVAS_HEIGHT = DRAW_HEIGHT + CONTROL_HEIGHT;
+
+// Physics constants
+const EPS_0 = 8.854e-12; // F/m
+
+// Dielectric materials: [name, relative permittivity]
+const DIELECTRICS = [
+    ["Air",         1.0],
+    ["Paper",       3.0],
+    ["Polyester",   3.2],
+    ["Ceramic",    50.0],
+    ["Electrolytic",10.0],
+];
+
+let areaSlider, sepSlider, voltSlider;
+let dielectricIndex = 0;
+let dielectricBtns = [];
+
+// Layout
+const leftPanelW = 370;
+const rightPanelX = leftPanelW + 10;
+const rightPanelW = CANVAS_WIDTH - rightPanelX - 10;
+
+// Slider layout
+const sliderLabelX = rightPanelX;
+const sliderX = rightPanelX + 135;
+const sliderW = rightPanelW - 140;
+
+function setup() {
+    let cnv = createCanvas(CANVAS_WIDTH, CANVAS_HEIGHT);
+    cnv.parent(document.body);
+    textFont('monospace');
+
+    // Plate area slider: 1 to 100 cm²
+    areaSlider = createSlider(1, 100, 25, 1);
+    areaSlider.position(sliderX, DRAW_HEIGHT + 15);
+    areaSlider.size(sliderW);
+    areaSlider.style('cursor', 'pointer');
+
+    // Plate separation slider: 1 to 20 mm
+    sepSlider = createSlider(1, 20, 5, 1);
+    sepSlider.position(sliderX, DRAW_HEIGHT + 45);
+    sepSlider.size(sliderW);
+    sepSlider.style('cursor', 'pointer');
+
+    // Applied voltage slider: 1 to 100 V
+    voltSlider = createSlider(1, 100, 10, 1);
+    voltSlider.position(sliderX, DRAW_HEIGHT + 75);
+    voltSlider.size(sliderW);
+    voltSlider.style('cursor', 'pointer');
+}
+
+function draw() {
+    // Get values
+    let areaCm2 = areaSlider.value();         // cm²
+    let sepMm   = sepSlider.value();           // mm
+    let voltage = voltSlider.value();          // V
+
+    let areaM2 = areaCm2 * 1e-4;             // m²
+    let sepM   = sepMm   * 1e-3;              // m
+    let epsR   = DIELECTRICS[dielectricIndex][1];
+
+    // Capacitance
+    let C = EPS_0 * epsR * areaM2 / sepM;    // Farads
+    let Q = C * voltage;                       // Coulombs
+    let E_stored = 0.5 * C * voltage * voltage; // Joules
+    let E_field  = voltage / sepM;             // V/m
+
+    // ---- Background ----
+    background(240);
+
+    // ---- Left Panel: Visualization ----
+    drawCapacitorViz(areaCm2, sepMm, voltage, epsR, C, Q, E_field);
+
+    // ---- Right Panel: Controls & Calculations ----
+    drawControls(areaCm2, sepMm, voltage, epsR, C, Q, E_stored, E_field);
+}
+
+function drawCapacitorViz(areaCm2, sepMm, voltage, epsR, C, Q, E_field) {
+    let panelX = 10, panelY = 10;
+    let panelW = leftPanelW - 20, panelH = DRAW_HEIGHT - 20;
+
+    // Panel background
+    fill(255);
+    stroke(180);
+    strokeWeight(1);
+    rect(panelX, panelY, panelW, panelH, 6);
+
+    // Title
+    fill(40);
+    noStroke();
+    textSize(13);
+    textAlign(CENTER);
+    text("Parallel Plate Capacitor", panelX + panelW / 2, panelY + 22);
+
+    // ---- Draw plates ----
+    // Scale plate width by area (50–200 px range)
+    let plateW = map(areaCm2, 1, 100, 60, 220);
+    let plateH = 14;
+    let gapPx  = map(sepMm, 1, 20, 20, 100);
+    let cx     = panelX + panelW / 2;
+    let cy     = panelY + panelH / 2 + 10;
+
+    let topPlateY    = cy - gapPx / 2 - plateH;
+    let bottomPlateY = cy + gapPx / 2;
+
+    // Dielectric fill
+    let dColor = getDielectricColor(dielectricIndex);
+    fill(dColor);
+    stroke(150);
+    strokeWeight(1);
+    rect(cx - plateW / 2, topPlateY + plateH, plateW, gapPx, 0);
+
+    // Top plate (positive)
+    fill(220, 100, 100);
+    stroke(160, 60, 60);
+    strokeWeight(1.5);
+    rect(cx - plateW / 2, topPlateY, plateW, plateH, 3);
+
+    // Bottom plate (negative)
+    fill(100, 140, 220);
+    stroke(60, 80, 160);
+    rect(cx - plateW / 2, bottomPlateY, plateW, plateH, 3);
+
+    // Plate labels
+    noStroke();
+    textSize(11);
+    textAlign(LEFT);
+    fill(180, 40, 40);
+    text("+  (positive plate)", cx + plateW / 2 + 8, topPlateY + plateH / 2 + 4);
+    fill(40, 80, 180);
+    text("−  (negative plate)", cx + plateW / 2 + 8, bottomPlateY + plateH / 2 + 4);
+
+    // Charge symbols on plates
+    let numCharges = floor(map(Q * 1e9, 0, 10, 1, 8));
+    numCharges = constrain(numCharges, 1, 8);
+    let spacing = plateW / (numCharges + 1);
+    textSize(10);
+    textAlign(CENTER, CENTER);
+    for (let i = 1; i <= numCharges; i++) {
+        let px = cx - plateW / 2 + spacing * i;
+        fill(255, 200, 200);
+        text("+", px, topPlateY + plateH / 2);
+        fill(200, 200, 255);
+        text("−", px, bottomPlateY + plateH / 2);
+    }
+
+    // Electric field lines (arrows)
+    let numLines = constrain(floor(map(E_field, 0, 200000, 1, 6)), 1, 6);
+    let lineSpacing = plateW / (numLines + 1);
+    stroke(200, 140, 0, 180);
+    strokeWeight(1.5);
+    fill(200, 140, 0, 180);
+    for (let i = 1; i <= numLines; i++) {
+        let lx = cx - plateW / 2 + lineSpacing * i;
+        let y1 = topPlateY + plateH + 4;
+        let y2 = bottomPlateY - 4;
+        drawArrow(lx, y1, lx, y2);
+    }
+
+    // Field arrow legend
+    noStroke();
+    fill(180, 120, 0);
+    textSize(10);
+    textAlign(LEFT);
+    text("E field", panelX + 12, cy - 2);
+
+    // Dimension labels
+    fill(60);
+    textSize(10);
+    textAlign(CENTER);
+    // Area label above top plate
+    text(`Area = ${areaSlider.value()} cm²`, cx, topPlateY - 8);
+    // Gap label on right
+    textAlign(LEFT);
+    text(`d = ${sepMm} mm`, cx - plateW / 2 - 60, cy);
+
+    // Dielectric label
+    textAlign(CENTER);
+    fill(80);
+    textSize(10);
+    text(DIELECTRICS[dielectricIndex][0] + " (εᵣ=" + DIELECTRICS[dielectricIndex][1].toFixed(1) + ")",
+        cx, bottomPlateY + plateH + 18);
+
+    // ---- Capacitance readout at bottom of panel ----
+    fill(30, 30, 30);
+    textSize(13);
+    textAlign(CENTER);
+    text("C = " + formatCapacitance(C), cx, panelY + panelH - 18);
+}
+
+function drawArrow(x1, y1, x2, y2) {
+    let headLen = 7;
+    line(x1, y1, x2, y2);
+    let angle = atan2(y2 - y1, x2 - x1);
+    fill(200, 140, 0, 180);
+    noStroke();
+    triangle(
+        x2, y2,
+        x2 - headLen * cos(angle - PI / 6), y2 - headLen * sin(angle - PI / 6),
+        x2 - headLen * cos(angle + PI / 6), y2 - headLen * sin(angle + PI / 6)
+    );
+    stroke(200, 140, 0, 180);
+}
+
+function drawControls(areaCm2, sepMm, voltage, epsR, C, Q, E_stored, E_field) {
+    // Right panel background
+    fill(250);
+    stroke(180);
+    strokeWeight(1);
+    rect(rightPanelX - 4, 8, rightPanelW + 8, DRAW_HEIGHT - 16, 6);
+
+    // Calculations
+    fill(30);
+    noStroke();
+    textSize(12);
+    textAlign(LEFT);
+    let ry = 28;
+    text("Calculated Values:", rightPanelX + 2, ry);
+    ry += 18;
+    textSize(11);
+    fill(60);
+    text("C = " + formatCapacitance(C), rightPanelX + 2, ry); ry += 16;
+    text("Q = " + formatCharge(Q), rightPanelX + 2, ry); ry += 16;
+    text("E = " + formatEnergy(E_stored), rightPanelX + 2, ry); ry += 16;
+    text("V = " + voltage + " V", rightPanelX + 2, ry); ry += 16;
+    text("E-field = " + formatEField(E_field), rightPanelX + 2, ry); ry += 24;
+
+    // Dielectric selector
+    fill(30);
+    textSize(11);
+    text("Dielectric:", rightPanelX + 2, ry); ry += 4;
+    for (let i = 0; i < DIELECTRICS.length; i++) {
+        let btnX = rightPanelX + 2;
+        let btnY = ry + i * 22;
+        let btnW = rightPanelW - 8;
+        let btnH = 18;
+        let isActive = (i === dielectricIndex);
+        fill(isActive ? color(60, 120, 200) : color(220));
+        stroke(isActive ? color(40, 90, 170) : color(160));
+        strokeWeight(1);
+        rect(btnX, btnY, btnW, btnH, 3);
+        fill(isActive ? 255 : 50);
+        noStroke();
+        textSize(10);
+        textAlign(CENTER, CENTER);
+        text(DIELECTRICS[i][0] + " εᵣ=" + DIELECTRICS[i][1].toFixed(1),
+             btnX + btnW / 2, btnY + btnH / 2);
+        // Store button bounds for click detection
+        dielectricBtns[i] = { x: btnX, y: btnY, w: btnW, h: btnH };
+    }
+
+    // Slider labels (in control area)
+    fill(50);
+    noStroke();
+    textSize(11);
+    textAlign(RIGHT);
+    text("Area: " + areaCm2 + " cm²", sliderX - 5, DRAW_HEIGHT + 26);
+    text("Sep: " + sepMm + " mm", sliderX - 5, DRAW_HEIGHT + 56);
+    text("Voltage: " + voltage + " V", sliderX - 5, DRAW_HEIGHT + 86);
+}
+
+function mousePressed() {
+    for (let i = 0; i < DIELECTRICS.length; i++) {
+        let b = dielectricBtns[i];
+        if (b && mouseX >= b.x && mouseX <= b.x + b.w &&
+            mouseY >= b.y && mouseY <= b.y + b.h) {
+            dielectricIndex = i;
+        }
+    }
+}
+
+function getDielectricColor(idx) {
+    const colors = [
+        color(200, 230, 255, 120), // Air - light blue
+        color(240, 220, 180, 160), // Paper - tan
+        color(200, 255, 200, 160), // Polyester - light green
+        color(255, 200, 200, 160), // Ceramic - light red
+        color(230, 200, 255, 160), // Electrolytic - light purple
+    ];
+    return colors[idx] || color(220, 220, 220, 120);
+}
+
+function formatCapacitance(C) {
+    if (C >= 1e-6) return (C * 1e6).toFixed(2) + " µF";
+    if (C >= 1e-9) return (C * 1e9).toFixed(2) + " nF";
+    return (C * 1e12).toFixed(2) + " pF";
+}
+
+function formatCharge(Q) {
+    if (Q >= 1e-6) return (Q * 1e6).toFixed(2) + " µC";
+    if (Q >= 1e-9) return (Q * 1e9).toFixed(2) + " nC";
+    return (Q * 1e12).toFixed(2) + " pC";
+}
+
+function formatEnergy(E) {
+    if (E >= 1e-3) return (E * 1e3).toFixed(3) + " mJ";
+    if (E >= 1e-6) return (E * 1e6).toFixed(3) + " µJ";
+    return (E * 1e9).toFixed(3) + " nJ";
+}
+
+function formatEField(E) {
+    if (E >= 1000) return (E / 1000).toFixed(1) + " kV/m";
+    return E.toFixed(1) + " V/m";
+}
+</script>
+</body>
+</html>

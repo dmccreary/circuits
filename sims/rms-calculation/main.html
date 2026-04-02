@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RMS Calculation</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+    <style>
+        body { margin: 0; padding: 0; background: #f0f0f0; display: flex; justify-content: center; }
+        canvas { display: block; }
+    </style>
+</head>
+<body>
+<script>
+// RMS Calculation MicroSim
+// Chapter 5: Passive Components
+// AC vs DC power — prove RMS gives equal average power
+
+const CANVAS_WIDTH   = 670;
+const DRAW_HEIGHT    = 360;
+const CONTROL_HEIGHT = 90;
+const CANVAS_HEIGHT  = DRAW_HEIGHT + CONTROL_HEIGHT;
+
+let vpSlider, rSlider;
+let animTime = 0;
+let isAnimating = true;
+let startBtn = { x: 0, y: 0, w: 90, h: 24 };
+
+// Layout
+const LEFT_X  = 8,    LEFT_W  = 300;
+const RIGHT_X = 318,  RIGHT_W = 344;
+const GRAPH_Y = 210,  GRAPH_H = 135;
+
+function setup() {
+    let cnv = createCanvas(CANVAS_WIDTH, CANVAS_HEIGHT);
+    cnv.parent(document.body);
+    textFont('monospace');
+
+    let sy = DRAW_HEIGHT + 14;
+    vpSlider = createSlider(1, 20, 10, 1);
+    vpSlider.position(160, sy); vpSlider.size(160); vpSlider.style('cursor','pointer');
+
+    rSlider = createSlider(100, 10000, 1000, 100);
+    rSlider.position(160, sy + 32); rSlider.size(160); rSlider.style('cursor','pointer');
+
+    startBtn.x = 360; startBtn.y = sy + 20; startBtn.w = 90; startBtn.h = 24;
+}
+
+function draw() {
+    let Vp   = vpSlider.value();
+    let R    = rSlider.value();
+    let Vrms = Vp / sqrt(2);
+    let f    = 50; // 50 Hz display
+    let omega = TWO_PI * f;
+
+    if (isAnimating) animTime += deltaTime / 1000;
+
+    let Vac  = Vp * sin(omega * animTime);
+    let Pac_inst = (Vac * Vac) / R;
+    let Pavg = (Vp * Vp) / (2 * R);   // = Vrms²/R
+    let Pdc  = (Vrms * Vrms) / R;      // same as Pavg
+
+    background(240);
+    drawACPanel(Vp, Vrms, R, Vac, Pac_inst, Pavg, omega);
+    drawDCPanel(Vrms, R, Pdc);
+    drawPowerGraphs(Vp, Vrms, R, Pavg, omega);
+    drawControls(Vp, Vrms, R, Pavg);
+}
+
+function drawACPanel(Vp, Vrms, R, Vac, Pac, Pavg, omega) {
+    fill(255, 248, 248); stroke(180); strokeWeight(1);
+    rect(LEFT_X, 6, LEFT_W - 2, 196, 6);
+
+    noStroke(); fill(200,60,60); textSize(12); textAlign(CENTER);
+    text("AC Circuit", LEFT_X + LEFT_W / 2, 22);
+
+    // Schematic: source ~ -- R -- loop
+    let cx = LEFT_X + LEFT_W / 2;
+    let cy = 110;
+    // Box
+    stroke(100); strokeWeight(1.5); noFill();
+    rect(cx - 90, cy - 50, 180, 100, 4);
+    // Source symbol (circle with ~)
+    stroke(200,60,60); fill(255,240,240);
+    ellipse(cx - 55, cy, 28, 28);
+    noStroke(); fill(200,60,60); textSize(13); textAlign(CENTER,CENTER);
+    text("~", cx - 55, cy);
+    // Resistor
+    stroke(180,100,0); strokeWeight(2); noFill();
+    let rx = cx + 20, ry = cy - 50;
+    beginShape();
+    for (let i = 0; i < 6; i++) vertex(rx - 22 + i*8, ry + (i%2===0 ? -8 : 8));
+    vertex(rx + 22, ry + 8);
+    endShape();
+    stroke(100); strokeWeight(1.5);
+    line(cx - 90, cy, cx - 69, cy);   // left wire to source
+    line(cx - 41, cy, cx + 90, cy);   // right wire to R top-right
+    // Resistor leads vertical
+    line(rx - 22, ry, rx - 22, cy);
+    line(rx + 22, ry, rx + 22, cy);
+
+    // Instantaneous values
+    noStroke(); fill(200,60,60); textSize(10); textAlign(CENTER);
+    text("Vac = " + Vac.toFixed(2) + " V", cx, cy + 65);
+    fill(40);
+    text("Vp = " + vpSlider.value() + "V   Vrms = " + Vrms.toFixed(2) + "V", cx, cy + 79);
+
+    // Power display
+    fill(255,240,200); stroke(200,160,0); strokeWeight(1);
+    rect(LEFT_X + 8, cy + 90, LEFT_W - 18, 48, 4);
+    noStroke(); fill(150,100,0); textSize(10); textAlign(LEFT);
+    text("P_inst = V²/R = " + Pac.toFixed(3) + " W", LEFT_X + 14, cy + 107);
+    text("P_avg  = Vp²/2R = " + Pavg.toFixed(4) + " W", LEFT_X + 14, cy + 123);
+}
+
+function drawDCPanel(Vrms, R, Pdc) {
+    fill(240, 248, 255); stroke(180); strokeWeight(1);
+    rect(RIGHT_X, 6, RIGHT_W - 6, 196, 6);
+
+    noStroke(); fill(60,100,200); textSize(12); textAlign(CENTER);
+    text("Equivalent DC Circuit", RIGHT_X + RIGHT_W / 2, 22);
+
+    let cx = RIGHT_X + RIGHT_W / 2;
+    let cy = 110;
+    // Box
+    stroke(100); strokeWeight(1.5); noFill();
+    rect(cx - 90, cy - 50, 180, 100, 4);
+    // DC battery symbol
+    stroke(60,100,200); fill(230,240,255);
+    rect(cx - 69, cy - 14, 28, 28, 3);
+    noStroke(); fill(60,100,200); textSize(10); textAlign(CENTER,CENTER);
+    text(Vrms.toFixed(2)+"V", cx - 55, cy);
+    // Resistor
+    stroke(180,100,0); strokeWeight(2); noFill();
+    let rx = cx + 20, ry = cy - 50;
+    beginShape();
+    for (let i = 0; i < 6; i++) vertex(rx - 22 + i*8, ry + (i%2===0 ? -8 : 8));
+    vertex(rx + 22, ry + 8);
+    endShape();
+    stroke(100); strokeWeight(1.5);
+    line(cx - 90, cy, cx - 69, cy);
+    line(cx - 41, cy, cx + 90, cy);
+    line(rx - 22, ry, rx - 22, cy);
+    line(rx + 22, ry, rx + 22, cy);
+
+    // Values
+    noStroke(); fill(60,100,200); textSize(10); textAlign(CENTER);
+    text("Vdc = Vrms = " + Vrms.toFixed(2) + " V", cx, cy + 65);
+
+    // Power display
+    fill(220,240,255); stroke(100,140,200); strokeWeight(1);
+    rect(RIGHT_X + 8, cy + 90, RIGHT_W - 18, 48, 4);
+    noStroke(); fill(30,60,150); textSize(10); textAlign(LEFT);
+    text("P = Vdc²/R = " + Pdc.toFixed(4) + " W", RIGHT_X + 14, cy + 107);
+    fill(0,120,0); textSize(11);
+    text("= P_avg (AC) ✓", RIGHT_X + 14, cy + 123);
+}
+
+function drawPowerGraphs(Vp, Vrms, R, Pavg, omega) {
+    let px = LEFT_X, py = GRAPH_Y, pw = CANVAS_WIDTH - 18, ph = GRAPH_H;
+    fill(255); stroke(180); strokeWeight(1);
+    rect(px, py, pw, ph, 6);
+
+    noStroke(); fill(40); textSize(10); textAlign(CENTER);
+    text("Instantaneous Power Comparison", px + pw / 2, py + 14);
+
+    let plotX = px + 50, plotY = py + 22;
+    let plotW = pw - 60, plotH = ph - 36;
+    let Pmax  = (Vp * Vp) / R;
+    let steps = 300;
+    let cycles = 2.5;
+
+    // Grid
+    stroke(230); strokeWeight(0.5);
+    for (let i = 0; i <= 4; i++) {
+        let gy = map(i, 0, 4, plotY + plotH, plotY);
+        line(plotX, gy, plotX + plotW, gy);
+    }
+
+    // AC power curve (orange, oscillates 0 to Pmax)
+    stroke(220, 100, 30); strokeWeight(2); noFill();
+    beginShape();
+    for (let i = 0; i <= steps; i++) {
+        let t  = (i / steps) * cycles / 50;  // time in seconds
+        let v  = Vp * sin(omega * t + omega * animTime);
+        let p  = (v * v) / R;
+        let x  = map(i, 0, steps, plotX, plotX + plotW);
+        let y  = map(p, 0, Pmax, plotY + plotH, plotY);
+        vertex(x, y);
+    }
+    endShape();
+
+    // Pavg line (dashed green)
+    let avgY = map(Pavg, 0, Pmax, plotY + plotH, plotY);
+    stroke(60, 160, 60); strokeWeight(2);
+    drawingContext.setLineDash([6, 4]);
+    line(plotX, avgY, plotX + plotW, avgY);
+    drawingContext.setLineDash([]);
+
+    // DC power (constant blue)
+    stroke(60, 100, 200); strokeWeight(2.5);
+    line(plotX, avgY, plotX + plotW, avgY);
+
+    // Labels
+    noStroke(); fill(220,100,30); textSize(9); textAlign(LEFT);
+    text("AC power P(t)", plotX + 4, plotY + 12);
+    fill(60,160,60);
+    text("P_avg = DC power", plotX + 4, plotY + 24);
+
+    // Y axis labels
+    fill(100); textSize(8); textAlign(RIGHT);
+    text(Pmax.toFixed(3)+" W", plotX - 2, plotY + 4);
+    text(Pavg.toFixed(3)+" W", plotX - 2, avgY + 4);
+    text("0", plotX - 2, plotY + plotH);
+}
+
+function drawControls(Vp, Vrms, R, Pavg) {
+    fill(245); stroke(180); strokeWeight(1);
+    rect(0, DRAW_HEIGHT, CANVAS_WIDTH, CONTROL_HEIGHT);
+
+    noStroke(); fill(50); textSize(11); textAlign(RIGHT);
+    text("Vp: " + Vp + " V   (Vrms=" + Vrms.toFixed(2) + "V)", 155, DRAW_HEIGHT + 26);
+    text("R:  " + (R >= 1000 ? (R/1000).toFixed(1)+"kΩ" : R+"Ω"), 155, DRAW_HEIGHT + 58);
+
+    // Equation reminder
+    noStroke(); fill(80); textSize(10); textAlign(LEFT);
+    text("Vrms = Vp / √2 = " + Vrms.toFixed(3) + " V    Pavg = Vrms²/R = " + Pavg.toFixed(4) + " W",
+        170, DRAW_HEIGHT + 26);
+    fill(120); textSize(9);
+    text("AC average power = DC power when Vdc = Vrms  →  that's why RMS is the useful measure", 170, DRAW_HEIGHT + 42);
+
+    // Start/Stop
+    fill(isAnimating ? color(60,120,200) : color(80,140,80));
+    stroke(isAnimating ? color(40,90,170) : color(50,100,50));
+    strokeWeight(1);
+    rect(startBtn.x, startBtn.y, startBtn.w, startBtn.h, 4);
+    noStroke(); fill(255); textSize(10); textAlign(CENTER,CENTER);
+    text(isAnimating ? "Stop" : "Start", startBtn.x + startBtn.w/2, startBtn.y + startBtn.h/2);
+}
+
+function mousePressed() {
+    if (mouseX >= startBtn.x && mouseX <= startBtn.x + startBtn.w &&
+        mouseY >= startBtn.y && mouseY <= startBtn.y + startBtn.h) {
+        isAnimating = !isAnimating;
+    }
+}
+</script>
+</body>
+</html>

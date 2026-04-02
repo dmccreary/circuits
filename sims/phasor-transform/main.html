@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phasor Transformation Visualizer</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+    <style>
+        body { margin: 0; padding: 0; background: #f0f0f0; display: flex; justify-content: center; }
+        canvas { display: block; }
+    </style>
+</head>
+<body>
+<script>
+// Phasor Transformation Visualizer
+// Chapter 9: Phasors and Complex Impedance
+// Left: time-domain waveform  |  Right: complex plane with rotating phasor
+
+const CANVAS_WIDTH   = 670;
+const DRAW_HEIGHT    = 420;
+const CONTROL_HEIGHT = 80;
+const CANVAS_HEIGHT  = DRAW_HEIGHT + CONTROL_HEIGHT;
+
+const LEFT_W  = 320;
+const RIGHT_X = LEFT_W + 10;
+const RIGHT_W = CANVAS_WIDTH - RIGHT_X - 4;
+
+let vmSlider, phaseSlider, speedSlider;
+let animating = true;
+let t = 0;
+
+// Buttons
+let animBtn = { x: 10, y: 42, w: 90, h: 22 };
+
+function setup() {
+    let cnv = createCanvas(CANVAS_WIDTH, CANVAS_HEIGHT);
+    cnv.parent(document.body);
+    textFont('monospace');
+
+    let sy = DRAW_HEIGHT + 10;
+
+    vmSlider = createSlider(1, 10, 5, 0.1);
+    vmSlider.position(110, sy);
+    vmSlider.size(130);
+    vmSlider.style('cursor', 'pointer');
+
+    phaseSlider = createSlider(-180, 180, 45, 1);
+    phaseSlider.position(110, sy + 32);
+    phaseSlider.size(130);
+    phaseSlider.style('cursor', 'pointer');
+
+    speedSlider = createSlider(0.2, 3, 1, 0.1);
+    speedSlider.position(430, sy + 16);
+    speedSlider.size(100);
+    speedSlider.style('cursor', 'pointer');
+}
+
+function draw() {
+    let Vm  = vmSlider.value();
+    let phi = phaseSlider.value() * PI / 180;
+    let spd = speedSlider.value();
+
+    if (animating) t += 0.012 * spd;
+
+    background(240);
+    drawTimeDomain(Vm, phi);
+    drawComplexPlane(Vm, phi);
+    drawControls(Vm, phi);
+}
+
+// ─── Left panel: time-domain waveform ───────────────────────────────────────
+function drawTimeDomain(Vm, phi) {
+    fill(255); stroke(180); strokeWeight(1);
+    rect(4, 4, LEFT_W - 6, DRAW_HEIGHT - 8, 6);
+
+    noStroke(); fill(40); textSize(12); textAlign(CENTER);
+    text("Time Domain  v(t) = Vₘ cos(ωt + φ)", LEFT_W / 2, 22);
+
+    let cx = 18;
+    let cy = DRAW_HEIGHT / 2;
+    let pw = LEFT_W - 28;
+    let ph = 160;
+    let top = cy - ph / 2;
+
+    // Axes
+    stroke(180); strokeWeight(1);
+    line(cx, top, cx, top + ph);
+    line(cx, cy, cx + pw, cy);
+
+    // Axis labels
+    noStroke(); fill(120); textSize(9); textAlign(LEFT);
+    text("v(t)", cx + 2, top + 10);
+    textAlign(RIGHT);
+    text("+Vₘ", cx - 2, top + 8);
+    text("-Vₘ", cx - 2, top + ph - 2);
+    textAlign(LEFT);
+    text("t →", cx + pw - 18, cy - 4);
+
+    // Waveform
+    stroke(30, 100, 200); strokeWeight(2); noFill();
+    beginShape();
+    for (let i = 0; i <= pw; i++) {
+        let tVal = map(i, 0, pw, 0, 2 * TWO_PI);
+        let y = map(Vm * cos(tVal + phi), Vm, -Vm, top + 4, top + ph - 4);
+        vertex(cx + i, y);
+    }
+    endShape();
+
+    // Current time marker
+    let tMarker = t % (2 * TWO_PI);
+    if (tMarker < 0) tMarker += 2 * TWO_PI;
+    let mx = map(tMarker, 0, 2 * TWO_PI, cx, cx + pw);
+    let vNow = Vm * cos(tMarker + phi);
+    let my = map(vNow, Vm, -Vm, top + 4, top + ph - 4);
+
+    stroke(220, 60, 60); strokeWeight(1.5);
+    line(mx, top, mx, top + ph);
+    fill(220, 60, 60); noStroke();
+    ellipse(mx, my, 8, 8);
+
+    // Annotation: current value
+    noStroke(); fill(220, 60, 60); textSize(10); textAlign(LEFT);
+    let label = "v(t) = " + vNow.toFixed(2) + " V";
+    text(label, mx < cx + pw - 80 ? mx + 6 : mx - 80, my - 6);
+
+    // Phase angle annotation
+    let phiDeg = phaseSlider.value();
+    noStroke(); fill(60); textSize(10); textAlign(LEFT);
+    text("φ = " + phiDeg + "°", cx + 6, top + ph + 20);
+    text("ω = 2π rad/s  (1 Hz)", cx + 6, top + ph + 34);
+
+    // Expression
+    fill(20, 80, 180); textSize(11); textAlign(CENTER);
+    let phiStr = phiDeg >= 0 ? "+" + phiDeg + "°" : phiDeg + "°";
+    text("v(t) = " + vmSlider.value().toFixed(1) + " cos(ωt " + phiStr + ")", LEFT_W / 2, top - 10);
+}
+
+// ─── Right panel: complex plane with phasor ──────────────────────────────────
+function drawComplexPlane(Vm, phi) {
+    let px = RIGHT_X, py = 4, pw = RIGHT_W - 4, ph = DRAW_HEIGHT - 8;
+    fill(255); stroke(180); strokeWeight(1);
+    rect(px, py, pw, ph, 6);
+
+    let cx = px + pw / 2;
+    let cy = py + ph / 2 + 10;
+    let r  = min(pw, ph) * 0.37;
+
+    noStroke(); fill(40); textSize(12); textAlign(CENTER);
+    text("Complex Plane (Phasor Domain)", px + pw / 2, py + 16);
+
+    // Axes
+    stroke(180); strokeWeight(1);
+    line(px + 10, cy, px + pw - 6, cy);
+    line(cx, py + 28, cx, py + ph - 10);
+
+    // Axis labels
+    noStroke(); fill(120); textSize(10);
+    textAlign(LEFT);  text("Re →", px + pw - 30, cy - 4);
+    textAlign(CENTER); text("Im ↑", cx + 12, py + 36);
+
+    // Unit circle (dashed)
+    noFill(); stroke(200); strokeWeight(1);
+    drawingContext.setLineDash([3, 4]);
+    ellipse(cx, cy, r * 2, r * 2);
+    drawingContext.setLineDash([]);
+
+    // Tick marks on axes
+    stroke(160); strokeWeight(1);
+    for (let v = -1; v <= 1; v += 0.5) {
+        if (v === 0) continue;
+        let tx = cx + v * r;
+        let ty = cy - v * r;
+        line(tx, cy - 3, tx, cy + 3);
+        line(cx - 3, ty, cx + 3, ty);
+    }
+
+    // Rotating phasor (if animating)
+    let rotAngle = animating ? t : 0;
+    let totalAngle = rotAngle + phi;
+
+    // Trace of projection (show last portion of rotation)
+    noFill(); stroke(200, 150, 150, 150); strokeWeight(1);
+
+    // Static frozen phasor (phi only)
+    let pRe = Vm * cos(phi);
+    let pIm = Vm * sin(phi);
+    let pxEnd = cx + (pRe / Vm) * r;
+    let pyEnd = cy - (pIm / Vm) * r;
+
+    // Rotating phasor tip
+    let rRe = Vm * cos(totalAngle);
+    let rIm = Vm * sin(totalAngle);
+    let rxEnd = cx + (rRe / Vm) * r;
+    let ryEnd = cy - (rIm / Vm) * r;
+
+    if (animating) {
+        // Rotating phasor in light blue
+        stroke(100, 160, 220); strokeWeight(2);
+        line(cx, cy, rxEnd, ryEnd);
+        drawArrowHead(cx, cy, rxEnd, ryEnd, color(100, 160, 220));
+
+        // Projection line to real axis
+        stroke(220, 100, 100, 180); strokeWeight(1.5);
+        drawingContext.setLineDash([4, 4]);
+        line(rxEnd, ryEnd, rxEnd, cy);
+        drawingContext.setLineDash([]);
+
+        // Projection dot on real axis
+        fill(220, 100, 100); noStroke();
+        let projX = cx + (rRe / Vm) * r;
+        ellipse(projX, cy, 7, 7);
+
+        // Label: rotating
+        noStroke(); fill(100, 160, 220); textSize(10); textAlign(LEFT);
+        text("V·e^(jωt)", rxEnd + 4, ryEnd - 4);
+    }
+
+    // Static (frozen) phasor at t=0
+    stroke(30, 130, 60); strokeWeight(3);
+    line(cx, cy, pxEnd, pyEnd);
+    drawArrowHead(cx, cy, pxEnd, pyEnd, color(30, 130, 60));
+
+    // Phase arc
+    stroke(200, 130, 0); strokeWeight(1.5); noFill();
+    let arcR = r * 0.3;
+    drawingContext.setLineDash([]);
+    arc(cx, cy, arcR * 2, arcR * 2, -phi, 0);
+    // Phase label
+    let arcMid = phi / 2;
+    noStroke(); fill(160, 100, 0); textSize(10);
+    textAlign(LEFT);
+    let lx = cx + arcR * cos(-arcMid) + 4;
+    let ly = cy + arcR * sin(-arcMid);
+    text("φ=" + phaseSlider.value() + "°", lx, ly);
+
+    // Green phasor label
+    noStroke(); fill(30, 130, 60); textSize(10);
+    let lbx = pxEnd + 6, lby = pyEnd - 6;
+    if (pxEnd > cx + pw - 60) lbx = pxEnd - 60;
+    textAlign(LEFT);
+    text("V = " + vmSlider.value().toFixed(1) + "∠" + phaseSlider.value() + "°", lbx, lby);
+
+    // Rectangular form
+    noStroke(); fill(60); textSize(10); textAlign(LEFT);
+    let re = (Vm * cos(phi)).toFixed(2);
+    let im = (Vm * sin(phi));
+    let imStr = im >= 0 ? "+" + im.toFixed(2) + "j" : im.toFixed(2) + "j";
+    text("= " + re + " " + imStr, px + 10, py + ph - 30);
+    text("|V| = " + Vm.toFixed(1) + " V", px + 10, py + ph - 16);
+
+    // Legend
+    noStroke(); fill(30, 130, 60); textSize(9); textAlign(LEFT);
+    text("● Frozen phasor (t=0)", px + 10, py + 30);
+    if (animating) {
+        fill(100, 160, 220);
+        text("● Rotating phasor V·e^(jωt)", px + 10, py + 42);
+        fill(220, 100, 100);
+        text("● Real-axis projection", px + 10, py + 54);
+    }
+}
+
+function drawArrowHead(x1, y1, x2, y2, col) {
+    let angle = atan2(y2 - y1, x2 - x1);
+    let sz = 8;
+    fill(col); noStroke();
+    push();
+    translate(x2, y2);
+    rotate(angle);
+    triangle(0, 0, -sz, -sz / 2.5, -sz, sz / 2.5);
+    pop();
+}
+
+// ─── Controls ────────────────────────────────────────────────────────────────
+function drawControls(Vm, phi) {
+    fill(245); stroke(180); strokeWeight(1);
+    rect(0, DRAW_HEIGHT, CANVAS_WIDTH, CONTROL_HEIGHT);
+
+    // Animate button
+    let ab = animBtn;
+    fill(animating ? color(60, 150, 60) : color(180, 60, 60));
+    stroke(animating ? color(40, 110, 40) : color(130, 40, 40));
+    strokeWeight(1);
+    rect(ab.x, ab.y, ab.w, ab.h, 4);
+    noStroke(); fill(255); textSize(10); textAlign(CENTER, CENTER);
+    text(animating ? "Pause" : "Animate", ab.x + ab.w / 2, ab.y + ab.h / 2);
+
+    noStroke(); fill(50); textSize(11); textAlign(RIGHT);
+    text("Amplitude Vₘ:", 105, DRAW_HEIGHT + 22);
+    text("Phase φ:", 105, DRAW_HEIGHT + 54);
+
+    fill(20, 80, 180); textSize(11); textAlign(LEFT);
+    text(Vm.toFixed(1) + " V", 250, DRAW_HEIGHT + 22);
+    text(phaseSlider.value() + "°", 250, DRAW_HEIGHT + 54);
+
+    noStroke(); fill(50); textSize(11); textAlign(RIGHT);
+    text("Speed:", 425, DRAW_HEIGHT + 38);
+    fill(80); textSize(11); textAlign(LEFT);
+    text(speedSlider.value().toFixed(1) + "×", 540, DRAW_HEIGHT + 38);
+}
+
+function mousePressed() {
+    let ab = animBtn;
+    if (mouseX >= ab.x && mouseX <= ab.x + ab.w &&
+        mouseY >= ab.y && mouseY <= ab.y + ab.h) {
+        animating = !animating;
+    }
+}
+</script>
+</body>
+</html>
