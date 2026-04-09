@@ -31,53 +31,53 @@ nav:
 
   - MicroSims:
     - Introduction: sims/index.md
-    - Water Flow Analogy: sims/water-flow-analogy/index.md
-    - Power Triangle: sims/power-triangle/index.md
-    - Ground Symbols: sims/ground-symbols/index.md
-    - Circuit Symbol Flashcards: sims/circuit-symbol-flashcards/index.md
-    - Learning Graph: sims/learning-graph/index.md
-    - Background Grid: sims/background-grid/index.md
-    - Simple DC Circuit: sims/dc-circuit/index.md
-    - DC Circuit V2: sims/dc-circuit/circuits-v2.md
-    - Natural Frequency Calculator: sims/natural-frequency-calculator/index.md
-    - RC Charging: sims/rc-charging/index.md
-    - RL Energizing: sims/rl-charging/index.md
-    - Initial and Final Conditions: sims/initial-final-conditions/index.md
-    - RC/RL Applications: sims/rc-rl-applications/index.md
-    - Exponential Properties: sims/exponential-properties/index.md
-    - Oscilloscope Guide: sims/oscilloscope/index.md
-    - RLC Transient Response: sims/rlc-circuit/index.md
-    - Filter Frequency Response: sims/filter-frequency-response/index.md
-    - First-Order Filters: sims/first-order-filters/index.md
-    - Second-Order Filter Designer: sims/second-order-filter/index.md
     - Audio Signal Chain: sims/audio-signal-chain/index.md
-    - Op-Amp Golden Rules: sims/opamp-golden-rules/index.md
-    - Op-Amp Configurations: sims/opamp-configurations/index.md
-    - Kirchhoff's Laws: sims/kirchhoffs-law/index.md
-    - Ohm's Law Triangle: sims/ohms-triangle/index.md
-    - Series Circuit Analysis: sims/series-circuit/index.md
-    - Parallel Circuit Analysis: sims/parallel-circuit/index.md
-    - Series-Parallel Circuit Analysis: sims/series-parallel-circuit/index.md
-    - Voltage Divider Calculator: sims/voltage-divider/index.md
-    - I-V Characteristics: sims/iv-characteristics/index.md
-    - Thevenin Equivalent Circuit: sims/thevenin-concept/index.md
-    - Phasor Transformation: sims/phasor-transform/index.md
-    - Phasor Addition: sims/phasor-addition/index.md
-    - Reactance vs Frequency: sims/reactance-frequency/index.md
-    - Impedance Triangle: sims/impedance-triangle/index.md
-    - Phasor Circuit Solver: sims/phasor-circuit-solver/index.md
-    - Resonance Comparison: sims/resonance-comparison/index.md
+    - Background Grid: sims/background-grid/index.md
     - Bandwidth and Selectivity: sims/bandwidth-selectivity/index.md
-    - Signal Parameters: sims/signal-parameters/index.md
-    - RMS Calculation: sims/rms-calculation/index.md
-    - Decibel Scale: sims/decibel-scale/index.md
     - Capacitor Charging: sims/capacitor-charging/index.md
     - Capacitor Combinations: sims/capacitor-combinations/index.md
-    - Parallel Plate Capacitor: sims/parallel-plate-capacitor/index.md
-    - Real Capacitor Model: sims/real-capacitor-model/index.md
-    - Mutual Inductance: sims/mutual-inductance/index.md
+    - Circuit Symbol Flashcards: sims/circuit-symbol-flashcards/index.md
     - Current Meter: sims/current-meter/index.md
+    - DC Circuit V2: sims/dc-circuit/circuits-v2.md
+    - Decibel Scale: sims/decibel-scale/index.md
+    - Exponential Properties: sims/exponential-properties/index.md
+    - Filter Frequency Response: sims/filter-frequency-response/index.md
+    - First-Order Filters: sims/first-order-filters/index.md
+    - Ground Symbols: sims/ground-symbols/index.md
+    - I-V Characteristics: sims/iv-characteristics/index.md
+    - Impedance Triangle: sims/impedance-triangle/index.md
+    - Initial and Final Conditions: sims/initial-final-conditions/index.md
+    - Kirchhoff's Laws: sims/kirchhoffs-law/index.md
+    - Learning Graph: sims/learning-graph/index.md
     - Learning Graph Viewer: sims/graph-viewer/index.md
+    - Mutual Inductance: sims/mutual-inductance/index.md
+    - Natural Frequency Calculator: sims/natural-frequency-calculator/index.md
+    - Ohm's Law Triangle: sims/ohms-triangle/index.md
+    - Op-Amp Configurations: sims/opamp-configurations/index.md
+    - Op-Amp Golden Rules: sims/opamp-golden-rules/index.md
+    - Oscilloscope Guide: sims/oscilloscope/index.md
+    - Parallel Circuit Analysis: sims/parallel-circuit/index.md
+    - Parallel Plate Capacitor: sims/parallel-plate-capacitor/index.md
+    - Phasor Addition: sims/phasor-addition/index.md
+    - Phasor Circuit Solver: sims/phasor-circuit-solver/index.md
+    - Phasor Transformation: sims/phasor-transform/index.md
+    - Power Triangle: sims/power-triangle/index.md
+    - RC Charging: sims/rc-charging/index.md
+    - RC/RL Applications: sims/rc-rl-applications/index.md
+    - Reactance vs Frequency: sims/reactance-frequency/index.md
+    - Real Capacitor Model: sims/real-capacitor-model/index.md
+    - Resonance Comparison: sims/resonance-comparison/index.md
+    - RL Energizing: sims/rl-charging/index.md
+    - RLC Transient Response: sims/rlc-circuit/index.md
+    - RMS Calculation: sims/rms-calculation/index.md
+    - Second-Order Filter Designer: sims/second-order-filter/index.md
+    - Series Circuit Analysis: sims/series-circuit/index.md
+    - Series-Parallel Circuit Analysis: sims/series-parallel-circuit/index.md
+    - Signal Parameters: sims/signal-parameters/index.md
+    - Simple DC Circuit: sims/dc-circuit/index.md
+    - Thevenin Equivalent Circuit: sims/thevenin-concept/index.md
+    - Voltage Divider Calculator: sims/voltage-divider/index.md
+    - Water Flow Analogy: sims/water-flow-analogy/index.md
     - prompts/circuit-similarity/index.md
     - prompts/top-100-circuits/top-100-circuits.md
     - sims/circuit-similarity/index.md
