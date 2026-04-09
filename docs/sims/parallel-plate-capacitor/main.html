@@ -42,10 +42,10 @@ const leftPanelW = 370;
 const rightPanelX = leftPanelW + 10;
 const rightPanelW = CANVAS_WIDTH - rightPanelX - 10;
 
-// Slider layout
+// Slider layout — spans full control area width
 const sliderLabelX = rightPanelX;
-const sliderX = rightPanelX + 135;
-const sliderW = rightPanelW - 140;
+const sliderX = 220;
+const sliderW = CANVAS_WIDTH - sliderX - 20;
 
 function setup() {
     let cnv = createCanvas(CANVAS_WIDTH, CANVAS_HEIGHT);
@@ -143,14 +143,18 @@ function drawCapacitorViz(areaCm2, sepMm, voltage, epsR, C, Q, E_field) {
     stroke(60, 80, 160);
     rect(cx - plateW / 2, bottomPlateY, plateW, plateH, 3);
 
-    // Plate labels
+    // Plate legend (fixed position at bottom-left of panel, above C readout)
     noStroke();
-    textSize(11);
+    textSize(10);
     textAlign(LEFT);
+    fill(220, 100, 100);
+    rect(panelX + 8, panelY + panelH - 52, 12, 10, 2);
     fill(180, 40, 40);
-    text("+  (positive plate)", cx + plateW / 2 + 8, topPlateY + plateH / 2 + 4);
+    text("positive plate (+)", panelX + 24, panelY + panelH - 43);
+    fill(100, 140, 220);
+    rect(panelX + 8, panelY + panelH - 38, 12, 10, 2);
     fill(40, 80, 180);
-    text("−  (negative plate)", cx + plateW / 2 + 8, bottomPlateY + plateH / 2 + 4);
+    text("negative plate (−)", panelX + 24, panelY + panelH - 29);
 
     // Charge symbols on plates
     let numCharges = floor(map(Q * 1e9, 0, 10, 1, 8));
@@ -276,9 +280,9 @@ function drawControls(areaCm2, sepMm, voltage, epsR, C, Q, E_stored, E_field) {
     noStroke();
     textSize(11);
     textAlign(RIGHT);
-    text("Area: " + areaCm2 + " cm²", sliderX - 5, DRAW_HEIGHT + 26);
-    text("Sep: " + sepMm + " mm", sliderX - 5, DRAW_HEIGHT + 56);
-    text("Voltage: " + voltage + " V", sliderX - 5, DRAW_HEIGHT + 86);
+    text("Area: " + areaCm2 + " cm²", sliderX - 8, DRAW_HEIGHT + 26);
+    text("Sep: " + sepMm + " mm", sliderX - 8, DRAW_HEIGHT + 56);
+    text("Voltage: " + voltage + " V", sliderX - 8, DRAW_HEIGHT + 86);
 }
 
 function mousePressed() {
