@@ -18,6 +18,17 @@ Learn electronic circuits with the help of generative AI tools. This interactive
 - 🧠 **Knowledge Graphs**: AI-generated concept maps and dependency graphs
 - 💡 **Practical Examples**: Real-world circuit applications and design patterns
 
+## Project Kanban Board
+
+[Kanban Board](https://github.com/users/dmccreary/projects/9) - use this board to
+track what tasks are:
+
+1. backlog
+2. read
+3. in process
+4. in review
+5. done
+
 ## Quick Start
 
 ### Prerequisites
