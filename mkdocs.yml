@@ -2,8 +2,8 @@ site_name: Circuits 1
 site_description: 'An intelligent interactive Circuits textbook for EE and CS students with AI-generated content and simulations.'
 site_author: 'Dan McCreary'
 repo_name: 'GitHub Repo'
-site_url: 'https://oceanlin-me.github.io/circuits/'
-repo_url: 'https://github.com/oceanlin-me/circuits'
+site_url: 'https://dmccreary.github.io/circuits/'
+repo_url: 'https://github.com/dmccreary/circuits'
 edit_uri: 'blob/master/docs'
 
 nav:
