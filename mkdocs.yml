@@ -31,9 +31,11 @@ nav:
       - Interactive Walkthrough: chapters/07-second-order-rlc-circuits/walkthrough.md
     - 8. AC Signals and Sinusoids:
       - Overview: chapters/08-ac-signals-sinusoidal/index.md
+      - Chapter Content: chapters/08-ac-signals-sinusoidal/content.md
       - Quiz: chapters/08-ac-signals-sinusoidal/quiz.md
     - 9. Phasors and Impedance:
       - Overview: chapters/09-phasors-complex-impedance/index.md
+      - Chapter Content: chapters/09-phasors-complex-impedance/content.md
       - Quiz: chapters/09-phasors-complex-impedance/quiz.md
     - 10. AC Power Analysis:
       - Overview: chapters/10-ac-power-analysis/index.md
