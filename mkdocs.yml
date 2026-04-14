@@ -20,8 +20,11 @@ nav:
     - 6. Transient Analysis RC/RL: chapters/06-transient-analysis-rc-rl/index.md
     - 7. Second-Order RLC Circuits: chapters/07-second-order-rlc-circuits/index.md
     - 7. Quiz and Problems: chapters/07-second-order-rlc-circuits/quiz.md
+    - 7. Interactive Walkthrough: chapters/07-second-order-rlc-circuits/walkthrough.md
     - 8. AC Signals and Sinusoids: chapters/08-ac-signals-sinusoidal/index.md
+    - 8. Quiz and Problems: chapters/08-ac-signals-sinusoidal/quiz.md
     - 9. Phasors and Impedance: chapters/09-phasors-complex-impedance/index.md
+    - 9. Quiz and Problems: chapters/09-phasors-complex-impedance/quiz.md
     - 10. AC Power Analysis: chapters/10-ac-power-analysis/index.md
     - 11. Frequency Response and Bode: chapters/11-frequency-response-bode/index.md
     - 12. Filters and Resonance: chapters/12-filters-resonance/index.md
