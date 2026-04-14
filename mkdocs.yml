@@ -18,6 +18,7 @@ nav:
       - Overview: chapters/02-ohms-law-basic-configurations/index.md
     - 3. Kirchhoff's Laws and Topology:
       - Overview: chapters/03-kirchhoffs-laws-topology/index.md
+      - Quiz and Problems: chapters/03-kirchhoffs-laws-topology/quiz.md
     - 4. DC Circuit Analysis:
       - Overview: chapters/04-dc-circuit-analysis/index.md
     - 5. Passive Components:
