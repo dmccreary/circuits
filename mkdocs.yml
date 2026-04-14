@@ -12,22 +12,42 @@ nav:
   - Course Description: course-description.md
   - Chapters:
     - List of Chapters: chapters/index.md
-    - 1. Electric Charge and Quantities: chapters/01-electric-charge-basic-quantities/index.md
-    - 2. Ohm's Law and Configurations: chapters/02-ohms-law-basic-configurations/index.md
-    - 3. Kirchhoff's Laws and Topology: chapters/03-kirchhoffs-laws-topology/index.md
-    - 4. DC Circuit Analysis: chapters/04-dc-circuit-analysis/index.md
-    - 5. Passive Components: chapters/05-passive-components/index.md
-    - 6. Transient Analysis RC/RL: chapters/06-transient-analysis-rc-rl/index.md
-    - 7. Second-Order RLC Circuits: chapters/07-second-order-rlc-circuits/index.md
-    - 8. AC Signals and Sinusoids: chapters/08-ac-signals-sinusoidal/index.md
-    - 9. Phasors and Impedance: chapters/09-phasors-complex-impedance/index.md
-    - 10. AC Power Analysis: chapters/10-ac-power-analysis/index.md
-    - 11. Frequency Response and Bode: chapters/11-frequency-response-bode/index.md
-    - 12. Filters and Resonance: chapters/12-filters-resonance/index.md
-    - 13. Operational Amplifiers: chapters/13-operational-amplifiers/index.md
-    - 14. Signal Analysis and Fourier: chapters/14-signals-audio-lab/index.md
-    - 15. Audio Applications: chapters/15-audio-applications/index.md
-    - 16. Laboratory Techniques: chapters/16-laboratory-techniques/index.md
+    - 1. Electric Charge and Quantities:
+      - Overview: chapters/01-electric-charge-basic-quantities/index.md
+    - 2. Ohm's Law and Configurations:
+      - Overview: chapters/02-ohms-law-basic-configurations/index.md
+    - 3. Kirchhoff's Laws and Topology:
+      - Overview: chapters/03-kirchhoffs-laws-topology/index.md
+    - 4. DC Circuit Analysis:
+      - Overview: chapters/04-dc-circuit-analysis/index.md
+    - 5. Passive Components:
+      - Overview: chapters/05-passive-components/index.md
+    - 6. Transient Analysis RC/RL:
+      - Overview: chapters/06-transient-analysis-rc-rl/index.md
+    - 7. Second-Order RLC Circuits:
+      - Overview: chapters/07-second-order-rlc-circuits/index.md
+      - Quiz and Problems: chapters/07-second-order-rlc-circuits/quiz.md
+      - Interactive Walkthrough: chapters/07-second-order-rlc-circuits/walkthrough.md
+    - 8. AC Signals and Sinusoids:
+      - Overview: chapters/08-ac-signals-sinusoidal/index.md
+      - Quiz: chapters/08-ac-signals-sinusoidal/quiz.md
+    - 9. Phasors and Impedance:
+      - Overview: chapters/09-phasors-complex-impedance/index.md
+      - Quiz: chapters/09-phasors-complex-impedance/quiz.md
+    - 10. AC Power Analysis:
+      - Overview: chapters/10-ac-power-analysis/index.md
+    - 11. Frequency Response and Bode:
+      - Overview: chapters/11-frequency-response-bode/index.md
+    - 12. Filters and Resonance:
+      - Overview: chapters/12-filters-resonance/index.md
+    - 13. Operational Amplifiers:
+      - Overview: chapters/13-operational-amplifiers/index.md
+    - 14. Signal Analysis and Fourier:
+      - Overview: chapters/14-signals-audio-lab/index.md
+    - 15. Audio Applications:
+      - Overview: chapters/15-audio-applications/index.md
+    - 16. Laboratory Techniques:
+      - Overview: chapters/16-laboratory-techniques/index.md
 
   - MicroSims:
     - Introduction: sims/index.md
