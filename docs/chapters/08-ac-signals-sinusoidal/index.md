@@ -898,6 +898,9 @@ With these foundations in place, you're ready for the next chapter where we'll t
 
 ---
 
+<details markdown="1">
+<summary><strong>📝 Chapter 8 Quiz — AC Signals and Sinusoidal Waveforms</strong></summary>
+
 ## Chapter 8 Quiz
 
 **1. In the expression \(v(t) = V_m \sin(\omega t + \phi)\), which parameter represents the peak amplitude?**
@@ -974,3 +977,5 @@ A) 1.0 &emsp; B) \(\sqrt{2}\) &emsp; C) 2.0 &emsp; D) \(\pi/2\)
 | 8 | C | This is the definition of a periodic signal |
 | 9 | B | \(V_{AC,rms} = 10/\sqrt{2} = 7.07\) V |
 | 10 | B | Crest factor \(= V_m / V_{rms} = V_m / (V_m/\sqrt{2}) = \sqrt{2}\) |
+
+</details>

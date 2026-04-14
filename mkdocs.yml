@@ -19,8 +19,6 @@ nav:
     - 5. Passive Components: chapters/05-passive-components/index.md
     - 6. Transient Analysis RC/RL: chapters/06-transient-analysis-rc-rl/index.md
     - 7. Second-Order RLC Circuits: chapters/07-second-order-rlc-circuits/index.md
-    - 7. Quiz and Problems: chapters/07-second-order-rlc-circuits/quiz.md
-    - 7. Interactive Walkthrough: chapters/07-second-order-rlc-circuits/walkthrough.md
     - 8. AC Signals and Sinusoids: chapters/08-ac-signals-sinusoidal/index.md
     - 9. Phasors and Impedance: chapters/09-phasors-complex-impedance/index.md
     - 10. AC Power Analysis: chapters/10-ac-power-analysis/index.md

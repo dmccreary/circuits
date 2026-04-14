@@ -881,6 +881,9 @@ With phasors and impedance in your toolkit, you can now analyze any AC circuit u
 
 ---
 
+<details markdown="1">
+<summary><strong>📝 Chapter 9 Quiz — Phasors and Complex Impedance</strong></summary>
+
 ## Chapter 9 Quiz
 
 **1. A phasor is best described as:**
@@ -957,3 +960,5 @@ A) Zero &emsp; B) \(X_L\) &emsp; C) \(R\) &emsp; D) \(X_L + X_C\)
 | 8 | B | \(X_L = 2\pi fL = 2\pi \times 5000 \times 0.01 \approx 314\) Ω |
 | 9 | C | Phasors require sinusoidal steady state at a single shared frequency |
 | 10 | C | At resonance \(X_L = X_C\), they cancel; only \(R\) remains |
+
+</details>
