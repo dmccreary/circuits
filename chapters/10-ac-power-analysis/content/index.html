@@ -6,13 +6,13 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="Teaching content for Chapter 6 covering time constants, exponential responses, and first-order circuit analysis">
+        <meta name="description" content="Teaching content for Chapter 10 covering real, reactive, apparent power, power factor, and efficiency">
       
       
         <meta name="author" content="Dan McCreary">
       
       
-        <link rel="canonical" href="https://dmccreary.github.io/circuits/chapters/06-transient-analysis-rc-rl/content/">
+        <link rel="canonical" href="https://dmccreary.github.io/circuits/chapters/10-ac-power-analysis/content/">
       
       
         <link rel="prev" href="../">
@@ -29,7 +29,7 @@
     
     
       
-        <title>Chapter 6 Content — Transient Analysis of RC and RL Circuits - Circuits 1</title>
+        <title>Chapter 10 Content — AC Power Analysis - Circuits 1</title>
       
     
     
@@ -92,7 +92,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#chapter-6-transient-analysis-of-rc-and-rl-circuits" class="md-skip">
+        <a href="#chapter-10-ac-power-analysis" class="md-skip">
           Skip to content
         </a>
       
@@ -127,7 +127,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Chapter 6 Content — Transient Analysis of RC and RL Circuits
+              Chapter 10 Content — AC Power Analysis
             
           </span>
         </div>
@@ -717,8 +717,6 @@
                 
   
   
-    
-  
   
   
     
@@ -737,17 +735,18 @@
     
     
       
+        
+        
+      
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
       
         
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_7" checked>
-        
-          
-          <div class="md-nav__link md-nav__container">
-            <a href="../" class="md-nav__link ">
-              
+  
+  
+  
+    <a href="../../06-transient-analysis-rc-rl/" class="md-nav__link">
+      
   
   
   <span class="md-ellipsis">
@@ -761,232 +760,12 @@
   
   
 
-            </a>
-            
-              
-              <label class="md-nav__link " for="__nav_4_7" id="__nav_4_7_label" tabindex="0">
-                <span class="md-nav__icon md-icon"></span>
-              </label>
-            
-          </div>
-        
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_7_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_4_7">
-            <span class="md-nav__icon md-icon"></span>
-            
-  
-    6. Transient Analysis RC/RL
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
   
 
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-            
-              
-                
-  
-  
-    
-  
-  
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Chapter Content
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Chapter Content
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#61-transient-vs-steady-state" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        6.1 Transient vs. Steady-State Response
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#62-the-rc-circuit-charging" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        6.2 The RC Circuit: Charging
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#63-the-time-constant" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        6.3 The Time Constant
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#64-rc-circuit-discharging" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        6.4 The RC Circuit: Discharging
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#65-the-rl-circuit" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        6.5 The RL Circuit
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#66-initial-and-final-conditions" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        6.6 Initial and Final Conditions
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#67-natural-forced-complete-response" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        6.7 Natural, Forced, and Complete Response
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#68-worked-example" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        6.8 Worked Example: Complete Transient Analysis
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#69-chapter-summary" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        6.9 Chapter Summary
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../quiz/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Quiz and Problems
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
       
     </li>
   
@@ -1174,6 +953,8 @@
                 
   
   
+    
+  
   
   
     
@@ -1192,18 +973,17 @@
     
     
       
-        
-        
-      
     
-    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
-  
-  
-  
-    <a href="../../10-ac-power-analysis/" class="md-nav__link">
-      
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_11" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
   
   
   <span class="md-ellipsis">
@@ -1217,12 +997,276 @@
   
   
 
-      
-        <span class="md-nav__icon md-icon"></span>
-      
-    </a>
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_11" id="__nav_4_11_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_11_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4_11">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    10. AC Power Analysis
   
 
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter Content
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter Content
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#101-instantaneous-power" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.1 Instantaneous Power
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#102-real-power" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.2 Real Power (Average Power)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#103-reactive-power" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.3 Reactive Power
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#104-apparent-power" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.4 Apparent Power
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#105-complex-power" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.5 Complex Power
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#106-power-triangle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.6 The Power Triangle
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#107-power-factor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.7 Power Factor: Leading and Lagging
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#108-power-factor-correction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.8 Power Factor Correction
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#109-power-in-elements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.9 Power in Resistors, Capacitors, and Inductors
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1010-maximum-power-transfer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.10 Maximum Power Transfer in AC
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1011-efficiency-and-gain" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.11 Efficiency and Power Gain
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1012-worked-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.12 Worked Example: Complete Power Analysis
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1013-chapter-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.13 Chapter Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../quiz/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quiz and Problems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
       
     </li>
   
@@ -2091,10 +2135,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#61-transient-vs-steady-state" class="md-nav__link">
+  <a href="#101-instantaneous-power" class="md-nav__link">
     <span class="md-ellipsis">
       
-        6.1 Transient vs. Steady-State Response
+        10.1 Instantaneous Power
       
     </span>
   </a>
@@ -2102,10 +2146,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#62-the-rc-circuit-charging" class="md-nav__link">
+  <a href="#102-real-power" class="md-nav__link">
     <span class="md-ellipsis">
       
-        6.2 The RC Circuit: Charging
+        10.2 Real Power (Average Power)
       
     </span>
   </a>
@@ -2113,10 +2157,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#63-the-time-constant" class="md-nav__link">
+  <a href="#103-reactive-power" class="md-nav__link">
     <span class="md-ellipsis">
       
-        6.3 The Time Constant
+        10.3 Reactive Power
       
     </span>
   </a>
@@ -2124,10 +2168,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#64-rc-circuit-discharging" class="md-nav__link">
+  <a href="#104-apparent-power" class="md-nav__link">
     <span class="md-ellipsis">
       
-        6.4 The RC Circuit: Discharging
+        10.4 Apparent Power
       
     </span>
   </a>
@@ -2135,10 +2179,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#65-the-rl-circuit" class="md-nav__link">
+  <a href="#105-complex-power" class="md-nav__link">
     <span class="md-ellipsis">
       
-        6.5 The RL Circuit
+        10.5 Complex Power
       
     </span>
   </a>
@@ -2146,10 +2190,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#66-initial-and-final-conditions" class="md-nav__link">
+  <a href="#106-power-triangle" class="md-nav__link">
     <span class="md-ellipsis">
       
-        6.6 Initial and Final Conditions
+        10.6 The Power Triangle
       
     </span>
   </a>
@@ -2157,10 +2201,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#67-natural-forced-complete-response" class="md-nav__link">
+  <a href="#107-power-factor" class="md-nav__link">
     <span class="md-ellipsis">
       
-        6.7 Natural, Forced, and Complete Response
+        10.7 Power Factor: Leading and Lagging
       
     </span>
   </a>
@@ -2168,10 +2212,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#68-worked-example" class="md-nav__link">
+  <a href="#108-power-factor-correction" class="md-nav__link">
     <span class="md-ellipsis">
       
-        6.8 Worked Example: Complete Transient Analysis
+        10.8 Power Factor Correction
       
     </span>
   </a>
@@ -2179,10 +2223,54 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#69-chapter-summary" class="md-nav__link">
+  <a href="#109-power-in-elements" class="md-nav__link">
     <span class="md-ellipsis">
       
-        6.9 Chapter Summary
+        10.9 Power in Resistors, Capacitors, and Inductors
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1010-maximum-power-transfer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.10 Maximum Power Transfer in AC
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1011-efficiency-and-gain" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.11 Efficiency and Power Gain
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1012-worked-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.12 Worked Example: Complete Power Analysis
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1013-chapter-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.13 Chapter Summary
       
     </span>
   </a>
@@ -2253,7 +2341,7 @@
         <a href="../" class="md-path__link">
           
   <span class="md-ellipsis">
-    6. Transient Analysis RC/RL
+    10. AC Power Analysis
   </span>
 
         </a>
@@ -2272,7 +2360,7 @@
 
 
   
-    <a href="https://github.com/dmccreary/circuits/blob/master/docs/chapters/06-transient-analysis-rc-rl/content.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+    <a href="https://github.com/dmccreary/circuits/blob/master/docs/chapters/10-ac-power-analysis/content.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
     </a>
@@ -2281,233 +2369,333 @@
 
 
 <div class="unit1-styled">
-<h1 id="chapter-6-transient-analysis-of-rc-and-rl-circuits">Chapter 6 — Transient Analysis of RC and RL Circuits</h1>
-<h2 id="61-transient-vs-steady-state" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">6.1 Transient vs. Steady-State Response</h2>
-<p>Every circuit exists in one of two states: <strong>steady state</strong> or <strong>transient</strong>.</p>
-<p>In <strong>steady state</strong>, all voltages and currents are constant (for DC) or periodic (for AC). Nothing is changing — the circuit has settled to its final behavior. This is the comfortable world of Chapters 1–4.</p>
-<p>A <strong>transient</strong> occurs whenever the circuit is disturbed — a switch opens or closes, a source turns on or off. During the transient, the circuit transitions from one steady state to another. The transient is temporary; eventually the circuit reaches the new steady state.</p>
-<p>Why does the transition take time at all? Because capacitors and inductors <strong>store energy</strong> and cannot release or absorb it instantaneously:
-- A capacitor's voltage cannot change instantaneously (stored charge must flow through finite resistance)
-- An inductor's current cannot change instantaneously (stored magnetic energy must be released through finite resistance)</p>
-<p>This chapter focuses on <strong>first-order circuits</strong> — circuits with exactly one energy storage element (one capacitor or one inductor). These circuits always produce <strong>exponential</strong> transients.</p>
-<hr />
-<h2 id="62-the-rc-circuit-charging" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">6.2 The RC Circuit: Charging</h2>
-<p>Consider a resistor <span class="arithmatex">\(R\)</span> in series with a capacitor <span class="arithmatex">\(C\)</span>, connected to a voltage source <span class="arithmatex">\(V_S\)</span> via a switch closed at <span class="arithmatex">\(t = 0\)</span>. The capacitor starts uncharged (<span class="arithmatex">\(V_C(0) = 0\)</span>).</p>
-<p>Applying KVL around the loop:</p>
-<div class="arithmatex">\[V_S = V_R + V_C = i R + V_C\]</div>
-<p>Since <span class="arithmatex">\(i = C\,dV_C/dt\)</span>:</p>
-<div class="arithmatex">\[V_S = RC\,\frac{dV_C}{dt} + V_C\]</div>
-<p>Solving this first-order differential equation with initial condition <span class="arithmatex">\(V_C(0) = 0\)</span>:</p>
+<h1 id="chapter-10-ac-power-analysis">Chapter 10 — AC Power Analysis</h1>
+<h2 id="101-instantaneous-power" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">10.1 Instantaneous Power</h2>
+<p><strong>Instantaneous power</strong> is the power at any specific instant:</p>
 <div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
-<div class="arithmatex">\[V_C(t) = V_S\left(1 - e^{-t/RC}\right)\]</div>
-<div class="arithmatex">\[i(t) = \frac{V_S}{R} e^{-t/RC}\]</div>
+<div class="arithmatex">\[p(t) = v(t) \cdot i(t)\]</div>
+<p>For sinusoidal signals: (p(t) = \dfrac{V_m I_m}{2}\cos(\theta_v - \theta_i) + \dfrac{V_m I_m}{2}\cos(2\omega t + \theta_v + \theta_i)]</p>
 </div>
-<p>The capacitor voltage starts at 0 and rises exponentially toward <span class="arithmatex">\(V_S\)</span>. The current starts at <span class="arithmatex">\(V_S/R\)</span> (as if the capacitor were a short circuit) and decays to zero as the capacitor charges.</p>
-<p><strong>Charging behavior at key moments:</strong></p>
+<p>This reveals two components: a <strong>constant term</strong> (the average power) and an <strong>oscillating term</strong> at twice the signal frequency. The oscillating component means power flows back and forth between the source and reactive elements every quarter cycle — it can actually go negative, meaning energy flows <em>back</em> to the source.</p>
+<hr />
+<h2 id="102-real-power" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">10.2 Real Power (Average Power)</h2>
+<p><strong>Real power</strong> (also called average power or active power) is the time-averaged power over one complete cycle. It represents the power that actually does useful work — heating elements, turning motors, producing light and sound.</p>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<div class="arithmatex">\[P = V_{rms} I_{rms} \cos\theta = I_{rms}^2 R\]</div>
+<p>Measured in <strong>watts (W)</strong>. <span class="arithmatex">\(\theta = \theta_v - \theta_i\)</span> is the phase angle between voltage and current.</p>
+</div>
+<p>The factor <span class="arithmatex">\(\cos\theta\)</span> is the <strong>power factor</strong> — it determines how much of the apparent power does useful work. Your electric bill is based on real power (kilowatt-hours).</p>
 <table>
 <thead>
 <tr>
-<th>Time</th>
-<th><span class="arithmatex">\(V_C\)</span></th>
-<th><span class="arithmatex">\(i\)</span></th>
+<th>Phase Angle θ</th>
+<th>cos θ</th>
+<th>Interpretation</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><span class="arithmatex">\(t = 0\)</span></td>
-<td>0</td>
-<td><span class="arithmatex">\(V_S/R\)</span></td>
+<td>0°</td>
+<td>1.00</td>
+<td>Pure resistive — all power is real</td>
 </tr>
 <tr>
-<td><span class="arithmatex">\(t = \tau\)</span></td>
-<td><span class="arithmatex">\(0.632\,V_S\)</span></td>
-<td><span class="arithmatex">\(0.368\,V_S/R\)</span></td>
+<td>30°</td>
+<td>0.866</td>
+<td>Moderate reactive component</td>
 </tr>
 <tr>
-<td><span class="arithmatex">\(t = 2\tau\)</span></td>
-<td><span class="arithmatex">\(0.865\,V_S\)</span></td>
-<td><span class="arithmatex">\(0.135\,V_S/R\)</span></td>
+<td>60°</td>
+<td>0.50</td>
+<td>Mostly reactive</td>
 </tr>
 <tr>
-<td><span class="arithmatex">\(t = 5\tau\)</span></td>
-<td><span class="arithmatex">\(0.993\,V_S\)</span></td>
-<td><span class="arithmatex">\(0.007\,V_S/R\)</span></td>
-</tr>
-<tr>
-<td><span class="arithmatex">\(t \to \infty\)</span></td>
-<td><span class="arithmatex">\(V_S\)</span></td>
-<td>0</td>
+<td>90°</td>
+<td>0.00</td>
+<td>Pure reactive — zero real power</td>
 </tr>
 </tbody>
 </table>
 <hr />
-<h2 id="63-the-time-constant" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">6.3 The Time Constant</h2>
-<p>The product <span class="arithmatex">\(RC\)</span> appears in the exponent and has units of seconds. It is called the <strong>time constant</strong> <span class="arithmatex">\(\tau\)</span> (tau):</p>
+<h2 id="103-reactive-power" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">10.3 Reactive Power</h2>
+<p><strong>Reactive power</strong> (Q) represents energy oscillating between the source and reactive elements without being consumed. It's measured in <strong>volt-amperes reactive (VAR)</strong>.</p>
 <div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
-<div class="arithmatex">\[\tau = RC\]</div>
-<p>where <span class="arithmatex">\(R\)</span> is in ohms (Ω), <span class="arithmatex">\(C\)</span> is in farads (F), and <span class="arithmatex">\(\tau\)</span> is in seconds (s).</p>
+<div class="arithmatex">\[Q = V_{rms} I_{rms} \sin\theta = I_{rms}^2 X\]</div>
+<p>Inductive loads: <span class="arithmatex">\(Q &gt; 0\)</span> (lagging). Capacitive loads: <span class="arithmatex">\(Q &lt; 0\)</span> (leading).</p>
 </div>
-<p>The time constant is the single most important parameter describing a first-order transient:</p>
+<p>Reactive power doesn't do useful work, but it still requires current to flow — meaning larger wires, transformers, and generators must be sized to carry it. This is why utilities penalize poor power factor.</p>
+<hr />
+<h2 id="104-apparent-power" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">10.4 Apparent Power</h2>
+<p><strong>Apparent power</strong> (S) is the product of RMS voltage and RMS current — the total "power handling" demanded from the source. Measured in <strong>volt-amperes (VA)</strong>.</p>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<div class="arithmatex">\[S = V_{rms} I_{rms} \qquad S^2 = P^2 + Q^2\]</div>
+</div>
+<p>Apparent power determines wire sizing, transformer ratings, generator capacity, and circuit breaker ratings — equipment must handle the full current regardless of power factor.</p>
+<p><strong>Example:</strong> A motor draws 10 A from a 120 V source at PF = 0.8:
+- <span class="arithmatex">\(S = 120 \times 10 = 1{,}200\)</span> VA
+- <span class="arithmatex">\(P = 1{,}200 \times 0.8 = 960\)</span> W
+- <span class="arithmatex">\(Q = 1{,}200 \times 0.6 = 720\)</span> VAR</p>
+<p>The motor does only 960 W of work, but the supply must have capacity for 1,200 VA.</p>
+<hr />
+<h2 id="105-complex-power" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">10.5 Complex Power</h2>
+<p><strong>Complex power</strong> combines real and reactive power into a single complex number:</p>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<div class="arithmatex">\[\mathbf{S} = P + jQ = \mathbf{V}_{rms}\, \mathbf{I}_{rms}^* = I_{rms}^2 Z\]</div>
+<p>where <span class="arithmatex">\(\mathbf{I}^*\)</span> is the complex conjugate of the current phasor.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Quantity</th>
+<th>Symbol</th>
+<th>Units</th>
+<th>Formula</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Real Power</td>
+<td><span class="arithmatex">\(P\)</span></td>
+<td>W</td>
+<td><span class="arithmatex">\(V I \cos\theta\)</span></td>
+</tr>
+<tr>
+<td>Reactive Power</td>
+<td><span class="arithmatex">\(Q\)</span></td>
+<td>VAR</td>
+<td><span class="arithmatex">\(V I \sin\theta\)</span></td>
+</tr>
+<tr>
+<td>Apparent Power</td>
+<td><span class="arithmatex">\(S\)</span></td>
+<td>VA</td>
+<td><span class="arithmatex">\(VI = \|\mathbf{S}\|\)</span></td>
+</tr>
+<tr>
+<td>Complex Power</td>
+<td><span class="arithmatex">\(\mathbf{S}\)</span></td>
+<td>VA</td>
+<td><span class="arithmatex">\(P + jQ\)</span></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="106-power-triangle" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">10.6 The Power Triangle</h2>
+<p>The power triangle shows the geometric relationship between P, Q, and S — they form a right triangle:</p>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<div class="arithmatex">\[S = \sqrt{P^2 + Q^2} \qquad PF = \cos\theta = \frac{P}{S} \qquad \tan\theta = \frac{Q}{P}\]</div>
+</div>
 <ul>
-<li>At <span class="arithmatex">\(t = \tau\)</span>: the circuit is <strong>63.2%</strong> of the way from its initial to final value</li>
-<li>At <span class="arithmatex">\(t = 5\tau\)</span>: the circuit is <strong>99.3%</strong> complete — engineers consider this "done"</li>
+<li><strong>Hypotenuse:</strong> Apparent power S (VA)</li>
+<li><strong>Horizontal leg:</strong> Real power P (W)</li>
+<li><strong>Vertical leg:</strong> Reactive power Q (VAR)</li>
+<li><strong>Angle θ:</strong> Phase angle between voltage and current</li>
 </ul>
-<p><strong>Physical interpretation:</strong> <span class="arithmatex">\(\tau\)</span> is the time it would take the capacitor to charge to <span class="arithmatex">\(V_S\)</span> if the initial rate of change were maintained. It's the "natural pace" of the circuit.</p>
-<p><strong>Example:</strong> An RC circuit with <span class="arithmatex">\(R = 10\)</span> kΩ and <span class="arithmatex">\(C = 47\)</span> μF has <span class="arithmatex">\(\tau = 10\,000 \times 47 \times 10^{-6} = 0.47\)</span> s. After <span class="arithmatex">\(5\tau = 2.35\)</span> s, the capacitor is fully charged.</p>
-<p>The time constant applies equally to the discharging case.</p>
+<p>The power triangle is identical in shape to the impedance triangle (<span class="arithmatex">\(|Z|\)</span>, R, X).</p>
 <hr />
-<h2 id="64-rc-circuit-discharging" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">6.4 The RC Circuit: Discharging</h2>
-<p>Now consider a capacitor initially charged to <span class="arithmatex">\(V_0\)</span>, connected to a resistor at <span class="arithmatex">\(t = 0\)</span> (with the source removed). The capacitor discharges through the resistor.</p>
-<p>Applying KVL: <span class="arithmatex">\(V_C = -iR\)</span> (current flows opposite to charging direction), which gives:</p>
-<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
-<div class="arithmatex">\[V_C(t) = V_0\, e^{-t/RC} = V_0\, e^{-t/\tau}\]</div>
-<div class="arithmatex">\[i(t) = -\frac{V_0}{R} e^{-t/\tau}\]</div>
-</div>
-<p>The capacitor voltage decays exponentially from <span class="arithmatex">\(V_0\)</span> toward 0. The time constant <span class="arithmatex">\(\tau = RC\)</span> governs the discharge rate just as it governs charging.</p>
-<div class="admonition tip">
-<p class="admonition-title">Finding τ in a Complex Circuit</p>
-<p>When finding the time constant, reduce the circuit seen by the capacitor (or inductor) to its Thévenin equivalent. Then <span class="arithmatex">\(\tau = R_{Th} \cdot C\)</span> or <span class="arithmatex">\(\tau = L / R_{Th}\)</span>.</p>
-</div>
-<hr />
-<h2 id="65-the-rl-circuit" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">6.5 The RL Circuit</h2>
-<p>An <strong>RL circuit</strong> pairs a resistor <span class="arithmatex">\(R\)</span> with an inductor <span class="arithmatex">\(L\)</span>. It behaves as the dual of the RC circuit, with current replacing voltage and inductance replacing capacitance.</p>
-<p><strong>Energizing (switch closed at <span class="arithmatex">\(t = 0\)</span>, inductor initially uncharged):</strong></p>
-<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
-<div class="arithmatex">\[i_L(t) = \frac{V_S}{R}\left(1 - e^{-t/\tau}\right)\]</div>
-<div class="arithmatex">\[v_L(t) = V_S\, e^{-t/\tau}\]</div>
-<p>where <span class="arithmatex">\(\tau = \frac{L}{R}\)</span></p>
-</div>
-<p><strong>De-energizing (switch opened, inductor initially carrying current <span class="arithmatex">\(I_0\)</span>):</strong></p>
-<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
-<div class="arithmatex">\[i_L(t) = I_0\, e^{-t/\tau}\]</div>
-<div class="arithmatex">\[v_L(t) = -I_0 R\, e^{-t/\tau}\]</div>
-</div>
-<p><strong>The RL time constant:</strong></p>
-<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
-<div class="arithmatex">\[\tau = \frac{L}{R}\]</div>
-<p>where <span class="arithmatex">\(L\)</span> is in henrys (H), <span class="arithmatex">\(R\)</span> is in ohms (Ω), and <span class="arithmatex">\(\tau\)</span> is in seconds (s).</p>
-</div>
-<div class="admonition warning">
-<p class="admonition-title">Inductor Voltage Spike</p>
-<p>When you abruptly open a switch carrying inductor current, the inductor tries to maintain its current instantaneously, producing a very large voltage spike: <span class="arithmatex">\(v = L\,di/dt\)</span> with <span class="arithmatex">\(di/dt \to \infty\)</span>. This can damage switches and semiconductors. In practice, a <strong>freewheeling diode</strong> or snubber circuit is placed across the inductor to provide a controlled discharge path.</p>
-</div>
-<p><strong>RC and RL duality:</strong></p>
+<h2 id="107-power-factor" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">10.7 Power Factor: Leading and Lagging</h2>
+<p><strong>Power factor</strong> (PF) = <span class="arithmatex">\(\cos\theta = P/S\)</span>. It ranges from 0 to 1 and measures how efficiently apparent power converts to real work.</p>
+<p><strong>Lagging power factor</strong> — current lags voltage (inductive loads: motors, transformers, ballasts):
+- <span class="arithmatex">\(\theta &gt; 0\)</span>, <span class="arithmatex">\(Q &gt; 0\)</span>, load absorbs VARs from source</p>
+<p><strong>Leading power factor</strong> — current leads voltage (capacitive loads: correction capacitors, some power supplies):
+- <span class="arithmatex">\(\theta &lt; 0\)</span>, <span class="arithmatex">\(Q &lt; 0\)</span>, load supplies VARs to circuit</p>
 <table>
 <thead>
 <tr>
-<th>RC Circuit</th>
-<th>RL Circuit</th>
+<th>Power Factor</th>
+<th>Description</th>
+<th>Typical Load</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><span class="arithmatex">\(V_C\)</span> is continuous</td>
-<td><span class="arithmatex">\(I_L\)</span> is continuous</td>
+<td>1.0</td>
+<td>Unity</td>
+<td>Resistive heaters, incandescent bulbs</td>
 </tr>
 <tr>
-<td><span class="arithmatex">\(\tau = RC\)</span></td>
-<td><span class="arithmatex">\(\tau = L/R\)</span></td>
+<td>0.95 lagging</td>
+<td>Excellent</td>
+<td>Well-corrected industrial motors</td>
 </tr>
 <tr>
-<td><span class="arithmatex">\(V_C\)</span> charges toward <span class="arithmatex">\(V_S\)</span></td>
-<td><span class="arithmatex">\(I_L\)</span> energizes toward <span class="arithmatex">\(V_S/R\)</span></td>
+<td>0.85 lagging</td>
+<td>Good</td>
+<td>Typical industrial mix</td>
 </tr>
 <tr>
-<td>At steady state: open circuit</td>
-<td>At steady state: short circuit</td>
+<td>0.70 lagging</td>
+<td>Poor</td>
+<td>Uncompensated motors</td>
+</tr>
+<tr>
+<td>0.50 lagging</td>
+<td>Very poor</td>
+<td>Lightly loaded motors</td>
 </tr>
 </tbody>
 </table>
 <hr />
-<h2 id="66-initial-and-final-conditions" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">6.6 Initial and Final Conditions</h2>
-<p>To solve any first-order transient, you need two pieces of information: the <strong>initial condition</strong> and the <strong>final condition</strong>.</p>
-<p><strong>Initial condition <span class="arithmatex">\(x(0^+)\)</span>:</strong></p>
-<p>The value of the state variable immediately after switching. Due to continuity:
-- Capacitor voltage immediately after switching = capacitor voltage immediately before: <span class="arithmatex">\(V_C(0^+) = V_C(0^-)\)</span>
-- Inductor current immediately after switching = inductor current immediately before: <span class="arithmatex">\(I_L(0^+) = I_L(0^-)\)</span></p>
-<p>To find the initial condition, analyze the circuit at <span class="arithmatex">\(t = 0^-\)</span> (DC steady state before switching):
-- Capacitor → open circuit (in DC steady state, <span class="arithmatex">\(i_C = 0\)</span>)
-- Inductor → short circuit (in DC steady state, <span class="arithmatex">\(v_L = 0\)</span>)</p>
-<p><strong>Final condition <span class="arithmatex">\(x(\infty)\)</span>:</strong></p>
-<p>The DC steady-state value as <span class="arithmatex">\(t \to \infty\)</span>. Analyze the circuit at DC steady state with the new switch configuration:
-- Capacitor → open circuit
-- Inductor → short circuit</p>
-<hr />
-<h2 id="67-natural-forced-complete-response" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">6.7 Natural, Forced, and Complete Response</h2>
-<p>The complete response of a first-order circuit has two components:</p>
-<p><strong>Natural response</strong> <span class="arithmatex">\(x_n(t)\)</span>: The circuit's response due to its initial stored energy, with no external forcing. It decays to zero:</p>
+<h2 id="108-power-factor-correction" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">10.8 Power Factor Correction</h2>
+<p><strong>Power factor correction</strong> improves PF by adding capacitors in parallel with inductive loads. The capacitors supply reactive power locally, reducing the reactive current drawn from the source.</p>
+<p><strong>Benefits:</strong> reduced line current, less I²R loss, increased infrastructure capacity, avoided utility penalties.</p>
+<p><strong>Correction formula</strong> — to improve from <span class="arithmatex">\(\theta_1\)</span> to <span class="arithmatex">\(\theta_2\)</span>:</p>
 <div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
-<div class="arithmatex">\[x_n(t) = A\, e^{-t/\tau}\]</div>
+<div class="arithmatex">\[Q_C = P(\tan\theta_1 - \tan\theta_2) \qquad C = \frac{Q_C}{\omega\, V_{rms}^2}\]</div>
 </div>
-<p><strong>Forced response</strong> <span class="arithmatex">\(x_f(t)\)</span>: The response driven by the external source(s), which the circuit eventually settles to. For DC sources, this is a constant equal to the final value <span class="arithmatex">\(x(\infty)\)</span>.</p>
-<p><strong>Complete response</strong> = natural + forced:</p>
-<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
-<div class="arithmatex">\[x(t) = x(\infty) + \bigl[x(0) - x(\infty)\bigr]\, e^{-t/\tau}\]</div>
-</div>
-<p>This is the <strong>universal step-response formula</strong> — it solves <em>any</em> first-order DC transient. Once you know <span class="arithmatex">\(x(0)\)</span>, <span class="arithmatex">\(x(\infty)\)</span>, and <span class="arithmatex">\(\tau\)</span>, you're done.</p>
-<p><strong>Procedure for first-order transient analysis:</strong></p>
-<ol>
-<li>Find <span class="arithmatex">\(x(0)\)</span>: analyze circuit at DC steady state before switching (C → open, L → short)</li>
-<li>Find <span class="arithmatex">\(x(\infty)\)</span>: analyze circuit at DC steady state after switching (C → open, L → short)</li>
-<li>Find <span class="arithmatex">\(\tau\)</span>: find Thévenin resistance seen by the energy storage element; <span class="arithmatex">\(\tau = R_{Th}C\)</span> or <span class="arithmatex">\(\tau = L/R_{Th}\)</span></li>
-<li>Write the solution: <span class="arithmatex">\(x(t) = x(\infty) + [x(0) - x(\infty)]e^{-t/\tau}\)</span></li>
-</ol>
+<p><strong>Example:</strong> A 10 kW load at PF = 0.7 lagging from 240 V, 60 Hz. Correct to PF = 0.95:</p>
+<p><span class="arithmatex">\(\theta_1 = 45.57°\)</span>, <span class="arithmatex">\(\tan\theta_1 = 1.020\)</span> ; <span class="arithmatex">\(\theta_2 = 18.19°\)</span>, <span class="arithmatex">\(\tan\theta_2 = 0.329\)</span></p>
+<p><span class="arithmatex">\(Q_C = 10{,}000(1.020 - 0.329) = 6{,}910\)</span> VAR</p>
+<p><span class="arithmatex">\(C = 6{,}910 / (2\pi \times 60 \times 240^2) = 319\)</span> μF</p>
+<p>A 320 μF capacitor reduces reactive demand from the utility by 6,910 VAR.</p>
 <hr />
-<h2 id="68-worked-example" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">6.8 Worked Example: Complete Transient Analysis</h2>
-<p><strong>Problem:</strong> A 24 V source drives a circuit with R1 = 6 kΩ in series with a parallel combination of R2 = 12 kΩ and C = 10 μF. The switch closes at <span class="arithmatex">\(t = 0\)</span>. Find <span class="arithmatex">\(V_C(t)\)</span> for <span class="arithmatex">\(t \geq 0\)</span>.</p>
-<p>Assume the capacitor is initially uncharged.</p>
-<p><strong>Step 1 — Initial condition:</strong>
-At <span class="arithmatex">\(t = 0^-\)</span>, capacitor is uncharged: <span class="arithmatex">\(V_C(0) = 0\)</span> V.</p>
-<p><strong>Step 2 — Final condition:</strong>
-At <span class="arithmatex">\(t \to \infty\)</span>, capacitor is open circuit. Current through R1 and R2 in series:
-<span class="arithmatex">\(I = 24 / (6\,\text{k} + 12\,\text{k}) = 24/18\,\text{k} = 1.33\)</span> mA<br />
-<span class="arithmatex">\(V_C(\infty) = I \times R2 = 1.33\,\text{m} \times 12\,\text{k} = 16\)</span> V</p>
-<p><strong>Step 3 — Time constant:</strong>
-Kill the source (short); Thévenin resistance seen by C = R1 ∥ R2 = (6k × 12k)/(6k + 12k) = 4 kΩ<br />
-<span class="arithmatex">\(\tau = R_{Th} C = 4\,000 \times 10 \times 10^{-6} = 40\)</span> ms</p>
-<p><strong>Step 4 — Complete response:</strong></p>
+<h2 id="109-power-in-elements" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">10.9 Power in Resistors, Capacitors, and Inductors</h2>
+<p>Each passive component has distinct power behavior:</p>
+<p><strong>Resistors</strong> — voltage and current are in phase (<span class="arithmatex">\(\theta = 0\)</span>):</p>
 <div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
-<div class="arithmatex">\[V_C(t) = 16 + (0 - 16)\,e^{-t/0.04} = 16\left(1 - e^{-25t}\right) \text{ V}, \quad t \geq 0\]</div>
+<div class="arithmatex">\[P_R = I_{rms}^2 R = \frac{V_{rms}^2}{R} \qquad Q_R = 0\]</div>
 </div>
-<p>At <span class="arithmatex">\(t = \tau = 40\)</span> ms: <span class="arithmatex">\(V_C = 16(1 - e^{-1}) = 16 \times 0.632 = 10.1\)</span> V ✓</p>
+<p><strong>Capacitors</strong> — current leads voltage by 90°, no real power consumed:</p>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<div class="arithmatex">\[P_C = 0 \qquad Q_C = -\frac{V_{rms}^2}{X_C} \quad \text{(negative — supplies VARs)}\]</div>
+</div>
+<p><strong>Inductors</strong> — current lags voltage by 90°, no real power consumed:</p>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<div class="arithmatex">\[P_L = 0 \qquad Q_L = \frac{V_{rms}^2}{X_L} \quad \text{(positive — absorbs VARs)}\]</div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Element</th>
+<th>Real Power P</th>
+<th>Reactive Power Q</th>
+<th>PF</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Resistor</td>
+<td><span class="arithmatex">\(I^2 R\)</span></td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>Capacitor</td>
+<td>0</td>
+<td><span class="arithmatex">\(-V^2/X_C\)</span></td>
+<td>0 leading</td>
+</tr>
+<tr>
+<td>Inductor</td>
+<td>0</td>
+<td><span class="arithmatex">\(+V^2/X_L\)</span></td>
+<td>0 lagging</td>
+</tr>
+</tbody>
+</table>
 <hr />
-<h2 id="69-chapter-summary" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">6.9 Chapter Summary</h2>
+<h2 id="1010-maximum-power-transfer" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">10.10 Maximum Power Transfer in AC</h2>
+<p>For maximum power transfer from a source with internal impedance <span class="arithmatex">\(Z_s = R_s + jX_s\)</span> to load <span class="arithmatex">\(Z_L\)</span>:</p>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<div class="arithmatex">\[Z_L = Z_s^* = R_s - jX_s \qquad P_{max} = \frac{|V_s|^2}{4R_s}\]</div>
+<p>The load impedance must be the <strong>complex conjugate</strong> of the source impedance.</p>
+</div>
+<p>At conjugate matching: <span class="arithmatex">\(R_L = R_s\)</span> (equal resistances) and <span class="arithmatex">\(X_L = -X_s\)</span> (reactances cancel). The result is resonance — maximum current and maximum power transfer — but efficiency is only 50%. This trade-off is acceptable in RF and audio signal systems; power delivery systems optimize for efficiency instead.</p>
+<hr />
+<h2 id="1011-efficiency-and-gain" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">10.11 Efficiency and Power Gain</h2>
+<p><strong>Efficiency:</strong></p>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<div class="arithmatex">\[\eta = \frac{P_{out}}{P_{in}} \times 100\%\]</div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Device</th>
+<th>Typical Efficiency</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Power transformer</td>
+<td>95–99%</td>
+</tr>
+<tr>
+<td>AC induction motor</td>
+<td>80–95%</td>
+</tr>
+<tr>
+<td>LED bulb</td>
+<td>35–50%</td>
+</tr>
+<tr>
+<td>Incandescent bulb</td>
+<td>2–5%</td>
+</tr>
+<tr>
+<td>Switching power supply</td>
+<td>85–95%</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Power gain</strong> measures amplification:</p>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<div class="arithmatex">\[A_P = \frac{P_{out}}{P_{in}} \qquad A_P(dB) = 10\log_{10}\!\left(\frac{P_{out}}{P_{in}}\right)\]</div>
+</div>
+<hr />
+<h2 id="1012-worked-example" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">10.12 Worked Example: Complete Power Analysis</h2>
+<p><strong>Problem:</strong> A series RL load with R = 30 Ω and <span class="arithmatex">\(X_L = 40\)</span> Ω is connected to a 120 V RMS, 60 Hz source. Find all power quantities and the capacitor needed for unity PF correction.</p>
+<p><strong>Step 1 — Impedance and current:</strong></p>
+<p><span class="arithmatex">\(Z = 30 + j40 = 50\angle 53.13°\)</span> Ω <span class="arithmatex">\(\quad I_{rms} = 120/50 = 2.4\)</span> A</p>
+<p><strong>Step 2 — Powers:</strong></p>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<p>[P = I^2 R = (2.4)^2(30) = 172.8 \text{ W}]
+[Q = I^2 X_L = (2.4)^2(40) = 230.4 \text{ VAR}]
+[S = I^2|Z| = (2.4)^2(50) = 288 \text{ VA} \qquad PF = P/S = 0.6 \text{ lagging}]</p>
+</div>
+<p><strong>Step 3 — Power factor correction to unity:</strong></p>
+<p><span class="arithmatex">\(Q_C = -230.4\)</span> VAR needed. <span class="arithmatex">\(C = 230.4 / (2\pi \times 60 \times 120^2) = 42.5\)</span> μF</p>
+<p>After correction: current drops from 2.4 A to <span class="arithmatex">\(172.8/120 = 1.44\)</span> A — a 40% reduction!</p>
+<hr />
+<h2 id="1013-chapter-summary" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">10.13 Chapter Summary</h2>
 <div style="background: #F8F6FF; border: 2px solid #D4C8FF; border-radius: 12px; padding: 20px 28px; margin: 1rem 0;">
-<p><strong>Key results:</strong></p>
+<p><strong>The three power quantities:</strong></p>
 <table>
 <thead>
 <tr>
-<th>Circuit</th>
-<th>Time Constant</th>
-<th>Energizing</th>
-<th>De-energizing</th>
+<th>Quantity</th>
+<th>Symbol</th>
+<th>Units</th>
+<th>Formula</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>RC</td>
-<td><span class="arithmatex">\(\tau = RC\)</span></td>
-<td><span class="arithmatex">\(V_C = V_S(1-e^{-t/\tau})\)</span></td>
-<td><span class="arithmatex">\(V_C = V_0 e^{-t/\tau}\)</span></td>
+<td>Real (active)</td>
+<td>P</td>
+<td>W</td>
+<td><span class="arithmatex">\(V_{rms} I_{rms}\cos\theta\)</span></td>
 </tr>
 <tr>
-<td>RL</td>
-<td><span class="arithmatex">\(\tau = L/R\)</span></td>
-<td><span class="arithmatex">\(I_L = (V_S/R)(1-e^{-t/\tau})\)</span></td>
-<td><span class="arithmatex">\(I_L = I_0 e^{-t/\tau}\)</span></td>
+<td>Reactive</td>
+<td>Q</td>
+<td>VAR</td>
+<td><span class="arithmatex">\(V_{rms} I_{rms}\sin\theta\)</span></td>
+</tr>
+<tr>
+<td>Apparent</td>
+<td>S</td>
+<td>VA</td>
+<td><span class="arithmatex">\(V_{rms} I_{rms}\)</span></td>
 </tr>
 </tbody>
 </table>
-<p><strong>Universal formula for any first-order DC transient:</strong></p>
-<div class="arithmatex">\[x(t) = x(\infty) + [x(0) - x(\infty)]\,e^{-t/\tau}\]</div>
-<p><strong>Procedure:</strong>
-1. Find <span class="arithmatex">\(x(0)\)</span>: DC steady state before switching (C = open, L = short)
-2. Find <span class="arithmatex">\(x(\infty)\)</span>: DC steady state after switching (C = open, L = short)
-3. Find <span class="arithmatex">\(\tau = R_{Th}C\)</span> or <span class="arithmatex">\(\tau = L/R_{Th}\)</span> (Thévenin resistance seen by storage element)
-4. Apply the universal formula</p>
-<p><strong>Rules:</strong>
-- At <span class="arithmatex">\(t = \tau\)</span>: circuit is 63.2% from initial to final
-- After <span class="arithmatex">\(5\tau\)</span>: circuit is 99.3% complete — treated as fully settled</p>
+<p><strong>Power triangle:</strong> <span class="arithmatex">\(S^2 = P^2 + Q^2\)</span>, <span class="arithmatex">\(\quad PF = P/S = \cos\theta\)</span></p>
+<p><strong>Power factor correction:</strong> add <span class="arithmatex">\(C = Q_C/(\omega V^2)\)</span> in parallel with inductive load</p>
+<p><strong>Per-element power:</strong>
+- Resistors: only P (real power)
+- Capacitors: only Q &lt; 0 (supply VARs)
+- Inductors: only Q &gt; 0 (absorb VARs)</p>
+<p><strong>AC maximum power transfer:</strong> <span class="arithmatex">\(Z_L = Z_s^*\)</span> (conjugate matching), efficiency = 50%</p>
 </div>
 </div>
 
