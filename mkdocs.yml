@@ -14,10 +14,15 @@ nav:
     - List of Chapters: chapters/index.md
     - 1. Electric Charge and Quantities:
       - Overview: chapters/01-electric-charge-basic-quantities/index.md
+      - Chapter Content: chapters/01-electric-charge-basic-quantities/content.md
+      - Quiz: chapters/01-electric-charge-basic-quantities/quiz.md
     - 2. Ohm's Law and Configurations:
       - Overview: chapters/02-ohms-law-basic-configurations/index.md
+      - Chapter Content: chapters/02-ohms-law-basic-configurations/content.md
+      - Quiz: chapters/02-ohms-law-basic-configurations/quiz.md
     - 3. Kirchhoff's Laws and Topology:
       - Overview: chapters/03-kirchhoffs-laws-topology/index.md
+      - Chapter Content: chapters/03-kirchhoffs-laws-topology/content.md
       - Quiz and Problems: chapters/03-kirchhoffs-laws-topology/quiz.md
     - 4. DC Circuit Analysis:
       - Overview: chapters/04-dc-circuit-analysis/index.md
