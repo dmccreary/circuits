@@ -52,12 +52,30 @@ nav:
       - Overview: chapters/10-ac-power-analysis/index.md
       - Chapter Content: chapters/10-ac-power-analysis/content.md
       - Quiz and Problems: chapters/10-ac-power-analysis/quiz.md
-    - 11. Frequency Response and Bode: chapters/11-frequency-response-bode/index.md
-    - 12. Filters and Resonance: chapters/12-filters-resonance/index.md
-    - 13. Operational Amplifiers: chapters/13-operational-amplifiers/index.md
-    - 14. Signal Analysis and Fourier: chapters/14-signals-audio-lab/index.md
-    - 15. Audio Applications: chapters/15-audio-applications/index.md
-    - 16. Laboratory Techniques: chapters/16-laboratory-techniques/index.md
+    - 11. Frequency Response and Bode:
+      - Overview: chapters/11-frequency-response-bode/index.md
+      - Chapter Content: chapters/11-frequency-response-bode/content.md
+      - Quiz and Problems: chapters/11-frequency-response-bode/quiz.md
+    - 12. Filters and Resonance:
+      - Overview: chapters/12-filters-resonance/index.md
+      - Chapter Content: chapters/12-filters-resonance/content.md
+      - Quiz and Problems: chapters/12-filters-resonance/quiz.md
+    - 13. Operational Amplifiers:
+      - Overview: chapters/13-operational-amplifiers/index.md
+      - Chapter Content: chapters/13-operational-amplifiers/content.md
+      - Quiz and Problems: chapters/13-operational-amplifiers/quiz.md
+    - 14. Signal Analysis and Fourier:
+      - Overview: chapters/14-signals-audio-lab/index.md
+      - Chapter Content: chapters/14-signals-audio-lab/content.md
+      - Quiz and Problems: chapters/14-signals-audio-lab/quiz.md
+    - 15. Audio Applications:
+      - Overview: chapters/15-audio-applications/index.md
+      - Chapter Content: chapters/15-audio-applications/content.md
+      - Quiz and Problems: chapters/15-audio-applications/quiz.md
+    - 16. Laboratory Techniques:
+      - Overview: chapters/16-laboratory-techniques/index.md
+      - Chapter Content: chapters/16-laboratory-techniques/content.md
+      - Quiz and Problems: chapters/16-laboratory-techniques/quiz.md
 
   - MicroSims:
     - Introduction: sims/index.md
