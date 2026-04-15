@@ -36,7 +36,10 @@ nav:
       - Overview: chapters/06-transient-analysis-rc-rl/index.md
       - Chapter Content: chapters/06-transient-analysis-rc-rl/content.md
       - Quiz and Problems: chapters/06-transient-analysis-rc-rl/quiz.md
-    - 7. Second-Order RLC Circuits: chapters/07-second-order-rlc-circuits/index.md
+    - 7. Second-Order RLC Circuits:
+      - Overview: chapters/07-second-order-rlc-circuits/index.md
+      - Chapter Content: chapters/07-second-order-rlc-circuits/content.md
+      - Quiz and Problems: chapters/07-second-order-rlc-circuits/quiz.md
     - 8. AC Signals and Sinusoids:
       - Overview: chapters/08-ac-signals-sinusoidal/index.md
       - Chapter Content: chapters/08-ac-signals-sinusoidal/content.md
