@@ -228,12 +228,17 @@ theme:
   name: material
   logo: img/course-logo.png
   favicon: img/favicon.ico
+  font:
+    text: Roboto
+    code: JetBrains Mono
   palette:
-    primary: 'blue'
-    accent: 'orange'
+    - scheme: default
+      primary: deep purple
+      accent: amber
   include_sidebar: true
   features:
     - content.code.copy
+    - navigation.tabs
     - navigation.expand
     - navigation.path
     - navigation.prune
