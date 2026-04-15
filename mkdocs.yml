@@ -26,10 +26,16 @@ nav:
       - Quiz and Problems: chapters/03-kirchhoffs-laws-topology/quiz.md
     - 4. DC Circuit Analysis:
       - Overview: chapters/04-dc-circuit-analysis/index.md
+      - Chapter Content: chapters/04-dc-circuit-analysis/content.md
+      - Quiz and Problems: chapters/04-dc-circuit-analysis/quiz.md
     - 5. Passive Components:
       - Overview: chapters/05-passive-components/index.md
+      - Chapter Content: chapters/05-passive-components/content.md
+      - Quiz and Problems: chapters/05-passive-components/quiz.md
     - 6. Transient Analysis RC/RL:
       - Overview: chapters/06-transient-analysis-rc-rl/index.md
+      - Chapter Content: chapters/06-transient-analysis-rc-rl/content.md
+      - Quiz and Problems: chapters/06-transient-analysis-rc-rl/quiz.md
     - 7. Second-Order RLC Circuits:
       - Overview: chapters/07-second-order-rlc-circuits/index.md
       - Quiz and Problems: chapters/07-second-order-rlc-circuits/quiz.md
