@@ -288,3 +288,85 @@ body {
 
 .msim-btn:hover { background: #5A3EED; color: #fff; }
 .msim-box.msim-fs .msim-btn { position: fixed; top: 12px; right: 12px; }
+
+/* ── Cover Page ─────────────────────────────────────────────────────────── */
+
+.cover-page {
+  background: radial-gradient(ellipse at 50% -10%, #2D1A6E 0%, #1A0C4A 40%, #0D0630 70%, #060018 100%);
+  color: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  margin: -0.8rem -1.6rem 0;
+}
+
+.cover-content {
+  text-align: center;
+}
+
+.md-typeset .cover-content h1 {
+  color: #fff !important;
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.4rem;
+  text-shadow: 0 2px 20px rgba(124, 92, 239, 0.6);
+  border-bottom: none !important;
+}
+
+.cover-institution {
+  color: rgba(255,255,255,0.75);
+  font-size: 1rem;
+  line-height: 1.65;
+  margin: 0.5rem 0;
+}
+
+.cover-description {
+  color: rgba(255,255,255,0.62);
+  font-size: 0.93rem;
+  line-height: 1.65;
+  margin: 0.4rem 0 0;
+}
+
+.cover-stats {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.stat-item {
+  text-align: center;
+  min-width: 90px;
+}
+
+.stat-number {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: #D4A017;
+  line-height: 1;
+}
+
+.stat-label {
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.6);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-top: 0.3rem;
+}
+
+.cover-buttons .md-button {
+  color: rgba(255,255,255,0.88);
+  border-color: rgba(255,255,255,0.28);
+  background: rgba(255,255,255,0.07);
+}
+
+.cover-buttons .md-button--primary {
+  background: #5A3EED;
+  border-color: #5A3EED;
+  color: #fff;
+}
+
+@media (max-width: 600px) {
+  .cover-stats { gap: 1.2rem; }
+  .stat-number { font-size: 1.8rem; }
+}

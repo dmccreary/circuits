@@ -7,7 +7,7 @@ repo_url: 'https://github.com/dmccreary/circuits'
 edit_uri: 'blob/master/docs'
 
 nav:
-  - Home: index.md
+  - Cover: index.md
 
   - Chapters:
     - List of Chapters: chapters/index.md
