@@ -48,7 +48,10 @@ nav:
       - Overview: chapters/09-phasors-complex-impedance/index.md
       - Chapter Content: chapters/09-phasors-complex-impedance/content.md
       - Quiz: chapters/09-phasors-complex-impedance/quiz.md
-    - 10. AC Power Analysis: chapters/10-ac-power-analysis/index.md
+    - 10. AC Power Analysis:
+      - Overview: chapters/10-ac-power-analysis/index.md
+      - Chapter Content: chapters/10-ac-power-analysis/content.md
+      - Quiz and Problems: chapters/10-ac-power-analysis/quiz.md
     - 11. Frequency Response and Bode: chapters/11-frequency-response-bode/index.md
     - 12. Filters and Resonance: chapters/12-filters-resonance/index.md
     - 13. Operational Amplifiers: chapters/13-operational-amplifiers/index.md
