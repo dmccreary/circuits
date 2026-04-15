@@ -8,8 +8,7 @@ edit_uri: 'blob/master/docs'
 
 nav:
   - Home: index.md
-  - About This Course: about.md
-  - Course Description: course-description.md
+
   - Chapters:
     - List of Chapters: chapters/index.md
     - 1. Electric Charge and Quantities:
@@ -131,23 +130,6 @@ nav:
     - sims/circuit-similarity/index.md
     - sims/templates/index.md
 
-  - Circuits:
-    - List of Circuits: circuits/index.md
-    - SchemaDraw: circuits/schemadraw/index.md
-    - Test Table: circuits/schemadraw/test-table.md
-
-  - Supplementary Sections:
-    - Table of Contents: old-sections/index.md
-    - Introduction: old-sections/01-intro/index.md
-    - Voltage Across a Capacitor: old-sections/05-voltage-across-a-capacitor/index.md
-    - Circuit Laws: old-sections/02-laws/index.md
-    - Diodes: old-sections/50-diode/index.md
-    - Transistors:
-       - Introduction: old-sections/60-transistors/index.md
-       - LED Driver Circuit: old-sections/60-transistors/led-circuit.md
-    - MOSFETs: old-sections/70-mosfet/index.md
-    - Frequency Response: old-sections/10-frequency-response/index.md
-  
   - Learning Graph:
     - Introduction: learning-graph/index.md
     - Concept List: learning-graph/concept-list.md
@@ -159,7 +141,7 @@ nav:
     - Book Metrics: learning-graph/book-metrics.md
     - FAQ Quality Report: learning-graph/faq-quality-report.md
 
-  - Sample Prompts:
+  - Prompts:
     - Introduction: prompts/index.md
     - Learning Via Simulations: prompts/learning-via-interactive-simulations.md
     - Top 100 Circuits:
@@ -172,7 +154,7 @@ nav:
       - Generating Circuit Diagrams with Mermaid: prompts/circuit-diagrams/gen-circuit-diagrams-mermaid.md
     - Current-Voltage Plots: prompts/current-voltage-plots/index.md
     - Adding LaTeX Equations: prompts/adding-latex-equations.md
-    - Common Formulas: 
+    - Common Formulas:
       - Introduction: prompts/formulas/index.md
       - Full List: prompts/formulas/full.md
     - Frequently Asked Questions: prompts/frequently-asked-questions.md
@@ -195,7 +177,6 @@ nav:
     - Similarity Plot: prompts/similarity-plot/index.md
     - Circuit Diagram Skill: prompts/circuit-diagram-skill.md
     - Generate Chapter Content: prompts/generate-chapter-content.md
-  
     - Component Tests:
       - Introduction: sims/components.md
       - Circuit Library Test: sims/circuit-lib/index.md
@@ -216,18 +197,38 @@ nav:
     - Series and Parallel: faq/series-and-parallel/index.md
 
   - Glossary: glossary.md
-  - How We Built This Site: how-we-built-this-site.md
-  - Feature Checklist: feature-checklist.md
-  - References: references.md
-  - License: license.md
-  - Contact: contact.md
+
+  - About:
+    - About This Course: about.md
+    - Course Description: course-description.md
+    - Circuits:
+      - List of Circuits: circuits/index.md
+      - SchemaDraw: circuits/schemadraw/index.md
+      - Test Table: circuits/schemadraw/test-table.md
+    - Supplementary Sections:
+      - Table of Contents: old-sections/index.md
+      - Introduction: old-sections/01-intro/index.md
+      - Voltage Across a Capacitor: old-sections/05-voltage-across-a-capacitor/index.md
+      - Circuit Laws: old-sections/02-laws/index.md
+      - Diodes: old-sections/50-diode/index.md
+      - Transistors:
+        - Introduction: old-sections/60-transistors/index.md
+        - LED Driver Circuit: old-sections/60-transistors/led-circuit.md
+      - MOSFETs: old-sections/70-mosfet/index.md
+      - Frequency Response: old-sections/10-frequency-response/index.md
+    - How We Built This Site: how-we-built-this-site.md
+    - Feature Checklist: feature-checklist.md
+    - References: references.md
+    - License: license.md
+    - Contact: contact.md
  
 # Dan's MicroSite Standards from here down
 
 theme:
   name: material
-  logo: img/course-logo.png
   favicon: img/favicon.ico
+  icon:
+    logo: material/chip
   font:
     text: Roboto
     code: JetBrains Mono
@@ -239,6 +240,7 @@ theme:
   features:
     - content.code.copy
     - navigation.tabs
+    - navigation.sections
     - navigation.expand
     - navigation.path
     - navigation.prune
