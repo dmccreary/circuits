@@ -1,0 +1,2388 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Multiple choice quiz and practice problems for Chapter 5 covering capacitors, inductors, mutual inductance, and signal fundamentals">
+      
+      
+        <meta name="author" content="Dan McCreary">
+      
+      
+        <link rel="canonical" href="https://dmccreary.github.io/circuits/chapters/05-passive-components/quiz/">
+      
+      
+        <link rel="prev" href="../content/">
+      
+      
+        <link rel="next" href="../../06-transient-analysis-rc-rl/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../img/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>Chapter 5 Quiz — Passive Components - Circuits 1</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../css/extra.css">
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+<script id="__analytics">function __md_analytics(){function e(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],e("js",new Date),e("config","G-9J4MVE6LWP"),document.addEventListener("DOMContentLoaded",(function(){document.forms.search&&document.forms.search.query.addEventListener("blur",(function(){this.value&&e("event","search",{search_term:this.value})}));document$.subscribe((function(){var t=document.forms.feedback;if(void 0!==t)for(var a of t.querySelectorAll("[type=submit]"))a.addEventListener("click",(function(a){a.preventDefault();var n=document.location.pathname,d=this.getAttribute("data-md-value");e("event","feedback",{page:n,data:d}),t.firstElementChild.disabled=!0;var r=t.querySelector(".md-feedback__note [data-md-value='"+d+"']");r&&(r.hidden=!1)})),t.hidden=!1})),location$.subscribe((function(t){e("config","G-9J4MVE6LWP",{page_path:t.pathname})}))}));var t=document.createElement("script");t.async=!0,t.src="https://www.googletagmanager.com/gtag/js?id=G-9J4MVE6LWP",document.getElementById("__analytics").insertAdjacentElement("afterEnd",t)}</script>
+  
+    <script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
+  
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="orange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#chapter-5-quiz-passive-components" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Circuits 1" class="md-header__button md-logo" aria-label="Circuits 1" data-md-component="logo">
+      
+  <img src="../../../img/course-logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Circuits 1
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Chapter 5 Quiz — Passive Components
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/dmccreary/circuits" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub Repo
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Circuits 1" class="md-nav__button md-logo" aria-label="Circuits 1" data-md-component="logo">
+      
+  <img src="../../../img/course-logo.png" alt="logo">
+
+    </a>
+    Circuits 1
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/dmccreary/circuits" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub Repo
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    About This Course
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../course-description/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Course Description
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapters
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Chapters
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../01-electric-charge-basic-quantities/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Electric Charge and Quantities
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../02-ohms-law-basic-configurations/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Ohm's Law and Configurations
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../03-kirchhoffs-laws-topology/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Kirchhoff's Laws and Topology
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../04-dc-circuit-analysis/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. DC Circuit Analysis
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_6" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Passive Components
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_6" id="__nav_4_6_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    5. Passive Components
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../content/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter Content
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quiz and Problems
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quiz and Problems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#multiple-choice-questions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Multiple Choice Questions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#practice-problems" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Practice Problems
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../06-transient-analysis-rc-rl/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Transient Analysis RC/RL
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../07-second-order-rlc-circuits/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. Second-Order RLC Circuits
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../08-ac-signals-sinusoidal/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8. AC Signals and Sinusoids
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../09-phasors-complex-impedance/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9. Phasors and Impedance
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10-ac-power-analysis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10. AC Power Analysis
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../11-frequency-response-bode/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    11. Frequency Response and Bode
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../12-filters-resonance/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    12. Filters and Resonance
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../13-operational-amplifiers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    13. Operational Amplifiers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-signals-audio-lab/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    14. Signal Analysis and Fourier
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../15-audio-applications/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    15. Audio Applications
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../16-laboratory-techniques/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    16. Laboratory Techniques
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../sims/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MicroSims
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../circuits/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Circuits
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../old-sections/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Supplementary Sections
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../learning-graph/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Learning Graph
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../prompts/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sample Prompts
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../faq/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FAQ
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../how-we-built-this-site/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How We Built This Site
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../feature-checklist/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Feature Checklist
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../references/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    References
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../license/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    License
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../contact/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contact
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#multiple-choice-questions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Multiple Choice Questions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#practice-problems" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Practice Problems
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+                
+
+
+
+  
+
+
+  <nav class="md-path" aria-label="Navigation" >
+    <ol class="md-path__list">
+      
+        
+  
+  
+    <li class="md-path__item">
+      <a href="../../.." class="md-path__link">
+        
+  <span class="md-ellipsis">
+    Home
+  </span>
+
+      </a>
+    </li>
+  
+
+      
+      
+        
+  
+  
+    
+    
+      <li class="md-path__item">
+        <a href="../../" class="md-path__link">
+          
+  <span class="md-ellipsis">
+    Chapters
+  </span>
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+    
+    
+      <li class="md-path__item">
+        <a href="../" class="md-path__link">
+          
+  <span class="md-ellipsis">
+    5. Passive Components
+  </span>
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ol>
+  </nav>
+
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/dmccreary/circuits/blob/master/docs/chapters/05-passive-components/quiz.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+
+
+<div class="unit1-styled">
+<h1 id="chapter-5-quiz-passive-components">Chapter 5 Quiz — Passive Components</h1>
+<h2 id="multiple-choice-questions">Multiple Choice Questions</h2>
+<p><strong>1.</strong> A 10 μF capacitor is charged to 50 V. How much energy is stored?</p>
+<ul>
+<li>A) 500 μJ</li>
+<li>B) 12.5 mJ</li>
+<li>C) 25 mJ</li>
+<li>D) 2.5 mJ</li>
+</ul>
+<details class="success">
+<summary>Answer</summary>
+<p><strong>B) 12.5 mJ</strong></p>
+<p><span class="arithmatex">\(E = \frac{1}{2}CV^2 = \frac{1}{2} \times 10 \times 10^{-6} \times 2500 = 12.5 \times 10^{-3}\)</span> J = 12.5 mJ.</p>
+</details>
+<hr />
+<p><strong>2.</strong> Which of the following correctly describes a capacitor in DC steady state?</p>
+<ul>
+<li>A) It acts as a short circuit</li>
+<li>B) It acts as an open circuit</li>
+<li>C) It acts as a resistor</li>
+<li>D) It continuously draws current</li>
+</ul>
+<details class="success">
+<summary>Answer</summary>
+<p><strong>B) It acts as an open circuit</strong></p>
+<p>In DC steady state, <span class="arithmatex">\(dV/dt = 0\)</span>, so <span class="arithmatex">\(i = C\,dV/dt = 0\)</span>. No current flows through the capacitor; it appears as an open circuit.</p>
+</details>
+<hr />
+<p><strong>3.</strong> Three capacitors — 4 μF, 6 μF, and 12 μF — are connected in series. What is the equivalent capacitance?</p>
+<ul>
+<li>A) 22 μF</li>
+<li>B) 2 μF</li>
+<li>C) 6 μF</li>
+<li>D) 4 μF</li>
+</ul>
+<details class="success">
+<summary>Answer</summary>
+<p><strong>B) 2 μF</strong></p>
+<p><span class="arithmatex">\(\frac{1}{C_{eq}} = \frac{1}{4} + \frac{1}{6} + \frac{1}{12} = \frac{3+2+1}{12} = \frac{6}{12} = \frac{1}{2}\)</span>, so <span class="arithmatex">\(C_{eq} = 2\)</span> μF.</p>
+</details>
+<hr />
+<p><strong>4.</strong> An inductor has 5 mH inductance and carries 4 A of current. How much energy is stored?</p>
+<ul>
+<li>A) 40 mJ</li>
+<li>B) 10 mJ</li>
+<li>C) 20 mJ</li>
+<li>D) 80 mJ</li>
+</ul>
+<details class="success">
+<summary>Answer</summary>
+<p><strong>B) 10 mJ</strong></p>
+<p><span class="arithmatex">\(E = \frac{1}{2}LI^2 = \frac{1}{2} \times 5 \times 10^{-3} \times 16 = 40 \times 10^{-3} = 40\)</span> mJ... wait, let me recalculate.</p>
+<p><span class="arithmatex">\(E = \frac{1}{2} \times 0.005 \times 16 = 0.04\)</span> J = 40 mJ.</p>
+<p><strong>Correction:</strong> The correct answer is <strong>A) 40 mJ</strong>.</p>
+<p><span class="arithmatex">\(E = \frac{1}{2} \times 5\times10^{-3} \times 4^2 = \frac{1}{2} \times 0.005 \times 16 = 0.04\)</span> J = 40 mJ.</p>
+</details>
+<hr />
+<p><strong>5.</strong> Which statement about an ideal inductor in DC steady state is correct?</p>
+<ul>
+<li>A) It has a large voltage across it</li>
+<li>B) It acts as an open circuit</li>
+<li>C) It acts as a short circuit (zero voltage)</li>
+<li>D) It blocks all current</li>
+</ul>
+<details class="success">
+<summary>Answer</summary>
+<p><strong>C) It acts as a short circuit (zero voltage)</strong></p>
+<p>In DC steady state, <span class="arithmatex">\(di/dt = 0\)</span>, so <span class="arithmatex">\(v = L\,di/dt = 0\)</span>. The inductor has zero voltage across it and acts as a short circuit (assuming no winding resistance).</p>
+</details>
+<hr />
+<p><strong>6.</strong> Two inductors L1 = 8 mH and L2 = 2 mH are coupled with mutual inductance M = 3 mH. When connected series-aiding, the equivalent inductance is:</p>
+<ul>
+<li>A) 10 mH</li>
+<li>B) 16 mH</li>
+<li>C) 4 mH</li>
+<li>D) 13 mH</li>
+</ul>
+<details class="success">
+<summary>Answer</summary>
+<p><strong>B) 16 mH</strong></p>
+<p>Series-aiding: <span class="arithmatex">\(L_{eq} = L_1 + L_2 + 2M = 8 + 2 + 6 = 16\)</span> mH.</p>
+</details>
+<hr />
+<p><strong>7.</strong> A sinusoidal voltage <span class="arithmatex">\(v(t) = 170\sin(377t)\)</span> V. What is the RMS value and frequency?</p>
+<ul>
+<li>A) 170 V RMS, 60 Hz</li>
+<li>B) 120 V RMS, 60 Hz</li>
+<li>C) 85 V RMS, 120 Hz</li>
+<li>D) 120 V RMS, 377 Hz</li>
+</ul>
+<details class="success">
+<summary>Answer</summary>
+<p><strong>B) 120 V RMS, 60 Hz</strong></p>
+<p><span class="arithmatex">\(V_{rms} = V_m/\sqrt{2} = 170/1.414 \approx 120\)</span> V.<br />
+<span class="arithmatex">\(\omega = 377\)</span> rad/s, so <span class="arithmatex">\(f = 377/(2\pi) \approx 60\)</span> Hz.<br />
+This is standard US household voltage!</p>
+</details>
+<hr />
+<p><strong>8.</strong> A signal level increases by 20 dB. By what factor does the voltage increase?</p>
+<ul>
+<li>A) 20 times</li>
+<li>B) 10 times</li>
+<li>C) 100 times</li>
+<li>D) 4 times</li>
+</ul>
+<details class="success">
+<summary>Answer</summary>
+<p><strong>B) 10 times</strong></p>
+<p><span class="arithmatex">\(20 = 20\log_{10}(V_2/V_1)\)</span>, so <span class="arithmatex">\(\log_{10}(V_2/V_1) = 1\)</span>, giving <span class="arithmatex">\(V_2/V_1 = 10\)</span>.</p>
+</details>
+<hr />
+<p><strong>9.</strong> What is Equivalent Series Resistance (ESR) in a real capacitor?</p>
+<ul>
+<li>A) The capacitance times the resistance</li>
+<li>B) Parasitic resistance in series with the capacitor representing internal losses</li>
+<li>C) The resistance that must be added in series for proper operation</li>
+<li>D) The resistance of the dielectric material only</li>
+</ul>
+<details class="success">
+<summary>Answer</summary>
+<p><strong>B) Parasitic resistance in series with the capacitor representing internal losses</strong></p>
+<p>ESR is an undesired parasitic parameter of real capacitors that causes power dissipation and limits performance in filtering and switching applications.</p>
+</details>
+<hr />
+<p><strong>10.</strong> The coupling coefficient <span class="arithmatex">\(k\)</span> between two inductors equals 1. This means:</p>
+<ul>
+<li>A) The inductors have equal inductance</li>
+<li>B) All the magnetic flux of one inductor links the other (perfect coupling)</li>
+<li>C) The inductors are in series</li>
+<li>D) There is no magnetic coupling</li>
+</ul>
+<details class="success">
+<summary>Answer</summary>
+<p><strong>B) All the magnetic flux of one inductor links the other (perfect coupling)</strong></p>
+<p><span class="arithmatex">\(k = M/\sqrt{L_1 L_2} = 1\)</span> represents perfect (100%) magnetic coupling, the ideal transformer condition.</p>
+</details>
+<hr />
+<h2 id="practice-problems">Practice Problems</h2>
+<p><strong>Problem 1: Capacitor Combinations</strong></p>
+<p>Three capacitors — C1 = 2 μF, C2 = 3 μF, C3 = 6 μF — are arranged so that C2 and C3 are in parallel, and that parallel combination is in series with C1.</p>
+<p>a) Find the equivalent capacitance.<br />
+b) If 12 V is applied across the whole combination, find the voltage across C1 and across the parallel combination (C2 ∥ C3).</p>
+<details class="success">
+<summary>Solution</summary>
+<p><strong>a) Equivalent capacitance:</strong></p>
+<p>C2 ∥ C3: <span class="arithmatex">\(C_{23} = 3 + 6 = 9\)</span> μF</p>
+<p>C1 in series with C23: <span class="arithmatex">\(\frac{1}{C_{eq}} = \frac{1}{2} + \frac{1}{9} = \frac{9+2}{18} = \frac{11}{18}\)</span></p>
+<p><span class="arithmatex">\(C_{eq} = 18/11 \approx 1.636\)</span> μF</p>
+<p><strong>b) Charge on series combination:</strong>
+<span class="arithmatex">\(Q = C_{eq} \times V = (18/11 \times 10^{-6}) \times 12 = 216/11 \approx 19.6\)</span> μC</p>
+<p>Voltage across C1: <span class="arithmatex">\(V_1 = Q/C_1 = (19.6 \times 10^{-6})/(2 \times 10^{-6}) \approx 9.82\)</span> V</p>
+<p>Voltage across C2 ∥ C3: <span class="arithmatex">\(V_{23} = Q/C_{23} = (19.6 \times 10^{-6})/(9 \times 10^{-6}) \approx 2.18\)</span> V</p>
+<p>Check: <span class="arithmatex">\(9.82 + 2.18 = 12\)</span> V ✓</p>
+</details>
+<hr />
+<p><strong>Problem 2: Inductor Energy</strong></p>
+<p>An inductor with L = 50 mH is carrying 2 A when a switch suddenly opens. The inductor current must discharge through a parallel resistor R = 100 Ω.</p>
+<p>a) How much energy was stored in the inductor?<br />
+b) Write an expression for the inductor current after the switch opens.<br />
+c) What voltage appears across the inductor immediately after the switch opens?</p>
+<details class="success">
+<summary>Solution</summary>
+<p><strong>a)</strong> <span class="arithmatex">\(E = \frac{1}{2}LI^2 = \frac{1}{2} \times 0.05 \times 4 = 0.1\)</span> J = 100 mJ</p>
+<p><strong>b)</strong> <span class="arithmatex">\(\tau = L/R = 0.05/100 = 0.5\)</span> ms</p>
+<p><span class="arithmatex">\(i_L(t) = 2\,e^{-t/0.0005} = 2\,e^{-2000t}\)</span> A, for <span class="arithmatex">\(t \geq 0\)</span></p>
+<p><strong>c)</strong> At <span class="arithmatex">\(t = 0^+\)</span>: <span class="arithmatex">\(v_L = L\,di/dt\)</span></p>
+<p>Since the current decays through R, <span class="arithmatex">\(v_L(0^+) = -I_0 R = -2 \times 100 = -200\)</span> V</p>
+<p>The negative sign indicates the inductor reverses polarity to maintain current flow (Lenz's Law). This 200 V spike can destroy unprotected transistors!</p>
+</details>
+<hr />
+<p><strong>Problem 3: Signal Parameters</strong></p>
+<p>A sinusoidal voltage is described as <span class="arithmatex">\(v(t) = 5\sin(1000\pi t + 30°)\)</span> V.</p>
+<p>Determine: a) amplitude, b) period, c) frequency, d) angular frequency, e) phase angle, f) RMS value.</p>
+<details class="success">
+<summary>Solution</summary>
+<ul>
+<li><strong>a) Amplitude (peak value):</strong> <span class="arithmatex">\(V_m = 5\)</span> V</li>
+<li><strong>b) Period:</strong> <span class="arithmatex">\(\omega = 1000\pi\)</span> rad/s, so <span class="arithmatex">\(T = 2\pi/\omega = 2\pi/(1000\pi) = 2/1000 = 2\)</span> ms</li>
+<li><strong>c) Frequency:</strong> <span class="arithmatex">\(f = 1/T = 1/0.002 = 500\)</span> Hz</li>
+<li><strong>d) Angular frequency:</strong> <span class="arithmatex">\(\omega = 1000\pi \approx 3142\)</span> rad/s</li>
+<li><strong>e) Phase angle:</strong> <span class="arithmatex">\(\phi = 30°\)</span> (the signal leads the reference by 30°)</li>
+<li><strong>f) RMS value:</strong> <span class="arithmatex">\(V_{rms} = V_m/\sqrt{2} = 5/1.414 \approx 3.54\)</span> V</li>
+</ul>
+</details>
+<hr />
+<p><strong>Problem 4: Decibel Calculations</strong></p>
+<p>An audio amplifier has a voltage gain of 40 in the midband, dropping to 28.28 at the cutoff frequencies.</p>
+<p>a) Express the midband gain in dB.<br />
+b) Express the gain at the cutoff frequency in dB.<br />
+c) What is the dB drop at the cutoff frequency?</p>
+<details class="success">
+<summary>Solution</summary>
+<p><strong>a)</strong> Midband: <span class="arithmatex">\(A_{dB} = 20\log_{10}(40) = 20 \times 1.602 = 32.04\)</span> dB ≈ <strong>32 dB</strong></p>
+<p><strong>b)</strong> Cutoff: <span class="arithmatex">\(A_{dB} = 20\log_{10}(28.28) = 20\log_{10}(20\sqrt{2}) = 20\log_{10}(40/\sqrt{2})\)</span></p>
+<p>More directly: <span class="arithmatex">\(28.28 = 40/\sqrt{2}\)</span>, so the gain is <span class="arithmatex">\(40/\sqrt{2}\)</span>.</p>
+<p><span class="arithmatex">\(A_{dB} = 20\log_{10}(28.28) = 20 \times 1.452 = 29.04\)</span> dB ≈ <strong>29 dB</strong></p>
+<p><strong>c)</strong> Drop = 32 − 29 = <strong>3 dB</strong> — this is the classic "−3 dB point" or "half-power point," since a voltage ratio of <span class="arithmatex">\(1/\sqrt{2}\)</span> corresponds to a power ratio of 1/2 (i.e., −3 dB).</p>
+</details>
+</div>
+
+
+
+
+
+
+
+  
+  
+
+
+
+  
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../content/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Chapter Content">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Chapter Content
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../../06-transient-analysis-rc-rl/" class="md-footer__link md-footer__link--next" aria-label="Next: Overview">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Overview
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2024, 2025, 2026 Dan McCreary. Licensed under <a href="license/">CC BY-NC-SA 4.0</a> for non-commercial use.
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["content.code.copy", "navigation.expand", "navigation.path", "navigation.prune", "navigation.indexes", "toc.follow", "navigation.top", "navigation.footer", "content.action.edit"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../../js/extra.js"></script>
+      
+        <script src="../../../js/audio-reader.js"></script>
+      
+        <script src="../../../js/katex.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+      
+    
+  </body>
+</html>

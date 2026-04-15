@@ -1,0 +1,3615 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Teaching content covering KCL, KVL, circuit topology, node voltage method, mesh current method, superposition, and delta-wye transformation">
+      
+      
+        <meta name="author" content="Dan McCreary">
+      
+      
+        <link rel="canonical" href="https://dmccreary.github.io/circuits/chapters/03-kirchhoffs-laws-topology/content/">
+      
+      
+        <link rel="prev" href="../">
+      
+      
+        <link rel="next" href="../quiz/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../img/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>Chapter 3 Content — Kirchhoff's Laws and Circuit Topology - Circuits 1</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../css/extra.css">
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+<script id="__analytics">function __md_analytics(){function e(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],e("js",new Date),e("config","G-9J4MVE6LWP"),document.addEventListener("DOMContentLoaded",(function(){document.forms.search&&document.forms.search.query.addEventListener("blur",(function(){this.value&&e("event","search",{search_term:this.value})}));document$.subscribe((function(){var t=document.forms.feedback;if(void 0!==t)for(var a of t.querySelectorAll("[type=submit]"))a.addEventListener("click",(function(a){a.preventDefault();var n=document.location.pathname,d=this.getAttribute("data-md-value");e("event","feedback",{page:n,data:d}),t.firstElementChild.disabled=!0;var r=t.querySelector(".md-feedback__note [data-md-value='"+d+"']");r&&(r.hidden=!1)})),t.hidden=!1})),location$.subscribe((function(t){e("config","G-9J4MVE6LWP",{page_path:t.pathname})}))}));var t=document.createElement("script");t.async=!0,t.src="https://www.googletagmanager.com/gtag/js?id=G-9J4MVE6LWP",document.getElementById("__analytics").insertAdjacentElement("afterEnd",t)}</script>
+  
+    <script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
+  
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="orange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#chapter-3-kirchhoffs-laws-and-circuit-topology" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Circuits 1" class="md-header__button md-logo" aria-label="Circuits 1" data-md-component="logo">
+      
+  <img src="../../../img/course-logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Circuits 1
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Chapter 3 Content — Kirchhoff's Laws and Circuit Topology
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/dmccreary/circuits" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub Repo
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Circuits 1" class="md-nav__button md-logo" aria-label="Circuits 1" data-md-component="logo">
+      
+  <img src="../../../img/course-logo.png" alt="logo">
+
+    </a>
+    Circuits 1
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/dmccreary/circuits" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub Repo
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    About This Course
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../course-description/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Course Description
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapters
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Chapters
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../01-electric-charge-basic-quantities/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Electric Charge and Quantities
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../02-ohms-law-basic-configurations/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Ohm's Law and Configurations
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_4" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Kirchhoff's Laws and Topology
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_4" id="__nav_4_4_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    3. Kirchhoff's Laws and Topology
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter Content
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter Content
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#31-kirchhoffs-current-law" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 Kirchhoff's Current Law (KCL)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.1 Kirchhoff&#39;s Current Law (KCL)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-kcl-node-visualization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Diagram: KCL Node Visualization
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#applying-kcl" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Applying KCL
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#32-kirchhoffs-voltage-law" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 Kirchhoff's Voltage Law (KVL)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.2 Kirchhoff&#39;s Voltage Law (KVL)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sign-convention-for-kvl" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sign Convention for KVL
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Sign Convention for KVL">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-kvl-loop-walkthrough" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Diagram: KVL Loop Walkthrough
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kvl-example-single-loop-circuit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        KVL Example: Single Loop Circuit
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#33-circuit-topology" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3 Circuit Topology
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.3 Circuit Topology">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-topology-formula" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Topology Formula
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Topology Formula">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-circuit-topology-explorer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Diagram: Circuit Topology Explorer
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#34-node-voltage-method" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.4 The Node Voltage Method
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.4 The Node Voltage Method">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-reference-node" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Reference Node
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#node-voltage-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Node Voltage Example
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-supernode-technique" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Supernode Technique
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Supernode Technique">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-supernode-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Diagram: Supernode Analysis
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#35-mesh-current-method" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.5 The Mesh Current Method
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.5 The Mesh Current Method">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mesh-current-sign-convention" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mesh Current Sign Convention
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mesh-analysis-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mesh Analysis Example
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-supermesh-technique" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Supermesh Technique
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Supermesh Technique">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-mesh-vs-supermesh-comparison" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Diagram: Mesh vs. Supermesh Comparison
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#36-superposition-principle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.6 The Superposition Principle
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.6 The Superposition Principle">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-superposition-principle-demonstrator" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Diagram: Superposition Principle Demonstrator
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#37-load-and-equivalent-resistance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.7 Load Resistance and Equivalent Resistance
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#38-delta-and-wye-configurations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.8 Delta and Wye Configurations
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.8 Delta and Wye Configurations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#delta-to-wye-transformation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Delta-to-Wye Transformation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#wye-to-delta-transformation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Wye-to-Delta Transformation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Wye-to-Delta Transformation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-delta-wye-transformation-calculator" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Diagram: Delta-Wye Transformation Calculator
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#39-circuit-simplification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.9 Circuit Simplification
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.9 Circuit Simplification">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-circuit-simplification-step-by-step" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Diagram: Circuit Simplification Step-by-Step
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#310-choosing-an-analysis-method" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.10 Choosing an Analysis Method
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#311-matrix-approach" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.11 Systematic Analysis: The Matrix Approach
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.11 Systematic Analysis: The Matrix Approach">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-matrix-equation-builder" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Diagram: Matrix Equation Builder
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#chapter-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Chapter Summary
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Chapter Summary">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#key-equations-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Equations Reference
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#whats-next" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What's Next
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../quiz/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quiz and Problems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../04-dc-circuit-analysis/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. DC Circuit Analysis
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../05-passive-components/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Passive Components
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../06-transient-analysis-rc-rl/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Transient Analysis RC/RL
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../07-second-order-rlc-circuits/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. Second-Order RLC Circuits
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../08-ac-signals-sinusoidal/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8. AC Signals and Sinusoids
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../09-phasors-complex-impedance/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9. Phasors and Impedance
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10-ac-power-analysis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10. AC Power Analysis
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../11-frequency-response-bode/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    11. Frequency Response and Bode
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../12-filters-resonance/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    12. Filters and Resonance
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../13-operational-amplifiers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    13. Operational Amplifiers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-signals-audio-lab/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    14. Signal Analysis and Fourier
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../15-audio-applications/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    15. Audio Applications
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../16-laboratory-techniques/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    16. Laboratory Techniques
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../sims/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MicroSims
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../circuits/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Circuits
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../old-sections/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Supplementary Sections
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../learning-graph/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Learning Graph
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../prompts/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sample Prompts
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../faq/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FAQ
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../how-we-built-this-site/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How We Built This Site
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../feature-checklist/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Feature Checklist
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../references/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    References
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../license/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    License
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../contact/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contact
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#31-kirchhoffs-current-law" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 Kirchhoff's Current Law (KCL)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.1 Kirchhoff&#39;s Current Law (KCL)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-kcl-node-visualization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Diagram: KCL Node Visualization
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#applying-kcl" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Applying KCL
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#32-kirchhoffs-voltage-law" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 Kirchhoff's Voltage Law (KVL)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.2 Kirchhoff&#39;s Voltage Law (KVL)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sign-convention-for-kvl" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sign Convention for KVL
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Sign Convention for KVL">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-kvl-loop-walkthrough" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Diagram: KVL Loop Walkthrough
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kvl-example-single-loop-circuit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        KVL Example: Single Loop Circuit
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#33-circuit-topology" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3 Circuit Topology
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.3 Circuit Topology">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-topology-formula" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Topology Formula
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Topology Formula">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-circuit-topology-explorer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Diagram: Circuit Topology Explorer
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#34-node-voltage-method" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.4 The Node Voltage Method
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.4 The Node Voltage Method">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-reference-node" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Reference Node
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#node-voltage-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Node Voltage Example
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-supernode-technique" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Supernode Technique
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Supernode Technique">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-supernode-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Diagram: Supernode Analysis
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#35-mesh-current-method" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.5 The Mesh Current Method
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.5 The Mesh Current Method">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mesh-current-sign-convention" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mesh Current Sign Convention
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mesh-analysis-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mesh Analysis Example
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-supermesh-technique" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Supermesh Technique
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Supermesh Technique">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-mesh-vs-supermesh-comparison" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Diagram: Mesh vs. Supermesh Comparison
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#36-superposition-principle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.6 The Superposition Principle
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.6 The Superposition Principle">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-superposition-principle-demonstrator" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Diagram: Superposition Principle Demonstrator
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#37-load-and-equivalent-resistance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.7 Load Resistance and Equivalent Resistance
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#38-delta-and-wye-configurations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.8 Delta and Wye Configurations
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.8 Delta and Wye Configurations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#delta-to-wye-transformation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Delta-to-Wye Transformation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#wye-to-delta-transformation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Wye-to-Delta Transformation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Wye-to-Delta Transformation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-delta-wye-transformation-calculator" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Diagram: Delta-Wye Transformation Calculator
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#39-circuit-simplification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.9 Circuit Simplification
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.9 Circuit Simplification">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-circuit-simplification-step-by-step" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Diagram: Circuit Simplification Step-by-Step
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#310-choosing-an-analysis-method" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.10 Choosing an Analysis Method
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#311-matrix-approach" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.11 Systematic Analysis: The Matrix Approach
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.11 Systematic Analysis: The Matrix Approach">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-matrix-equation-builder" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Diagram: Matrix Equation Builder
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#chapter-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Chapter Summary
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Chapter Summary">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#key-equations-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Equations Reference
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#whats-next" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What's Next
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+                
+
+
+
+  
+
+
+  <nav class="md-path" aria-label="Navigation" >
+    <ol class="md-path__list">
+      
+        
+  
+  
+    <li class="md-path__item">
+      <a href="../../.." class="md-path__link">
+        
+  <span class="md-ellipsis">
+    Home
+  </span>
+
+      </a>
+    </li>
+  
+
+      
+      
+        
+  
+  
+    
+    
+      <li class="md-path__item">
+        <a href="../../" class="md-path__link">
+          
+  <span class="md-ellipsis">
+    Chapters
+  </span>
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+    
+    
+      <li class="md-path__item">
+        <a href="../" class="md-path__link">
+          
+  <span class="md-ellipsis">
+    3. Kirchhoff's Laws and Topology
+  </span>
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ol>
+  </nav>
+
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/dmccreary/circuits/blob/master/docs/chapters/03-kirchhoffs-laws-topology/content.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+
+
+<div class="unit1-styled">
+<h1 id="chapter-3-kirchhoffs-laws-and-circuit-topology">Chapter 3 — Kirchhoff's Laws and Circuit Topology</h1>
+<h2 id="31-kirchhoffs-current-law" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">3.1 Kirchhoff's Current Law (KCL)</h2>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
+<strong style="color: #333;">Kirchhoff's Current Law</strong> is a direct consequence of the conservation of electric charge. It states that the algebraic sum of all currents entering and leaving any node in a circuit must equal zero. Every coulomb of charge that arrives at a node must also depart — charge cannot accumulate at a junction.
+</p>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<div class="arithmatex">\[\sum_{k=1}^{n} i_k = 0\]</div>
+</div>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.5rem;">
+Equivalently, the total current flowing into a node equals the total current flowing out. By convention, currents entering a node are assigned positive signs and currents leaving are assigned negative signs. Consistent application of this sign convention ensures correct results.
+</p>
+<h4 id="diagram-kcl-node-visualization" style="color: #5A3EED; font-weight: 700; margin-top: 2rem; margin-bottom: 0.8rem;">Diagram: KCL Node Visualization</h4>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe height="500px" scrolling="no" src="../../sims/kcl-node-viz/main.html" style="border:none; border-radius:8px; overflow:hidden;" width="100%"></iframe>
+</div>
+<h3 id="applying-kcl" style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Applying KCL</h3>
+<div style="background: #FFF7DD; border: 2px solid #F0D87A; border-radius: 10px; padding: 24px; margin: 1.5rem 0;">
+<p style="color: #B8860B; font-weight: 700; font-size: 1.08rem; margin-top: 0; margin-bottom: 14px;">Example — KCL at a Three-Wire Node</p>
+<p style="color: #555; line-height: 1.75;">
+Consider a node where three wires meet. If <span class="arithmatex">\(I_1 = 5\)</span> A flows in and <span class="arithmatex">\(I_2 = 3\)</span> A flows in, determine the current through the third wire.
+</p>
+<p style="color: #555; line-height: 1.75;">
+By KCL: <span class="arithmatex">\(I_1 + I_2 + I_3 = 0\)</span>
+</p>
+<p style="color: #555; line-height: 1.75;">
+Defining currents entering as positive: <span class="arithmatex">\(5 + 3 + I_3 = 0\)</span>
+</p>
+<p style="color: #555; line-height: 1.75; margin-bottom: 1rem;">
+Therefore: <span class="arithmatex">\(I_3 = -8\)</span> A — the negative sign indicates current flows <strong>out</strong> of the node.
+</p>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 10px 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<table>
+<thead>
+<tr>
+<th>Current</th>
+<th>Direction</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="arithmatex">\(I_1\)</span></td>
+<td>Into node</td>
+<td>+5 A</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(I_2\)</span></td>
+<td>Into node</td>
+<td>+3 A</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(I_3\)</span></td>
+<td>Out of node</td>
+<td>−8 A</td>
+</tr>
+<tr>
+<td><strong>Sum</strong></td>
+<td>—</td>
+<td><strong>0 A</strong></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<hr />
+<h2 id="32-kirchhoffs-voltage-law" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">3.2 Kirchhoff's Voltage Law (KVL)</h2>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
+<strong style="color: #333;">Kirchhoff's Voltage Law</strong> is a consequence of conservation of energy. It states that the algebraic sum of all voltages around any closed loop in a circuit must equal zero. When traversing a closed path, voltage rises from sources are exactly balanced by voltage drops across resistive elements.
+</p>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<div class="arithmatex">\[\sum_{k=1}^{n} v_k = 0\]</div>
+</div>
+<h3 id="sign-convention-for-kvl" style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Sign Convention for KVL</h3>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1rem;">
+Correct application of KVL requires a consistent sign convention. The standard approach is:
+</p>
+<ul style="list-style: none; padding-left: 0.8rem; margin: 0.8rem 0 1.2rem 0;">
+<li style="margin-bottom: 0.9rem; line-height: 1.75; color: #333;"><span style="color: #5A3EED; font-weight: 700; margin-right: 0.5rem;">&#9679;</span> <strong>Choose a traversal direction</strong> for the loop (clockwise is conventional)</li>
+<li style="margin-bottom: 0.9rem; line-height: 1.75; color: #333;"><span style="color: #5A3EED; font-weight: 700; margin-right: 0.5rem;">&#9679;</span> <strong>For voltage sources:</strong> Entering the negative terminal and exiting the positive terminal constitutes a voltage rise (+V). The reverse constitutes a drop (−V).</li>
+<li style="margin-bottom: 0.9rem; line-height: 1.75; color: #333;"><span style="color: #5A3EED; font-weight: 700; margin-right: 0.5rem;">&#9679;</span> <strong>For resistors:</strong> Traversing in the direction of current flow produces a voltage drop (−IR). Traversing against current flow produces a rise (+IR).</li>
+</ul>
+<h4 id="diagram-kvl-loop-walkthrough" style="color: #5A3EED; font-weight: 700; margin-top: 2rem; margin-bottom: 0.8rem;">Diagram: KVL Loop Walkthrough</h4>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe height="520px" scrolling="no" src="../../sims/kvl-loop-walkthrough/main.html" style="border:none; border-radius:8px; overflow:hidden;" width="100%"></iframe>
+</div>
+<h3 id="kvl-example-single-loop-circuit" style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">KVL Example: Single Loop Circuit</h3>
+<div style="background: #FFF7DD; border: 2px solid #F0D87A; border-radius: 10px; padding: 24px; margin: 1.5rem 0;">
+<p style="color: #B8860B; font-weight: 700; font-size: 1.08rem; margin-top: 0; margin-bottom: 14px;">Example — KVL in a Series Resistor Circuit</p>
+<p style="color: #555; line-height: 1.75;">
+Consider a circuit with a 12V battery and three series resistors: <span class="arithmatex">\(R_1 = 2\Omega\)</span>, <span class="arithmatex">\(R_2 = 3\Omega\)</span>, <span class="arithmatex">\(R_3 = 1\Omega\)</span>.
+</p>
+<p style="color: #555; line-height: 1.75;">
+First, determine the current using Ohm's Law:
+</p>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 10px 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<div class="arithmatex">\[I = \frac{V_{source}}{R_{total}} = \frac{12\text{V}}{2+3+1\;\Omega} = \frac{12\text{V}}{6\;\Omega} = 2\text{A}\]</div>
+</div>
+<p style="color: #555; line-height: 1.75;">
+Apply KVL starting at the battery's negative terminal, going clockwise:
+</p>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 10px 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<div class="arithmatex">\[+12\text{V} - (2\text{A})(2\;\Omega) - (2\text{A})(3\;\Omega) - (2\text{A})(1\;\Omega) = 0\]</div>
+<div class="arithmatex">\[+12\text{V} - 4\text{V} - 6\text{V} - 2\text{V} = 0 \quad \checkmark\]</div>
+</div>
+<p style="color: #555; line-height: 1.75; margin-bottom: 0;">
+The 12V supplied by the battery is entirely dissipated across the three resistors, confirming conservation of energy.
+</p>
+</div>
+<hr />
+<h2 id="33-circuit-topology" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">3.3 Circuit Topology</h2>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
+<strong style="color: #333;">Circuit topology</strong> is the study of how components are interconnected, independent of component type or value. Topological analysis determines the number of independent equations required to fully solve a circuit.
+</p>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 24px 28px; margin: 1.5rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Definition</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Node</strong></td>
+<td>A point where two or more components connect</td>
+</tr>
+<tr>
+<td><strong>Branch</strong></td>
+<td>A path containing a single component between two nodes</td>
+</tr>
+<tr>
+<td><strong>Loop</strong></td>
+<td>Any closed path through a circuit</td>
+</tr>
+<tr>
+<td><strong>Mesh</strong></td>
+<td>A loop that contains no other loops within it (a minimal loop)</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="the-topology-formula" style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">The Topology Formula</h3>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1rem;">
+The relationship between branches, nodes, and independent meshes is given by:
+</p>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<div class="arithmatex">\[b = n - 1 + m\]</div>
+</div>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
+where <span class="arithmatex">\(b\)</span> is the number of branches, <span class="arithmatex">\(n\)</span> is the number of nodes, and <span class="arithmatex">\(m\)</span> is the number of independent meshes. KCL yields <span class="arithmatex">\(n-1\)</span> independent equations and KVL yields <span class="arithmatex">\(m\)</span> independent equations.
+</p>
+<h4 id="diagram-circuit-topology-explorer" style="color: #5A3EED; font-weight: 700; margin-top: 2rem; margin-bottom: 0.8rem;">Diagram: Circuit Topology Explorer</h4>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe height="550px" scrolling="no" src="../../sims/circuit-topology-explorer/main.html" style="border:none; border-radius:8px; overflow:hidden;" width="100%"></iframe>
+</div>
+<hr />
+<h2 id="34-node-voltage-method" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">3.4 The Node Voltage Method</h2>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
+The <strong style="color: #333;">node voltage method</strong> is a systematic procedure for circuit analysis that minimizes the number of unknowns by working with node voltages rather than individual branch currents. For a circuit with <span class="arithmatex">\(n\)</span> nodes, this method requires <span class="arithmatex">\(n-1\)</span> equations.
+</p>
+<ul style="list-style: none; padding-left: 0.8rem; margin: 0.8rem 0 1.2rem 0;">
+<li style="margin-bottom: 0.9rem; line-height: 1.75; color: #333;"><span style="color: #5A3EED; font-weight: 700; margin-right: 0.5rem;">&#9679;</span> <strong>Step 1:</strong> Select a <strong>reference node</strong> (ground) — typically the node with the most connections</li>
+<li style="margin-bottom: 0.9rem; line-height: 1.75; color: #333;"><span style="color: #5A3EED; font-weight: 700; margin-right: 0.5rem;">&#9679;</span> <strong>Step 2:</strong> Define voltages at all other nodes relative to the reference</li>
+<li style="margin-bottom: 0.9rem; line-height: 1.75; color: #333;"><span style="color: #5A3EED; font-weight: 700; margin-right: 0.5rem;">&#9679;</span> <strong>Step 3:</strong> Write KCL equations at each non-reference node</li>
+<li style="margin-bottom: 0.9rem; line-height: 1.75; color: #333;"><span style="color: #5A3EED; font-weight: 700; margin-right: 0.5rem;">&#9679;</span> <strong>Step 4:</strong> Solve the resulting system of equations</li>
+</ul>
+<h3 id="the-reference-node" style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">The Reference Node</h3>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
+The <strong style="color: #333;">reference node</strong> serves as the zero-potential point against which all other node voltages are measured. The assignment is arbitrary — it does not need to connect to physical earth ground.
+</p>
+<div style="background: #E7F7E7; border: 2px solid #81C784; border-radius: 12px; padding: 24px 28px; margin: 1.5rem 0; box-shadow: 0 2px 8px rgba(56,142,60,0.08);">
+<p style="color: #2E7D32; font-weight: 700; font-size: 1.08rem; margin-top: 0; margin-bottom: 10px;">Reference Node Selection Guidelines</p>
+<p style="color: #333; line-height: 1.75; margin-bottom: 0;">
+Choose the node with the greatest number of connections to minimize the number of required equations. If a ground symbol is present in the schematic, use that node. The negative terminal of a voltage source is often a convenient choice.
+</p>
+</div>
+<h3 id="node-voltage-example" style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Node Voltage Example</h3>
+<div style="background: #FFF7DD; border: 2px solid #F0D87A; border-radius: 10px; padding: 24px; margin: 1.5rem 0;">
+<p style="color: #B8860B; font-weight: 700; font-size: 1.08rem; margin-top: 0; margin-bottom: 14px;">Example — Two-Node Circuit</p>
+<p style="color: #555; line-height: 1.75;">
+Consider a circuit with a 10V source, three nodes (A, B, and reference ground), and resistors connecting them.
+</p>
+<p style="color: #555; line-height: 1.75;"><strong>Step 1:</strong> Label the reference node (ground = 0V)</p>
+<p style="color: #555; line-height: 1.75;"><strong>Step 2:</strong> Define node voltages <span class="arithmatex">\(V_A\)</span> and <span class="arithmatex">\(V_B\)</span></p>
+<p style="color: #555; line-height: 1.75;"><strong>Step 3:</strong> Write KCL at each non-reference node. At node A (assuming all currents leaving):</p>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 10px 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<div class="arithmatex">\[\frac{V_A - 10}{R_1} + \frac{V_A - V_B}{R_2} = 0\]</div>
+</div>
+<p style="color: #555; line-height: 1.75;">At node B:</p>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 10px 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<div class="arithmatex">\[\frac{V_B - V_A}{R_2} + \frac{V_B - 0}{R_3} = 0\]</div>
+</div>
+<p style="color: #555; line-height: 1.75; margin-bottom: 0;">
+<strong>Step 4:</strong> Solve the system for <span class="arithmatex">\(V_A\)</span> and <span class="arithmatex">\(V_B\)</span>, then derive all branch currents using Ohm's Law.
+</p>
+</div>
+<h3 id="the-supernode-technique" style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">The Supernode Technique</h3>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
+When a voltage source connects two non-reference nodes, the standard KCL equation cannot be written directly because the current through an ideal voltage source is unknown. The <strong style="color: #333;">supernode</strong> technique resolves this situation.
+</p>
+<ul style="list-style: none; padding-left: 0.8rem; margin: 0.8rem 0 1.2rem 0;">
+<li style="margin-bottom: 0.9rem; line-height: 1.75; color: #333;"><span style="color: #5A3EED; font-weight: 700; margin-right: 0.5rem;">&#9679;</span> Enclose the voltage source and its two connected nodes within a single boundary</li>
+<li style="margin-bottom: 0.9rem; line-height: 1.75; color: #333;"><span style="color: #5A3EED; font-weight: 700; margin-right: 0.5rem;">&#9679;</span> Write a KCL equation for the entire supernode (total current entering = total current leaving)</li>
+<li style="margin-bottom: 0.9rem; line-height: 1.75; color: #333;"><span style="color: #5A3EED; font-weight: 700; margin-right: 0.5rem;">&#9679;</span> Add a constraint equation relating the two node voltages through the voltage source value</li>
+</ul>
+<h4 id="diagram-supernode-analysis" style="color: #5A3EED; font-weight: 700; margin-top: 2rem; margin-bottom: 0.8rem;">Diagram: Supernode Analysis</h4>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe height="480px" scrolling="no" src="../../sims/supernode-analysis/main.html" style="border:none; border-radius:8px; overflow:hidden;" width="100%"></iframe>
+</div>
+<hr />
+<h2 id="35-mesh-current-method" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">3.5 The Mesh Current Method</h2>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
+The <strong style="color: #333;">mesh current method</strong> takes the complementary approach to node voltages. Instead of defining node voltages and deriving currents, this method assigns a circulating current to each mesh and writes KVL equations. For a circuit with <span class="arithmatex">\(m\)</span> meshes, exactly <span class="arithmatex">\(m\)</span> equations are required. This method is particularly efficient when the circuit has many nodes but few meshes.
+</p>
+<ul style="list-style: none; padding-left: 0.8rem; margin: 0.8rem 0 1.2rem 0;">
+<li style="margin-bottom: 0.9rem; line-height: 1.75; color: #333;"><span style="color: #5A3EED; font-weight: 700; margin-right: 0.5rem;">&#9679;</span> <strong>Step 1:</strong> Assign a <strong>mesh current</strong> to each mesh (conventionally all clockwise)</li>
+<li style="margin-bottom: 0.9rem; line-height: 1.75; color: #333;"><span style="color: #5A3EED; font-weight: 700; margin-right: 0.5rem;">&#9679;</span> <strong>Step 2:</strong> Write KVL equations around each mesh</li>
+<li style="margin-bottom: 0.9rem; line-height: 1.75; color: #333;"><span style="color: #5A3EED; font-weight: 700; margin-right: 0.5rem;">&#9679;</span> <strong>Step 3:</strong> Solve for the mesh currents</li>
+<li style="margin-bottom: 0.9rem; line-height: 1.75; color: #333;"><span style="color: #5A3EED; font-weight: 700; margin-right: 0.5rem;">&#9679;</span> <strong>Step 4:</strong> Derive branch currents and voltages as needed</li>
+</ul>
+<h3 id="mesh-current-sign-convention" style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Mesh Current Sign Convention</h3>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1rem;">
+When two meshes share a branch, the actual branch current is determined by the combination of both mesh currents:
+</p>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 24px 28px; margin: 1.5rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<table>
+<thead>
+<tr>
+<th>Situation</th>
+<th>Branch Current</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Only mesh 1 passes through branch</td>
+<td><span class="arithmatex">\(I_1\)</span></td>
+</tr>
+<tr>
+<td>Meshes 1 and 2 share branch, same direction</td>
+<td><span class="arithmatex">\(I_1 + I_2\)</span></td>
+</tr>
+<tr>
+<td>Meshes 1 and 2 share branch, opposite direction</td>
+<td><span class="arithmatex">\(I_1 - I_2\)</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="mesh-analysis-example" style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Mesh Analysis Example</h3>
+<div style="background: #FFF7DD; border: 2px solid #F0D87A; border-radius: 10px; padding: 24px; margin: 1.5rem 0;">
+<p style="color: #B8860B; font-weight: 700; font-size: 1.08rem; margin-top: 0; margin-bottom: 14px;">Example — Two-Mesh Circuit</p>
+<p style="color: #555; line-height: 1.75;">
+Define mesh currents <span class="arithmatex">\(I_1\)</span> (left mesh, clockwise) and <span class="arithmatex">\(I_2\)</span> (right mesh, clockwise).
+</p>
+<p style="color: #555; line-height: 1.75;"><strong>Mesh 1 (left):</strong></p>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 10px 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<div class="arithmatex">\[V_s - I_1 R_1 - (I_1 - I_2)R_2 = 0\]</div>
+</div>
+<p style="color: #555; line-height: 1.75;"><strong>Mesh 2 (right):</strong></p>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 10px 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<div class="arithmatex">\[-(I_2 - I_1)R_2 - I_2 R_3 = 0\]</div>
+</div>
+<p style="color: #555; line-height: 1.75;">
+Rearranging into matrix form:
+</p>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 10px 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<div class="arithmatex">\[\begin{bmatrix} R_1 + R_2 &amp; -R_2 \\ -R_2 &amp; R_2 + R_3 \end{bmatrix} \begin{bmatrix} I_1 \\ I_2 \end{bmatrix} = \begin{bmatrix} V_s \\ 0 \end{bmatrix}\]</div>
+</div>
+<p style="color: #555; line-height: 1.75; margin-bottom: 0;">
+The resistance matrix is symmetric: the main diagonal contains the sum of resistances in each mesh, and the off-diagonal entries contain the negative of shared resistances.
+</p>
+</div>
+<h3 id="the-supermesh-technique" style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">The Supermesh Technique</h3>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
+When a current source is shared between two meshes, a standard KVL equation cannot be written for the branch containing the current source because the voltage across an ideal current source is unknown. The <strong style="color: #333;">supermesh</strong> technique resolves this by:
+</p>
+<ul style="list-style: none; padding-left: 0.8rem; margin: 0.8rem 0 1.2rem 0;">
+<li style="margin-bottom: 0.9rem; line-height: 1.75; color: #333;"><span style="color: #5A3EED; font-weight: 700; margin-right: 0.5rem;">&#9679;</span> Combining the two meshes that share the current source into a single outer loop</li>
+<li style="margin-bottom: 0.9rem; line-height: 1.75; color: #333;"><span style="color: #5A3EED; font-weight: 700; margin-right: 0.5rem;">&#9679;</span> Writing KVL around the supermesh (excluding the current source branch)</li>
+<li style="margin-bottom: 0.9rem; line-height: 1.75; color: #333;"><span style="color: #5A3EED; font-weight: 700; margin-right: 0.5rem;">&#9679;</span> Adding a constraint equation relating the two mesh currents through the current source value</li>
+</ul>
+<h4 id="diagram-mesh-vs-supermesh-comparison" style="color: #5A3EED; font-weight: 700; margin-top: 2rem; margin-bottom: 0.8rem;">Diagram: Mesh vs. Supermesh Comparison</h4>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe height="520px" scrolling="no" src="../../sims/mesh-supermesh-compare/main.html" style="border:none; border-radius:8px; overflow:hidden;" width="100%"></iframe>
+</div>
+<hr />
+<h2 id="36-superposition-principle" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">3.6 The Superposition Principle</h2>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
+The <strong style="color: #333;">superposition principle</strong> provides a divide-and-conquer approach for circuits with multiple independent sources. In a linear circuit, the response at any point equals the algebraic sum of the responses caused by each source acting alone, with all other independent sources deactivated.
+</p>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1rem;">
+Deactivating sources means:
+</p>
+<ul style="list-style: none; padding-left: 0.8rem; margin: 0.8rem 0 1.2rem 0;">
+<li style="margin-bottom: 0.9rem; line-height: 1.75; color: #333;"><span style="color: #5A3EED; font-weight: 700; margin-right: 0.5rem;">&#9679;</span> <strong>Voltage sources</strong> → Replace with a short circuit (0V, wire)</li>
+<li style="margin-bottom: 0.9rem; line-height: 1.75; color: #333;"><span style="color: #5A3EED; font-weight: 700; margin-right: 0.5rem;">&#9679;</span> <strong>Current sources</strong> → Replace with an open circuit (0A, break)</li>
+</ul>
+<div style="background: #FFF8E1; border-left: 4px solid #F0D87A; border-radius: 8px; padding: 16px 20px; margin: 1rem 0;">
+<strong style="color: #B8860B;">Key Insight — Linearity Requirement:</strong> Superposition is valid because Ohm's Law is linear — voltage and current are proportional, and responses from multiple sources combine additively. This principle does not apply to circuits containing nonlinear elements such as diodes.
+</div>
+<h4 id="diagram-superposition-principle-demonstrator" style="color: #5A3EED; font-weight: 700; margin-top: 2rem; margin-bottom: 0.8rem;">Diagram: Superposition Principle Demonstrator</h4>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe height="550px" scrolling="no" src="../../sims/superposition-demo/main.html" style="border:none; border-radius:8px; overflow:hidden;" width="100%"></iframe>
+</div>
+<hr />
+<h2 id="37-load-and-equivalent-resistance" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">3.7 Load Resistance and Equivalent Resistance</h2>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
+<strong style="color: #333;">Load resistance</strong> (<span class="arithmatex">\(R_L\)</span>) is the resistance of the component or subsystem being powered by a circuit. <strong style="color: #333;">Equivalent resistance</strong> (<span class="arithmatex">\(R_{eq}\)</span>) reduces a complex resistor network to a single resistance value that draws the same current from the source as the original network.
+</p>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 24px 28px; margin: 1.5rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<table>
+<thead>
+<tr>
+<th>Configuration</th>
+<th>Formula</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Series</td>
+<td><span class="arithmatex">\(R_{eq} = R_1 + R_2 + \cdots + R_n\)</span></td>
+</tr>
+<tr>
+<td>Parallel</td>
+<td><span class="arithmatex">\(\frac{1}{R_{eq}} = \frac{1}{R_1} + \frac{1}{R_2} + \cdots + \frac{1}{R_n}\)</span></td>
+</tr>
+<tr>
+<td>Mixed</td>
+<td>Combine step by step using series and parallel rules</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.5rem;">
+Some resistor configurations — notably bridge circuits — cannot be reduced using series and parallel rules alone. These require the <strong style="color: #333;">delta-wye transformation</strong> described in the next section.
+</p>
+<hr />
+<h2 id="38-delta-and-wye-configurations" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">3.8 Delta and Wye Configurations</h2>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
+Two three-terminal resistor configurations frequently appear in circuit analysis:
+</p>
+<ul style="list-style: none; padding-left: 0.8rem; margin: 0.8rem 0 1.2rem 0;">
+<li style="margin-bottom: 0.9rem; line-height: 1.75; color: #333;"><span style="color: #5A3EED; font-weight: 700; margin-right: 0.5rem;">&#9679;</span> <strong>Delta configuration</strong> (Δ, also called pi π) — three resistors connected in a triangle, where each resistor directly connects two of the three terminals</li>
+<li style="margin-bottom: 0.9rem; line-height: 1.75; color: #333;"><span style="color: #5A3EED; font-weight: 700; margin-right: 0.5rem;">&#9679;</span> <strong>Wye configuration</strong> (Y, also called T) — three resistors that share a common central node, with each resistor extending to one of the three terminals</li>
+</ul>
+<h3 id="delta-to-wye-transformation" style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Delta-to-Wye Transformation</h3>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1rem;">
+Each wye resistor equals the product of the two adjacent delta resistors divided by the sum of all three delta resistors:
+</p>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<div class="arithmatex">\[R_1 = \frac{R_a R_b}{R_a + R_b + R_c} \qquad R_2 = \frac{R_b R_c}{R_a + R_b + R_c} \qquad R_3 = \frac{R_a R_c}{R_a + R_b + R_c}\]</div>
+</div>
+<h3 id="wye-to-delta-transformation" style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Wye-to-Delta Transformation</h3>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1rem;">
+Each delta resistor equals the sum of all pairwise products of wye resistors divided by the opposite wye resistor:
+</p>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<div class="arithmatex">\[R_a = \frac{R_1 R_2 + R_2 R_3 + R_1 R_3}{R_3} \qquad R_b = \frac{R_1 R_2 + R_2 R_3 + R_1 R_3}{R_1} \qquad R_c = \frac{R_1 R_2 + R_2 R_3 + R_1 R_3}{R_2}\]</div>
+</div>
+<h4 id="diagram-delta-wye-transformation-calculator" style="color: #5A3EED; font-weight: 700; margin-top: 2rem; margin-bottom: 0.8rem;">Diagram: Delta-Wye Transformation Calculator</h4>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe height="520px" scrolling="no" src="../../sims/delta-wye-transform/main.html" style="border:none; border-radius:8px; overflow:hidden;" width="100%"></iframe>
+</div>
+<hr />
+<h2 id="39-circuit-simplification" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">3.9 Circuit Simplification</h2>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
+<strong style="color: #333;">Circuit simplification</strong> reduces a complex circuit to its simplest equivalent form using a systematic strategy:
+</p>
+<ul style="list-style: none; padding-left: 0.8rem; margin: 0.8rem 0 1.2rem 0;">
+<li style="margin-bottom: 0.9rem; line-height: 1.75; color: #333;"><span style="color: #5A3EED; font-weight: 700; margin-right: 0.5rem;">&#9679;</span> <strong>Step 1:</strong> Identify series or parallel resistor groups</li>
+<li style="margin-bottom: 0.9rem; line-height: 1.75; color: #333;"><span style="color: #5A3EED; font-weight: 700; margin-right: 0.5rem;">&#9679;</span> <strong>Step 2:</strong> Combine them step by step using the appropriate formulas</li>
+<li style="margin-bottom: 0.9rem; line-height: 1.75; color: #333;"><span style="color: #5A3EED; font-weight: 700; margin-right: 0.5rem;">&#9679;</span> <strong>Step 3:</strong> Apply delta-wye transformation if no further series/parallel reductions are possible</li>
+<li style="margin-bottom: 0.9rem; line-height: 1.75; color: #333;"><span style="color: #5A3EED; font-weight: 700; margin-right: 0.5rem;">&#9679;</span> <strong>Step 4:</strong> Repeat until a single equivalent resistance remains</li>
+</ul>
+<div style="background: #FFF8E1; border-left: 4px solid #F0D87A; border-radius: 8px; padding: 16px 20px; margin: 1rem 0;">
+<strong style="color: #B8860B;">Key Insight — Simplification Priority:</strong> Always attempt series and parallel reduction before resorting to delta-wye transformation. The simpler methods are less prone to computational error and should be exhausted first.
+</div>
+<h4 id="diagram-circuit-simplification-step-by-step" style="color: #5A3EED; font-weight: 700; margin-top: 2rem; margin-bottom: 0.8rem;">Diagram: Circuit Simplification Step-by-Step</h4>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe height="580px" scrolling="no" src="../../sims/circuit-simplification/main.html" style="border:none; border-radius:8px; overflow:hidden;" width="100%"></iframe>
+</div>
+<hr />
+<h2 id="310-choosing-an-analysis-method" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">3.10 Choosing an Analysis Method</h2>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
+With multiple analysis techniques available, the choice of method depends on the circuit characteristics:
+</p>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 24px 28px; margin: 1.5rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<table>
+<thead>
+<tr>
+<th>Circuit Characteristic</th>
+<th>Recommended Method</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Few nodes, many meshes</td>
+<td>Node Voltage Method</td>
+</tr>
+<tr>
+<td>Few meshes, many nodes</td>
+<td>Mesh Current Method</td>
+</tr>
+<tr>
+<td>Multiple independent sources</td>
+<td>Superposition (then either method)</td>
+</tr>
+<tr>
+<td>Need only one current or voltage</td>
+<td>Simplification + Ohm's Law</td>
+</tr>
+<tr>
+<td>Bridge or complex topology</td>
+<td>Delta-Wye transformation first</td>
+</tr>
+<tr>
+<td>Voltage source between non-reference nodes</td>
+<td>Supernode technique</td>
+</tr>
+<tr>
+<td>Current source shared between meshes</td>
+<td>Supermesh technique</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.5rem;">
+Both the node voltage method and the mesh current method can solve any planar circuit. Select the method that produces fewer simultaneous equations based on the circuit's node and mesh count.
+</p>
+<hr />
+<h2 id="311-matrix-approach" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">3.11 Systematic Analysis: The Matrix Approach</h2>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
+For larger circuits, organizing the system of equations into matrix form enables efficient computation. The two standard matrix formulations are:
+</p>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 0.8rem;">
+<strong style="color: #333;">Node voltage formulation</strong> with <span class="arithmatex">\(n-1\)</span> unknowns:
+</p>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<div class="arithmatex">\[\mathbf{G} \mathbf{V} = \mathbf{I}\]</div>
+</div>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 0.8rem;">
+<strong style="color: #333;">Mesh current formulation</strong> with <span class="arithmatex">\(m\)</span> unknowns:
+</p>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<div class="arithmatex">\[\mathbf{R} \mathbf{I} = \mathbf{V}\]</div>
+</div>
+<div style="background: #E7F7E7; border: 2px solid #81C784; border-radius: 12px; padding: 24px 28px; margin: 1.5rem 0; box-shadow: 0 2px 8px rgba(56,142,60,0.08);">
+<p style="color: #2E7D32; font-weight: 700; font-size: 1.08rem; margin-top: 0; margin-bottom: 10px;">Matrix Properties</p>
+<p style="color: #333; line-height: 1.75; margin-bottom: 0;">
+For circuits containing only passive elements and independent sources, both matrices are <strong>symmetric</strong>. Main diagonal entries are positive sums of connected conductances or resistances. Off-diagonal entries are the negatives of shared conductances or resistances.
+</p>
+</div>
+<h4 id="diagram-matrix-equation-builder" style="color: #5A3EED; font-weight: 700; margin-top: 2rem; margin-bottom: 0.8rem;">Diagram: Matrix Equation Builder</h4>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe height="550px" scrolling="no" src="../../sims/matrix-equation-builder/main.html" style="border:none; border-radius:8px; overflow:hidden;" width="100%"></iframe>
+</div>
+<hr />
+<h2 id="chapter-summary" style="color: #5A3EED !important; border-bottom: 2px solid #5A3EED; padding-bottom: 0.3rem; font-weight: 700; margin-top: 2rem;">Chapter Summary</h2>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 20px 24px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<p style="color: #333; line-height: 1.85; font-size: 1.02rem; margin: 0;">
+This chapter covered the fundamental laws and systematic methods for analyzing any DC circuit. Kirchhoff's Current Law enforces conservation of charge at nodes, while Kirchhoff's Voltage Law enforces conservation of energy around loops. Circuit topology — nodes, branches, loops, and meshes — determines the structure of analysis equations. The node voltage method and mesh current method provide systematic procedures that work for any linear circuit, with supernodes and supermeshes handling special source configurations. The superposition principle decomposes multi-source circuits into single-source problems. Delta-wye transformations enable simplification of circuits that cannot be reduced by series and parallel rules alone.
+</p>
+</div>
+<h3 id="key-equations-reference" style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Key Equations Reference</h3>
+<div style="background: #F8F6FF; border: 2px solid #D4C8FF; border-radius: 12px; padding: 20px 24px; margin: 1rem 0;">
+<table>
+<thead>
+<tr>
+<th>Concept</th>
+<th>Equation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>KCL</td>
+<td><span class="arithmatex">\(\sum i_k = 0\)</span></td>
+</tr>
+<tr>
+<td>KVL</td>
+<td><span class="arithmatex">\(\sum v_k = 0\)</span></td>
+</tr>
+<tr>
+<td>Topology</td>
+<td><span class="arithmatex">\(b = n - 1 + m\)</span></td>
+</tr>
+<tr>
+<td>Delta→Wye</td>
+<td><span class="arithmatex">\(R_Y = \frac{R_{\Delta,adj1} \cdot R_{\Delta,adj2}}{\sum R_\Delta}\)</span></td>
+</tr>
+<tr>
+<td>Wye→Delta</td>
+<td><span class="arithmatex">\(R_\Delta = \frac{\sum (R_Y \text{ products})}{R_{Y,opposite}}\)</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="whats-next" style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">What's Next</h3>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.5rem;">
+Chapter 4 introduces additional analysis tools: Thévenin and Norton equivalent circuits, source transformations, and the maximum power transfer theorem. These techniques enable further circuit simplification and address practical questions about optimal power delivery to loads.
+</p>
+<hr />
+<details class="question">
+<summary>Chapter 3 Review: Test Your Understanding</summary>
+<ol>
+<li>At a node with four wires, if currents of 3A, −5A, and 4A flow through three of them (positive = into node), what current flows through the fourth wire?</li>
+<li>In a loop with a 9V battery and two resistors (3Ω and 6Ω), what is the current?</li>
+<li>When should you use a supernode?</li>
+<li>What is the difference between a loop and a mesh?</li>
+<li>If a circuit has 4 nodes and 6 branches, how many independent meshes does it have?</li>
+</ol>
+<p><strong>Answers:</strong></p>
+<ol>
+<li>By KCL: 3 + (−5) + 4 + I₄ = 0, so I₄ = −2A (flows out of node)</li>
+<li>I = V/(R₁+R₂) = 9V/9Ω = 1A</li>
+<li>When a voltage source connects two non-reference nodes</li>
+<li>A mesh is a loop that contains no other loops inside it (a minimal loop)</li>
+<li>Using b = n − 1 + m: 6 = 4 − 1 + m, so m = 3 meshes</li>
+</ol>
+</details>
+</div>
+
+
+
+
+
+
+
+  
+  
+
+
+
+  
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../" class="md-footer__link md-footer__link--prev" aria-label="Previous: Overview">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Overview
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../quiz/" class="md-footer__link md-footer__link--next" aria-label="Next: Quiz and Problems">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Quiz and Problems
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2024, 2025, 2026 Dan McCreary. Licensed under <a href="license/">CC BY-NC-SA 4.0</a> for non-commercial use.
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["content.code.copy", "navigation.expand", "navigation.path", "navigation.prune", "navigation.indexes", "toc.follow", "navigation.top", "navigation.footer", "content.action.edit"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../../js/extra.js"></script>
+      
+        <script src="../../../js/audio-reader.js"></script>
+      
+        <script src="../../../js/katex.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+      
+    
+  </body>
+</html>

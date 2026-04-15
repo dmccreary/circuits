@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapter 3 Concept Map</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', Roboto, sans-serif; background: transparent; position: relative; }
+  .wrap { position: relative; }
+  svg { display: block; width: 100%; }
+  .node { cursor: pointer; transition: opacity 0.3s; }
+  .node rect { transition: filter 0.3s, stroke-width 0.3s; }
+  .node:hover rect { filter: drop-shadow(0 0 8px rgba(90,62,237,0.4)); stroke-width: 3; }
+  .node.active rect { filter: drop-shadow(0 0 12px rgba(90,62,237,0.5)); stroke-width: 3.5; }
+  .edge { transition: opacity 0.3s; }
+  .faded { opacity: 0.15; }
+  .highlighted rect { filter: drop-shadow(0 0 10px rgba(90,62,237,0.35)); stroke-width: 3; }
+  .edge.highlighted { opacity: 1; }
+
+  /* Hover tooltip */
+  .tip {
+    position: fixed; background: #333; color: #fff; padding: 5px 10px;
+    border-radius: 6px; font-size: 11.5px; pointer-events: none;
+    opacity: 0; transition: opacity 0.2s; z-index: 200; white-space: nowrap;
+  }
+  .tip.show { opacity: 1; }
+
+  /* Click info panel */
+  .panel {
+    position: absolute; left: 50%; transform: translateX(-50%);
+    width: 92%; max-width: 460px;
+    background: #fff; border: 2px solid #A8C8FF; border-radius: 12px;
+    padding: 0; z-index: 300;
+    box-shadow: 0 8px 32px rgba(90,62,237,0.18);
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.25s, transform 0.25s;
+  }
+  .panel.open {
+    opacity: 1; pointer-events: auto;
+  }
+  .panel-header {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 14px 18px 10px;
+    border-bottom: 1px solid #E8EDF5;
+  }
+  .panel-header h3 {
+    font-size: 1rem; font-weight: 700; color: #5A3EED; margin: 0;
+  }
+  .panel-close {
+    background: none; border: none; font-size: 1.3rem; color: #999;
+    cursor: pointer; padding: 0 4px; line-height: 1;
+  }
+  .panel-close:hover { color: #333; }
+  .panel-body {
+    padding: 12px 18px 16px;
+  }
+  .panel-body p {
+    font-size: 0.9rem; line-height: 1.7; color: #444; margin: 0 0 12px;
+  }
+  .panel-body .key-eq {
+    background: #F8F6FF; border: 1px solid #D4C8FF; border-radius: 8px;
+    padding: 8px 14px; font-size: 0.88rem; color: #333;
+    text-align: center; margin-bottom: 12px; font-weight: 600;
+  }
+  .panel-actions {
+    display: flex; gap: 8px; flex-wrap: wrap;
+  }
+  .panel-actions a {
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 7px 16px; border-radius: 8px; font-size: 0.82rem;
+    font-weight: 600; text-decoration: none; transition: background 0.15s;
+  }
+  .btn-sim {
+    background: #5A3EED; color: #fff;
+  }
+  .btn-sim:hover { background: #4830c9; }
+  .btn-section {
+    background: #EEF4FF; color: #5A3EED; border: 1px solid #A8C8FF;
+  }
+  .btn-section:hover { background: #dde8ff; }
+
+  /* Overlay to catch outside clicks */
+  .overlay {
+    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    z-index: 250; display: none;
+  }
+  .overlay.active { display: block; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="tip" id="tip"></div>
+  <div class="overlay" id="overlay"></div>
+
+  <div class="panel" id="panel">
+    <div class="panel-header">
+      <h3 id="panelTitle">—</h3>
+      <button class="panel-close" id="panelClose">&times;</button>
+    </div>
+    <div class="panel-body">
+      <p id="panelDesc">—</p>
+      <div class="key-eq" id="panelEq" style="display:none;"></div>
+      <div class="panel-actions" id="panelActions"></div>
+    </div>
+  </div>
+
+  <svg viewBox="0 0 760 580" xmlns="http://www.w3.org/2000/svg" id="map" font-family="Segoe UI, Roboto, sans-serif">
+    <defs>
+      <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#5A3EED"/></marker>
+      <marker id="ag" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#B8860B"/></marker>
+    </defs>
+
+    <!-- EDGES -->
+    <line class="edge" data-from="ch1" data-to="ch2" x1="380" y1="52" x2="380" y2="72" stroke="#5A3EED" stroke-width="2" marker-end="url(#a)"/>
+    <line class="edge" data-from="ch2" data-to="topology" x1="380" y1="118" x2="360" y2="148" stroke="#5A3EED" stroke-width="2" marker-end="url(#a)"/>
+    <line class="edge" data-from="ch2" data-to="deltawye" x1="490" y1="118" x2="635" y2="148" stroke="#5A3EED" stroke-width="2" marker-end="url(#a)"/>
+    <line class="edge" data-from="topology" data-to="kcl" x1="300" y1="192" x2="170" y2="232" stroke="#5A3EED" stroke-width="2" marker-end="url(#a)"/>
+    <line class="edge" data-from="topology" data-to="loops" x1="360" y1="192" x2="380" y2="232" stroke="#5A3EED" stroke-width="2" marker-end="url(#a)"/>
+    <line class="edge" data-from="topology" data-to="kvl" x1="420" y1="192" x2="580" y2="232" stroke="#5A3EED" stroke-width="2" marker-end="url(#a)"/>
+    <line class="edge" data-from="kcl" data-to="nodevolt" x1="170" y1="278" x2="170" y2="320" stroke="#5A3EED" stroke-width="2" marker-end="url(#a)"/>
+    <line class="edge" data-from="kvl" data-to="meshcur" x1="600" y1="278" x2="600" y2="320" stroke="#5A3EED" stroke-width="2" marker-end="url(#a)"/>
+    <line class="edge" data-from="kcl" data-to="superpos" x1="260" y1="278" x2="370" y2="320" stroke="#5A3EED" stroke-width="1.5" stroke-dasharray="6,3" marker-end="url(#a)"/>
+    <line class="edge" data-from="kvl" data-to="superpos" x1="520" y1="278" x2="410" y2="320" stroke="#5A3EED" stroke-width="1.5" stroke-dasharray="6,3" marker-end="url(#a)"/>
+    <line class="edge" data-from="nodevolt" data-to="supernode" x1="115" y1="366" x2="115" y2="410" stroke="#5A3EED" stroke-width="2" marker-end="url(#a)"/>
+    <line class="edge" data-from="meshcur" data-to="supermesh" x1="655" y1="366" x2="655" y2="410" stroke="#5A3EED" stroke-width="2" marker-end="url(#a)"/>
+    <line class="edge" data-from="nodevolt" data-to="matrix" x1="230" y1="366" x2="330" y2="410" stroke="#5A3EED" stroke-width="1.5" stroke-dasharray="6,3" marker-end="url(#a)"/>
+    <line class="edge" data-from="meshcur" data-to="matrix" x1="540" y1="366" x2="440" y2="410" stroke="#5A3EED" stroke-width="1.5" stroke-dasharray="6,3" marker-end="url(#a)"/>
+    <line class="edge" data-from="matrix" data-to="simplify" x1="380" y1="454" x2="380" y2="498" stroke="#5A3EED" stroke-width="2" marker-end="url(#a)"/>
+    <line class="edge" data-from="superpos" data-to="simplify" x1="360" y1="366" x2="310" y2="498" stroke="#5A3EED" stroke-width="1.5" stroke-dasharray="6,3" marker-end="url(#a)"/>
+    <path class="edge" data-from="deltawye" data-to="simplify" d="M660 192 L660 484 Q660 494 650 498 L540 520" fill="none" stroke="#B8860B" stroke-width="2.5" marker-end="url(#ag)"/>
+
+    <!-- NODES -->
+    <g class="node" data-id="ch1"><rect x="240" y="8" width="280" height="44" rx="10" fill="#F8F6FF" stroke="#5A3EED" stroke-width="2"/><text x="380" y="35" text-anchor="middle" font-size="12.5" fill="#333"><tspan font-weight="700">Ch 1:</tspan> Charge, Voltage, Current, Resistance</text></g>
+    <g class="node" data-id="ch2"><rect x="240" y="76" width="280" height="42" rx="10" fill="#F8F6FF" stroke="#5A3EED" stroke-width="2"/><text x="380" y="102" text-anchor="middle" font-size="12.5" fill="#333"><tspan font-weight="700">Ch 2:</tspan> Ohm's Law, Series &amp; Parallel</text></g>
+    <g class="node" data-id="topology"><rect x="230" y="152" width="260" height="40" rx="10" fill="#EEF4FF" stroke="#A8C8FF" stroke-width="2"/><text x="360" y="177" text-anchor="middle" font-size="12.5" fill="#333"><tspan font-weight="700">Nodes &amp; Branches</tspan> — Topology</text></g>
+    <g class="node" data-id="deltawye"><rect x="560" y="152" width="190" height="40" rx="10" fill="#FFF7DD" stroke="#F0D87A" stroke-width="2"/><text x="655" y="177" text-anchor="middle" font-size="12.5" fill="#333"><tspan font-weight="700">Delta-Wye</tspan> Transform</text></g>
+    <g class="node" data-id="kcl"><rect x="40" y="236" width="260" height="42" rx="10" fill="#E7F7E7" stroke="#81C784" stroke-width="2"/><text x="170" y="262" text-anchor="middle" font-size="12.5" fill="#333"><tspan font-weight="700">KCL</tspan> — Conservation of Charge</text></g>
+    <g class="node" data-id="loops"><rect x="320" y="236" width="120" height="42" rx="10" fill="#EEF4FF" stroke="#A8C8FF" stroke-width="2"/><text x="380" y="256" text-anchor="middle" font-size="12.5" fill="#333"><tspan font-weight="700">Loops &amp;</tspan></text><text x="380" y="271" text-anchor="middle" font-size="10.5" fill="#555">Meshes</text></g>
+    <g class="node" data-id="kvl"><rect x="460" y="236" width="260" height="42" rx="10" fill="#E7F7E7" stroke="#81C784" stroke-width="2"/><text x="590" y="262" text-anchor="middle" font-size="12.5" fill="#333"><tspan font-weight="700">KVL</tspan> — Conservation of Energy</text></g>
+    <g class="node" data-id="nodevolt"><rect x="40" y="324" width="260" height="42" rx="10" fill="#FFF7DD" stroke="#F0D87A" stroke-width="2"/><text x="170" y="350" text-anchor="middle" font-size="12.5" fill="#333"><tspan font-weight="700">Node Voltage Method</tspan></text></g>
+    <g class="node" data-id="superpos"><rect x="320" y="324" width="120" height="42" rx="10" fill="#FFF7DD" stroke="#F0D87A" stroke-width="2"/><text x="380" y="344" text-anchor="middle" font-size="11.5" fill="#333"><tspan font-weight="700">Super-</tspan></text><text x="380" y="358" text-anchor="middle" font-size="11.5" fill="#333"><tspan font-weight="700">position</tspan></text></g>
+    <g class="node" data-id="meshcur"><rect x="460" y="324" width="260" height="42" rx="10" fill="#FFF7DD" stroke="#F0D87A" stroke-width="2"/><text x="590" y="350" text-anchor="middle" font-size="12.5" fill="#333"><tspan font-weight="700">Mesh Current Method</tspan></text></g>
+    <g class="node" data-id="supernode"><rect x="20" y="414" width="190" height="38" rx="10" fill="#FFF7DD" stroke="#F0D87A" stroke-width="2"/><text x="115" y="438" text-anchor="middle" font-size="12.5" fill="#333">Supernode</text></g>
+    <g class="node" data-id="matrix"><rect x="250" y="414" width="260" height="38" rx="10" fill="#EEF4FF" stroke="#A8C8FF" stroke-width="2"/><text x="380" y="432" text-anchor="middle" font-size="12" fill="#333"><tspan font-weight="700">Matrix Methods</tspan></text><text x="380" y="446" text-anchor="middle" font-size="9.5" fill="#777">(Systematic Circuit Solving)</text></g>
+    <g class="node" data-id="supermesh"><rect x="550" y="414" width="190" height="38" rx="10" fill="#FFF7DD" stroke="#F0D87A" stroke-width="2"/><text x="645" y="438" text-anchor="middle" font-size="12.5" fill="#333">Supermesh</text></g>
+    <g class="node" data-id="simplify"><rect x="230" y="500" width="300" height="46" rx="10" fill="#E7F7E7" stroke="#81C784" stroke-width="2.5"/><text x="380" y="528" text-anchor="middle" font-size="13.5" font-weight="700" fill="#333">Circuit Simplification</text></g>
+
+    <!-- Edge labels -->
+    <text x="135" y="305" text-anchor="end" font-size="9.5" fill="#999" font-style="italic">applies</text>
+    <text x="630" y="305" text-anchor="start" font-size="9.5" fill="#999" font-style="italic">applies</text>
+    <text x="380" y="312" text-anchor="middle" font-size="9.5" fill="#999" font-style="italic">linearity</text>
+    <text x="672" y="360" text-anchor="start" font-size="9.5" fill="#B8860B" font-style="italic" transform="rotate(90,672,360)">enables</text>
+  </svg>
+</div>
+
+<script>
+// ── Concept data ──
+const info = {
+  ch1: {
+    title: 'Chapter 1 — Fundamentals',
+    desc: 'Electric charge, voltage, current, power, and resistance — the building blocks of all circuit analysis.',
+    eq: 'V = IR, P = VI, Q = It',
+    section: '../01-electric-charge-basic-quantities/'
+  },
+  ch2: {
+    title: 'Chapter 2 — Ohm\'s Law & Configurations',
+    desc: 'Ohm\'s Law relates voltage, current, and resistance. Series and parallel circuits provide the basis for combining components.',
+    eq: 'R_series = R₁+R₂+…, 1/R_parallel = 1/R₁+1/R₂+…',
+    section: '../02-ohms-law-basic-configurations/'
+  },
+  topology: {
+    title: 'Nodes & Branches — Circuit Topology',
+    desc: 'Circuit topology describes the structure of connections. A node is where components meet; a branch is a path between two nodes containing one element.',
+    eq: 'b = n − 1 + m',
+    sim: '../../sims/circuit-topology-explorer/main.html',
+    section: '#33-topology'
+  },
+  deltawye: {
+    title: 'Delta-Wye (Δ-Y) Transformation',
+    desc: 'Converts between delta and wye resistor configurations. Essential for simplifying bridge circuits that cannot be reduced by series/parallel rules alone.',
+    eq: 'R_Y = (R_Δ₁ · R_Δ₂) / (R_Δ₁+R_Δ₂+R_Δ₃)',
+    sim: '../../sims/delta-wye-transform/main.html',
+    section: '#38-delta-wye'
+  },
+  kcl: {
+    title: 'KCL — Kirchhoff\'s Current Law',
+    desc: 'The algebraic sum of all currents at any node equals zero. This is conservation of charge: every coulomb entering a node must also leave.',
+    eq: 'ΣI = 0 at every node',
+    sim: '../../sims/kcl-node-viz/main.html',
+    section: '#31-kcl'
+  },
+  loops: {
+    title: 'Loops & Meshes',
+    desc: 'A loop is any closed path through a circuit. A mesh is a loop that contains no other loops inside it — the smallest possible loop in a planar circuit.',
+    eq: 'KCL: n−1 equations, KVL: m equations',
+    sim: '../../sims/circuit-topology-explorer/main.html',
+    section: '#33-topology'
+  },
+  kvl: {
+    title: 'KVL — Kirchhoff\'s Voltage Law',
+    desc: 'The algebraic sum of all voltages around any closed loop equals zero. This is conservation of energy: voltage rises equal voltage drops.',
+    eq: 'ΣV = 0 around every loop',
+    sim: '../../sims/kvl-loop-walkthrough/main.html',
+    section: '#32-kvl'
+  },
+  nodevolt: {
+    title: 'Node Voltage Method',
+    desc: 'A systematic technique that uses KCL to write equations in terms of node voltages. Requires n−1 equations for n nodes. Best when the circuit has few nodes.',
+    eq: 'G·V = I (conductance matrix form)',
+    sim: '../../sims/supernode-analysis/main.html',
+    section: '#34-node-voltage'
+  },
+  superpos: {
+    title: 'Superposition Principle',
+    desc: 'In a linear circuit, the total response equals the sum of individual responses from each independent source acting alone. Deactivate voltage sources (short) and current sources (open).',
+    eq: 'I_total = I′ (from V₁) + I″ (from I₁)',
+    sim: '../../sims/superposition-demo/main.html',
+    section: '#36-superposition'
+  },
+  meshcur: {
+    title: 'Mesh Current Method',
+    desc: 'A systematic technique that uses KVL to write equations in terms of mesh currents. Requires m equations for m meshes. Best when the circuit has few meshes.',
+    eq: 'R·I = V (resistance matrix form)',
+    sim: '../../sims/mesh-supermesh-compare/main.html',
+    section: '#35-mesh-current'
+  },
+  supernode: {
+    title: 'Supernode',
+    desc: 'When a voltage source connects two non-reference nodes, enclose both nodes as a supernode. Write KCL for the boundary and add V_a − V_b = V_s as a constraint.',
+    section: '#34-node-voltage'
+  },
+  matrix: {
+    title: 'Matrix Methods',
+    desc: 'For larger circuits, organize node voltage or mesh current equations into matrix form (GV=I or RI=V) for systematic solving. Both matrices are symmetric for passive circuits.',
+    eq: 'GV = I or RI = V',
+    section: '#311-matrix'
+  },
+  supermesh: {
+    title: 'Supermesh',
+    desc: 'When a current source is shared between two meshes, combine them into a supermesh. Write KVL around the outer loop and add I₂ − I₁ = I_s as a constraint.',
+    section: '#35-mesh-current'
+  },
+  simplify: {
+    title: 'Circuit Simplification',
+    desc: 'Reduce complex circuits to simpler equivalents using series/parallel combination, delta-wye transformation, superposition, and matrix methods.',
+    eq: 'Series: R₁+R₂, Parallel: R₁R₂/(R₁+R₂)',
+    sim: '../../sims/circuit-simplification/main.html',
+    section: '#39-simplification'
+  }
+};
+
+// ── Elements ──
+const allNodes = document.querySelectorAll('.node');
+const allEdges = document.querySelectorAll('.edge');
+const tip = document.getElementById('tip');
+const panel = document.getElementById('panel');
+const overlay = document.getElementById('overlay');
+let panelOpen = false;
+
+// Build adjacency
+const adj = {};
+allEdges.forEach(e => {
+  const f = e.dataset.from, t = e.dataset.to;
+  if (!adj[f]) adj[f] = new Set();
+  if (!adj[t]) adj[t] = new Set();
+  adj[f].add(t); adj[t].add(f);
+});
+
+// ── Hover ──
+allNodes.forEach(node => {
+  const id = node.dataset.id;
+
+  node.addEventListener('mouseenter', () => {
+    if (panelOpen) return;
+    const nb = adj[id] || new Set();
+    allNodes.forEach(n => {
+      if (n.dataset.id !== id && !nb.has(n.dataset.id)) n.classList.add('faded');
+      else n.classList.add('highlighted');
+    });
+    allEdges.forEach(e => {
+      if (e.dataset.from === id || e.dataset.to === id) e.classList.add('highlighted');
+      else e.classList.add('faded');
+    });
+    node.classList.remove('faded');
+    node.classList.add('active');
+    tip.textContent = info[id] ? info[id].title : id;
+    tip.classList.add('show');
+  });
+
+  node.addEventListener('mousemove', (e) => {
+    tip.style.left = (e.clientX + 14) + 'px';
+    tip.style.top = (e.clientY - 32) + 'px';
+  });
+
+  node.addEventListener('mouseleave', () => {
+    if (panelOpen) return;
+    clearHighlights();
+    tip.classList.remove('show');
+  });
+
+  // ── Click → info panel ──
+  node.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const d = info[id];
+    if (!d) return;
+
+    // Position panel near the clicked node
+    const rect = node.getBoundingClientRect();
+    const wrapRect = document.querySelector('.wrap').getBoundingClientRect();
+    let top = rect.bottom - wrapRect.top + 8;
+    if (top + 200 > wrapRect.height) top = rect.top - wrapRect.top - 180;
+    if (top < 0) top = 8;
+    panel.style.top = top + 'px';
+
+    document.getElementById('panelTitle').textContent = d.title;
+    document.getElementById('panelDesc').textContent = d.desc;
+
+    const eqEl = document.getElementById('panelEq');
+    if (d.eq) { eqEl.textContent = d.eq; eqEl.style.display = ''; }
+    else { eqEl.style.display = 'none'; }
+
+    const actEl = document.getElementById('panelActions');
+    actEl.innerHTML = '';
+    if (d.sim) {
+      const a = document.createElement('a');
+      a.className = 'btn-sim';
+      a.href = d.sim;
+      a.target = '_blank';
+      a.innerHTML = '&#9654; Open MicroSim';
+      actEl.appendChild(a);
+    }
+    if (d.section) {
+      const a = document.createElement('a');
+      a.className = 'btn-section';
+      a.href = d.section;
+      a.target = d.section.startsWith('#') ? '_parent' : '_blank';
+      a.innerHTML = '&#128196; Go to Section';
+      actEl.appendChild(a);
+    }
+
+    panel.classList.add('open');
+    overlay.classList.add('active');
+    panelOpen = true;
+  });
+});
+
+function clearHighlights() {
+  allNodes.forEach(n => n.classList.remove('faded', 'highlighted', 'active'));
+  allEdges.forEach(e => e.classList.remove('faded', 'highlighted'));
+}
+
+function closePanel() {
+  panel.classList.remove('open');
+  overlay.classList.remove('active');
+  panelOpen = false;
+  clearHighlights();
+  tip.classList.remove('show');
+}
+
+document.getElementById('panelClose').addEventListener('click', closePanel);
+overlay.addEventListener('click', closePanel);
+</script>
+</body>
+</html>

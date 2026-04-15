@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+  <title>I-V Characteristics: Resistor vs Diode</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #f0f4f8;
+      font-family: Arial, sans-serif;
+      width: 620px;
+    }
+    #chart-container {
+      position: relative;
+      height: 390px;
+      background: #fff;
+      padding: 6px 8px 4px 8px;
+      border-bottom: 2px solid #ccd3dc;
+    }
+    #controls {
+      background: #e4e9f0;
+      padding: 10px 18px 8px 18px;
+    }
+    .ctrl-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 9px;
+    }
+    .ctrl-label {
+      font-size: 12px;
+      color: #333;
+      min-width: 170px;
+      text-align: right;
+    }
+    input[type=range] {
+      flex: 1;
+      accent-color: #0064b4;
+    }
+    .ctrl-val {
+      font-size: 12px;
+      font-weight: bold;
+      color: #0064b4;
+      min-width: 58px;
+    }
+    .btn-row {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+    button {
+      padding: 5px 14px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 11px;
+      font-weight: bold;
+      color: #fff;
+    }
+    #btnDiode  { background: #c06000; }
+    #btnDiode.off  { background: #999; }
+    #btnKnee   { background: #555; }
+    #btnKnee.off   { background: #aaa; }
+    #btnResistor { background: #0064b4; }
+    #btnResistor.off { background: #999; }
+    .note {
+      font-size: 10px;
+      color: #666;
+      margin-left: 6px;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+
+<div id="chart-container">
+  <canvas id="ivChart"></canvas>
+</div>
+
+<div id="controls">
+  <div class="ctrl-row">
+    <span class="ctrl-label">Resistor R =</span>
+    <input type="range" id="rSlider" min="50" max="500" value="100" step="10">
+    <span class="ctrl-val" id="rVal">100 Ω</span>
+    <span class="note">slope = 1/R</span>
+  </div>
+  <div class="ctrl-row">
+    <span class="ctrl-label" style="min-width:auto;font-size:12px;color:#555;">Show / Hide:</span>
+    <div class="btn-row">
+      <button id="btnResistor">Hide Resistor</button>
+      <button id="btnDiode">Hide Diode</button>
+      <button id="btnKnee">Hide Knee</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── Physical constants ────────────────────────────────────────────────────
+const IS = 1e-12;          // diode saturation current (A)
+const VT = 0.02585;        // thermal voltage at 25°C (V)
+const V_STEP = 0.02;       // voltage resolution (V)
+const V_MIN = -2.0;
+const V_MAX =  2.0;
+const I_MAX_MA = 20;       // display clamp (mA)
+
+// ── State ─────────────────────────────────────────────────────────────────
+let showResistor = true;
+let showDiode    = true;
+let showKnee     = true;
+
+// ── Data generation ───────────────────────────────────────────────────────
+function buildVoltages() {
+  const vs = [];
+  for (let v = V_MIN; v <= V_MAX + 1e-9; v += V_STEP) {
+    vs.push(Math.round(v * 1000) / 1000);
+  }
+  return vs;
+}
+
+function resistorPoints(R, voltages) {
+  return voltages.map(v => ({
+    x: v,
+    y: Math.max(-I_MAX_MA, Math.min(I_MAX_MA, (v / R) * 1000))
+  }));
+}
+
+function diodePoints(voltages) {
+  return voltages.map(v => {
+    const iA = IS * (Math.exp(v / VT) - 1);
+    return { x: v, y: Math.max(-I_MAX_MA, Math.min(I_MAX_MA, iA * 1000)) };
+  });
+}
+
+const voltages = buildVoltages();
+let R = 100;
+
+// ── Annotation plugin ─────────────────────────────────────────────────────
+const annotationPlugin = {
+  id: 'ivAnnotations',
+  afterDraw(chart) {
+    const ctx  = chart.ctx;
+    const xSc  = chart.scales.x;
+    const ySc  = chart.scales.y;
+
+    const toX = v => xSc.getPixelForValue(v);
+    const toY = i => ySc.getPixelForValue(i);
+
+    // ── Knee vertical dashed line ────────────────────────────────────────
+    if (showKnee) {
+      const kx   = toX(0.6);
+      const topY = ySc.top;
+      const botY = ySc.bottom;
+
+      ctx.save();
+      ctx.setLineDash([5, 4]);
+      ctx.strokeStyle = '#d06000';
+      ctx.lineWidth   = 1.5;
+      ctx.beginPath();
+      ctx.moveTo(kx, topY);
+      ctx.lineTo(kx, botY);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      // Knee label
+      ctx.fillStyle = '#b05000';
+      ctx.font      = 'bold 10px Arial';
+      ctx.fillText('Knee ≈ 0.6V', kx + 4, topY + 14);
+      ctx.restore();
+    }
+
+    // ── Resistor label ───────────────────────────────────────────────────
+    if (showResistor) {
+      // Place label at V=1.3, just above the line
+      const labelV = 1.3;
+      const labelI = Math.min(I_MAX_MA - 1, (labelV / R) * 1000);
+      const lx = toX(labelV);
+      const ly = toY(labelI);
+
+      ctx.save();
+      ctx.fillStyle = '#0050a0';
+      ctx.font      = 'bold 11px Arial';
+      ctx.fillText('Linear: I = V/R', lx + 4, ly - 6);
+      ctx.restore();
+    }
+
+    // ── Diode label ───────────────────────────────────────────────────────
+    if (showDiode) {
+      // Place in upper-right area of diode curve
+      const dlx = toX(0.72);
+      const dly = toY(I_MAX_MA - 2);
+      ctx.save();
+      ctx.fillStyle = '#a04000';
+      ctx.font      = 'bold 11px Arial';
+      ctx.fillText('Nonlinear: exponential', dlx + 2, dly + 4);
+      ctx.restore();
+    }
+
+    // ── Origin crosshair ─────────────────────────────────────────────────
+    const ox = toX(0), oy = toY(0);
+    ctx.save();
+    ctx.strokeStyle = '#bbb';
+    ctx.lineWidth   = 1;
+    ctx.setLineDash([3, 3]);
+    ctx.beginPath(); ctx.moveTo(xSc.left, oy); ctx.lineTo(xSc.right, oy); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(ox, ySc.top);  ctx.lineTo(ox, ySc.bottom); ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.restore();
+  }
+};
+
+// ── Chart setup ───────────────────────────────────────────────────────────
+const ctx = document.getElementById('ivChart').getContext('2d');
+const chart = new Chart(ctx, {
+  type: 'scatter',
+  data: {
+    datasets: [
+      {
+        label: 'Resistor (R = 100Ω)',
+        data: resistorPoints(R, voltages),
+        borderColor: '#0064b4',
+        backgroundColor: 'transparent',
+        borderWidth: 2.5,
+        pointRadius: 0,
+        showLine: true,
+        tension: 0,
+        order: 2
+      },
+      {
+        label: 'Diode (exponential)',
+        data: diodePoints(voltages),
+        borderColor: '#d06000',
+        backgroundColor: 'transparent',
+        borderWidth: 2.5,
+        pointRadius: 0,
+        showLine: true,
+        tension: 0,
+        order: 1
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: true,
+    animation: false,
+    interaction: {
+      mode: 'nearest',
+      axis: 'x',
+      intersect: false
+    },
+    plugins: {
+      title: {
+        display: true,
+        text: 'I-V Characteristics: Resistor vs Diode',
+        font: { size: 14, weight: 'bold' },
+        color: '#222',
+        padding: { top: 4, bottom: 6 }
+      },
+      legend: {
+        position: 'top',
+        labels: {
+          font: { size: 11 },
+          usePointStyle: false,
+          padding: 14
+        }
+      },
+      tooltip: {
+        callbacks: {
+          title(items) {
+            return 'V = ' + items[0].parsed.x.toFixed(2) + ' V';
+          },
+          label(item) {
+            const ds = item.dataset.label.split('(')[0].trim();
+            return ds + ': I = ' + item.parsed.y.toFixed(2) + ' mA';
+          }
+        },
+        backgroundColor: 'rgba(20,30,50,0.85)',
+        titleFont: { size: 11 },
+        bodyFont: { size: 11 },
+        padding: 8
+      }
+    },
+    scales: {
+      x: {
+        type: 'linear',
+        min: V_MIN,
+        max: V_MAX,
+        title: {
+          display: true,
+          text: 'Voltage (V)',
+          font: { size: 12 },
+          color: '#333'
+        },
+        grid: { color: '#dde3ea' },
+        ticks: {
+          stepSize: 0.5,
+          font: { size: 11 },
+          callback: v => v.toFixed(1) + 'V'
+        }
+      },
+      y: {
+        type: 'linear',
+        min: -I_MAX_MA,
+        max:  I_MAX_MA,
+        title: {
+          display: true,
+          text: 'Current (mA)',
+          font: { size: 12 },
+          color: '#333'
+        },
+        grid: { color: '#dde3ea' },
+        ticks: {
+          stepSize: 5,
+          font: { size: 11 },
+          callback: v => v + ' mA'
+        }
+      }
+    }
+  },
+  plugins: [annotationPlugin]
+});
+
+// ── Resistor slider ────────────────────────────────────────────────────────
+const rSlider = document.getElementById('rSlider');
+const rValEl  = document.getElementById('rVal');
+
+rSlider.addEventListener('input', () => {
+  R = parseInt(rSlider.value);
+  rValEl.textContent = R + ' Ω';
+  chart.data.datasets[0].label = 'Resistor (R = ' + R + 'Ω)';
+  chart.data.datasets[0].data  = resistorPoints(R, voltages);
+  chart.update('none');
+});
+
+// ── Toggle buttons ─────────────────────────────────────────────────────────
+function toggleDataset(btn, dsIndex, flagName, offLabel, onLabel) {
+  const ds = chart.data.datasets[dsIndex];
+  if (flagName === 'showResistor') showResistor = !showResistor;
+  if (flagName === 'showDiode')    showDiode    = !showDiode;
+  if (flagName === 'showKnee')     showKnee     = !showKnee;
+
+  const visible = flagName === 'showResistor' ? showResistor
+                : flagName === 'showDiode'    ? showDiode
+                : showKnee;
+
+  if (dsIndex >= 0) {
+    chart.setDatasetVisibility(dsIndex, visible);
+  }
+  btn.textContent = visible ? offLabel : onLabel;
+  btn.classList.toggle('off', !visible);
+  chart.update('none');
+}
+
+document.getElementById('btnResistor').addEventListener('click', function() {
+  toggleDataset(this, 0, 'showResistor', 'Hide Resistor', 'Show Resistor');
+});
+document.getElementById('btnDiode').addEventListener('click', function() {
+  toggleDataset(this, 1, 'showDiode', 'Hide Diode', 'Show Diode');
+});
+document.getElementById('btnKnee').addEventListener('click', function() {
+  toggleDataset(this, -1, 'showKnee', 'Hide Knee', 'Show Knee');
+});
+</script>
+</body>
+</html>
