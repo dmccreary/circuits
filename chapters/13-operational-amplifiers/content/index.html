@@ -1,0 +1,4114 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Teaching content covering ideal op-amp model, negative feedback, golden rules, fundamental configurations, arithmetic circuits, integrators, differentiators, bandwidth, and practical limitations">
+      
+      
+        <meta name="author" content="Dan McCreary">
+      
+      
+        <link rel="canonical" href="https://dmccreary.github.io/circuits/chapters/13-operational-amplifiers/content/">
+      
+      
+        <link rel="prev" href="../">
+      
+      
+        <link rel="next" href="../quiz/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../img/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>Chapter 13 Content — Operational Amplifiers - Circuits 1</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../css/extra.css">
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+<script id="__analytics">function __md_analytics(){function e(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],e("js",new Date),e("config","G-9J4MVE6LWP"),document.addEventListener("DOMContentLoaded",(function(){document.forms.search&&document.forms.search.query.addEventListener("blur",(function(){this.value&&e("event","search",{search_term:this.value})}));document$.subscribe((function(){var t=document.forms.feedback;if(void 0!==t)for(var a of t.querySelectorAll("[type=submit]"))a.addEventListener("click",(function(a){a.preventDefault();var n=document.location.pathname,d=this.getAttribute("data-md-value");e("event","feedback",{page:n,data:d}),t.firstElementChild.disabled=!0;var r=t.querySelector(".md-feedback__note [data-md-value='"+d+"']");r&&(r.hidden=!1)})),t.hidden=!1})),location$.subscribe((function(t){e("config","G-9J4MVE6LWP",{page_path:t.pathname})}))}));var t=document.createElement("script");t.async=!0,t.src="https://www.googletagmanager.com/gtag/js?id=G-9J4MVE6LWP",document.getElementById("__analytics").insertAdjacentElement("afterEnd",t)}</script>
+  
+    <script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
+  
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="orange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#chapter-13-operational-amplifiers" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Circuits 1" class="md-header__button md-logo" aria-label="Circuits 1" data-md-component="logo">
+      
+  <img src="../../../img/course-logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Circuits 1
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Chapter 13 Content — Operational Amplifiers
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/dmccreary/circuits" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub Repo
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Circuits 1" class="md-nav__button md-logo" aria-label="Circuits 1" data-md-component="logo">
+      
+  <img src="../../../img/course-logo.png" alt="logo">
+
+    </a>
+    Circuits 1
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/dmccreary/circuits" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub Repo
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    About This Course
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../course-description/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Course Description
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapters
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Chapters
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../01-electric-charge-basic-quantities/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Electric Charge and Quantities
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../02-ohms-law-basic-configurations/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Ohm's Law and Configurations
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../03-kirchhoffs-laws-topology/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Kirchhoff's Laws and Topology
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../04-dc-circuit-analysis/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. DC Circuit Analysis
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../05-passive-components/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Passive Components
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../06-transient-analysis-rc-rl/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Transient Analysis RC/RL
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../07-second-order-rlc-circuits/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. Second-Order RLC Circuits
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../08-ac-signals-sinusoidal/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8. AC Signals and Sinusoids
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../09-phasors-complex-impedance/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9. Phasors and Impedance
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../10-ac-power-analysis/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10. AC Power Analysis
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../11-frequency-response-bode/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    11. Frequency Response and Bode
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../12-filters-resonance/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    12. Filters and Resonance
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_14" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    13. Operational Amplifiers
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_14" id="__nav_4_14_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_14_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4_14">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    13. Operational Amplifiers
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter Content
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter Content
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#131-introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.1 Introduction
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#132-ideal-op-amp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.2 The Ideal Op-Amp Model
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="13.2 The Ideal Op-Amp Model">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ideal-op-amp-characteristics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ideal Op-Amp Characteristics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-op-amp-symbol" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Op-Amp Symbol
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#133-open-closed-loop" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.3 Open-Loop vs. Closed-Loop Gain
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="13.3 Open-Loop vs. Closed-Loop Gain">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#open-loop-gain" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Open-Loop Gain
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#closed-loop-gain" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Closed-Loop Gain
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#134-negative-feedback" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.4 Negative Feedback
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="13.4 Negative Feedback">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#how-negative-feedback-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How Negative Feedback Works
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#positive-feedback" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Positive Feedback
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#135-golden-rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.5 The Golden Rules: Virtual Short and Virtual Ground
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="13.5 The Golden Rules: Virtual Short and Virtual Ground">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#golden-rule-1-virtual-short" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Golden Rule 1 — Virtual Short
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#golden-rule-2-no-input-current" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Golden Rule 2 — No Input Current
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#virtual-ground" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Virtual Ground
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#136-inverting-amplifier" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.6 Inverting Amplifier
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="13.6 Inverting Amplifier">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#voltage-gain" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Voltage Gain
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-by-step-analysis-using-the-golden-rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step-by-Step Analysis Using the Golden Rules
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#worked-design-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Worked Design Example
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#137-non-inverting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.7 Non-Inverting Amplifier
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="13.7 Non-Inverting Amplifier">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#voltage-gain_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Voltage Gain
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#analysis-using-the-golden-rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Analysis Using the Golden Rules
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#138-voltage-follower" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.8 Voltage Follower (Buffer Amplifier)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="13.8 Voltage Follower (Buffer Amplifier)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#configuration-comparison" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configuration Comparison
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#139-arithmetic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.9 Arithmetic Circuits
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="13.9 Arithmetic Circuits">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#summing-amplifier" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Summing Amplifier
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#difference-amplifier" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Difference Amplifier
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#instrumentation-amplifier" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Instrumentation Amplifier
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1310-integrator-differentiator" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.10 Integrator and Differentiator
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="13.10 Integrator and Differentiator">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#integrator-circuit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Integrator Circuit
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#differentiator-circuit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Differentiator Circuit
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1311-bandwidth-gbw" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.11 Bandwidth and Gain-Bandwidth Product
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="13.11 Bandwidth and Gain-Bandwidth Product">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#op-amp-bandwidth" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Op-Amp Bandwidth
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gain-bandwidth-product-gbw" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Gain-Bandwidth Product (GBW)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#slew-rate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Slew Rate
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1312-practical-limitations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.12 Practical Limitations
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="13.12 Practical Limitations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#input-offset-voltage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Input Offset Voltage
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#input-bias-current" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Input Bias Current
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#common-mode-rejection-ratio-cmrr" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common-Mode Rejection Ratio (CMRR)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#op-amp-saturation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Op-Amp Saturation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1313-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Chapter Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../quiz/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quiz and Problems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../14-signals-audio-lab/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    14. Signal Analysis and Fourier
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../15-audio-applications/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    15. Audio Applications
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../16-laboratory-techniques/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    16. Laboratory Techniques
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../sims/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MicroSims
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../circuits/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Circuits
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../old-sections/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Supplementary Sections
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../learning-graph/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Learning Graph
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../prompts/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sample Prompts
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../faq/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FAQ
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../how-we-built-this-site/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How We Built This Site
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../feature-checklist/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Feature Checklist
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../references/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    References
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../license/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    License
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../contact/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contact
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#131-introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.1 Introduction
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#132-ideal-op-amp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.2 The Ideal Op-Amp Model
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="13.2 The Ideal Op-Amp Model">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ideal-op-amp-characteristics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ideal Op-Amp Characteristics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-op-amp-symbol" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Op-Amp Symbol
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#133-open-closed-loop" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.3 Open-Loop vs. Closed-Loop Gain
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="13.3 Open-Loop vs. Closed-Loop Gain">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#open-loop-gain" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Open-Loop Gain
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#closed-loop-gain" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Closed-Loop Gain
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#134-negative-feedback" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.4 Negative Feedback
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="13.4 Negative Feedback">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#how-negative-feedback-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How Negative Feedback Works
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#positive-feedback" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Positive Feedback
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#135-golden-rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.5 The Golden Rules: Virtual Short and Virtual Ground
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="13.5 The Golden Rules: Virtual Short and Virtual Ground">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#golden-rule-1-virtual-short" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Golden Rule 1 — Virtual Short
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#golden-rule-2-no-input-current" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Golden Rule 2 — No Input Current
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#virtual-ground" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Virtual Ground
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#136-inverting-amplifier" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.6 Inverting Amplifier
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="13.6 Inverting Amplifier">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#voltage-gain" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Voltage Gain
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-by-step-analysis-using-the-golden-rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step-by-Step Analysis Using the Golden Rules
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#worked-design-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Worked Design Example
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#137-non-inverting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.7 Non-Inverting Amplifier
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="13.7 Non-Inverting Amplifier">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#voltage-gain_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Voltage Gain
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#analysis-using-the-golden-rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Analysis Using the Golden Rules
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#138-voltage-follower" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.8 Voltage Follower (Buffer Amplifier)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="13.8 Voltage Follower (Buffer Amplifier)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#configuration-comparison" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configuration Comparison
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#139-arithmetic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.9 Arithmetic Circuits
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="13.9 Arithmetic Circuits">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#summing-amplifier" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Summing Amplifier
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#difference-amplifier" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Difference Amplifier
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#instrumentation-amplifier" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Instrumentation Amplifier
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1310-integrator-differentiator" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.10 Integrator and Differentiator
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="13.10 Integrator and Differentiator">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#integrator-circuit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Integrator Circuit
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#differentiator-circuit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Differentiator Circuit
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1311-bandwidth-gbw" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.11 Bandwidth and Gain-Bandwidth Product
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="13.11 Bandwidth and Gain-Bandwidth Product">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#op-amp-bandwidth" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Op-Amp Bandwidth
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gain-bandwidth-product-gbw" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Gain-Bandwidth Product (GBW)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#slew-rate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Slew Rate
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1312-practical-limitations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.12 Practical Limitations
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="13.12 Practical Limitations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#input-offset-voltage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Input Offset Voltage
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#input-bias-current" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Input Bias Current
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#common-mode-rejection-ratio-cmrr" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common-Mode Rejection Ratio (CMRR)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#op-amp-saturation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Op-Amp Saturation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1313-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Chapter Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+                
+
+
+
+  
+
+
+  <nav class="md-path" aria-label="Navigation" >
+    <ol class="md-path__list">
+      
+        
+  
+  
+    <li class="md-path__item">
+      <a href="../../.." class="md-path__link">
+        
+  <span class="md-ellipsis">
+    Home
+  </span>
+
+      </a>
+    </li>
+  
+
+      
+      
+        
+  
+  
+    
+    
+      <li class="md-path__item">
+        <a href="../../" class="md-path__link">
+          
+  <span class="md-ellipsis">
+    Chapters
+  </span>
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+    
+    
+      <li class="md-path__item">
+        <a href="../" class="md-path__link">
+          
+  <span class="md-ellipsis">
+    13. Operational Amplifiers
+  </span>
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ol>
+  </nav>
+
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/dmccreary/circuits/blob/master/docs/chapters/13-operational-amplifiers/content.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+
+
+<div class="unit1-styled">
+<h1 id="chapter-13-operational-amplifiers">Chapter 13 — Operational Amplifiers</h1>
+<h2 id="131-introduction" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">13.1 Introduction</h2>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
+If passive components are the nouns of circuit language, <strong style="color: #333;">operational amplifiers</strong> are the verbs. They <em>do</em> things: amplify, buffer, sum, subtract, integrate, differentiate, compare, and oscillate. A single IC costing less than a dollar can perform tasks that would require dozens of discrete transistors and hours of careful matching and biasing.
+</p>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
+The operational amplifier earned its name from 1940s analog computers, where it performed mathematical <em>operations</em> — addition, integration, and differentiation — on continuously varying electrical signals. Today, op-amps appear in virtually every electronic system: microphone preamplifiers, audio equalizers, sensor interfaces, active filters, motor controllers, medical instruments, and countless industrial applications. The iconic 741 introduced in 1968 democratized analog design; its modern descendants offer dramatically improved performance at a fraction of the cost.
+</p>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.5rem;">
+The beauty of op-amp design lies in how <strong style="color: #333;">negative feedback</strong> tames enormous open-loop gain into precise, stable, predictable behavior. With just two rules — and a handful of resistors — you can design amplifiers with exactly the gain you need, every time, regardless of manufacturing variations between individual chips. This chapter teaches you those rules and applies them systematically to the complete family of fundamental op-amp configurations.
+</p>
+<h2 id="132-ideal-op-amp" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">13.2 The Ideal Op-Amp Model</h2>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
+The <strong style="color: #333;">ideal op-amp</strong> is a simplified model that makes circuit analysis straightforward. Real op-amps approach this ideal closely enough that the model yields accurate results for the vast majority of designs.
+</p>
+<h3 id="ideal-op-amp-characteristics" style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Ideal Op-Amp Characteristics</h3>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Ideal Value</th>
+<th>Practical Significance</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Open-loop gain <span class="arithmatex">\(A\)</span></td>
+<td><span class="arithmatex">\(\infty\)</span></td>
+<td>Any input difference drives output to a rail</td>
+</tr>
+<tr>
+<td>Input impedance <span class="arithmatex">\(Z_{in}\)</span></td>
+<td><span class="arithmatex">\(\infty\)</span></td>
+<td>No current flows into the input terminals</td>
+</tr>
+<tr>
+<td>Output impedance <span class="arithmatex">\(Z_{out}\)</span></td>
+<td>0</td>
+<td>Can drive any load without voltage drop</td>
+</tr>
+<tr>
+<td>Bandwidth</td>
+<td><span class="arithmatex">\(\infty\)</span></td>
+<td>Works equally at all frequencies</td>
+</tr>
+<tr>
+<td>CMRR</td>
+<td><span class="arithmatex">\(\infty\)</span></td>
+<td>Perfectly rejects common-mode signals</td>
+</tr>
+<tr>
+<td>Slew rate</td>
+<td><span class="arithmatex">\(\infty\)</span></td>
+<td>Output changes instantaneously</td>
+</tr>
+</tbody>
+</table>
+<h3 id="the-op-amp-symbol" style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">The Op-Amp Symbol</h3>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
+The standard <strong style="color: #333;">op-amp symbol</strong> is a triangle pointing right with five terminals:
+</p>
+<ul>
+<li><strong>Inverting input (−):</strong> The input at which a positive signal produces a negative output change</li>
+<li><strong>Non-inverting input (+):</strong> The input at which a positive signal produces a positive output change</li>
+<li><strong>Output:</strong> The amplified difference signal, at the apex of the triangle</li>
+<li><strong>Positive power supply (V+):</strong> Often labeled V_CC or V_DD, typically +5 V to +18 V</li>
+<li><strong>Negative power supply (V−):</strong> Often labeled V_EE or GND for single-supply, typically 0 V to −18 V</li>
+</ul>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 0.8rem;">
+The fundamental relationship is:
+</p>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 10px; padding: 16px 20px; margin: 1.2rem 0;">
+
+\[V_{out} = A(V_+ - V_-)\]
+
+</div>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
+where \(A\) is the open-loop gain (typically 100,000 to 1,000,000 for real op-amps). Power supply connections are almost always omitted from schematics, but they are always physically present — the output can only swing between the supply rails.
+</p>
+<div style="background: #FFF7DD; border: 2px solid #F0D87A; border-radius: 10px; padding: 16px 20px; margin: 1.2rem 0;">
+<p style="color: #B8860B; font-weight: 700; margin-top: 0; margin-bottom: 8px;">Ideal Op-Amp Summary</p>
+<p style="color: #555; line-height: 1.75; margin: 0;">
+
+\[A \to \infty, \quad Z_{in} \to \infty, \quad Z_{out} \to 0\]
+
+</p>
+</div>
+<h2 id="133-open-closed-loop" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">13.3 Open-Loop vs. Closed-Loop Gain</h2>
+<h3 id="open-loop-gain" style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Open-Loop Gain</h3>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
+<strong style="color: #333;">Open-loop gain</strong> (\(A_{OL}\)) is the op-amp's intrinsic voltage gain with no external feedback — typically 100,000 (100 dB) or more at DC. This enormous gain means that even a 1 µV input difference would ideally produce a 100 mV output change. In practice, any tiny offset drives the output all the way to one of the power supply rails.
+</p>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
+Open-loop operation is therefore useless for linear amplification but is the basis of <strong>comparator</strong> circuits, where we <em>want</em> the output to saturate at one rail or the other.
+</p>
+<h3 id="closed-loop-gain" style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Closed-Loop Gain</h3>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
+<strong style="color: #333;">Closed-loop gain</strong> (\(A_{CL}\)) is the overall gain when a feedback network is connected from the output back to one of the inputs. Let \(\beta\) be the fraction of the output fed back to the inverting input. Then:
+</p>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 10px; padding: 16px 20px; margin: 1.2rem 0;">
+
+\[A_{CL} = \frac{A_{OL}}{1 + A_{OL}\beta}\]
+
+</div>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
+When \(A_{OL}\beta \gg 1\) (which is almost always true in practical circuits):
+</p>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 10px; padding: 16px 20px; margin: 1.2rem 0;">
+
+\[A_{CL} \approx \frac{1}{\beta}\]
+
+</div>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
+The closed-loop gain depends <strong>only</strong> on the feedback network — not on the op-amp's open-loop gain. This is the central magic of negative feedback: resistors are far more stable and predictable than transistor gains, so the circuit's behavior is stable and repeatable.
+</p>
+<table>
+<thead>
+<tr>
+<th>Mode</th>
+<th>Gain</th>
+<th>Stability</th>
+<th>Use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Open-loop</td>
+<td><span class="arithmatex">\(A_{OL} \approx 10^5\)</span></td>
+<td>Saturates immediately</td>
+<td>Comparators</td>
+</tr>
+<tr>
+<td>Closed-loop</td>
+<td><span class="arithmatex">\(\approx 1/\beta\)</span></td>
+<td>Stable, predictable</td>
+<td>Amplifiers, filters</td>
+</tr>
+</tbody>
+</table>
+<h2 id="134-negative-feedback" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">13.4 Negative Feedback</h2>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
+<strong style="color: #333;">Negative feedback</strong> connects a portion of the output signal back to the <em>inverting</em> input. It is the cornerstone of stable, linear op-amp operation.
+</p>
+<h3 id="how-negative-feedback-works" style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">How Negative Feedback Works</h3>
+<ol>
+<li>The output increases slightly due to a change at the input</li>
+<li>A fraction of that output is fed back to the inverting (−) input</li>
+<li>The increased signal at (−) reduces the difference <span class="arithmatex">\(V_+ - V_-\)</span></li>
+<li>The reduced difference reduces the output</li>
+<li>The system reaches a stable equilibrium</li>
+</ol>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem; margin-top: 1rem;">
+The benefits of negative feedback go well beyond stability:
+</p>
+<ul>
+<li><strong>Reduced distortion</strong> — nonlinearities in the op-amp are suppressed by the loop gain</li>
+<li><strong>Increased bandwidth</strong> — the feedback extends usable frequency range</li>
+<li><strong>Reduced output impedance</strong> — the amplifier can drive heavier loads</li>
+<li><strong>Reduced sensitivity</strong> — gain varies only slightly with temperature or supply voltage</li>
+</ul>
+<h3 id="positive-feedback" style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Positive Feedback</h3>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
+<strong style="color: #333;">Positive feedback</strong> connects output back to the <em>non-inverting</em> (+) input. Instead of opposing changes, it reinforces them — the circuit is intentionally unstable. Positive feedback is the basis of oscillators and Schmitt triggers (comparators with hysteresis), but is never used for linear amplification.
+</p>
+<table>
+<thead>
+<tr>
+<th>Feedback Type</th>
+<th>Connected To</th>
+<th>Effect</th>
+<th>Applications</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Negative</td>
+<td>Inverting (−) input</td>
+<td>Stabilizing</td>
+<td>Amplifiers, filters, integrators</td>
+</tr>
+<tr>
+<td>Positive</td>
+<td>Non-inverting (+) input</td>
+<td>Destabilizing</td>
+<td>Oscillators, Schmitt triggers</td>
+</tr>
+</tbody>
+</table>
+<h2 id="135-golden-rules" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">13.5 The Golden Rules: Virtual Short and Virtual Ground</h2>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
+For an ideal op-amp operating with negative feedback, two simple rules solve almost every linear op-amp circuit. These are commonly called the <strong style="color: #333;">golden rules</strong>.
+</p>
+<h3 id="golden-rule-1-virtual-short" style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Golden Rule 1 — Virtual Short</h3>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 10px; padding: 16px 20px; margin: 1.2rem 0;">
+
+\[V_+ = V_-\]
+
+</div>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
+The voltage at the inverting input equals the voltage at the non-inverting input. This is not a physical short circuit — no wire connects them — but the feedback loop forces them to be equal. The reasoning: with infinite open-loop gain, even a microvolt difference would drive the output to a rail. Negative feedback continuously corrects any difference until it vanishes. The two inputs appear <em>virtually</em> shorted.
+</p>
+<h3 id="golden-rule-2-no-input-current" style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Golden Rule 2 — No Input Current</h3>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 10px; padding: 16px 20px; margin: 1.2rem 0;">
+
+\[I_+ = I_- = 0\]
+
+</div>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
+No current flows into either input terminal. This follows from the infinite input impedance of the ideal op-amp. Any current arriving at a node connected to an op-amp input must flow somewhere else — through the feedback resistor or the source, but never into the op-amp itself.
+</p>
+<h3 id="virtual-ground" style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Virtual Ground</h3>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
+<strong style="color: #333;">Virtual ground</strong> is the special — and extremely common — case of the virtual short when the non-inverting input is connected to actual ground:
+</p>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 10px; padding: 16px 20px; margin: 1.2rem 0;">
+
+\[V_+ = 0 \quad \Rightarrow \quad V_- = 0\]
+
+</div>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
+The inverting input node sits at exactly 0 V without being connected directly to ground. This virtual ground is maintained by the feedback loop, not by a wire. It is the key to analyzing inverting-configuration circuits: any current flowing toward the inverting input node through the input resistor must flow away through the feedback resistor, since the op-amp draws none of it.
+</p>
+<div style="background: #FFF7DD; border: 2px solid #F0D87A; border-radius: 10px; padding: 20px 24px; margin: 1.5rem 0;">
+<p style="color: #B8860B; font-weight: 700; font-size: 1.05rem; margin-top: 0; margin-bottom: 12px;">The Two Golden Rules (Summary)</p>
+<p><strong>Rule 1 — Virtual Short:</strong> <span class="arithmatex">\(V_+ = V_-\)</span> (inputs are at the same voltage when negative feedback is present)</p>
+<p><strong>Rule 2 — No Input Current:</strong> <span class="arithmatex">\(I_+ = I_- = 0\)</span> (no current flows into either input terminal)</p>
+<p><strong>Corollary — Virtual Ground:</strong> When <span class="arithmatex">\(V_+ = 0\)</span>, then <span class="arithmatex">\(V_- = 0\)</span> as well</p>
+</div>
+<h2 id="136-inverting-amplifier" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">13.6 Inverting Amplifier</h2>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
+The <strong style="color: #333;">inverting amplifier</strong> is the most widely used basic op-amp configuration. The input signal connects through an input resistor \(R_i\) to the inverting (−) input, and a feedback resistor \(R_f\) connects from the output back to the inverting input. The non-inverting (+) input is tied to ground.
+</p>
+<h3 id="voltage-gain" style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Voltage Gain</h3>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 10px; padding: 16px 20px; margin: 1.2rem 0;">
+
+\[A_V = -\frac{R_f}{R_i}, \qquad Z_{in} = R_i\]
+
+</div>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
+The negative sign indicates <strong>phase inversion</strong> — a positive input produces a negative output, and vice versa. The magnitude of gain is set entirely by the resistor ratio.
+</p>
+<h3 id="step-by-step-analysis-using-the-golden-rules" style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Step-by-Step Analysis Using the Golden Rules</h3>
+<div style="background: #FFF7DD; border: 2px solid #F0D87A; border-radius: 10px; padding: 20px 24px; margin: 1.5rem 0;">
+<p style="color: #B8860B; font-weight: 700; font-size: 1.05rem; margin-top: 0; margin-bottom: 12px;">Worked Analysis — Inverting Amplifier</p>
+<p><strong>Given:</strong> <span class="arithmatex">\(R_i\)</span>, <span class="arithmatex">\(R_f\)</span>, input voltage <span class="arithmatex">\(V_{in}\)</span>. Find <span class="arithmatex">\(V_{out}\)</span>.</p>
+<p><strong>Step 1 — Apply virtual short.</strong> Since <span class="arithmatex">\(V_+ = 0\)</span> (grounded) and <span class="arithmatex">\(V_+ = V_-\)</span>, we conclude <span class="arithmatex">\(V_- = 0\)</span>. The inverting input is a virtual ground.</p>
+<p><strong>Step 2 — Find current through <span class="arithmatex">\(R_i\)</span>.</strong> The voltage across <span class="arithmatex">\(R_i\)</span> is <span class="arithmatex">\(V_{in} - V_- = V_{in} - 0 = V_{in}\)</span>:</p>
+<div class="arithmatex">\[I_i = \frac{V_{in}}{R_i}\]</div>
+<p><strong>Step 3 — Apply no-input-current rule.</strong> Since <span class="arithmatex">\(I_- = 0\)</span>, all of <span class="arithmatex">\(I_i\)</span> must flow through <span class="arithmatex">\(R_f\)</span> (KCL at the virtual ground node):</p>
+<div class="arithmatex">\[I_f = I_i = \frac{V_{in}}{R_i}\]</div>
+<p><strong>Step 4 — Find <span class="arithmatex">\(V_{out}\)</span>.</strong> The current <span class="arithmatex">\(I_f\)</span> flows from the virtual ground node (0 V) through <span class="arithmatex">\(R_f\)</span> to the output. The output is at the other end of <span class="arithmatex">\(R_f\)</span>:</p>
+<div class="arithmatex">\[V_{out} = V_- - I_f R_f = 0 - \frac{V_{in}}{R_i} R_f = -\frac{R_f}{R_i} V_{in}\]</div>
+<p><strong>Result:</strong></p>
+<div class="arithmatex">\[A_V = \frac{V_{out}}{V_{in}} = -\frac{R_f}{R_i}\]</div>
+</div>
+<h3 id="worked-design-example" style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Worked Design Example</h3>
+<div style="background: #FFF7DD; border: 2px solid #F0D87A; border-radius: 10px; padding: 20px 24px; margin: 1.5rem 0;">
+<p style="color: #B8860B; font-weight: 700; font-size: 1.05rem; margin-top: 0; margin-bottom: 12px;">Design — Inverting Amplifier with Gain = −25</p>
+<p><strong>Specification:</strong> Design an inverting amplifier with <span class="arithmatex">\(A_V = -25\)</span>. Use standard 5% resistors.</p>
+<p><strong>Step 1 — Choose <span class="arithmatex">\(R_i\)</span>.</strong> A value of <span class="arithmatex">\(R_i = 10\ \text{k}\Omega\)</span> is a good starting point (low enough to source easily, high enough not to load most sources).</p>
+<p><strong>Step 2 — Calculate <span class="arithmatex">\(R_f\)</span>:</strong></p>
+<div class="arithmatex">\[|A_V| = \frac{R_f}{R_i} \quad \Rightarrow \quad R_f = 25 \times 10\ \text{k}\Omega = 250\ \text{k}\Omega\]</div>
+<p><strong>Step 3 — Select standard value.</strong> The nearest standard E24 value is 240 kΩ, giving actual gain:</p>
+<div class="arithmatex">\[A_V = -\frac{240\ \text{k}\Omega}{10\ \text{k}\Omega} = -24\]</div>
+<p>Or use 270 kΩ for <span class="arithmatex">\(A_V = -27\)</span>. If precise gain is required, use a trim pot in series with <span class="arithmatex">\(R_f\)</span>.</p>
+<p><strong>Step 4 — Add a bias-compensation resistor.</strong> Connect a resistor <span class="arithmatex">\(R_{bias} = R_i \| R_f\)</span> from the non-inverting input to ground to cancel errors from input bias current:</p>
+<div class="arithmatex">\[R_{bias} = \frac{R_i \cdot R_f}{R_i + R_f} = \frac{10\ \text{k} \times 240\ \text{k}}{250\ \text{k}} \approx 9.6\ \text{k}\Omega \approx 10\ \text{k}\Omega\]</div>
+<p><strong>Final design:</strong> <span class="arithmatex">\(R_i = 10\ \text{k}\Omega\)</span>, <span class="arithmatex">\(R_f = 240\ \text{k}\Omega\)</span>, <span class="arithmatex">\(R_{bias} = 10\ \text{k}\Omega\)</span></p>
+</div>
+<h2 id="137-non-inverting" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">13.7 Non-Inverting Amplifier</h2>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
+The <strong style="color: #333;">non-inverting amplifier</strong> connects the input signal to the non-inverting (+) input, with a resistor voltage divider providing feedback from the output to the inverting (−) input. The input and output are in phase.
+</p>
+<h3 id="voltage-gain_1" style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Voltage Gain</h3>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 10px; padding: 16px 20px; margin: 1.2rem 0;">
+
+\[A_V = 1 + \frac{R_f}{R_i}, \qquad Z_{in} \approx \infty\]
+
+</div>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
+The gain is always positive (no phase inversion) and always greater than or equal to 1. The input impedance is extremely high — essentially infinite for the ideal case — because the signal drives the non-inverting input directly.
+</p>
+<h3 id="analysis-using-the-golden-rules" style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Analysis Using the Golden Rules</h3>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
+By the virtual short: \(V_- = V_+ = V_{in}\). The inverting input voltage is set by the feedback voltage divider \(R_i\) and \(R_f\):
+</p>
+<div class="arithmatex">\[V_- = V_{out} \cdot \frac{R_i}{R_i + R_f}\]</div>
+<p>Setting <span class="arithmatex">\(V_- = V_{in}\)</span> and solving for <span class="arithmatex">\(V_{out}\)</span>:</p>
+<div class="arithmatex">\[V_{in} = V_{out} \cdot \frac{R_i}{R_i + R_f} \quad \Rightarrow \quad V_{out} = V_{in}\left(1 + \frac{R_f}{R_i}\right)\]</div>
+<h2 id="138-voltage-follower" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">13.8 Voltage Follower (Buffer Amplifier)</h2>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
+The <strong style="color: #333;">voltage follower</strong> (also called a <strong>unity-gain buffer</strong> or <strong>buffer amplifier</strong>) is the special case of the non-inverting amplifier where the output is connected directly to the inverting input (\(R_f = 0\), \(R_i = \infty\)).
+</p>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 10px; padding: 16px 20px; margin: 1.2rem 0;">
+
+\[A_V = 1, \qquad V_{out} = V_{in}\]
+
+</div>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
+The gain is exactly 1 — the output follows the input. But why use a circuit that provides no gain? The voltage follower provides <strong>impedance transformation</strong>: its input impedance is essentially infinite (does not load the source), and its output impedance is essentially zero (can drive heavy loads without voltage drop). It isolates one stage from the next.
+</p>
+<p><strong>Applications of the voltage follower:</strong>
+- Buffer between a high-impedance source (sensor, potentiometer) and a low-impedance load
+- Prevent a load from affecting the source voltage in precision measurement
+- Sample-and-hold circuits
+- Active oscilloscope probes</p>
+<h3 id="configuration-comparison" style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Configuration Comparison</h3>
+<table>
+<thead>
+<tr>
+<th>Configuration</th>
+<th>Gain Formula</th>
+<th>Gain Sign</th>
+<th><span class="arithmatex">\(Z_{in}\)</span></th>
+<th>Use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Inverting</td>
+<td><span class="arithmatex">\(-R_f/R_i\)</span></td>
+<td>Negative</td>
+<td><span class="arithmatex">\(R_i\)</span></td>
+<td>Precise inverting gain</td>
+</tr>
+<tr>
+<td>Non-inverting</td>
+<td><span class="arithmatex">\(1 + R_f/R_i\)</span></td>
+<td>Positive</td>
+<td><span class="arithmatex">\(\approx \infty\)</span></td>
+<td>Non-inverting gain</td>
+</tr>
+<tr>
+<td>Voltage follower</td>
+<td>1</td>
+<td>Positive</td>
+<td><span class="arithmatex">\(\approx \infty\)</span></td>
+<td>Impedance buffering</td>
+</tr>
+</tbody>
+</table>
+<h2 id="139-arithmetic" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">13.9 Arithmetic Circuits</h2>
+<h3 id="summing-amplifier" style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Summing Amplifier</h3>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
+The <strong style="color: #333;">summing amplifier</strong> extends the inverting configuration by adding multiple input resistors. Each input signal connects through its own resistor to the virtual ground node at V−. Because the virtual ground prevents any input from affecting the others (they are all driven into a 0 V node), the currents add independently.
+</p>
+<p><strong>For different input resistors:</strong></p>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 10px; padding: 16px 20px; margin: 1.2rem 0;">
+
+\[V_{out} = -R_f\left(\frac{V_1}{R_1} + \frac{V_2}{R_2} + \frac{V_3}{R_3}\right)\]
+
+</div>
+<p><strong>For equal input resistors <span class="arithmatex">\((R_1 = R_2 = R_3 = R)\)</span>:</strong></p>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 10px; padding: 16px 20px; margin: 1.2rem 0;">
+
+\[V_{out} = -\frac{R_f}{R}(V_1 + V_2 + V_3)\]
+
+</div>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
+Applications include audio mixing (combining microphone, instrument, and playback channels), digital-to-analog conversion (binary-weighted resistors), and weighted signal averaging.
+</p>
+<div style="background: #FFF7DD; border: 2px solid #F0D87A; border-radius: 10px; padding: 20px 24px; margin: 1.5rem 0;">
+<p style="color: #B8860B; font-weight: 700; font-size: 1.05rem; margin-top: 0; margin-bottom: 12px;">Worked Example — Summing Amplifier</p>
+<p><strong>Given:</strong> Three inputs — <span class="arithmatex">\(V_1 = 1\ \text{V}\)</span>, <span class="arithmatex">\(V_2 = 2\ \text{V}\)</span>, <span class="arithmatex">\(V_3 = -0.5\ \text{V}\)</span>. All input resistors <span class="arithmatex">\(R = 10\ \text{k}\Omega\)</span>, feedback <span class="arithmatex">\(R_f = 20\ \text{k}\Omega\)</span>.</p>
+<p><strong>Solution:</strong></p>
+<div class="arithmatex">\[V_{out} = -\frac{R_f}{R}(V_1 + V_2 + V_3) = -\frac{20}{10}(1 + 2 - 0.5) = -2 \times 2.5 = -5\ \text{V}\]</div>
+</div>
+<h3 id="difference-amplifier" style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Difference Amplifier</h3>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
+The <strong style="color: #333;">difference amplifier</strong> subtracts one signal from another. With four equal resistors (all equal to \(R\)) or with a standard resistor ratio \(R_f/R_i\):
+</p>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 10px; padding: 16px 20px; margin: 1.2rem 0;">
+
+\[V_{out} = \frac{R_f}{R_i}(V_2 - V_1)\]
+
+</div>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
+The output is proportional to the difference of the two inputs. Common-mode signals (equal voltages on both inputs) are rejected. One limitation: the input impedances seen by \(V_1\) and \(V_2\) are not equal, and both are relatively low (\(R_i\) and \(R_i + R_f\) respectively), which can load sensitive sources.
+</p>
+<h3 id="instrumentation-amplifier" style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Instrumentation Amplifier</h3>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
+The <strong style="color: #333;">instrumentation amplifier</strong> (INA) solves the input impedance problem of the basic difference amplifier. It consists of three op-amps: two input buffer stages (non-inverting) that provide very high input impedance, followed by a precision difference stage.
+</p>
+<p><strong>Key characteristics:</strong>
+- Very high input impedance on both differential inputs (essentially infinite)
+- Excellent CMRR (80–120 dB typical)
+- Gain set by a single external resistor <span class="arithmatex">\(R_G\)</span>:</p>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 10px; padding: 16px 20px; margin: 1.2rem 0;">
+
+\[A_V = 1 + \frac{2R}{R_G}\]
+
+</div>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
+Applications include bridge sensor amplifiers (strain gauges, load cells), medical biosignal amplifiers (ECG, EEG), and precision thermocouple interfaces.
+</p>
+<h2 id="1310-integrator-differentiator" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">13.10 Integrator and Differentiator</h2>
+<h3 id="integrator-circuit" style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Integrator Circuit</h3>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
+The <strong style="color: #333;">integrator</strong> replaces the feedback resistor \(R_f\) with a capacitor \(C\). The output is proportional to the time integral of the input:
+</p>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 10px; padding: 16px 20px; margin: 1.2rem 0;">
+
+\[V_{out}(t) = -\frac{1}{RC}\int_0^t V_{in}(\tau)\, d\tau + V_{out}(0)\]
+
+</div>
+<p><strong>In the frequency domain (s-domain transfer function):</strong></p>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 10px; padding: 16px 20px; margin: 1.2rem 0;">
+
+\[H(j\omega) = -\frac{1}{j\omega RC}\]
+
+</div>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
+The gain magnitude is \(|H| = 1/(\omega RC)\) — it increases without bound as frequency decreases. The integrator is a first-order low-pass filter with a −20 dB/decade slope, and its phase shift is a constant −90°.
+</p>
+<p><strong>Practical note:</strong> A pure integrator saturates due to DC offset and bias current accumulation. A large resistor in parallel with the capacitor (typically 10 × <span class="arithmatex">\(R\)</span>) creates a low-frequency pole that limits DC gain and stabilizes the circuit at the cost of integration accuracy at very low frequencies.</p>
+<div style="background: #FFF7DD; border: 2px solid #F0D87A; border-radius: 10px; padding: 20px 24px; margin: 1.5rem 0;">
+<p style="color: #B8860B; font-weight: 700; font-size: 1.05rem; margin-top: 0; margin-bottom: 12px;">Worked Example — Integrator with Step Input</p>
+<p><strong>Given:</strong> <span class="arithmatex">\(R = 10\ \text{k}\Omega\)</span>, <span class="arithmatex">\(C = 100\ \text{nF}\)</span>, step input <span class="arithmatex">\(V_{in} = +2\ \text{V}\)</span> applied at <span class="arithmatex">\(t = 0\)</span>, initial condition <span class="arithmatex">\(V_{out}(0) = 0\)</span>.</p>
+<p><strong>Calculate <span class="arithmatex">\(V_{out}\)</span> at <span class="arithmatex">\(t = 1\ \text{ms}\)</span>:</strong></p>
+<div class="arithmatex">\[RC = 10 \times 10^3 \times 100 \times 10^{-9} = 1\ \text{ms}\]</div>
+<p>For a constant input:</p>
+<div class="arithmatex">\[V_{out}(t) = -\frac{V_{in}}{RC} \cdot t = -\frac{2\ \text{V}}{1\ \text{ms}} \times 1\ \text{ms} = -2\ \text{V}\]</div>
+<p>The output ramps linearly from 0 V to −2 V in 1 ms. If the input remains constant, the output continues ramping until it saturates at the negative supply rail.</p>
+</div>
+<h3 id="differentiator-circuit" style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Differentiator Circuit</h3>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
+The <strong style="color: #333;">differentiator</strong> replaces the input resistor \(R_i\) with a capacitor \(C\). The output is proportional to the time derivative of the input:
+</p>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 10px; padding: 16px 20px; margin: 1.2rem 0;">
+
+\[V_{out}(t) = -RC\frac{dV_{in}}{dt}\]
+
+</div>
+<p><strong>In the frequency domain:</strong></p>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 10px; padding: 16px 20px; margin: 1.2rem 0;">
+
+\[H(j\omega) = -j\omega RC\]
+
+</div>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
+The gain increases linearly with frequency — the differentiator is a first-order high-pass filter with a +20 dB/decade slope. Unfortunately, this means it amplifies high-frequency noise, which in real circuits can make the output completely unusable. Adding a small series resistor \(R_s\) in series with the capacitor limits the gain at high frequencies and stabilizes the circuit.
+</p>
+<table>
+<thead>
+<tr>
+<th>Circuit</th>
+<th>Feedback Element</th>
+<th>Transfer Function</th>
+<th>Shape</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Inverting amplifier</td>
+<td>Resistor <span class="arithmatex">\(R_f\)</span></td>
+<td><span class="arithmatex">\(-R_f/R_i\)</span></td>
+<td>Flat</td>
+</tr>
+<tr>
+<td>Integrator</td>
+<td>Capacitor <span class="arithmatex">\(C\)</span></td>
+<td><span class="arithmatex">\(-1/(j\omega RC)\)</span></td>
+<td>−20 dB/decade</td>
+</tr>
+<tr>
+<td>Differentiator</td>
+<td>Capacitor <span class="arithmatex">\(C\)</span> at input</td>
+<td><span class="arithmatex">\(-j\omega RC\)</span></td>
+<td>+20 dB/decade</td>
+</tr>
+</tbody>
+</table>
+<h2 id="1311-bandwidth-gbw" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">13.11 Bandwidth and Gain-Bandwidth Product</h2>
+<h3 id="op-amp-bandwidth" style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Op-Amp Bandwidth</h3>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
+Real op-amps have finite <strong style="color: #333;">bandwidth</strong>. The open-loop gain \(A_{OL}\) is maximum at DC and rolls off at −20 dB/decade above a dominant pole frequency (often just a few hertz). By the time the gain falls to 1 (0 dB), we reach the <strong>unity-gain frequency</strong> \(f_T\), which is also called the <strong>gain-bandwidth product</strong> (GBW).
+</p>
+<h3 id="gain-bandwidth-product-gbw" style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Gain-Bandwidth Product (GBW)</h3>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
+For a single-pole op-amp, the product of closed-loop gain and bandwidth is constant:
+</p>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 10px; padding: 16px 20px; margin: 1.2rem 0;">
+
+\[\text{GBW} = A_{CL} \times BW = \text{constant}\]
+
+</div>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
+Higher gain means narrower bandwidth — they trade off against each other. The GBW is a fixed property of the op-amp, typically listed in the datasheet.
+</p>
+<div style="background: #FFF7DD; border: 2px solid #F0D87A; border-radius: 10px; padding: 20px 24px; margin: 1.5rem 0;">
+<p style="color: #B8860B; font-weight: 700; font-size: 1.05rem; margin-top: 0; margin-bottom: 12px;">Example — GBW Trade-off</p>
+<p>Op-amp with GBW = 10 MHz:</p>
+<table>
+<thead>
+<tr>
+<th>Closed-Loop Gain</th>
+<th>Available Bandwidth</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1 (voltage follower)</td>
+<td>10 MHz</td>
+</tr>
+<tr>
+<td>10</td>
+<td>1 MHz</td>
+</tr>
+<tr>
+<td>100</td>
+<td>100 kHz</td>
+</tr>
+<tr>
+<td>1000</td>
+<td>10 kHz</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Design rule:</strong> Always verify that <span class="arithmatex">\(A_{CL} \times f_{signal} &lt; \text{GBW}\)</span> before finalizing a design.</p>
+</div>
+<h3 id="slew-rate" style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Slew Rate</h3>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
+<strong style="color: #333;">Slew rate</strong> (SR) is the maximum rate at which the output voltage can change, regardless of the input. It arises from the finite current available to charge internal capacitances.
+</p>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 10px; padding: 16px 20px; margin: 1.2rem 0;">
+
+\[SR = \left|\frac{dV_{out}}{dt}\right|_{max} \quad \text{in V/μs}\]
+
+</div>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
+Slew rate limits performance on large-amplitude, high-frequency signals — even if the GBW is adequate for small signals. The maximum frequency at which a full output swing of peak value \(V_{peak}\) can be faithfully reproduced is:
+</p>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 10px; padding: 16px 20px; margin: 1.2rem 0;">
+
+\[f_{max} = \frac{SR}{2\pi V_{peak}}\]
+
+</div>
+<div style="background: #FFF7DD; border: 2px solid #F0D87A; border-radius: 10px; padding: 20px 24px; margin: 1.5rem 0;">
+<p style="color: #B8860B; font-weight: 700; font-size: 1.05rem; margin-top: 0; margin-bottom: 12px;">Example — Slew Rate Limitation</p>
+<p><strong>Given:</strong> LM741 op-amp with SR = 0.5 V/μs. Required: 10 V peak output.</p>
+<div class="arithmatex">\[f_{max} = \frac{SR}{2\pi V_{peak}} = \frac{0.5 \times 10^6\ \text{V/s}}{2\pi \times 10\ \text{V}} = \frac{500{,}000}{62.83} \approx 7.96\ \text{kHz}\]</div>
+<p>Above approximately 8 kHz, the LM741 cannot faithfully reproduce a 10 V peak sinusoid — the output becomes a triangle wave. For audio applications extending to 20 kHz with 10 V output, you need an op-amp with SR &gt; 1.26 V/μs.</p>
+</div>
+<h2 id="1312-practical-limitations" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">13.12 Practical Limitations</h2>
+<h3 id="input-offset-voltage" style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Input Offset Voltage</h3>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
+<strong style="color: #333;">Input offset voltage</strong> (\(V_{OS}\)) is the small differential DC voltage that must be applied between the inputs to make the output exactly zero. It arises from mismatches in the input transistor pair during manufacturing.
+</p>
+<ul>
+<li>Typical values: 1–10 mV (general purpose), below 100 µV (precision op-amps)</li>
+<li>Effect at output: <span class="arithmatex">\(V_{OS,out} = V_{OS} \times (1 + R_f/R_i)\)</span> — amplified by closed-loop gain</li>
+<li>Mitigation: use precision op-amps (e.g., OPA2134), add an offset null trim circuit, or AC-couple the signal path</li>
+</ul>
+<h3 id="input-bias-current" style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Input Bias Current</h3>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
+<strong style="color: #333;">Input bias current</strong> (\(I_B\)) is the small DC current that must flow into each input terminal for the internal transistors to operate. Although golden rule 2 says this is zero for an ideal op-amp, real op-amps require it.
+</p>
+<ul>
+<li>BJT input op-amps: 10 nA to 10 µA</li>
+<li>JFET/CMOS input op-amps: below 1 pA (essentially zero)</li>
+<li>Effect: creates a voltage error <span class="arithmatex">\(I_B \times R_{source}\)</span> that appears as an input offset</li>
+<li>Mitigation: match source impedances at both inputs; use FET-input op-amps for high-impedance sources</li>
+</ul>
+<h3 id="common-mode-rejection-ratio-cmrr" style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Common-Mode Rejection Ratio (CMRR)</h3>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
+<strong style="color: #333;">CMRR</strong> quantifies how well an op-amp rejects signals that appear simultaneously (in common) on both inputs, such as 60 Hz power-line interference or ground noise.
+</p>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 10px; padding: 16px 20px; margin: 1.2rem 0;">
+
+\[\text{CMRR} = 20\log_{10}\!\left(\frac{A_{differential}}{A_{common}}\right)\ \text{dB}\]
+
+</div>
+<ul>
+<li>Typical values: 80–120 dB for general-purpose op-amps</li>
+<li>Higher CMRR means better rejection of common-mode interference</li>
+<li>Critical in sensor applications where the signal of interest is small (millivolts) riding on top of a large common-mode voltage (volts)</li>
+</ul>
+<h3 id="op-amp-saturation" style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Op-Amp Saturation</h3>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
+<strong style="color: #333;">Saturation</strong> occurs when the calculated output voltage exceeds what the power supply can provide. For a ±15 V supply, a conventional op-amp can typically swing to within 1–2 V of each rail, so the actual output limits at approximately ±13 V to ±14 V. When saturated, the circuit is no longer linear and the golden rules do not apply.
+</p>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
+<strong style="color: #333;">Rail-to-rail op-amps</strong> use output stage topologies that allow the output to swing all the way to the supply rails (within millivolts). They are essential in single-supply, low-voltage designs (3.3 V, 5 V) where losing 1–2 V would be a large fraction of the available swing.
+</p>
+<table>
+<thead>
+<tr>
+<th>Limitation</th>
+<th>Cause</th>
+<th>Effect</th>
+<th>Mitigation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Input offset voltage</td>
+<td>Transistor mismatch</td>
+<td>DC error at output</td>
+<td>Precision op-amp, trim circuit</td>
+</tr>
+<tr>
+<td>Input bias current</td>
+<td>Base/gate current</td>
+<td>Offset from source resistance</td>
+<td>FET-input op-amp, matched <span class="arithmatex">\(R\)</span></td>
+</tr>
+<tr>
+<td>Finite GBW</td>
+<td>Internal compensation capacitor</td>
+<td>Gain falls at high <span class="arithmatex">\(f\)</span></td>
+<td>Higher-GBW op-amp</td>
+</tr>
+<tr>
+<td>Slew rate</td>
+<td>Limited charge current</td>
+<td>Distortion at high <span class="arithmatex">\(f\)</span>, large swing</td>
+<td>High-SR op-amp</td>
+</tr>
+<tr>
+<td>Finite CMRR</td>
+<td>Input transistor mismatch</td>
+<td>Common-mode error</td>
+<td>High-CMRR op-amp, careful layout</td>
+</tr>
+<tr>
+<td>Saturation</td>
+<td>Supply rail limit</td>
+<td>Clipping, loss of linearity</td>
+<td>Reduce gain, increase supply</td>
+</tr>
+</tbody>
+</table>
+<h2 id="1313-summary" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">Chapter Summary</h2>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
+Operational amplifiers are the foundation of analog circuit design. Here is a consolidated reference for the key formulas and principles from this chapter:
+</p>
+<table>
+<thead>
+<tr>
+<th>Topic</th>
+<th>Key Formula or Principle</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Ideal op-amp</td>
+<td><span class="arithmatex">\(A \to \infty\)</span>, <span class="arithmatex">\(Z_{in} \to \infty\)</span>, <span class="arithmatex">\(Z_{out} \to 0\)</span></td>
+</tr>
+<tr>
+<td>Op-amp output</td>
+<td><span class="arithmatex">\(V_{out} = A(V_+ - V_-)\)</span></td>
+</tr>
+<tr>
+<td>Virtual short</td>
+<td><span class="arithmatex">\(V_+ = V_-\)</span> (with negative feedback)</td>
+</tr>
+<tr>
+<td>No input current</td>
+<td><span class="arithmatex">\(I_+ = I_- = 0\)</span></td>
+</tr>
+<tr>
+<td>Inverting amplifier</td>
+<td><span class="arithmatex">\(A_V = -R_f/R_i\)</span>, <span class="arithmatex">\(Z_{in} = R_i\)</span></td>
+</tr>
+<tr>
+<td>Non-inverting amplifier</td>
+<td><span class="arithmatex">\(A_V = 1 + R_f/R_i\)</span>, <span class="arithmatex">\(Z_{in} \approx \infty\)</span></td>
+</tr>
+<tr>
+<td>Voltage follower</td>
+<td><span class="arithmatex">\(A_V = 1\)</span></td>
+</tr>
+<tr>
+<td>Summing amplifier</td>
+<td><span class="arithmatex">\(V_{out} = -R_f(V_1/R_1 + V_2/R_2 + V_3/R_3)\)</span></td>
+</tr>
+<tr>
+<td>Difference amplifier</td>
+<td><span class="arithmatex">\(V_{out} = (R_f/R_i)(V_2 - V_1)\)</span></td>
+</tr>
+<tr>
+<td>Integrator</td>
+<td><span class="arithmatex">\(V_{out} = -(1/RC)\int V_{in}\,dt\)</span>, <span class="arithmatex">\(H = -1/(j\omega RC)\)</span></td>
+</tr>
+<tr>
+<td>Differentiator</td>
+<td><span class="arithmatex">\(V_{out} = -RC\,dV_{in}/dt\)</span>, <span class="arithmatex">\(H = -j\omega RC\)</span></td>
+</tr>
+<tr>
+<td>Gain-bandwidth product</td>
+<td><span class="arithmatex">\(\text{GBW} = A_{CL} \times BW\)</span></td>
+</tr>
+<tr>
+<td>Slew rate limit</td>
+<td><span class="arithmatex">\(f_{max} = SR / (2\pi V_{peak})\)</span></td>
+</tr>
+<tr>
+<td>CMRR</td>
+<td><span class="arithmatex">\(20\log_{10}(A_{diff}/A_{cm})\ \text{dB}\)</span></td>
+</tr>
+</tbody>
+</table>
+<div style="background: #E8F5E9; border: 2px solid #A5D6A7; border-radius: 12px; padding: 18px 24px; margin: 2rem 0; box-shadow: 0 2px 8px rgba(76,175,80,0.08);">
+<p style="margin:0;color:#2E7D32;font-weight:600;font-size:1.02rem;">
+&#127891; Test your understanding:
+<a href="../quiz/" style="color:#1565C0;font-weight:700;margin-left:0.5rem;">Proceed to Chapter 13 Quiz &rarr;</a>
+</p>
+</div>
+</div>
+
+
+
+
+
+
+
+  
+  
+
+
+
+  
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../" class="md-footer__link md-footer__link--prev" aria-label="Previous: Overview">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Overview
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../quiz/" class="md-footer__link md-footer__link--next" aria-label="Next: Quiz and Problems">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Quiz and Problems
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2024, 2025, 2026 Dan McCreary. Licensed under <a href="license/">CC BY-NC-SA 4.0</a> for non-commercial use.
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["content.code.copy", "navigation.expand", "navigation.path", "navigation.prune", "navigation.indexes", "toc.follow", "navigation.top", "navigation.footer", "content.action.edit"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../../js/extra.js"></script>
+      
+        <script src="../../../js/audio-reader.js"></script>
+      
+        <script src="../../../js/katex.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+      
+    
+  </body>
+</html>

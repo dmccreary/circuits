@@ -1,0 +1,3650 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Teaching content covering Fourier series formula, harmonic analysis, spectrum representation, waveform symmetry, canonical waveforms, and applications to audio and filter design">
+      
+      
+        <meta name="author" content="Dan McCreary">
+      
+      
+        <link rel="canonical" href="https://dmccreary.github.io/circuits/chapters/14-signals-audio-lab/content/">
+      
+      
+        <link rel="prev" href="../">
+      
+      
+        <link rel="next" href="../quiz/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../img/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>Chapter 14 Content — Signal Analysis and Fourier Series - Circuits 1</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../css/extra.css">
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+<script id="__analytics">function __md_analytics(){function e(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],e("js",new Date),e("config","G-9J4MVE6LWP"),document.addEventListener("DOMContentLoaded",(function(){document.forms.search&&document.forms.search.query.addEventListener("blur",(function(){this.value&&e("event","search",{search_term:this.value})}));document$.subscribe((function(){var t=document.forms.feedback;if(void 0!==t)for(var a of t.querySelectorAll("[type=submit]"))a.addEventListener("click",(function(a){a.preventDefault();var n=document.location.pathname,d=this.getAttribute("data-md-value");e("event","feedback",{page:n,data:d}),t.firstElementChild.disabled=!0;var r=t.querySelector(".md-feedback__note [data-md-value='"+d+"']");r&&(r.hidden=!1)})),t.hidden=!1})),location$.subscribe((function(t){e("config","G-9J4MVE6LWP",{page_path:t.pathname})}))}));var t=document.createElement("script");t.async=!0,t.src="https://www.googletagmanager.com/gtag/js?id=G-9J4MVE6LWP",document.getElementById("__analytics").insertAdjacentElement("afterEnd",t)}</script>
+  
+    <script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
+  
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="orange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#chapter-14-signal-analysis-and-fourier-series" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Circuits 1" class="md-header__button md-logo" aria-label="Circuits 1" data-md-component="logo">
+      
+  <img src="../../../img/course-logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Circuits 1
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Chapter 14 Content — Signal Analysis and Fourier Series
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/dmccreary/circuits" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub Repo
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Circuits 1" class="md-nav__button md-logo" aria-label="Circuits 1" data-md-component="logo">
+      
+  <img src="../../../img/course-logo.png" alt="logo">
+
+    </a>
+    Circuits 1
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/dmccreary/circuits" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub Repo
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    About This Course
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../course-description/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Course Description
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapters
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Chapters
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../01-electric-charge-basic-quantities/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Electric Charge and Quantities
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../02-ohms-law-basic-configurations/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Ohm's Law and Configurations
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../03-kirchhoffs-laws-topology/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Kirchhoff's Laws and Topology
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../04-dc-circuit-analysis/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. DC Circuit Analysis
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../05-passive-components/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Passive Components
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../06-transient-analysis-rc-rl/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Transient Analysis RC/RL
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../07-second-order-rlc-circuits/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. Second-Order RLC Circuits
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../08-ac-signals-sinusoidal/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8. AC Signals and Sinusoids
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../09-phasors-complex-impedance/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9. Phasors and Impedance
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../10-ac-power-analysis/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10. AC Power Analysis
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../11-frequency-response-bode/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    11. Frequency Response and Bode
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../12-filters-resonance/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    12. Filters and Resonance
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../13-operational-amplifiers/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    13. Operational Amplifiers
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_15" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    14. Signal Analysis and Fourier
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_15" id="__nav_4_15_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_15_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4_15">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    14. Signal Analysis and Fourier
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter Content
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter Content
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#141-introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.1 Introduction
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#142-fourier-series-formula" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.2 The Fourier Series Formula
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="14.2 The Fourier Series Formula">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fourier-coefficients" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fourier Coefficients
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#amplitudephase-form" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Amplitude–Phase Form
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#143-fundamental-frequency-harmonics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.3 Fundamental Frequency and Harmonics
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#144-spectrum-representation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.4 Spectrum Representation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="14.4 Spectrum Representation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#reading-a-spectrum-plot" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reading a Spectrum Plot
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#145-waveform-symmetry" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.5 Waveform Symmetry
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="14.5 Waveform Symmetry">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#even-symmetry" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Even Symmetry
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#odd-symmetry" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Odd Symmetry
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#half-wave-symmetry" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Half-Wave Symmetry
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#symmetry-summary-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Symmetry Summary Table
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#146-common-waveforms-spectra" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.6 Common Waveforms and Their Spectra
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="14.6 Common Waveforms and Their Spectra">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#square-wave" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Square Wave
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#triangle-wave" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Triangle Wave
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sawtooth-wave" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sawtooth Wave
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#waveform-comparison" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Waveform Comparison
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#147-applications" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.7 Applications
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="14.7 Applications">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#audio-timbre-and-musical-instruments" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Audio Timbre and Musical Instruments
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#amplifier-distortion-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Amplifier Distortion Analysis
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#filter-design-for-harmonic-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Filter Design for Harmonic Control
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#power-systems-harmonic-pollution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Power Systems — Harmonic Pollution
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#148-worked-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.8 Worked Example — Fourier Coefficients of a Rectangular Pulse Train
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="14.8 Worked Example — Fourier Coefficients of a Rectangular Pulse Train">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1-identify-symmetry" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1 — Identify Symmetry
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-dc-coefficient-a_0" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2 — DC Coefficient \(a_0\)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3-cosine-coefficients-a_n" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3 — Cosine Coefficients \(a_n\)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-4-sine-coefficients-b_n" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4 — Sine Coefficients \(b_n\)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-5-complete-fourier-series" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 5 — Complete Fourier Series
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#interpretation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Interpretation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#149-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.9 Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../quiz/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quiz and Problems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../15-audio-applications/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    15. Audio Applications
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../16-laboratory-techniques/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    16. Laboratory Techniques
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../sims/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MicroSims
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../circuits/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Circuits
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../old-sections/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Supplementary Sections
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../learning-graph/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Learning Graph
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../prompts/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sample Prompts
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../faq/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FAQ
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../how-we-built-this-site/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How We Built This Site
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../feature-checklist/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Feature Checklist
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../references/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    References
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../license/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    License
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../contact/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contact
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#141-introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.1 Introduction
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#142-fourier-series-formula" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.2 The Fourier Series Formula
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="14.2 The Fourier Series Formula">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fourier-coefficients" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fourier Coefficients
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#amplitudephase-form" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Amplitude–Phase Form
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#143-fundamental-frequency-harmonics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.3 Fundamental Frequency and Harmonics
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#144-spectrum-representation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.4 Spectrum Representation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="14.4 Spectrum Representation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#reading-a-spectrum-plot" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reading a Spectrum Plot
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#145-waveform-symmetry" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.5 Waveform Symmetry
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="14.5 Waveform Symmetry">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#even-symmetry" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Even Symmetry
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#odd-symmetry" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Odd Symmetry
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#half-wave-symmetry" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Half-Wave Symmetry
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#symmetry-summary-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Symmetry Summary Table
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#146-common-waveforms-spectra" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.6 Common Waveforms and Their Spectra
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="14.6 Common Waveforms and Their Spectra">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#square-wave" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Square Wave
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#triangle-wave" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Triangle Wave
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sawtooth-wave" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sawtooth Wave
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#waveform-comparison" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Waveform Comparison
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#147-applications" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.7 Applications
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="14.7 Applications">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#audio-timbre-and-musical-instruments" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Audio Timbre and Musical Instruments
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#amplifier-distortion-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Amplifier Distortion Analysis
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#filter-design-for-harmonic-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Filter Design for Harmonic Control
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#power-systems-harmonic-pollution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Power Systems — Harmonic Pollution
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#148-worked-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.8 Worked Example — Fourier Coefficients of a Rectangular Pulse Train
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="14.8 Worked Example — Fourier Coefficients of a Rectangular Pulse Train">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1-identify-symmetry" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1 — Identify Symmetry
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-dc-coefficient-a_0" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2 — DC Coefficient \(a_0\)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3-cosine-coefficients-a_n" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3 — Cosine Coefficients \(a_n\)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-4-sine-coefficients-b_n" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4 — Sine Coefficients \(b_n\)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-5-complete-fourier-series" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 5 — Complete Fourier Series
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#interpretation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Interpretation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#149-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.9 Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+                
+
+
+
+  
+
+
+  <nav class="md-path" aria-label="Navigation" >
+    <ol class="md-path__list">
+      
+        
+  
+  
+    <li class="md-path__item">
+      <a href="../../.." class="md-path__link">
+        
+  <span class="md-ellipsis">
+    Home
+  </span>
+
+      </a>
+    </li>
+  
+
+      
+      
+        
+  
+  
+    
+    
+      <li class="md-path__item">
+        <a href="../../" class="md-path__link">
+          
+  <span class="md-ellipsis">
+    Chapters
+  </span>
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+    
+    
+      <li class="md-path__item">
+        <a href="../" class="md-path__link">
+          
+  <span class="md-ellipsis">
+    14. Signal Analysis and Fourier
+  </span>
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ol>
+  </nav>
+
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/dmccreary/circuits/blob/master/docs/chapters/14-signals-audio-lab/content.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+
+
+<div class="unit1-styled">
+<h1 id="chapter-14-signal-analysis-and-fourier-series">Chapter 14 — Signal Analysis and Fourier Series</h1>
+<h2 id="141-introduction" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">14.1 Introduction</h2>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
+Every circuit you have analysed so far has a well-defined response to a sinusoidal input: the transfer function \(H(j\omega)\) scales the amplitude and shifts the phase. But real-world signals — speech, music, clock pulses, sensor readings — are rarely pure sinusoids. They are complex waveforms whose shape changes from moment to moment. How do you predict what a filter or amplifier will do to such a signal?
+</p>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
+The key is a remarkable result discovered by Jean-Baptiste Joseph Fourier around 1807: <strong style="color: #333;">any periodic signal can be expressed as a sum of sinusoids</strong>. This is the Fourier series. Once a signal is expressed as a sum of sinusoids, linearity means you can apply the transfer function to each sinusoid independently and add the results. The Fourier series thereby transforms a difficult problem — system response to an arbitrary waveform — into a family of easy problems, each solved with the phasor techniques already in your toolkit.
+</p>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
+The Fourier series also provides a second, equally important viewpoint: the <strong style="color: #333;">frequency domain</strong>. Rather than plotting a signal versus time, you plot its amplitude and phase versus frequency. This frequency-domain picture — called the <strong style="color: #333;">spectrum</strong> — reveals which frequencies carry the signal's energy. The spectrum is the language of filter design, audio engineering, communications, and signal processing. Learning to read and compute spectra is a foundational skill for any circuits engineer.
+</p>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.5rem;">
+This chapter builds the Fourier series from first principles, develops the coefficient integrals, introduces spectral representations, exploits waveform symmetry to simplify calculations, analyses the canonical waveforms — square, triangle, and sawtooth — and connects everything to practical applications in audio and filter design.
+</p>
+<h2 id="142-fourier-series-formula" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">14.2 The Fourier Series Formula</h2>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
+A signal \(f(t)\) is <strong style="color: #333;">periodic with period \(T\)</strong> if \(f(t + T) = f(t)\) for all \(t\). The <strong style="color: #333;">Fourier series</strong> represents any such signal as a DC offset plus an infinite sum of cosine and sine terms:
+</p>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 10px; padding: 16px 20px; margin: 1.2rem 0;">
+
+\[f(t) = a_0 + \sum_{n=1}^{\infty} \bigl[a_n \cos(n\omega_0 t) + b_n \sin(n\omega_0 t)\bigr]\]
+
+</div>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
+where \(\omega_0 = 2\pi / T\) is the <strong style="color: #333;">fundamental angular frequency</strong> in radians per second. Each pair \(\{a_n \cos(n\omega_0 t),\ b_n \sin(n\omega_0 t)\}\) constitutes the <em>nth harmonic</em>.
+</p>
+<h3 id="fourier-coefficients" style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Fourier Coefficients</h3>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 0.8rem;">
+The three coefficient formulas follow from the orthogonality of sines and cosines over one period. Integrating \(f(t)\) against each basis function isolates the corresponding coefficient.
+</p>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 0.4rem;"><strong>DC component (average value):</strong></p>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 10px; padding: 16px 20px; margin: 1.2rem 0;">
+
+\[a_0 = \frac{1}{T}\int_0^T f(t)\, dt\]
+
+</div>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 0.4rem;"><strong>Cosine coefficients</strong> (for \(n = 1, 2, 3, \ldots\)):</p>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 10px; padding: 16px 20px; margin: 1.2rem 0;">
+
+\[a_n = \frac{2}{T}\int_0^T f(t)\cos(n\omega_0 t)\, dt\]
+
+</div>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 0.4rem;"><strong>Sine coefficients</strong> (for \(n = 1, 2, 3, \ldots\)):</p>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 10px; padding: 16px 20px; margin: 1.2rem 0;">
+
+\[b_n = \frac{2}{T}\int_0^T f(t)\sin(n\omega_0 t)\, dt\]
+
+</div>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
+The limits of integration can be any convenient interval of length \(T\), such as \([-T/2,\ T/2]\). Choose whichever limits make the integrand simplest.
+</p>
+<h3 id="amplitudephase-form" style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Amplitude–Phase Form</h3>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 0.8rem;">
+It is often more intuitive to combine the cosine and sine terms into a single sinusoid with amplitude \(c_n\) and phase \(\phi_n\):
+</p>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 10px; padding: 16px 20px; margin: 1.2rem 0;">
+
+\[c_n = \sqrt{a_n^2 + b_n^2}, \qquad \phi_n = -\arctan\!\left(\frac{b_n}{a_n}\right)\]
+
+</div>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
+The equivalent amplitude–phase Fourier series is then:
+</p>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 10px; padding: 16px 20px; margin: 1.2rem 0;">
+
+\[f(t) = a_0 + \sum_{n=1}^{\infty} c_n \cos(n\omega_0 t + \phi_n)\]
+
+</div>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
+The amplitudes \(c_n\) are the heights of the lines in the <strong>amplitude spectrum</strong>; the angles \(\phi_n\) form the <strong>phase spectrum</strong>.
+</p>
+<div style="background: #FFF7DD; border: 2px solid #F0D87A; border-radius: 10px; padding: 16px 20px; margin: 1.2rem 0;">
+<p style="color: #B8860B; font-weight: 700; margin-top: 0; margin-bottom: 8px;">Key Insight — Linearity and the Fourier Series</p>
+<p style="color: #555; line-height: 1.75; margin: 0;">
+Because the Fourier series decomposes a signal into individual sinusoids, and because circuit analysis with phasors handles one sinusoid at a time, the response of any linear circuit to a periodic input is found by applying the transfer function \(H(j\omega)\) to each harmonic individually and summing the outputs. This is the practical power of the Fourier series.
+</p>
+</div>
+<h2 id="143-fundamental-frequency-harmonics" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">14.3 Fundamental Frequency and Harmonics</h2>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
+The <strong style="color: #333;">fundamental frequency</strong> \(f_0\) is the reciprocal of the period:
+</p>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 10px; padding: 16px 20px; margin: 1.2rem 0;">
+
+\[f_0 = \frac{1}{T}\]
+
+</div>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
+It is the lowest frequency component of the signal and determines its repetition rate. In music, the fundamental sets the perceived pitch.
+</p>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
+<strong style="color: #333;">Harmonics</strong> are sinusoidal components at integer multiples of \(f_0\). The \(n\)th harmonic has frequency \(nf_0\) and angular frequency \(n\omega_0\):
+</p>
+<table>
+<thead>
+<tr>
+<th>Harmonic number <span class="arithmatex">\(n\)</span></th>
+<th>Frequency</th>
+<th>Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><span class="arithmatex">\(f_0\)</span></td>
+<td>Fundamental (1st harmonic)</td>
+</tr>
+<tr>
+<td>2</td>
+<td><span class="arithmatex">\(2f_0\)</span></td>
+<td>2nd harmonic</td>
+</tr>
+<tr>
+<td>3</td>
+<td><span class="arithmatex">\(3f_0\)</span></td>
+<td>3rd harmonic</td>
+</tr>
+<tr>
+<td>4</td>
+<td><span class="arithmatex">\(4f_0\)</span></td>
+<td>4th harmonic</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(n\)</span></td>
+<td><span class="arithmatex">\(nf_0\)</span></td>
+<td><span class="arithmatex">\(n\)</span>th harmonic</td>
+</tr>
+</tbody>
+</table>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem; margin-top: 1.2rem;">
+<strong style="color: #333;">Harmonic content</strong> refers to the set of amplitudes \(\{c_n\}\) across all harmonics. It is harmonic content that distinguishes the timbre of two instruments playing the same note at the same loudness: a violin and a clarinet both at concert A (440 Hz) have the same fundamental but radically different harmonic amplitudes.
+</p>
+<div style="background: #FFF7DD; border: 2px solid #F0D87A; border-radius: 10px; padding: 16px 20px; margin: 1.2rem 0;">
+<p style="color: #B8860B; font-weight: 700; margin-top: 0; margin-bottom: 8px;">Even vs. Odd Harmonics</p>
+<p style="color: #555; line-height: 1.75; margin: 0;">
+Harmonics with \(n = 1, 3, 5, \ldots\) are called <strong>odd harmonics</strong>; those with \(n = 2, 4, 6, \ldots\) are <strong>even harmonics</strong>. Many common waveforms — square and triangle waves — contain only odd harmonics, a direct consequence of their symmetry (see Section 14.5).
+</p>
+</div>
+<h2 id="144-spectrum-representation" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">14.4 Spectrum Representation</h2>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
+The <strong style="color: #333;">frequency spectrum</strong> is a plot of the amplitude (and optionally phase) of each Fourier component against frequency. For a periodic signal with period \(T\), energy exists only at the discrete frequencies \(0,\ f_0,\ 2f_0,\ 3f_0,\ldots\) — this is called a <strong style="color: #333;">discrete line spectrum</strong>. Each line's height equals the amplitude \(c_n\) of the corresponding harmonic.
+</p>
+<h3 id="reading-a-spectrum-plot" style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Reading a Spectrum Plot</h3>
+<table>
+<thead>
+<tr>
+<th>Feature in spectrum</th>
+<th>Meaning in time domain</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Single line at <span class="arithmatex">\(f_0\)</span></td>
+<td>Pure sinusoid at the fundamental frequency</td>
+</tr>
+<tr>
+<td>Lines at <span class="arithmatex">\(f_0, 3f_0, 5f_0, \ldots\)</span> only</td>
+<td>Odd harmonics only — indicates symmetry</td>
+</tr>
+<tr>
+<td>Lines at <span class="arithmatex">\(f_0, 2f_0, 3f_0, \ldots\)</span></td>
+<td>All harmonics — asymmetric waveform</td>
+</tr>
+<tr>
+<td>Rapidly falling amplitudes</td>
+<td>Smooth, slowly changing waveform</td>
+</tr>
+<tr>
+<td>Slowly falling amplitudes</td>
+<td>Sharp transitions, many harmonics needed</td>
+</tr>
+<tr>
+<td>DC line at <span class="arithmatex">\(f = 0\)</span></td>
+<td>Non-zero average value</td>
+</tr>
+</tbody>
+</table>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem; margin-top: 1.2rem;">
+Two spectra are needed for a complete frequency-domain description of a periodic signal:
+</p>
+<ul>
+<li><strong>Amplitude spectrum:</strong> Plot of <span class="arithmatex">\(c_n\)</span> vs. <span class="arithmatex">\(nf_0\)</span>. This shows how signal power is distributed among harmonics.</li>
+<li><strong>Phase spectrum:</strong> Plot of <span class="arithmatex">\(\phi_n\)</span> vs. <span class="arithmatex">\(nf_0\)</span>. Important when waveform shape must be exactly reconstructed.</li>
+</ul>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
+For many engineering purposes — especially filter design and power analysis — only the amplitude spectrum is needed. The phase spectrum matters when signal delay is significant, as in audio and communications systems.
+</p>
+<div style="background: #FFF7DD; border: 2px solid #F0D87A; border-radius: 10px; padding: 16px 20px; margin: 1.2rem 0;">
+<p style="color: #B8860B; font-weight: 700; margin-top: 0; margin-bottom: 8px;">Parseval's Theorem</p>
+<p style="color: #555; line-height: 1.75; margin: 0;">
+The total average power of a periodic signal equals the sum of the powers in its DC component and each harmonic:
+
+\[\frac{1}{T}\int_0^T [f(t)]^2\, dt = a_0^2 + \frac{1}{2}\sum_{n=1}^{\infty}(a_n^2 + b_n^2) = a_0^2 + \frac{1}{2}\sum_{n=1}^{\infty} c_n^2\]
+
+This means you can calculate total power either from the waveform directly or from the spectrum — both methods give the same answer.
+</p>
+</div>
+<h2 id="145-waveform-symmetry" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">14.5 Waveform Symmetry</h2>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
+<strong style="color: #333;">Waveform symmetry</strong> is the single most useful shortcut in Fourier analysis. Before computing any integral, inspect the waveform for symmetry. Each type of symmetry eliminates a class of coefficients, turning an infinite integral computation into a finite one.
+</p>
+<h3 id="even-symmetry" style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Even Symmetry</h3>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 0.8rem;">
+A waveform has <strong style="color: #333;">even symmetry</strong> if it is symmetric about the vertical axis:
+</p>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 10px; padding: 16px 20px; margin: 1.2rem 0;">
+
+\[f(-t) = f(t) \quad \text{for all } t\]
+
+</div>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 0.8rem;">
+Because the product of an even function with the odd function \(\sin(n\omega_0 t)\) is odd and integrates to zero over a symmetric interval:</p>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 10px; padding: 16px 20px; margin: 1.2rem 0;">
+
+\[\text{Even symmetry} \implies b_n = 0 \text{ for all } n \quad \text{(cosine terms only)}\]
+
+</div>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 0.8rem;"><strong>Examples:</strong> cosine wave, triangle wave (centred at peak), even rectangular pulse train.</p>
+<h3 id="odd-symmetry" style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Odd Symmetry</h3>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 0.8rem;">
+A waveform has <strong style="color: #333;">odd symmetry</strong> if it is antisymmetric about the vertical axis:
+</p>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 10px; padding: 16px 20px; margin: 1.2rem 0;">
+
+\[f(-t) = -f(t) \quad \text{for all } t\]
+
+</div>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 0.8rem;">
+By the same orthogonality argument, the product of an odd function with the even function \(\cos(n\omega_0 t)\) integrates to zero, and the average value is also zero:
+</p>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 10px; padding: 16px 20px; margin: 1.2rem 0;">
+
+\[\text{Odd symmetry} \implies a_0 = 0,\quad a_n = 0 \text{ for all } n \quad \text{(sine terms only, no DC)}\]
+
+</div>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 0.8rem;"><strong>Examples:</strong> sine wave, odd square wave (centred at zero crossing), sawtooth through origin.</p>
+<h3 id="half-wave-symmetry" style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Half-Wave Symmetry</h3>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 0.8rem;">
+A waveform has <strong style="color: #333;">half-wave symmetry</strong> if the second half of each period is the negative of the first half:
+</p>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 10px; padding: 16px 20px; margin: 1.2rem 0;">
+
+\[f\!\left(t + \tfrac{T}{2}\right) = -f(t) \quad \text{for all } t\]
+
+</div>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 0.8rem;">
+When this condition holds, the contributions from even-numbered harmonics cancel over a full period:</p>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 10px; padding: 16px 20px; margin: 1.2rem 0;">
+
+\[\text{Half-wave symmetry} \implies a_n = b_n = 0 \text{ for even } n \quad \text{(odd harmonics only)}\]
+
+</div>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 0.8rem;"><strong>Examples:</strong> square wave, triangle wave, any waveform that looks like its own negative shifted by half a period.</p>
+<h3 id="symmetry-summary-table" style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Symmetry Summary Table</h3>
+<table>
+<thead>
+<tr>
+<th>Symmetry</th>
+<th>Condition</th>
+<th>Effect on Fourier series</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Even</td>
+<td><span class="arithmatex">\(f(-t) = f(t)\)</span></td>
+<td><span class="arithmatex">\(b_n = 0\)</span> (cosine terms only)</td>
+</tr>
+<tr>
+<td>Odd</td>
+<td><span class="arithmatex">\(f(-t) = -f(t)\)</span></td>
+<td><span class="arithmatex">\(a_0 = 0\)</span>, <span class="arithmatex">\(a_n = 0\)</span> (sine terms only, no DC)</td>
+</tr>
+<tr>
+<td>Half-wave</td>
+<td><span class="arithmatex">\(f(t+T/2) = -f(t)\)</span></td>
+<td><span class="arithmatex">\(a_n = b_n = 0\)</span> for even <span class="arithmatex">\(n\)</span> (odd harmonics only)</td>
+</tr>
+</tbody>
+</table>
+<div style="background: #FFF7DD; border: 2px solid #F0D87A; border-radius: 10px; padding: 16px 20px; margin: 1.2rem 0;">
+<p style="color: #B8860B; font-weight: 700; margin-top: 0; margin-bottom: 8px;">Tip — Check Symmetry First</p>
+<p style="color: #555; line-height: 1.75; margin: 0;">
+Always inspect the waveform for all three symmetries before integrating. A waveform can have more than one type simultaneously — for example, a square wave that is both odd and half-wave symmetric. Each identified symmetry halves (or more) the number of coefficients you must actually compute.
+</p>
+</div>
+<h2 id="146-common-waveforms-spectra" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">14.6 Common Waveforms and Their Spectra</h2>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
+Three waveforms appear so often in electronics that their Fourier series are worth memorising. Each has a characteristic spectral signature that immediately suggests which harmonics dominate and how quickly they decay.
+</p>
+<h3 id="square-wave" style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Square Wave</h3>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 0.8rem;">
+A square wave of amplitude \(A\) alternates between \(+A\) and \(-A\) with 50 % duty cycle. It has odd symmetry and half-wave symmetry, so only odd sine terms survive.
+</p>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 10px; padding: 16px 20px; margin: 1.2rem 0;">
+
+\[f(t) = \frac{4A}{\pi}\left[\sin(\omega_0 t) + \frac{1}{3}\sin(3\omega_0 t) + \frac{1}{5}\sin(5\omega_0 t) + \cdots\right] = \frac{4A}{\pi}\sum_{\substack{n=1 \\ n \text{ odd}}}^{\infty} \frac{\sin(n\omega_0 t)}{n}\]
+
+</div>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 0.8rem;">
+Spectral characteristics:</p>
+<ul>
+<li>Only odd harmonics present (<span class="arithmatex">\(n = 1, 3, 5, \ldots\)</span>)</li>
+<li>Amplitudes <span class="arithmatex">\(c_n = 4A/(n\pi)\)</span> decay as <span class="arithmatex">\(1/n\)</span> — slow decay</li>
+<li>Many harmonics needed to represent the sharp corners accurately</li>
+</ul>
+<h3 id="triangle-wave" style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Triangle Wave</h3>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 0.8rem;">
+A triangle wave of amplitude \(A\) ramps linearly between \(+A\) and \(-A\). Depending on placement, it can have even or odd symmetry; it always has half-wave symmetry.
+</p>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 10px; padding: 16px 20px; margin: 1.2rem 0;">
+
+\[f(t) = \frac{8A}{\pi^2}\left[\sin(\omega_0 t) - \frac{1}{9}\sin(3\omega_0 t) + \frac{1}{25}\sin(5\omega_0 t) - \cdots\right] = \frac{8A}{\pi^2}\sum_{\substack{n=1 \\ n \text{ odd}}}^{\infty} \frac{(-1)^{(n-1)/2}}{n^2}\sin(n\omega_0 t)\]
+
+</div>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 0.8rem;">
+Spectral characteristics:</p>
+<ul>
+<li>Only odd harmonics present</li>
+<li>Amplitudes <span class="arithmatex">\(c_n \propto 1/n^2\)</span> — rapid decay</li>
+<li>The <span class="arithmatex">\(1/n^2\)</span> decay reflects the smoother waveform (no discontinuities in <span class="arithmatex">\(f(t)\)</span> itself, only in its derivative)</li>
+</ul>
+<h3 id="sawtooth-wave" style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Sawtooth Wave</h3>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 0.8rem;">
+A sawtooth wave of amplitude \(A\) ramps linearly from \(-A\) to \(+A\) then resets abruptly. It lacks half-wave symmetry and (centred at the origin) has odd symmetry only, so all harmonics appear.
+</p>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 10px; padding: 16px 20px; margin: 1.2rem 0;">
+
+\[f(t) = \frac{2A}{\pi}\left[\sin(\omega_0 t) - \frac{1}{2}\sin(2\omega_0 t) + \frac{1}{3}\sin(3\omega_0 t) - \cdots\right] = \frac{2A}{\pi}\sum_{n=1}^{\infty} \frac{(-1)^{n+1}}{n}\sin(n\omega_0 t)\]
+
+</div>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 0.8rem;">
+Spectral characteristics:</p>
+<ul>
+<li>All harmonics present (both odd and even)</li>
+<li>Amplitudes <span class="arithmatex">\(c_n = 2A/(n\pi)\)</span> decay as <span class="arithmatex">\(1/n\)</span></li>
+<li>The sudden reset discontinuity requires all harmonics; eliminating even harmonics would produce a triangle wave instead</li>
+</ul>
+<h3 id="waveform-comparison" style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Waveform Comparison</h3>
+<table>
+<thead>
+<tr>
+<th>Waveform</th>
+<th>Harmonics present</th>
+<th>Amplitude decay</th>
+<th>Smoothness</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Sine</td>
+<td>Fundamental only (<span class="arithmatex">\(n = 1\)</span>)</td>
+<td>—</td>
+<td>Perfectly smooth</td>
+</tr>
+<tr>
+<td>Square</td>
+<td>Odd only (<span class="arithmatex">\(n = 1, 3, 5, \ldots\)</span>)</td>
+<td><span class="arithmatex">\(1/n\)</span></td>
+<td>Sharp corners</td>
+</tr>
+<tr>
+<td>Triangle</td>
+<td>Odd only (<span class="arithmatex">\(n = 1, 3, 5, \ldots\)</span>)</td>
+<td><span class="arithmatex">\(1/n^2\)</span></td>
+<td>Smooth (no discontinuity in <span class="arithmatex">\(f\)</span>)</td>
+</tr>
+<tr>
+<td>Sawtooth</td>
+<td>All (<span class="arithmatex">\(n = 1, 2, 3, \ldots\)</span>)</td>
+<td><span class="arithmatex">\(1/n\)</span></td>
+<td>Sharp reset</td>
+</tr>
+</tbody>
+</table>
+<h2 id="147-applications" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">14.7 Applications</h2>
+<h3 id="audio-timbre-and-musical-instruments" style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Audio Timbre and Musical Instruments</h3>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
+Every musical instrument produces a distinctive harmonic profile. A flute playing concert A (440 Hz) is nearly a pure sine — its spectrum shows one dominant line. A violin on the same note has strong 2nd, 3rd, and 4th harmonics that give it richness. A clarinet, owing to its cylindrical bore, emphasises odd harmonics almost exclusively. Fourier analysis quantifies these differences and enables digital synthesis, equalisation, and timbre modelling.
+</p>
+<h3 id="amplifier-distortion-analysis" style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Amplifier Distortion Analysis</h3>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
+When a sinusoidal signal passes through a nonlinear amplifier, the output contains harmonics not present in the input. <strong>Total harmonic distortion (THD)</strong> quantifies this:
+</p>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 10px; padding: 16px 20px; margin: 1.2rem 0;">
+
+\[\text{THD} = \frac{\sqrt{c_2^2 + c_3^2 + c_4^2 + \cdots}}{c_1} \times 100\,\%\]
+
+</div>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
+A THD below 0.1 % is inaudible; high-fidelity audio amplifiers typically specify THD below 0.01 %. Fourier analysis of the output spectrum directly reveals which harmonics the amplifier generates and at what levels.
+</p>
+<h3 id="filter-design-for-harmonic-control" style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Filter Design for Harmonic Control</h3>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
+Because a low-pass filter attenuates high-frequency harmonics, it smooths sharp waveforms. A square wave passed through a low-pass filter with cutoff frequency between the 3rd and 5th harmonics loses its sharp corners and takes on a sinusoidal shape. Anti-aliasing filters in analogue-to-digital converters (ADCs) exploit this: by removing harmonics above the Nyquist frequency before sampling, they prevent aliasing artefacts. The Fourier series tells the designer exactly which harmonics fall above the cutoff and what their amplitudes are, allowing an accurate prediction of the filtered output.
+</p>
+<h3 id="power-systems-harmonic-pollution" style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Power Systems — Harmonic Pollution</h3>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
+Nonlinear loads on the power grid (variable-speed motor drives, switched-mode power supplies, fluorescent lighting) draw non-sinusoidal currents that inject harmonics back into the 50/60 Hz supply. The 3rd, 5th, and 7th harmonics (150, 250, 350 Hz in a 50 Hz system) cause overheating of neutral conductors, transformer core losses, and interference with sensitive equipment. Fourier analysis of the line current spectrum is the standard diagnostic tool for power quality assessment.
+</p>
+<h2 id="148-worked-example" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">14.8 Worked Example — Fourier Coefficients of a Rectangular Pulse Train</h2>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
+Compute the Fourier series of the following rectangular pulse train:
+</p>
+<div style="background: #F8F6FF; border: 2px solid #D4C8FF; border-radius: 10px; padding: 16px 20px; margin: 1.2rem 0;">
+
+\[f(t) = \begin{cases} A &amp; 0 &lt; t &lt; T/2 \\ 0 &amp; T/2 &lt; t &lt; T \end{cases}\]
+
+repeated with period \(T\).
+
+</div>
+<h3 id="step-1-identify-symmetry" style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Step 1 — Identify Symmetry</h3>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 0.8rem;">
+The waveform is neither even nor odd (it is not symmetric about \(t = 0\)), and it does not satisfy \(f(t + T/2) = -f(t)\) because the second half is zero, not \(-A\). Therefore <strong>no symmetry shortcuts apply</strong>; all three coefficient integrals must be evaluated.
+</p>
+<h3 id="step-2-dc-coefficient-a_0" style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Step 2 — DC Coefficient \(a_0\)</h3>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 10px; padding: 16px 20px; margin: 1.2rem 0;">
+
+\[a_0 = \frac{1}{T}\int_0^T f(t)\, dt = \frac{1}{T}\int_0^{T/2} A\, dt = \frac{1}{T}\cdot A\cdot\frac{T}{2} = \frac{A}{2}\]
+
+</div>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 0.8rem;">
+The DC component equals the average value: the waveform is \(A\) for half the period and 0 for the other half, so the average is \(A/2\). ✓
+</p>
+<h3 id="step-3-cosine-coefficients-a_n" style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Step 3 — Cosine Coefficients \(a_n\)</h3>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 10px; padding: 16px 20px; margin: 1.2rem 0;">
+
+\[a_n = \frac{2}{T}\int_0^{T/2} A\cos(n\omega_0 t)\, dt = \frac{2A}{T}\left[\frac{\sin(n\omega_0 t)}{n\omega_0}\right]_0^{T/2}\]
+
+Since \(\omega_0 = 2\pi/T\), at the upper limit \(n\omega_0 \cdot T/2 = n\pi\):
+
+\[a_n = \frac{2A}{T}\cdot\frac{\sin(n\pi) - \sin(0)}{n\omega_0} = \frac{2A}{T}\cdot\frac{0}{n\omega_0} = 0 \quad \text{for all } n\]
+
+</div>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 0.8rem;">
+All cosine coefficients vanish because \(\sin(n\pi) = 0\) for every integer \(n\).
+</p>
+<h3 id="step-4-sine-coefficients-b_n" style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Step 4 — Sine Coefficients \(b_n\)</h3>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 10px; padding: 16px 20px; margin: 1.2rem 0;">
+
+\[b_n = \frac{2}{T}\int_0^{T/2} A\sin(n\omega_0 t)\, dt = \frac{2A}{T}\left[-\frac{\cos(n\omega_0 t)}{n\omega_0}\right]_0^{T/2} = \frac{2A}{T}\cdot\frac{1 - \cos(n\pi)}{n\omega_0}\]
+
+Substituting \(\omega_0 = 2\pi/T\):
+
+\[b_n = \frac{2A}{T}\cdot\frac{T}{2n\pi}\bigl[1 - \cos(n\pi)\bigr] = \frac{A}{n\pi}\bigl[1 - (-1)^n\bigr]\]
+
+</div>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 0.8rem;">
+Evaluating for the first several harmonics:
+</p>
+<table>
+<thead>
+<tr>
+<th><span class="arithmatex">\(n\)</span></th>
+<th><span class="arithmatex">\((-1)^n\)</span></th>
+<th><span class="arithmatex">\(1 - (-1)^n\)</span></th>
+<th><span class="arithmatex">\(b_n\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><span class="arithmatex">\(-1\)</span></td>
+<td>2</td>
+<td><span class="arithmatex">\(2A/\pi\)</span></td>
+</tr>
+<tr>
+<td>2</td>
+<td><span class="arithmatex">\(+1\)</span></td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>3</td>
+<td><span class="arithmatex">\(-1\)</span></td>
+<td>2</td>
+<td><span class="arithmatex">\(2A/(3\pi)\)</span></td>
+</tr>
+<tr>
+<td>4</td>
+<td><span class="arithmatex">\(+1\)</span></td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>5</td>
+<td><span class="arithmatex">\(-1\)</span></td>
+<td>2</td>
+<td><span class="arithmatex">\(2A/(5\pi)\)</span></td>
+</tr>
+</tbody>
+</table>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 0.8rem; margin-top: 0.8rem;">
+Even harmonics vanish; odd harmonics have \(b_n = 2A/(n\pi)\).
+</p>
+<h3 id="step-5-complete-fourier-series" style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Step 5 — Complete Fourier Series</h3>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 10px; padding: 16px 20px; margin: 1.2rem 0;">
+
+\[f(t) = \frac{A}{2} + \frac{2A}{\pi}\left[\sin(\omega_0 t) + \frac{1}{3}\sin(3\omega_0 t) + \frac{1}{5}\sin(5\omega_0 t) + \cdots\right]\]
+
+\[= \frac{A}{2} + \frac{2A}{\pi}\sum_{\substack{n=1 \\ n \text{ odd}}}^{\infty}\frac{\sin(n\omega_0 t)}{n}\]
+
+</div>
+<h3 id="interpretation" style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Interpretation</h3>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 0.8rem;">
+The result is essentially a DC offset \(A/2\) plus a scaled square wave. This makes intuitive sense: a square wave toggling between \(+A/2\) and \(-A/2\) has a zero average; adding a DC level of \(A/2\) shifts it to toggle between \(A\) and \(0\) — exactly our pulse train. The factor \(2A/\pi\) vs. the square-wave factor \(4A/\pi\) reflects the different amplitude definition used here (\(0\) to \(A\) vs. \(-A\) to \(+A\)).
+</p>
+<h2 id="149-summary" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">14.9 Summary</h2>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
+This chapter developed the Fourier series as the bridge between time-domain waveforms and frequency-domain spectra. The key results are:
+</p>
+<ol>
+<li><strong>Any periodic signal</strong> can be decomposed into a DC term plus sinusoids at integer multiples of the fundamental frequency <span class="arithmatex">\(f_0 = 1/T\)</span>.</li>
+<li><strong>The three coefficient integrals</strong> — for <span class="arithmatex">\(a_0\)</span>, <span class="arithmatex">\(a_n\)</span>, and <span class="arithmatex">\(b_n\)</span> — follow from the orthogonality of sines and cosines. The amplitude–phase form <span class="arithmatex">\(c_n = \sqrt{a_n^2 + b_n^2}\)</span> is the natural representation for spectrum plots.</li>
+<li><strong>Even symmetry</strong> eliminates all <span class="arithmatex">\(b_n\)</span>; <strong>odd symmetry</strong> eliminates <span class="arithmatex">\(a_0\)</span> and all <span class="arithmatex">\(a_n\)</span>; <strong>half-wave symmetry</strong> eliminates all even harmonics. Checking these before integrating saves enormous effort.</li>
+<li><strong>Square and sawtooth waves</strong> have amplitudes decaying as <span class="arithmatex">\(1/n\)</span> (slow); <strong>triangle waves</strong> decay as <span class="arithmatex">\(1/n^2\)</span> (fast). Smoother waveforms require fewer harmonics.</li>
+<li><strong>The frequency spectrum</strong> of a periodic signal is a discrete line spectrum at <span class="arithmatex">\(0, f_0, 2f_0, \ldots\)</span>. Amplitude and phase spectra together completely characterise the signal in the frequency domain.</li>
+<li><strong>Applications</strong> include audio timbre analysis, amplifier THD measurement, filter design for harmonic control, and power-system harmonic assessment.</li>
+</ol>
+<div style="background: #E8F5E9; border: 2px solid #A5D6A7; border-radius: 12px; padding: 18px 24px; margin: 2rem 0; box-shadow: 0 2px 8px rgba(76,175,80,0.08);">
+<p style="margin:0;color:#2E7D32;font-weight:600;font-size:1.02rem;">
+&#128221; Test your understanding:
+<a href="quiz/" style="color:#1565C0;font-weight:700;margin-left:0.5rem;">Go to Chapter 14 Quiz &rarr;</a>
+</p>
+</div>
+</div>
+
+
+
+
+
+
+
+  
+  
+
+
+
+  
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../" class="md-footer__link md-footer__link--prev" aria-label="Previous: Overview">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Overview
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../quiz/" class="md-footer__link md-footer__link--next" aria-label="Next: Quiz and Problems">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Quiz and Problems
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2024, 2025, 2026 Dan McCreary. Licensed under <a href="license/">CC BY-NC-SA 4.0</a> for non-commercial use.
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["content.code.copy", "navigation.expand", "navigation.path", "navigation.prune", "navigation.indexes", "toc.follow", "navigation.top", "navigation.footer", "content.action.edit"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../../js/extra.js"></script>
+      
+        <script src="../../../js/audio-reader.js"></script>
+      
+        <script src="../../../js/katex.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+      
+    
+  </body>
+</html>
