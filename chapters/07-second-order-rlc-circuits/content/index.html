@@ -1,0 +1,2967 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Teaching content for Chapter 7 covering damping, natural frequency, resonance, and quality factor">
+      
+      
+        <meta name="author" content="Dan McCreary">
+      
+      
+        <link rel="canonical" href="https://dmccreary.github.io/circuits/chapters/07-second-order-rlc-circuits/content/">
+      
+      
+        <link rel="prev" href="../">
+      
+      
+        <link rel="next" href="../quiz/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../img/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>Chapter 7 Content — Second-Order RLC Circuits - Circuits 1</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../css/extra.css">
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+<script id="__analytics">function __md_analytics(){function e(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],e("js",new Date),e("config","G-9J4MVE6LWP"),document.addEventListener("DOMContentLoaded",(function(){document.forms.search&&document.forms.search.query.addEventListener("blur",(function(){this.value&&e("event","search",{search_term:this.value})}));document$.subscribe((function(){var t=document.forms.feedback;if(void 0!==t)for(var a of t.querySelectorAll("[type=submit]"))a.addEventListener("click",(function(a){a.preventDefault();var n=document.location.pathname,d=this.getAttribute("data-md-value");e("event","feedback",{page:n,data:d}),t.firstElementChild.disabled=!0;var r=t.querySelector(".md-feedback__note [data-md-value='"+d+"']");r&&(r.hidden=!1)})),t.hidden=!1})),location$.subscribe((function(t){e("config","G-9J4MVE6LWP",{page_path:t.pathname})}))}));var t=document.createElement("script");t.async=!0,t.src="https://www.googletagmanager.com/gtag/js?id=G-9J4MVE6LWP",document.getElementById("__analytics").insertAdjacentElement("afterEnd",t)}</script>
+  
+    <script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
+  
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="orange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#chapter-7-second-order-rlc-circuits" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Circuits 1" class="md-header__button md-logo" aria-label="Circuits 1" data-md-component="logo">
+      
+  <img src="../../../img/course-logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Circuits 1
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Chapter 7 Content — Second-Order RLC Circuits
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/dmccreary/circuits" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub Repo
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Circuits 1" class="md-nav__button md-logo" aria-label="Circuits 1" data-md-component="logo">
+      
+  <img src="../../../img/course-logo.png" alt="logo">
+
+    </a>
+    Circuits 1
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/dmccreary/circuits" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub Repo
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    About This Course
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../course-description/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Course Description
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapters
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Chapters
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../01-electric-charge-basic-quantities/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Electric Charge and Quantities
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../02-ohms-law-basic-configurations/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Ohm's Law and Configurations
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../03-kirchhoffs-laws-topology/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Kirchhoff's Laws and Topology
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../04-dc-circuit-analysis/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. DC Circuit Analysis
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../05-passive-components/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Passive Components
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../06-transient-analysis-rc-rl/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Transient Analysis RC/RL
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_8" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. Second-Order RLC Circuits
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_8" id="__nav_4_8_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_8_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    7. Second-Order RLC Circuits
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter Content
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter Content
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#71-introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.1 Introduction: When Circuits Get Dramatic
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#72-second-order-circuits" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.2 Second-Order Circuits: The Mathematical Upgrade
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#73-rlc-circuits" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.3 Series and Parallel RLC Circuits
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#74-characteristic-equation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.4 The Characteristic Equation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#75-natural-frequency" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.5 Natural Frequency
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#76-damping-ratio" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.6 Damping Ratio
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#77-overdamped-response" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.7 Overdamped Response (\(\zeta &gt; 1\))
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#78-underdamped-response" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.8 Underdamped Response (\(0 &lt; \zeta &lt; 1\))
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#79-critically-damped-response" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.9 Critically Damped Response (\(\zeta = 1\))
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#710-resonant-frequency" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.10 Resonant Frequency
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#711-quality-factor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.11 Quality Factor
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#712-chapter-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.12 Key Formulas Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../quiz/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quiz and Problems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../08-ac-signals-sinusoidal/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8. AC Signals and Sinusoids
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../09-phasors-complex-impedance/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9. Phasors and Impedance
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../10-ac-power-analysis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10. AC Power Analysis
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../11-frequency-response-bode/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    11. Frequency Response and Bode
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../12-filters-resonance/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    12. Filters and Resonance
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../13-operational-amplifiers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    13. Operational Amplifiers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-signals-audio-lab/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    14. Signal Analysis and Fourier
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../15-audio-applications/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    15. Audio Applications
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../16-laboratory-techniques/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    16. Laboratory Techniques
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../sims/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MicroSims
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../circuits/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Circuits
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../old-sections/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Supplementary Sections
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../learning-graph/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Learning Graph
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../prompts/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sample Prompts
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../faq/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FAQ
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../how-we-built-this-site/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How We Built This Site
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../feature-checklist/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Feature Checklist
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../references/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    References
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../license/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    License
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../contact/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contact
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#71-introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.1 Introduction: When Circuits Get Dramatic
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#72-second-order-circuits" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.2 Second-Order Circuits: The Mathematical Upgrade
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#73-rlc-circuits" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.3 Series and Parallel RLC Circuits
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#74-characteristic-equation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.4 The Characteristic Equation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#75-natural-frequency" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.5 Natural Frequency
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#76-damping-ratio" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.6 Damping Ratio
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#77-overdamped-response" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.7 Overdamped Response (\(\zeta &gt; 1\))
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#78-underdamped-response" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.8 Underdamped Response (\(0 &lt; \zeta &lt; 1\))
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#79-critically-damped-response" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.9 Critically Damped Response (\(\zeta = 1\))
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#710-resonant-frequency" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.10 Resonant Frequency
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#711-quality-factor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.11 Quality Factor
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#712-chapter-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.12 Key Formulas Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+                
+
+
+
+  
+
+
+  <nav class="md-path" aria-label="Navigation" >
+    <ol class="md-path__list">
+      
+        
+  
+  
+    <li class="md-path__item">
+      <a href="../../.." class="md-path__link">
+        
+  <span class="md-ellipsis">
+    Home
+  </span>
+
+      </a>
+    </li>
+  
+
+      
+      
+        
+  
+  
+    
+    
+      <li class="md-path__item">
+        <a href="../../" class="md-path__link">
+          
+  <span class="md-ellipsis">
+    Chapters
+  </span>
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+    
+    
+      <li class="md-path__item">
+        <a href="../" class="md-path__link">
+          
+  <span class="md-ellipsis">
+    7. Second-Order RLC Circuits
+  </span>
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ol>
+  </nav>
+
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/dmccreary/circuits/blob/master/docs/chapters/07-second-order-rlc-circuits/content.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+
+
+<div class="unit1-styled">
+<h1 id="chapter-7-second-order-rlc-circuits">Chapter 7 — Second-Order RLC Circuits</h1>
+<h2 id="71-introduction" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">7.1 Introduction: When Circuits Get Dramatic</h2>
+<p>If first-order RC and RL circuits are like a polite conversation — one thing leads smoothly to another — then second-order RLC circuits are like a heated debate. Things can swing back and forth, overshoot their targets, or even oscillate indefinitely.</p>
+<p>In Chapter 6, you learned how capacitors and inductors store and release energy exponentially. But what happens when you put <em>both</em> energy storage elements in the same circuit? The energy sloshes back and forth between the electric field of the capacitor and the magnetic field of the inductor, like two friends tossing a ball between them. Add some resistance, and the ball gradually loses energy with each toss until everyone gets tired.</p>
+<p>This energy exchange creates behaviors you won't see in simpler circuits:</p>
+<ul>
+<li><strong>Oscillations</strong> that ring like a bell</li>
+<li><strong>Overshoot</strong> that rockets past the target before settling back</li>
+<li><strong>Resonance</strong> that amplifies signals at specific frequencies</li>
+</ul>
+<p>Understanding these behaviors unlocks your ability to design everything from radio tuners to shock absorbers to audio equalizers.</p>
+<hr />
+<h2 id="72-second-order-circuits" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">7.2 Second-Order Circuits: The Mathematical Upgrade</h2>
+<p>A <strong>second-order circuit</strong> is any circuit whose behavior is described by a second-order differential equation. This happens whenever a circuit contains two independent energy storage elements — typically an inductor and a capacitor.</p>
+<p>The general form of a second-order differential equation is:</p>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<div class="arithmatex">\[\frac{d^2x}{dt^2} + 2\alpha\frac{dx}{dt} + \omega_0^2 x = f(t)\]</div>
+<p>where <span class="arithmatex">\(x\)</span> is the response (voltage or current), <span class="arithmatex">\(\alpha\)</span> is the damping coefficient, <span class="arithmatex">\(\omega_0\)</span> is the undamped natural frequency, and <span class="arithmatex">\(f(t)\)</span> is the source.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Order</th>
+<th>Energy Storage Elements</th>
+<th>Equation Type</th>
+<th>Example Response</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>First</td>
+<td>1 (C or L)</td>
+<td>First-order ODE</td>
+<td>Exponential decay/rise</td>
+</tr>
+<tr>
+<td>Second</td>
+<td>2 (C and L)</td>
+<td>Second-order ODE</td>
+<td>Oscillatory, damped</td>
+</tr>
+<tr>
+<td>Higher</td>
+<td>3+</td>
+<td>Higher-order ODE</td>
+<td>Complex multi-frequency</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="73-rlc-circuits" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">7.3 Series and Parallel RLC Circuits</h2>
+<p><strong>Series RLC</strong> — all components share the same current. Applying KVL and differentiating:</p>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<div class="arithmatex">\[\frac{d^2i}{dt^2} + \frac{R}{L}\frac{di}{dt} + \frac{1}{LC}i = \frac{1}{L}\frac{dV_S}{dt}\]</div>
+<p>Series RLC: <span class="arithmatex">\(\quad \alpha = \dfrac{R}{2L}, \qquad \omega_0 = \dfrac{1}{\sqrt{LC}}\)</span></p>
+</div>
+<p><strong>Parallel RLC</strong> — all components share the same voltage. Applying KCL:</p>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<p>Parallel RLC: <span class="arithmatex">\(\quad \alpha = \dfrac{1}{2RC}, \qquad \omega_0 = \dfrac{1}{\sqrt{LC}}\)</span></p>
+</div>
+<p>Notice that <span class="arithmatex">\(\omega_0\)</span> is the same for both configurations — it depends only on L and C.</p>
+<div class="msim-box"><button class="msim-btn" onclick="toggleFS(this)">⛶ Fullscreen</button>
+<div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:8px;">
+<label style="font-size:0.9em;">R (Ω): <input type="range" id="rlcR" min="1" max="200" value="20" step="1" oninput="drawRLC()"><strong id="rlcRv">20</strong></label>
+<label style="font-size:0.9em;">L (mH): <input type="range" id="rlcL" min="1" max="200" value="100" step="1" oninput="drawRLC()"><strong id="rlcLv">100</strong></label>
+<label style="font-size:0.9em;">C (μF): <input type="range" id="rlcC" min="1" max="200" value="100" step="1" oninput="drawRLC()"><strong id="rlcCv">100</strong></label>
+</div>
+<canvas height="360" id="rlcCanvas" width="690"></canvas>
+<div id="rlcInfo" style="font-size:0.9em;margin-top:6px;padding:8px;background:#F8F6FF;border-radius:6px;"></div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+<style>
+.msim-box{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:12px;margin:1rem 0;position:relative;transition:all 0.3s ease;}
+.msim-box.msim-fs{position:fixed!important;top:0;left:0;width:100vw!important;height:100vh!important;z-index:9999;border-radius:0;overflow-y:auto;padding:20px 30px;box-sizing:border-box;}
+.msim-btn{position:absolute;top:8px;right:8px;padding:4px 12px;border:1px solid #5A3EED;border-radius:4px;background:#F8F6FF;color:#5A3EED;cursor:pointer;font-size:0.8em;font-weight:600;z-index:10;}
+.msim-btn:hover{background:#5A3EED;color:#fff;}
+.msim-box.msim-fs .msim-btn{position:fixed;top:12px;right:12px;}
+</style>
+<script>
+function toggleFS(btn){var box=btn.closest('.msim-box');box.classList.toggle('msim-fs');btn.textContent=box.classList.contains('msim-fs')?'✕ Back to Doc':'⛶ Fullscreen';}
+</script>
+<script>
+var rlcChart=null;
+function stepResp(alpha,w0,t){
+  var z=alpha/w0;
+  if(Math.abs(z-1)<0.01){return 1-(1+w0*t)*Math.exp(-w0*t);}
+  if(z<1){var wd=w0*Math.sqrt(1-z*z);return 1-(1/Math.sqrt(1-z*z))*Math.exp(-alpha*t)*Math.sin(wd*t+Math.acos(z));}
+  var d=Math.sqrt(alpha*alpha-w0*w0),s1=-alpha+d,s2=-alpha-d;
+  return 1+s2/(s1-s2)*Math.exp(s1*t)+s1/(s2-s1)*Math.exp(s2*t);
+}
+function dampLabel(z){return Math.abs(z-1)<0.02?'Crit. Damped':z<1?'Underdamped':'Overdamped';}
+function drawRLC(){
+  var R=+document.getElementById('rlcR').value,Lm=+document.getElementById('rlcL').value,Cu=+document.getElementById('rlcC').value;
+  document.getElementById('rlcRv').textContent=R;document.getElementById('rlcLv').textContent=Lm;document.getElementById('rlcCv').textContent=Cu;
+  var L=Lm*1e-3,C=Cu*1e-6,w0=1/Math.sqrt(L*C);
+  var aS=R/(2*L),aP=1/(2*R*C),zS=aS/w0,zP=aP/w0;
+  var tMax=Math.max(5/aS,5/aP,6*Math.PI/w0);tMax=Math.min(tMax,2);
+  var N=300,labels=[],sD=[],pD=[],ssLine=[];
+  for(var i=0;i<=N;i++){var t=i*tMax/N;labels.push((t*1000).toFixed(1));sD.push(stepResp(aS,w0,t));pD.push(stepResp(aP,w0,t));ssLine.push(1);}
+  var datasets=[
+    {label:'Series (ζₛ='+zS.toFixed(3)+', '+dampLabel(zS)+')',data:sD,borderColor:'#5A3EED',borderWidth:2.5,pointRadius:0,fill:false},
+    {label:'Parallel (ζₚ='+zP.toFixed(3)+', '+dampLabel(zP)+')',data:pD,borderColor:'#E53935',borderWidth:2.5,pointRadius:0,fill:false},
+    {label:'Steady State = 1',data:ssLine,borderColor:'#D4A017',borderWidth:1,borderDash:[6,4],pointRadius:0,fill:false}
+  ];
+  if(rlcChart){rlcChart.data.labels=labels;rlcChart.data.datasets=datasets;rlcChart.options.plugins.title.text='Series vs Parallel RLC Step Response';rlcChart.update();}
+  else{rlcChart=new Chart(document.getElementById('rlcCanvas'),{type:'line',data:{labels:labels,datasets:datasets},options:{responsive:true,animation:{duration:0},plugins:{title:{display:true,text:'Series vs Parallel RLC Step Response',font:{size:15},color:'#333'},legend:{labels:{font:{size:11}}}},scales:{x:{title:{display:true,text:'Time (ms)',font:{size:12}},ticks:{maxTicksLimit:10,font:{size:10}}},y:{title:{display:true,text:'Normalized Voltage',font:{size:12}},min:-0.3,max:2.0,ticks:{font:{size:10}}}}}});}
+  document.getElementById('rlcInfo').innerHTML='<b>ω₀ = '+(w0).toFixed(1)+' rad/s</b> &nbsp;|&nbsp; <span style="color:#5A3EED">Series: αₛ='+aS.toFixed(1)+', ζₛ='+zS.toFixed(3)+'</span> &nbsp;|&nbsp; <span style="color:#E53935">Parallel: αₚ='+aP.toFixed(1)+', ζₚ='+zP.toFixed(3)+'</span>';
+}
+drawRLC();
+</script>
+<hr />
+<h2 id="74-characteristic-equation" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">7.4 The Characteristic Equation</h2>
+<p>To solve the homogeneous equation, assume <span class="arithmatex">\(x = Ae^{st}\)</span>. Substituting gives the <strong>characteristic equation</strong>:</p>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<div class="arithmatex">\[s^2 + 2\alpha s + \omega_0^2 = 0\]</div>
+<div class="arithmatex">\[s_{1,2} = -\alpha \pm \sqrt{\alpha^2 - \omega_0^2}\]</div>
+</div>
+<p>The nature of the roots determines everything about the circuit response:</p>
+<table>
+<thead>
+<tr>
+<th>Condition</th>
+<th>Root Type</th>
+<th>Response Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="arithmatex">\(\alpha &gt; \omega_0\)</span></td>
+<td>Two distinct real roots</td>
+<td>Overdamped</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(\alpha = \omega_0\)</span></td>
+<td>Repeated real root</td>
+<td>Critically damped</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(\alpha &lt; \omega_0\)</span></td>
+<td>Complex conjugate roots</td>
+<td>Underdamped</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="75-natural-frequency" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">7.5 Natural Frequency</h2>
+<p>The <strong>natural frequency</strong> <span class="arithmatex">\(\omega_0\)</span> is the frequency at which an undamped circuit would oscillate forever — the circuit's preferred rhythm:</p>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<div class="arithmatex">\[\omega_0 = \frac{1}{\sqrt{LC}} \text{ rad/s} \qquad f_0 = \frac{1}{2\pi\sqrt{LC}} \text{ Hz}\]</div>
+</div>
+<p>The natural frequency depends only on L and C, not on R. Resistance controls how quickly oscillations die out, but not their frequency.</p>
+<table>
+<thead>
+<tr>
+<th>L (mH)</th>
+<th>C (μF)</th>
+<th>f₀ (Hz)</th>
+<th>Audio Equivalent</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>100</td>
+<td>100</td>
+<td>50.3</td>
+<td>Low bass hum</td>
+</tr>
+<tr>
+<td>10</td>
+<td>10</td>
+<td>503</td>
+<td>Mid-range tone</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>5,033</td>
+<td>High-pitched whistle</td>
+</tr>
+<tr>
+<td>0.1</td>
+<td>0.1</td>
+<td>50,330</td>
+<td>Ultrasonic</td>
+</tr>
+</tbody>
+</table>
+<div class="msim-box"><button class="msim-btn" onclick="toggleFS(this)">⛶ Fullscreen</button>
+<div style="display:flex;gap:16px;flex-wrap:wrap;margin-bottom:6px;">
+<label style="font-size:0.9em;">L (mH): <input type="range" id="nfL" min="0.1" max="100" value="10" step="0.1" oninput="updateNF()"> <strong id="nfLval">10.0</strong></label>
+<label style="font-size:0.9em;">C (μF): <input type="range" id="nfC" min="0.01" max="100" value="1" step="0.01" oninput="updateNF()"> <strong id="nfCval">1.00</strong></label>
+</div>
+<div id="nfResult" style="padding:10px;background:#F8F6FF;border-radius:8px;margin-bottom:8px;font-size:0.95em;"></div>
+<canvas height="250" id="nfRawCanvas" style="display:block;width:100%;border-radius:6px;" width="690"></canvas>
+</div>
+<script>
+function updateNF(){
+  var Lm=+document.getElementById('nfL').value,Cu=+document.getElementById('nfC').value;
+  document.getElementById('nfLval').textContent=Lm.toFixed(1);
+  document.getElementById('nfCval').textContent=Cu.toFixed(2);
+  var L=Lm*1e-3,C=Cu*1e-6,w0=1/Math.sqrt(L*C),f0=w0/(2*Math.PI),T=1/f0;
+  var tUnit='ms',tDiv=1000;if(T<0.001){tUnit='μs';tDiv=1e6;}
+  document.getElementById('nfResult').innerHTML=
+    '<b>Formula:</b> ω₀ = 1/√(LC) = 1/√('+(L*C).toExponential(3)+') = <span style="color:#5A3EED;font-size:1.15em"><b>'+w0.toFixed(1)+' rad/s</b></span><br>'+
+    '<b>f₀</b> = ω₀/(2π) = <span style="color:#D4A017;font-size:1.15em"><b>'+f0.toFixed(1)+' Hz</b></span> &nbsp;|&nbsp; <b>T</b> = '+(T*tDiv).toFixed(3)+' '+tUnit+'<br>'+
+    '<b>L</b> = '+Lm+' mH &nbsp;|&nbsp; <b>C</b> = '+Cu+' μF';
+  var cv=document.getElementById('nfRawCanvas'),ctx=cv.getContext('2d');
+  var W=cv.width,H=cv.height,ml=55,mr=15,mt=30,mb=35,pw=W-ml-mr,ph=H-mt-mb;
+  ctx.clearRect(0,0,W,H);
+  ctx.fillStyle='#FAFAFA';ctx.fillRect(ml,mt,pw,ph);
+  ctx.strokeStyle='#E8E8E8';ctx.lineWidth=1;
+  for(var g=0;g<=4;g++){var gy=mt+g*ph/4;ctx.beginPath();ctx.moveTo(ml,gy);ctx.lineTo(ml+pw,gy);ctx.stroke();}
+  for(var g=0;g<=6;g++){var gx=ml+g*pw/6;ctx.beginPath();ctx.moveTo(gx,mt);ctx.lineTo(gx,mt+ph);ctx.stroke();}
+  ctx.strokeStyle='#333';ctx.lineWidth=1.5;
+  ctx.beginPath();ctx.moveTo(ml,mt);ctx.lineTo(ml,mt+ph);ctx.lineTo(ml+pw,mt+ph);ctx.stroke();
+  var zeroY=mt+ph/2;
+  ctx.strokeStyle='#ccc';ctx.lineWidth=1;ctx.setLineDash([4,4]);
+  ctx.beginPath();ctx.moveTo(ml,zeroY);ctx.lineTo(ml+pw,zeroY);ctx.stroke();
+  ctx.setLineDash([]);
+  var tMax=3*T;
+  ctx.strokeStyle='#5A3EED';ctx.lineWidth=2.5;ctx.beginPath();
+  for(var i=0;i<=300;i++){
+    var t=i*tMax/300,x=ml+i*pw/300,y=zeroY-Math.cos(w0*t)*(ph/2-5);
+    if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);
+  }
+  ctx.stroke();
+  ctx.fillStyle='#333';ctx.font='12px Arial';ctx.textAlign='center';
+  ctx.fillText('Time ('+tUnit+')',ml+pw/2,H-3);
+  ctx.font='10px Arial';
+  for(var g=0;g<=6;g++){var tv=(g*tMax/6*tDiv).toFixed(1);ctx.fillText(tv,ml+g*pw/6,mt+ph+14);}
+  ctx.textAlign='right';
+  ctx.fillText('1.0',ml-4,mt+8);ctx.fillText('0',ml-4,zeroY+4);ctx.fillText('-1.0',ml-4,mt+ph+2);
+  ctx.save();ctx.translate(12,mt+ph/2);ctx.rotate(-Math.PI/2);ctx.textAlign='center';ctx.font='12px Arial';ctx.fillText('Amplitude',0,0);ctx.restore();
+  ctx.fillStyle='#333';ctx.font='bold 13px Arial';ctx.textAlign='center';
+  ctx.fillText('Undamped Oscillation at f₀ = '+f0.toFixed(1)+' Hz  (T = '+(T*tDiv).toFixed(2)+' '+tUnit+')',W/2,18);
+}
+updateNF();
+</script>
+<hr />
+<h2 id="76-damping-ratio" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">7.6 Damping Ratio</h2>
+<p>The <strong>damping ratio</strong> <span class="arithmatex">\(\zeta\)</span> is the single dimensionless number that classifies circuit response:</p>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<div class="arithmatex">\[\zeta = \frac{\alpha}{\omega_0}\]</div>
+<p>Series RLC: <span class="arithmatex">\(\zeta = \dfrac{R}{2}\sqrt{\dfrac{C}{L}}\)</span> &nbsp;&nbsp; Parallel RLC: <span class="arithmatex">\(\zeta = \dfrac{1}{2R}\sqrt{\dfrac{L}{C}}\)</span></p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Damping Ratio</th>
+<th>Condition</th>
+<th>Response Type</th>
+<th>Behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="arithmatex">\(\zeta &gt; 1\)</span></td>
+<td><span class="arithmatex">\(\alpha &gt; \omega_0\)</span></td>
+<td>Overdamped</td>
+<td>Slow, no oscillation</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(\zeta = 1\)</span></td>
+<td><span class="arithmatex">\(\alpha = \omega_0\)</span></td>
+<td>Critically damped</td>
+<td>Fastest without overshoot</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(0 &lt; \zeta &lt; 1\)</span></td>
+<td><span class="arithmatex">\(\alpha &lt; \omega_0\)</span></td>
+<td>Underdamped</td>
+<td>Oscillation with decay</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(\zeta = 0\)</span></td>
+<td><span class="arithmatex">\(\alpha = 0\)</span></td>
+<td>Undamped</td>
+<td>Endless oscillation</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="77-overdamped-response" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">7.7 Overdamped Response (\(\zeta &gt; 1\))</h2>
+<p>When <span class="arithmatex">\(\zeta &gt; 1\)</span>, the characteristic equation has two distinct negative real roots. The general solution is:</p>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<div class="arithmatex">\[x(t) = A_1 e^{s_1 t} + A_2 e^{s_2 t}\]</div>
+<p>where <span class="arithmatex">\(s_{1,2} = -\alpha \pm \sqrt{\alpha^2 - \omega_0^2}\)</span> (both negative real)</p>
+</div>
+<p>The response creeps slowly toward its final value with no oscillation. Think of a door closer adjusted too tight — it closes without bouncing, but takes forever. Overdamping is preferred in precision instruments and safety systems where overshoot is unacceptable.</p>
+<div class="msim-box"><button class="msim-btn" onclick="toggleFS(this)">⛶ Fullscreen</button>
+<div style="display:flex;gap:16px;flex-wrap:wrap;margin-bottom:6px;">
+<label style="font-size:0.9em;">ζ: <input type="range" id="odZ" min="1.05" max="5" value="2" step="0.05" oninput="drawOD()"> <strong id="odZv">2.00</strong></label>
+<label style="font-size:0.9em;">ω₀: <input type="range" id="odW" min="1" max="20" value="5" step="0.5" oninput="drawOD()"> <strong id="odWv">5.0</strong></label>
+</div>
+<canvas height="320" id="overdampedCanvas" width="690"></canvas>
+<div id="odInfo" style="font-size:0.85em;margin-top:4px;color:#555;"></div>
+</div>
+<script>
+var odChart=null;
+function drawOD(){
+  var z=+document.getElementById('odZ').value,w0=+document.getElementById('odW').value;
+  document.getElementById('odZv').textContent=z.toFixed(2);document.getElementById('odWv').textContent=w0.toFixed(1);
+  var a=z*w0,d=Math.sqrt(a*a-w0*w0),s1=-a+d,s2=-a-d;
+  var tMax=5/Math.abs(s1),N=250,labels=[],data=[],ssLine=[];
+  for(var i=0;i<=N;i++){var t=i*tMax/N;labels.push(t.toFixed(3));
+    data.push(1+s2/(s1-s2)*Math.exp(s1*t)+s1/(s2-s1)*Math.exp(s2*t));ssLine.push(1);}
+  var ds=[
+    {label:'Overdamped Response (ζ='+z.toFixed(2)+')',data:data,borderColor:'#5A3EED',borderWidth:2.5,pointRadius:0,fill:false},
+    {label:'Steady State = 1',data:ssLine,borderColor:'#D4A017',borderWidth:1,borderDash:[6,4],pointRadius:0,fill:false}
+  ];
+  if(odChart){odChart.data.labels=labels;odChart.data.datasets=ds;odChart.update();}
+  else{odChart=new Chart(document.getElementById('overdampedCanvas'),{type:'line',data:{labels:labels,datasets:ds},options:{responsive:true,animation:{duration:0},plugins:{title:{display:true,text:'Overdamped Step Response',font:{size:14},color:'#333'},legend:{labels:{font:{size:11}}}},scales:{x:{title:{display:true,text:'Time (s)'},ticks:{maxTicksLimit:10,font:{size:10}}},y:{title:{display:true,text:'Voltage (V)'},min:0,max:1.15}}}});}
+  document.getElementById('odInfo').innerHTML='s₁ = '+s1.toFixed(2)+' &nbsp;|&nbsp; s₂ = '+s2.toFixed(2)+' &nbsp;|&nbsp; α = '+a.toFixed(2)+' &nbsp;|&nbsp; No oscillation — two real negative roots';
+}
+drawOD();
+</script>
+<hr />
+<h2 id="78-underdamped-response" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">7.8 Underdamped Response (\(0 &lt; \zeta &lt; 1\))</h2>
+<p>When <span class="arithmatex">\(\zeta &lt; 1\)</span>, the characteristic equation has complex conjugate roots, giving oscillatory behavior:</p>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<div class="arithmatex">\[s_{1,2} = -\alpha \pm j\omega_d \qquad \omega_d = \omega_0\sqrt{1 - \zeta^2}\]</div>
+<div class="arithmatex">\[x(t) = Ce^{-\alpha t}\cos(\omega_d t + \phi)\]</div>
+</div>
+<p>The response oscillates at the <strong>damped natural frequency</strong> <span class="arithmatex">\(\omega_d\)</span> while decaying with time constant <span class="arithmatex">\(1/\alpha\)</span>. Two key performance metrics:</p>
+<p><strong>Percent Overshoot:</strong></p>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<div class="arithmatex">\[PO = e^{-\pi\zeta/\sqrt{1-\zeta^2}} \times 100\%\]</div>
+<p><strong>Settling time</strong> (to within 2%): <span class="arithmatex">\(\displaystyle t_s \approx \frac{4}{\alpha} = \frac{4}{\zeta\omega_0}\)</span></p>
+</div>
+<div class="msim-box"><button class="msim-btn" onclick="toggleFS(this)">⛶ Fullscreen</button>
+<div style="display:flex;gap:16px;flex-wrap:wrap;margin-bottom:6px;">
+<label style="font-size:0.9em;">ζ: <input type="range" id="udZ" min="0.02" max="0.95" value="0.2" step="0.02" oninput="drawUD()"> <strong id="udZv">0.20</strong></label>
+<label style="font-size:0.9em;">ω₀: <input type="range" id="udW" min="1" max="20" value="5" step="0.5" oninput="drawUD()"> <strong id="udWv">5.0</strong></label>
+</div>
+<canvas height="340" id="underdampedCanvas" width="690"></canvas>
+<div id="udInfo" style="font-size:0.85em;margin-top:4px;padding:6px;background:#FFF8E1;border-radius:6px;"></div>
+</div>
+<script>
+var udChart=null;
+function drawUD(){
+  var z=+document.getElementById('udZ').value,w0=+document.getElementById('udW').value;
+  document.getElementById('udZv').textContent=z.toFixed(2);document.getElementById('udWv').textContent=w0.toFixed(1);
+  var a=z*w0,wd=w0*Math.sqrt(1-z*z),phi=Math.acos(z);
+  var os=100*Math.exp(-Math.PI*z/Math.sqrt(1-z*z)),ts=4/(z*w0);
+  var tMax=Math.max(ts*1.5,8/a),N=350,labels=[],resp=[],envU=[],envL=[],ssLine=[];
+  for(var i=0;i<=N;i++){var t=i*tMax/N;labels.push(t.toFixed(3));
+    var e=Math.exp(-a*t)/Math.sqrt(1-z*z);
+    resp.push(1-e*Math.sin(wd*t+phi));envU.push(1+e);envL.push(1-e);ssLine.push(1);}
+  var ds=[
+    {label:'Response (ζ='+z.toFixed(2)+')',data:resp,borderColor:'#5A3EED',borderWidth:2.5,pointRadius:0,fill:false},
+    {label:'Decay Envelope',data:envU,borderColor:'#D4A017',borderWidth:1.5,borderDash:[6,4],pointRadius:0,fill:false},
+    {label:'',data:envL,borderColor:'#D4A017',borderWidth:1.5,borderDash:[6,4],pointRadius:0,fill:false},
+    {label:'Steady State',data:ssLine,borderColor:'#43A047',borderWidth:1,borderDash:[4,4],pointRadius:0,fill:false}
+  ];
+  if(udChart){udChart.data.labels=labels;udChart.data.datasets=ds;udChart.options.plugins.title.text='Underdamped Oscillation Anatomy';udChart.update();}
+  else{udChart=new Chart(document.getElementById('underdampedCanvas'),{type:'line',data:{labels:labels,datasets:ds},options:{responsive:true,animation:{duration:0},plugins:{title:{display:true,text:'Underdamped Oscillation Anatomy',font:{size:14},color:'#333'},legend:{labels:{font:{size:10},filter:function(item){return item.text!=='';}}}},scales:{x:{title:{display:true,text:'Time (s)'},ticks:{maxTicksLimit:10,font:{size:10}}},y:{title:{display:true,text:'Voltage (V)'},min:-0.4,max:2.2}}}});}
+  document.getElementById('udInfo').innerHTML='<b>Overshoot:</b> <span style="color:#E53935">'+os.toFixed(1)+'%</span> &nbsp;|&nbsp; <b>Settling Time (2%):</b> '+ts.toFixed(3)+' s &nbsp;|&nbsp; <b>ω_d:</b> '+wd.toFixed(2)+' rad/s &nbsp;|&nbsp; <b>f_d:</b> '+(wd/(2*Math.PI)).toFixed(2)+' Hz';
+}
+drawUD();
+</script>
+<hr />
+<h2 id="79-critically-damped-response" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">7.9 Critically Damped Response (\(\zeta = 1\))</h2>
+<p>When <span class="arithmatex">\(\zeta = 1\)</span>, there is a repeated root <span class="arithmatex">\(s = -\alpha = -\omega_0\)</span>. The general solution is:</p>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<div class="arithmatex">\[x(t) = (A + Bt)e^{-\omega_0 t}\]</div>
+</div>
+<p>Critical damping gives the fastest possible return to equilibrium <em>without</em> overshoot. It's the design target for galvanometers, analog meters, automotive suspension, and camera stabilization — any application where overshoot is unacceptable but speed matters.</p>
+<div class="msim-box"><button class="msim-btn" onclick="toggleFS(this)">⛶ Fullscreen</button>
+<div style="display:flex;gap:16px;flex-wrap:wrap;margin-bottom:6px;">
+<label style="font-size:0.9em;">ω₀: <input type="range" id="dcW" min="1" max="20" value="5" step="0.5" oninput="drawDC()"> <strong id="dcWv">5.0</strong></label>
+<label style="font-size:0.9em;">ζ (under): <input type="range" id="dcZu" min="0.05" max="0.9" value="0.2" step="0.05" oninput="drawDC()"> <strong id="dcZuv">0.20</strong></label>
+<label style="font-size:0.9em;">ζ (over): <input type="range" id="dcZo" min="1.5" max="5" value="3" step="0.1" oninput="drawDC()"> <strong id="dcZov">3.0</strong></label>
+</div>
+<canvas height="340" id="dampingCanvas" width="690"></canvas>
+</div>
+<script>
+var dcChart=null;
+function drawDC(){
+  var w0=+document.getElementById('dcW').value,zu=+document.getElementById('dcZu').value,zo=+document.getElementById('dcZo').value;
+  document.getElementById('dcWv').textContent=w0.toFixed(1);document.getElementById('dcZuv').textContent=zu.toFixed(2);document.getElementById('dcZov').textContent=zo.toFixed(1);
+  var tMax=Math.max(4/(zu*w0),4/w0,4/(zo*w0)),N=300,labels=[],under=[],cr=[],over=[],ss=[];
+  for(var i=0;i<=N;i++){var t=i*tMax/N;labels.push(t.toFixed(3));
+    var au=zu*w0,wdu=w0*Math.sqrt(1-zu*zu);
+    under.push(1-(1/Math.sqrt(1-zu*zu))*Math.exp(-au*t)*Math.sin(wdu*t+Math.acos(zu)));
+    cr.push(1-(1+w0*t)*Math.exp(-w0*t));
+    var ao=zo*w0,d=Math.sqrt(ao*ao-w0*w0),s1=-ao+d,s2=-ao-d;
+    over.push(1+s2/(s1-s2)*Math.exp(s1*t)+s1/(s2-s1)*Math.exp(s2*t));ss.push(1);}
+  var ds=[
+    {label:'Underdamped (ζ='+zu.toFixed(2)+') — oscillates',data:under,borderColor:'#5A3EED',borderWidth:2.5,pointRadius:0,fill:false},
+    {label:'Critically Damped (ζ=1.0) — fastest, no overshoot',data:cr,borderColor:'#D4A017',borderWidth:2.5,pointRadius:0,fill:false},
+    {label:'Overdamped (ζ='+zo.toFixed(1)+') — slow, no oscillation',data:over,borderColor:'#E53935',borderWidth:2.5,pointRadius:0,fill:false},
+    {label:'Steady State',data:ss,borderColor:'#999',borderWidth:1,borderDash:[4,4],pointRadius:0,fill:false}
+  ];
+  if(dcChart){dcChart.data.labels=labels;dcChart.data.datasets=ds;dcChart.update();}
+  else{dcChart=new Chart(document.getElementById('dampingCanvas'),{type:'line',data:{labels:labels,datasets:ds},options:{responsive:true,animation:{duration:0},plugins:{title:{display:true,text:'Three Damping Regimes Comparison',font:{size:14},color:'#333'},legend:{labels:{font:{size:10}}}},scales:{x:{title:{display:true,text:'Time (s)'},ticks:{maxTicksLimit:10,font:{size:10}}},y:{title:{display:true,text:'Voltage (V)'},min:-0.3,max:2.0}}}});}
+}
+drawDC();
+</script>
+<hr />
+<h2 id="710-resonant-frequency" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">7.10 Resonant Frequency</h2>
+<p><strong>Resonance</strong> occurs when inductive reactance equals capacitive reactance:</p>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<div class="arithmatex">\[X_L = X_C \implies \omega_r L = \frac{1}{\omega_r C} \implies \omega_r = \frac{1}{\sqrt{LC}} = \omega_0\]</div>
+</div>
+<p>At resonance in a <strong>series RLC</strong> circuit: impedance is minimum (= R), current is maximum, and <span class="arithmatex">\(V_L = V_C\)</span> (they cancel). Voltage across L or C individually can <em>exceed</em> the source voltage!</p>
+<p>At resonance in a <strong>parallel RLC</strong> circuit: impedance is maximum, current from source is minimum, and circulating current between L and C can exceed source current.</p>
+<div class="msim-box"><button class="msim-btn" onclick="toggleFS(this)">⛶ Fullscreen</button>
+<div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:6px;">
+<label style="font-size:0.9em;">R (Ω): <input type="range" id="resR" min="1" max="200" value="10" step="1" oninput="drawRes()"> <strong id="resRv">10</strong></label>
+<label style="font-size:0.9em;">L (mH): <input type="range" id="resL" min="1" max="100" value="10" step="1" oninput="drawRes()"> <strong id="resLv">10</strong></label>
+<label style="font-size:0.9em;">C (μF): <input type="range" id="resC" min="0.1" max="10" value="1" step="0.1" oninput="drawRes()"> <strong id="resCv">1.0</strong></label>
+</div>
+<canvas height="340" id="resonanceCanvas" width="690"></canvas>
+<div id="resInfo" style="font-size:0.9em;margin-top:4px;padding:6px;background:#F8F6FF;border-radius:6px;"></div>
+</div>
+<script>
+var resChart=null;
+function drawRes(){
+  var R=+document.getElementById('resR').value,Lm=+document.getElementById('resL').value,Cu=+document.getElementById('resC').value;
+  document.getElementById('resRv').textContent=R;document.getElementById('resLv').textContent=Lm;document.getElementById('resCv').textContent=Cu.toFixed(1);
+  var L=Lm*1e-3,C=Cu*1e-6,f0=1/(2*Math.PI*Math.sqrt(L*C)),Q=(1/R)*Math.sqrt(L/C),BW=f0/Q;
+  var fMin=f0*0.05,fMax=f0*20,N=350,labels=[],mag=[],db3Line=[];
+  var peak=0;
+  for(var i=0;i<=N;i++){var f=fMin*Math.pow(fMax/fMin,i/N);labels.push(f.toFixed(0));
+    var XL=2*Math.PI*f*L,XC=1/(2*Math.PI*f*C),H=1/Math.sqrt(R*R+(XL-XC)*(XL-XC));
+    if(H>peak)peak=H;mag.push(H);}
+  for(var i=0;i<mag.length;i++){mag[i]/=peak;db3Line.push(0.707);}
+  var ds=[
+    {label:'Normalized |I/V|',data:mag,borderColor:'#5A3EED',borderWidth:2.5,pointRadius:0,fill:false},
+    {label:'-3dB (0.707)',data:db3Line,borderColor:'#E53935',borderWidth:1,borderDash:[5,5],pointRadius:0,fill:false}
+  ];
+  if(resChart){resChart.data.labels=labels;resChart.data.datasets=ds;resChart.update();}
+  else{resChart=new Chart(document.getElementById('resonanceCanvas'),{type:'line',data:{labels:labels,datasets:ds},options:{responsive:true,animation:{duration:0},plugins:{title:{display:true,text:'Series RLC Resonance Explorer',font:{size:14},color:'#333'},legend:{labels:{font:{size:10}}}},scales:{x:{title:{display:true,text:'Frequency (Hz)'},ticks:{maxTicksLimit:10,font:{size:10}}},y:{title:{display:true,text:'Normalized |I|'},min:0,max:1.15}}}});}
+  document.getElementById('resInfo').innerHTML='<b style="color:#5A3EED">f₀ = '+f0.toFixed(1)+' Hz</b> &nbsp;|&nbsp; <b style="color:#D4A017">Q = '+Q.toFixed(2)+'</b> &nbsp;|&nbsp; <b>BW = '+BW.toFixed(1)+' Hz</b> &nbsp;|&nbsp; f_low ≈ '+(f0-BW/2).toFixed(1)+' Hz, f_high ≈ '+(f0+BW/2).toFixed(1)+' Hz';
+}
+drawRes();
+</script>
+<hr />
+<h2 id="711-quality-factor" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">7.11 Quality Factor</h2>
+<p>The <strong>quality factor</strong> Q characterizes the sharpness of resonance and efficiency of energy storage:</p>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<p>Series RLC: <span class="arithmatex">\(\displaystyle Q = \frac{\omega_0 L}{R} = \frac{1}{R}\sqrt{\frac{L}{C}}\)</span></p>
+<p>Parallel RLC: <span class="arithmatex">\(\displaystyle Q = \omega_0 CR = R\sqrt{\frac{C}{L}}\)</span></p>
+<p>Relationship to damping: <span class="arithmatex">\(\displaystyle Q = \frac{1}{2\zeta}\)</span></p>
+</div>
+<p>Q also defines bandwidth:</p>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<div class="arithmatex">\[BW = \frac{f_0}{Q}\]</div>
+</div>
+<table>
+<thead>
+<tr>
+<th>Q</th>
+<th>Bandwidth (at f₀ = 1 MHz)</th>
+<th>Application</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>10</td>
+<td>100 kHz</td>
+<td>Audio filter</td>
+</tr>
+<tr>
+<td>100</td>
+<td>10 kHz</td>
+<td>IF stage</td>
+</tr>
+<tr>
+<td>1000</td>
+<td>1 kHz</td>
+<td>Crystal oscillator</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition warning">
+<p class="admonition-title">Practical Q limits</p>
+<p>Real inductors have winding resistance that caps practical Q at 100–200 for discrete LC circuits. Higher Q requires quartz crystals or mechanical resonators.</p>
+</div>
+<hr />
+<h2 id="712-chapter-summary" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">7.12 Key Formulas Summary</h2>
+<div style="background: #F8F6FF; border: 2px solid #D4C8FF; border-radius: 12px; padding: 20px 28px; margin: 1rem 0;">
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Series RLC</th>
+<th>Parallel RLC</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Damping coefficient α</td>
+<td><span class="arithmatex">\(R/2L\)</span></td>
+<td><span class="arithmatex">\(1/2RC\)</span></td>
+</tr>
+<tr>
+<td>Natural frequency ω₀</td>
+<td><span class="arithmatex">\(1/\sqrt{LC}\)</span></td>
+<td><span class="arithmatex">\(1/\sqrt{LC}\)</span></td>
+</tr>
+<tr>
+<td>Damping ratio ζ</td>
+<td><span class="arithmatex">\((R/2)\sqrt{C/L}\)</span></td>
+<td><span class="arithmatex">\((1/2R)\sqrt{L/C}\)</span></td>
+</tr>
+<tr>
+<td>Quality factor Q</td>
+<td><span class="arithmatex">\((1/R)\sqrt{L/C}\)</span></td>
+<td><span class="arithmatex">\(R\sqrt{C/L}\)</span></td>
+</tr>
+<tr>
+<td>Bandwidth BW</td>
+<td><span class="arithmatex">\(R/L\)</span></td>
+<td><span class="arithmatex">\(1/RC\)</span></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Response classification:</strong></p>
+<ul>
+<li>Overdamped (<span class="arithmatex">\(\zeta &gt; 1\)</span>): <span class="arithmatex">\(x(t) = A_1 e^{s_1 t} + A_2 e^{s_2 t}\)</span>, two distinct real roots</li>
+<li>Critically damped (<span class="arithmatex">\(\zeta = 1\)</span>): <span class="arithmatex">\(x(t) = (A+Bt)e^{-\omega_0 t}\)</span>, repeated root</li>
+<li>Underdamped (<span class="arithmatex">\(\zeta &lt; 1\)</span>): <span class="arithmatex">\(x(t) = Ce^{-\alpha t}\cos(\omega_d t + \phi)\)</span>, <span class="arithmatex">\(\omega_d = \omega_0\sqrt{1-\zeta^2}\)</span></li>
+</ul>
+<p><strong>Key relationships:</strong> <span class="arithmatex">\(Q = 1/(2\zeta)\)</span>, <span class="arithmatex">\(\quad BW = f_0/Q\)</span>, <span class="arithmatex">\(\quad PO = e^{-\pi\zeta/\sqrt{1-\zeta^2}} \times 100\%\)</span></p>
+</div>
+</div>
+
+
+
+
+
+
+
+  
+  
+
+
+
+  
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../" class="md-footer__link md-footer__link--prev" aria-label="Previous: Overview">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Overview
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../quiz/" class="md-footer__link md-footer__link--next" aria-label="Next: Quiz and Problems">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Quiz and Problems
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2024, 2025, 2026 Dan McCreary. Licensed under <a href="license/">CC BY-NC-SA 4.0</a> for non-commercial use.
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["content.code.copy", "navigation.expand", "navigation.path", "navigation.prune", "navigation.indexes", "toc.follow", "navigation.top", "navigation.footer", "content.action.edit"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../../js/extra.js"></script>
+      
+        <script src="../../../js/audio-reader.js"></script>
+      
+        <script src="../../../js/katex.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+      
+    
+  </body>
+</html>
