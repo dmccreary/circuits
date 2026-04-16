@@ -52,6 +52,12 @@ In this chapter, you'll learn to describe these dancing signals mathematically, 
 
 A **sinusoidal waveform** (or sinusoid) is a mathematical curve describing smooth, repetitive oscillation. It's defined by the sine or cosine function:
 
+<div class="mascot rezi" markdown>
+**Sinusoidal Waveform**
+
+A signal that follows a sine or cosine curve: \(v(t) = V_m \sin(\omega t + \phi)\), where \(V_m\) is the peak amplitude, \(\omega\) is the angular frequency in rad/s, and \(\phi\) is the phase angle.
+</div>
+
 \[v(t) = V_m \sin(\omega t + \phi)\]
 
 Or equivalently:
@@ -148,8 +154,11 @@ Different applications require different ways of characterizing amplitude:
 | Peak-to-Peak | \(V_{pp} = 2V_m\) | 340 V |
 | Average (half-cycle) | \(V_{avg} = 2V_m/\pi\) | 108 V |
 
-!!! tip "Why RMS Matters"
-    RMS (Root Mean Square) is the most important AC measurement because it directly relates to power. A 120V RMS AC source delivers the same heating power to a resistor as a 120V DC source. This is why your wall outlet is rated at 120V RMS—that's the effective voltage for power delivery.
+<div class="mascot cappy" markdown>
+**Why RMS Matters**
+
+RMS (Root Mean Square) is the most important AC measurement because it directly relates to power. A 120V RMS AC source delivers the same heating power to a resistor as a 120V DC source. This is why your wall outlet is rated at 120V RMS — that's the effective voltage for power delivery.
+</div>
 
 ### Frequency and Period
 
@@ -184,6 +193,12 @@ Different applications require different ways of characterizing amplitude:
 \[v_2(t) = V_m \sin(\omega t + 90°) = V_m \cos(\omega t)\]
 
 When we say "\(v_2\) leads \(v_1\) by 90°," we mean \(v_2\) reaches its peak earlier in time.
+
+<div class="mascot sparky" markdown>
+**Phase angle units — watch out!**
+
+Phase angles can be expressed in **degrees** or **radians**. Never mix them in a calculation. When using a calculator, check whether it's in DEG or RAD mode. A common mistake: plugging degrees into \(\sin(\omega t + \phi)\) when \(\omega t\) is in radians.
+</div>
 
 #### Diagram: Phase Relationship Visualizer
 
@@ -401,6 +416,12 @@ Implementation: p5.js
 
 If you've been dreading complex numbers, prepare for a surprise: they're going to make your life *easier*. Complex numbers provide a compact way to represent both magnitude and phase in a single mathematical object.
 
+<div class="mascot rezi" markdown>
+**Complex Number**
+
+A number of the form \(z = a + jb\), where \(a\) is the **real part** and \(b\) is the **imaginary part**. In engineering, \(j = \sqrt{-1}\) (not \(i\), which is reserved for current).
+</div>
+
 **Definition:** A complex number \(z\) has a real part and an imaginary part:
 \[z = a + jb\]
 
@@ -463,8 +484,11 @@ Division: \(\frac{r_1 \angle \theta_1}{r_2 \angle \theta_2} = \frac{r_1}{r_2} \a
 | Rectangular | Polar | \(r = \sqrt{a^2+b^2}\), \(\theta = \tan^{-1}(b/a)\) |
 | Polar | Rectangular | \(a = r\cos\theta\), \(b = r\sin\theta\) |
 
-!!! tip "Choosing the Right Form"
-    Use rectangular form for addition/subtraction, polar form for multiplication/division. Your calculator can switch between them, but understanding both builds intuition for what complex numbers represent.
+<div class="mascot cappy" markdown>
+**Choosing the Right Form**
+
+Use rectangular form for addition/subtraction, polar form for multiplication/division. Your calculator can switch between them, but understanding both builds intuition for what complex numbers represent.
+</div>
 
 #### Diagram: Complex Number Visualizer
 
@@ -520,6 +544,18 @@ Implementation: p5.js
 ### Euler's Formula: The Bridge Between Worlds
 
 **Euler's formula** is one of the most beautiful equations in mathematics:
+
+<div class="mascot ohmy" markdown>
+**Euler's Formula**
+
+\[e^{j\theta} = \cos\theta + j\sin\theta\]
+
+Differentiation of a sinusoid becomes multiplication by \(j\omega\):
+
+\[\frac{d}{dt}e^{j\omega t} = j\omega \cdot e^{j\omega t}\]
+
+This is why phasors make AC circuit analysis so powerful — derivatives turn into algebra.
+</div>
 
 \[e^{j\theta} = \cos\theta + j\sin\theta\]
 

@@ -1,0 +1,27 @@
+<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background circle -->
+  <circle cx="50" cy="50" r="48" fill="#F0FDF4" stroke="#16A34A" stroke-width="2.5"/>
+  <!-- Omega symbol as face/body shape -->
+  <path d="M50,22 C33,22 22,33 22,46 C22,58 30,66 38,70 L32,78 L68,78 L62,70 C70,66 78,58 78,46 C78,33 67,22 50,22 Z"
+        fill="#BBF7D0" stroke="#16A34A" stroke-width="2.5" stroke-linejoin="round"/>
+  <!-- Inner omega cutout (makes it look like Ω) -->
+  <path d="M50,30 C38,30 30,37 30,46 C30,54 35,60 42,63 L38,70 L62,70 L58,63 C65,60 70,54 70,46 C70,37 62,30 50,30 Z"
+        fill="#F0FDF4"/>
+  <!-- Eyes -->
+  <circle cx="41" cy="46" r="5" fill="#15803D"/>
+  <circle cx="59" cy="46" r="5" fill="#15803D"/>
+  <!-- Eye shine -->
+  <circle cx="39.5" cy="44.5" r="1.8" fill="white"/>
+  <circle cx="57.5" cy="44.5" r="1.8" fill="white"/>
+  <!-- Thoughtful expression: slight smile -->
+  <path d="M42 57 Q50 63 58 57" fill="none" stroke="#16A34A" stroke-width="2.5" stroke-linecap="round"/>
+  <!-- Thinking finger on cheek -->
+  <circle cx="67" cy="55" r="3" fill="#86EFAC"/>
+  <line x1="67" y1="52" x2="67" y2="47" stroke="#86EFAC" stroke-width="2.5" stroke-linecap="round"/>
+  <!-- Cheeks -->
+  <circle cx="34" cy="57" r="5" fill="#86EFAC" opacity="0.55"/>
+  <circle cx="66" cy="57" r="5" fill="#86EFAC" opacity="0.55"/>
+  <!-- Small formula text decoration -->
+  <text x="50" y="89" font-size="10" text-anchor="middle" fill="#16A34A" font-family="serif" font-style="italic">Ω</text>
+  <line x1="30" y1="93" x2="70" y2="93" stroke="#16A34A" stroke-width="1" opacity="0.4"/>
+</svg>
