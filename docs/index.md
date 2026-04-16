@@ -63,6 +63,32 @@ hide:
      preserveAspectRatio="none"
      style="width:100%;height:100%;">
 
+  <!-- ══ GLOW FILTERS ────────────────────────────────────────────────────── -->
+  <defs>
+    <!-- Purple glow — oscilloscope primary waveform -->
+    <filter id="glow-purple" x="-18%" y="-60%" width="136%" height="220%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="4.5" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <!-- Gold glow — op-amp triangle & feedback path -->
+    <filter id="glow-opamp" x="-14%" y="-14%" width="128%" height="128%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="3.5" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <!-- Soft scope-screen ambient backlight -->
+    <filter id="glow-scope" x="-8%" y="-8%" width="116%" height="116%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <!-- Center safe-zone clip: anything inside is masked to near-zero -->
+    <clipPath id="edge-only">
+      <rect x="0"    y="0"   width="200"  height="900"/>
+      <rect x="1000" y="0"   width="200"  height="900"/>
+      <rect x="0"    y="0"   width="1200" height="218"/>
+      <rect x="0"    y="705" width="1200" height="195"/>
+    </clipPath>
+  </defs>
+
   <!-- ══ PCB GRID ──────────────────────────────────────────────────────── -->
   <g stroke="rgba(90,62,237,0.20)" stroke-width="0.6">
     <line x1="0" y1="75"  x2="1200" y2="75"/>
@@ -108,9 +134,12 @@ hide:
   <!-- ══════════════════════════════════════════════════════════════════════
        ZONE 1 — TOP-LEFT (x=8–390, y=8–210): Oscilloscope display
        ══════════════════════════════════════════════════════════════════════ -->
-  <!-- Scope frame -->
+  <!-- Oscilloscope ambient screen backlight (glow behind frame) -->
   <rect x="8" y="8" width="378" height="200" rx="4"
-        stroke="rgba(90,62,237,0.55)" stroke-width="1.5" fill="rgba(90,62,237,0.09)"/>
+        fill="rgba(90,62,237,0.10)" filter="url(#glow-scope)"/>
+  <!-- Scope frame — boosted contrast -->
+  <rect x="8" y="8" width="378" height="200" rx="4"
+        stroke="rgba(120,90,255,0.80)" stroke-width="2.0" fill="rgba(90,62,237,0.10)"/>
   <!-- Internal scope grid -->
   <line x1="8"   y1="57"  x2="386" y2="57"  stroke="rgba(90,62,237,0.25)" stroke-width="0.6"/>
   <line x1="8"   y1="108" x2="386" y2="108" stroke="rgba(90,62,237,0.30)" stroke-width="0.7"/>
@@ -118,16 +147,17 @@ hide:
   <line x1="104" y1="8"   x2="104" y2="208" stroke="rgba(90,62,237,0.20)" stroke-width="0.5"/>
   <line x1="200" y1="8"   x2="200" y2="208" stroke="rgba(90,62,237,0.20)" stroke-width="0.5"/>
   <line x1="296" y1="8"   x2="296" y2="208" stroke="rgba(90,62,237,0.20)" stroke-width="0.5"/>
-  <!-- Sine wave (primary, purple) y-center=108, amplitude=62 -->
+  <!-- Sine wave (primary, purple) — with glow filter for emphasis -->
   <path d="M8,108 C29,46 58,46 79,108 C100,170 129,170 150,108 C171,46 200,46 221,108 C242,170 271,170 292,108 C313,46 342,46 363,108 C384,170 386,170 386,108"
-        stroke="rgba(180,140,255,0.92)" stroke-width="3.2" fill="none"/>
-  <!-- Second harmonic (gold) amplitude=30 -->
+        stroke="rgba(200,160,255,0.98)" stroke-width="3.8" fill="none"
+        filter="url(#glow-purple)"/>
+  <!-- Second harmonic (gold) — boosted -->
   <path d="M8,108 C19,78 33,78 44,108 C55,138 69,138 80,108 C91,78 105,78 116,108 C127,138 141,138 152,108 C163,78 177,78 188,108 C199,138 213,138 224,108 C235,78 249,78 260,108 C271,138 285,138 296,108 C307,78 321,78 332,108 C343,138 357,138 368,108 C379,78 386,78 386,108"
-        stroke="rgba(220,170,30,0.85)" stroke-width="2.2" fill="none"/>
-  <!-- Step response (cyan) -->
-  <line x1="8" y1="108" x2="8" y2="36" stroke="rgba(100,220,255,0.88)" stroke-width="2.2"/>
+        stroke="rgba(220,170,30,0.95)" stroke-width="2.5" fill="none"/>
+  <!-- Step response (cyan) — boosted -->
+  <line x1="8" y1="108" x2="8" y2="36" stroke="rgba(100,220,255,0.96)" stroke-width="2.5"/>
   <path d="M8,36 C52,36 80,58 115,78 C148,96 178,104 228,107 C270,109 330,108 386,108"
-        stroke="rgba(100,220,255,0.88)" stroke-width="2.2" fill="none"/>
+        stroke="rgba(100,220,255,0.96)" stroke-width="2.5" fill="none"/>
   <!-- Labels -->
   <text x="22"  y="30"  fill="rgba(200,185,255,0.88)" font-size="12" font-weight="bold">V(t)</text>
   <text x="352" y="205" fill="rgba(200,185,255,0.78)" font-size="11">t →</text>
@@ -205,9 +235,10 @@ hide:
   <line x1="928" y1="72" x2="956" y2="72" stroke="rgba(100,220,255,0.82)" stroke-width="2.2"/>
   <line x1="932" y1="63" x2="952" y2="63" stroke="rgba(100,220,255,0.68)" stroke-width="1.6"/>
   <line x1="936" y1="54" x2="948" y2="54" stroke="rgba(100,220,255,0.52)" stroke-width="1.2"/>
-  <!-- Op-amp body: (962,68)→(962,158)→(1055,108) -->
+  <!-- Op-amp body — with glow for emphasis -->
   <polygon points="962,68 962,158 1058,108"
-           stroke="rgba(200,185,255,1.0)" stroke-width="2.8" fill="rgba(90,62,237,0.15)"/>
+           stroke="rgba(210,190,255,1.0)" stroke-width="3.2" fill="rgba(90,62,237,0.22)"
+           filter="url(#glow-opamp)"/>
   <text x="998" y="96" fill="rgba(200,185,255,0.82)" font-size="10">+</text>
   <text x="998" y="120" fill="rgba(200,185,255,0.82)" font-size="10">−</text>
   <text x="1004" y="114" fill="rgba(200,185,255,0.88)" font-size="12" font-weight="bold">A</text>
@@ -218,10 +249,10 @@ hide:
   <line x1="1108" y1="108" x2="1108" y2="42"  stroke="rgba(220,170,30,0.82)" stroke-width="1.8"/>
   <line x1="1108" y1="42"  x2="962"  y2="42"  stroke="rgba(220,170,30,0.82)" stroke-width="1.8"/>
   <line x1="962"  y1="42"  x2="962"  y2="123" stroke="rgba(220,170,30,0.82)" stroke-width="1.8"/>
-  <!-- Rf zigzag on top feedback wire -->
+  <!-- Rf zigzag on top feedback wire — boosted -->
   <polyline points="1018,42 1027,42 1033,24 1041,60 1049,24 1057,60 1065,24 1073,42 1088,42"
-            stroke="rgba(220,170,30,0.98)" stroke-width="2.5" fill="none"/>
-  <text x="1052" y="15" fill="rgba(220,170,30,0.88)" font-size="12" text-anchor="middle" font-weight="bold">Rf</text>
+            stroke="rgba(220,170,30,1.0)" stroke-width="3.0" fill="none"/>
+  <text x="1052" y="15" fill="rgba(220,170,30,0.96)" font-size="12" text-anchor="middle" font-weight="bold">Rf</text>
   <!-- Vin label -->
   <text x="812" y="97" fill="rgba(220,170,30,0.82)" font-size="12" font-weight="bold">Vᵢₙ</text>
   <!-- Extra output load R -->
@@ -239,28 +270,28 @@ hide:
   <text x="90" y="225" fill="rgba(220,170,30,0.88)" font-size="12" text-anchor="middle" font-weight="bold">Vcc</text>
   <!-- Wire down from source -->
   <line x1="90" y1="272" x2="90" y2="293" stroke="rgba(220,170,30,0.88)" stroke-width="2.0"/>
-  <!-- R1 vertical zigzag y=293–375 -->
+  <!-- R1 vertical zigzag y=293–375 — boosted stroke -->
   <polyline points="90,293 90,305 72,315 108,327 72,339 108,351 72,363 90,373 90,385"
-            stroke="rgba(220,170,30,1.0)" stroke-width="2.5" fill="none"/>
-  <text x="118" y="342" fill="rgba(220,170,30,0.90)" font-size="12" font-weight="bold">R₁</text>
+            stroke="rgba(220,170,30,1.0)" stroke-width="3.0" fill="none"/>
+  <text x="118" y="342" fill="rgba(220,170,30,0.96)" font-size="12" font-weight="bold">R₁</text>
   <!-- Node A -->
   <circle cx="90" cy="385" r="5" fill="rgba(220,170,30,1.0)"/>
   <line x1="90" y1="385" x2="158" y2="385" stroke="rgba(200,185,255,0.85)" stroke-width="1.8"/>
   <circle cx="163" cy="385" r="6" stroke="rgba(200,185,255,0.90)" stroke-width="2.0" fill="none"/>
   <text x="175" y="382" fill="rgba(200,185,255,0.88)" font-size="11" font-weight="bold">V₁</text>
-  <!-- R2 vertical y=385–467 -->
+  <!-- R2 vertical y=385–467 — boosted stroke -->
   <polyline points="90,385 90,397 72,407 108,419 72,431 108,443 72,455 90,465 90,477"
-            stroke="rgba(220,170,30,0.98)" stroke-width="2.5" fill="none"/>
-  <text x="118" y="434" fill="rgba(220,170,30,0.88)" font-size="12" font-weight="bold">R₂</text>
+            stroke="rgba(220,170,30,1.0)" stroke-width="3.0" fill="none"/>
+  <text x="118" y="434" fill="rgba(220,170,30,0.95)" font-size="12" font-weight="bold">R₂</text>
   <!-- Node B -->
   <circle cx="90" cy="477" r="5" fill="rgba(220,170,30,0.98)"/>
   <line x1="90" y1="477" x2="158" y2="477" stroke="rgba(200,185,255,0.82)" stroke-width="1.8"/>
   <circle cx="163" cy="477" r="6" stroke="rgba(200,185,255,0.85)" stroke-width="2.0" fill="none"/>
   <text x="175" y="474" fill="rgba(200,185,255,0.85)" font-size="11" font-weight="bold">V₂</text>
-  <!-- R3 vertical y=477–559 -->
+  <!-- R3 vertical y=477–559 — boosted stroke -->
   <polyline points="90,477 90,489 72,499 108,511 72,523 108,535 72,547 90,557 90,569"
-            stroke="rgba(220,170,30,0.95)" stroke-width="2.5" fill="none"/>
-  <text x="118" y="526" fill="rgba(220,170,30,0.85)" font-size="12" font-weight="bold">R₃</text>
+            stroke="rgba(220,170,30,1.0)" stroke-width="3.0" fill="none"/>
+  <text x="118" y="526" fill="rgba(220,170,30,0.93)" font-size="12" font-weight="bold">R₃</text>
   <!-- Node C -->
   <circle cx="90" cy="569" r="5" fill="rgba(200,185,255,0.95)"/>
   <line x1="90" y1="569" x2="158" y2="569" stroke="rgba(200,185,255,0.78)" stroke-width="1.8"/>
@@ -333,6 +364,19 @@ hide:
   <line x1="290" y1="609" x2="314" y2="609" stroke="rgba(100,220,255,0.72)" stroke-width="1.8"/>
   <line x1="294" y1="618" x2="310" y2="618" stroke="rgba(100,220,255,0.58)" stroke-width="1.3"/>
   </g>
+
+  <!-- ══════════════════════════════════════════════════════════════════════
+       CENTER VIGNETTE — radial dim behind text/button region
+       Suppresses any residual grid/trace lines behind the content.
+       ══════════════════════════════════════════════════════════════════════ -->
+  <defs>
+    <radialGradient id="center-dim" cx="50%" cy="50%" r="50%" fx="50%" fy="50%"
+                    gradientUnits="userSpaceOnUse" x1="600" y1="460">
+      <stop offset="0%"   stop-color="rgba(6,0,24,0.28)"/>
+      <stop offset="100%" stop-color="rgba(6,0,24,0.00)"/>
+    </radialGradient>
+  </defs>
+  <ellipse cx="600" cy="460" rx="380" ry="260" fill="url(#center-dim)"/>
 
   <!-- ══════════════════════════════════════════════════════════════════════
        ZONE 6 — CENTER SAFE ZONE (x=320–880, y=238–685): Barely-visible texture
@@ -437,9 +481,9 @@ hide:
   <!-- Input terminal at top -->
   <circle cx="1098" cy="248" r="7" stroke="rgba(200,185,255,0.90)" stroke-width="2.2" fill="none"/>
   <line x1="1098" y1="255" x2="1098" y2="275" stroke="rgba(220,170,30,0.88)" stroke-width="2.0"/>
-  <!-- L1 coil vertical (4 humps) y=275–380 -->
+  <!-- L1 coil vertical (4 humps) y=275–380 — boosted -->
   <path d="M1098,275 C1079,285 1079,301 1098,311 C1117,321 1117,337 1098,347 C1079,357 1079,373 1098,383"
-        stroke="rgba(220,170,30,1.0)" stroke-width="2.8" fill="none"/>
+        stroke="rgba(220,170,30,1.0)" stroke-width="3.2" fill="none"/>
   <line x1="1098" y1="383" x2="1098" y2="402" stroke="rgba(220,170,30,0.88)" stroke-width="2.0"/>
   <text x="1130" y="332" fill="rgba(220,170,30,0.90)" font-size="12" font-weight="bold">L₁</text>
   <!-- Node + C1 shunt at y=402 -->
@@ -455,7 +499,7 @@ hide:
   <!-- L2 coil y=452–548 -->
   <line x1="1098" y1="452" x2="1098" y2="468" stroke="rgba(220,170,30,0.82)" stroke-width="1.8"/>
   <path d="M1098,468 C1079,478 1079,494 1098,504 C1117,514 1117,530 1098,540"
-        stroke="rgba(220,170,30,0.92)" stroke-width="2.5" fill="none"/>
+        stroke="rgba(220,170,30,0.98)" stroke-width="3.0" fill="none"/>
   <line x1="1098" y1="540" x2="1098" y2="558" stroke="rgba(220,170,30,0.82)" stroke-width="1.8"/>
   <text x="1130" y="510" fill="rgba(220,170,30,0.85)" font-size="12" font-weight="bold">L₂</text>
   <!-- Node + C2 shunt at y=558 -->
@@ -482,11 +526,11 @@ hide:
   <!-- Vin label top -->
   <line x1="188" y1="710" x2="188" y2="722" stroke="rgba(220,170,30,0.90)" stroke-width="2.2"/>
   <text x="188" y="703" fill="rgba(220,170,30,0.92)" font-size="12" text-anchor="middle" font-weight="bold">Vᵢₙ</text>
-  <!-- Arms -->
-  <line x1="188" y1="722" x2="72"  y2="800" stroke="rgba(220,170,30,0.95)" stroke-width="2.2"/>
-  <line x1="188" y1="722" x2="304" y2="800" stroke="rgba(220,170,30,0.95)" stroke-width="2.2"/>
-  <line x1="72"  y1="800" x2="188" y2="878" stroke="rgba(220,170,30,0.88)" stroke-width="2.2"/>
-  <line x1="304" y1="800" x2="188" y2="878" stroke="rgba(220,170,30,0.88)" stroke-width="2.2"/>
+  <!-- Arms — boosted contrast -->
+  <line x1="188" y1="722" x2="72"  y2="800" stroke="rgba(220,170,30,1.0)" stroke-width="2.8"/>
+  <line x1="188" y1="722" x2="304" y2="800" stroke="rgba(220,170,30,1.0)" stroke-width="2.8"/>
+  <line x1="72"  y1="800" x2="188" y2="878" stroke="rgba(220,170,30,0.95)" stroke-width="2.8"/>
+  <line x1="304" y1="800" x2="188" y2="878" stroke="rgba(220,170,30,0.95)" stroke-width="2.8"/>
   <!-- Galvanometer (dashed) with G circle -->
   <line x1="72" y1="800" x2="154" y2="800" stroke="rgba(100,220,255,0.85)" stroke-width="2.0" stroke-dasharray="7,4"/>
   <line x1="222" y1="800" x2="304" y2="800" stroke="rgba(100,220,255,0.85)" stroke-width="2.0" stroke-dasharray="7,4"/>
@@ -528,10 +572,10 @@ hide:
   <line x1="493" y1="733" x2="531" y2="733" stroke="rgba(100,220,255,1.0)" stroke-width="3.0"/>
   <line x1="512" y1="733" x2="512" y2="718" stroke="rgba(100,220,255,0.80)" stroke-width="1.8"/>
   <text x="538" y="740" fill="rgba(100,220,255,0.90)" font-size="12" font-weight="bold">C</text>
-  <!-- L coil horizontal -->
-  <line x1="512" y1="762" x2="536" y2="762" stroke="rgba(220,170,30,0.90)" stroke-width="2.0"/>
+  <!-- L coil horizontal — boosted -->
+  <line x1="512" y1="762" x2="536" y2="762" stroke="rgba(220,170,30,0.95)" stroke-width="2.2"/>
   <path d="M536,762 C542,745 554,745 560,762 C566,779 578,779 584,762 C590,745 602,745 608,762 C614,779 626,779 632,762 C638,745 646,762 646,762"
-        stroke="rgba(220,170,30,1.0)" stroke-width="2.8" fill="none"/>
+        stroke="rgba(220,170,30,1.0)" stroke-width="3.2" fill="none"/>
   <line x1="646" y1="762" x2="668" y2="762" stroke="rgba(220,170,30,0.90)" stroke-width="2.0"/>
   <text x="591" y="733" fill="rgba(220,170,30,0.90)" font-size="12" text-anchor="middle" font-weight="bold">L</text>
   <!-- Vout terminal -->
