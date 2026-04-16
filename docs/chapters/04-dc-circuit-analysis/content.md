@@ -52,6 +52,11 @@ A current source \(I_N\) in parallel with \(R_P\) becomes a voltage source \(V_{
 !!! warning "Direction Matters"
     When transforming, the polarity of the voltage source and the direction of the current source must be consistent. The current arrow in the current source model should point from − to + *through* the source (the direction positive current would flow from the equivalent voltage source's positive terminal through the external circuit).
 
+<div class="mascot sparky" markdown>
+**Common Mistake: Getting the Current Direction Backwards in Source Transformation**
+When converting a voltage source (+ terminal up, series resistor) to a current source, the current arrow must point **into** the node that was connected to the + terminal. Students often reverse this. A quick check: short the output terminals of both forms and verify the short-circuit current matches in magnitude and direction before proceeding.
+</div>
+
 **Example:** A 12 V voltage source in series with a 4 Ω resistor transforms to a 3 A current source in parallel with 4 Ω. Verify: if you connect a 2 Ω load, the original gives \(I = 12/(4+2) = 2\) A; the transformed gives \(I_L = 3 \times 4/(4+2) = 2\) A. ✓
 
 Source transformation is most powerful when you chain multiple transformations to consolidate sources — turning a complex network into something you can solve by inspection.
@@ -63,6 +68,11 @@ Source transformation is most powerful when you chain multiple transformations t
 Here is one of the most powerful ideas in all of circuit analysis: **any linear circuit with sources and resistors, viewed from two terminals, is electrically equivalent to a single voltage source \(V_{Th}\) in series with a single resistance \(R_{Th}\).**
 
 This is **Thévenin's theorem**, published by Léon Charles Thévenin in 1883. It means that no matter how many components are inside a black box — dozens of resistors, multiple sources, complicated networks — it all collapses to just two elements from the perspective of whatever you connect to it.
+
+<div class="mascot rezi" markdown>
+**Definition: Thévenin's Theorem**
+Any linear two-terminal circuit containing sources and resistors can be replaced by an equivalent circuit consisting of a single voltage source \(V_{Th}\) (equal to the open-circuit voltage) in series with a single resistance \(R_{Th}\) (equal to the resistance seen at the terminals with all independent sources deactivated). The behavior at the terminals is identical to the original circuit for any load.
+</div>
 
 **Finding \(V_{Th}\):**
 
@@ -127,6 +137,11 @@ The relationship between the two theorems is:
 !!! tip "Thévenin or Norton?"
     Use **Thévenin** when the load is in series with other elements, or when you're interested in voltage. Use **Norton** when the load is in parallel with other elements, or when you're interested in current. You can always convert between them.
 
+<div class="mascot cappy" markdown>
+**Pro Tip: Thévenin vs Norton — Pick Based on Load Type**
+If your load is a single resistor and you want to quickly sweep different load values, Thévenin is usually easier — just plug \(R_L\) into the voltage-divider formula. If your load is a current source or your circuit already has many parallel elements, Norton saves algebra. And remember: they give identical external behavior, so you can always convert mid-problem if you change your mind.
+</div>
+
 ---
 
 ## 4.4 Maximum Power Transfer
@@ -152,6 +167,14 @@ Maximum power transferred: \(\displaystyle P_{max} = \frac{V_{Th}^2}{4 R_{Th}}\)
 </div>
 
 The efficiency at maximum power transfer is exactly 50% — half the source power goes to the load, half is dissipated in \(R_{Th}\). This is fine for signal applications (you want *maximum power*, not efficiency) but unacceptable for power delivery applications (power companies would hate 50% efficiency).
+
+<div class="mascot ohmy" markdown>
+**Key Formula: Maximum Power Transfer**
+
+\[R_L = R_{Th} \qquad P_{max} = \frac{V_{Th}^2}{4\,R_{Th}}\]
+
+Maximum power flows to the load when the load resistance **equals** the Thévenin resistance. At this condition the efficiency is exactly 50% — acceptable for signal work, unacceptable for power distribution.
+</div>
 
 **Example:** A source with \(V_{Th} = 10\) V and \(R_{Th} = 50\) Ω delivers maximum power when \(R_L = 50\) Ω. Maximum power: \(P_{max} = 100 / (4 \times 50) = 0.5\) W.
 

@@ -56,6 +56,11 @@ To recover the time-domain signal from a phasor:
 !!! tip "Why Cosine as Reference?"
     Engineers typically use cosine (not sine) as the reference for phasor analysis because it aligns naturally with the real axis on the complex plane. A phasor at angle 0° corresponds to a cosine wave. Converting from sine is easy: \(\sin(\omega t) = \cos(\omega t - 90°)\).
 
+<div class="mascot cappy" markdown>
+**Pro Tip: Always Convert Sine to Cosine Before Writing Phasors**
+Phasor analysis uses cosine as its reference. If your source is \(v(t) = V_m \sin(\omega t + \phi)\), rewrite it as \(V_m \cos(\omega t + \phi - 90°)\) first, then form the phasor \(V_m \angle(\phi - 90°)\). Mixing cosine and sine references in the same problem is a guaranteed way to get phase angles wrong by 90°.
+</div>
+
 #### Diagram: Phasor Transformation Visualizer
 
 <iframe src="../../../sims/phasor-transform/main.html" width="100%" height="500px" scrolling="no" style="overflow: hidden;"></iframe>
@@ -207,6 +212,11 @@ Implementation: p5.js
 
 Impedance plays the same role in AC circuits that resistance plays in DC circuits. In fact, Ohm's law works perfectly with impedance:
 
+<div class="mascot rezi" markdown>
+**Definition: Impedance**
+Impedance \(Z\) is the complex generalization of resistance for AC circuits, defined as \(Z = \mathbf{V}/\mathbf{I}\) in the phasor domain, measured in ohms (Ω). Its real part \(R\) is resistance (dissipates power) and its imaginary part \(X\) is reactance (stores and returns power). Unlike resistance, impedance depends on frequency.
+</div>
+
 \[\mathbf{V} = \mathbf{I} \cdot Z\]
 
 But unlike resistance (which is just a real number), impedance is complex:
@@ -225,6 +235,14 @@ Where:
 | Resistor | \(Z_R = R\) | Purely real |
 | Capacitor | \(Z_C = \frac{1}{j\omega C} = -\frac{j}{\omega C}\) | Purely imaginary, negative |
 | Inductor | \(Z_L = j\omega L\) | Purely imaginary, positive |
+
+<div class="mascot ohmy" markdown>
+**Key Formula: Component Impedances**
+
+\[Z_R = R \qquad Z_L = j\omega L \qquad Z_C = \frac{1}{j\omega C} = \frac{-j}{\omega C}\]
+
+Resistors have real, frequency-independent impedance. Inductors have positive imaginary impedance that grows with frequency. Capacitors have negative imaginary impedance that shrinks with frequency. All combine using the same series and parallel rules as DC resistors — just with complex arithmetic.
+</div>
 
 ### Reactance: The Imaginary Part
 
@@ -435,6 +453,11 @@ If \(Z = R + jX\), then:
 So: \(G = \frac{R}{R^2 + X^2}\) and \(B = \frac{-X}{R^2 + X^2}\)
 
 Note: \(G \neq 1/R\) unless \(X = 0\)!
+
+<div class="mascot sparky" markdown>
+**Common Mistake: Conductance Is Not Simply 1/Resistance When Reactance Is Present**
+In DC circuits \(G = 1/R\). In AC circuits with complex impedance \(Z = R + jX\), the conductance \(G = R/(R^2 + X^2)\), which is **not** equal to \(1/R\) unless \(X = 0\). Similarly, susceptance \(B = -X/(R^2+X^2)\), not \(1/X\). Only take the reciprocal of the entire complex impedance, then separate real and imaginary parts. Never reciprocate R and X separately.
+</div>
 
 ## AC Resistance and Power Factor
 

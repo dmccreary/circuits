@@ -27,6 +27,11 @@ This chapter introduces the fundamental electrical quantities that every circuit
 
 Everything in the electrical world starts with **electric charge**. Charge is a fundamental property of matter, just like mass, but instead of telling you how much "stuff" something has, charge tells you how that stuff will interact electromagnetically.
 
+<div class="mascot rezi" markdown>
+**Definition: Electric Charge**
+Electric charge is a fundamental property of matter measured in coulombs (C). It comes in two types — positive and negative — where opposite charges attract and like charges repel. The charge of one electron is \(-1.602 \times 10^{-19}\) C; one coulomb equals approximately \(6.24 \times 10^{18}\) electrons worth of charge.
+</div>
+
 Here's the key insight: there are exactly two types of charge, which we creatively call *positive* and *negative*. (Benjamin Franklin made this naming choice in the 1750s, and we've been stuck with it ever since. Thanks, Ben.) Opposite charges attract, like charges repel. Simple as that.
 
 The fundamental unit of charge is the **coulomb** (C), named after Charles-Augustin de Coulomb. One coulomb is actually a *huge* amount of charge — roughly 6.24 × 10¹⁸ electrons worth. In practical circuits, we usually deal with much smaller quantities like microcoulombs (μC) or nanocoulombs (nC).
@@ -91,6 +96,11 @@ For circuit analysis, we use conventional current (positive to negative), and ev
 
 Don't let this keep you up at night. Pick one convention and stick with it. We'll use conventional current throughout this course.
 
+<div class="mascot sparky" markdown>
+**Common Mistake: Confusing Conventional Current with Electron Flow**
+Conventional current flows from **+** to **−**, but electrons actually move from **−** to **+**. This historical accident trips up students constantly. The good news: as long as you consistently use conventional current direction in your analysis, all the math works out correctly. Never mix the two conventions in the same problem.
+</div>
+
 ---
 
 ## 1.3 Voltage: The Electrical "Push"
@@ -150,6 +160,14 @@ $$P = VI = I^2R = \frac{V^2}{R}$$
 </div>
 
 One watt equals one joule per second. These three forms are all equivalent; use whichever is most convenient for your problem.
+
+<div class="mascot ohmy" markdown>
+**Key Formula: The Power Trio**
+
+\[P = VI = I^2R = \frac{V^2}{R}\]
+
+All three forms give the same result — choose based on what you know. Use \(P = VI\) when you have both voltage and current, \(P = I^2R\) when you know current and resistance, and \(P = V^2/R\) when you know voltage and resistance.
+</div>
 
 #### Diagram: Power Triangle Visualization
 
@@ -335,6 +353,11 @@ Power dissipation enables many applications:
 
 Every resistor has a **power rating** — the maximum power it can safely dissipate without damage. Common ratings are 1/8W, 1/4W, 1/2W, 1W, and 2W for small resistors. Exceeding this rating will cause the resistor to overheat, potentially changing its resistance value, failing open, or even catching fire.
 
+<div class="mascot fusi" markdown>
+**Safety Warning: Resistor Power Ratings**
+Always calculate the actual power dissipation in a resistor and verify it is well below the component's power rating — ideally at 50% or less for reliability. A resistor running near its rated limit will be uncomfortably hot to touch, may drift in value, and can fail catastrophically. In lab work, a burning smell is your first warning sign; shut down the circuit immediately.
+</div>
+
 #### Diagram: Power Dissipation Calculator
 
 <div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
@@ -368,6 +391,11 @@ The SI prefix system lets us express very large or very small quantities conveni
 
 !!! tip "Dimensional Analysis Is Your Friend"
     When you're not sure if your answer is correct, check the units. If you're calculating current and your answer comes out in volts, something went wrong. This simple technique catches more errors than you'd expect.
+
+<div class="mascot cappy" markdown>
+**Pro Tip: Dimensional Analysis Catches Errors**
+Before accepting any numerical answer, verify the units. Write out the units at each algebraic step: \(\frac{\text{V}}{\Omega} = \frac{\text{V}}{\text{V/A}} = \text{A}\). If the units don't simplify to what you expect, you made an algebra mistake somewhere. This habit alone will save you hours of debugging on exams and in the lab.
+</div>
 
 ---
 

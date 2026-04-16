@@ -99,6 +99,11 @@ where \(A\) is the open-loop gain (typically 100,000 to 1,000,000 for real op-am
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 Open-loop operation is therefore useless for linear amplification but is the basis of <strong>comparator</strong> circuits, where we <em>want</em> the output to saturate at one rail or the other.
+
+<div class="mascot sparky" markdown>
+**Common Mistake: Applying the Golden Rules Without Negative Feedback**
+The golden rules (\(V_+ = V_-\) and \(I_{in} = 0\)) apply **only** when negative feedback is present and the op-amp is operating in its linear region. Without negative feedback — or when the output is saturated at a rail — these rules are invalid. Always check that negative feedback exists and that your calculated output falls within the supply rails before trusting golden-rule results.
+</div>
 </p>
 
 ### Closed-Loop Gain
@@ -170,6 +175,11 @@ The benefits of negative feedback go well beyond stability:
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 For an ideal op-amp operating with negative feedback, two simple rules solve almost every linear op-amp circuit. These are commonly called the <strong style="color: #333;">golden rules</strong>.
+
+<div class="mascot rezi" markdown>
+**Definition: The Op-Amp Golden Rules**
+For an ideal op-amp operating with **negative feedback**: (1) **Virtual Short** — the voltage at the inverting input equals the voltage at the non-inverting input (\(V_+ = V_-\)); (2) **No Input Current** — no current flows into either input terminal (\(I_+ = I_- = 0\)). These two rules, applied with KCL, are sufficient to analyze any linear op-amp circuit without knowing the open-loop gain.
+</div>
 </p>
 
 ### Golden Rule 1 — Virtual Short
@@ -238,6 +248,14 @@ The <strong style="color: #333;">inverting amplifier</strong> is the most widely
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 The negative sign indicates <strong>phase inversion</strong> — a positive input produces a negative output, and vice versa. The magnitude of gain is set entirely by the resistor ratio.
+
+<div class="mascot ohmy" markdown>
+**Key Formula: Inverting Amplifier Gain**
+
+\[A_V = -\frac{R_f}{R_i} \qquad Z_{in} = R_i\]
+
+The gain magnitude is the ratio of feedback to input resistors; the minus sign indicates phase inversion. Input impedance is simply \(R_i\) — lower input impedance than the non-inverting configuration. To get gain = −10 with \(R_i = 10\ \text{k}\Omega\), use \(R_f = 100\ \text{k}\Omega\).
+</div>
 </p>
 
 ### Step-by-Step Analysis Using the Golden Rules
@@ -538,6 +556,11 @@ Op-amp with GBW = 10 MHz:
 | 1000 | 10 kHz |
 
 **Design rule:** Always verify that \(A_{CL} \times f_{signal} < \text{GBW}\) before finalizing a design.
+</div>
+
+<div class="mascot cappy" markdown>
+**Pro Tip: Higher Gain Means Narrower Bandwidth — Plan Ahead**
+The gain-bandwidth product is fixed for a given op-amp: doubling the gain halves the usable bandwidth. If you need gain = 100 and bandwidth to 50 kHz, you need GBW ≥ 5 MHz. When cascading stages, split the gain between stages rather than putting it all in one. Two stages of ×10 each (total ×100) with a 1 MHz GBW op-amp will each reach 100 kHz bandwidth — far better than one stage of ×100 limited to 10 kHz.
 </div>
 
 ### Slew Rate

@@ -45,6 +45,11 @@ The **transfer function** \(H(j\omega)\) is the ratio of the output phasor to th
 
 Because \(H(j\omega)\) is a complex number, it has both magnitude and phase:
 
+<div class="mascot rezi" markdown>
+**Definition: Transfer Function**
+The transfer function \(H(j\omega) = \mathbf{V}_{out}/\mathbf{V}_{in}\) is a complex-valued function of frequency that fully characterizes a linear circuit's input-output relationship. Its magnitude \(|H|\) gives the gain (or attenuation) at each frequency; its phase \(\angle H\) gives the phase shift. At DC (\(\omega = 0\)) and as \(\omega \to \infty\), the transfer function reduces to simple voltage-divider ratios.
+</div>
+
 <div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 10px; padding: 16px 20px; margin: 1.2rem 0;">
 
 \[H(j\omega) = |H(j\omega)|\,\angle\,\phi(\omega)\]
@@ -184,6 +189,14 @@ At the cutoff frequency of a first-order filter:
 !!! tip "Three Names, One Frequency"
     Cutoff frequency, corner frequency, break frequency, and half-power frequency all refer to the same point \(f_c\). In Bode plot construction, "corner" is most common because it is where the asymptotic approximation "corners" or bends.
 
+<div class="mascot ohmy" markdown>
+**Key Formula: Cutoff Frequency**
+
+\[f_c = \frac{1}{2\pi RC} \qquad \omega_c = \frac{1}{RC}\ \text{rad/s}\]
+
+At \(f_c\): magnitude is \(-3\) dB (0.707× passband), phase is \(\pm 45°\). This formula applies to first-order RC filters. For RL filters use \(\omega_c = R/L\). For higher-order filters, the cutoff frequency is set by component values in the prototype design.
+</div>
+
 ## 11.6 Roll-Off Rate and Filter Order
 
 The **roll-off rate** describes how quickly the magnitude response decreases beyond the cutoff frequency. It is determined by the **filter order** — the number of independent reactive elements (capacitors and inductors) in the filter circuit.
@@ -249,6 +262,11 @@ The phase transitions from \(0°\) to \(-90°\) across roughly two decades cente
 
 The actual phase at the corner is exactly \(-45°\), and the asymptote error peaks at about \(5.7°\) at one decade above or below the corner.
 
+<div class="mascot cappy" markdown>
+**Pro Tip: The Asymptotic Bode Plot Is Accurate Enough for Most Design**
+The straight-line (asymptotic) Bode approximation has a maximum error of only 3 dB at the corner frequency and less than 1 dB more than a decade away. For hand calculations, design iterations, and quick sanity checks, this is more than adequate. Only use the exact formula when you need to verify a final design or are very close to a specification boundary.
+</div>
+
 ### Step-by-Step Bode Plot Construction
 
 1. **Factor** \(H(j\omega)\) into standard pole/zero form (see Section 11.8).
@@ -297,6 +315,11 @@ For passive RC circuits, poles appear at negative real values on the \(s\)-plane
 
 !!! note "Poles Determine Filter Order"
     The number of poles equals the filter order and equals the number of independent reactive elements. Count poles — not zeros — to determine the roll-off rate.
+
+<div class="mascot sparky" markdown>
+**Common Mistake: Confusing Poles and Zeros on a Bode Plot**
+A **pole** causes the magnitude slope to drop by 20 dB/decade and the phase to shift −90°. A **zero** causes the slope to increase by 20 dB/decade and the phase to shift +90°. These are opposite effects, and mixing them up produces completely wrong Bode plots. Remember: poles are in the **denominator** (they make the denominator larger → gain decreases); zeros are in the **numerator** (they make the numerator larger → gain increases).
+</div>
 
 ## 11.9 Filter Types
 
