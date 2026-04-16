@@ -3,64 +3,50 @@ title: Mascot Style Guide
 description: Preview page for all Sparky mascot pose variants
 ---
 
-# Mascot Style Guide
+# Sparky the Circuit Explorer - Mascot Test
 
-This page shows all Sparky pose variants for contributor reference.
+This page shows all Sparky mascot images and admonition styles for reference.
+Check that all images have a transparent background and do not have excessive
+padding around the drawing.
 
----
+Note that the images below have a dashed blue border so you can clearly see the padding.
 
-## Warning (existing SVG)
+<style type="text/css">
+  .image-test img {
+    border: 1px dashed blue;
+  }
+</style>
 
-<img src="../img/mascots/sparky.svg" alt="Sparky warning pose" width="150" style="float:left; margin-right:1em;">
+## Image Tests
 
-<div class="mascot sparky" markdown>
-**Watch Out!**
-
-This is the warning style — Sparky's signature pose. Used for common mistakes,
-unit mismatches, and sign errors.
+<div class="image-test grid cards" markdown>
+1. Warning (SVG)
+![](../img/mascots/sparky.svg){ width="150px"}
+2. Welcome
+![](../img/mascots/sparky-welcome.png){ width="150px"}
+3. Thinking
+![](../img/mascots/sparky-thinking.png){ width="150px"}
+4. Tip
+![](../img/mascots/sparky-tip.png){ width="150px"}
 </div>
 
----
+## Admonition Tests
 
-## Welcome
+!!! quote "Sparky's Welcome"
+    Welcome to the Circuits course! I'm Sparky, your guide through the fascinating
+    world of electronic circuits. Buckle up — we're about to discover how electrons
+    flow, how components behave, and how to build real-world circuits!
 
-<img src="../img/mascots/sparky-welcome.png" alt="Sparky welcome pose" width="150" style="float:left; margin-right:1em;">
+!!! quote "Sparky Thinking"
+    "See that voltage drop across the resistor? Ohm's Law isn't just a formula —
+    it's describing something *real* happening to those electrons right now."
 
-<div class="mascot sparky-welcome" markdown>
-**Welcome to This Chapter!**
+!!! quote "Sparky's Tip"
+    "When analyzing a circuit, always start by identifying the ground reference.
+    Everything else is measured relative to that point. Pick it wisely and the
+    math gets a lot cleaner."
 
-This is the welcome style, used at chapter openings to greet students and
-preview what's ahead.
-</div>
-
----
-
-## Thinking
-
-<img src="../img/mascots/sparky-thinking.png" alt="Sparky thinking pose" width="150" style="float:left; margin-right:1em;">
-
-<div class="mascot sparky-thinking" markdown>
-**Key Insight**
-
-This is the thinking style, used when introducing an important concept that
-deserves careful attention.
-</div>
-
----
-
-## Tip
-
-<img src="../img/mascots/sparky-tip.png" alt="Sparky tip pose" width="150" style="float:left; margin-right:1em;">
-
-<div class="mascot sparky-tip" markdown>
-**Helpful Tip**
-
-This is the tip style, used for practical hints and "good to know" guidance
-that builds intuition.
-</div>
-
----
-
-!!! note "CSS Note"
-    The `sparky-welcome`, `sparky-thinking`, and `sparky-tip` classes require
-    entries in `docs/css/mascots.css` to display their respective PNG images.
+!!! quote "Sparky's Warning"
+    "Don't confuse voltage and current! Voltage is the *pressure* pushing
+    electrons through a wire. Current is the *flow* of those electrons.
+    You need both to understand power — and to avoid frying your components!"
