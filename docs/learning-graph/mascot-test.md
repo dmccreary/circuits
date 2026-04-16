@@ -33,24 +33,24 @@ Note that the images below have a dashed blue border so you can clearly see the 
 ## Admonition Tests
 
 !!! mascot-welcome "Sparky's Welcome"
-    <img src="../img/mascots/sparky-welcome.png" class="mascot-admonition-img" alt="Sparky welcoming">
+    <img src="../../img/mascots/sparky-welcome.png" class="mascot-admonition-img" alt="Sparky welcoming">
     Welcome to the Circuits course! I'm Sparky, your guide through the fascinating
     world of electronic circuits. Buckle up — we're about to discover how electrons
     flow, how components behave, and how to build real-world circuits!
 
 !!! mascot-thinking "Sparky Thinking"
-    <img src="../img/mascots/sparky-thinking.png" class="mascot-admonition-img" alt="Sparky thinking">
+    <img src="../../img/mascots/sparky-thinking.png" class="mascot-admonition-img" alt="Sparky thinking">
     See that voltage drop across the resistor? Ohm's Law isn't just a formula —
     it's describing something *real* happening to those electrons right now.
 
 !!! mascot-tip "Sparky's Tip"
-    <img src="../img/mascots/sparky-tip.png" class="mascot-admonition-img" alt="Sparky giving a tip">
+    <img src="../../img/mascots/sparky-tip.png" class="mascot-admonition-img" alt="Sparky giving a tip">
     When analyzing a circuit, always start by identifying the ground reference.
     Everything else is measured relative to that point. Pick it wisely and the
     math gets a lot cleaner.
 
 !!! mascot-warning "Sparky's Warning"
-    <img src="../img/mascots/sparky.svg" class="mascot-admonition-img" alt="Sparky warning">
+    <img src="../../img/mascots/sparky.svg" class="mascot-admonition-img" alt="Sparky warning">
     Don't confuse voltage and current! Voltage is the *pressure* pushing
     electrons through a wire. Current is the *flow* of those electrons.
     You need both to understand power — and to avoid frying your components!
