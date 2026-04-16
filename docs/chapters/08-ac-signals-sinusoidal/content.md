@@ -68,7 +68,7 @@ Where:
 
 #### Diagram: Sinusoidal Waveform Anatomy
 
-<iframe src="../../sims/sinusoid-anatomy/main.html" width="100%" height="500px" scrolling="no" style="overflow: hidden;"></iframe>
+<iframe src="../../../sims/sinusoid-anatomy/main.html" width="100%" height="500px" scrolling="no" style="overflow: hidden;"></iframe>
 
 <details markdown="1">
 <summary>Sinusoidal Waveform Anatomy</summary>
@@ -174,7 +174,7 @@ When we say "\(v_2\) leads \(v_1\) by 90°," we mean \(v_2\) reaches its peak ea
 
 #### Diagram: Phase Relationship Visualizer
 
-<iframe src="../../sims/phase-relationship/main.html" width="100%" height="450px" scrolling="no" style="overflow: hidden;"></iframe>
+<iframe src="../../../sims/phase-relationship/main.html" width="100%" height="450px" scrolling="no" style="overflow: hidden;"></iframe>
 
 <details markdown="1">
 <summary>Phase Relationship Visualizer</summary>
@@ -268,7 +268,7 @@ This decomposition is crucial in electronics:
 
 #### Diagram: DC and AC Component Separator
 
-<iframe src="../../sims/dc-ac-separator/main.html" width="100%" height="450px" scrolling="no" style="overflow: hidden;"></iframe>
+<iframe src="../../../sims/dc-ac-separator/main.html" width="100%" height="450px" scrolling="no" style="overflow: hidden;"></iframe>
 
 <details markdown="1">
 <summary>DC and AC Component Separator</summary>
@@ -336,7 +336,7 @@ The transformation between these views is called the **Fourier Transform**, and 
 
 #### Diagram: Time Domain vs Frequency Domain
 
-<iframe src="../../sims/time-frequency-domain/main.html" width="100%" height="500px" scrolling="no" style="overflow: hidden;"></iframe>
+<iframe src="../../../sims/time-frequency-domain/main.html" width="100%" height="500px" scrolling="no" style="overflow: hidden;"></iframe>
 
 <details markdown="1">
 <summary>Time Domain vs Frequency Domain</summary>
@@ -455,7 +455,7 @@ Division: \(\frac{r_1 \angle \theta_1}{r_2 \angle \theta_2} = \frac{r_1}{r_2} \a
 
 #### Diagram: Complex Number Visualizer
 
-<iframe src="../../sims/complex-number-viz/main.html" width="100%" height="500px" scrolling="no" style="overflow: hidden;"></iframe>
+<iframe src="../../../sims/complex-number-viz/main.html" width="100%" height="500px" scrolling="no" style="overflow: hidden;"></iframe>
 
 <details markdown="1">
 <summary>Complex Number Visualizer</summary>
@@ -539,7 +539,7 @@ This single equation connects five fundamental constants: \(e\), \(j\), \(\pi\),
 
 #### Diagram: Euler's Formula on the Unit Circle
 
-<iframe src="../../sims/euler-circle/main.html" width="100%" height="450px" scrolling="no" style="overflow: hidden;"></iframe>
+<iframe src="../../../sims/euler-circle/main.html" width="100%" height="450px" scrolling="no" style="overflow: hidden;"></iframe>
 
 <details markdown="1">
 <summary>Euler's Formula on the Unit Circle</summary>
@@ -672,7 +672,7 @@ Gain can be:
 
 #### Diagram: Gain and Decibel Converter
 
-<iframe src="../../sims/gain-db-converter/main.html" width="100%" height="400px" scrolling="no" style="overflow: hidden;"></iframe>
+<iframe src="../../../sims/gain-db-converter/main.html" width="100%" height="400px" scrolling="no" style="overflow: hidden;"></iframe>
 
 <details markdown="1">
 <summary>Gain and Decibel Converter</summary>
