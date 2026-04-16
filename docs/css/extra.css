@@ -370,3 +370,163 @@ body {
   .cover-stats { gap: 1.2rem; }
   .stat-number { font-size: 1.8rem; }
 }
+
+/* ── TTS Reader Controls (Chapter Overview Narration) ───────────────────── */
+
+.md-typeset .tts-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0.8rem 0 0.2rem 0;
+  padding: 0.3rem 0.6rem;
+  border-radius: 6px;
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+  border-left: 3px solid transparent;
+}
+
+.md-typeset .tts-controls.tts-active {
+  border-left-color: #00BFFF;
+  box-shadow: -2px 0 10px rgba(0, 191, 255, 0.15);
+}
+
+.md-typeset .tts-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 1rem;
+  border: 2px solid #5A3EED;
+  border-radius: 24px;
+  background: white;
+  color: #4527A0;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.md-typeset .tts-btn:hover {
+  background: #5A3EED;
+  color: white;
+}
+
+.md-typeset .tts-btn:focus {
+  outline: 3px solid #7A5CFF;
+  outline-offset: 2px;
+}
+
+.md-typeset .tts-play[data-state="playing"] {
+  background: #5A3EED;
+  color: white;
+}
+
+.md-typeset .tts-stop {
+  border-color: #ef9a9a;
+  color: #e57373;
+  padding: 0.4rem 0.85rem;
+  font-weight: 500;
+  font-size: 0.85rem;
+}
+
+.md-typeset .tts-stop:hover {
+  background: #ef9a9a;
+  color: white;
+  border-color: #ef9a9a;
+}
+
+.md-typeset .tts-icon {
+  font-size: 0.85rem;
+}
+
+/* ── Sentence Highlighting ──────────────────────────────────────────────── */
+
+.md-typeset details.video-overview .tts-sentence {
+  border-radius: 2px;
+  padding: 1px 2px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.md-typeset details.video-overview .tts-sentence:hover {
+  background-color: rgba(90, 62, 237, 0.08);
+}
+
+.md-typeset details.video-overview .tts-sentence.tts-reading {
+  background-color: rgba(0, 191, 255, 0.14);
+}
+
+/* ── TTS Progress Bar ───────────────────────────────────────────────────── */
+
+.md-typeset .tts-progress-wrap {
+  flex-basis: 100%;
+  display: none;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.3rem;
+}
+
+.md-typeset .tts-controls.tts-active .tts-progress-wrap {
+  display: flex;
+}
+
+.md-typeset .tts-progress {
+  -webkit-appearance: none;
+  appearance: none;
+  flex: 1;
+  height: 4px;
+  border-radius: 2px;
+  background: linear-gradient(to right, #00BFFF var(--tts-fill, 0%), #e0e0e0 var(--tts-fill, 0%));
+  outline: none;
+  cursor: pointer;
+}
+
+.md-typeset .tts-progress::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #00BFFF;
+  border: none;
+  cursor: pointer;
+}
+
+.md-typeset .tts-progress::-moz-range-thumb {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #00BFFF;
+  border: none;
+  cursor: pointer;
+}
+
+.md-typeset .tts-progress::-moz-range-track {
+  height: 4px;
+  border-radius: 2px;
+  background: linear-gradient(to right, #00BFFF var(--tts-fill, 0%), #e0e0e0 var(--tts-fill, 0%));
+}
+
+.md-typeset .tts-progress-label {
+  font-size: 0.72rem;
+  color: #5A3EED;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* ── Active Reading Indicator (pulsing glow on details box) ─────────────── */
+
+@keyframes tts-details-glow {
+  0%, 100% { box-shadow: 0 0 6px rgba(0, 191, 255, 0.15); }
+  50%      { box-shadow: 0 0 14px rgba(0, 191, 255, 0.35); }
+}
+
+.md-typeset details.video-overview.tts-details-active {
+  border-color: #00BFFF !important;
+  animation: tts-details-glow 3s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .md-typeset details.video-overview.tts-details-active {
+    animation: none;
+    box-shadow: 0 0 10px rgba(0, 191, 255, 0.25);
+  }
+}
