@@ -121,32 +121,109 @@ hide:
 </div>
 
 <div class="cover-circuit cover-circuit-bottom">
-<svg viewBox="0 0 1200 90" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style="width:100%;height:90px;display:block;opacity:0.6;">
-  <!-- resistor zigzag symbol, repeated -->
-  <polyline points="0,45 60,45 75,20 90,70 105,20 120,70 135,20 150,70 165,45 220,45"
-            stroke="#D4A017" stroke-width="1.6" fill="none" opacity="0.7"/>
-  <polyline points="240,45 300,45 315,20 330,70 345,20 360,70 375,20 390,70 405,45 460,45"
-            stroke="#D4A017" stroke-width="1.6" fill="none" opacity="0.5"/>
-  <!-- capacitor symbol -->
-  <line x1="500" y1="20" x2="500" y2="70" stroke="#7C5CEF" stroke-width="2" opacity="0.7"/>
-  <line x1="520" y1="20" x2="520" y2="70" stroke="#7C5CEF" stroke-width="2" opacity="0.7"/>
-  <line x1="460" y1="45" x2="500" y2="45" stroke="#7C5CEF" stroke-width="1.5" opacity="0.5"/>
-  <line x1="520" y1="45" x2="560" y2="45" stroke="#7C5CEF" stroke-width="1.5" opacity="0.5"/>
-  <!-- inductor coil -->
-  <path d="M600,45 C610,25 630,25 640,45 C650,65 670,65 680,45 C690,25 710,25 720,45 C730,65 750,65 760,45 C770,25 790,25 800,45"
-        stroke="#D4A017" stroke-width="1.8" fill="none" opacity="0.6"/>
-  <line x1="560" y1="45" x2="600" y2="45" stroke="#D4A017" stroke-width="1.5" opacity="0.5"/>
-  <line x1="800" y1="45" x2="840" y2="45" stroke="#D4A017" stroke-width="1.5" opacity="0.5"/>
-  <!-- op-amp triangle -->
-  <polygon points="900,18 900,72 950,45" stroke="#7C5CEF" stroke-width="1.8" fill="none" opacity="0.55"/>
-  <line x1="860" y1="32" x2="900" y2="32" stroke="#7C5CEF" stroke-width="1.4" opacity="0.5"/>
-  <line x1="860" y1="58" x2="900" y2="58" stroke="#7C5CEF" stroke-width="1.4" opacity="0.5"/>
-  <line x1="950" y1="45" x2="990" y2="45" stroke="#7C5CEF" stroke-width="1.4" opacity="0.5"/>
-  <!-- ground symbol -->
-  <line x1="990" y1="45" x2="990" y2="72" stroke="#7dd3fc" stroke-width="1.5" opacity="0.5"/>
-  <line x1="970" y1="72" x2="1010" y2="72" stroke="#7dd3fc" stroke-width="1.8" opacity="0.5"/>
-  <line x1="978" y1="79" x2="1002" y2="79" stroke="#7dd3fc" stroke-width="1.4" opacity="0.4"/>
-  <line x1="985" y1="86" x2="995"  y2="86" stroke="#7dd3fc" stroke-width="1.0" opacity="0.3"/>
+<svg viewBox="0 0 1200 90" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style="width:100%;height:90px;display:block;opacity:0.85;">
+
+  <!-- ── voltage source (left) ─────────────────────────────────────────── -->
+  <!-- circle symbol, center x=28 y=45 -->
+  <circle cx="28" cy="45" r="18" stroke="#D4A017" stroke-width="1.4" fill="none" opacity="0.65"/>
+  <text x="28" y="42" fill="#D4A017" font-size="9" text-anchor="middle" opacity="0.7">+</text>
+  <text x="28" y="54" fill="#D4A017" font-size="9" text-anchor="middle" opacity="0.7">−</text>
+  <!-- wire from source to R1 -->
+  <line x1="46" y1="45" x2="62" y2="45" stroke="#D4A017" stroke-width="1.5" opacity="0.6"/>
+
+  <!-- ── R1 (resistor zigzag) ────────────────────────────────────────── -->
+  <polyline points="62,45 74,45 86,22 99,68 112,22 125,68 138,22 151,68 164,45 178,45"
+            stroke="#D4A017" stroke-width="1.7" fill="none" opacity="0.80"/>
+  <text x="120" y="13" fill="#D4A017" font-size="8" text-anchor="middle" opacity="0.65">R₁</text>
+  <!-- wire R1 → junction -->
+  <line x1="178" y1="45" x2="218" y2="45" stroke="#D4A017" stroke-width="1.5" opacity="0.60"/>
+  <!-- junction node -->
+  <circle cx="218" cy="45" r="3" fill="#D4A017" opacity="0.75"/>
+
+  <!-- ── C1 (shunt capacitor to ground rail) ─────────────────────────── -->
+  <!-- wire down from junction -->
+  <line x1="218" y1="45" x2="218" y2="55" stroke="#7C5CEF" stroke-width="1.4" opacity="0.55"/>
+  <!-- plate 1 -->
+  <line x1="200" y1="55" x2="236" y2="55" stroke="#7C5CEF" stroke-width="2.0" opacity="0.80"/>
+  <!-- plate 2 -->
+  <line x1="200" y1="63" x2="236" y2="63" stroke="#7C5CEF" stroke-width="2.0" opacity="0.80"/>
+  <text x="246" y="62" fill="#7C5CEF" font-size="8" opacity="0.65">C₁</text>
+  <!-- wire down to ground rail -->
+  <line x1="218" y1="63" x2="218" y2="76" stroke="#7C5CEF" stroke-width="1.4" opacity="0.50"/>
+
+  <!-- ── wire R1-junction → L1 ────────────────────────────────────────── -->
+  <line x1="218" y1="45" x2="280" y2="45" stroke="#D4A017" stroke-width="1.5" opacity="0.60"/>
+
+  <!-- ── L1 (inductor coil) ──────────────────────────────────────────── -->
+  <path d="M280,45 C288,26 304,26 312,45 C320,64 336,64 344,45 C352,26 368,26 376,45 C384,64 400,64 408,45 C416,26 432,26 440,45"
+        stroke="#D4A017" stroke-width="1.8" fill="none" opacity="0.75"/>
+  <text x="360" y="15" fill="#D4A017" font-size="8" text-anchor="middle" opacity="0.65">L₁</text>
+  <!-- wire L1 → junction -->
+  <line x1="440" y1="45" x2="490" y2="45" stroke="#D4A017" stroke-width="1.5" opacity="0.60"/>
+  <!-- junction node -->
+  <circle cx="490" cy="45" r="3" fill="#7C5CEF" opacity="0.75"/>
+
+  <!-- ── R2 (shunt resistor to ground) ──────────────────────────────── -->
+  <!-- wire down and zigzag vertical (represent as a box with hatching) -->
+  <line x1="490" y1="45" x2="490" y2="53" stroke="#7C5CEF" stroke-width="1.4" opacity="0.55"/>
+  <rect x="479" y="53" width="22" height="14" stroke="#7C5CEF" stroke-width="1.5" fill="none" opacity="0.70"/>
+  <text x="516" y="64" fill="#7C5CEF" font-size="8" opacity="0.65">R₂</text>
+  <line x1="490" y1="67" x2="490" y2="76" stroke="#7C5CEF" stroke-width="1.4" opacity="0.50"/>
+
+  <!-- ── wire junction → op-amp ──────────────────────────────────────── -->
+  <line x1="490" y1="45" x2="560" y2="45" stroke="#7C5CEF" stroke-width="1.5" opacity="0.60"/>
+  <!-- route to + input (y=32) -->
+  <line x1="560" y1="45" x2="560" y2="32" stroke="#7C5CEF" stroke-width="1.4" opacity="0.55"/>
+  <line x1="560" y1="32" x2="610" y2="32" stroke="#7C5CEF" stroke-width="1.4" opacity="0.55"/>
+  <!-- − input tied to mid-voltage via line going down -->
+  <line x1="560" y1="58" x2="610" y2="58" stroke="#7C5CEF" stroke-width="1.4" opacity="0.40"/>
+  <text x="570" y="70" fill="#7C5CEF" font-size="7" opacity="0.45">½V</text>
+
+  <!-- ── op-amp triangle ─────────────────────────────────────────────── -->
+  <polygon points="610,18 610,72 670,45" stroke="#7C5CEF" stroke-width="1.8" fill="none" opacity="0.70"/>
+  <text x="628" y="49" fill="#7C5CEF" font-size="7" opacity="0.55">+</text>
+  <text x="628" y="62" fill="#7C5CEF" font-size="7" opacity="0.40">−</text>
+  <!-- output wire -->
+  <line x1="670" y1="45" x2="720" y2="45" stroke="#7C5CEF" stroke-width="1.5" opacity="0.60"/>
+  <!-- junction node at output -->
+  <circle cx="720" cy="45" r="3" fill="#7C5CEF" opacity="0.65"/>
+
+  <!-- ── R3 (series output resistor) ────────────────────────────────── -->
+  <polyline points="720,45 734,45 748,22 762,68 776,22 790,68 804,22 818,68 832,45 848,45"
+            stroke="#D4A017" stroke-width="1.7" fill="none" opacity="0.70"/>
+  <text x="784" y="13" fill="#D4A017" font-size="8" text-anchor="middle" opacity="0.60">R₃</text>
+
+  <!-- ── C2 (output filter cap to ground) ───────────────────────────── -->
+  <line x1="848" y1="45" x2="900" y2="45" stroke="#D4A017" stroke-width="1.5" opacity="0.60"/>
+  <!-- junction node -->
+  <circle cx="900" cy="45" r="3" fill="#D4A017" opacity="0.65"/>
+  <!-- shunt cap wire down -->
+  <line x1="900" y1="45" x2="900" y2="54" stroke="#7dd3fc" stroke-width="1.4" opacity="0.55"/>
+  <line x1="882" y1="54" x2="918" y2="54" stroke="#7dd3fc" stroke-width="2.0" opacity="0.75"/>
+  <line x1="882" y1="62" x2="918" y2="62" stroke="#7dd3fc" stroke-width="2.0" opacity="0.75"/>
+  <text x="928" y="62" fill="#7dd3fc" font-size="8" opacity="0.60">C₂</text>
+  <line x1="900" y1="62" x2="900" y2="76" stroke="#7dd3fc" stroke-width="1.4" opacity="0.50"/>
+
+  <!-- ── V_out terminal ──────────────────────────────────────────────── -->
+  <line x1="900" y1="45" x2="980" y2="45" stroke="#7dd3fc" stroke-width="1.5" opacity="0.60"/>
+  <circle cx="985" cy="45" r="4" stroke="#7dd3fc" stroke-width="1.5" fill="none" opacity="0.65"/>
+  <text x="995" y="40" fill="#7dd3fc" font-size="8" opacity="0.60">V_out</text>
+
+  <!-- ── ground rail ─────────────────────────────────────────────────── -->
+  <line x1="10" y1="76" x2="1190" y2="76" stroke="rgba(125,211,252,0.25)" stroke-width="1.0"/>
+  <!-- ground return on left (from voltage source bottom) -->
+  <line x1="10" y1="45" x2="10" y2="76" stroke="#D4A017" stroke-width="1.2" opacity="0.40"/>
+  <!-- ground symbol center -->
+  <line x1="560" y1="76" x2="560" y2="82" stroke="#7dd3fc" stroke-width="1.4" opacity="0.45"/>
+  <line x1="545" y1="82" x2="575" y2="82" stroke="#7dd3fc" stroke-width="1.6" opacity="0.45"/>
+  <line x1="551" y1="87" x2="569" y2="87" stroke="#7dd3fc" stroke-width="1.2" opacity="0.35"/>
+
+  <!-- ── faint right-side extension (decorative) ─────────────────────── -->
+  <line x1="1020" y1="45" x2="1060" y2="45" stroke="#D4A017" stroke-width="1.3" opacity="0.35"/>
+  <polyline points="1060,45 1070,45 1078,28 1087,62 1096,28 1105,62 1114,28 1123,62 1132,45 1145,45"
+            stroke="#D4A017" stroke-width="1.4" fill="none" opacity="0.30"/>
+  <line x1="1145" y1="45" x2="1185" y2="45" stroke="#D4A017" stroke-width="1.3" opacity="0.25"/>
+
 </svg>
 </div>
 
