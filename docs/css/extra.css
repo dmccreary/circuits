@@ -43,13 +43,37 @@
     max-width: 100%;
 }
 
-/* Chapter overview section headings (Summary / Concepts Covered / Prerequisites) */
+/* Chapter section headings — h2 (major sections like 1.1, 1.2 …) */
 .md-typeset .unit1-styled h2 {
     color: #5A3EED !important;
     border-bottom: 2px solid #5A3EED;
-    padding-bottom: 0.3rem;
+    padding-bottom: 0.4rem;
+    font-weight: 800;
+    margin-top: 2.2rem;
+    margin-bottom: 0.8rem;
+    border-left: none !important;
+    padding-left: 0 !important;
+}
+
+/* h3 — subsections */
+.md-typeset .unit1-styled h3 {
+    color: #5A3EED !important;
+    font-weight: 700;
+    margin-top: 1.8rem;
+    margin-bottom: 0.6rem;
+    border-left: none !important;
+    padding-left: 0 !important;
+}
+
+/* h4 — diagram labels and minor sub-headings */
+.md-typeset .unit1-styled h4 {
+    color: #5A3EED !important;
     font-weight: 700;
     margin-top: 2rem;
+    margin-bottom: 0.8rem;
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
 }
 
 /* Collapsible chapter overview */
