@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resistor Physical Structure</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+  <style>
+    body { margin: 0; padding: 0; background: #e8eaf0; display: flex; justify-content: center; }
+    canvas { display: block; }
+  </style>
+</head>
+<body>
+<script>
+new p5(function(p) {
+  // Color code: digit -> [r, g, b, name]
+  const COLORS = {
+    0: [0,   0,   0,   'Black'],
+    1: [102, 51,  0,   'Brown'],
+    2: [200, 0,   0,   'Red'],
+    3: [255, 128, 0,   'Orange'],
+    4: [255, 230, 0,   'Yellow'],
+    5: [0,   160, 0,   'Green'],
+    6: [0,   0,   200, 'Blue'],
+    7: [148, 0,   211, 'Violet'],
+    8: [128, 128, 128, 'Gray'],
+    9: [255, 255, 255, 'White']
+  };
+  const GOLD   = [212, 175, 55,  'Gold ±5%'];
+  const SILVER = [192, 192, 192, 'Silver ±10%'];
+
+  let resistanceSlider;
+  let currentR = 470;
+
+  // Slider range: 10 to 1000000 on log scale
+  const SLIDER_MIN = 1;  // log10(10)=1
+  const SLIDER_MAX = 6;  // log10(1000000)=6
+
+  // EIA 4-band color code
+  function getBands(R) {
+    // Clamp
+    R = Math.max(10, Math.min(1000000, R));
+    // Find magnitude
+    let exp = Math.floor(Math.log10(R));
+    let mantissa = R / Math.pow(10, exp);
+    // Normalize so we have a 2-digit significand
+    // digit1, digit2, multiplier exponent
+    let d1, d2, mult;
+    if (mantissa >= 10) {
+      d1 = Math.floor(mantissa / 10) % 10;
+      d2 = Math.floor(mantissa) % 10;
+      mult = exp;
+    } else if (mantissa >= 1) {
+      d1 = Math.floor(mantissa) % 10;
+      d2 = Math.floor(mantissa * 10) % 10;
+      mult = exp - 1;
+    } else {
+      d1 = 0;
+      d2 = Math.floor(mantissa * 10) % 10;
+      mult = exp - 1;
+    }
+    // Ensure mult >= 0 for standard EIA
+    if (mult < 0) mult = 0;
+    if (mult > 6) mult = 6;
+    return { d1, d2, mult };
+  }
+
+  function formatR(R) {
+    if (R >= 1000000) return (R / 1000000).toFixed(1).replace(/\.0$/, '') + ' MΩ';
+    if (R >= 1000)    return (R / 1000).toFixed(1).replace(/\.0$/, '') + ' kΩ';
+    return R + ' Ω';
+  }
+
+  p.setup = function() {
+    let cnv = p.createCanvas(820, 450);
+    cnv.parent(document.body);
+
+    resistanceSlider = p.createSlider(SLIDER_MIN * 100, SLIDER_MAX * 100, 267, 1);
+    resistanceSlider.position(200, 408);
+    resistanceSlider.style('width', '420px');
+  };
+
+  p.draw = function() {
+    p.background('#e8eaf0');
+
+    // Recover R from log-scale slider
+    let logVal = resistanceSlider.value() / 100;
+    // Map to nice EIA values
+    let rawR = Math.round(Math.pow(10, logVal));
+    // Snap to nearest EIA E12 series value approximately
+    currentR = rawR;
+
+    let bands = getBands(currentR);
+
+    drawTitle();
+    drawResistorBody(bands);
+    drawColorLegend();
+    drawSliderLabel();
+  };
+
+  function drawTitle() {
+    p.fill(30);
+    p.noStroke();
+    p.textSize(20);
+    p.textAlign(p.CENTER, p.TOP);
+    p.textStyle(p.BOLD);
+    p.text('Resistor Physical Structure', 410, 12);
+    p.textStyle(p.NORMAL);
+  }
+
+  function drawResistorBody(bands) {
+    let cx = 410;
+    let cy = 175;
+    let bw = 400;  // body width
+    let bh = 80;   // body height
+    let bx = cx - bw / 2;
+    let by = cy - bh / 2;
+    let leadLen = 130;
+
+    // === Wire leads ===
+    p.stroke(160);
+    p.strokeWeight(4);
+    // Left lead
+    p.line(bx - leadLen, cy, bx, cy);
+    // Right lead
+    p.line(bx + bw, cy, bx + bw + leadLen, cy);
+
+    // === Body (ceramic core, tan/beige) ===
+    p.noStroke();
+    // Shadow
+    p.fill(180, 170, 140, 120);
+    p.rect(bx + 4, by + 6, bw, bh, 22);
+    // Main body
+    p.fill(210, 190, 145);
+    p.stroke(160, 140, 100);
+    p.strokeWeight(2);
+    p.rect(bx, by, bw, bh, 20);
+
+    // Lacquer coating highlight
+    p.noStroke();
+    p.fill(255, 255, 200, 60);
+    p.rect(bx + 10, by + 6, bw - 20, bh / 3, 10);
+
+    // === Color Bands ===
+    let bandW = 30;
+    let bandPositions = [
+      bx + 60,
+      bx + 110,
+      bx + 160,
+      bx + bw - 90   // tolerance band (gold) more separated
+    ];
+    let bandColors = [
+      COLORS[bands.d1],
+      COLORS[bands.d2],
+      COLORS[bands.mult],
+      GOLD
+    ];
+
+    for (let i = 0; i < 4; i++) {
+      let bpos = bandPositions[i];
+      let col = bandColors[i];
+      // Clip to rounded body
+      p.fill(col[0], col[1], col[2]);
+      p.stroke(0, 0, 0, 80);
+      p.strokeWeight(1);
+      p.rect(bpos, by + 4, bandW, bh - 8, 3);
+    }
+
+    // === Body end caps (lead attachment) ===
+    p.noStroke();
+    p.fill(180, 160, 110);
+    p.rect(bx, by, 22, bh, 20, 0, 0, 20);
+    p.rect(bx + bw - 22, by, 22, bh, 0, 20, 20, 0);
+
+    // === Labels with arrows ===
+    drawLabel(bx - leadLen / 2, cy - 60, 'Lead (tinned copper)', bx - leadLen / 2, cy - 10);
+    drawLabel(bx + 50, cy - 80, 'Lacquer coating', bx + 90, by);
+    drawLabel(bx + bw / 2, cy + 75, 'Body (ceramic core)', bx + bw / 2, by + bh);
+    drawLabel(bx + 130, cy - 80, 'Color bands', bx + 140, by - 2);
+    drawLabel(bx + bw + leadLen / 2, cy - 60, 'Lead', bx + bw + leadLen / 2, cy - 10);
+
+    // === Band value labels below bands ===
+    let digitNames = ['1st digit', '2nd digit', 'Multiplier', 'Tolerance'];
+    let digitVals  = [
+      COLORS[bands.d1][3] + ' (' + bands.d1 + ')',
+      COLORS[bands.d2][3] + ' (' + bands.d2 + ')',
+      COLORS[bands.mult][3] + ' (×' + Math.pow(10, bands.mult) + ')',
+      GOLD[3]
+    ];
+    p.textSize(11);
+    p.textAlign(p.CENTER, p.TOP);
+    for (let i = 0; i < 4; i++) {
+      p.fill(60);
+      p.noStroke();
+      p.text(digitNames[i], bandPositions[i] + bandW / 2, by + bh + 10);
+      p.fill(30);
+      p.textStyle(p.BOLD);
+      p.text(digitVals[i], bandPositions[i] + bandW / 2, by + bh + 23);
+      p.textStyle(p.NORMAL);
+    }
+  }
+
+  function drawLabel(lx, ly, label, arrowX, arrowY) {
+    p.fill(30);
+    p.noStroke();
+    p.textSize(12);
+    p.textAlign(p.CENTER, p.CENTER);
+    p.text(label, lx, ly);
+    // Arrow line
+    p.stroke(80);
+    p.strokeWeight(1.5);
+    p.line(lx, ly + 8, arrowX, arrowY);
+    // Arrowhead
+    p.fill(80);
+    p.noStroke();
+    p.circle(arrowX, arrowY, 5);
+  }
+
+  function drawSliderLabel() {
+    p.fill(30);
+    p.noStroke();
+    p.textSize(15);
+    p.textAlign(p.LEFT, p.CENTER);
+    p.text('Resistance:', 30, 415);
+    p.textStyle(p.BOLD);
+    p.textSize(17);
+    p.fill(0, 80, 180);
+    p.text(formatR(currentR), 120, 415);
+    p.textStyle(p.NORMAL);
+
+    // Range labels
+    p.fill(80);
+    p.textSize(11);
+    p.textAlign(p.LEFT, p.CENTER);
+    p.text('10 Ω', 196, 432);
+    p.textAlign(p.RIGHT, p.CENTER);
+    p.text('1 MΩ', 626, 432);
+  }
+
+  function drawColorLegend() {
+    let lx = 640;
+    let ly = 60;
+    let sw = 22;
+    let sh = 14;
+    let gap = 17;
+
+    p.fill(255, 255, 255, 200);
+    p.stroke(180);
+    p.strokeWeight(1);
+    p.rect(lx - 8, ly - 20, 175, 210, 6);
+
+    p.fill(30);
+    p.noStroke();
+    p.textSize(12);
+    p.textAlign(p.LEFT, p.TOP);
+    p.textStyle(p.BOLD);
+    p.text('Color Code Table', lx, ly - 14);
+    p.textStyle(p.NORMAL);
+
+    for (let d = 0; d <= 9; d++) {
+      let col = COLORS[d];
+      let y = ly + d * gap;
+      p.fill(col[0], col[1], col[2]);
+      p.stroke(0, 0, 0, 80);
+      p.strokeWeight(1);
+      p.rect(lx, y, sw, sh);
+      p.fill(30);
+      p.noStroke();
+      p.textSize(11);
+      p.textAlign(p.LEFT, p.CENTER);
+      p.text(d + '  ' + col[3], lx + sw + 5, y + sh / 2);
+    }
+
+    // Gold tolerance
+    let y = ly + 10 * gap + 4;
+    p.fill(GOLD[0], GOLD[1], GOLD[2]);
+    p.stroke(0, 0, 0, 80);
+    p.strokeWeight(1);
+    p.rect(lx, y, sw, sh);
+    p.fill(30);
+    p.noStroke();
+    p.textSize(11);
+    p.textAlign(p.LEFT, p.CENTER);
+    p.text('Gold  ±5%', lx + sw + 5, y + sh / 2);
+  }
+});
+</script>
+</body>
+</html>
