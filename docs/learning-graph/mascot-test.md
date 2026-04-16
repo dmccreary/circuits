@@ -11,6 +11,8 @@ This page shows all Sparky pose variants for contributor reference.
 
 ## Warning (existing SVG)
 
+<img src="../img/mascots/sparky.svg" alt="Sparky warning pose" width="150" style="float:left; margin-right:1em;">
+
 <div class="mascot sparky" markdown>
 **Watch Out!**
 
@@ -21,6 +23,8 @@ unit mismatches, and sign errors.
 ---
 
 ## Welcome
+
+<img src="../img/mascots/sparky-welcome.png" alt="Sparky welcome pose" width="150" style="float:left; margin-right:1em;">
 
 <div class="mascot sparky-welcome" markdown>
 **Welcome to This Chapter!**
@@ -33,6 +37,8 @@ preview what's ahead.
 
 ## Thinking
 
+<img src="../img/mascots/sparky-thinking.png" alt="Sparky thinking pose" width="150" style="float:left; margin-right:1em;">
+
 <div class="mascot sparky-thinking" markdown>
 **Key Insight**
 
@@ -43,6 +49,8 @@ deserves careful attention.
 ---
 
 ## Tip
+
+<img src="../img/mascots/sparky-tip.png" alt="Sparky tip pose" width="150" style="float:left; margin-right:1em;">
 
 <div class="mascot sparky-tip" markdown>
 **Helpful Tip**
