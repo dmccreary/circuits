@@ -216,6 +216,24 @@ details.video-overview[open] > summary {
   border-radius: 12px;
   overflow: hidden;
   margin: -0.8rem -1.6rem 0;
+  position: relative;  /* needed for absolute-positioned circuit overlay */
+}
+
+/* Full-cover background circuit art overlay */
+.cover-bg-circuit {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+/* Lift content layers above the background overlay */
+.cover-circuit,
+.cover-content,
+.cover-circuit-bottom {
+  position: relative;
+  z-index: 1;
 }
 
 .cover-content {
@@ -447,5 +465,193 @@ details.video-overview[open] > summary {
   .md-typeset details.video-overview.tts-details-active {
     animation: none;
     box-shadow: 0 0 10px rgba(0, 191, 255, 0.25);
+  }
+}
+
+/* ── Footer Navigation (Previous / Next) ────────────────────────────────── */
+/*
+ * Styled to match EE2301 textbook: compact rounded cards with purple icon
+ * circles, clean typography, and subtle lift-on-hover interaction.
+ *
+ * Selectors target standard MkDocs Material classes:
+ *   .md-footer              – outer <footer>
+ *   .md-footer__inner       – <nav> holding prev/next links
+ *   .md-footer__link        – each <a> (--prev / --next)
+ *   .md-footer__direction   – "Previous" / "Next" label
+ *   .md-footer__title       – wrapper around page title
+ *   .md-footer__button      – icon wrapper
+ */
+
+/* Container — explicit white background so cards sit on a clean surface */
+.md-footer {
+  background: #ffffff;
+  border-top: 1px solid #E8E0FF;
+  color: inherit;
+}
+
+.md-footer__inner.md-grid {
+  display: flex !important;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding: 2rem 0.75rem 1.25rem;
+  max-width: 61rem;
+}
+
+/* Card (shared) */
+.md-footer__link {
+  flex: 1 1 0;
+  display: flex !important;
+  align-items: center;
+  gap: 1rem;
+  background: #F6F1FF;
+  border: 1.5px solid #C8B7FF;
+  border-radius: 14px;
+  padding: 1.15rem 1.5rem;
+  margin: 0;
+  max-width: 50%;
+  box-shadow: 0 2px 8px rgba(90, 62, 237, 0.07);
+  text-decoration: none !important;
+  opacity: 1 !important;
+  transition: background 0.22s ease,
+              border-color 0.22s ease,
+              box-shadow 0.22s ease,
+              transform 0.18s ease;
+}
+
+/* Hover / focus */
+.md-footer__link:hover,
+.md-footer__link:focus-visible {
+  background: #EEE6FF;
+  border-color: #7A5CFF;
+  box-shadow: 0 6px 18px rgba(90, 62, 237, 0.16);
+  transform: translateY(-3px);
+}
+
+.md-footer__link:active {
+  transform: translateY(-1px);
+  box-shadow: 0 3px 10px rgba(90, 62, 237, 0.12);
+}
+
+/* Previous card: icon left, text right */
+.md-footer__link--prev {
+  flex-direction: row;
+  text-align: left;
+}
+
+/* Next card: text left, icon right */
+.md-footer__link--next {
+  flex-direction: row;
+  text-align: right;
+  margin-left: auto;
+  margin-right: 0;
+}
+
+/* Material hides the prev title by default — force it visible */
+.md-footer__link--prev .md-footer__title {
+  display: block !important;
+}
+
+/* Icon circle */
+.md-footer__button.md-icon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  margin: 0;
+  padding: 0;
+  border-radius: 50%;
+  background: #5A3EED;
+  transition: background 0.22s ease,
+              transform 0.18s ease;
+}
+
+.md-footer__link:hover .md-footer__button.md-icon {
+  background: #4527A0;
+  transform: scale(1.1);
+}
+
+/* Arrow SVG — white, fills the circle */
+.md-footer__button.md-icon svg {
+  fill: #fff;
+  width: 1.35rem;
+  height: 1.35rem;
+}
+
+/* Title block */
+.md-footer__title {
+  flex-grow: 1;
+  min-width: 0;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #2F2F2F;
+  margin: 0;
+  padding: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* "PREVIOUS" / "NEXT" direction label */
+.md-footer__direction {
+  display: block;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #5A3EED;
+  opacity: 1;
+  margin-bottom: 0.25rem;
+}
+
+/* Page title ellipsis */
+.md-footer__title .md-ellipsis {
+  display: block;
+  color: #2F2F2F;
+  font-weight: 500;
+  font-size: 0.92rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.md-footer__link:hover .md-footer__title .md-ellipsis {
+  color: #5A3EED;
+}
+
+/* Bottom meta bar — purple matching the site header, not dark charcoal */
+.md-footer-meta {
+  background-color: #5A3EED;
+}
+
+.md-footer-meta.md-typeset a {
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.md-footer-meta.md-typeset a:hover {
+  color: #D4A017;
+}
+
+/* Mobile: stack cards vertically */
+@media screen and (max-width: 720px) {
+  .md-footer__inner.md-grid {
+    flex-direction: column;
+    gap: 0.85rem;
+    padding: 1.25rem 0.75rem 1rem;
+  }
+
+  .md-footer__link {
+    max-width: 100%;
+    flex: none;
+  }
+
+  .md-footer__link--next {
+    margin-left: 0;
+  }
+
+  .md-footer__button.md-icon {
+    width: 2.5rem;
+    height: 2.5rem;
   }
 }
