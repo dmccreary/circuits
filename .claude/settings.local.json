@@ -1,7 +1,44 @@
 {
   "permissions": {
     "allow": [
-      "Bash(gh:*)"
+      "Bash(gh:*)",
+      "Bash(git add:*)",
+      "Bash(git commit -m ':*)",
+      "Bash(git push:*)",
+      "Bash(mkdocs gh-deploy:*)",
+      "WebFetch(domain:nati-123.github.io)",
+      "Bash(python3:*)",
+      "Bash(mkdocs build:*)",
+      "Bash(git commit:*)",
+      "Bash(git show-ref:*)",
+      "Bash(git fetch:*)",
+      "Bash(git merge:*)",
+      "Bash(git rebase:*)",
+      "Bash(git stash:*)",
+      "Bash(git checkout:*)",
+      "Bash(wc -l /home/kebar/projects/circuits/docs/chapters/12-filters-resonance/*.md)",
+      "Bash(grep -c '\\\\\\\\$\\\\|\\\\\\\\$\\\\\\\\$' /home/kebar/projects/circuits/docs/chapters/14-signals-audio-lab/content.md)",
+      "Bash(grep -n '\\\\$' /home/kebar/projects/circuits/docs/chapters/14-signals-audio-lab/content.md)",
+      "Bash(grep -Pn '\\(?<![\\\\\\\\]\\)\\\\$' /home/kebar/projects/circuits/docs/chapters/14-signals-audio-lab/content.md)",
+      "Bash(grep -Pn '\\(?<![\\\\\\\\]\\)\\\\$' /home/kebar/projects/circuits/docs/chapters/14-signals-audio-lab/quiz.md)",
+      "Bash(wc -l /home/kebar/projects/circuits/docs/chapters/15-audio-applications/*.md)",
+      "Bash(awk '{print $NF}')",
+      "Bash(grep -h \"^<h2 id=\" /home/kebar/projects/circuits/docs/chapters/01*/content.md)",
+      "Bash(sed -n '95,102p' /home/kebar/projects/intelligent-textbook-ee2301/mkdocs.yml)",
+      "Bash(sed -n '143,150p' /home/kebar/projects/intelligent-textbook-ee2301/mkdocs.yml)",
+      "Bash(wc -l /home/kebar/projects/circuits/docs/chapters/*/index.md)",
+      "Bash(git -C /home/kebar/projects/circuits status --short)",
+      "Bash(git -C /home/kebar/projects/circuits diff mkdocs.yml)",
+      "Bash(wc -l docs/chapters/*/quiz.md docs/chapters/*/problems.md docs/chapters/*/glossary.md)",
+      "Bash(curl -s \"https://dmccreary.github.io/circuits/js/tts-reader.js\")",
+      "Bash(curl -s -o /dev/null -w \"audio-reader.js HTTP: %{http_code}\\\\n\" \"https://dmccreary.github.io/circuits/js/audio-reader.js\")",
+      "Bash(curl -s -o /dev/null -w \"tts-reader.js HTTP: %{http_code}\\\\n\" \"https://dmccreary.github.io/circuits/js/tts-reader.js\")",
+      "Bash(curl -s \"https://dmccreary.github.io/circuits/chapters/01-electric-charge-basic-quantities/\")",
+      "Bash(sed -i 's|<h2[^>]*>\\\\\\(.*\\\\\\)</h2>|## \\\\1|g' docs/chapters/01-electric-charge-basic-quantities/content.md)",
+      "Bash(sed -i 's|<h3[^>]*>\\\\\\(.*\\\\\\)</h3>|### \\\\1|g' docs/chapters/01-electric-charge-basic-quantities/content.md)",
+      "Bash(sed -i 's|<h4[^>]*>\\\\\\(.*\\\\\\)</h4>|#### \\\\1|g' docs/chapters/01-electric-charge-basic-quantities/content.md)",
+      "Bash(curl -s \"https://dmccreary.github.io/circuits/chapters/01-electric-charge-basic-quantities/content/\")",
+      "Bash(wc -l /home/kebar/projects/circuits/docs/js/*.js)"
     ]
   }
 }
