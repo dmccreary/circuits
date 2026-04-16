@@ -252,7 +252,6 @@ nav:
 
   - About:
     - About This Course: about.md
-    - Authors: about/authors.md
     - Course Description: course-description.md
     - Circuits:
       - List of Circuits: circuits/index.md

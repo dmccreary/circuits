@@ -671,11 +671,6 @@ hide:
 
 </div>
 
-<p class="cover-team" style="margin:1.4rem 0 0.2rem; font-size:0.92rem; color:#c4b5fd; opacity:0.9;">
-<strong>Team:</strong> Natol Dinka &nbsp;·&nbsp; Ocean Lin &nbsp;·&nbsp; Augustus Sargent &nbsp;·&nbsp; Thelma Ade<br>
-<strong>Advisor:</strong> Dan McCreary
-</p>
-
 <div class="cover-buttons" markdown>
 
 [Enter Textbook :material-arrow-right:](chapters/index.md){ .md-button .md-button--primary }
