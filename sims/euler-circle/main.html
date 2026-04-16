@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Euler's Formula on the Unit Circle</title>
+<script src="https://cdn.jsdelivr.net/npm/p5@1.11.7/lib/p5.js"></script>
+<style>
+  body { margin: 0; padding: 0; background: #e8eaf0; }
+  canvas { display: block; }
+</style>
+</head>
+<body>
+<main></main>
+<script>
+// Euler's Formula on the Unit Circle
+// Chapter 8: AC Signals and Sinusoidal Waveforms
+// Shows rotating phasor + cos/sin projections
+
+const CW = 680;
+const CH  = 450;
+
+// Unit circle area (left)
+const UC_W = 300;
+const UC_CX = 150;
+const UC_CY = 200;
+const UC_R  = 110;
+
+// Waveform panels (right)
+const WV_X  = UC_W + 10;
+const WV_W  = CW - WV_X - 10;
+const COS_Y = 50;
+const SIN_Y = 230;
+const WV_H  = 140;
+const CTRL_Y = 365;
+const CTRL_H = CH - CTRL_Y;
+
+let theta = 0;       // current angle in radians
+let isAnimating = false;
+let animTime = 0;
+let speed = 0.8;     // rad/s
+
+// Key angles for step mode
+const KEY_ANGLES = [0, 30, 45, 60, 90, 120, 135, 150, 180, 210, 225, 240, 270, 300, 315, 330, 360];
+let keyIdx = 0;
+
+const BTN_STEP  = { x: 10, y: CTRL_Y + 8,  w: 90, h: 28 };
+const BTN_ANIM  = { x: 110, y: CTRL_Y + 8, w: 120, h: 28 };
+const BTN_RST   = { x: 240, y: CTRL_Y + 8, w: 70,  h: 28 };
+const SL_X = 360, SL_W = CW - 360 - 15, SL_Y = CTRL_Y + 22;
+
+function setup() {
+  createCanvas(CW, CH).parent(select('main').elt);
+  textFont('Arial');
+}
+
+function draw() {
+  if (isAnimating) {
+    animTime += deltaTime;
+    theta = (animTime / 1000) * speed;
+  }
+  background(232, 234, 240);
+  drawUnitCircle();
+  drawWaveforms();
+  drawControls();
+}
+
+function drawUnitCircle() {
+  fill(252, 252, 255); noStroke(); rect(0, 0, UC_W, CH - CTRL_H);
+
+  fill(20, 30, 80); textSize(12); textStyle(BOLD); textAlign(CENTER, TOP);
+  text("Euler's Formula", UC_CX, 6);
+  textStyle(NORMAL);
+  fill(50, 60, 130); textSize(10); textAlign(CENTER, TOP);
+  text('eʲᶿ = cos(θ) + j·sin(θ)', UC_CX, 20);
+
+  // Grid circle
+  noFill(); stroke(210, 215, 240); strokeWeight(1); circle(UC_CX, UC_CY, UC_R * 2);
+
+  // Axes
+  stroke(130, 140, 180); strokeWeight(1.5);
+  line(UC_CX - UC_R - 15, UC_CY, UC_CX + UC_R + 15, UC_CY);
+  line(UC_CX, UC_CY - UC_R - 15, UC_CX, UC_CY + UC_R + 15);
+  fill(90, 100, 160); noStroke(); textSize(10);
+  textAlign(LEFT, CENTER); text('Re', UC_CX + UC_R + 4, UC_CY);
+  textAlign(CENTER, TOP);  text('Im', UC_CX + 3, UC_CY - UC_R - 14);
+
+  // Unit circle tick marks
+  noStroke(); fill(120, 130, 170); textSize(8);
+  textAlign(CENTER, TOP);  text('+1', UC_CX + UC_R + 2, UC_CY + 2);
+  textAlign(CENTER, TOP);  text('-1', UC_CX - UC_R - 12, UC_CY + 2);
+  textAlign(CENTER, TOP);  text('+j', UC_CX + 3, UC_CY - UC_R - 12);
+  textAlign(CENTER, TOP);  text('-j', UC_CX + 3, UC_CY + UC_R + 2);
+
+  // Current point on circle
+  const ex = UC_CX + UC_R * cos(theta);
+  const ey = UC_CY - UC_R * sin(theta);
+
+  // Projections
+  stroke(50, 100, 210); strokeWeight(1.5); setLineDash([5, 4]);
+  line(ex, UC_CY, ex, ey);  // cos projection vertical line
+  line(UC_CX, ey, ex, ey);  // sin projection horizontal line
+  setLineDash([]);
+
+  // cos projection onto x-axis
+  stroke(50, 100, 210); strokeWeight(3);
+  line(UC_CX, UC_CY, ex, UC_CY);
+  noStroke(); fill(50, 100, 210); textSize(9); textStyle(BOLD);
+  textAlign(CENTER, TOP);
+  text('cos(θ) = ' + cos(theta).toFixed(3), UC_CX + (ex - UC_CX) / 2, UC_CY + 4);
+  textStyle(NORMAL);
+
+  // sin projection onto y-axis
+  stroke(200, 60, 60); strokeWeight(3);
+  line(UC_CX, UC_CY, UC_CX, ey);
+  noStroke(); fill(200, 60, 60); textSize(9); textStyle(BOLD);
+  textAlign(RIGHT, CENTER);
+  text('sin(θ) = ' + sin(theta).toFixed(3), UC_CX - 4, UC_CY + (ey - UC_CY) / 2);
+  textStyle(NORMAL);
+
+  // Rotating phasor
+  stroke(150, 50, 180); strokeWeight(2.5);
+  line(UC_CX, UC_CY, ex, ey);
+  fill(150, 50, 180); noStroke();
+  const ang = atan2(ey - UC_CY, ex - UC_CX);
+  push(); translate(ex, ey); rotate(ang); triangle(-8, -4, -8, 4, 0, 0); pop();
+
+  // Angle arc
+  noFill(); stroke(180, 100, 10); strokeWeight(1.5);
+  const arcR = UC_R * 0.35;
+  const dispTheta = ((theta % TWO_PI) + TWO_PI) % TWO_PI;
+  arc(UC_CX, UC_CY, arcR * 2, arcR * 2, -theta, 0);
+  noStroke(); fill(180, 100, 10); textSize(10);
+  const midA = -dispTheta / 2;
+  textAlign(LEFT, CENTER);
+  text('θ = ' + degrees(dispTheta).toFixed(1) + '°', UC_CX + (arcR + 4) * cos(midA), UC_CY + (arcR + 4) * sin(midA));
+
+  // Point on circle
+  fill(150, 50, 180); noStroke(); circle(ex, ey, 10);
+
+  // Formula display
+  const cosV = cos(theta).toFixed(3);
+  const sinV = sin(theta).toFixed(3);
+  noStroke(); fill(30, 40, 100); textSize(10); textStyle(BOLD);
+  textAlign(CENTER, BOTTOM);
+  text(`eʲᶿ = ${cosV} + j·${sinV}`, UC_CX, CH - CTRL_H - 5);
+  textStyle(NORMAL);
+}
+
+function drawWaveforms() {
+  // Cos waveform panel
+  drawWavePanel(WV_X, COS_Y, 'cos(θ)  — Real part', [50, 100, 210], (ang) => cos(ang));
+  // Sin waveform panel
+  drawWavePanel(WV_X, SIN_Y, 'sin(θ)  — Imaginary part', [200, 60, 60], (ang) => sin(ang));
+}
+
+function drawWavePanel(x, y, title, col, fn) {
+  fill(252, 252, 255); noStroke(); rect(x, y, WV_W, WV_H, 5);
+
+  fill(col[0] * 0.3 + 170, col[1] * 0.3 + 170, col[2] * 0.3 + 170); noStroke();
+  rect(x, y, WV_W, 18, 5, 5, 0, 0);
+  fill(30, 40, 100); textSize(10); textStyle(BOLD); textAlign(LEFT, CENTER);
+  text(title, x + 6, y + 9);
+  textStyle(NORMAL);
+
+  const ox = x + 18, oy = y + 18 + (WV_H - 18) / 2;
+  const pw = WV_W - 28;
+  const ph = (WV_H - 28) / 2;
+
+  // Grid
+  stroke(210, 215, 235); strokeWeight(1);
+  line(ox, oy - ph, ox + pw, oy - ph);
+  line(ox, oy,      ox + pw, oy);
+  line(ox, oy + ph, ox + pw, oy + ph);
+
+  // Axes
+  stroke(130, 140, 180); strokeWeight(1.5);
+  line(ox, y + 18, ox, y + WV_H - 5);
+  line(ox, oy, ox + pw, oy);
+
+  // Labels
+  fill(90, 100, 150); noStroke(); textSize(8); textAlign(RIGHT, CENTER);
+  text('+1', ox - 2, oy - ph);
+  text('0',  ox - 2, oy);
+  text('-1', ox - 2, oy + ph);
+  textAlign(CENTER, TOP); textSize(8);
+  text('0°', ox, y + WV_H - 6);
+  text('360°', ox + pw, y + WV_H - 6);
+
+  // Waveform
+  stroke(col[0], col[1], col[2]); strokeWeight(2); noFill();
+  beginShape();
+  for (let px = 0; px <= pw; px++) {
+    const ang = (px / pw) * TWO_PI;
+    vertex(ox + px, oy - fn(ang) * ph);
+  }
+  endShape();
+
+  // Current position marker
+  const dispTheta = ((theta % TWO_PI) + TWO_PI) % TWO_PI;
+  const markerX = ox + (dispTheta / TWO_PI) * pw;
+  const markerY = oy - fn(theta) * ph;
+  stroke(col[0], col[1], col[2]); strokeWeight(1.5); setLineDash([4, 4]);
+  line(markerX, y + 18, markerX, y + WV_H - 8);
+  setLineDash([]);
+  fill(col[0], col[1], col[2]); noStroke(); circle(markerX, markerY, 9);
+
+  // Value
+  noStroke(); fill(col[0], col[1], col[2]); textSize(9); textStyle(BOLD);
+  textAlign(LEFT, TOP);
+  text(fn(theta).toFixed(3), markerX + 4, y + 20);
+  textStyle(NORMAL);
+}
+
+function drawControls() {
+  fill(218, 224, 240); noStroke(); rect(0, CTRL_Y, CW, CTRL_H, 0, 0, 8, 8);
+
+  drawBtn(BTN_STEP, '⟩ Step', [70, 90, 175]);
+  drawBtn(BTN_ANIM, isAnimating ? '■ Stop' : '▶ Animate', isAnimating ? [150, 50, 50] : [50, 125, 55]);
+  drawBtn(BTN_RST,  '↺ Reset', [100, 105, 135]);
+
+  drawSlider('Speed:', speed, 0.1, 3, SL_Y, speed.toFixed(1) + ' rad/s');
+
+  // Key angle display
+  if (!isAnimating) {
+    const dispTheta = ((theta % TWO_PI) + TWO_PI) % TWO_PI;
+    noStroke(); fill(30, 50, 120); textSize(11); textStyle(BOLD);
+    textAlign(LEFT, CENTER);
+    text('θ = ' + degrees(dispTheta).toFixed(1) + '°', 10, CTRL_Y + 52);
+    textStyle(NORMAL);
+  }
+}
+
+function setLineDash(list) { drawingContext.setLineDash(list); }
+
+function drawSlider(label, val, mn, mx, cy, dispVal) {
+  const t  = constrain((val - mn) / (mx - mn), 0, 1);
+  const tx = SL_X + SL_W * t;
+  noStroke(); fill(35, 45, 100); textSize(11); textAlign(RIGHT, CENTER);
+  text(label + '  ' + dispVal, SL_X - 8, cy);
+  fill(178, 183, 210); noStroke(); rect(SL_X, cy - 4, SL_W, 8, 4);
+  fill(70, 110, 200); rect(SL_X, cy - 4, SL_W * t, 8, 4);
+  fill(255); stroke(75, 110, 200); strokeWeight(2); circle(tx, cy, 18);
+}
+
+function drawBtn(b, lbl, col) {
+  fill(col[0], col[1], col[2]); noStroke(); rect(b.x, b.y, b.w, b.h, 5);
+  fill(255); textSize(11); textStyle(BOLD); textAlign(CENTER, CENTER);
+  text(lbl, b.x + b.w / 2, b.y + b.h / 2); textStyle(NORMAL);
+}
+
+let dragSlider = null;
+
+function mousePressed() {
+  if (inBtn(BTN_STEP)) {
+    isAnimating = false;
+    keyIdx = (keyIdx + 1) % KEY_ANGLES.length;
+    theta = KEY_ANGLES[keyIdx] * PI / 180;
+    return;
+  }
+  if (inBtn(BTN_ANIM)) {
+    isAnimating = !isAnimating;
+    if (isAnimating) animTime = theta / speed * 1000;
+    return;
+  }
+  if (inBtn(BTN_RST)) {
+    isAnimating = false; theta = 0; keyIdx = 0; animTime = 0; speed = 0.8;
+    return;
+  }
+  startSliderDrag();
+}
+function mouseDragged() { if (dragSlider) applySliderDrag(); }
+function mouseReleased() { dragSlider = null; }
+
+function inBtn(b) {
+  return mouseX >= b.x && mouseX <= b.x + b.w && mouseY >= b.y && mouseY <= b.y + b.h;
+}
+function startSliderDrag() {
+  if (mouseX >= SL_X - 12 && mouseX <= SL_X + SL_W + 12 &&
+      mouseY >= SL_Y - 14 && mouseY <= SL_Y + 14) {
+    dragSlider = 'speed'; applySliderDrag();
+  }
+}
+function applySliderDrag() {
+  const t = constrain((mouseX - SL_X) / SL_W, 0, 1);
+  speed = constrain(0.1 + t * 2.9, 0.1, 3.0);
+}
+</script>
+</body>
+</html>
