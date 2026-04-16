@@ -29,11 +29,42 @@ From the humble resistor through series and parallel combinations to voltage div
 
 ## Summary
 
-<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 20px 24px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
-<p style="color: #333; line-height: 1.85; font-size: 1.02rem; margin: 0;">
-This chapter covers Ohm's Law, the fundamental relationship between voltage, current, and resistance, and introduces the basic circuit configurations used throughout electrical engineering. Students will learn about voltage and current sources, series and parallel circuit arrangements, and how to use voltage and current dividers to analyze circuits. The chapter also introduces resistor properties including color codes, tolerance, and power ratings. After completing this chapter, students will be able to analyze simple resistive circuits and select appropriate components for basic applications.
-</p>
-</div>
+### Key Concepts
+
+- **Ohm's Law**: voltage across a resistor is directly proportional to current through it
+- **Series circuits**: same current flows through all elements; voltages add
+- **Parallel circuits**: same voltage across all elements; currents add
+- **Voltage divider**: two series resistors divide voltage in proportion to resistance values
+- **Current divider**: two parallel resistors divide current inversely proportional to resistance
+- **Ideal voltage source**: maintains constant terminal voltage regardless of current drawn
+- **Ideal current source**: maintains constant current regardless of load voltage
+
+### Important Equations
+
+\[ V = IR \qquad R_{series} = R_1 + R_2 + \cdots \qquad \frac{1}{R_{parallel}} = \frac{1}{R_1} + \frac{1}{R_2} + \cdots \]
+
+\[ V_x = V_s \cdot \frac{R_x}{R_1 + R_2} \quad \text{(voltage divider)} \qquad I_x = I_s \cdot \frac{R_{other}}{R_1 + R_2} \quad \text{(current divider)} \]
+
+### What You Should Understand
+
+- Why series resistors add directly but parallel resistors combine as reciprocals
+- How a voltage divider behaves under no load vs. under a finite load (loading effect)
+- The difference between ideal and real (non-ideal) voltage and current sources
+- How to read a resistor color code for resistance value, tolerance, and power rating
+
+### Applications
+
+- Current-limiting resistor selection for LEDs and indicators
+- Sensor signal conditioning (thermistor voltage dividers for temperature measurement)
+- Battery terminal voltage under load (internal resistance effect)
+- Volume control resistor networks in audio circuits
+
+### Quick Review Checklist
+
+- [ ] I can apply Ohm's Law to find V, I, or R given any two values
+- [ ] I can calculate equivalent resistance for series and parallel networks
+- [ ] I can design a voltage divider for a specified output ratio
+- [ ] I can read a four-band resistor color code for resistance and tolerance
 
 ## Concepts Covered
 

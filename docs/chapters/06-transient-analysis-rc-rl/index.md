@@ -32,7 +32,44 @@ Think of transient analysis as learning to read a circuit's "body language." The
 
 ## Summary
 
-<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 20px 24px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);"><p style="color: #333; line-height: 1.85; font-size: 1.02rem; margin: 0;">This chapter analyzes the time-domain behavior of first-order circuits containing resistors with either capacitors (RC) or inductors (RL). Students will learn how these circuits respond to sudden changes like switching events, developing intuition for time constants and exponential responses. The chapter covers charging and discharging behavior, initial and final conditions, and the concepts of natural and forced response. Understanding transient analysis is crucial for analyzing real-world circuits where signals change over time.</p></div>
+### Key Concepts
+
+- The **time constant** τ sets the speed of response to a step input
+- **RC circuit**: \(\tau = RC\) — **RL circuit**: \(\tau = L/R\)
+- After **1τ**: response reaches ~63.2% of its final value
+- After **5τ**: response is considered complete (>99% of final value)
+- **Natural response**: behavior driven by initial stored energy, no external source
+- **Forced (step) response**: behavior driven by a suddenly applied DC source
+- **Complete response** = natural response + forced response
+
+### Important Equations
+
+\[ \tau = RC \qquad \tau = \frac{L}{R} \]
+
+\[ x(t) = x(\infty) + \bigl[x(0^+) - x(\infty)\bigr]\,e^{-t/\tau} \]
+
+Where \(x(0^+)\) is the initial condition and \(x(\infty)\) is the final (DC steady-state) value.
+
+### What You Should Understand
+
+- **Voltage across a capacitor** and **current through an inductor** cannot change instantaneously
+- How to determine \(v_C(0^+)\) and \(i_L(0^+)\) from the circuit state immediately before switching
+- How to find the final value \(x(\infty)\) by analyzing the DC steady-state circuit (C = open, L = short)
+- The physical meaning of τ: larger τ means slower response
+
+### Applications
+
+- Power supply filter capacitor hold-up time calculation
+- Switch debouncing circuits in digital electronics
+- Camera flash charge/discharge timing
+- Motor driver current rise-time estimation
+
+### Quick Review Checklist
+
+- [ ] I can calculate τ for any RC or RL circuit
+- [ ] I can determine \(x(0^+)\) and \(x(\infty)\) and write the complete step response
+- [ ] I can apply the no-instantaneous-change rule for capacitor voltage and inductor current
+- [ ] I can sketch the exponential waveform and identify the 1τ, 2τ, and 5τ points
 
 ## Concepts Covered
 

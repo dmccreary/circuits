@@ -16,11 +16,42 @@ This chapter introduces alternating current (AC) and the sinusoidal waveforms th
 
 ## Summary
 
-<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 20px 24px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
-<p style="color: #333; line-height: 1.85; font-size: 1.02rem; margin: 0;">
-This chapter introduces alternating current (AC) and the sinusoidal waveforms that are fundamental to power systems and signal processing. Students will learn to characterize sinusoids by their amplitude, frequency, period, and phase, and understand the relationships between these parameters. The chapter covers important measurement quantities including peak, peak-to-peak, RMS, and average values. Complex numbers are introduced as the mathematical foundation for phasor analysis in the next chapter.
-</p>
-</div>
+### Key Concepts
+
+- A sinusoidal signal is fully characterized by **amplitude** \(V_p\), **frequency** f (or ω), and **phase** φ
+- **Frequency** f (Hz) and **angular frequency** ω (rad/s) are related by \(\omega = 2\pi f\)
+- **Period** T = 1/f: the time for one complete cycle
+- **RMS value**: the DC-equivalent for power; \(V_{rms} = V_p/\sqrt{2}\) for a pure sinusoid
+- **Phase shift** φ: time offset between two sinusoids at the same frequency; positive φ means *leading*
+- **Complex numbers** in rectangular (a + jb) and polar (|Z|∠θ) form underpin all phasor analysis
+- **Euler's formula**: \(e^{j\theta} = \cos\theta + j\sin\theta\)
+
+### Important Equations
+
+\[ v(t) = V_p\cos(\omega t + \phi) \qquad \omega = 2\pi f = \frac{2\pi}{T} \]
+
+\[ V_{rms} = \frac{V_p}{\sqrt{2}} \approx 0.707\,V_p \qquad |Z| = \sqrt{a^2 + b^2},\quad \angle Z = \arctan\!\frac{b}{a} \]
+
+### What You Should Understand
+
+- Why RMS, not peak, is used in power calculations and appliance ratings
+- The relationship between the time-domain sinusoid and its phasor representation
+- How to add two sinusoids of the same frequency using phasors (amplitude and phase addition)
+- How to convert between rectangular and polar complex number forms fluently
+
+### Applications
+
+- Household AC power (120 V RMS, 60 Hz — North America; 230 V RMS, 50 Hz — Europe)
+- Audio signal amplitude specifications and headroom
+- Oscilloscope measurements and waveform characterization
+- Function generator settings for lab experiments
+
+### Quick Review Checklist
+
+- [ ] I can write a sinusoidal expression given amplitude, frequency, and phase
+- [ ] I can convert between peak, peak-to-peak, and RMS values
+- [ ] I can convert a complex number between rectangular and polar form
+- [ ] I understand why phase angle matters when combining or comparing two signals
 
 ## Concepts Covered
 

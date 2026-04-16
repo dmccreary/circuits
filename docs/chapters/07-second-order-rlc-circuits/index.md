@@ -29,11 +29,43 @@ This chapter introduces the three damping regimes (overdamped, critically damped
 
 ## Summary
 
-<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 20px 24px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
-<p style="color: #333; line-height: 1.85; font-size: 1.02rem; margin: 0;">
-This chapter analyzes circuits containing both inductors and capacitors, whose behavior is governed by second-order differential equations. Students will learn how to classify circuit responses as overdamped, underdamped, or critically damped based on the relationship between the damping coefficient and natural frequency. The chapter covers series and parallel RLC configurations, the quality factor, resonant frequency, bandwidth, and the physical phenomenon of resonance. Interactive simulations let students observe how changing R, L, and C shifts damping behavior and resonance peaks in real time.
-</p>
-</div>
+### Key Concepts
+
+- RLC circuits are governed by second-order differential equations with characteristic roots \(s_1, s_2\)
+- The **damping ratio** ζ (or α vs. ω₀) determines the response type:
+    - **Overdamped** (ζ > 1): two distinct real roots; exponential decay, no oscillation
+    - **Critically damped** (ζ = 1): repeated real root; fastest non-oscillatory settling
+    - **Underdamped** (ζ < 1): complex conjugate roots; oscillatory decay (ringing)
+- **Resonance** occurs when \(Z_L = Z_C\): inductive and capacitive reactances cancel
+- **Quality factor** Q: sharpness of resonance peak; higher Q = narrower bandwidth
+- **Bandwidth** BW = f₀/Q: the frequency range around resonance where power exceeds half-maximum
+
+### Important Equations
+
+\[ \omega_0 = \frac{1}{\sqrt{LC}} \qquad \alpha = \frac{R}{2L} \text{ (series)} \qquad \zeta = \frac{\alpha}{\omega_0} \]
+
+\[ Q = \frac{\omega_0 L}{R} = \frac{1}{2\zeta} \quad \text{(series RLC)} \qquad BW = \frac{f_0}{Q} \]
+
+### What You Should Understand
+
+- How to classify the response type given R, L, and C values
+- Why critically damped gives the fastest settling without overshoot — often the design target
+- The physical meaning of Q: approximately how many oscillation cycles before the energy dissipates
+- How series and parallel RLC topologies differ in their resonance behavior and impedance characteristics
+
+### Applications
+
+- Radio and TV tuning circuits (selective resonance to pick a station)
+- Switching power supply LC output filters
+- Crystal oscillators and clock generation
+- EMI filter design for noise suppression
+
+### Quick Review Checklist
+
+- [ ] I can calculate ω₀, α, and ζ for a given RLC circuit
+- [ ] I can classify the response as overdamped, critically damped, or underdamped
+- [ ] I can sketch all three response types qualitatively and label key features
+- [ ] I can calculate the resonant frequency and bandwidth of a band-pass RLC circuit
 
 ## Concepts Covered
 

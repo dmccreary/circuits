@@ -29,11 +29,42 @@ The chapter covers power factor correction (how to add capacitors to improve eff
 
 ## Summary
 
-<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 20px 24px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
-<p style="color: #333; line-height: 1.85; font-size: 1.02rem; margin: 0;">
-This chapter examines power in AC circuits, where phase relationships between voltage and current create fundamentally different behavior from DC. Students will learn about instantaneous, average, real, reactive, and apparent power, and understand how power factor affects energy efficiency. The chapter covers the power triangle, power factor correction using capacitors, power calculations in resistive, capacitive, and inductive elements, and maximum power transfer in AC systems.
-</p>
-</div>
+### Key Concepts
+
+- **Real power** P (watts): average power actually consumed; produced only by resistive elements
+- **Reactive power** Q (VAR): power exchanged with energy-storage elements (L, C); not consumed
+- **Apparent power** S (VA): product of RMS voltage and RMS current; \(S = V_{rms} I_{rms}\)
+- **Power factor** PF = cos θ: ratio of real to apparent power; ranges from 0 (pure reactive) to 1 (purely resistive)
+- **Inductive loads**: lagging power factor (current lags voltage); **capacitive loads**: leading power factor
+- **Power factor correction**: adding capacitance in parallel reduces reactive current in inductive systems
+- **Complex power**: \(\mathbf{S} = P + jQ\)
+
+### Important Equations
+
+\[ P = V_{rms} I_{rms} \cos\theta \qquad Q = V_{rms} I_{rms} \sin\theta \]
+
+\[ S = V_{rms} I_{rms} = \sqrt{P^2 + Q^2} \qquad PF = \frac{P}{S} = \cos\theta \]
+
+### What You Should Understand
+
+- Why reactive power does not consume energy but still stresses power lines, transformers, and generators
+- How a power factor below 1 requires larger currents to deliver the same real power
+- Why electric utilities charge large industrial customers for poor (low) power factor
+- How adding a capacitor in parallel corrects a lagging (inductive) power factor toward unity
+
+### Applications
+
+- Industrial motor drives and power systems
+- Utility billing and power factor penalty calculations
+- UPS, inverter, and generator sizing
+- Wireless power transfer efficiency optimization
+
+### Quick Review Checklist
+
+- [ ] I can calculate P, Q, and S for any load given V, I, and phase angle θ
+- [ ] I can draw the power triangle and correctly label P, Q, and S
+- [ ] I can determine whether a load is inductive or capacitive from the power factor angle
+- [ ] I can calculate the capacitance required to correct power factor to unity
 
 ## Concepts Covered
 

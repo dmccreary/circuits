@@ -16,11 +16,42 @@ This chapter introduces phasors — rotating vectors that elegantly represent si
 
 ## Summary
 
-<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 20px 24px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
-<p style="color: #333; line-height: 1.85; font-size: 1.02rem; margin: 0;">
-This chapter introduces phasors — rotating vectors that elegantly represent sinusoidal signals — and shows how they transform differential equations into algebraic ones. Students will learn about impedance, the AC equivalent of resistance, and how capacitors and inductors create frequency-dependent reactance. The chapter covers the impedance triangle, admittance, and the phasor domain approach to AC circuit analysis. Mastering phasor techniques is essential for efficient analysis of AC circuits.
-</p>
-</div>
+### Key Concepts
+
+- A **phasor** is a complex number representing a sinusoidal signal by its amplitude and phase angle
+- **Impedance** Z (Ω) is the AC generalization of resistance: \(\mathbf{Z} = \mathbf{V}/\mathbf{I}\) in the phasor domain
+- **Resistor**: \(Z_R = R\) — purely real, no frequency dependence
+- **Capacitor**: \(Z_C = 1/(j\omega C)\) — decreases with frequency; capacitor passes high frequencies
+- **Inductor**: \(Z_L = j\omega L\) — increases with frequency; inductor blocks high frequencies
+- **Reactance** X: imaginary part of impedance; **admittance** Y = 1/Z
+- Phasor analysis replaces differential equations with straightforward complex algebra
+
+### Important Equations
+
+\[ \mathbf{Z}_R = R \qquad \mathbf{Z}_C = \frac{1}{j\omega C} \qquad \mathbf{Z}_L = j\omega L \]
+
+\[ \mathbf{V} = \mathbf{Z}\,\mathbf{I} \quad \text{(phasor Ohm's Law)} \qquad \mathbf{Z}_{series} = \mathbf{Z}_1 + \mathbf{Z}_2 \qquad \mathbf{Y} = \frac{1}{\mathbf{Z}} \]
+
+### What You Should Understand
+
+- Phasors are only valid for **sinusoidal steady-state** at a single frequency — not for transients
+- Why Z_C decreases at high frequency: capacitor impedance → 0 (short) as f → ∞
+- Why Z_L increases at high frequency: inductor impedance → ∞ (open) as f → ∞
+- How to draw an impedance triangle and read off magnitude, resistance, and reactance
+
+### Applications
+
+- AC circuit analysis using the same node/mesh methods as DC (replace R with Z)
+- Filter behavior prediction from impedance vs. frequency
+- Impedance matching in RF and audio systems
+- Power factor analysis (real vs. reactive components of Z)
+
+### Quick Review Checklist
+
+- [ ] I can write the impedance of R, C, and L at any given frequency
+- [ ] I can apply phasor Ohm's Law and phasor voltage/current dividers
+- [ ] I can find total impedance for series and parallel combinations of R, L, C
+- [ ] I can determine whether a circuit is inductive or capacitive from the sign of the phase angle
 
 ## Concepts Covered
 

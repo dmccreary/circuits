@@ -29,11 +29,41 @@ The chapter then applies these principles to audio engineering: how bass and tre
 
 ## Summary
 
-<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 20px 24px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
-<p style="color: #333; line-height: 1.85; font-size: 1.02rem; margin: 0;">
-This chapter provides practical coverage of filter circuit design for audio and signal-processing applications. Students learn to design first-order RC and RL filters, second-order RLC band-pass filters, and introductory active filters using operational amplifiers. Filter specifications — cutoff frequency, resonant frequency, quality factor Q, bandwidth, roll-off rate, and gain — are connected to component selection using standard design equations. Audio applications ground the mathematics in real engineering context: bass and treble shelving filters, audio signal levels in dBV and dBu, headroom, dynamic range, and the microphone-to-speaker signal chain.
-</p>
-</div>
+### Key Concepts
+
+- **First-order filters** (RC, RL): roll off at −20 dB/decade; simple, single-element designs
+- **Second-order RLC filters**: roll off at −40 dB/decade; enable band-pass and band-stop responses
+- **Quality factor** Q: determines resonance sharpness and bandwidth; \(BW = f_0/Q\)
+- **Active filters**: use op-amps to achieve precise gain and filter responses without large inductors
+- **Shelving filters**: boost or cut all frequencies above (treble) or below (bass) a shelf frequency — used in audio EQ
+- Audio level standards: **0 dBu = 775 mV RMS**; **0 dBV = 1 V RMS**; professional line level = +4 dBu
+
+### Important Equations
+
+\[ f_c = \frac{1}{2\pi RC} \quad \text{(RC filter)} \qquad f_c = \frac{R}{2\pi L} \quad \text{(RL filter)} \]
+
+\[ f_0 = \frac{1}{2\pi\sqrt{LC}} \quad \text{(resonant frequency)} \qquad Q = \frac{f_0}{BW} \qquad BW = \frac{f_0}{Q} \]
+
+### What You Should Understand
+
+- How to select R and C values to achieve a target cutoff frequency
+- The trade-off between Q and bandwidth in second-order band-pass filter design
+- Why op-amp active filters replace inductors in audio applications (size, loss, cost)
+- How headroom, dynamic range, and clipping relate to audio signal level standards
+
+### Applications
+
+- Audio crossover networks for splitting bass and treble to separate speaker drivers
+- Radio IF filters (narrow band-pass selection at a fixed intermediate frequency)
+- Power supply ripple reduction
+- Parametric and graphic equalizer design for studio audio
+
+### Quick Review Checklist
+
+- [ ] I can design an RC low-pass filter for a specified cutoff frequency
+- [ ] I can calculate Q and bandwidth for a second-order band-pass RLC filter
+- [ ] I understand the difference between dBV and dBu audio level standards
+- [ ] I can compare first- and second-order filter roll-off rates and explain the trade-offs
 
 ## Concepts Covered
 

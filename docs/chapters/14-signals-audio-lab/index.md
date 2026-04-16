@@ -27,11 +27,44 @@ This chapter develops the Fourier series from first principles and builds the to
 
 ## Summary
 
-<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 20px 24px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
-<p style="color: #333; line-height: 1.85; font-size: 1.02rem; margin: 0;">
-This chapter provides a rigorous yet accessible introduction to Fourier series analysis and its application to periodic electrical signals. Students will master the Fourier series formula and learn to compute DC, cosine, and sine coefficients via integration. The chapter develops amplitude and phase representations of harmonic content, introduces the discrete line spectrum for periodic signals, and exploits even, odd, and half-wave symmetry to simplify coefficient calculations. The canonical waveforms — square, triangle, and sawtooth — are analysed in detail, with their harmonic decay rates compared. The chapter closes with applications to audio timbre analysis, amplifier distortion measurement, and anti-aliasing filter design.
-</p>
-</div>
+### Key Concepts
+
+- Any periodic signal can be represented as a sum of sinusoids (**Fourier series**)
+- The series consists of a **DC component** \(a_0\) plus harmonics at \(f_0, 2f_0, 3f_0, \ldots\)
+- **Square wave**: odd harmonics only; amplitude decays as \(1/n\)
+- **Triangle wave**: odd harmonics only; amplitude decays as \(1/n^2\) (faster decay → softer sound)
+- **Sawtooth wave**: all harmonics; amplitude decays as \(1/n\)
+- **Symmetry shortcuts**: even symmetry → cosine terms only; odd symmetry → sine terms only; half-wave symmetry → odd harmonics only
+- **Total Harmonic Distortion** (THD): quantifies nonlinear distortion added by an amplifier
+
+### Important Equations
+
+\[ f(t) = a_0 + \sum_{n=1}^{\infty}\bigl[a_n\cos(n\omega_0 t) + b_n\sin(n\omega_0 t)\bigr] \]
+
+\[ a_0 = \frac{1}{T}\int_0^T f(t)\,dt \qquad a_n = \frac{2}{T}\int_0^T f(t)\cos(n\omega_0 t)\,dt \qquad b_n = \frac{2}{T}\int_0^T f(t)\sin(n\omega_0 t)\,dt \]
+
+\[ f_0 = 1/T \quad \text{(fundamental frequency)} \]
+
+### What You Should Understand
+
+- Why a square wave sounds harsher than a sine wave — it contains more high-frequency harmonics
+- How filters can reshape a signal by selectively attenuating harmonics
+- Why half-wave and odd symmetry eliminate certain Fourier coefficients (saves calculation)
+- How THD measures the ratio of harmonic distortion energy to fundamental signal energy
+
+### Applications
+
+- Audio synthesizer waveform generation (additive synthesis)
+- Amplifier distortion measurement and specification
+- Anti-aliasing filter design before analog-to-digital conversion
+- Spectrum analysis of periodic signals in power electronics
+
+### Quick Review Checklist
+
+- [ ] I can state the Fourier series formula and identify the role of each coefficient
+- [ ] I can determine which harmonics are present in a square, triangle, or sawtooth wave
+- [ ] I can use symmetry properties to simplify Fourier coefficient calculation
+- [ ] I understand the connection between harmonic content and perceived audio timbre
 
 ## Concepts Covered
 

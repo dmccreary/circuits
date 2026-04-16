@@ -33,11 +33,44 @@ Let's store some energy. (Unlike your coffee, these components actually return i
 
 ## Summary
 
-<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 20px 24px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
-<p style="color: #333; line-height: 1.85; font-size: 1.02rem; margin: 0;">
-This chapter provides an in-depth examination of passive electronic components beyond basic resistors. Students will learn how capacitors store energy in electric fields and how inductors store energy in magnetic fields. The chapter covers series and parallel combinations of capacitors and inductors, mutual inductance between inductors, and the practical considerations of real versus ideal components. Understanding these energy storage elements is essential for analyzing dynamic circuits and filters in subsequent chapters. The chapter concludes with signal fundamentals — amplitude, frequency, phase, RMS value, and the decibel — forming the vocabulary needed for all AC and audio circuit work.
-</p>
-</div>
+### Key Concepts
+
+- **Capacitor**: stores energy in an electric field; current leads voltage by 90°; blocks DC, passes AC
+- **Inductor**: stores energy in a magnetic field; voltage leads current by 90°; passes DC, opposes AC
+- Series capacitors combine like parallel resistors; **parallel capacitors add directly**
+- Series inductors add directly; **parallel inductors combine like parallel resistors**
+- **Mutual inductance** (M): magnetic coupling between two inductors; basis of transformer operation
+- Real components have parasitics: capacitors have **ESR** (equivalent series resistance); inductors have winding resistance
+- The **decibel** (dB) is a logarithmic scale for expressing voltage, current, or power ratios
+
+### Important Equations
+
+\[ i_C = C\,\frac{dv}{dt} \qquad E_C = \frac{1}{2}CV^2 \]
+
+\[ v_L = L\,\frac{di}{dt} \qquad E_L = \frac{1}{2}LI^2 \]
+
+\[ V_{rms} = \frac{V_p}{\sqrt{2}} \approx 0.707\,V_p \qquad \text{dB} = 20\log_{10}\!\left(\frac{V_2}{V_1}\right) \]
+
+### What You Should Understand
+
+- Why a capacitor acts as an open circuit at DC and a short circuit at very high frequency
+- Why an inductor acts as a short circuit at DC and an open circuit at very high frequency
+- The physical meaning of the I–V relationships: capacitor current depends on *rate of change* of voltage
+- How the decibel scale compresses a wide dynamic range into a manageable number
+
+### Applications
+
+- Bypass and decoupling capacitors in power supply design
+- Energy storage in DC-DC converter inductors
+- Transformer design and operation (mutual inductance)
+- Audio level metering and specification (dB scale)
+
+### Quick Review Checklist
+
+- [ ] I can write the I–V relationship for both a capacitor and an inductor
+- [ ] I can calculate the energy stored in C or L given voltage or current
+- [ ] I can combine capacitors and inductors in series and parallel configurations
+- [ ] I can convert a voltage ratio to decibels and convert decibels back to a ratio
 
 ## Concepts Covered
 

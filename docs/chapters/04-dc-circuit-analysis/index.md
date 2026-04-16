@@ -29,11 +29,41 @@ This chapter covers advanced circuit analysis techniques including Thevenin's an
 
 ## Summary
 
-<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 20px 24px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
-<p style="color: #333; line-height: 1.85; font-size: 1.02rem; margin: 0;">
-This chapter covers advanced circuit analysis techniques including Thevenin's and Norton's theorems, which allow complex circuits to be simplified to equivalent forms. Students will learn source transformation, the maximum power transfer theorem, and how to analyze two-port networks. The chapter also addresses practical considerations like input and output resistance and the loading effect. After completing this chapter, students will be able to simplify complex circuits, design for maximum power transfer, and understand how connecting circuits together affects their behavior.
-</p>
-</div>
+### Key Concepts
+
+- **Thevenin's theorem**: any linear circuit seen from two terminals is equivalent to a voltage source \(V_{th}\) in series with resistance \(R_{th}\)
+- **Norton's theorem**: any linear circuit is equivalent to a current source \(I_N\) in parallel with resistance \(R_N\)
+- **Source transformation**: Thevenin and Norton equivalents are interchangeable; \(V_{th} = I_N R_{th}\)
+- **Superposition**: in a linear circuit, the total response equals the sum of responses to each independent source acting alone
+- **Maximum power transfer**: load receives maximum power when \(R_L = R_{th}\)
+- **Loading effect**: connecting a load changes the operating point — a finite load on a voltage divider reduces the output voltage
+
+### Important Equations
+
+\[ V_{th} = V_{oc} \qquad I_N = I_{sc} \qquad R_{th} = R_N = \frac{V_{th}}{I_N} \]
+
+\[ P_{L,max} = \frac{V_{th}^2}{4R_{th}} \quad \text{(maximum power transfer)} \]
+
+### What You Should Understand
+
+- Why Thevenin/Norton equivalents are powerful: analyze once, substitute any load
+- When superposition applies and when it does not (nonlinear elements; power is not superposable)
+- The trade-off: maximum power transfer (50% efficiency) vs. maximum efficiency (high R_L)
+- How input and output resistance determine the loading behavior between circuit stages
+
+### Applications
+
+- Amplifier input/output impedance matching
+- Battery equivalent circuit (\(V_{th}\) = EMF, \(R_{th}\) = internal resistance)
+- Sensor interface and signal conditioning design
+- RF antenna and transmission line matching networks
+
+### Quick Review Checklist
+
+- [ ] I can find \(V_{th}\) and \(R_{th}\) for a circuit with independent sources
+- [ ] I can convert between Thevenin and Norton equivalent circuits
+- [ ] I can correctly apply superposition to find voltage or current
+- [ ] I can determine the load resistance for maximum power transfer
 
 ## Concepts Covered
 

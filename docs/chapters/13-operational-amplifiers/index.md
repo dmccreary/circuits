@@ -29,11 +29,44 @@ The chapter then systematically develops the fundamental configurations: the inv
 
 ## Summary
 
-<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 20px 24px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
-<p style="color: #333; line-height: 1.85; font-size: 1.02rem; margin: 0;">
-This chapter provides comprehensive coverage of operational amplifiers, the foundational building blocks of analog electronics. Students will master the ideal op-amp model and discover how negative feedback transforms enormous open-loop gain into precise, predictable closed-loop behavior governed by just two golden rules. The chapter develops all fundamental op-amp configurations — inverting, non-inverting, voltage follower, summing, difference, instrumentation, integrator, and differentiator — through systematic analysis and worked design examples. Practical limitations including gain-bandwidth product, slew rate, input offset voltage, bias current, CMRR, and saturation are addressed to prepare students for real-world op-amp selection and design.
-</p>
-</div>
+### Key Concepts
+
+- **Ideal op-amp model**: infinite input impedance, zero output impedance, infinite open-loop gain \(A_{OL}\)
+- **Golden Rules** (with negative feedback):
+    1. The output drives the inputs to make \(V^+ = V^-\) (virtual short)
+    2. No current flows into either input terminal
+- **Inverting amplifier**: gain = \(-R_f/R_1\) — output is phase-inverted
+- **Non-inverting amplifier**: gain = \(1 + R_f/R_1\) — output is in phase
+- **Voltage follower (buffer)**: gain = 1; high-input, low-output impedance stage for isolation
+- **Gain-bandwidth product** (GBW): \(A_v \times BW = \text{constant}\) — higher gain means lower bandwidth
+- **Slew rate**: maximum rate of output voltage change; limits large-signal high-frequency performance
+
+### Important Equations
+
+\[ A_v = -\frac{R_f}{R_1} \quad \text{(inverting)} \qquad A_v = 1 + \frac{R_f}{R_1} \quad \text{(non-inverting)} \]
+
+\[ V_{out} = -R_f\!\left(\frac{V_1}{R_1} + \frac{V_2}{R_2}\right) \quad \text{(summing)} \qquad GBW = A_v \times BW \]
+
+### What You Should Understand
+
+- Why **negative feedback** stabilizes gain, reduces distortion, and extends bandwidth
+- How to apply the two Golden Rules to derive the gain of any op-amp configuration
+- The difference between open-loop behavior (high-gain comparator) and closed-loop behavior (precise amplifier)
+- How slew rate and GBW impose different limits: GBW limits small-signal bandwidth; slew rate limits large-signal speed
+
+### Applications
+
+- Instrumentation amplifiers for sensor signal conditioning (strain gauges, thermocouples)
+- Active filters (Chapters 11–12)
+- Audio preamplifiers, mixers, and tone controls
+- PID controllers in feedback control systems
+
+### Quick Review Checklist
+
+- [ ] I can apply the two Golden Rules to derive the gain of any op-amp configuration
+- [ ] I can design an inverting or non-inverting amplifier for a specified gain
+- [ ] I can explain how gain-bandwidth product limits high-frequency performance
+- [ ] I can identify at least three op-amp datasheet specifications relevant to practical design
 
 ## Concepts Covered
 
