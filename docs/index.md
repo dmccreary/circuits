@@ -93,17 +93,17 @@ hide:
 
   <!-- ══ STRUCTURAL BUS TRACES (connecting all zones) ─────────────────── -->
   <!-- Horizontal separator between top and middle -->
-  <line x1="0"   y1="218" x2="1200" y2="218" stroke="rgba(90,62,237,0.38)" stroke-width="1.2"/>
+  <line x1="0"   y1="218" x2="1200" y2="218" stroke="rgba(90,62,237,0.24)" stroke-width="1.0"/>
   <!-- Horizontal separator between middle and bottom -->
-  <line x1="0"   y1="705" x2="1200" y2="705" stroke="rgba(90,62,237,0.38)" stroke-width="1.2"/>
+  <line x1="0"   y1="705" x2="1200" y2="705" stroke="rgba(90,62,237,0.24)" stroke-width="1.0"/>
   <!-- Vertical bus left (between Zone 4 and center) -->
-  <line x1="198" y1="218" x2="198" y2="705" stroke="rgba(90,62,237,0.32)" stroke-width="1.0"/>
-  <!-- Vertical bus right (between center and Zone 6) -->
-  <line x1="1002" y1="218" x2="1002" y2="705" stroke="rgba(90,62,237,0.32)" stroke-width="1.0"/>
-  <!-- Mid-left bus (between LC tank and center) -->
-  <line x1="400" y1="218" x2="400" y2="705" stroke="rgba(90,62,237,0.22)" stroke-width="0.7"/>
-  <!-- Mid-right bus -->
-  <line x1="800" y1="218" x2="800" y2="705" stroke="rgba(90,62,237,0.22)" stroke-width="0.7"/>
+  <line x1="198" y1="218" x2="198" y2="705" stroke="rgba(90,62,237,0.28)" stroke-width="1.0"/>
+  <!-- Vertical bus right (between center and Zone 8) -->
+  <line x1="1002" y1="218" x2="1002" y2="705" stroke="rgba(90,62,237,0.28)" stroke-width="1.0"/>
+  <!-- Mid-left bus — faint; center safe zone boundary -->
+  <line x1="400" y1="218" x2="400" y2="705" stroke="rgba(90,62,237,0.10)" stroke-width="0.6"/>
+  <!-- Mid-right bus — faint; center safe zone boundary -->
+  <line x1="800" y1="218" x2="800" y2="705" stroke="rgba(90,62,237,0.10)" stroke-width="0.6"/>
 
   <!-- ══════════════════════════════════════════════════════════════════════
        ZONE 1 — TOP-LEFT (x=8–390, y=8–210): Oscilloscope display
@@ -274,7 +274,9 @@ hide:
 
   <!-- ══════════════════════════════════════════════════════════════════════
        ZONE 5 — LEFT-MID UPPER (x=210–395, y=238–462): LC Resonant Tank
+       Faded: sits in transition zone approaching center safe area.
        ══════════════════════════════════════════════════════════════════════ -->
+  <g opacity="0.35">
   <!-- Tank top wire -->
   <line x1="218" y1="268" x2="388" y2="268" stroke="rgba(220,170,30,0.85)" stroke-width="2.0"/>
   <!-- Inductor L humps on top wire x=243–363 -->
@@ -299,10 +301,13 @@ hide:
   <circle cx="388" cy="268" r="4" fill="rgba(100,220,255,1.0)"/>
   <circle cx="218" cy="452" r="4" fill="rgba(100,220,255,0.80)"/>
   <circle cx="388" cy="452" r="4" fill="rgba(100,220,255,0.80)"/>
+  </g>
 
   <!-- ══════════════════════════════════════════════════════════════════════
        ZONE 5B — LEFT-MID LOWER (x=210–395, y=478–685): Diode rectifier + RC
+       Faded: transition zone toward center.
        ══════════════════════════════════════════════════════════════════════ -->
+  <g opacity="0.32">
   <!-- Horizontal wire y=545 -->
   <line x1="218" y1="545" x2="390" y2="545" stroke="rgba(200,185,255,0.72)" stroke-width="1.8"/>
   <!-- Diode symbol (triangle + bar) -->
@@ -327,11 +332,13 @@ hide:
   <line x1="286" y1="600" x2="318" y2="600" stroke="rgba(100,220,255,0.85)" stroke-width="2.5"/>
   <line x1="290" y1="609" x2="314" y2="609" stroke="rgba(100,220,255,0.72)" stroke-width="1.8"/>
   <line x1="294" y1="618" x2="310" y2="618" stroke="rgba(100,220,255,0.58)" stroke-width="1.3"/>
+  </g>
 
   <!-- ══════════════════════════════════════════════════════════════════════
-       ZONE 6 — CENTER (x=320–880, y=238–685): Faint mesh network (behind title)
+       ZONE 6 — CENTER SAFE ZONE (x=320–880, y=238–685): Barely-visible texture
+       Ultra-low opacity — keeps center clear for title/text/buttons.
        ══════════════════════════════════════════════════════════════════════ -->
-  <g opacity="0.22">
+  <g opacity="0.04">
     <!-- Three-node mesh: N1=(445,355), N2=(755,355), N3=(600,565) -->
     <circle cx="445" cy="355" r="7" fill="rgba(220,170,30,1)"/>
     <circle cx="755" cy="355" r="7" fill="rgba(220,170,30,1)"/>
@@ -367,7 +374,9 @@ hide:
 
   <!-- ══════════════════════════════════════════════════════════════════════
        ZONE 7 — RIGHT-MID UPPER (x=815–995, y=238–462): RC Ladder chain
+       Faded: sits in transition zone approaching center safe area.
        ══════════════════════════════════════════════════════════════════════ -->
+  <g opacity="0.35">
   <!-- Horizontal bus y=315 -->
   <line x1="815" y1="315" x2="992" y2="315" stroke="rgba(220,170,30,0.80)" stroke-width="1.8"/>
   <!-- R1 -->
@@ -392,10 +401,13 @@ hide:
   <line x1="907" y1="372" x2="943" y2="372" stroke="rgba(100,220,255,0.85)" stroke-width="2.5"/>
   <line x1="911" y1="381" x2="939" y2="381" stroke="rgba(100,220,255,0.72)" stroke-width="1.8"/>
   <line x1="915" y1="390" x2="935" y2="390" stroke="rgba(100,220,255,0.58)" stroke-width="1.3"/>
+  </g>
 
   <!-- ══════════════════════════════════════════════════════════════════════
        ZONE 7B — RIGHT-MID LOWER (x=815–995, y=480–685): Op-amp differentiator
+       Faded: transition zone toward center.
        ══════════════════════════════════════════════════════════════════════ -->
+  <g opacity="0.32">
   <!-- C series input -->
   <line x1="818" y1="565" x2="843" y2="565" stroke="rgba(100,220,255,0.80)" stroke-width="1.8"/>
   <line x1="843" y1="547" x2="843" y2="583" stroke="rgba(100,220,255,1.0)" stroke-width="3.0"/>
@@ -417,6 +429,7 @@ hide:
   <!-- Feedback dashed arc -->
   <path d="M990,565 C1005,518 862,508 858,546"
         stroke="rgba(220,170,30,0.80)" stroke-width="1.8" fill="none" stroke-dasharray="5,3"/>
+  </g>
 
   <!-- ══════════════════════════════════════════════════════════════════════
        ZONE 8 — RIGHT COLUMN (x=1008–1188, y=238–685): LC Filter chain
