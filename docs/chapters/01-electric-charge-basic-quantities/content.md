@@ -10,6 +10,19 @@ version: 0.04
 
 # Chapter 1 — Electric Charge and Basic Circuit Quantities
 
+<details class="video-overview">
+<summary><strong>Chapter Overview</strong> (click to expand)</summary>
+
+This chapter introduces the fundamental electrical quantities that every circuit engineer works with every day. We begin with electric charge — the basic property of matter that makes all electrical phenomena possible — and build up to current, voltage, resistance, power, and energy. Along the way you will learn Ohm's Law, the most important equation in electronics, which links voltage, current, and resistance. We cover conductance, the complement of resistance, and explain why ground is simply a chosen reference point rather than a connection to the physical earth. The chapter closes with circuit schematic symbols, the language of circuit diagrams, and the concepts of nodes, branches, open circuits, and short circuits that form the vocabulary of circuit analysis. By the end you will have the complete toolkit needed to analyze any resistive circuit.
+
+**Key Takeaways**
+
+1. Electric charge (coulombs) is the source of all electrical phenomena; current (amperes) is charge in motion, defined as the rate of charge flow over time.
+2. Voltage (volts) is the potential difference that drives current; resistance (ohms) opposes it; and Ohm's Law — V equals I times R — links all three.
+3. Power (P equals V times I) is the rate of energy transfer in watts, and every resistor has a maximum power rating that must not be exceeded in a safe design.
+
+</details>
+
 ## 1.1 Electric Charge: Where It All Begins
 
 Everything in the electrical world starts with **electric charge**. Charge is a fundamental property of matter, just like mass, but instead of telling you how much "stuff" something has, charge tells you how that stuff will interact electromagnetically.
