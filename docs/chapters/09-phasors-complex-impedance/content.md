@@ -45,7 +45,7 @@ To recover the time-domain signal from a phasor:
 
 #### Diagram: Phasor Transformation Visualizer
 
-<iframe src="../../sims/phasor-transform/main.html" width="100%" height="500px" scrolling="no" style="overflow: hidden;"></iframe>
+<iframe src="../../../sims/phasor-transform/main.html" width="100%" height="500px" scrolling="no" style="overflow: hidden;"></iframe>
 
 <details markdown="1">
 <summary>Phasor Transformation Visualizer</summary>
@@ -141,7 +141,7 @@ Try doing this with trig identities—phasors are *much* easier!
 
 #### Diagram: Phasor Addition Visualizer
 
-<iframe src="../../sims/phasor-addition/main.html" width="100%" height="500px" scrolling="no" style="overflow: hidden;"></iframe>
+<iframe src="../../../sims/phasor-addition/main.html" width="100%" height="500px" scrolling="no" style="overflow: hidden;"></iframe>
 
 <details markdown="1">
 <summary>Phasor Addition Visualizer</summary>
@@ -242,7 +242,7 @@ Where:
 
 #### Diagram: Reactance vs Frequency
 
-<iframe src="../../sims/reactance-frequency/main.html" width="100%" height="450px" scrolling="no" style="overflow: hidden;"></iframe>
+<iframe src="../../../sims/reactance-frequency/main.html" width="100%" height="450px" scrolling="no" style="overflow: hidden;"></iframe>
 
 <details markdown="1">
 <summary>Reactance vs Frequency</summary>
@@ -329,7 +329,7 @@ The magnitude is 50Ω, and current lags voltage by 53.13°.
 
 #### Diagram: Impedance Triangle Explorer
 
-<iframe src="../../sims/impedance-triangle/main.html" width="100%" height="500px" scrolling="no" style="overflow: hidden;"></iframe>
+<iframe src="../../../sims/impedance-triangle/main.html" width="100%" height="500px" scrolling="no" style="overflow: hidden;"></iframe>
 
 <details markdown="1">
 <summary>Impedance Triangle Explorer</summary>
@@ -508,7 +508,7 @@ At resonance, the current is in phase with the voltage and limited only by the r
 
 #### Diagram: Phasor Domain Circuit Solver
 
-<iframe src="../../sims/phasor-circuit-solver/main.html" width="100%" height="550px" scrolling="no" style="overflow: hidden;"></iframe>
+<iframe src="../../../sims/phasor-circuit-solver/main.html" width="100%" height="550px" scrolling="no" style="overflow: hidden;"></iframe>
 
 <details markdown="1">
 <summary>Phasor Domain Circuit Solver</summary>
@@ -605,7 +605,7 @@ In a **parallel resonant circuit** (also called a "tank" circuit):
 
 #### Diagram: Series vs Parallel Resonance
 
-<iframe src="../../sims/resonance-comparison/main.html" width="100%" height="500px" scrolling="no" style="overflow: hidden;"></iframe>
+<iframe src="../../../sims/resonance-comparison/main.html" width="100%" height="500px" scrolling="no" style="overflow: hidden;"></iframe>
 
 <details markdown="1">
 <summary>Series vs Parallel Resonance</summary>
@@ -681,7 +681,7 @@ The bandwidth is typically measured between the frequencies where the response d
 
 #### Diagram: Bandwidth and Selectivity
 
-<iframe src="../../sims/bandwidth-selectivity/main.html" width="100%" height="450px" scrolling="no" style="overflow: hidden;"></iframe>
+<iframe src="../../../sims/bandwidth-selectivity/main.html" width="100%" height="450px" scrolling="no" style="overflow: hidden;"></iframe>
 
 <details markdown="1">
 <summary>Bandwidth and Selectivity</summary>
