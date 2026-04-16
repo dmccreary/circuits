@@ -14,7 +14,7 @@ This chapter introduces phasors — rotating vectors that elegantly represent si
 
 </details>
 
-<h2 style="color: #5A3EED !important; border-bottom: 2px solid #5A3EED; padding-bottom: 0.3rem; font-weight: 700; margin-top: 2rem;">Summary</h2>
+## Summary
 
 <div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 20px 24px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
 <p style="color: #333; line-height: 1.85; font-size: 1.02rem; margin: 0;">
@@ -22,7 +22,7 @@ This chapter introduces phasors — rotating vectors that elegantly represent si
 </p>
 </div>
 
-<h2 style="color: #5A3EED !important; border-bottom: 2px solid #5A3EED; padding-bottom: 0.3rem; font-weight: 700; margin-top: 2rem;">Concepts Covered</h2>
+## Concepts Covered
 
 <div style="background: #F8F6FF; border: 2px solid #D4C8FF; border-radius: 12px; padding: 20px 24px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
 <ul style="list-style:none;padding-left:0.5rem;margin:0;">
@@ -50,7 +50,7 @@ This chapter introduces phasors — rotating vectors that elegantly represent si
 </ul>
 </div>
 
-<h2 style="color: #5A3EED !important; border-bottom: 2px solid #5A3EED; padding-bottom: 0.3rem; font-weight: 700; margin-top: 2rem;">Prerequisites</h2>
+## Prerequisites
 
 <div style="background: #F8F6FF; border: 2px solid #D4C8FF; border-radius: 12px; padding: 20px 24px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
 <p style="color:#555;margin-bottom:0.8rem;line-height:1.75;">Before beginning this chapter, students should have completed:</p>
