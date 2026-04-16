@@ -9,54 +9,50 @@
  *   Back to Doc — if inside an iframe, navigates the top frame back in
  *                 browser history (returns to the embedding chapter page);
  *                 if standalone, navigates to the sim's index page (./).
+ *
+ * Style: matches EE2301 intelligent-textbook MicroSim control convention —
+ *   small semi-transparent white pill, #5C6BC0 purple text, 0.75 opacity,
+ *   fixed top-right corner at 4px offset, 1px #ccc border, Arial 11px bold.
  */
 (function () {
   'use strict';
 
-  /* ── Styles ─────────────────────────────────────────────────────────────── */
+  /* ── Styles — EE2301 convention ─────────────────────────────────────────── */
   var CSS = [
     '.msim-controls-bar {',
     '  position: fixed;',
-    '  top: 8px;',
-    '  right: 8px;',
-    '  z-index: 99999;',
+    '  top: 4px;',
+    '  right: 4px;',
+    '  z-index: 10000;',
     '  display: flex;',
-    '  gap: 5px;',
-    '  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;',
+    '  gap: 6px;',
+    '  align-items: center;',
     '}',
 
     '.msim-ctrl-btn {',
-    '  background: rgba(8, 4, 32, 0.80);',
-    '  color: #c4b5fd;',
-    '  border: 1px solid rgba(90, 62, 237, 0.55);',
-    '  border-radius: 6px;',
-    '  padding: 5px 11px;',
+    '  background: rgba(255, 255, 255, 0.92);',
+    '  color: #5C6BC0;',
+    '  border: 1px solid #ccc;',
+    '  border-radius: 4px;',
+    '  padding: 3px 10px;',
     '  font-size: 11px;',
-    '  font-weight: 600;',
-    '  line-height: 1;',
+    '  font-weight: bold;',
+    '  line-height: 1.4;',
     '  cursor: pointer;',
-    '  letter-spacing: 0.02em;',
-    '  backdrop-filter: blur(6px);',
-    '  -webkit-backdrop-filter: blur(6px);',
-    '  transition: background 0.18s, color 0.18s, border-color 0.18s;',
-    '  user-select: none;',
+    '  font-family: Arial, Helvetica, sans-serif;',
+    '  opacity: 0.75;',
+    '  transition: background 0.2s, opacity 0.3s;',
     '  white-space: nowrap;',
+    '  text-decoration: none;',
     '}',
 
     '.msim-ctrl-btn:hover {',
-    '  background: rgba(90, 62, 237, 0.88);',
-    '  color: #fff;',
-    '  border-color: rgba(160, 130, 255, 0.80);',
+    '  background: rgba(255, 255, 255, 1);',
+    '  opacity: 1;',
     '}',
 
     '.msim-ctrl-btn:active {',
-    '  background: rgba(65, 40, 190, 0.96);',
-    '}',
-
-    /* Wider tap targets on touch screens */
-    '@media (max-width: 540px) {',
-    '  .msim-controls-bar { top: 4px; right: 4px; gap: 4px; }',
-    '  .msim-ctrl-btn { padding: 6px 9px; font-size: 10px; }',
+    '  background: #e8eaf6;',
     '}',
   ].join('\n');
 
@@ -116,7 +112,7 @@
   }
 
   function updateFsLabel(btn) {
-    btn.textContent = isFullscreen() ? '\u22BF Exit Full' : '\u22BF Fullscreen';
+    btn.textContent = isFullscreen() ? '\u26F6 Exit Full' : '\u26F6 Fullscreen';
     btn.title       = isFullscreen() ? 'Exit fullscreen' : 'Open in fullscreen';
   }
 
@@ -143,7 +139,7 @@
     /* Back to Doc */
     var backBtn = document.createElement('button');
     backBtn.className = 'msim-ctrl-btn';
-    backBtn.textContent = '\u2190 Back';
+    backBtn.textContent = 'Back to Doc';
     backBtn.title = 'Return to the course document';
     backBtn.addEventListener('click', goBackToDoc);
 
