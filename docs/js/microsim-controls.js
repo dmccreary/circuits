@@ -1,176 +1,142 @@
 /**
- * microsim-controls.js
- * Injects "Fullscreen" and "Back to Doc" controls into every MicroSim.
- * Include once before </body> in each sim HTML file.
+ * microsim-controls.js  —  EE2301-style MicroSim navigation controls
  *
- * Behavior:
- *   Fullscreen  — expands the iframe (or the document when standalone)
- *                 to fill the screen; button label toggles to "Exit Full".
- *   Back to Doc — if inside an iframe, navigates the top frame back in
- *                 browser history (returns to the embedding chapter page);
- *                 if standalone, navigates to the sim's index page (./).
+ * MODE DETECTION
+ * ─────────────
+ *   embedded  : running inside an <iframe> on a chapter page
+ *               → shows [⛶ Fullscreen] only
+ *               → clicking opens the sim in a new tab with ?fs=1
  *
- * Style: matches EE2301 intelligent-textbook MicroSim control convention —
- *   small semi-transparent white pill, #5C6BC0 purple text, 0.75 opacity,
- *   fixed top-right corner at 4px offset, 1px #ccc border, Arial 11px bold.
+ *   fullscreen : standalone tab opened via the Fullscreen button (?fs=1)
+ *               → shows [Back to Doc] and [⛶ Exit Full]
+ *               → "Back to Doc" / "Exit Full" close the tab (returns user
+ *                  to the chapter page that opened it)
+ *
+ *   standalone : sim loaded directly (no iframe, no ?fs=1)
+ *               → shows [Back to Doc] only (navigates to sim index page)
+ *
+ * WHY NO NATIVE FULLSCREEN API
+ * ────────────────────────────
+ *   The chapter-page iframes don't carry allowfullscreen / allow="fullscreen".
+ *   Calling requestFullscreen() on window.frameElement triggers a 3-second
+ *   browser permission overlay then a rejection.  Opening a new tab is
+ *   instant, clean, and matches the EE2301 fullscreen-toggle.js pattern.
+ *
+ * STYLE — EE2301 convention
+ * ─────────────────────────
+ *   rgba(255,255,255,0.92) background · #5C6BC0 text · 1px solid #ccc border
+ *   border-radius 4px · padding 3px 10px · Arial 11px bold · opacity 0.75→1
+ *   position fixed · top 4px · right 4px · z-index 10000
  */
 (function () {
   'use strict';
 
-  /* ── Styles — EE2301 convention ─────────────────────────────────────────── */
+  /* ── Style block ─────────────────────────────────────────────────────────── */
   var CSS = [
-    '.msim-controls-bar {',
-    '  position: fixed;',
-    '  top: 4px;',
-    '  right: 4px;',
-    '  z-index: 10000;',
-    '  display: flex;',
-    '  gap: 6px;',
-    '  align-items: center;',
+    '.msim-controls-bar{',
+    '  position:fixed;top:4px;right:4px;z-index:10000;',
+    '  display:flex;gap:6px;align-items:center;',
     '}',
-
-    '.msim-ctrl-btn {',
-    '  background: rgba(255, 255, 255, 0.92);',
-    '  color: #5C6BC0;',
-    '  border: 1px solid #ccc;',
-    '  border-radius: 4px;',
-    '  padding: 3px 10px;',
-    '  font-size: 11px;',
-    '  font-weight: bold;',
-    '  line-height: 1.4;',
-    '  cursor: pointer;',
-    '  font-family: Arial, Helvetica, sans-serif;',
-    '  opacity: 0.75;',
-    '  transition: background 0.2s, opacity 0.3s;',
-    '  white-space: nowrap;',
-    '  text-decoration: none;',
+    '.msim-ctrl-btn{',
+    '  background:rgba(255,255,255,0.92);',
+    '  color:#5C6BC0;',
+    '  border:1px solid #ccc;',
+    '  border-radius:4px;',
+    '  padding:3px 10px;',
+    '  font-size:11px;font-weight:bold;line-height:1.4;',
+    '  font-family:Arial,Helvetica,sans-serif;',
+    '  cursor:pointer;',
+    '  opacity:0.75;',
+    '  transition:background 0.2s,opacity 0.3s;',
+    '  white-space:nowrap;',
+    '  text-decoration:none;',
+    '  user-select:none;',
     '}',
+    '.msim-ctrl-btn:hover{background:rgba(255,255,255,1);opacity:1;}',
+    '.msim-ctrl-btn:active{background:#e8eaf6;}',
+  ].join('');
 
-    '.msim-ctrl-btn:hover {',
-    '  background: rgba(255, 255, 255, 1);',
-    '  opacity: 1;',
-    '}',
-
-    '.msim-ctrl-btn:active {',
-    '  background: #e8eaf6;',
-    '}',
-  ].join('\n');
-
-  function injectStyles() {
-    var s = document.createElement('style');
-    s.textContent = CSS;
-    document.head.appendChild(s);
+  /* ── Helpers ─────────────────────────────────────────────────────────────── */
+  function makeBtn(label, title, onClick) {
+    var b = document.createElement('button');
+    b.className   = 'msim-ctrl-btn';
+    b.textContent = label;
+    b.title       = title;
+    b.addEventListener('click', onClick);
+    return b;
   }
 
-  /* ── Fullscreen ──────────────────────────────────────────────────────────── */
-  function isFullscreen() {
+  function closeOrBack() {
+    /* Close the fullscreen tab — returns user to the chapter page.
+       Falls back to history.back() if the tab was not script-opened. */
     try {
-      return !!(
-        document.fullscreenElement ||
-        document.webkitFullscreenElement ||
-        (window !== window.top &&
-          (window.top.document.fullscreenElement ||
-           window.top.document.webkitFullscreenElement))
-      );
+      window.close();
+      /* window.close() is async; if it worked the page is gone.
+         Give it 400ms then fall back. */
+      setTimeout(function () {
+        if (!window.closed) { window.history.back(); }
+      }, 400);
     } catch (e) {
-      return !!document.fullscreenElement;
+      window.history.back();
     }
   }
 
-  function requestFs(el) {
-    if (el.requestFullscreen)       return el.requestFullscreen();
-    if (el.webkitRequestFullscreen) return el.webkitRequestFullscreen();
+  /* ── Mode detection ──────────────────────────────────────────────────────── */
+  var inIframe = (window !== window.top);
+  var fsParam  = false;
+  try {
+    fsParam = (new URLSearchParams(window.location.search)).get('fs') === '1';
+  } catch (e) {
+    fsParam = /[?&]fs=1/.test(window.location.search);
   }
 
-  function exitFs() {
-    try {
-      if (window !== window.top) {
-        var td = window.top.document;
-        if (td.exitFullscreen)       return td.exitFullscreen();
-        if (td.webkitExitFullscreen) return td.webkitExitFullscreen();
-      }
-    } catch (e) {}
-    if (document.exitFullscreen)       return document.exitFullscreen();
-    if (document.webkitExitFullscreen) return document.webkitExitFullscreen();
-  }
+  /* embedded  → iframe, no ?fs
+     fullscreen → new tab with ?fs=1
+     standalone → direct URL, no iframe, no ?fs           */
+  var mode = inIframe ? 'embedded' : (fsParam ? 'fullscreen' : 'standalone');
 
-  function toggleFullscreen(btn) {
-    if (isFullscreen()) {
-      exitFs();
-    } else {
-      var target = document.documentElement;
-      /* Prefer to fullscreen the iframe element so the sim fills the screen */
-      if (window !== window.top) {
-        try { target = window.frameElement || target; } catch (e) {}
-      }
-      requestFs(target).catch(function () {
-        /* Fallback: open sim in a new tab at full size */
-        window.open(window.location.href, '_blank');
-      });
-    }
-    /* Button label update is handled by the fullscreenchange listener */
-  }
-
-  function updateFsLabel(btn) {
-    btn.textContent = isFullscreen() ? '\u26F6 Exit Full' : '\u26F6 Fullscreen';
-    btn.title       = isFullscreen() ? 'Exit fullscreen' : 'Open in fullscreen';
-  }
-
-  /* ── Back to Doc ─────────────────────────────────────────────────────────── */
-  function goBackToDoc() {
-    if (window !== window.top) {
-      /* Inside an iframe — send the embedding chapter page backwards */
-      try {
-        window.top.history.back();
-        return;
-      } catch (e) { /* cross-origin; fall through */ }
-    }
-    /* Standalone sim page — go to the sim's index (MkDocs page) */
-    window.location.href = './';
-  }
-
-  /* ── Build the bar ───────────────────────────────────────────────────────── */
+  /* ── Build bar ───────────────────────────────────────────────────────────── */
   function buildBar() {
+    var style = document.createElement('style');
+    style.textContent = CSS;
+    document.head.appendChild(style);
+
     var bar = document.createElement('div');
     bar.className = 'msim-controls-bar';
     bar.setAttribute('role', 'toolbar');
-    bar.setAttribute('aria-label', 'MicroSim navigation controls');
+    bar.setAttribute('aria-label', 'MicroSim controls');
 
-    /* Back to Doc */
-    var backBtn = document.createElement('button');
-    backBtn.className = 'msim-ctrl-btn';
-    backBtn.textContent = 'Back to Doc';
-    backBtn.title = 'Return to the course document';
-    backBtn.addEventListener('click', goBackToDoc);
+    if (mode === 'embedded') {
+      /* ── Embedded: Fullscreen only ──────────────────────────────────────── */
+      var fsBtn = makeBtn('\u26F6 Fullscreen', 'Open in fullscreen view', function () {
+        var url = new URL(window.location.href);
+        url.searchParams.set('fs', '1');
+        window.open(url.toString(), '_blank');
+      });
+      bar.appendChild(fsBtn);
 
-    /* Fullscreen */
-    var fsBtn = document.createElement('button');
-    fsBtn.className = 'msim-ctrl-btn';
-    updateFsLabel(fsBtn);
-    fsBtn.addEventListener('click', function () { toggleFullscreen(fsBtn); });
+    } else if (mode === 'fullscreen') {
+      /* ── Fullscreen tab: Back to Doc + Exit Full ────────────────────────── */
+      var backBtn = makeBtn('Back to Doc', 'Close this view and return to the course page', closeOrBack);
+      var exitBtn = makeBtn('\u26F6 Exit Full', 'Close this fullscreen view', closeOrBack);
+      bar.appendChild(backBtn);
+      bar.appendChild(exitBtn);
 
-    /* Update label whenever fullscreen state changes */
-    ['fullscreenchange', 'webkitfullscreenchange'].forEach(function (ev) {
-      document.addEventListener(ev, function () { updateFsLabel(fsBtn); });
-      try {
-        window.top.document.addEventListener(ev, function () { updateFsLabel(fsBtn); });
-      } catch (e) {}
-    });
+    } else {
+      /* ── Standalone: Back to Doc only ───────────────────────────────────── */
+      var standaloneBack = makeBtn('Back to Doc', 'Go to the sim description page', function () {
+        window.location.href = './';
+      });
+      bar.appendChild(standaloneBack);
+    }
 
-    bar.appendChild(backBtn);
-    bar.appendChild(fsBtn);
     document.body.appendChild(bar);
   }
 
   /* ── Init ────────────────────────────────────────────────────────────────── */
-  function init() {
-    injectStyles();
-    buildBar();
-  }
-
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
+    document.addEventListener('DOMContentLoaded', buildBar);
   } else {
-    init();
+    buildBar();
   }
 })();
