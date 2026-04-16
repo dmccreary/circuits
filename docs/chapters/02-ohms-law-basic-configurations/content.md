@@ -10,7 +10,20 @@ version: 0.04
 
 # Chapter 2 — Ohm's Law and Basic Circuit Configurations
 
-<h2 id="21-the-resistor" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">2.1 The Resistor: Your First Real Component</h2>
+<details class="video-overview">
+<summary><strong>Chapter Overview</strong> (click to expand)</summary>
+
+Ohm's Law — the simple relationship V = IR — is the foundational equation of circuit analysis, connecting voltage, current, and resistance in every resistive circuit. This chapter builds on that law to explain how resistors behave when connected in series and parallel, and how those configurations are used to divide voltages and split currents precisely.
+
+**Key Takeaways**
+
+1. Ohm's Law states that the voltage across a resistor equals the product of the current through it and its resistance: V = IR.
+2. Series resistors share the same current and add their resistances, while parallel resistors share the same voltage and combine as reciprocals.
+3. Voltage dividers and current dividers are direct applications of series and parallel configurations used throughout practical circuit design.
+
+</details>
+
+## 2.1 The Resistor: Your First Real Component
 
 Before we can talk about Ohm's Law, we need to understand the humble **resistor** — the most common component in electronics. Every circuit you'll ever build will probably have at least one.
 
@@ -30,11 +43,11 @@ Resistors serve several critical functions:
 | Tolerance | — | Percent (%) | ±1% to ±10% |
 | Temperature Coefficient | TC | ppm/°C | ±50 to ±200 |
 
-<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Physical Construction</h3>
+### Physical Construction
 
 Real resistors come in various forms, but the most common type you'll encounter in lab is the **carbon film** or **metal film** resistor. These cylindrical components have colored bands that encode their resistance value — a system we'll decode shortly.
 
-<h4 style="color: #5A3EED; font-weight: 700; margin-top: 2rem; margin-bottom: 0.8rem;">Diagram: Resistor Physical Structure</h4>
+#### Diagram: Resistor Physical Structure
 
 <div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
 <iframe src="../../../sims/resistor-physical-structure/main.html" width="100%" height="400px" scrolling="no" style="border:none; border-radius:8px; overflow:hidden;"></iframe>
@@ -42,7 +55,7 @@ Real resistors come in various forms, but the most common type you'll encounter 
 
 ---
 
-<h2 id="22-ohms-law" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">2.2 Ohm's Law: The E = mc² of Circuits</h2>
+## 2.2 Ohm's Law: The E = mc² of Circuits
 
 If physics has \(E = mc^2\), then electrical engineering has Ohm's Law. It's equally fundamental, considerably more practical for everyday use, and thankfully much easier to derive.
 
@@ -69,17 +82,17 @@ This deceptively simple equation tells us that voltage and current are directly 
 
     Memorize all three forms. You'll use them constantly.
 
-<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">The Ohm's Law Triangle</h3>
+### The Ohm's Law Triangle
 
 Many students find the "Ohm's Law Triangle" helpful for remembering the three forms. Cover the variable you want to find, and the remaining two show you the formula.
 
-<h4 style="color: #5A3EED; font-weight: 700; margin-top: 2rem; margin-bottom: 0.8rem;">Diagram: Ohm's Law Triangle</h4>
+#### Diagram: Ohm's Law Triangle
 
 <div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
 <iframe src="../../../sims/ohms-triangle/main.html" width="100%" height="350px" scrolling="no" style="border:none; border-radius:8px; overflow:hidden;"></iframe>
 </div>
 
-<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Applying Ohm's Law: A Simple Example</h3>
+### Applying Ohm's Law: A Simple Example
 
 Suppose you have a 9V battery connected to a 1000Ω (1kΩ) resistor. How much current flows?
 
@@ -87,7 +100,7 @@ Suppose you have a 9V battery connected to a 1000Ω (1kΩ) resistor. How much cu
 
 Nine milliamps. That's enough current to light an LED, run a small sensor, or power a microcontroller's GPIO pin.
 
-<h4 style="color: #5A3EED; font-weight: 700; margin-top: 2rem; margin-bottom: 0.8rem;">Diagram: Ohm's Law Calculator</h4>
+#### Diagram: Ohm's Law Calculator
 
 <div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
 <iframe src="../../../sims/ohms-law-calculator/main.html" width="100%" height="450px" scrolling="no" style="border:none; border-radius:8px; overflow:hidden;"></iframe>
@@ -95,7 +108,7 @@ Nine milliamps. That's enough current to light an LED, run a small sensor, or po
 
 ---
 
-<h2 id="23-power" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">2.3 Power in Resistive Circuits</h2>
+## 2.3 Power in Resistive Circuits
 
 Current flowing through a resistor converts electrical energy into heat. The rate of this energy conversion is **power**, measured in watts (W). This matters because resistors have power ratings — exceed them, and you'll get a dramatic (and smoky) demonstration of why specifications exist.
 
@@ -113,7 +126,7 @@ Use whichever form is most convenient given the known quantities.
 | I and R | \(P = I^2 \cdot R\) |
 | V and R | \(P = V^2 / R\) |
 
-<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Component Power Rating and Derating</h3>
+### Component Power Rating and Derating
 
 Every resistor has a **power rating** — the maximum power it can safely dissipate without damage. Common values are 1/8W, 1/4W, 1/2W, and 1W for through-hole resistors. A resistor will happily try to dissipate whatever power you throw at it — exceed the rating and you'll see discoloration, smell burning, and eventually witness component failure.
 
@@ -121,7 +134,7 @@ Smart engineers practice **derating** — operating a component below its maximu
 
 ---
 
-<h2 id="24-color-codes" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">2.4 Resistor Color Codes and Tolerance</h2>
+## 2.4 Resistor Color Codes and Tolerance
 
 Those colored bands on resistors aren't decorative — they encode the resistance value. Learning to read them is like learning a secret language, except the secret is just "how many ohms."
 
@@ -145,7 +158,7 @@ Those colored bands on resistors aren't decorative — they encode the resistanc
 !!! note "Mnemonic Alert"
     Need to remember the color order? "**B**ad **B**eer **R**ots **O**ur **Y**oung **G**uts **B**ut **V**odka **G**oes **W**ell" gives you Black, Brown, Red, Orange, Yellow, Green, Blue, Violet, Gray, White.
 
-<h4 style="color: #5A3EED; font-weight: 700; margin-top: 2rem; margin-bottom: 0.8rem;">Diagram: Resistor Color Code Reader</h4>
+#### Diagram: Resistor Color Code Reader
 
 <div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
 <iframe src="../../../sims/resistor-color-code/main.html" width="100%" height="500px" scrolling="no" style="border:none; border-radius:8px; overflow:hidden;"></iframe>
@@ -155,11 +168,11 @@ No resistor is perfect. A "1kΩ resistor" with ±5% tolerance (gold band) will a
 
 ---
 
-<h2 id="25-sources" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">2.5 Voltage and Current Sources</h2>
+## 2.5 Voltage and Current Sources
 
 Circuits need something to drive current flow. That's where **sources** come in. We have two ideal types: voltage sources and current sources.
 
-<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Voltage Sources</h3>
+### Voltage Sources
 
 An ideal **voltage source** maintains a constant voltage across its terminals regardless of the current drawn. Real-world examples include batteries (approximately) and regulated power supplies.
 
@@ -167,11 +180,11 @@ Schematic symbols: Battery (long and short parallel lines — long line is posit
 
 The ideal voltage source is a mathematical convenience — real batteries have internal resistance that causes their terminal voltage to drop under load. But for many calculations, treating a battery as ideal is close enough.
 
-<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Current Sources</h3>
+### Current Sources
 
 An ideal **current source** maintains a constant current through itself regardless of the voltage across it. These are less intuitive than voltage sources but essential for understanding amplifier biasing. Certain transistor configurations behave as current sources.
 
-<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Dependent Sources</h3>
+### Dependent Sources
 
 **Dependent sources** (also called controlled sources) have their output determined by a voltage or current elsewhere in the circuit. There are four types: VCVS, VCCS, CCVS, and CCCS. Dependent sources are drawn as diamond shapes to distinguish them from independent sources. We'll explore them deeply when we hit transistor chapters.
 
@@ -182,7 +195,7 @@ An ideal **current source** maintains a constant current through itself regardle
 
 ---
 
-<h2 id="26-series" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">2.6 Series Circuits: The Single-File Line</h2>
+## 2.6 Series Circuits: The Single-File Line
 
 When components are connected end-to-end, forming a single path for current, we call it a **series circuit**. Think of it like a single-lane road: all the cars (charges) must pass through every toll booth (component) along the way.
 
@@ -200,7 +213,7 @@ The total resistance is always larger than any individual resistor.
 
 </div>
 
-<h4 style="color: #5A3EED; font-weight: 700; margin-top: 2rem; margin-bottom: 0.8rem;">Diagram: Series Circuit Analysis</h4>
+#### Diagram: Series Circuit Analysis
 
 <div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
 <iframe src="../../../sims/series-circuit/main.html" width="100%" height="500px" scrolling="no" style="border:none; border-radius:8px; overflow:hidden;"></iframe>
@@ -208,7 +221,7 @@ The total resistance is always larger than any individual resistor.
 
 ---
 
-<h2 id="27-parallel" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">2.7 Parallel Circuits: Multiple Paths</h2>
+## 2.7 Parallel Circuits: Multiple Paths
 
 When components connect across the same two nodes, sharing the same voltage, they're in **parallel**. Think of parallel lanes on a highway: traffic (current) divides among them, but they all connect the same two points.
 
@@ -230,7 +243,7 @@ $$R_{total} = \frac{R_1 \cdot R_2}{R_1 + R_2}$$
 
 A key insight: **the total resistance of a parallel combination is always less than the smallest individual resistor**. Adding more parallel paths makes it easier for current to flow.
 
-<h4 style="color: #5A3EED; font-weight: 700; margin-top: 2rem; margin-bottom: 0.8rem;">Diagram: Parallel Circuit Analysis</h4>
+#### Diagram: Parallel Circuit Analysis
 
 <div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
 <iframe src="../../../sims/parallel-circuit/main.html" width="100%" height="500px" scrolling="no" style="border:none; border-radius:8px; overflow:hidden;"></iframe>
@@ -238,7 +251,7 @@ A key insight: **the total resistance of a parallel combination is always less t
 
 ---
 
-<h2 id="28-series-parallel" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">2.8 Series-Parallel Circuits: The Real World</h2>
+## 2.8 Series-Parallel Circuits: The Real World
 
 Most practical circuits aren't purely series or purely parallel — they're combinations. Analyzing these **series-parallel circuits** requires breaking them down systematically.
 
@@ -251,7 +264,7 @@ The strategy:
 
 This is like simplifying a complex fraction: you work from the inside out, reducing the complexity step by step.
 
-<h4 style="color: #5A3EED; font-weight: 700; margin-top: 2rem; margin-bottom: 0.8rem;">Diagram: Series-Parallel Analysis</h4>
+#### Diagram: Series-Parallel Analysis
 
 <div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
 <iframe src="../../../sims/series-parallel-circuit/main.html" width="100%" height="550px" scrolling="no" style="border:none; border-radius:8px; overflow:hidden;"></iframe>
@@ -259,7 +272,7 @@ This is like simplifying a complex fraction: you work from the inside out, reduc
 
 ---
 
-<h2 id="29-voltage-divider" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">2.9 The Voltage Divider: A Circuit You'll Build a Thousand Times</h2>
+## 2.9 The Voltage Divider: A Circuit You'll Build a Thousand Times
 
 Take two resistors in series, connect them to a voltage source, and tap the middle point. Congratulations — you've built a **voltage divider**, one of the most useful circuits in electronics.
 
@@ -276,11 +289,11 @@ where \(V_{out}\) is the output voltage (at the junction of R1 and R2), \(V_{in}
 
 Voltage dividers are everywhere: creating reference voltages for comparators, scaling signals to fit ADC input ranges, biasing transistor circuits, and reading resistive sensors (thermistors, photoresistors).
 
-<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Voltage Divider Loading Effect</h3>
+### Voltage Divider Loading Effect
 
 Here's a trap that catches beginners: voltage dividers work perfectly when nothing is connected to the output. Connect a load (which has its own resistance), and the output voltage drops. The load resistance appears in parallel with R2, reducing the effective lower resistance. For a voltage divider to work well, the load resistance must be much larger than R2 — typically 10× larger or more.
 
-<h4 style="color: #5A3EED; font-weight: 700; margin-top: 2rem; margin-bottom: 0.8rem;">Diagram: Voltage Divider Calculator</h4>
+#### Diagram: Voltage Divider Calculator
 
 <div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
 <iframe src="../../../sims/voltage-divider/main.html" width="100%" height="450px" scrolling="no" style="border:none; border-radius:8px; overflow:hidden;"></iframe>
@@ -288,7 +301,7 @@ Here's a trap that catches beginners: voltage dividers work perfectly when nothi
 
 ---
 
-<h2 id="210-current-divider" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">2.10 The Current Divider: Sharing the Flow</h2>
+## 2.10 The Current Divider: Sharing the Flow
 
 Just as voltage divides in series circuits, current divides in parallel circuits. A **current divider** lets you calculate how current splits between parallel branches.
 
@@ -310,7 +323,7 @@ Notice: more current flows through the **smaller** resistance — the path of le
 
 ---
 
-<h2 id="211-potentiometer" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">2.11 Potentiometers: Variable Resistance</h2>
+## 2.11 Potentiometers: Variable Resistance
 
 A **potentiometer** (or "pot") is a three-terminal resistor with an adjustable center tap. Turn the knob (or slide the lever), and you change the resistance ratio — and therefore the voltage at the wiper terminal.
 
@@ -323,7 +336,7 @@ Potentiometers are essentially adjustable voltage dividers. They're used for:
 
 The three terminals are: End terminal 1, Wiper (the moving contact), and End terminal 2.
 
-<h4 style="color: #5A3EED; font-weight: 700; margin-top: 2rem; margin-bottom: 0.8rem;">Diagram: Potentiometer as Voltage Divider</h4>
+#### Diagram: Potentiometer as Voltage Divider
 
 <div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
 <iframe src="../../../sims/potentiometer/main.html" width="100%" height="400px" scrolling="no" style="border:none; border-radius:8px; overflow:hidden;"></iframe>
@@ -331,7 +344,7 @@ The three terminals are: End terminal 1, Wiper (the moving contact), and End ter
 
 ---
 
-<h2 id="212-wire-resistance" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">2.12 Wire Resistance: The Overlooked Reality</h2>
+## 2.12 Wire Resistance: The Overlooked Reality
 
 In ideal circuit analysis, we assume wires have zero resistance. In reality, every wire has some resistance, determined by:
 
@@ -357,7 +370,7 @@ For most bench circuits with short wires, this resistance is negligible. But it 
 
 ---
 
-<h2 id="213-linearity" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">2.13 Linearity and the Foundation for Advanced Analysis</h2>
+## 2.13 Linearity and the Foundation for Advanced Analysis
 
 Ohm's Law describes a **linear** relationship. If you double the voltage, you double the current. If you halve the voltage, you halve the current. No surprises, no complications.
 
@@ -369,7 +382,7 @@ This **linearity** property enables powerful analysis techniques:
 
 Not all components are linear (diodes and transistors aren't), but resistive circuits are, and that makes them beautifully predictable.
 
-<h4 style="color: #5A3EED; font-weight: 700; margin-top: 2rem; margin-bottom: 0.8rem;">Diagram: Linear vs Nonlinear I-V Characteristics</h4>
+#### Diagram: Linear vs Nonlinear I-V Characteristics
 
 <div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
 <iframe src="../../../sims/linear-vs-nonlinear/main.html" width="100%" height="400px" scrolling="no" style="border:none; border-radius:8px; overflow:hidden;"></iframe>
@@ -377,7 +390,7 @@ Not all components are linear (diodes and transistors aren't), but resistive cir
 
 ---
 
-<h2 id="214-example" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">2.14 Putting It All Together: A Complete Analysis Example</h2>
+## 2.14 Putting It All Together: A Complete Analysis Example
 
 Let's work through a complete circuit analysis using all the tools we've developed.
 
@@ -416,7 +429,7 @@ The current divides according to the inverse resistance ratio: twice as much cur
 
 ---
 
-<h2 style="color: #5A3EED !important; border-bottom: 2px solid #5A3EED; padding-bottom: 0.3rem; font-weight: 700; margin-top: 2rem;">Chapter Summary</h2>
+## Chapter Summary
 
 <div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 20px 24px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
 <p style="color: #333; line-height: 1.85; font-size: 1.02rem; margin: 0;">
@@ -424,7 +437,7 @@ This chapter built on basic quantities to develop practical circuit analysis ski
 </p>
 </div>
 
-<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Key Equations Reference</h3>
+### Key Equations Reference
 
 <div style="background: #F8F6FF; border: 2px solid #D4C8FF; border-radius: 12px; padding: 20px 24px; margin: 1rem 0;" markdown>
 
@@ -440,7 +453,7 @@ This chapter built on basic quantities to develop practical circuit analysis ski
 
 </div>
 
-<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">What's Next</h3>
+### What's Next
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.5rem;">
 Chapter 3 introduces Kirchhoff's Laws — the two fundamental conservation principles that make it possible to systematically analyze any electrical circuit, no matter how complex. The circuits will get more complex, but the fundamental tools you've learned here will carry you through.

@@ -10,7 +10,20 @@ version: 0.04
 
 # Chapter 6 — Transient Analysis of RC and RL Circuits
 
-<h2 id="61-transient-vs-steady-state" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">6.1 Transient vs. Steady-State Response</h2>
+<details class="video-overview">
+<summary><strong>Chapter Overview</strong> (click to expand)</summary>
+
+When a switch opens or closes in a circuit containing a capacitor or inductor, the circuit transitions between two steady states through an exponential transient governed by a characteristic time constant. This chapter develops the complete analytical framework for first-order RC and RL circuits, covering both the natural response (energy decay) and the step response (energy charging).
+
+**Key Takeaways**
+
+1. The time constant tau (τ = RC or τ = L/R) determines how quickly a first-order circuit responds — after five time constants, the circuit is essentially at its new steady state.
+2. The natural response is a decaying exponential representing the release of stored energy with no external forcing.
+3. The complete response combines the natural response with the forced (particular) response to describe circuit behavior for any initial conditions and source values.
+
+</details>
+
+## 6.1 Transient vs. Steady-State Response
 
 Every circuit exists in one of two states: **steady state** or **transient**.
 
@@ -26,7 +39,7 @@ This chapter focuses on **first-order circuits** — circuits with exactly one e
 
 ---
 
-<h2 id="62-the-rc-circuit-charging" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">6.2 The RC Circuit: Charging</h2>
+## 6.2 The RC Circuit: Charging
 
 Consider a resistor \(R\) in series with a capacitor \(C\), connected to a voltage source \(V_S\) via a switch closed at \(t = 0\). The capacitor starts uncharged (\(V_C(0) = 0\)).
 
@@ -62,7 +75,7 @@ The capacitor voltage starts at 0 and rises exponentially toward \(V_S\). The cu
 
 ---
 
-<h2 id="63-the-time-constant" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">6.3 The Time Constant</h2>
+## 6.3 The Time Constant
 
 The product \(RC\) appears in the exponent and has units of seconds. It is called the **time constant** \(\tau\) (tau):
 
@@ -87,7 +100,7 @@ The time constant applies equally to the discharging case.
 
 ---
 
-<h2 id="64-rc-circuit-discharging" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">6.4 The RC Circuit: Discharging</h2>
+## 6.4 The RC Circuit: Discharging
 
 Now consider a capacitor initially charged to \(V_0\), connected to a resistor at \(t = 0\) (with the source removed). The capacitor discharges through the resistor.
 
@@ -108,7 +121,7 @@ The capacitor voltage decays exponentially from \(V_0\) toward 0. The time const
 
 ---
 
-<h2 id="65-the-rl-circuit" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">6.5 The RL Circuit</h2>
+## 6.5 The RL Circuit
 
 An **RL circuit** pairs a resistor \(R\) with an inductor \(L\). It behaves as the dual of the RC circuit, with current replacing voltage and inductance replacing capacitance.
 
@@ -158,7 +171,7 @@ where \(L\) is in henrys (H), \(R\) is in ohms (Ω), and \(\tau\) is in seconds 
 
 ---
 
-<h2 id="66-initial-and-final-conditions" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">6.6 Initial and Final Conditions</h2>
+## 6.6 Initial and Final Conditions
 
 To solve any first-order transient, you need two pieces of information: the **initial condition** and the **final condition**.
 
@@ -180,7 +193,7 @@ The DC steady-state value as \(t \to \infty\). Analyze the circuit at DC steady 
 
 ---
 
-<h2 id="67-natural-forced-complete-response" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">6.7 Natural, Forced, and Complete Response</h2>
+## 6.7 Natural, Forced, and Complete Response
 
 The complete response of a first-order circuit has two components:
 
@@ -213,7 +226,7 @@ This is the **universal step-response formula** — it solves *any* first-order 
 
 ---
 
-<h2 id="68-worked-example" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">6.8 Worked Example: Complete Transient Analysis</h2>
+## 6.8 Worked Example: Complete Transient Analysis
 
 **Problem:** A 24 V source drives a circuit with R1 = 6 kΩ in series with a parallel combination of R2 = 12 kΩ and C = 10 μF. The switch closes at \(t = 0\). Find \(V_C(t)\) for \(t \geq 0\).
 
@@ -243,7 +256,7 @@ At \(t = \tau = 40\) ms: \(V_C = 16(1 - e^{-1}) = 16 \times 0.632 = 10.1\) V ✓
 
 ---
 
-<h2 id="69-chapter-summary" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">6.9 Chapter Summary</h2>
+## 6.9 Chapter Summary
 
 <div style="background: #F8F6FF; border: 2px solid #D4C8FF; border-radius: 12px; padding: 20px 28px; margin: 1rem 0;" markdown>
 

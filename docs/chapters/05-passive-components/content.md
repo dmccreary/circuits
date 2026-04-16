@@ -10,7 +10,20 @@ version: 0.04
 
 # Chapter 5 — Passive Components: Resistors, Capacitors, and Inductors
 
-<h2 id="51-the-capacitor" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">5.1 The Capacitor</h2>
+<details class="video-overview">
+<summary><strong>Chapter Overview</strong> (click to expand)</summary>
+
+Beyond the resistor, two essential passive components — capacitors and inductors — store energy rather than dissipating it, giving circuits memory and frequency-dependent behavior. This chapter explains the physical construction, V-I relationships, and energy storage properties of all three passive component types, laying the groundwork for transient and AC analysis.
+
+**Key Takeaways**
+
+1. A capacitor stores energy in an electric field and its current is proportional to the rate of change of voltage: i = C dv/dt.
+2. An inductor stores energy in a magnetic field and its voltage is proportional to the rate of change of current: v = L di/dt.
+3. Under DC steady-state conditions, capacitors behave as open circuits and inductors behave as short circuits, which is a key simplification for initial analysis.
+
+</details>
+
+## 5.1 The Capacitor
 
 A **capacitor** is a component that stores energy in an **electric field**. In its simplest form, it consists of two conductive plates separated by an insulating material called a **dielectric**. When a voltage is applied across the plates, charge accumulates — positive charge on one plate, negative on the other — and an electric field forms between them.
 
@@ -53,7 +66,7 @@ This is the defining equation of a capacitor. Two immediate consequences:
 
 ---
 
-<h2 id="52-capacitor-energy-storage" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">5.2 Energy Stored in a Capacitor</h2>
+## 5.2 Energy Stored in a Capacitor
 
 Unlike a resistor, which dissipates energy as heat, a capacitor stores energy and can return it to the circuit later. The energy stored in a charged capacitor is:
 
@@ -72,7 +85,7 @@ This is analogous to the kinetic energy of a moving mass (\(\frac{1}{2}mv^2\)), 
 
 ---
 
-<h2 id="53-capacitors-in-series-and-parallel" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">5.3 Capacitors in Series and Parallel</h2>
+## 5.3 Capacitors in Series and Parallel
 
 Capacitors combine differently from resistors — the formulas are *swapped*.
 
@@ -101,7 +114,7 @@ Series combination increases the effective plate separation (lower capacitance, 
 
 ---
 
-<h2 id="54-the-inductor" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">5.4 The Inductor</h2>
+## 5.4 The Inductor
 
 An **inductor** is a component that stores energy in a **magnetic field**. In its basic form, it's a coil of wire. When current flows through the coil, it creates a magnetic field. If the current changes, the changing magnetic flux induces a voltage that *opposes* the change — this is Lenz's Law in action.
 
@@ -132,7 +145,7 @@ where \(N\) is the number of turns, \(A\) is the cross-sectional area, \(\ell\) 
 
 ---
 
-<h2 id="55-inductor-energy-storage" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">5.5 Energy Stored in an Inductor</h2>
+## 5.5 Energy Stored in an Inductor
 
 The energy stored in an inductor's magnetic field:
 
@@ -155,7 +168,7 @@ The **duality** between capacitors and inductors is complete:
 
 ---
 
-<h2 id="56-inductors-in-series-and-parallel" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">5.6 Inductors in Series and Parallel</h2>
+## 5.6 Inductors in Series and Parallel
 
 Inductors combine exactly like resistors (assuming no mutual coupling):
 
@@ -179,7 +192,7 @@ For two: \(\displaystyle L_{eq} = \frac{L_1 L_2}{L_1 + L_2}\)
 
 ---
 
-<h2 id="57-mutual-inductance" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">5.7 Mutual Inductance</h2>
+## 5.7 Mutual Inductance
 
 When two inductors are placed near each other, the magnetic field of one can influence the other. This is **mutual inductance** \(M\), and it is the operating principle of **transformers**.
 
@@ -215,7 +228,7 @@ For inductors in series with mutual inductance:
 
 ---
 
-<h2 id="58-real-vs-ideal-components" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">5.8 Real vs. Ideal Components</h2>
+## 5.8 Real vs. Ideal Components
 
 The components you've been analyzing are **ideal**: a capacitor is purely capacitive, an inductor is purely inductive. Real components are more complicated.
 
@@ -236,7 +249,7 @@ The components you've been analyzing are **ideal**: a capacitor is purely capaci
 
 ---
 
-<h2 id="59-signal-fundamentals" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">5.9 Signal Fundamentals</h2>
+## 5.9 Signal Fundamentals
 
 Before diving into AC circuits, we need the vocabulary to describe signals that change over time.
 
@@ -278,7 +291,7 @@ When \(\phi < 0\), the signal **lags** the reference (arrives later in time).
 
 ---
 
-<h2 id="510-decibels" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">5.10 The Decibel Scale</h2>
+## 5.10 The Decibel Scale
 
 The **decibel (dB)** is a logarithmic unit for expressing ratios of power, voltage, or current. It's used everywhere in audio and communications because human hearing is approximately logarithmic and because gains/losses cascade multiplicatively (which becomes addition in dB).
 
@@ -314,7 +327,7 @@ The **human hearing range** spans approximately 20 Hz to 20,000 Hz (20 kHz). In 
 
 ---
 
-<h2 id="511-chapter-summary" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">5.11 Chapter Summary</h2>
+## 5.11 Chapter Summary
 
 <div style="background: #F8F6FF; border: 2px solid #D4C8FF; border-radius: 12px; padding: 20px 28px; margin: 1rem 0;" markdown>
 

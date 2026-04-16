@@ -6,6 +6,19 @@ title: "Chapter 8 — Main Content: AC Signals and Sinusoidal Waveforms"
 
 # Chapter 8 — Main Content: AC Signals and Sinusoidal Waveforms
 
+<details class="video-overview">
+<summary><strong>Chapter Overview</strong> (click to expand)</summary>
+
+Alternating current signals are the language of power systems and communications, and the sinusoidal waveform is their most fundamental form. This chapter establishes how to mathematically describe sinusoids using amplitude, frequency, period, and phase, and introduces RMS values as the key measure for relating AC magnitudes to equivalent DC power delivery.
+
+**Key Takeaways**
+
+1. A sinusoidal waveform is fully described by its amplitude, angular frequency ω, and phase angle φ in the expression v(t) = Vₘ cos(ωt + φ).
+2. The RMS (root mean square) value of a sinusoid equals its peak amplitude divided by √2, and represents the equivalent DC voltage for the same average power.
+3. Phase difference between voltage and current signals is a critical quantity in AC circuits and sets up the phasor analysis introduced in the next chapter.
+
+</details>
+
 ## Introduction: Why the World Runs on Waves
 
 Walk into any room, flip a light switch, and you're tapping into a global network of energy that flows back and forth, back and forth—60 times per second in the Americas, 50 times per second in most of the rest of the world. This isn't a design flaw or a compromise; it's a deliberate choice that makes modern electrical power possible.

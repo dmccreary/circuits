@@ -10,7 +10,20 @@ version: 0.05
 
 # Chapter 16 — Laboratory Measurement Techniques
 
-<h2 id="161-introduction" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">16.1 Introduction</h2>
+<details class="video-overview">
+<summary><strong>Chapter Overview</strong> (click to expand)</summary>
+
+Laboratory measurement is where theoretical predictions meet physical reality, and mastering the instruments and techniques in this chapter is essential for diagnosing discrepancies and building reliable circuits. This chapter covers the multimeter, oscilloscope, function generator, and DC power supply in depth, together with breadboarding practices, systematic debugging strategies, and the measurement errors that trip up even experienced engineers.
+
+**Key Takeaways**
+
+1. The oscilloscope is the most powerful diagnostic tool in the electronics lab — it displays voltage waveforms in real time and reveals amplitude, frequency, phase, and transient behavior simultaneously.
+2. Loading error occurs when a measuring instrument's own impedance alters the circuit being measured; understanding input impedance prevents systematic measurement mistakes.
+3. Systematic debugging follows a structured process — compare measurements to predictions, isolate the discrepancy, and test one hypothesis at a time — rather than randomly swapping components.
+
+</details>
+
+## 16.1 Introduction
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 Every circuit analysis method developed in previous chapters produces a prediction. The laboratory is where predictions meet reality. Sometimes reality agrees with theory immediately. More often, there is a discrepancy — a voltage that should be 3.3 V reads 2.9 V, or a filter that should cut off at 1 kHz starts rolling off at 800 Hz. These gaps between prediction and measurement are not failures; they are the most informative moments in engineering. Tracking down the cause requires mastery of the instruments and techniques covered in this chapter.
@@ -26,19 +39,19 @@ Beyond instruments, practical skills matter enormously: building reliable circui
 
 ---
 
-<h2 id="162-multimeter" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">16.2 The Multimeter</h2>
+## 16.2 The Multimeter
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 The <strong>digital multimeter</strong> (DMM) is the most frequently used instrument on any workbench. It measures voltage, current, and resistance, and most modern models add continuity, diode test, capacitance, and frequency modes. Understanding exactly how each measurement is made — and what the instrument's connection to the circuit does to the circuit — is essential for accurate readings.
 </p>
 
-<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Voltage Measurement</h3>
+### Voltage Measurement
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 A voltmeter is connected <strong>in parallel</strong> with the component or node being measured. To minimize disturbing the circuit, the voltmeter must have a very high input impedance — typically <strong>10 MΩ</strong> on most DMMs. A DC voltage measurement uses the DMM's DC mode; for AC voltages, True RMS meters correctly handle non-sinusoidal waveforms while average-responding meters give accurate results only for pure sine waves.
 </p>
 
-<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Current Measurement</h3>
+### Current Measurement
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 An ammeter is connected <strong>in series</strong> — the circuit must be broken and the meter inserted into the break so that all current flows through it. The ammeter has very low input impedance (ideally zero) to avoid adding resistance to the loop. Select the correct current range before connecting: overcurrent causes a blown fuse, not just an off-scale reading.
@@ -47,7 +60,7 @@ An ammeter is connected <strong>in series</strong> — the circuit must be broke
 !!! warning "Never Connect an Ammeter in Parallel"
     Connecting an ammeter across a component creates a near-short circuit. The meter's low resistance will draw very large current, blowing the meter's internal fuse and potentially damaging the circuit. Always insert the meter in series.
 
-<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Resistance Measurement</h3>
+### Resistance Measurement
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 The ohmmeter applies a known test current and measures the resulting voltage drop to calculate resistance. For accurate results, the component must be <strong>disconnected from the circuit</strong> (or at minimum, power must be removed and capacitors discharged). Parallel paths through other circuit elements will cause the meter to read a lower value than the actual component resistance.
@@ -67,25 +80,25 @@ The ohmmeter applies a known test current and measures the resulting voltage dro
 
 ---
 
-<h2 id="163-oscilloscope" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">16.3 The Oscilloscope</h2>
+## 16.3 The Oscilloscope
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 The <strong>oscilloscope</strong> displays voltage as a function of time. It is the single most important instrument for understanding dynamic circuit behavior — waveform shape, amplitude, frequency, rise time, overshoot, and the phase relationship between two signals are all visible at a glance. Modern digital oscilloscopes also provide automatic measurements, cursor readouts, and built-in FFT for frequency-domain analysis.
 </p>
 
-<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Time Base</h3>
+### Time Base
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 The <strong>time base</strong> sets the horizontal scale in seconds per division (s/div). The graticule has 10 horizontal divisions, so the total time window is \(10 \times \text{(s/div)}\). To display a waveform usefully, set the time base so that one to three full periods are visible. For a 1 kHz sine wave (\(T = 1\) ms), a setting of 200 µs/div shows two complete cycles across 10 divisions.
 </p>
 
-<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Vertical Sensitivity</h3>
+### Vertical Sensitivity
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 The <strong>vertical sensitivity</strong> sets the voltage scale in volts per division (V/div). The graticule has 8 vertical divisions, so the total vertical range is \(8 \times \text{(V/div)}\). Adjust sensitivity so the waveform occupies 4–6 divisions for maximum readability. A waveform that fills only 1–2 divisions has poor amplitude resolution; one that clips at the top and bottom is off-scale.
 </p>
 
-<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Reading Waveform Parameters</h3>
+### Reading Waveform Parameters
 
 <div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 10px; padding: 16px 20px; margin: 1.2rem 0;">
 
@@ -101,13 +114,13 @@ The <strong>vertical sensitivity</strong> sets the voltage scale in volts per di
 
 ---
 
-<h2 id="164-function-generator" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">16.4 The Function Generator</h2>
+## 16.4 The Function Generator
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 A <strong>function generator</strong> produces standard test waveforms — sine, square, triangle, pulse — at selectable frequency, amplitude, and DC offset. It is the primary signal source for characterizing filters, amplifiers, and other AC circuits. Understanding its output impedance is critical for using it correctly.
 </p>
 
-<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Output Impedance and the 50 Ω Rule</h3>
+### Output Impedance and the 50 Ω Rule
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 Most function generators have a <strong>50 Ω output impedance</strong> \(R_s\). The generator's front-panel amplitude setting assumes the output is terminated into a matched 50 Ω load — in which case the load sees exactly half the open-circuit voltage (due to the voltage divider formed by \(R_s\) and the load). When driving a high-impedance circuit input (much greater than 50 Ω), nearly the full open-circuit voltage appears at the load, which is approximately twice the panel-indicated value.
@@ -129,9 +142,9 @@ Always verify the actual voltage at the circuit input with an oscilloscope.
 
 ---
 
-<h2 id="165-dc-power-supply-spectrum-analyzer" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">16.5 DC Power Supply and Spectrum Analyzer</h2>
+## 16.5 DC Power Supply and Spectrum Analyzer
 
-<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">DC Power Supply</h3>
+### DC Power Supply
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 The <strong>DC power supply</strong> provides controlled, regulated DC voltage and current. Two operating modes are essential to understand:
@@ -148,7 +161,7 @@ The <strong>DC power supply</strong> provides controlled, regulated DC voltage a
 !!! warning "Set the Current Limit First"
     Before powering a new or repaired circuit, set the supply current limit conservatively (e.g., 100 mA for low-power circuits). If the circuit draws more than expected, the supply will enter CC mode rather than sourcing damaging current. Verify the CC LED is off under normal operation.
 
-<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Spectrum Analyzer</h3>
+### Spectrum Analyzer
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 A <strong>spectrum analyzer</strong> displays amplitude as a function of frequency — the frequency-domain view of a signal. While an oscilloscope shows time-domain waveforms, the spectrum analyzer reveals harmonic content, interference, and distortion that may be invisible in the time domain.
@@ -172,9 +185,9 @@ Key applications include measuring <strong>Total Harmonic Distortion (THD)</stro
 
 ---
 
-<h2 id="166-measurement-techniques" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">16.6 Measurement Techniques</h2>
+## 16.6 Measurement Techniques
 
-<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Voltage and Current Measurement</h3>
+### Voltage and Current Measurement
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 For <strong>DC voltage</strong> at a node, connect the DMM black probe to ground and the red probe to the node. Always verify the DMM is in voltage mode before making contact — connecting a meter set to current mode across a low-impedance source creates a near-short circuit. For <strong>AC voltage</strong> on an oscilloscope, connect the probe ground clip to circuit ground, touch the probe tip to the node, and adjust V/div and time base for a clear display.
@@ -190,7 +203,7 @@ For <strong>current</strong>, the preferred indirect method using an oscilloscop
 Choose \(R_{sense}\) small enough that its voltage drop does not significantly affect circuit operation (typically 1–10 Ω for milliamp-range circuits).
 </p>
 
-<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Frequency Measurement</h3>
+### Frequency Measurement
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 With an oscilloscope, measure the period \(T\) by counting the number of horizontal divisions between two identical points on consecutive cycles (e.g., rising zero crossings), then multiplying by the s/div setting:
@@ -202,7 +215,7 @@ With an oscilloscope, measure the period \(T\) by counting the number of horizon
 For higher accuracy, use the oscilloscope's automatic frequency measurement or a dedicated frequency counter, which can resolve frequency to many more significant figures than counting divisions.
 </p>
 
-<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Phase Measurement</h3>
+### Phase Measurement
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 To measure the phase difference between two signals of the same frequency, display both on a dual-channel oscilloscope with the same time base. Measure the time delay \(\Delta t\) between corresponding reference points (typically rising zero crossings) on the two signals. Calculate phase angle \(\phi\):
@@ -245,13 +258,13 @@ The output lags the input by 108°. This is consistent with an RC low-pass circu
 
 ---
 
-<h2 id="167-oscilloscope-probes" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">16.7 Oscilloscope Probes and Compensation</h2>
+## 16.7 Oscilloscope Probes and Compensation
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 The oscilloscope probe is not a passive wire — it is a precision component that determines what the oscilloscope actually sees. Choosing the wrong probe or failing to compensate it properly produces measurements that appear valid but are systematically wrong.
 </p>
 
-<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">1X vs. 10X Probes</h3>
+### 1X vs. 10X Probes
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 A <strong>1X (direct) probe</strong> connects the circuit directly to the oscilloscope input with minimal attenuation. It has relatively low input impedance (1 MΩ) and high input capacitance (~100 pF). This high capacitance loads the circuit heavily at high frequencies, limiting useful bandwidth to around 10–20 MHz.
@@ -278,7 +291,7 @@ A <strong>10X probe</strong> includes an internal 9 MΩ series resistor that, co
 Use the 10X probe for the vast majority of measurements. Use 1X only when measuring signals too small to resolve with 10X attenuation.
 </p>
 
-<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Probe Compensation Procedure</h3>
+### Probe Compensation Procedure
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 A 10X probe contains a small adjustable capacitor (trimmer) in parallel with the 9 MΩ resistor. This trimmer must be adjusted to match the oscilloscope's input capacitance. An improperly compensated probe distorts the frequency response — most visibly on square waves:
@@ -304,9 +317,9 @@ A 10X probe contains a small adjustable capacitor (trimmer) in parallel with the
 
 ---
 
-<h2 id="168-triggering-coupling" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">16.8 Triggering and Coupling</h2>
+## 16.8 Triggering and Coupling
 
-<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Triggering</h3>
+### Triggering
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 <strong>Triggering</strong> determines when the oscilloscope begins drawing a new sweep across the display. For a repetitive waveform to appear stable rather than rolling or flickering, each new sweep must begin at exactly the same point on the waveform. The trigger circuit detects when the chosen signal crosses a set voltage threshold on the chosen edge.
@@ -326,7 +339,7 @@ The three primary trigger controls are:
 <strong>Auto trigger mode</strong> forces sweeps to occur even without a valid trigger event, producing a running (unstable) display if the trigger is not set correctly — useful for finding a signal. <strong>Normal trigger mode</strong> only sweeps when a valid trigger event occurs, causing the display to hold the last captured waveform until a new trigger fires — necessary for single-shot or intermittent events.
 </p>
 
-<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">AC and DC Coupling</h3>
+### AC and DC Coupling
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 <strong>DC coupling</strong> passes the complete input signal — both DC and AC components — directly to the vertical amplifier. This is the correct choice for measuring DC levels, viewing the full waveform including its offset, and most general measurements.
@@ -354,13 +367,13 @@ The three primary trigger controls are:
 
 ---
 
-<h2 id="169-breadboards-prototyping" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">16.9 Breadboards and Prototyping</h2>
+## 16.9 Breadboards and Prototyping
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 A <strong>breadboard</strong> (solderless breadboard) enables rapid circuit construction without permanent connections. Components and wire leads are inserted into spring-loaded contacts arranged in a standard pattern.
 </p>
 
-<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Breadboard Anatomy</h3>
+### Breadboard Anatomy
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 <strong>Terminal strips</strong> run horizontally in groups of 5 connected holes. Inserting a component lead into any hole in a group of 5 connects it to the other 4 holes in that group. The central gap separates the two halves of each row, allowing ICs to span it with each pin in its own independent group.
@@ -370,7 +383,7 @@ A <strong>breadboard</strong> (solderless breadboard) enables rapid circuit cons
 <strong>Bus strips</strong> run the full length of the board on both sides and are used for power (red strip, \(+V_{CC}\)) and ground (blue or black strip). These long strips allow easy power distribution to any circuit section.
 </p>
 
-<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Breadboard Limitations</h3>
+### Breadboard Limitations
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 Breadboards introduce parasitic effects that limit their usefulness at higher frequencies:
@@ -391,13 +404,13 @@ Breadboards introduce parasitic effects that limit their usefulness at higher fr
 
 ---
 
-<h2 id="1610-soldering" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">16.10 Soldering</h2>
+## 16.10 Soldering
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 <strong>Soldering</strong> creates a permanent, low-resistance metallic bond between component leads and a circuit board or wire. A quality solder joint is both mechanically robust and electrically reliable.
 </p>
 
-<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Characteristics of a Good Solder Joint</h3>
+### Characteristics of a Good Solder Joint
 
 <ul style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 <li><strong>Shiny appearance:</strong> A properly heated joint has a bright, reflective surface. Dull or grainy appearance indicates a cold joint.</li>
@@ -425,13 +438,13 @@ Breadboards introduce parasitic effects that limit their usefulness at higher fr
 
 ---
 
-<h2 id="1611-circuit-debugging" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">16.11 Circuit Debugging</h2>
+## 16.11 Circuit Debugging
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 When a circuit does not behave as expected, a systematic debugging strategy finds the problem faster than random probing. The key insight is that a circuit can only fail in a finite number of ways — following a logical sequence narrows the possibilities quickly.
 </p>
 
-<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Debugging Sequence</h3>
+### Debugging Sequence
 
 <ol style="color: #555; line-height: 2.0; font-size: 1.02rem; margin-bottom: 1.2rem;">
 <li><strong>Verify power:</strong> Measure supply voltage at the IC power pins — not just at the power supply terminals. A voltage drop across a bad connection, wrong wire, or blown trace can deprive a circuit of supply voltage entirely. Confirm both positive supply and ground connections.</li>
@@ -457,13 +470,13 @@ When a circuit does not behave as expected, a systematic debugging strategy find
 
 ---
 
-<h2 id="1612-measurement-errors-loading" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">16.12 Measurement Errors and Loading</h2>
+## 16.12 Measurement Errors and Loading
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 Every measurement instrument, when connected to a circuit, interacts with that circuit. Understanding how instruments load the circuit — and quantifying the resulting measurement error — is essential for interpreting readings correctly.
 </p>
 
-<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Voltage Measurement Loading Error</h3>
+### Voltage Measurement Loading Error
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 When a voltmeter with internal resistance \(R_{meter}\) is connected across a source with Thevenin resistance \(R_{source}\), the meter and source resistance form a voltage divider. The meter reads:
@@ -505,7 +518,7 @@ A circuit has a Thevenin equivalent of \(V_{th} = 5\) V and \(R_{th} = 500\) kΩ
 </p>
 </div>
 
-<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Other Error Sources</h3>
+### Other Error Sources
 
 <ul style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 <li><strong>Calibration error:</strong> All instruments drift over time. Certified calibration against traceable standards corrects systematic offset and gain errors.</li>
@@ -514,7 +527,7 @@ A circuit has a Thevenin equivalent of \(V_{th} = 5\) V and \(R_{th} = 500\) kΩ
 <li><strong>Probe ground lead inductance:</strong> The long ground clip wire on an oscilloscope probe has inductance (~30 nH for a 15 cm lead). At high frequencies, this inductance resonates with probe and stray capacitance, producing ringing artifacts. Use the shortest possible ground lead, or a spring-tip ground for high-frequency work.</li>
 </ul>
 
-<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Calibration</h3>
+### Calibration
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 <strong>Calibration</strong> is the process of comparing an instrument's readings against a known reference and adjusting or recording the deviation. In-lab checks include: verifying the DMM reads 0.000 V with probes shorted, confirming the oscilloscope calibration output is 1 kHz ± 1%, and checking probe compensation. Formal calibration for critical measurements requires certified reference standards traceable to national metrology standards and should be performed annually or per the instrument manufacturer's recommendation.
@@ -522,13 +535,13 @@ A circuit has a Thevenin equivalent of \(V_{th} = 5\) V and \(R_{th} = 500\) kΩ
 
 ---
 
-<h2 id="1613-safety-practices" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">16.13 Safety Practices</h2>
+## 16.13 Safety Practices
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 Electrical hazards are invisible and act faster than human reflexes. The safety habits established in these labs must be correct from the start — they are not optional procedures to follow when convenient, but practices ingrained through deliberate repetition until they become automatic.
 </p>
 
-<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Fundamental Safety Rules</h3>
+### Fundamental Safety Rules
 
 <ol style="color: #555; line-height: 2.0; font-size: 1.02rem; margin-bottom: 1.2rem;">
 <li><strong>Power off before making or changing connections.</strong> Verify with a meter that voltage is absent before touching any circuit node. Never trust a switch to be off — measure.</li>
@@ -540,7 +553,7 @@ Electrical hazards are invisible and act faster than human reflexes. The safety 
 <li><strong>Never work alone on high-voltage equipment.</strong> At voltages above mains level (120/240 V AC), a second person must be present and know how to cut power and provide first aid.</li>
 </ol>
 
-<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Voltage Hazard Thresholds</h3>
+### Voltage Hazard Thresholds
 
 <div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 10px; padding: 16px 20px; margin: 1.2rem 0;">
 

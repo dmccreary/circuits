@@ -10,7 +10,20 @@ version: 0.05
 
 # Chapter 7 — Second-Order RLC Circuits
 
-<h2 id="71-introduction" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">7.1 Introduction: When Circuits Get Dramatic</h2>
+<details class="video-overview">
+<summary><strong>Chapter Overview</strong> (click to expand)</summary>
+
+When both a capacitor and an inductor are present in the same circuit, energy can oscillate back and forth between them, producing behaviors far richer than the simple exponential decay of first-order circuits. This chapter analyzes series and parallel RLC circuits through their characteristic equation, classifying responses as overdamped, critically damped, or underdamped based on the damping ratio.
+
+**Key Takeaways**
+
+1. The characteristic equation of a second-order circuit has two roots whose nature — real and distinct, real and equal, or complex conjugate — determines whether the circuit is overdamped, critically damped, or underdamped.
+2. An underdamped circuit oscillates at the damped natural frequency before settling, while an overdamped circuit decays to steady state without oscillation.
+3. The natural frequency ω₀ and damping ratio ζ are the two key parameters that fully characterize the transient behavior of any second-order circuit.
+
+</details>
+
+## 7.1 Introduction: When Circuits Get Dramatic
 
 If first-order RC and RL circuits are like a polite conversation — one thing leads smoothly to another — then second-order RLC circuits are like a heated debate. Things can swing back and forth, overshoot their targets, or even oscillate indefinitely.
 
@@ -26,7 +39,7 @@ Understanding these behaviors unlocks your ability to design everything from rad
 
 ---
 
-<h2 id="72-second-order-circuits" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">7.2 Second-Order Circuits: The Mathematical Upgrade</h2>
+## 7.2 Second-Order Circuits: The Mathematical Upgrade
 
 A **second-order circuit** is any circuit whose behavior is described by a second-order differential equation. This happens whenever a circuit contains two independent energy storage elements — typically an inductor and a capacitor.
 
@@ -48,7 +61,7 @@ where \(x\) is the response (voltage or current), \(\alpha\) is the damping coef
 
 ---
 
-<h2 id="73-rlc-circuits" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">7.3 Series and Parallel RLC Circuits</h2>
+## 7.3 Series and Parallel RLC Circuits
 
 **Series RLC** — all components share the same current. Applying KVL and differentiating:
 
@@ -122,7 +135,7 @@ drawRLC();
 
 ---
 
-<h2 id="74-characteristic-equation" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">7.4 The Characteristic Equation</h2>
+## 7.4 The Characteristic Equation
 
 To solve the homogeneous equation, assume \(x = Ae^{st}\). Substituting gives the **characteristic equation**:
 
@@ -144,7 +157,7 @@ The nature of the roots determines everything about the circuit response:
 
 ---
 
-<h2 id="75-natural-frequency" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">7.5 Natural Frequency</h2>
+## 7.5 Natural Frequency
 
 The **natural frequency** \(\omega_0\) is the frequency at which an undamped circuit would oscillate forever — the circuit's preferred rhythm:
 
@@ -217,7 +230,7 @@ updateNF();
 
 ---
 
-<h2 id="76-damping-ratio" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">7.6 Damping Ratio</h2>
+## 7.6 Damping Ratio
 
 The **damping ratio** \(\zeta\) is the single dimensionless number that classifies circuit response:
 
@@ -238,7 +251,7 @@ Series RLC: \(\zeta = \dfrac{R}{2}\sqrt{\dfrac{C}{L}}\) &nbsp;&nbsp; Parallel RL
 
 ---
 
-<h2 id="77-overdamped-response" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">7.7 Overdamped Response (\(\zeta > 1\))</h2>
+## 7.7 Overdamped Response (\(\zeta > 1\))
 
 When \(\zeta > 1\), the characteristic equation has two distinct negative real roots. The general solution is:
 
@@ -282,7 +295,7 @@ drawOD();
 
 ---
 
-<h2 id="78-underdamped-response" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">7.8 Underdamped Response (\(0 < \zeta < 1\))</h2>
+## 7.8 Underdamped Response (\(0 < \zeta < 1\))
 
 When \(\zeta < 1\), the characteristic equation has complex conjugate roots, giving oscillatory behavior:
 
@@ -340,7 +353,7 @@ drawUD();
 
 ---
 
-<h2 id="79-critically-damped-response" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">7.9 Critically Damped Response (\(\zeta = 1\))</h2>
+## 7.9 Critically Damped Response (\(\zeta = 1\))
 
 When \(\zeta = 1\), there is a repeated root \(s = -\alpha = -\omega_0\). The general solution is:
 
@@ -386,7 +399,7 @@ drawDC();
 
 ---
 
-<h2 id="710-resonant-frequency" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">7.10 Resonant Frequency</h2>
+## 7.10 Resonant Frequency
 
 **Resonance** occurs when inductive reactance equals capacitive reactance:
 
@@ -434,7 +447,7 @@ drawRes();
 
 ---
 
-<h2 id="711-quality-factor" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">7.11 Quality Factor</h2>
+## 7.11 Quality Factor
 
 The **quality factor** Q characterizes the sharpness of resonance and efficiency of energy storage:
 
@@ -467,7 +480,7 @@ Q also defines bandwidth:
 
 ---
 
-<h2 id="712-chapter-summary" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">7.12 Key Formulas Summary</h2>
+## 7.12 Key Formulas Summary
 
 <div style="background: #F8F6FF; border: 2px solid #D4C8FF; border-radius: 12px; padding: 20px 28px; margin: 1rem 0;" markdown>
 

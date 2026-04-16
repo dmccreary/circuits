@@ -10,7 +10,20 @@ version: 0.05
 
 # Chapter 15 — Audio Applications and Amplifiers
 
-<h2 id="151-introduction" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">15.1 Introduction</h2>
+<details class="video-overview">
+<summary><strong>Chapter Overview</strong> (click to expand)</summary>
+
+Audio electronics brings together nearly every circuit concept from the course — gain stages, filters, impedance matching, and noise analysis — into a practical system that faithfully amplifies sound from microphone to loudspeaker. This chapter traces the audio signal chain from preamplifier through power amplifier, covering the quality metrics (SNR, THD, power factor) that distinguish professional-grade designs from mediocre ones.
+
+**Key Takeaways**
+
+1. The audio signal chain stages each small-signal gain stage, tone control filter, and power stage in a sequence designed to maximize signal quality while minimizing noise and distortion.
+2. Preamplifiers provide voltage gain with very low noise, while power amplifiers deliver current to low-impedance speaker loads — the two stages have fundamentally different design priorities.
+3. Total harmonic distortion (THD) and signal-to-noise ratio (SNR) are the primary specifications that quantify audio amplifier fidelity, and circuit topology choices directly control both.
+
+</details>
+
+## 15.1 Introduction
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 When you press play on your favorite song, a series of carefully engineered circuits invisibly transforms microscopic electrical voltages into the sound pressure waves that reach your ears. A dynamic microphone generates a signal as small as 1 millivolt. By the time that signal drives a loudspeaker, it may have been amplified a million-fold in power — yet the music you hear should sound exactly like the original performance, only louder. That requirement of <strong style="color: #333;">faithful amplification</strong> drives every design decision in audio electronics.
@@ -24,13 +37,13 @@ Audio engineering is where nearly every topic from this course converges. Filter
 This chapter develops two parallel threads: the <strong style="color: #333;">signal chain</strong> — the functional blocks audio passes through — and the <strong style="color: #333;">quality metrics</strong> — the specifications that tell you whether each block is doing its job. Together, they give you the language, the mathematics, and the intuition to design audio circuits that both measure well and sound great.
 </p>
 
-<h2 id="152-signal-chain" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">15.2 The Audio Signal Chain</h2>
+## 15.2 The Audio Signal Chain
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 An <strong style="color: #333;">audio amplifier</strong> is any circuit that increases the power of an audio-frequency signal. In practice, no single stage handles the entire voltage and power gain required — the job is divided into specialized stages, each optimized for its particular role.
 </p>
 
-<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">The Standard Signal Chain</h3>
+### The Standard Signal Chain
 
 | Stage | Function | Typical Output Level |
 |---|---|---|
@@ -44,7 +57,7 @@ An <strong style="color: #333;">audio amplifier</strong> is any circuit that inc
 The concept of <strong style="color: #333;">line level</strong> (nominally 0 dBV or about 1 V RMS in consumer equipment; +4 dBu or 1.23 V RMS in professional equipment) is the universal handoff point between stages. A signal at line level can drive signal-processing equipment and power amplifiers directly. The preamplifier's job is to reach that level; the power amplifier's job is to go far beyond it in power — but not in voltage.
 </p>
 
-<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Typical Source Signal Levels</h3>
+### Typical Source Signal Levels
 
 | Source | Level (dBV) | Approximate Voltage | Required Preamp Gain |
 |---|---|---|---|
@@ -64,13 +77,13 @@ Noise added by the first stage is amplified by every stage that follows. A 2 μV
 </p>
 </div>
 
-<h2 id="153-preamplifiers" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">15.3 Preamplifiers</h2>
+## 15.3 Preamplifiers
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 A <strong style="color: #333;">preamplifier</strong> (preamp) takes a weak, low-impedance or high-impedance source signal and raises it to line level with as little added noise and distortion as possible. It is the most noise-sensitive stage in the audio chain.
 </p>
 
-<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Key Preamplifier Requirements</h3>
+### Key Preamplifier Requirements
 
 - **High input impedance:** Avoids loading the source and robbing it of signal. Microphone preamps typically present 1 kΩ–10 kΩ; instrument preamps 1 MΩ or higher.
 - **Low noise figure:** The noise figure (NF) in dB describes how much noise the stage adds above the theoretical thermal noise minimum. A professional mic preamp achieves NF < 1 dB.
@@ -78,7 +91,7 @@ A <strong style="color: #333;">preamplifier</strong> (preamp) takes a weak, low-
 - **Flat frequency response:** ±0.5 dB from 20 Hz to 20 kHz is a typical specification.
 - **Low output impedance:** Drives cables and downstream equipment without signal loss.
 
-<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Preamplifier Topologies</h3>
+### Preamplifier Topologies
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 Most modern preamplifiers are built around low-noise op-amps in non-inverting or instrumentation amplifier configurations. The non-inverting topology is preferred because its input impedance is set by the op-amp's differential input resistance (typically very high) rather than by feedback resistors.
@@ -102,13 +115,13 @@ The <strong style="color: #333;">instrumentation amplifier</strong> (in-amp) is 
 Recommended low-noise op-amps for preamplifier stages include the NE5532 (general purpose, very low noise), OPA2134 (audio grade, extremely low THD), and the INA217 (dedicated microphone preamplifier IC with variable gain and 130 dB CMRR).
 </p>
 
-<h2 id="154-power-amplifiers" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">15.4 Power Amplifiers</h2>
+## 15.4 Power Amplifiers
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 A <strong style="color: #333;">power amplifier</strong> takes a line-level signal (around 1 V RMS) and delivers high current to drive a loudspeaker load — typically 4 Ω or 8 Ω — at voltage swings of tens of volts. The fundamental challenge is doing so efficiently while minimizing distortion. The two goals are in direct conflict, and different amplifier classes resolve that tension in different ways.
 </p>
 
-<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Class A</h3>
+### Class A
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 In a <strong style="color: #333;">Class A</strong> amplifier, the output transistor conducts for the full 360° of the input waveform cycle. The bias current is set high enough that even at peak output swing, the transistor never cuts off.
@@ -118,7 +131,7 @@ In a <strong style="color: #333;">Class A</strong> amplifier, the output transis
 - **Disadvantage:** The transistor dissipates maximum power when no signal is present. Efficiency is at best ~25% theoretically; practical Class A amplifiers often achieve 15–20%. All the wasted power becomes heat.
 - **Typical use:** High-end audiophile amplifiers and headphone amplifiers where sound quality justifies the thermal penalty.
 
-<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Class B</h3>
+### Class B
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 In a <strong style="color: #333;">Class B</strong> amplifier, two complementary transistors share the load: one handles positive half-cycles, the other handles negative half-cycles. Each transistor conducts for exactly 180° and is completely off for the other half.
@@ -127,7 +140,7 @@ In a <strong style="color: #333;">Class B</strong> amplifier, two complementary 
 - **Advantage:** Much higher efficiency (~70% theoretical) because transistors dissipate power only while conducting.
 - **Disadvantage:** Near the zero crossing, neither transistor is conducting — producing a dead zone called **crossover distortion**. This harsh glitch is readily audible and makes pure Class B unacceptable for audio.
 
-<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Class AB</h3>
+### Class AB
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 <strong style="color: #333;">Class AB</strong> is the dominant choice in real-world power amplifiers. Both transistors are biased with a small quiescent current (typically a few milliamps) so that each conducts slightly beyond its 180° half-cycle. This eliminates the dead zone around the zero crossing while keeping efficiency high.
@@ -138,7 +151,7 @@ In a <strong style="color: #333;">Class B</strong> amplifier, two complementary 
 - **Heat:** Moderate; heat sinking is required but manageable.
 - **Typical use:** Home stereo receivers, car audio amplifiers, professional PA amplifiers.
 
-<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Class D (Switching Amplifier)</h3>
+### Class D (Switching Amplifier)
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 <strong style="color: #333;">Class D</strong> amplifiers do not linearly amplify the signal. Instead, they convert the audio signal to a high-frequency pulse-width modulated (PWM) waveform, switch transistors fully on or fully off at that PWM frequency (typically 300 kHz–1 MHz), and then pass the output through a low-pass filter to recover the audio.
@@ -150,7 +163,7 @@ In a <strong style="color: #333;">Class B</strong> amplifier, two complementary 
 - **Distortion:** Depends heavily on implementation; modern Class D designs achieve THD comparable to Class AB.
 - **Typical use:** Subwoofer amplifiers, portable speakers (Bluetooth/battery-powered), automotive amplifiers, hearing aids.
 
-<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Power Amplifier Class Comparison</h3>
+### Power Amplifier Class Comparison
 
 | Class | Conduction Angle | Efficiency | Distortion | Heat | Typical Application |
 |---|---|---|---|---|---|
@@ -159,7 +172,7 @@ In a <strong style="color: #333;">Class B</strong> amplifier, two complementary 
 | AB | 180°–360° | ~60% | Low | Moderate | Most audio amplifiers |
 | D | Switching | >90% | Low (modern) | Low | Portable, subwoofers |
 
-<h2 id="155-snr-noise-floor" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">15.5 Signal-to-Noise Ratio and Noise Floor</h2>
+## 15.5 Signal-to-Noise Ratio and Noise Floor
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 Every real amplifier adds some noise to the signal. The <strong style="color: #333;">signal-to-noise ratio (SNR)</strong> quantifies how much louder the desired signal is compared to the unwanted noise — the higher the SNR, the cleaner the audio.
@@ -175,7 +188,7 @@ Every real amplifier adds some noise to the signal. The <strong style="color: #3
 The <strong style="color: #333;">noise floor</strong> is the RMS noise voltage present at a system's output when no signal is applied. Expressed in dBV (decibels relative to 1 V RMS), it tells you the system's quietest possible output level.
 </p>
 
-<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">SNR Quality Benchmarks</h3>
+### SNR Quality Benchmarks
 
 | SNR | Quality Category | Typical Application |
 |---|---|---|
@@ -184,7 +197,7 @@ The <strong style="color: #333;">noise floor</strong> is the RMS noise voltage p
 | 70–90 dB | High consumer | Home stereo receivers, quality headphone amps |
 | <70 dB | Consumer / budget | Inexpensive portable devices |
 
-<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Worked Example — SNR Calculation</h3>
+### Worked Example — SNR Calculation
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.0rem;">
 A microphone preamplifier outputs a maximum signal of 2 V RMS. Its noise floor is measured at 20 μV RMS. What is the SNR?
@@ -200,7 +213,7 @@ A microphone preamplifier outputs a maximum signal of 2 V RMS. Its noise floor i
 A 100 dB SNR is professional quality. At maximum volume, the noise is 100,000 times smaller in voltage than the signal — completely inaudible.
 </p>
 
-<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Dynamic Range</h3>
+### Dynamic Range
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 <strong style="color: #333;">Dynamic range</strong> is closely related to SNR — it is the ratio between the maximum undistorted output level and the noise floor, measured in dB. For an amplifier that clips at 10 V RMS with a 10 μV noise floor:
@@ -212,7 +225,7 @@ A 100 dB SNR is professional quality. At maximum volume, the noise is 100,000 ti
 
 </div>
 
-<h2 id="156-thermal-noise" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">15.6 Thermal Noise</h2>
+## 15.6 Thermal Noise
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 <strong style="color: #333;">Thermal noise</strong> (also called Johnson-Nyquist noise) is the fundamental noise generated by the random thermal motion of electrons in any resistor at any temperature above absolute zero. It is not a design flaw — it is a consequence of thermodynamics. No resistor, no matter how well manufactured, can produce less than this noise.
@@ -238,7 +251,7 @@ Three factors control thermal noise:
 - **Resistance:** Lower resistance means less noise. Use the smallest practical resistor values in signal-path positions.
 - **Bandwidth:** A narrower bandwidth filter captures less noise. Audio systems naturally benefit from limiting bandwidth to 20 kHz.
 
-<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Worked Calculation — Thermal Noise of a 10 kΩ Source</h3>
+### Worked Calculation — Thermal Noise of a 10 kΩ Source
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 0.8rem;">
 A microphone has a source resistance of 10 kΩ. At room temperature (300 K) over the full audio bandwidth (20 Hz to 20 kHz, Δf = 20,000 Hz), what is the minimum possible noise voltage?
@@ -275,7 +288,7 @@ Multiple independent noise sources (thermal noise, op-amp voltage noise, op-amp 
 </p>
 </div>
 
-<h2 id="157-thd" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">15.7 Total Harmonic Distortion (THD)</h2>
+## 15.7 Total Harmonic Distortion (THD)
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 <strong style="color: #333;">Harmonic distortion</strong> occurs when a non-linearity in an amplifier causes the output to contain frequency components that are integer multiples of the input frequency. If you feed a pure 1 kHz sine wave into a distorting amplifier, the output will contain 1 kHz (the fundamental), 2 kHz (2nd harmonic), 3 kHz (3rd harmonic), and so on.
@@ -293,7 +306,7 @@ The \(a_2\) term produces 2nd-harmonic distortion; the \(a_3\) term produces 3rd
 
 </div>
 
-<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Even vs. Odd Harmonics</h3>
+### Even vs. Odd Harmonics
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 Harmonics have distinct perceptual characters that explain why some distorting amplifiers sound more pleasant than others:
@@ -302,7 +315,7 @@ Harmonics have distinct perceptual characters that explain why some distorting a
 - **Even harmonics (2nd, 4th, 6th…):** Correspond to octave relationships (2nd harmonic = one octave above fundamental). These are musically consonant and are perceived as adding warmth or richness. Vacuum tube amplifiers naturally emphasize even harmonics.
 - **Odd harmonics (3rd, 5th, 7th…):** These intervals are more dissonant. Strong odd harmonics produce the harsh, edgy character associated with transistor clipping or square-wave-like distortion.
 
-<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">The THD Formula</h3>
+### The THD Formula
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 0.8rem;">
 <strong style="color: #333;">Total Harmonic Distortion (THD)</strong> expresses the combined harmonic content as a percentage of the fundamental amplitude:
@@ -316,7 +329,7 @@ where \(V_1\) is the RMS amplitude of the fundamental and \(V_n\) is the RMS amp
 
 </div>
 
-<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Worked Example — THD Calculation</h3>
+### Worked Example — THD Calculation
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 0.8rem;">
 A spectrum analyzer measures the following at the output of a power amplifier (1 kHz input, 10 V RMS output):
@@ -339,7 +352,7 @@ A spectrum analyzer measures the following at the output of a power amplifier (1
 
 </div>
 
-<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">THD Quality Table</h3>
+### THD Quality Table
 
 | THD | Audio Quality | Assessment |
 |---|---|---|
@@ -353,13 +366,13 @@ A spectrum analyzer measures the following at the output of a power amplifier (1
 The 0.173% result from the example would be considered acceptable for a mid-tier consumer amplifier. Reducing it to <0.1% would require either operating at lower output power (more headroom), adding more negative feedback, or selecting transistors with better linearity characteristics.
 </p>
 
-<h2 id="158-imd" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">15.8 Intermodulation Distortion (IMD)</h2>
+## 15.8 Intermodulation Distortion (IMD)
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 Real audio contains many simultaneous frequencies — instruments, voices, overtones. When two or more frequencies pass through a non-linear system together, the non-linearity mixes them, producing new frequencies that are sums and differences of the originals and their harmonics. This is <strong style="color: #333;">intermodulation distortion (IMD)</strong>.
 </p>
 
-<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">How IMD Products Are Generated</h3>
+### How IMD Products Are Generated
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 0.8rem;">
 Consider two input tones at frequencies \(f_1\) and \(f_2\). The \(a_2\) (quadratic) non-linearity produces second-order IMD products:
@@ -377,7 +390,7 @@ Consider two input tones at frequencies \(f_1\) and \(f_2\). The \(a_2\) (quadra
 The 3rd-order products \(2f_1 - f_2\) and \(2f_2 - f_1\) fall close to the original frequencies when \(f_1\) and \(f_2\) are close together. Unlike harmonics, these products are <strong style="color: #333;">not harmonically related</strong> to the original tones. They produce dissonant, musically unrelated frequencies that listeners find objectionable — even at levels lower than equivalent THD.
 </p>
 
-<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Example — IMD Product Frequencies</h3>
+### Example — IMD Product Frequencies
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 0.8rem;">
 Input tones: \(f_1 = 1000\ \text{Hz}\), \(f_2 = 1500\ \text{Hz}\).
@@ -394,18 +407,18 @@ Input tones: \(f_1 = 1000\ \text{Hz}\), \(f_2 = 1500\ \text{Hz}\).
 None of these new frequencies (500 Hz, 2000 Hz, 2500 Hz) is a harmonic of 1 kHz or 1.5 kHz. They are musically alien interlopers.
 </p>
 
-<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Standard IMD Test Methods</h3>
+### Standard IMD Test Methods
 
 - **SMPTE/DIN method:** \(f_1 = 60\ \text{Hz}\) (4:1 amplitude ratio), \(f_2 = 7\ \text{kHz}\). Widely used for amplifier qualification.
 - **CCIF method (difference tone):** Two closely spaced high-frequency tones, e.g., 19 kHz and 20 kHz. The 1 kHz difference product is easily measured.
 
-<h2 id="159-clipping" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">15.9 Clipping</h2>
+## 15.9 Clipping
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 <strong style="color: #333;">Clipping</strong> is the most severe form of audio distortion. It occurs when an input signal demands an output voltage or current that exceeds what the amplifier's power supply can deliver. The waveform is literally clipped — its peaks are flattened.
 </p>
 
-<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Hard Clipping</h3>
+### Hard Clipping
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 <strong style="color: #333;">Hard clipping</strong> occurs abruptly when a transistor saturates or a rail is reached. The top and bottom of the waveform are replaced by flat horizontal sections. In the frequency domain, hard clipping of a sine wave generates very strong odd harmonics (3rd, 5th, 7th…) — a severely hard-clipped sine wave approaches a square wave, which is rich in odd harmonics. THD under hard clipping can easily exceed 10%.
@@ -415,7 +428,7 @@ None of these new frequencies (500 Hz, 2000 Hz, 2500 Hz) is a harmonic of 1 kHz 
 Hard clipping is the characteristic sound of overdriven transistor guitar amplifiers and is the cause of tweeter damage in PA systems driven into overdrive — the high harmonic content represents substantial high-frequency power that tweeters are not designed to handle.
 </p>
 
-<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Soft Clipping</h3>
+### Soft Clipping
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 <strong style="color: #333;">Soft clipping</strong> is a more gradual onset of limiting. Instead of the sharp corner of transistor saturation, the gain compresses progressively as the signal approaches the limit. Vacuum tubes exhibit this behavior naturally because their transconductance curves roll off smoothly rather than cutting off abruptly.
@@ -425,7 +438,7 @@ Hard clipping is the characteristic sound of overdriven transistor guitar amplif
 Soft clipping emphasizes even harmonics (2nd, 4th) more than odd harmonics, which is part of the reason overdriven tube amplifiers are considered more musical sounding than overdriven transistor amplifiers. Guitar effects pedals deliberately introduce soft clipping to simulate tube overdrive.
 </p>
 
-<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Headroom</h3>
+### Headroom
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 <strong style="color: #333;">Headroom</strong> is the margin between the normal operating signal level and the clipping threshold, measured in dB. Professional equipment maintains at least 20 dB of headroom above nominal operating level to handle transient peaks without clipping. Digital audio systems express this as the margin below 0 dBFS (digital full scale).
@@ -437,13 +450,13 @@ Soft clipping emphasizes even harmonics (2nd, 4th) more than odd harmonics, whic
 
 </div>
 
-<h2 id="1510-practical-design" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">15.10 Practical Design: Grounding, Shielding, and Balanced Connections</h2>
+## 15.10 Practical Design: Grounding, Shielding, and Balanced Connections
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 A circuit that measures beautifully on a bench can produce hum, buzz, and noise when installed in a real system. Electromagnetic interference (EMI), ground loops, and capacitively coupled noise are the practical enemies of audio quality. Professional audio design employs three systematic countermeasures.
 </p>
 
-<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Star Grounding</h3>
+### Star Grounding
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 In a <strong style="color: #333;">star ground</strong> topology, all circuit ground connections return to a single physical point rather than being daisy-chained along a shared ground bus. When multiple ground currents flow through a shared impedance, the voltage drop across that impedance appears as a noise signal — a phenomenon called a <strong style="color: #333;">ground loop</strong>.
@@ -453,13 +466,13 @@ In a <strong style="color: #333;">star ground</strong> topology, all circuit gro
 Star grounding ensures that high-current return paths (power supply, output stage) share no impedance with sensitive low-level signal returns (preamplifier input, A/D converter reference). The classic symptom of a ground loop is 50 Hz or 60 Hz hum in the audio — the AC mains frequency.
 </p>
 
-<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Shielded Cables</h3>
+### Shielded Cables
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 A <strong style="color: #333;">shielded cable</strong> surrounds the signal conductor with a grounded conductive braid or foil. Radio-frequency interference, hum from AC power wiring, and noise from other equipment capacitively couples onto the shield rather than onto the signal conductor. The shield is connected to ground at one end only (typically the source end) to avoid creating a ground loop through the cable shield.
 </p>
 
-<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Balanced Connections</h3>
+### Balanced Connections
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 <strong style="color: #333;">Balanced connections</strong> transmit the audio signal on two conductors simultaneously, with the signal on one conductor being the polarity-inverted copy of the signal on the other (differential transmission). Any noise induced along the cable — mains hum, RF interference — appears equally on both conductors (common-mode noise). The balanced receiver, implemented as a differential amplifier or instrumentation amplifier with high CMRR, subtracts the two signals, canceling the common-mode noise while doubling the desired differential signal.
@@ -477,7 +490,7 @@ A balanced receiver with CMRR = 80 dB rejects 80 dB of common-mode noise — a n
 Balanced connections use XLR connectors (3-pin: pin 1 = shield, pin 2 = hot, pin 3 = cold) in professional audio and are the reason studio equipment connected by long cable runs produces clean audio while consumer equipment on the same circuit would buzz and hum.
 </p>
 
-<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Component Selection for Low Noise</h3>
+### Component Selection for Low Noise
 
 | Component | Recommendation | Reason |
 |---|---|---|
@@ -487,7 +500,7 @@ Balanced connections use XLR connectors (3-pin: pin 1 = shield, pin 2 = hot, pin
 | Capacitors (bypass) | Ceramic X7R in parallel with film | Wide-frequency power supply decoupling |
 | PCB layout | Short signal traces, guard rings around sensitive nodes | Minimize parasitic coupling |
 
-<h2 id="1511-summary" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">15.11 Chapter Summary</h2>
+## 15.11 Chapter Summary
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 This chapter developed the theory and practice of audio amplifier systems:
