@@ -10,7 +10,20 @@ version: 0.05
 
 # Chapter 12 — Filters and Resonance
 
-<h2 id="121-introduction" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">12.1 Introduction</h2>
+<details class="video-overview">
+<summary><strong>Chapter Overview</strong> (click to expand)</summary>
+
+Filters are circuits designed to selectively pass or block signals based on their frequency, and they are found in virtually every electronic system from audio equalizers to radio receivers. This chapter covers the design of low-pass, high-pass, band-pass, and band-stop filters using RC, RL, and RLC components, and introduces resonance as the phenomenon that enables highly selective filtering.
+
+**Key Takeaways**
+
+1. First-order RC and RL filters provide a gentle 20 dB/decade roll-off, and their cutoff frequency is set by the time constant: f_c = 1/(2πτ).
+2. At resonance, a series or parallel RLC circuit exhibits a peak (or notch) in its frequency response at ω₀ = 1/√(LC), enabling narrow-band filtering.
+3. The quality factor Q quantifies the sharpness of a resonant response — higher Q means a narrower, more selective filter with lower losses.
+
+</details>
+
+## 12.1 Introduction
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 Every time you turn up the bass on a speaker system, tune a radio to your favourite station, or record a voice while suppressing background hiss, a <strong style="color: #333;">filter circuit</strong> is doing the work. Filters are selective frequency processors — they pass some frequencies largely unchanged while attenuating others. Chapter 11 showed you how to describe and measure this behaviour using transfer functions and Bode plots. Now it is time to design circuits that actually produce those responses.
@@ -22,13 +35,13 @@ This chapter proceeds from simple to complex. First-order RC and RL circuits pro
 
 ---
 
-<h2 id="122-first-order-filters" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">12.2 First-Order Filters</h2>
+## 12.2 First-Order Filters
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 A <strong style="color: #333;">first-order filter</strong> contains exactly one reactive element — one capacitor or one inductor — paired with one or more resistors. The single pole produces a -20 dB/decade roll-off in the stopband and a 90° maximum phase shift. First-order filters are the fundamental building blocks from which all higher-order designs are composed.
 </p>
 
-<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">12.2.1 RC Low-Pass Filter</h3>
+### 12.2.1 RC Low-Pass Filter
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1rem;">
 The <strong style="color: #333;">RC low-pass filter</strong> consists of a series resistor R with the output taken across the capacitor C connected to ground. At low frequencies the capacitor's impedance \(X_C = 1/(\omega C)\) is large, so most of the source voltage appears across it. At high frequencies \(X_C\) is small and the voltage divides mostly across R, attenuating the output.
@@ -66,7 +79,7 @@ The <strong style="color: #333;">RC low-pass filter</strong> consists of a serie
 <p style="color: #555; line-height: 1.75; margin-bottom: 0;"><strong>Result:</strong> The actual cutoff is 1.06 kHz — within 6% of the 1 kHz target, acceptable for most applications.</p>
 </div>
 
-<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">12.2.2 RC High-Pass Filter</h3>
+### 12.2.2 RC High-Pass Filter
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1rem;">
 The <strong style="color: #333;">RC high-pass filter</strong> places the capacitor in series and takes the output across the resistor. At low frequencies C blocks the signal; at high frequencies C passes it and the output appears fully across R.
@@ -94,7 +107,7 @@ The phase of the RC high-pass filter runs from +90° at very low frequencies dow
 | Phase at \(f_c\) | −45° | +45° |
 | Roll-off direction | Above \(f_c\): −20 dB/dec | Below \(f_c\): +20 dB/dec |
 
-<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">12.2.3 RL Low-Pass Filter</h3>
+### 12.2.3 RL Low-Pass Filter
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1rem;">
 The <strong style="color: #333;">RL low-pass filter</strong> places a series inductor L with the output taken across the resistor R (to ground). At low frequencies the inductor's impedance \(X_L = \omega L\) is small and nearly all the voltage appears across R. At high frequencies \(X_L\) is large and the output is attenuated.
@@ -108,7 +121,7 @@ The <strong style="color: #333;">RL low-pass filter</strong> places a series ind
 \[f_c = \frac{R}{2\pi L}\]
 </div>
 
-<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">12.2.4 RL High-Pass Filter</h3>
+### 12.2.4 RL High-Pass Filter
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1rem;">
 The <strong style="color: #333;">RL high-pass filter</strong> takes the output across the inductor L. At high frequencies the inductor's impedance is large and most of the voltage drops across it; at low frequencies it is small and the output is near zero.
@@ -132,13 +145,13 @@ At audio frequencies, inductors needed for low cutoff frequencies would need to 
 
 ---
 
-<h2 id="123-second-order-filters" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">12.3 Second-Order Filters and Resonance</h2>
+## 12.3 Second-Order Filters and Resonance
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 A <strong style="color: #333;">second-order filter</strong> contains two reactive elements and produces -40 dB/decade roll-off. When those elements are an inductor L and a capacitor C in the same circuit, they can exchange energy back and forth at the <strong>resonant frequency</strong>, producing a pronounced peak or sharp null in the frequency response. This resonance is what makes second-order circuits far more selective than their first-order counterparts.
 </p>
 
-<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">12.3.1 RLC Band-Pass Filter</h3>
+### 12.3.1 RLC Band-Pass Filter
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1rem;">
 In a series RLC circuit with the output taken across R, the impedances of L and C cancel at the <strong>resonant frequency</strong> \(f_0\), leaving only R in the circuit. All other frequencies see net reactive impedance and are attenuated. The result is a band-pass response centred on \(f_0\).
@@ -180,7 +193,7 @@ High Q means narrow bandwidth and sharp selectivity. Low Q means wide bandwidth.
 | 10–100 | High selectivity | AM radio IF filter |
 | > 100 | Very sharp resonance | Crystal oscillator |
 
-<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">12.3.2 RLC Band-Pass Design Procedure</h3>
+### 12.3.2 RLC Band-Pass Design Procedure
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 0.8rem;">
 Given specifications \(f_0\) and Q (or equivalently \(f_0\) and BW), the design proceeds as follows:
@@ -218,9 +231,9 @@ Given specifications \(f_0\) and Q (or equivalently \(f_0\) and BW), the design 
 
 ---
 
-<h2 id="124-passive-vs-active" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">12.4 Passive vs. Active Filters</h2>
+## 12.4 Passive vs. Active Filters
 
-<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">12.4.1 Passive Filters</h3>
+### 12.4.1 Passive Filters
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 0.8rem;">
 <strong style="color: #333;">Passive filters</strong> are built exclusively from resistors, capacitors, and inductors. They require no power supply and can handle high signal levels without distortion. Their maximum voltage gain is unity (0 dB) — they can only attenuate. Loading is a practical concern: connecting a passive filter to a low-impedance load shifts the cutoff frequency unless the load is accounted for in the design.
@@ -230,7 +243,7 @@ Given specifications \(f_0\) and Q (or equivalently \(f_0\) and BW), the design 
 
 **Disadvantages:** Gain ≤ 1, loading changes response, large inductors needed at audio frequencies, limited Q in some topologies.
 
-<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">12.4.2 Active Filters</h3>
+### 12.4.2 Active Filters
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 0.8rem;">
 <strong style="color: #333;">Active filters</strong> combine RC networks with an amplifying device — usually an operational amplifier. The op-amp's high input impedance and low output impedance decouple stages from each other, eliminating loading. Inductors are entirely absent; their resonance-shaping role is replicated by the op-amp's feedback network.
@@ -249,7 +262,7 @@ Given specifications \(f_0\) and Q (or equivalently \(f_0\) and BW), the design 
 | High Q | Difficult | Easy |
 | Upper frequency limit | Very high (RF) | Limited by op-amp GBW |
 
-<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">12.4.3 First-Order Active Low-Pass Filter (Inverting)</h3>
+### 12.4.3 First-Order Active Low-Pass Filter (Inverting)
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 0.8rem;">
 An inverting op-amp with a capacitor \(C_f\) in parallel with the feedback resistor \(R_f\) and input resistor \(R_i\) forms a first-order active low-pass filter:
@@ -263,7 +276,7 @@ An inverting op-amp with a capacitor \(C_f\) in parallel with the feedback resis
 DC gain magnitude: \(|A_{DC}| = R_f/R_i\). Cutoff frequency: \(f_c = 1/(2\pi R_f C_f)\).
 </p>
 
-<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">12.4.4 Sallen-Key Second-Order Active Filter</h3>
+### 12.4.4 Sallen-Key Second-Order Active Filter
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 0.8rem;">
 The Sallen-Key topology uses one op-amp (configured as a unity-gain buffer or with gain) plus four passive components to realise a second-order response without any inductor. For the equal-component unity-gain version (\(R_1 = R_2 = R\), \(C_1 = C_2 = C\)):
@@ -279,7 +292,7 @@ Adding gain to the op-amp stage raises Q above 0.5, producing sharper roll-off a
 
 ---
 
-<h2 id="125-filter-design" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">12.5 Filter Design Process</h2>
+## 12.5 Filter Design Process
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 0.8rem;">
 A systematic design process translates engineering specifications into component values:
@@ -295,13 +308,13 @@ A systematic design process translates engineering specifications into component
 
 ---
 
-<h2 id="126-audio-tone-control" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">12.6 Audio Tone Control: Bass and Treble</h2>
+## 12.6 Audio Tone Control: Bass and Treble
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 The bass and treble controls on a stereo amplifier are <strong>shelving filters</strong> — filters whose gain settles to a constant value in both the passband and the stopband rather than continuing to roll off. A bass control is a low-frequency shelf: it boosts or cuts frequencies below its corner frequency while leaving the midrange and treble unaffected. A treble control is a high-frequency shelf: it boosts or cuts frequencies above its corner frequency.
 </p>
 
-<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">12.6.1 Bass Filter (Low-Frequency Shelving)</h3>
+### 12.6.1 Bass Filter (Low-Frequency Shelving)
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 0.8rem;">
 A <strong style="color: #333;">bass filter</strong> acts on frequencies typically below 200–500 Hz. In boost mode it amplifies bass; in cut mode it attenuates bass. The classic Baxandall tone control implements this with a potentiometer-controlled RC network in an op-amp feedback path.
@@ -311,7 +324,7 @@ A <strong style="color: #333;">bass filter</strong> acts on frequencies typicall
 
 **Corner frequency for bass control:** RC time constant set for 100–300 Hz
 
-<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">12.6.2 Treble Filter (High-Frequency Shelving)</h3>
+### 12.6.2 Treble Filter (High-Frequency Shelving)
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 0.8rem;">
 A <strong style="color: #333;">treble filter</strong> acts on frequencies above 2–5 kHz. In boost mode it "brightens" the sound; in cut mode it softens harshness or reduces high-frequency noise.
@@ -321,7 +334,7 @@ A <strong style="color: #333;">treble filter</strong> acts on frequencies above 
 
 **Corner frequency for treble control:** RC time constant set for 2–5 kHz
 
-<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">12.6.3 Shelving Filter Transfer Functions</h3>
+### 12.6.3 Shelving Filter Transfer Functions
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 0.8rem;">
 A general first-order shelving filter has a transfer function of the form:
@@ -337,13 +350,13 @@ where \(\omega_z\) and \(\omega_p\) are the zero and pole frequencies. For a low
 
 ---
 
-<h2 id="127-decibels-audio" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">12.7 Decibels in Audio: dBV and dBu</h2>
+## 12.7 Decibels in Audio: dBV and dBu
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 Audio engineers express signal levels in decibels relative to a specific voltage reference. Two standards dominate: dBV (reference 1 V RMS) and dBu (reference 0.775 V RMS).
 </p>
 
-<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">12.7.1 dBV</h3>
+### 12.7.1 dBV
 
 <div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 10px; padding: 16px 20px; margin: 1.2rem 0;">
 \[\text{dBV} = 20\log_{10}\!\left(\frac{V_{rms}}{1\ \text{V}}\right)\]
@@ -361,7 +374,7 @@ Audio engineers express signal levels in decibels relative to a specific voltage
 | −60 dBV | 1 mV | Microphone output (typical) |
 | −80 dBV | 100 μV | Moving-coil cartridge |
 
-<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">12.7.2 dBu</h3>
+### 12.7.2 dBu
 
 <div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 10px; padding: 16px 20px; margin: 1.2rem 0;">
 \[\text{dBu} = 20\log_{10}\!\left(\frac{V_{rms}}{0.775\ \text{V}}\right)\]
@@ -382,7 +395,7 @@ The 0.775 V reference is the voltage that delivers 1 mW into a 600 Ω load — o
 The relationship between the two scales: \(\text{dBu} = \text{dBV} + 2.21\). Equipment datasheets specify one or both; always check the reference before comparing levels.
 </p>
 
-<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">12.7.3 Amplifier Gain in Decibels</h3>
+### 12.7.3 Amplifier Gain in Decibels
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 0.8rem;">
 <strong style="color: #333;">Amplifier gain</strong> in audio circuits is expressed in dB:
@@ -407,9 +420,9 @@ In a cascade of stages, the total gain in dB is the arithmetic sum of individual
 
 ---
 
-<h2 id="128-headroom-dynamic-range" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">12.8 Headroom and Dynamic Range</h2>
+## 12.8 Headroom and Dynamic Range
 
-<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">12.8.1 Headroom</h3>
+### 12.8.1 Headroom
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 0.8rem;">
 <strong style="color: #333;">Headroom</strong> is the margin in decibels between the nominal operating level and the maximum level before clipping (distortion) occurs:
@@ -423,7 +436,7 @@ In a cascade of stages, the total gain in dB is the arithmetic sum of individual
 Professional audio equipment is typically designed for a nominal level of +4 dBu with a maximum before clipping of +24 dBu, giving 20 dB of headroom. This headroom accommodates loud transients (drum hits, vocal peaks) without distortion.
 </p>
 
-<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">12.8.2 Dynamic Range</h3>
+### 12.8.2 Dynamic Range
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 0.8rem;">
 <strong style="color: #333;">Dynamic range</strong> is the span between the loudest undistorted signal and the noise floor:
@@ -448,9 +461,9 @@ An \(n\)-bit digital system has a theoretical dynamic range of approximately \(6
 
 ---
 
-<h2 id="129-audio-transducers" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">12.9 Audio Transducers: Microphones and Speakers</h2>
+## 12.9 Audio Transducers: Microphones and Speakers
 
-<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">12.9.1 Microphones</h3>
+### 12.9.1 Microphones
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 0.8rem;">
 A <strong style="color: #333;">microphone</strong> converts acoustic pressure waves into an electrical voltage. The key electrical parameters for circuit design are output level and source impedance.
@@ -466,7 +479,7 @@ A <strong style="color: #333;">microphone</strong> converts acoustic pressure wa
 | Condenser | Capacitor with moving plate | −40 to −20 dBV/Pa | Sensitive, needs 48 V phantom power |
 | Ribbon | Thin aluminium ribbon in field | −65 to −55 dBV/Pa | Warm sound, fragile |
 
-<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">12.9.2 Speakers</h3>
+### 12.9.2 Speakers
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 0.8rem;">
 A <strong style="color: #333;">loudspeaker</strong> converts an electrical current through a voice coil into cone motion, which radiates sound. Speaker impedance is nominally 4 Ω, 8 Ω, or 16 Ω but varies substantially with frequency.
@@ -482,7 +495,7 @@ A <strong style="color: #333;">loudspeaker</strong> converts an electrical curre
 
 ---
 
-<h2 id="1210-complete-signal-chain" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">12.10 The Complete Audio Signal Chain</h2>
+## 12.10 The Complete Audio Signal Chain
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 Understanding the full path from microphone to speaker requires applying filters, gain stages, and level management at every step.
@@ -512,7 +525,7 @@ Each gain stage must be designed with adequate headroom so that transient peaks 
 
 ---
 
-<h2 id="1211-summary" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">12.11 Summary</h2>
+## 12.11 Summary
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 0.8rem;">
 Chapter 12 developed practical filter design from first principles through audio-system application:

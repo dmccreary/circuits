@@ -10,7 +10,20 @@ version: 0.05
 
 # Chapter 10 — AC Power Analysis
 
-<h2 id="101-instantaneous-power" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">10.1 Instantaneous Power</h2>
+<details class="video-overview">
+<summary><strong>Chapter Overview</strong> (click to expand)</summary>
+
+AC power analysis distinguishes between three types of power — real, reactive, and apparent — that together characterize how efficiently energy is delivered to a load. This chapter develops the mathematics of complex power and the power triangle, and explains power factor correction, an essential technique for reducing wasted energy in electrical systems.
+
+**Key Takeaways**
+
+1. Real (average) power P, measured in watts, represents energy actually consumed; reactive power Q, measured in VARs, represents energy oscillating back and forth between source and reactive elements.
+2. Apparent power S is the product of RMS voltage and current, and equals the magnitude of complex power S = P + jQ.
+3. Power factor (cos θ) measures how effectively a load uses apparent power; capacitor banks are added to correct a lagging power factor and reduce transmission losses.
+
+</details>
+
+## 10.1 Instantaneous Power
 
 **Instantaneous power** is the power at any specific instant:
 
@@ -26,7 +39,7 @@ This reveals two components: a **constant term** (the average power) and an **os
 
 ---
 
-<h2 id="102-real-power" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">10.2 Real Power (Average Power)</h2>
+## 10.2 Real Power (Average Power)
 
 **Real power** (also called average power or active power) is the time-averaged power over one complete cycle. It represents the power that actually does useful work — heating elements, turning motors, producing light and sound.
 
@@ -49,7 +62,7 @@ The factor \(\cos\theta\) is the **power factor** — it determines how much of 
 
 ---
 
-<h2 id="103-reactive-power" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">10.3 Reactive Power</h2>
+## 10.3 Reactive Power
 
 **Reactive power** (Q) represents energy oscillating between the source and reactive elements without being consumed. It's measured in **volt-amperes reactive (VAR)**.
 
@@ -65,7 +78,7 @@ Reactive power doesn't do useful work, but it still requires current to flow —
 
 ---
 
-<h2 id="104-apparent-power" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">10.4 Apparent Power</h2>
+## 10.4 Apparent Power
 
 **Apparent power** (S) is the product of RMS voltage and RMS current — the total "power handling" demanded from the source. Measured in **volt-amperes (VA)**.
 
@@ -86,7 +99,7 @@ The motor does only 960 W of work, but the supply must have capacity for 1,200 V
 
 ---
 
-<h2 id="105-complex-power" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">10.5 Complex Power</h2>
+## 10.5 Complex Power
 
 **Complex power** combines real and reactive power into a single complex number:
 
@@ -107,7 +120,7 @@ where \(\mathbf{I}^*\) is the complex conjugate of the current phasor.
 
 ---
 
-<h2 id="106-power-triangle" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">10.6 The Power Triangle</h2>
+## 10.6 The Power Triangle
 
 The power triangle shows the geometric relationship between P, Q, and S — they form a right triangle:
 
@@ -126,7 +139,7 @@ The power triangle is identical in shape to the impedance triangle (\(|Z|\), R, 
 
 ---
 
-<h2 id="107-power-factor" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">10.7 Power Factor: Leading and Lagging</h2>
+## 10.7 Power Factor: Leading and Lagging
 
 **Power factor** (PF) = \(\cos\theta = P/S\). It ranges from 0 to 1 and measures how efficiently apparent power converts to real work.
 
@@ -146,7 +159,7 @@ The power triangle is identical in shape to the impedance triangle (\(|Z|\), R, 
 
 ---
 
-<h2 id="108-power-factor-correction" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">10.8 Power Factor Correction</h2>
+## 10.8 Power Factor Correction
 
 **Power factor correction** improves PF by adding capacitors in parallel with inductive loads. The capacitors supply reactive power locally, reducing the reactive current drawn from the source.
 
@@ -172,7 +185,7 @@ A 320 μF capacitor reduces reactive demand from the utility by 6,910 VAR.
 
 ---
 
-<h2 id="109-power-in-elements" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">10.9 Power in Resistors, Capacitors, and Inductors</h2>
+## 10.9 Power in Resistors, Capacitors, and Inductors
 
 Each passive component has distinct power behavior:
 
@@ -208,7 +221,7 @@ Each passive component has distinct power behavior:
 
 ---
 
-<h2 id="1010-maximum-power-transfer" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">10.10 Maximum Power Transfer in AC</h2>
+## 10.10 Maximum Power Transfer in AC
 
 For maximum power transfer from a source with internal impedance \(Z_s = R_s + jX_s\) to load \(Z_L\):
 
@@ -224,7 +237,7 @@ At conjugate matching: \(R_L = R_s\) (equal resistances) and \(X_L = -X_s\) (rea
 
 ---
 
-<h2 id="1011-efficiency-and-gain" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">10.11 Efficiency and Power Gain</h2>
+## 10.11 Efficiency and Power Gain
 
 **Efficiency:**
 
@@ -252,7 +265,7 @@ At conjugate matching: \(R_L = R_s\) (equal resistances) and \(X_L = -X_s\) (rea
 
 ---
 
-<h2 id="1012-worked-example" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">10.12 Worked Example: Complete Power Analysis</h2>
+## 10.12 Worked Example: Complete Power Analysis
 
 **Problem:** A series RL load with R = 30 Ω and \(X_L = 40\) Ω is connected to a 120 V RMS, 60 Hz source. Find all power quantities and the capacitor needed for unity PF correction.
 
@@ -278,7 +291,7 @@ After correction: current drops from 2.4 A to \(172.8/120 = 1.44\) A — a 40% r
 
 ---
 
-<h2 id="1013-chapter-summary" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">10.13 Chapter Summary</h2>
+## 10.13 Chapter Summary
 
 <div style="background: #F8F6FF; border: 2px solid #D4C8FF; border-radius: 12px; padding: 20px 28px; margin: 1rem 0;" markdown>
 

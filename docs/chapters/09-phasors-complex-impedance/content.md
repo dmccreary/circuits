@@ -6,6 +6,19 @@ title: "Chapter 9 — Main Content: Phasors and Complex Impedance"
 
 # Chapter 9 — Main Content: Phasors and Complex Impedance
 
+<details class="video-overview">
+<summary><strong>Chapter Overview</strong> (click to expand)</summary>
+
+Phasors transform time-domain sinusoidal analysis into straightforward complex-number algebra by representing each signal as a rotating vector frozen at a snapshot in time. This chapter introduces phasor notation, defines impedance for resistors, capacitors, and inductors, and shows how all of DC circuit analysis — including Ohm's law, KVL, KCL, and Thevenin's theorem — extends directly to the phasor domain.
+
+**Key Takeaways**
+
+1. A phasor is a complex number encoding the amplitude and phase of a sinusoid, allowing differential equations to be replaced with algebraic equations.
+2. Impedance Z generalizes resistance to AC circuits: Z_R = R, Z_C = 1/(jωC), and Z_L = jωL, each capturing both magnitude and phase effects.
+3. All DC analysis techniques — voltage dividers, nodal analysis, mesh analysis, Thevenin equivalents — apply unchanged in the phasor domain using complex impedances.
+
+</details>
+
 ## Introduction: Freezing the Dance
 
 In the last chapter, you learned that AC signals are constantly in motion—sinusoids that rise and fall, shift and dance through time. Analyzing circuits with these moving signals seems like it should be complicated. And with differential equations, it *is* complicated.

@@ -10,7 +10,20 @@ version: 0.04
 
 # Chapter 4 — DC Circuit Analysis Methods
 
-<h2 id="41-source-transformation" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">4.1 Source Transformation</h2>
+<details class="video-overview">
+<summary><strong>Chapter Overview</strong> (click to expand)</summary>
+
+This chapter presents the most powerful methods for analyzing DC circuits: the node voltage method, the mesh current method, superposition, and the Thevenin and Norton equivalent circuit theorems. These techniques let engineers reduce complex networks to simple models and calculate any desired quantity without solving a full system of equations from scratch every time.
+
+**Key Takeaways**
+
+1. The node voltage and mesh current methods provide systematic procedures for setting up and solving the equations that describe any DC circuit.
+2. The superposition theorem allows each independent source to be analyzed separately, with results added together to find the total response.
+3. Thevenin's and Norton's theorems let you replace any linear network with a simple two-element equivalent, greatly simplifying load analysis and design.
+
+</details>
+
+## 4.1 Source Transformation
 
 Every circuit has sources — things that push energy into the circuit. A **voltage source** forces a specific voltage across its terminals regardless of current. A **current source** forces a specific current through itself regardless of voltage. Here's the punchline: any practical source can be converted between these two forms without changing the behavior at the terminals.
 
@@ -45,7 +58,7 @@ Source transformation is most powerful when you chain multiple transformations t
 
 ---
 
-<h2 id="42-thevenins-theorem" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">4.2 Thévenin's Theorem</h2>
+## 4.2 Thévenin's Theorem
 
 Here is one of the most powerful ideas in all of circuit analysis: **any linear circuit with sources and resistors, viewed from two terminals, is electrically equivalent to a single voltage source \(V_{Th}\) in series with a single resistance \(R_{Th}\).**
 
@@ -90,7 +103,7 @@ The Thévenin equivalent is 12 V in series with 6 Ω.
 
 ---
 
-<h2 id="43-nortons-theorem" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">4.3 Norton's Theorem</h2>
+## 4.3 Norton's Theorem
 
 **Norton's theorem** is Thévenin's theorem wearing different clothes. It states that any linear circuit viewed from two terminals is equivalent to a **current source \(I_N\) in parallel with a resistance \(R_N\).**
 
@@ -116,7 +129,7 @@ The relationship between the two theorems is:
 
 ---
 
-<h2 id="44-maximum-power-transfer" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">4.4 Maximum Power Transfer</h2>
+## 4.4 Maximum Power Transfer
 
 How do you design a circuit to deliver the most power to a load? This question matters in audio amplifiers (delivering power to speakers), radio transmitters (delivering power to antennas), and sensor interfaces.
 
@@ -144,7 +157,7 @@ The efficiency at maximum power transfer is exactly 50% — half the source powe
 
 ---
 
-<h2 id="45-nodal-analysis-advanced" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">4.5 Advanced Nodal and Mesh Analysis</h2>
+## 4.5 Advanced Nodal and Mesh Analysis
 
 You encountered nodal analysis and mesh analysis in Chapter 3. This section extends those methods to handle circuits with dependent sources — a critically important capability for analyzing transistor and op-amp circuits.
 
@@ -176,7 +189,7 @@ Similarly, write KVL around each mesh. Express any dependent source's control va
 
 ---
 
-<h2 id="46-two-port-networks" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">4.6 Two-Port Networks</h2>
+## 4.6 Two-Port Networks
 
 A **two-port network** is a circuit viewed from two pairs of terminals: an input port and an output port. This is the standard model for amplifiers, filters, and any device with a defined input and output.
 
@@ -203,7 +216,7 @@ The two most common parameter sets are:
 
 ---
 
-<h2 id="47-input-output-resistance" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">4.7 Input Resistance, Output Resistance, and the Loading Effect</h2>
+## 4.7 Input Resistance, Output Resistance, and the Loading Effect
 
 When you connect one circuit to another, they interact. This interaction — called the **loading effect** — is one of the most practically important phenomena in circuit design.
 
@@ -227,7 +240,7 @@ Suppose a source with Thévenin equivalent \(V_S = 10\) V, \(R_{out,source} = 1\
 
 ---
 
-<h2 id="48-chapter-summary" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">4.8 Chapter Summary</h2>
+## 4.8 Chapter Summary
 
 <div style="background: #F8F6FF; border: 2px solid #D4C8FF; border-radius: 12px; padding: 20px 28px; margin: 1rem 0;" markdown>
 

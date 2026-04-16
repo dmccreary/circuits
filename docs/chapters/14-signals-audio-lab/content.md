@@ -10,7 +10,20 @@ version: 0.05
 
 # Chapter 14 — Signal Analysis and Fourier Series
 
-<h2 id="141-introduction" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">14.1 Introduction</h2>
+<details class="video-overview">
+<summary><strong>Chapter Overview</strong> (click to expand)</summary>
+
+Fourier series analysis reveals that any periodic signal can be decomposed into a sum of sinusoids at harmonically related frequencies, transforming complex waveform analysis into a manageable collection of single-frequency problems. This chapter develops the Fourier series formula, introduces the frequency-domain spectrum as a visualization tool, and applies harmonic analysis to understand how filters and amplifiers shape real signals.
+
+**Key Takeaways**
+
+1. Any periodic signal can be expressed as a sum of sinusoids (Fourier series) with frequencies that are integer multiples of the fundamental frequency.
+2. The frequency spectrum — a plot of harmonic amplitudes and phases versus frequency — provides an alternative and often more informative view of a signal than its time-domain waveform.
+3. Because linear circuits apply their transfer function independently to each harmonic, Fourier analysis lets you predict the exact output waveform of a filter or amplifier for any periodic input.
+
+</details>
+
+## 14.1 Introduction
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 Every circuit you have analysed so far has a well-defined response to a sinusoidal input: the transfer function \(H(j\omega)\) scales the amplitude and shifts the phase. But real-world signals — speech, music, clock pulses, sensor readings — are rarely pure sinusoids. They are complex waveforms whose shape changes from moment to moment. How do you predict what a filter or amplifier will do to such a signal?
@@ -28,7 +41,7 @@ The Fourier series also provides a second, equally important viewpoint: the <str
 This chapter builds the Fourier series from first principles, develops the coefficient integrals, introduces spectral representations, exploits waveform symmetry to simplify calculations, analyses the canonical waveforms — square, triangle, and sawtooth — and connects everything to practical applications in audio and filter design.
 </p>
 
-<h2 id="142-fourier-series-formula" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">14.2 The Fourier Series Formula</h2>
+## 14.2 The Fourier Series Formula
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 A signal \(f(t)\) is <strong style="color: #333;">periodic with period \(T\)</strong> if \(f(t + T) = f(t)\) for all \(t\). The <strong style="color: #333;">Fourier series</strong> represents any such signal as a DC offset plus an infinite sum of cosine and sine terms:
@@ -44,7 +57,7 @@ A signal \(f(t)\) is <strong style="color: #333;">periodic with period \(T\)</st
 where \(\omega_0 = 2\pi / T\) is the <strong style="color: #333;">fundamental angular frequency</strong> in radians per second. Each pair \(\{a_n \cos(n\omega_0 t),\ b_n \sin(n\omega_0 t)\}\) constitutes the <em>nth harmonic</em>.
 </p>
 
-<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Fourier Coefficients</h3>
+### Fourier Coefficients
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 0.8rem;">
 The three coefficient formulas follow from the orthogonality of sines and cosines over one period. Integrating \(f(t)\) against each basis function isolates the corresponding coefficient.
@@ -78,7 +91,7 @@ The three coefficient formulas follow from the orthogonality of sines and cosine
 The limits of integration can be any convenient interval of length \(T\), such as \([-T/2,\ T/2]\). Choose whichever limits make the integrand simplest.
 </p>
 
-<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Amplitude–Phase Form</h3>
+### Amplitude–Phase Form
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 0.8rem;">
 It is often more intuitive to combine the cosine and sine terms into a single sinusoid with amplitude \(c_n\) and phase \(\phi_n\):
@@ -111,7 +124,7 @@ Because the Fourier series decomposes a signal into individual sinusoids, and be
 </p>
 </div>
 
-<h2 id="143-fundamental-frequency-harmonics" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">14.3 Fundamental Frequency and Harmonics</h2>
+## 14.3 Fundamental Frequency and Harmonics
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 The <strong style="color: #333;">fundamental frequency</strong> \(f_0\) is the reciprocal of the period:
@@ -150,13 +163,13 @@ Harmonics with \(n = 1, 3, 5, \ldots\) are called <strong>odd harmonics</strong>
 </p>
 </div>
 
-<h2 id="144-spectrum-representation" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">14.4 Spectrum Representation</h2>
+## 14.4 Spectrum Representation
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 The <strong style="color: #333;">frequency spectrum</strong> is a plot of the amplitude (and optionally phase) of each Fourier component against frequency. For a periodic signal with period \(T\), energy exists only at the discrete frequencies \(0,\ f_0,\ 2f_0,\ 3f_0,\ldots\) — this is called a <strong style="color: #333;">discrete line spectrum</strong>. Each line's height equals the amplitude \(c_n\) of the corresponding harmonic.
 </p>
 
-<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Reading a Spectrum Plot</h3>
+### Reading a Spectrum Plot
 
 | Feature in spectrum | Meaning in time domain |
 |---|---|
@@ -189,13 +202,13 @@ This means you can calculate total power either from the waveform directly or fr
 </p>
 </div>
 
-<h2 id="145-waveform-symmetry" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">14.5 Waveform Symmetry</h2>
+## 14.5 Waveform Symmetry
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 <strong style="color: #333;">Waveform symmetry</strong> is the single most useful shortcut in Fourier analysis. Before computing any integral, inspect the waveform for symmetry. Each type of symmetry eliminates a class of coefficients, turning an infinite integral computation into a finite one.
 </p>
 
-<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Even Symmetry</h3>
+### Even Symmetry
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 0.8rem;">
 A waveform has <strong style="color: #333;">even symmetry</strong> if it is symmetric about the vertical axis:
@@ -218,7 +231,7 @@ Because the product of an even function with the odd function \(\sin(n\omega_0 t
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 0.8rem;"><strong>Examples:</strong> cosine wave, triangle wave (centred at peak), even rectangular pulse train.</p>
 
-<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Odd Symmetry</h3>
+### Odd Symmetry
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 0.8rem;">
 A waveform has <strong style="color: #333;">odd symmetry</strong> if it is antisymmetric about the vertical axis:
@@ -242,7 +255,7 @@ By the same orthogonality argument, the product of an odd function with the even
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 0.8rem;"><strong>Examples:</strong> sine wave, odd square wave (centred at zero crossing), sawtooth through origin.</p>
 
-<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Half-Wave Symmetry</h3>
+### Half-Wave Symmetry
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 0.8rem;">
 A waveform has <strong style="color: #333;">half-wave symmetry</strong> if the second half of each period is the negative of the first half:
@@ -265,7 +278,7 @@ When this condition holds, the contributions from even-numbered harmonics cancel
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 0.8rem;"><strong>Examples:</strong> square wave, triangle wave, any waveform that looks like its own negative shifted by half a period.</p>
 
-<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Symmetry Summary Table</h3>
+### Symmetry Summary Table
 
 | Symmetry | Condition | Effect on Fourier series |
 |---|---|---|
@@ -280,13 +293,13 @@ Always inspect the waveform for all three symmetries before integrating. A wavef
 </p>
 </div>
 
-<h2 id="146-common-waveforms-spectra" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">14.6 Common Waveforms and Their Spectra</h2>
+## 14.6 Common Waveforms and Their Spectra
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 Three waveforms appear so often in electronics that their Fourier series are worth memorising. Each has a characteristic spectral signature that immediately suggests which harmonics dominate and how quickly they decay.
 </p>
 
-<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Square Wave</h3>
+### Square Wave
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 0.8rem;">
 A square wave of amplitude \(A\) alternates between \(+A\) and \(-A\) with 50 % duty cycle. It has odd symmetry and half-wave symmetry, so only odd sine terms survive.
@@ -305,7 +318,7 @@ Spectral characteristics:</p>
 - Amplitudes \(c_n = 4A/(n\pi)\) decay as \(1/n\) — slow decay
 - Many harmonics needed to represent the sharp corners accurately
 
-<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Triangle Wave</h3>
+### Triangle Wave
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 0.8rem;">
 A triangle wave of amplitude \(A\) ramps linearly between \(+A\) and \(-A\). Depending on placement, it can have even or odd symmetry; it always has half-wave symmetry.
@@ -324,7 +337,7 @@ Spectral characteristics:</p>
 - Amplitudes \(c_n \propto 1/n^2\) — rapid decay
 - The \(1/n^2\) decay reflects the smoother waveform (no discontinuities in \(f(t)\) itself, only in its derivative)
 
-<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Sawtooth Wave</h3>
+### Sawtooth Wave
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 0.8rem;">
 A sawtooth wave of amplitude \(A\) ramps linearly from \(-A\) to \(+A\) then resets abruptly. It lacks half-wave symmetry and (centred at the origin) has odd symmetry only, so all harmonics appear.
@@ -343,7 +356,7 @@ Spectral characteristics:</p>
 - Amplitudes \(c_n = 2A/(n\pi)\) decay as \(1/n\)
 - The sudden reset discontinuity requires all harmonics; eliminating even harmonics would produce a triangle wave instead
 
-<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Waveform Comparison</h3>
+### Waveform Comparison
 
 | Waveform | Harmonics present | Amplitude decay | Smoothness |
 |---|---|---|---|
@@ -352,15 +365,15 @@ Spectral characteristics:</p>
 | Triangle | Odd only (\(n = 1, 3, 5, \ldots\)) | \(1/n^2\) | Smooth (no discontinuity in \(f\)) |
 | Sawtooth | All (\(n = 1, 2, 3, \ldots\)) | \(1/n\) | Sharp reset |
 
-<h2 id="147-applications" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">14.7 Applications</h2>
+## 14.7 Applications
 
-<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Audio Timbre and Musical Instruments</h3>
+### Audio Timbre and Musical Instruments
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 Every musical instrument produces a distinctive harmonic profile. A flute playing concert A (440 Hz) is nearly a pure sine — its spectrum shows one dominant line. A violin on the same note has strong 2nd, 3rd, and 4th harmonics that give it richness. A clarinet, owing to its cylindrical bore, emphasises odd harmonics almost exclusively. Fourier analysis quantifies these differences and enables digital synthesis, equalisation, and timbre modelling.
 </p>
 
-<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Amplifier Distortion Analysis</h3>
+### Amplifier Distortion Analysis
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 When a sinusoidal signal passes through a nonlinear amplifier, the output contains harmonics not present in the input. <strong>Total harmonic distortion (THD)</strong> quantifies this:
@@ -376,19 +389,19 @@ When a sinusoidal signal passes through a nonlinear amplifier, the output contai
 A THD below 0.1 % is inaudible; high-fidelity audio amplifiers typically specify THD below 0.01 %. Fourier analysis of the output spectrum directly reveals which harmonics the amplifier generates and at what levels.
 </p>
 
-<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Filter Design for Harmonic Control</h3>
+### Filter Design for Harmonic Control
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 Because a low-pass filter attenuates high-frequency harmonics, it smooths sharp waveforms. A square wave passed through a low-pass filter with cutoff frequency between the 3rd and 5th harmonics loses its sharp corners and takes on a sinusoidal shape. Anti-aliasing filters in analogue-to-digital converters (ADCs) exploit this: by removing harmonics above the Nyquist frequency before sampling, they prevent aliasing artefacts. The Fourier series tells the designer exactly which harmonics fall above the cutoff and what their amplitudes are, allowing an accurate prediction of the filtered output.
 </p>
 
-<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Power Systems — Harmonic Pollution</h3>
+### Power Systems — Harmonic Pollution
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 Nonlinear loads on the power grid (variable-speed motor drives, switched-mode power supplies, fluorescent lighting) draw non-sinusoidal currents that inject harmonics back into the 50/60 Hz supply. The 3rd, 5th, and 7th harmonics (150, 250, 350 Hz in a 50 Hz system) cause overheating of neutral conductors, transformer core losses, and interference with sensitive equipment. Fourier analysis of the line current spectrum is the standard diagnostic tool for power quality assessment.
 </p>
 
-<h2 id="148-worked-example" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">14.8 Worked Example — Fourier Coefficients of a Rectangular Pulse Train</h2>
+## 14.8 Worked Example — Fourier Coefficients of a Rectangular Pulse Train
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 Compute the Fourier series of the following rectangular pulse train:
@@ -402,13 +415,13 @@ repeated with period \(T\).
 
 </div>
 
-<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Step 1 — Identify Symmetry</h3>
+### Step 1 — Identify Symmetry
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 0.8rem;">
 The waveform is neither even nor odd (it is not symmetric about \(t = 0\)), and it does not satisfy \(f(t + T/2) = -f(t)\) because the second half is zero, not \(-A\). Therefore <strong>no symmetry shortcuts apply</strong>; all three coefficient integrals must be evaluated.
 </p>
 
-<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Step 2 — DC Coefficient \(a_0\)</h3>
+### Step 2 — DC Coefficient \(a_0\)
 
 <div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 10px; padding: 16px 20px; margin: 1.2rem 0;">
 
@@ -420,7 +433,7 @@ The waveform is neither even nor odd (it is not symmetric about \(t = 0\)), and 
 The DC component equals the average value: the waveform is \(A\) for half the period and 0 for the other half, so the average is \(A/2\). ✓
 </p>
 
-<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Step 3 — Cosine Coefficients \(a_n\)</h3>
+### Step 3 — Cosine Coefficients \(a_n\)
 
 <div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 10px; padding: 16px 20px; margin: 1.2rem 0;">
 
@@ -436,7 +449,7 @@ Since \(\omega_0 = 2\pi/T\), at the upper limit \(n\omega_0 \cdot T/2 = n\pi\):
 All cosine coefficients vanish because \(\sin(n\pi) = 0\) for every integer \(n\).
 </p>
 
-<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Step 4 — Sine Coefficients \(b_n\)</h3>
+### Step 4 — Sine Coefficients \(b_n\)
 
 <div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 10px; padding: 16px 20px; margin: 1.2rem 0;">
 
@@ -464,7 +477,7 @@ Evaluating for the first several harmonics:
 Even harmonics vanish; odd harmonics have \(b_n = 2A/(n\pi)\).
 </p>
 
-<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Step 5 — Complete Fourier Series</h3>
+### Step 5 — Complete Fourier Series
 
 <div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 10px; padding: 16px 20px; margin: 1.2rem 0;">
 
@@ -474,13 +487,13 @@ Even harmonics vanish; odd harmonics have \(b_n = 2A/(n\pi)\).
 
 </div>
 
-<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Interpretation</h3>
+### Interpretation
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 0.8rem;">
 The result is essentially a DC offset \(A/2\) plus a scaled square wave. This makes intuitive sense: a square wave toggling between \(+A/2\) and \(-A/2\) has a zero average; adding a DC level of \(A/2\) shifts it to toggle between \(A\) and \(0\) — exactly our pulse train. The factor \(2A/\pi\) vs. the square-wave factor \(4A/\pi\) reflects the different amplitude definition used here (\(0\) to \(A\) vs. \(-A\) to \(+A\)).
 </p>
 
-<h2 id="149-summary" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">14.9 Summary</h2>
+## 14.9 Summary
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 This chapter developed the Fourier series as the bridge between time-domain waveforms and frequency-domain spectra. The key results are:

@@ -10,7 +10,20 @@ version: 0.05
 
 # Chapter 11 — Frequency Response and Bode Plots
 
-<h2 id="111-introduction" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">11.1 Introduction: How Circuits Hear the World</h2>
+<details class="video-overview">
+<summary><strong>Chapter Overview</strong> (click to expand)</summary>
+
+Frequency response analysis reveals how a circuit treats signals of different frequencies, describing the gain and phase shift at every point in the spectrum through the transfer function H(jω). This chapter introduces Bode plots — logarithmic graphs of magnitude (in decibels) and phase versus frequency — as the standard engineering tool for visualizing and designing circuit frequency behavior.
+
+**Key Takeaways**
+
+1. The transfer function H(jω) = V_out / V_in is a complex-valued function of frequency that fully characterizes a linear circuit's input-output relationship.
+2. Bode magnitude plots use a decibel scale (20 log|H|) and a logarithmic frequency axis, allowing asymptotic straight-line approximations that make hand analysis practical.
+3. Poles and zeros of the transfer function each contribute predictable ±20 dB/decade slopes and ±90° phase shifts to the Bode plot, making design by inspection possible.
+
+</details>
+
+## 11.1 Introduction: How Circuits Hear the World
 
 Different musical instruments sound different even when playing the same note. A piano, a violin, and a synthesizer all playing middle C share the same fundamental frequency, but they sound completely different because of their harmonic content — the mix of frequencies above that fundamental.
 
@@ -20,7 +33,7 @@ Circuits behave the same way. They do not treat all frequencies equally. Some ci
 
 **Key insight for linear circuits:** When a sinusoidal input at frequency \(f\) is applied to a linear circuit, the output is always a sinusoid at the *same* frequency \(f\) — only the amplitude and phase change. Frequency response tells us exactly how much the amplitude changes and how much the phase shifts at every frequency.
 
-<h2 id="112-transfer-function" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">11.2 Transfer Function</h2>
+## 11.2 Transfer Function
 
 The **transfer function** \(H(j\omega)\) is the ratio of the output phasor to the input phasor as a function of angular frequency \(\omega = 2\pi f\):
 
@@ -62,7 +75,7 @@ where:
 | DC gain | \(\|H(0)\|\) — evaluate at \(\omega = 0\) |
 | High-frequency gain | \(\lim_{\omega\to\infty}\|H(j\omega)\|\) |
 
-<h2 id="113-magnitude-phase" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">11.3 Magnitude and Phase Response</h2>
+## 11.3 Magnitude and Phase Response
 
 ### Magnitude Response
 
@@ -108,7 +121,7 @@ Sign conventions:
 - **Positive phase**: output *leads* input (common for high-pass filters at low frequency)
 - **At the cutoff frequency** of a first-order filter: \(\phi = \pm 45°\)
 
-<h2 id="114-bode-plots" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">11.4 Bode Plots</h2>
+## 11.4 Bode Plots
 
 A **Bode plot** is a pair of graphs that display the frequency response of a circuit:
 
@@ -138,7 +151,7 @@ Roll-off rates are quoted in **dB/decade** (more common in the US) or **dB/octav
 
 \[-20\ \mathrm{dB/decade} = -6\ \mathrm{dB/octave}\]
 
-<h2 id="115-cutoff" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">11.5 Cutoff Frequency and the Half-Power Point</h2>
+## 11.5 Cutoff Frequency and the Half-Power Point
 
 The **cutoff frequency** \(f_c\) (also called the **corner frequency** or **break frequency**) is the frequency at which the magnitude response falls to \(1/\sqrt{2} \approx 0.707\) of its passband maximum — exactly \(-3\) dB:
 
@@ -171,7 +184,7 @@ At the cutoff frequency of a first-order filter:
 !!! tip "Three Names, One Frequency"
     Cutoff frequency, corner frequency, break frequency, and half-power frequency all refer to the same point \(f_c\). In Bode plot construction, "corner" is most common because it is where the asymptotic approximation "corners" or bends.
 
-<h2 id="116-rolloff" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">11.6 Roll-Off Rate and Filter Order</h2>
+## 11.6 Roll-Off Rate and Filter Order
 
 The **roll-off rate** describes how quickly the magnitude response decreases beyond the cutoff frequency. It is determined by the **filter order** — the number of independent reactive elements (capacitors and inductors) in the filter circuit.
 
@@ -206,7 +219,7 @@ Higher filter order means:
 | Bessel | Gentle roll-off | Gentle | Linear phase (pulse/data) |
 | Elliptic | Equiripple in both bands | Steepest possible | Maximum selectivity |
 
-<h2 id="117-asymptotic" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">11.7 Asymptotic Approximation</h2>
+## 11.7 Asymptotic Approximation
 
 **Asymptotic approximation** (also called the straight-line Bode approximation) replaces the smooth, curved frequency response with piecewise-linear segments. It makes Bode plots fast to sketch by hand and reveals key behavior at a glance.
 
@@ -250,7 +263,7 @@ The actual phase at the corner is exactly \(-45°\), and the asymptote error pea
    - Each **pole** contributes a \(-90°\) transition spanning one decade on each side of \(\omega_p\).
    - Each **zero** contributes a \(+90°\) transition spanning one decade on each side of \(\omega_z\).
 
-<h2 id="118-poles-zeros" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">11.8 Poles and Zeros</h2>
+## 11.8 Poles and Zeros
 
 **Poles and zeros** are the characteristic frequencies embedded in the transfer function. They come from factoring \(H(s)\) (the Laplace-domain transfer function, evaluated at \(s = j\omega\) for frequency response).
 
@@ -285,7 +298,7 @@ For passive RC circuits, poles appear at negative real values on the \(s\)-plane
 !!! note "Poles Determine Filter Order"
     The number of poles equals the filter order and equals the number of independent reactive elements. Count poles — not zeros — to determine the roll-off rate.
 
-<h2 id="119-filter-types" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">11.9 Filter Types</h2>
+## 11.9 Filter Types
 
 A **filter** is a circuit designed to pass signals in certain frequency ranges (the **passband**) while attenuating signals in other ranges (the **stopband**). There are four fundamental filter types:
 
@@ -355,7 +368,7 @@ The **quality factor** \(Q\) measures selectivity: high \(Q\) means a narrow, se
 | Band-pass | \(f_L\) to \(f_H\) | Outside band | Zero | \(f_0 = \sqrt{f_L f_H}\) |
 | Band-reject | Outside band | \(f_L\) to \(f_H\) | Maximum | \(f_0 = 1/(2\pi\sqrt{LC})\) |
 
-<h2 id="1110-practical-circuits" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">11.10 Practical Filter Circuits and Worked Examples</h2>
+## 11.10 Practical Filter Circuits and Worked Examples
 
 ### First-Order RC Low-Pass Filter
 
@@ -436,7 +449,7 @@ For a second-order low-pass with natural frequency \(\omega_0\) and damping rati
 - Roll-off: \(-40\) dB/decade above \(\omega_0\)
 - Maximum phase shift: \(-180°\)
 
-<h2 id="1111-summary" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">11.11 Chapter Summary</h2>
+## 11.11 Chapter Summary
 
 Frequency response analysis is one of the most powerful and widely applied tools in electrical engineering. The key ideas of this chapter:
 
