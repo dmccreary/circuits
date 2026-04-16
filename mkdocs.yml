@@ -46,6 +46,7 @@ nav:
       - Content: chapters/06-transient-analysis-rc-rl/content.md
       - Glossary: chapters/06-transient-analysis-rc-rl/glossary.md
       - Problems: chapters/06-transient-analysis-rc-rl/problems.md
+      - Practice Problems: chapters/06-transient-analysis-rc-rl/practice.md
       - Quiz: chapters/06-transient-analysis-rc-rl/quiz.md
     - 7. Second-Order RLC Circuits:
       - Overview: chapters/07-second-order-rlc-circuits/index.md
@@ -70,18 +71,21 @@ nav:
       - Content: chapters/10-ac-power-analysis/content.md
       - Glossary: chapters/10-ac-power-analysis/glossary.md
       - Problems: chapters/10-ac-power-analysis/problems.md
+      - Practice Problems: chapters/10-ac-power-analysis/practice.md
       - Quiz: chapters/10-ac-power-analysis/quiz.md
     - 11. Frequency Response and Bode:
       - Overview: chapters/11-frequency-response-bode/index.md
       - Content: chapters/11-frequency-response-bode/content.md
       - Glossary: chapters/11-frequency-response-bode/glossary.md
       - Problems: chapters/11-frequency-response-bode/problems.md
+      - Practice Problems: chapters/11-frequency-response-bode/practice.md
       - Quiz: chapters/11-frequency-response-bode/quiz.md
     - 12. Filters and Resonance:
       - Overview: chapters/12-filters-resonance/index.md
       - Content: chapters/12-filters-resonance/content.md
       - Glossary: chapters/12-filters-resonance/glossary.md
       - Problems: chapters/12-filters-resonance/problems.md
+      - Practice Problems: chapters/12-filters-resonance/practice.md
       - Quiz: chapters/12-filters-resonance/quiz.md
     - 13. Operational Amplifiers:
       - Overview: chapters/13-operational-amplifiers/index.md
