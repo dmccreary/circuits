@@ -43,6 +43,15 @@
     max-width: 100%;
 }
 
+/* Chapter overview section headings (Summary / Concepts Covered / Prerequisites) */
+.md-typeset .unit1-styled h2 {
+    color: #5A3EED !important;
+    border-bottom: 2px solid #5A3EED;
+    padding-bottom: 0.3rem;
+    font-weight: 700;
+    margin-top: 2rem;
+}
+
 /* Collapsible chapter overview */
 details.video-overview {
     background: #F8F6FF;

@@ -30,11 +30,11 @@ Think of transient analysis as learning to read a circuit's "body language." The
 
 </details>
 
-<h2 style="color: #5A3EED !important; border-bottom: 2px solid #5A3EED; padding-bottom: 0.3rem; font-weight: 700; margin-top: 2rem;">Summary</h2>
+## Summary
 
 <div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 20px 24px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);"><p style="color: #333; line-height: 1.85; font-size: 1.02rem; margin: 0;">This chapter analyzes the time-domain behavior of first-order circuits containing resistors with either capacitors (RC) or inductors (RL). Students will learn how these circuits respond to sudden changes like switching events, developing intuition for time constants and exponential responses. The chapter covers charging and discharging behavior, initial and final conditions, and the concepts of natural and forced response. Understanding transient analysis is crucial for analyzing real-world circuits where signals change over time.</p></div>
 
-<h2 style="color: #5A3EED !important; border-bottom: 2px solid #5A3EED; padding-bottom: 0.3rem; font-weight: 700; margin-top: 2rem;">Concepts Covered</h2>
+## Concepts Covered
 
 This chapter covers the following 17 concepts from the learning graph:
 
@@ -62,7 +62,7 @@ This chapter covers the following 17 concepts from the learning graph:
 
 ---
 
-<h2 style="color: #5A3EED !important; border-bottom: 2px solid #5A3EED; padding-bottom: 0.3rem; font-weight: 700; margin-top: 2rem;">Prerequisites</h2>
+## Prerequisites
 
 <div style="background: #F8F6FF; border: 2px solid #D4C8FF; border-radius: 12px; padding: 20px 24px; margin: 1rem 0;" markdown>
 
