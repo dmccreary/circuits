@@ -277,7 +277,7 @@ theme:
     - navigation.path
     - navigation.prune
     - navigation.indexes
-    - toc.follow
+    - toc.integrate
     - navigation.top
     # this adds the prev and next icons in the footer
     - navigation.footer
