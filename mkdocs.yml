@@ -157,6 +157,13 @@ nav:
     - Series Circuit Analysis: sims/series-circuit/index.md
     - Series-Parallel Circuit Analysis: sims/series-parallel-circuit/index.md
     - Signal Parameters: sims/signal-parameters/index.md
+    - Sinusoidal Waveform Anatomy: sims/sinusoid-anatomy/index.md
+    - Phase Relationship Visualizer: sims/phase-relationship/index.md
+    - DC and AC Component Separator: sims/dc-ac-separator/index.md
+    - Time Domain vs Frequency Domain: sims/time-frequency-domain/index.md
+    - Complex Number Visualizer: sims/complex-number-viz/index.md
+    - Euler's Formula Unit Circle: sims/euler-circle/index.md
+    - Gain and Decibel Converter: sims/gain-db-converter/index.md
     - Simple DC Circuit: sims/dc-circuit/index.md
     - Thevenin Equivalent Circuit: sims/thevenin-concept/index.md
     - Voltage Divider Calculator: sims/voltage-divider/index.md
@@ -252,6 +259,7 @@ nav:
 
   - About:
     - About This Course: about.md
+    - Course Mascots: mascots.md
     - Course Description: course-description.md
     - Circuits:
       - List of Circuits: circuits/index.md
@@ -327,6 +335,7 @@ markdown_extensions:
 
 extra_css:
   - css/extra.css
+  - css/mascots.css
   - https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css
 
 extra_javascript:

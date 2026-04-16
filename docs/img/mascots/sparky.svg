@@ -1,0 +1,26 @@
+<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <!-- Starburst background -->
+  <polygon points="50,4 57,34 84,18 66,42 97,50 66,58 84,82 57,66 50,96 43,66 16,82 34,58 3,50 34,42 16,18 43,34"
+           fill="#FEF9C3" stroke="#EAB308" stroke-width="1.5" stroke-linejoin="round"/>
+  <!-- Circle overlay -->
+  <circle cx="50" cy="50" r="29" fill="#FEF08A" stroke="#EAB308" stroke-width="2"/>
+  <!-- Lightning bolt body -->
+  <polygon points="54,22 44,50 52,50 46,78 62,47 53,47 60,22" fill="#EA580C" stroke="#C2410C" stroke-width="1"/>
+  <!-- Eyes (wide/alert) -->
+  <circle cx="40" cy="43" r="6" fill="white" stroke="#EA580C" stroke-width="1.5"/>
+  <circle cx="62" cy="43" r="6" fill="white" stroke="#EA580C" stroke-width="1.5"/>
+  <circle cx="40" cy="44" r="3.5" fill="#1C1917"/>
+  <circle cx="62" cy="44" r="3.5" fill="#1C1917"/>
+  <!-- Eye shine -->
+  <circle cx="38.5" cy="42.5" r="1.2" fill="white"/>
+  <circle cx="60.5" cy="42.5" r="1.2" fill="white"/>
+  <!-- Worried / alert eyebrows -->
+  <line x1="35" y1="36" x2="44" y2="38" stroke="#EA580C" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="57" y1="38" x2="66" y2="36" stroke="#EA580C" stroke-width="2.5" stroke-linecap="round"/>
+  <!-- Open alert mouth -->
+  <ellipse cx="50" cy="59" rx="7" ry="5" fill="#C2410C"/>
+  <ellipse cx="50" cy="57" rx="7" ry="4" fill="white"/>
+  <!-- Cheeks -->
+  <circle cx="33" cy="57" r="5" fill="#FCA5A5" opacity="0.6"/>
+  <circle cx="67" cy="57" r="5" fill="#FCA5A5" opacity="0.6"/>
+</svg>
