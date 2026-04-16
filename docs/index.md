@@ -7,32 +7,31 @@ hide:
 ---
 
 <style>
-/* ── Cover page refinements ─────────────────────────────────────────────── */
-.md-typeset .cover-page   { min-height: 80vh; }
-.md-typeset .cover-content { padding: 2rem 2rem 1rem 2rem; }
-.md-typeset .cover-stats  { margin: 2rem 0 1.2rem 0; }
+/* ── Cover page ─────────────────────────────────────────────────────────── */
+.md-typeset .cover-page   { min-height: 92vh; }
+.md-typeset .cover-content {
+  padding: 5.5rem 3rem 4.5rem;
+  text-align: center;
+}
+.md-typeset .cover-stats   { margin: 2rem 0 1.2rem 0; }
 .md-typeset .cover-buttons { margin-top: 2rem; }
 
-/* Subtitle color */
+/* Subtitle */
 .md-typeset .cover-page h2 {
   font-weight: 500;
   color: #c4b5fd !important;
 }
 
-/* Subtle glow animation on waveform art */
-@keyframes wave-glow {
-  0%, 100% { filter: drop-shadow(0 0 2px rgba(90,62,237,.12)) brightness(1.05); }
-  50%       { filter: drop-shadow(0 0 8px rgba(90,62,237,.30)) brightness(1.14); }
+/* Background circuit breathing glow */
+@keyframes circuit-breathe {
+  0%, 100% { opacity: 0.28; }
+  50%       { opacity: 0.38; }
 }
-@keyframes wave-glow-bottom {
-  0%, 100% { filter: drop-shadow(0 0 2px rgba(212,160,23,.08)); }
-  50%       { filter: drop-shadow(0 0 6px rgba(212,160,23,.22)); }
+.md-typeset .cover-bg-circuit svg {
+  animation: circuit-breathe 7s ease-in-out infinite;
 }
-.md-typeset .cover-circuit svg      { animation: wave-glow        5s ease-in-out infinite; }
-.md-typeset .cover-circuit-bottom svg { animation: wave-glow-bottom 5s ease-in-out infinite; }
 @media (prefers-reduced-motion: reduce) {
-  .md-typeset .cover-circuit svg,
-  .md-typeset .cover-circuit-bottom svg { animation: none; }
+  .md-typeset .cover-bg-circuit svg { animation: none; opacity: 0.30; }
 }
 
 /* Button hover */
@@ -40,194 +39,408 @@ hide:
   transition: transform .25s ease, box-shadow .25s ease,
               background .25s ease, color .25s ease, border-color .25s ease;
 }
-.md-typeset .cover-buttons .md-button:hover       { transform: translateY(-2px); box-shadow: 0 4px 18px rgba(90,62,237,.18); }
-.md-typeset .cover-buttons .md-button--primary:hover { transform: translateY(-2px); box-shadow: 0 6px 24px rgba(90,62,237,.45); }
+.md-typeset .cover-buttons .md-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 18px rgba(90,62,237,.18);
+}
+.md-typeset .cover-buttons .md-button--primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 24px rgba(90,62,237,.45);
+}
 
 @media (max-width: 768px) {
-  .md-typeset .cover-content { padding: 1.2rem 1rem .8rem 1rem; }
+  .md-typeset .cover-content { padding: 3rem 1rem 2.5rem; }
 }
 </style>
 
 <div class="cover-page" markdown>
 
-<!-- ── Full-cover background circuit art (absolute overlay behind all content) -->
+<!-- ════════════════════════════════════════════════════════════════════════
+     FULL-COVER BACKGROUND CIRCUIT ART
+     Single absolute SVG filling the entire cover behind all text content.
+     Uses rgba() colors so individual elements have independent transparency.
+     ════════════════════════════════════════════════════════════════════════ -->
 <div class="cover-bg-circuit" aria-hidden="true">
-<svg viewBox="0 0 1200 620" xmlns="http://www.w3.org/2000/svg"
+<svg viewBox="0 0 1200 700" xmlns="http://www.w3.org/2000/svg"
      preserveAspectRatio="xMidYMid slice"
-     style="width:100%;height:100%;opacity:0.22;">
+     style="width:100%;height:100%;opacity:0.32;">
 
-  <!-- ══ TOP ROW (y=95): Series RLC filter chain ════════════════════════ -->
-  <line x1="0" y1="95" x2="1200" y2="95" stroke="rgba(196,181,253,0.6)" stroke-width="1.0"/>
+  <!-- ── Subtle PCB grid ──────────────────────────────────────────────── -->
+  <line x1="0" y1="140" x2="1200" y2="140" stroke="rgba(90,62,237,0.18)" stroke-width="0.55"/>
+  <line x1="0" y1="280" x2="1200" y2="280" stroke="rgba(90,62,237,0.12)" stroke-width="0.45"/>
+  <line x1="0" y1="420" x2="1200" y2="420" stroke="rgba(90,62,237,0.12)" stroke-width="0.45"/>
+  <line x1="0" y1="560" x2="1200" y2="560" stroke="rgba(90,62,237,0.18)" stroke-width="0.55"/>
+  <line x1="200"  y1="0" x2="200"  y2="700" stroke="rgba(90,62,237,0.10)" stroke-width="0.40"/>
+  <line x1="400"  y1="0" x2="400"  y2="700" stroke="rgba(90,62,237,0.10)" stroke-width="0.40"/>
+  <line x1="600"  y1="0" x2="600"  y2="700" stroke="rgba(90,62,237,0.10)" stroke-width="0.40"/>
+  <line x1="800"  y1="0" x2="800"  y2="700" stroke="rgba(90,62,237,0.10)" stroke-width="0.40"/>
+  <line x1="1000" y1="0" x2="1000" y2="700" stroke="rgba(90,62,237,0.10)" stroke-width="0.40"/>
 
-  <!-- R₁ zigzag -->
-  <polyline points="58,95 70,95 80,70 93,120 106,70 119,120 132,70 145,120 158,95 170,95"
-            stroke="#D4A017" stroke-width="1.5" fill="none"/>
-  <text x="114" y="57" fill="#D4A017" font-size="12" text-anchor="middle">R₁</text>
+  <!-- ══════════════════════════════════════════════════════════════════
+       ZONE 1 — TOP BAND (y=0–145): Oscilloscope with 3 overlapping waves
+       ══════════════════════════════════════════════════════════════════ -->
+  <!-- Oscilloscope grid -->
+  <line x1="0"    y1="38"  x2="1200" y2="38"  stroke="rgba(90,62,237,0.22)" stroke-width="0.6"/>
+  <line x1="0"    y1="80"  x2="1200" y2="80"  stroke="rgba(90,62,237,0.30)" stroke-width="0.7"/>
+  <line x1="0"    y1="122" x2="1200" y2="122" stroke="rgba(90,62,237,0.22)" stroke-width="0.6"/>
+  <!-- Fundamental sine (purple, y-center=80, amplitude=56) -->
+  <path d="M0,80 C21,24 63,24 84,80 C105,136 147,136 168,80 C189,24 231,24 252,80 C273,136 315,136 336,80 C357,24 399,24 420,80 C441,136 483,136 504,80 C525,24 567,24 588,80 C609,136 651,136 672,80 C693,24 735,24 756,80 C777,136 819,136 840,80 C861,24 903,24 924,80 C945,136 987,136 1008,80 C1029,24 1071,24 1092,80 C1113,136 1155,136 1176,80 C1197,24 1200,24 1200,80"
+        stroke="rgba(124,92,239,0.95)" stroke-width="2.8" fill="none"/>
+  <!-- 2nd harmonic (gold, amplitude=28) -->
+  <path d="M0,80 C10,52 32,52 42,80 C52,108 74,108 84,80 C94,52 116,52 126,80 C136,108 158,108 168,80 C178,52 200,52 210,80 C220,108 242,108 252,80 C262,52 284,52 294,80 C304,108 326,108 336,80 C346,52 368,52 378,80 C388,108 410,108 420,80 C430,52 452,52 462,80 C472,108 494,108 504,80 C514,52 536,52 546,80 C556,108 578,108 588,80 C598,52 620,52 630,80 C640,108 662,108 672,80 C682,52 704,52 714,80 C724,108 746,108 756,80 C766,52 788,52 798,80 C808,108 830,108 840,80 C850,52 872,52 882,80 C892,108 914,108 924,80 C934,52 956,52 966,80 C976,108 998,108 1008,80 C1018,52 1040,52 1050,80 C1060,108 1082,108 1092,80 C1102,52 1124,52 1134,80 C1144,108 1166,108 1176,80 C1186,52 1200,52 1200,80"
+        stroke="rgba(212,160,23,0.82)" stroke-width="1.8" fill="none"/>
+  <!-- 3rd harmonic (cyan, amplitude=15) -->
+  <path d="M0,80 C7,65 21,65 28,80 C35,95 49,95 56,80 C63,65 77,65 84,80 C91,95 105,95 112,80 C119,65 133,65 140,80 C147,95 161,95 168,80 C175,65 189,65 196,80 C203,95 217,95 224,80 C231,65 245,65 252,80 C259,95 273,95 280,80 C287,65 301,65 308,80 C315,95 329,95 336,80 C343,65 357,65 364,80 C371,95 385,95 392,80 C399,65 413,65 420,80 C427,95 441,95 448,80 C455,65 469,65 476,80 C483,95 497,95 504,80 C511,65 525,65 532,80 C539,95 553,95 560,80 C567,65 581,65 588,80 C595,95 609,95 616,80 C623,65 637,65 644,80 C651,95 665,95 672,80 C679,65 693,65 700,80 C707,95 721,95 728,80 C735,65 749,65 756,80 C763,95 777,95 784,80 C791,65 805,65 812,80 C819,95 833,95 840,80 C847,65 861,65 868,80 C875,95 889,95 896,80 C903,65 917,65 924,80 C931,95 945,95 952,80 C959,65 973,65 980,80 C987,95 1001,95 1008,80 C1015,65 1029,65 1036,80 C1043,95 1057,95 1064,80 C1071,65 1085,65 1092,80 C1099,95 1113,95 1120,80 C1127,65 1141,65 1148,80 C1155,95 1169,95 1176,80 C1183,65 1197,65 1200,80"
+        stroke="rgba(125,211,252,0.58)" stroke-width="1.1" fill="none"/>
+  <!-- Decaying step-response transient (cyan, left edge) -->
+  <line x1="0" y1="80" x2="0" y2="16" stroke="rgba(125,211,252,0.72)" stroke-width="1.5"/>
+  <path d="M0,16 C35,16 65,32 95,50 C125,66 155,74 190,78 C225,82 265,80 320,80"
+        stroke="rgba(125,211,252,0.72)" stroke-width="1.5" fill="none"/>
 
-  <!-- C₁ shunt (down from node at x=242) -->
-  <circle cx="242" cy="95" r="3" fill="#D4A017"/>
-  <line x1="242" y1="95"  x2="242" y2="122" stroke="rgba(125,211,252,0.9)" stroke-width="1.1"/>
-  <line x1="224" y1="122" x2="260" y2="122" stroke="rgba(125,211,252,0.9)" stroke-width="2.2"/>
-  <line x1="224" y1="131" x2="260" y2="131" stroke="rgba(125,211,252,0.9)" stroke-width="2.2"/>
-  <line x1="242" y1="131" x2="242" y2="158" stroke="rgba(125,211,252,0.7)" stroke-width="1.1"/>
-  <text x="270" y="130" fill="rgba(125,211,252,0.9)" font-size="11">C₁</text>
+  <!-- ══════════════════════════════════════════════════════════════════
+       ZONE 2 — TOP-LEFT (x=0–310, y=135–250): RC Ladder Network
+       ══════════════════════════════════════════════════════════════════ -->
+  <!-- Bus wire -->
+  <line x1="0" y1="185" x2="310" y2="185" stroke="rgba(212,160,23,0.62)" stroke-width="1.2"/>
+  <!-- R1 zigzag -->
+  <polyline points="18,185 30,185 38,167 47,203 56,167 65,203 74,167 83,185 95,185"
+            stroke="rgba(212,160,23,0.82)" stroke-width="1.5" fill="none"/>
+  <text x="56" y="156" fill="rgba(212,160,23,0.75)" font-size="11" text-anchor="middle">R₁</text>
+  <!-- Node + C1 shunt -->
+  <circle cx="138" cy="185" r="2.8" fill="rgba(212,160,23,0.88)"/>
+  <line x1="138" y1="185" x2="138" y2="206" stroke="rgba(125,211,252,0.80)" stroke-width="1.2"/>
+  <line x1="122" y1="206" x2="154" y2="206" stroke="rgba(125,211,252,0.92)" stroke-width="2.1"/>
+  <line x1="122" y1="215" x2="154" y2="215" stroke="rgba(125,211,252,0.92)" stroke-width="2.1"/>
+  <line x1="138" y1="215" x2="138" y2="240" stroke="rgba(125,211,252,0.60)" stroke-width="1.2"/>
+  <text x="162" y="214" fill="rgba(125,211,252,0.82)" font-size="11">C₁</text>
+  <!-- R2 zigzag -->
+  <polyline points="165,185 177,185 185,167 194,203 203,167 212,203 221,167 230,185 242,185"
+            stroke="rgba(212,160,23,0.78)" stroke-width="1.5" fill="none"/>
+  <!-- Node + C2 shunt -->
+  <circle cx="285" cy="185" r="2.8" fill="rgba(212,160,23,0.82)"/>
+  <line x1="285" y1="185" x2="285" y2="206" stroke="rgba(125,211,252,0.75)" stroke-width="1.2"/>
+  <line x1="269" y1="206" x2="301" y2="206" stroke="rgba(125,211,252,0.88)" stroke-width="2.1"/>
+  <line x1="269" y1="215" x2="301" y2="215" stroke="rgba(125,211,252,0.88)" stroke-width="2.1"/>
+  <line x1="285" y1="215" x2="285" y2="240" stroke="rgba(125,211,252,0.55)" stroke-width="1.2"/>
+  <!-- Ground rail + symbol -->
+  <line x1="138" y1="240" x2="285" y2="240" stroke="rgba(125,211,252,0.32)" stroke-width="0.9"/>
+  <line x1="211" y1="240" x2="211" y2="250" stroke="rgba(125,211,252,0.62)" stroke-width="1.1"/>
+  <line x1="199" y1="250" x2="223" y2="250" stroke="rgba(125,211,252,0.62)" stroke-width="1.5"/>
+  <line x1="203" y1="257" x2="219" y2="257" stroke="rgba(125,211,252,0.52)" stroke-width="1.1"/>
+  <line x1="207" y1="264" x2="215" y2="264" stroke="rgba(125,211,252,0.42)" stroke-width="0.9"/>
 
-  <!-- L₁ inductor coil -->
-  <line x1="300" y1="95" x2="328" y2="95" stroke="#D4A017" stroke-width="1.1"/>
-  <path d="M328,95 C335,75 349,75 356,95 C363,115 377,115 384,95 C391,75 405,75 412,95 C419,115 433,115 440,95 C447,75 461,75 468,95"
-        stroke="#D4A017" stroke-width="1.5" fill="none"/>
-  <line x1="468" y1="95" x2="496" y2="95" stroke="#D4A017" stroke-width="1.1"/>
-  <text x="398" y="58" fill="#D4A017" font-size="12" text-anchor="middle">L₁</text>
+  <!-- ══════════════════════════════════════════════════════════════════
+       ZONE 3 — TOP-RIGHT (x=870–1200, y=135–260): Inverting op-amp
+       ══════════════════════════════════════════════════════════════════ -->
+  <!-- R_in -->
+  <line x1="870" y1="192" x2="900" y2="192" stroke="rgba(212,160,23,0.62)" stroke-width="1.2"/>
+  <polyline points="900,192 910,192 917,174 925,210 933,174 941,210 949,174 957,192 968,192"
+            stroke="rgba(212,160,23,0.80)" stroke-width="1.5" fill="none"/>
+  <text x="934" y="163" fill="rgba(212,160,23,0.72)" font-size="11" text-anchor="middle">Rᵢₙ</text>
+  <!-- route to -input (y=205) -->
+  <line x1="968" y1="192" x2="990" y2="192" stroke="rgba(196,181,253,0.68)" stroke-width="1.2"/>
+  <line x1="990" y1="192" x2="990" y2="205" stroke="rgba(196,181,253,0.62)" stroke-width="1.1"/>
+  <line x1="990" y1="205" x2="1010" y2="205" stroke="rgba(196,181,253,0.65)" stroke-width="1.1"/>
+  <!-- +input at y=179 tied to mid-ref -->
+  <line x1="990" y1="179" x2="1010" y2="179" stroke="rgba(196,181,253,0.52)" stroke-width="1.1"/>
+  <line x1="990" y1="192" x2="990" y2="179" stroke="rgba(196,181,253,0.45)" stroke-width="1.0"/>
+  <!-- Op-amp body -->
+  <polygon points="1010,158 1010,226 1082,192" stroke="rgba(196,181,253,0.88)" stroke-width="1.8" fill="none"/>
+  <text x="1036" y="197" fill="rgba(196,181,253,0.72)" font-size="10">A₁</text>
+  <!-- Output wire -->
+  <line x1="1082" y1="192" x2="1130" y2="192" stroke="rgba(196,181,253,0.70)" stroke-width="1.2"/>
+  <!-- Feedback: output → -input through Rf -->
+  <line x1="1130" y1="192" x2="1130" y2="145" stroke="rgba(212,160,23,0.58)" stroke-width="1.1"/>
+  <line x1="1130" y1="145" x2="1010" y2="145" stroke="rgba(212,160,23,0.58)" stroke-width="1.1"/>
+  <line x1="1010" y1="145" x2="1010" y2="205" stroke="rgba(212,160,23,0.58)" stroke-width="1.1"/>
+  <!-- Rf on feedback path -->
+  <polyline points="1046,145 1058,145 1065,128 1073,162 1081,128 1089,162 1097,128 1105,145 1118,145"
+            stroke="rgba(212,160,23,0.68)" stroke-width="1.3" fill="none"/>
+  <text x="1082" y="118" fill="rgba(212,160,23,0.65)" font-size="10" text-anchor="middle">Rf</text>
+  <!-- Output load R -->
+  <line x1="1130" y1="192" x2="1155" y2="192" stroke="rgba(212,160,23,0.52)" stroke-width="1.0"/>
+  <polyline points="1155,192 1163,192 1168,178 1174,206 1180,178 1186,206 1192,178 1197,192 1200,192"
+            stroke="rgba(212,160,23,0.58)" stroke-width="1.2" fill="none"/>
 
-  <!-- C₂ series (inline, plates perpendicular to wire) -->
-  <line x1="534" y1="95" x2="560" y2="95" stroke="rgba(125,211,252,0.8)" stroke-width="1.1"/>
-  <line x1="560" y1="72"  x2="560" y2="118" stroke="rgba(125,211,252,0.9)" stroke-width="2.2"/>
-  <line x1="570" y1="72"  x2="570" y2="118" stroke="rgba(125,211,252,0.9)" stroke-width="2.2"/>
-  <line x1="570" y1="95" x2="596" y2="95" stroke="rgba(125,211,252,0.8)" stroke-width="1.1"/>
-  <text x="565" y="58" fill="rgba(125,211,252,0.9)" font-size="11" text-anchor="middle">C₂</text>
+  <!-- ══════════════════════════════════════════════════════════════════
+       ZONE 4 — LEFT SIDE (x=0–185, y=255–545): Voltage divider
+       ══════════════════════════════════════════════════════════════════ -->
+  <!-- Current source (circle) at y=300 -->
+  <circle cx="65" cy="300" r="26" stroke="rgba(212,160,23,0.72)" stroke-width="1.6" fill="none"/>
+  <!-- Arrow inside -->
+  <line x1="65" y1="285" x2="65" y2="315" stroke="rgba(212,160,23,0.72)" stroke-width="1.4"/>
+  <polyline points="57,294 65,284 73,294" stroke="rgba(212,160,23,0.72)" stroke-width="1.4" fill="none"/>
+  <text x="65" y="277" fill="rgba(212,160,23,0.65)" font-size="10" text-anchor="middle">Iₛ</text>
+  <!-- Top wire from source -->
+  <line x1="65" y1="274" x2="65" y2="258" stroke="rgba(212,160,23,0.65)" stroke-width="1.2"/>
+  <line x1="65" y1="258" x2="140" y2="258" stroke="rgba(212,160,23,0.55)" stroke-width="1.0"/>
+  <!-- Bottom wire to R1 -->
+  <line x1="65" y1="326" x2="65" y2="358" stroke="rgba(212,160,23,0.65)" stroke-width="1.2"/>
+  <!-- R1 vertical (zigzag going down) -->
+  <polyline points="65,358 65,370 47,378 83,388 47,398 83,408 47,418 83,428 65,436 65,448"
+            stroke="rgba(212,160,23,0.78)" stroke-width="1.5" fill="none"/>
+  <text x="96" y="400" fill="rgba(212,160,23,0.68)" font-size="11">R₁</text>
+  <!-- Junction node + Vout tap -->
+  <circle cx="65" cy="448" r="3" fill="rgba(212,160,23,0.85)"/>
+  <line x1="65" y1="448" x2="145" y2="448" stroke="rgba(196,181,253,0.62)" stroke-width="1.1"/>
+  <text x="152" y="452" fill="rgba(196,181,253,0.68)" font-size="10">Vₒᵤₜ</text>
+  <!-- R2 vertical -->
+  <polyline points="65,448 65,460 47,468 83,478 47,488 83,498 47,508 83,518 65,526 65,538"
+            stroke="rgba(212,160,23,0.72)" stroke-width="1.5" fill="none"/>
+  <text x="96" y="490" fill="rgba(212,160,23,0.62)" font-size="11">R₂</text>
+  <!-- GND -->
+  <line x1="65" y1="538" x2="65" y2="556" stroke="rgba(125,211,252,0.68)" stroke-width="1.3"/>
+  <line x1="49" y1="556" x2="81" y2="556" stroke="rgba(125,211,252,0.68)" stroke-width="1.8"/>
+  <line x1="54" y1="564" x2="76" y2="564" stroke="rgba(125,211,252,0.58)" stroke-width="1.3"/>
+  <line x1="59" y1="572" x2="71" y2="572" stroke="rgba(125,211,252,0.48)" stroke-width="1.0"/>
 
-  <!-- R₂ zigzag -->
-  <polyline points="636,95 648,95 658,70 671,120 684,70 697,120 710,70 723,120 736,95 748,95"
-            stroke="#D4A017" stroke-width="1.5" fill="none"/>
-  <text x="692" y="57" fill="#D4A017" font-size="12" text-anchor="middle">R₂</text>
+  <!-- ══════════════════════════════════════════════════════════════════
+       ZONE 5 — RIGHT SIDE (x=1035–1200, y=260–545): LC Filter chain
+       ══════════════════════════════════════════════════════════════════ -->
+  <!-- Input wire from top -->
+  <line x1="1100" y1="258" x2="1100" y2="278" stroke="rgba(212,160,23,0.65)" stroke-width="1.2"/>
+  <!-- L1 coil (vertical, humps going left) -->
+  <line x1="1100" y1="278" x2="1100" y2="295" stroke="rgba(212,160,23,0.65)" stroke-width="1.2"/>
+  <path d="M1100,295 C1081,302 1081,317 1100,324 C1119,331 1119,346 1100,353 C1081,360 1081,375 1100,382 C1119,389 1119,404 1100,411"
+        stroke="rgba(212,160,23,0.82)" stroke-width="1.6" fill="none"/>
+  <line x1="1100" y1="411" x2="1100" y2="428" stroke="rgba(212,160,23,0.65)" stroke-width="1.2"/>
+  <text x="1130" y="358" fill="rgba(212,160,23,0.70)" font-size="11">L₁</text>
+  <!-- Junction node + C shunt (horizontal) -->
+  <circle cx="1100" cy="428" r="3" fill="rgba(196,181,253,0.85)"/>
+  <line x1="1100" y1="428" x2="1100" y2="446" stroke="rgba(125,211,252,0.78)" stroke-width="1.2"/>
+  <line x1="1120" y1="446" x2="1080" y2="446" stroke="rgba(125,211,252,0.92)" stroke-width="2.1"/>
+  <line x1="1120" y1="455" x2="1080" y2="455" stroke="rgba(125,211,252,0.92)" stroke-width="2.1"/>
+  <line x1="1100" y1="455" x2="1100" y2="474" stroke="rgba(125,211,252,0.65)" stroke-width="1.2"/>
+  <text x="1128" y="453" fill="rgba(125,211,252,0.82)" font-size="11">C₁</text>
+  <!-- Continue down + second L -->
+  <line x1="1100" y1="474" x2="1100" y2="492" stroke="rgba(212,160,23,0.55)" stroke-width="1.1"/>
+  <path d="M1100,492 C1081,499 1081,514 1100,521 C1119,528 1119,537 1100,537"
+        stroke="rgba(212,160,23,0.65)" stroke-width="1.4" fill="none"/>
+  <text x="1130" y="516" fill="rgba(212,160,23,0.58)" font-size="11">L₂</text>
+  <!-- GND at bottom -->
+  <line x1="1100" y1="537" x2="1100" y2="556" stroke="rgba(125,211,252,0.68)" stroke-width="1.3"/>
+  <line x1="1084" y1="556" x2="1116" y2="556" stroke="rgba(125,211,252,0.68)" stroke-width="1.8"/>
+  <line x1="1089" y1="564" x2="1111" y2="564" stroke="rgba(125,211,252,0.58)" stroke-width="1.3"/>
+  <line x1="1094" y1="572" x2="1106" y2="572" stroke="rgba(125,211,252,0.48)" stroke-width="1.0"/>
+  <!-- Horizontal output at junction -->
+  <line x1="1100" y1="428" x2="1165" y2="428" stroke="rgba(196,181,253,0.52)" stroke-width="1.0"/>
+  <circle cx="1165" cy="428" r="4.5" stroke="rgba(196,181,253,0.62)" stroke-width="1.5" fill="none"/>
 
-  <!-- Op-amp A₁ -->
-  <circle cx="800" cy="95" r="3" fill="rgba(196,181,253,0.9)"/>
-  <polygon points="820,63 820,127 884,95" stroke="rgba(196,181,253,0.9)" stroke-width="1.7" fill="none"/>
-  <line x1="800" y1="76"  x2="820" y2="76"  stroke="rgba(196,181,253,0.8)" stroke-width="1.1"/>
-  <line x1="800" y1="114" x2="820" y2="114" stroke="rgba(196,181,253,0.8)" stroke-width="1.1"/>
-  <line x1="884" y1="95"  x2="912" y2="95"  stroke="rgba(196,181,253,0.8)" stroke-width="1.1"/>
-  <text x="843" y="100" fill="rgba(196,181,253,0.8)" font-size="11">A₁</text>
+  <!-- ══════════════════════════════════════════════════════════════════
+       ZONE 6 — MID-LEFT (x=135–370, y=295–490): Inductor + op-amp stage
+       ══════════════════════════════════════════════════════════════════ -->
+  <!-- Horizontal bus -->
+  <line x1="145" y1="370" x2="370" y2="370" stroke="rgba(212,160,23,0.52)" stroke-width="1.0"/>
+  <!-- L (coil, horizontal) -->
+  <line x1="145" y1="370" x2="170" y2="370" stroke="rgba(212,160,23,0.55)" stroke-width="1.1"/>
+  <path d="M170,370 C175,353 187,353 192,370 C197,387 209,387 214,370 C219,353 231,353 236,370 C241,387 253,387 258,370 C263,353 270,370 270,370"
+        stroke="rgba(212,160,23,0.68)" stroke-width="1.4" fill="none"/>
+  <line x1="270" y1="370" x2="295" y2="370" stroke="rgba(212,160,23,0.55)" stroke-width="1.1"/>
+  <text x="215" y="343" fill="rgba(212,160,23,0.60)" font-size="10" text-anchor="middle">L₂</text>
+  <!-- C shunt at right of L -->
+  <circle cx="295" cy="370" r="2.5" fill="rgba(212,160,23,0.68)"/>
+  <line x1="295" y1="370" x2="295" y2="388" stroke="rgba(125,211,252,0.72)" stroke-width="1.1"/>
+  <line x1="279" y1="388" x2="311" y2="388" stroke="rgba(125,211,252,0.85)" stroke-width="1.9"/>
+  <line x1="279" y1="396" x2="311" y2="396" stroke="rgba(125,211,252,0.85)" stroke-width="1.9"/>
+  <line x1="295" y1="396" x2="295" y2="418" stroke="rgba(125,211,252,0.52)" stroke-width="1.1"/>
+  <!-- Small op-amp at end of bus -->
+  <line x1="340" y1="370" x2="355" y2="370" stroke="rgba(196,181,253,0.60)" stroke-width="1.1"/>
+  <line x1="355" y1="370" x2="355" y2="358" stroke="rgba(196,181,253,0.55)" stroke-width="1.0"/>
+  <line x1="355" y1="358" x2="368" y2="358" stroke="rgba(196,181,253,0.58)" stroke-width="1.0"/>
+  <line x1="355" y1="382" x2="368" y2="382" stroke="rgba(196,181,253,0.48)" stroke-width="1.0"/>
+  <polygon points="368,342 368,398 420,370" stroke="rgba(196,181,253,0.75)" stroke-width="1.5" fill="none"/>
+  <line x1="420" y1="370" x2="440" y2="370" stroke="rgba(196,181,253,0.58)" stroke-width="1.0"/>
 
-  <!-- R₃ zigzag -->
-  <polyline points="950,95 962,95 972,70 985,120 998,70 1011,120 1024,70 1037,120 1050,95 1062,95"
-            stroke="#D4A017" stroke-width="1.5" fill="none"/>
-  <text x="1006" y="57" fill="#D4A017" font-size="12" text-anchor="middle">R₃</text>
+  <!-- ══════════════════════════════════════════════════════════════════
+       ZONE 7 — MID-RIGHT (x=770–1030, y=295–490): RC + op-amp stage
+       ══════════════════════════════════════════════════════════════════ -->
+  <!-- Bus -->
+  <line x1="770" y1="370" x2="1030" y2="370" stroke="rgba(212,160,23,0.50)" stroke-width="1.0"/>
+  <!-- R zigzag -->
+  <line x1="770" y1="370" x2="793" y2="370" stroke="rgba(212,160,23,0.52)" stroke-width="1.1"/>
+  <polyline points="793,370 803,370 810,352 818,388 826,352 834,388 842,352 850,370 861,370"
+            stroke="rgba(212,160,23,0.65)" stroke-width="1.4" fill="none"/>
+  <line x1="861" y1="370" x2="886" y2="370" stroke="rgba(212,160,23,0.52)" stroke-width="1.1"/>
+  <!-- C inline (plates) -->
+  <line x1="886" y1="348" x2="886" y2="392" stroke="rgba(125,211,252,0.85)" stroke-width="2.0"/>
+  <line x1="896" y1="348" x2="896" y2="392" stroke="rgba(125,211,252,0.85)" stroke-width="2.0"/>
+  <line x1="896" y1="370" x2="924" y2="370" stroke="rgba(125,211,252,0.55)" stroke-width="1.1"/>
+  <!-- Junction + second op-amp -->
+  <circle cx="924" cy="370" r="2.5" fill="rgba(196,181,253,0.78)"/>
+  <line x1="924" y1="370" x2="944" y2="370" stroke="rgba(196,181,253,0.62)" stroke-width="1.1"/>
+  <line x1="944" y1="370" x2="944" y2="358" stroke="rgba(196,181,253,0.58)" stroke-width="1.0"/>
+  <line x1="944" y1="358" x2="958" y2="358" stroke="rgba(196,181,253,0.60)" stroke-width="1.0"/>
+  <line x1="944" y1="382" x2="958" y2="382" stroke="rgba(196,181,253,0.50)" stroke-width="1.0"/>
+  <polygon points="958,340 958,400 1012,370" stroke="rgba(196,181,253,0.80)" stroke-width="1.5" fill="none"/>
+  <line x1="1012" y1="370" x2="1030" y2="370" stroke="rgba(196,181,253,0.62)" stroke-width="1.1"/>
+  <!-- Feedback arc over this op-amp -->
+  <path d="M1030,370 C1048,320 930,310 930,358" stroke="rgba(125,211,252,0.58)" stroke-width="1.1" fill="none" stroke-dasharray="4,3"/>
 
-  <!-- Ground rail row 1 -->
-  <line x1="242" y1="158" x2="496" y2="158" stroke="rgba(125,211,252,0.35)" stroke-width="0.9"/>
-  <line x1="369" y1="158" x2="369" y2="168" stroke="rgba(125,211,252,0.6)" stroke-width="1.1"/>
-  <line x1="355" y1="168" x2="383" y2="168" stroke="rgba(125,211,252,0.6)" stroke-width="1.5"/>
-  <line x1="360" y1="175" x2="378" y2="175" stroke="rgba(125,211,252,0.5)" stroke-width="1.1"/>
-  <line x1="365" y1="182" x2="373" y2="182" stroke="rgba(125,211,252,0.4)" stroke-width="0.9"/>
+  <!-- ══════════════════════════════════════════════════════════════════
+       ZONE 8 — BOTTOM-LEFT (x=20–320, y=555–700): Wheatstone Bridge
+       ══════════════════════════════════════════════════════════════════ -->
+  <!-- Diamond nodes -->
+  <circle cx="170" cy="572" r="3.2" fill="rgba(212,160,23,0.88)"/>
+  <circle cx="65"  cy="640" r="3.2" fill="rgba(196,181,253,0.82)"/>
+  <circle cx="275" cy="640" r="3.2" fill="rgba(196,181,253,0.82)"/>
+  <circle cx="170" cy="708" r="3.2" fill="rgba(125,211,252,0.78)"/>
+  <!-- Supply wire -->
+  <line x1="170" y1="556" x2="170" y2="572" stroke="rgba(212,160,23,0.72)" stroke-width="1.3"/>
+  <text x="170" y="549" fill="rgba(212,160,23,0.72)" font-size="11" text-anchor="middle">Vᵢₙ</text>
+  <!-- Arms (R symbols on diagonals — just lines for compactness) -->
+  <line x1="170" y1="572" x2="65"  y2="640" stroke="rgba(212,160,23,0.78)" stroke-width="1.4"/>
+  <line x1="170" y1="572" x2="275" y2="640" stroke="rgba(212,160,23,0.78)" stroke-width="1.4"/>
+  <line x1="65"  y1="640" x2="170" y2="708" stroke="rgba(212,160,23,0.72)" stroke-width="1.4"/>
+  <line x1="275" y1="640" x2="170" y2="708" stroke="rgba(212,160,23,0.72)" stroke-width="1.4"/>
+  <!-- Galvanometer (dashed) -->
+  <line x1="65" y1="640" x2="275" y2="640" stroke="rgba(125,211,252,0.62)" stroke-width="1.0" stroke-dasharray="5,4"/>
+  <!-- R labels -->
+  <text x="100" y="602" fill="rgba(212,160,23,0.72)" font-size="10">R</text>
+  <text x="230" y="602" fill="rgba(212,160,23,0.72)" font-size="10">R</text>
+  <text x="100" y="688" fill="rgba(212,160,23,0.65)" font-size="10">R</text>
+  <text x="230" y="688" fill="rgba(212,160,23,0.65)" font-size="10">R</text>
 
-  <!-- ══ MIDDLE ROW (y=310): Overlapping AC signal traces ═══════════════ -->
-  <!-- Fundamental sine — purple -->
-  <path d="M0,310 C22,262 66,262 88,310 C110,358 154,358 176,310 C198,262 242,262 264,310 C286,358 330,358 352,310 C374,262 418,262 440,310 C462,358 506,358 528,310 C550,262 594,262 616,310 C638,358 682,358 704,310 C726,262 770,262 792,310 C814,358 858,358 880,310 C902,262 946,262 968,310 C990,358 1034,358 1056,310 C1078,262 1122,262 1144,310 C1166,358 1200,358 1200,310"
-        stroke="rgba(124,92,239,0.9)" stroke-width="2.0" fill="none"/>
-  <!-- 2nd harmonic — gold -->
-  <path d="M0,310 C11,291 33,291 44,310 C55,329 77,329 88,310 C99,291 121,291 132,310 C143,329 165,329 176,310 C187,291 209,291 220,310 C231,329 253,329 264,310 C275,291 297,291 308,310 C319,329 341,329 352,310 C363,291 385,291 396,310 C407,329 429,329 440,310 C451,291 473,291 484,310 C495,329 517,329 528,310 C539,291 561,291 572,310 C583,329 605,329 616,310 C627,291 649,291 660,310 C671,329 693,329 704,310 C715,291 737,291 748,310 C759,329 781,329 792,310 C803,291 825,291 836,310 C847,329 869,329 880,310 C891,291 913,291 924,310 C935,329 957,329 968,310 C979,291 1001,291 1012,310 C1023,329 1045,329 1056,310 C1067,291 1089,291 1100,310 C1111,329 1133,329 1144,310 C1155,291 1177,291 1188,310"
-        stroke="rgba(212,160,23,0.75)" stroke-width="1.2" fill="none"/>
-  <!-- Step response transient (decaying, left side) -->
-  <line x1="0"  y1="310" x2="0"   y2="228" stroke="rgba(125,211,252,0.7)" stroke-width="1.3"/>
-  <path d="M0,228 C30,228 55,240 80,256 C105,272 130,284 160,294 C190,304 220,308 260,310"
-        stroke="rgba(125,211,252,0.7)" stroke-width="1.3" fill="none"/>
+  <!-- ══════════════════════════════════════════════════════════════════
+       ZONE 9 — BOTTOM-CENTER (x=330–820, y=565–700): RLC Series Circuit
+       ══════════════════════════════════════════════════════════════════ -->
+  <!-- Signal bus -->
+  <line x1="330" y1="615" x2="820" y2="615" stroke="rgba(196,181,253,0.30)" stroke-width="0.8"/>
+  <!-- Voltage source (circle) -->
+  <circle cx="362" cy="615" r="22" stroke="rgba(212,160,23,0.78)" stroke-width="1.6" fill="none"/>
+  <text x="362" y="611" fill="rgba(212,160,23,0.80)" font-size="10" text-anchor="middle" font-weight="bold">+</text>
+  <text x="362" y="623" fill="rgba(212,160,23,0.80)" font-size="10" text-anchor="middle">−</text>
+  <text x="362" y="587" fill="rgba(212,160,23,0.68)" font-size="9" text-anchor="middle">Vₛ</text>
+  <!-- Wire right -->
+  <line x1="384" y1="615" x2="402" y2="615" stroke="rgba(212,160,23,0.78)" stroke-width="1.6"/>
+  <!-- R1 -->
+  <polyline points="402,615 413,615 420,597 429,633 438,597 447,633 456,597 465,615 477,615"
+            stroke="rgba(212,160,23,0.88)" stroke-width="1.7" fill="none"/>
+  <text x="439" y="586" fill="rgba(212,160,23,0.78)" font-size="10" text-anchor="middle">R₁</text>
+  <line x1="477" y1="615" x2="506" y2="615" stroke="rgba(212,160,23,0.78)" stroke-width="1.6"/>
+  <!-- Node 1 -->
+  <circle cx="506" cy="615" r="3.5" fill="rgba(212,160,23,0.88)"/>
+  <!-- C1 shunt -->
+  <line x1="506" y1="615" x2="506" y2="632" stroke="rgba(125,211,252,0.72)" stroke-width="1.3"/>
+  <line x1="490" y1="632" x2="522" y2="632" stroke="rgba(125,211,252,0.90)" stroke-width="2.1"/>
+  <line x1="490" y1="641" x2="522" y2="641" stroke="rgba(125,211,252,0.90)" stroke-width="2.1"/>
+  <line x1="506" y1="641" x2="506" y2="660" stroke="rgba(125,211,252,0.58)" stroke-width="1.2"/>
+  <text x="530" y="640" fill="rgba(125,211,252,0.82)" font-size="10">C₁</text>
+  <!-- L1 coil -->
+  <line x1="506" y1="615" x2="534" y2="615" stroke="rgba(212,160,23,0.78)" stroke-width="1.6"/>
+  <path d="M534,615 C540,598 552,598 558,615 C564,632 576,632 582,615 C588,598 600,598 606,615 C612,632 624,632 630,615 C636,598 644,615 644,615"
+        stroke="rgba(212,160,23,0.88)" stroke-width="1.8" fill="none"/>
+  <line x1="644" y1="615" x2="672" y2="615" stroke="rgba(212,160,23,0.78)" stroke-width="1.6"/>
+  <text x="589" y="586" fill="rgba(212,160,23,0.78)" font-size="10" text-anchor="middle">L₁</text>
+  <!-- Node 2 -->
+  <circle cx="672" cy="615" r="3.5" fill="rgba(196,181,253,0.88)"/>
+  <!-- C2 shunt -->
+  <line x1="672" y1="615" x2="672" y2="632" stroke="rgba(125,211,252,0.72)" stroke-width="1.3"/>
+  <line x1="656" y1="632" x2="688" y2="632" stroke="rgba(125,211,252,0.90)" stroke-width="2.1"/>
+  <line x1="656" y1="641" x2="688" y2="641" stroke="rgba(125,211,252,0.90)" stroke-width="2.1"/>
+  <line x1="672" y1="641" x2="672" y2="660" stroke="rgba(125,211,252,0.58)" stroke-width="1.2"/>
+  <text x="697" y="640" fill="rgba(125,211,252,0.82)" font-size="10">C₂</text>
+  <!-- R2 -->
+  <line x1="672" y1="615" x2="700" y2="615" stroke="rgba(212,160,23,0.78)" stroke-width="1.6"/>
+  <polyline points="700,615 711,615 718,597 727,633 736,597 745,633 754,597 763,615 775,615"
+            stroke="rgba(212,160,23,0.85)" stroke-width="1.7" fill="none"/>
+  <text x="737" y="586" fill="rgba(212,160,23,0.75)" font-size="10" text-anchor="middle">R₂</text>
+  <line x1="775" y1="615" x2="800" y2="615" stroke="rgba(125,211,252,0.72)" stroke-width="1.6"/>
+  <!-- Vout terminal -->
+  <circle cx="806" cy="615" r="5.5" stroke="rgba(125,211,252,0.82)" stroke-width="1.8" fill="none"/>
+  <text x="816" y="612" fill="rgba(125,211,252,0.72)" font-size="9">Vₒᵤₜ</text>
+  <!-- Ground rail -->
+  <line x1="340" y1="660" x2="810" y2="660" stroke="rgba(125,211,252,0.28)" stroke-width="0.9"/>
+  <line x1="340" y1="615" x2="340" y2="660" stroke="rgba(212,160,23,0.52)" stroke-width="1.1"/>
+  <!-- Center GND symbol -->
+  <line x1="588" y1="660" x2="588" y2="670" stroke="rgba(125,211,252,0.60)" stroke-width="1.1"/>
+  <line x1="575" y1="670" x2="601" y2="670" stroke="rgba(125,211,252,0.60)" stroke-width="1.5"/>
+  <line x1="579" y1="677" x2="597" y2="677" stroke="rgba(125,211,252,0.50)" stroke-width="1.1"/>
+  <line x1="583" y1="684" x2="593" y2="684" stroke="rgba(125,211,252,0.40)" stroke-width="0.9"/>
 
-  <!-- ══ BOTTOM-LEFT: Wheatstone Bridge (x=70–290, y=400–560) ══════════ -->
-  <circle cx="180" cy="400" r="3" fill="rgba(212,160,23,0.9)"/>
-  <circle cx="72"  cy="480" r="3" fill="rgba(196,181,253,0.8)"/>
-  <circle cx="288" cy="480" r="3" fill="rgba(196,181,253,0.8)"/>
-  <circle cx="180" cy="558" r="3" fill="rgba(125,211,252,0.8)"/>
-  <!-- Arms (diagonal lines representing R) -->
-  <line x1="180" y1="400" x2="72"  y2="480" stroke="#D4A017" stroke-width="1.3"/>
-  <line x1="180" y1="400" x2="288" y2="480" stroke="#D4A017" stroke-width="1.3"/>
-  <line x1="72"  y1="480" x2="180" y2="558" stroke="#D4A017" stroke-width="1.3"/>
-  <line x1="288" y1="480" x2="180" y2="558" stroke="#D4A017" stroke-width="1.3"/>
-  <!-- Galvanometer (dashed horizontal) -->
-  <line x1="72" y1="480" x2="288" y2="480" stroke="rgba(125,211,252,0.6)" stroke-width="1.0" stroke-dasharray="5,4"/>
-  <!-- Supply/GND -->
-  <line x1="180" y1="378" x2="180" y2="400" stroke="#D4A017" stroke-width="1.1"/>
-  <text x="180" y="373" fill="rgba(212,160,23,0.8)" font-size="11" text-anchor="middle">Vᵢₙ</text>
-  <line x1="180" y1="558" x2="180" y2="578" stroke="rgba(125,211,252,0.6)" stroke-width="1.1"/>
-  <line x1="164" y1="578" x2="196" y2="578" stroke="rgba(125,211,252,0.6)" stroke-width="1.5"/>
-  <line x1="169" y1="585" x2="191" y2="585" stroke="rgba(125,211,252,0.5)" stroke-width="1.1"/>
-  <line x1="175" y1="592" x2="185" y2="592" stroke="rgba(125,211,252,0.4)" stroke-width="0.9"/>
-  <!-- R labels on arms -->
-  <text x="104" y="435" fill="rgba(212,160,23,0.8)" font-size="10">R</text>
-  <text x="244" y="435" fill="rgba(212,160,23,0.8)" font-size="10">R</text>
-  <text x="104" y="535" fill="rgba(212,160,23,0.8)" font-size="10">R</text>
-  <text x="244" y="535" fill="rgba(212,160,23,0.8)" font-size="10">R</text>
+  <!-- ══════════════════════════════════════════════════════════════════
+       ZONE 10 — BOTTOM-RIGHT (x=830–1175, y=555–700): Op-amp Integrator
+       ══════════════════════════════════════════════════════════════════ -->
+  <!-- Rin -->
+  <line x1="830" y1="606" x2="860" y2="606" stroke="rgba(212,160,23,0.68)" stroke-width="1.2"/>
+  <polyline points="860,606 870,606 877,588 885,624 893,588 901,624 909,588 917,606 929,606"
+            stroke="rgba(212,160,23,0.80)" stroke-width="1.5" fill="none"/>
+  <text x="895" y="578" fill="rgba(212,160,23,0.70)" font-size="10" text-anchor="middle">Rᵢ</text>
+  <!-- Route to -input -->
+  <line x1="929" y1="606" x2="956" y2="606" stroke="rgba(196,181,253,0.68)" stroke-width="1.2"/>
+  <line x1="956" y1="606" x2="956" y2="620" stroke="rgba(196,181,253,0.62)" stroke-width="1.1"/>
+  <line x1="956" y1="620" x2="974" y2="620" stroke="rgba(196,181,253,0.65)" stroke-width="1.1"/>
+  <!-- +input to GND ref -->
+  <line x1="956" y1="592" x2="974" y2="592" stroke="rgba(196,181,253,0.52)" stroke-width="1.1"/>
+  <!-- Op-amp body -->
+  <polygon points="974,573 974,639 1048,606" stroke="rgba(196,181,253,0.88)" stroke-width="1.7" fill="none"/>
+  <text x="1003" y="611" fill="rgba(196,181,253,0.70)" font-size="10">A₂</text>
+  <!-- Output wire -->
+  <line x1="1048" y1="606" x2="1095" y2="606" stroke="rgba(196,181,253,0.72)" stroke-width="1.2"/>
+  <circle cx="1098" cy="606" r="5" stroke="rgba(196,181,253,0.72)" stroke-width="1.5" fill="none"/>
+  <!-- Feedback Cf (dashed arc) -->
+  <path d="M1095,606 C1122,558 958,548 958,592" stroke="rgba(125,211,252,0.65)" stroke-width="1.2" fill="none" stroke-dasharray="4,3"/>
+  <text x="1022" y="552" fill="rgba(125,211,252,0.65)" font-size="10" text-anchor="middle">Cf</text>
+  <!-- Mini step-response plot -->
+  <line x1="1108" y1="666" x2="1175" y2="666" stroke="rgba(125,211,252,0.28)" stroke-width="0.8"/>
+  <line x1="1108" y1="578" x2="1108" y2="666" stroke="rgba(125,211,252,0.28)" stroke-width="0.8"/>
+  <polyline points="1108,666 1108,606 1118,606" stroke="rgba(212,160,23,0.62)" stroke-width="1.2" fill="none"/>
+  <path d="M1108,666 C1122,666 1132,646 1142,632 C1152,618 1162,610 1175,607"
+        stroke="rgba(125,211,252,0.68)" stroke-width="1.4" fill="none"/>
 
-  <!-- ══ BOTTOM-CENTER: LC Resonant Tank (x=370–640, y=415–545) ════════ -->
-  <!-- Outer loop -->
-  <line x1="370" y1="435" x2="640" y2="435" stroke="#D4A017" stroke-width="1.1"/>
-  <line x1="640" y1="435" x2="640" y2="525" stroke="rgba(125,211,252,0.8)" stroke-width="1.1"/>
-  <line x1="370" y1="525" x2="640" y2="525" stroke="rgba(125,211,252,0.5)" stroke-width="0.9"/>
-  <line x1="370" y1="435" x2="370" y2="525" stroke="#D4A017" stroke-width="1.1"/>
-  <!-- Inductor (coil on top wire) -->
-  <line x1="370" y1="435" x2="398" y2="435" stroke="#D4A017" stroke-width="1.1"/>
-  <path d="M398,435 C404,416 418,416 424,435 C430,454 444,454 450,435 C456,416 470,416 476,435 C482,454 496,454 502,435 C508,416 522,416 528,435 C534,454 548,454 554,435 C560,416 566,435 566,435"
-        stroke="#D4A017" stroke-width="1.5" fill="none"/>
-  <line x1="566" y1="435" x2="594" y2="435" stroke="#D4A017" stroke-width="1.1"/>
-  <text x="482" y="408" fill="rgba(212,160,23,0.8)" font-size="11" text-anchor="middle">L</text>
-  <!-- Capacitor (on right vertical) -->
-  <line x1="640" y1="435" x2="640" y2="465" stroke="rgba(125,211,252,0.8)" stroke-width="1.1"/>
-  <line x1="618" y1="465" x2="662" y2="465" stroke="rgba(125,211,252,0.9)" stroke-width="2.2"/>
-  <line x1="618" y1="474" x2="662" y2="474" stroke="rgba(125,211,252,0.9)" stroke-width="2.2"/>
-  <line x1="640" y1="474" x2="640" y2="525" stroke="rgba(125,211,252,0.8)" stroke-width="1.1"/>
-  <text x="670" y="472" fill="rgba(125,211,252,0.9)" font-size="11">C</text>
+  <!-- ══════════════════════════════════════════════════════════════════
+       ZONE 11 — LC RESONANT TANK (x=350–580, y=295–490): Closed loop
+       ══════════════════════════════════════════════════════════════════ -->
+  <!-- Top wire -->
+  <line x1="355" y1="318" x2="572" y2="318" stroke="rgba(212,160,23,0.58)" stroke-width="1.1"/>
+  <!-- Left vertical -->
+  <line x1="355" y1="318" x2="355" y2="468" stroke="rgba(212,160,23,0.55)" stroke-width="1.1"/>
+  <!-- Inductor on top -->
+  <line x1="355" y1="318" x2="380" y2="318" stroke="rgba(212,160,23,0.58)" stroke-width="1.1"/>
+  <path d="M380,318 C385,302 397,302 402,318 C407,334 419,334 424,318 C429,302 441,302 446,318 C451,334 463,334 468,318 C473,302 485,302 490,318 C495,334 502,318 502,318"
+        stroke="rgba(212,160,23,0.72)" stroke-width="1.4" fill="none"/>
+  <line x1="502" y1="318" x2="528" y2="318" stroke="rgba(212,160,23,0.58)" stroke-width="1.1"/>
+  <text x="441" y="295" fill="rgba(212,160,23,0.62)" font-size="10" text-anchor="middle">L</text>
+  <!-- Capacitor on right vertical -->
+  <line x1="572" y1="318" x2="572" y2="358" stroke="rgba(125,211,252,0.72)" stroke-width="1.1"/>
+  <line x1="552" y1="358" x2="592" y2="358" stroke="rgba(125,211,252,0.90)" stroke-width="2.0"/>
+  <line x1="552" y1="367" x2="592" y2="367" stroke="rgba(125,211,252,0.90)" stroke-width="2.0"/>
+  <line x1="572" y1="367" x2="572" y2="468" stroke="rgba(125,211,252,0.65)" stroke-width="1.1"/>
+  <text x="598" y="365" fill="rgba(125,211,252,0.82)" font-size="10">C</text>
+  <!-- Bottom wire -->
+  <line x1="355" y1="468" x2="572" y2="468" stroke="rgba(125,211,252,0.38)" stroke-width="0.9"/>
   <!-- Node dots -->
-  <circle cx="370" cy="435" r="2.5" fill="#D4A017"/>
-  <circle cx="640" cy="435" r="2.5" fill="rgba(125,211,252,0.9)"/>
-  <circle cx="370" cy="525" r="2.5" fill="rgba(125,211,252,0.6)"/>
+  <circle cx="355" cy="318" r="2.5" fill="rgba(212,160,23,0.75)"/>
+  <circle cx="572" cy="318" r="2.5" fill="rgba(125,211,252,0.82)"/>
+  <circle cx="355" cy="468" r="2.5" fill="rgba(125,211,252,0.55)"/>
+  <circle cx="572" cy="468" r="2.5" fill="rgba(125,211,252,0.55)"/>
 
-  <!-- ══ BOTTOM-RIGHT: Op-amp Integrator + step plot (x=720–1180, y=390–570) -->
-  <!-- Op-amp A₂ -->
-  <polygon points="750,420 750,530 818,475" stroke="rgba(196,181,253,0.9)" stroke-width="1.6" fill="none"/>
-  <line x1="720" y1="438" x2="750" y2="438" stroke="rgba(196,181,253,0.8)" stroke-width="1.1"/>
-  <line x1="720" y1="512" x2="750" y2="512" stroke="rgba(196,181,253,0.8)" stroke-width="1.1"/>
-  <line x1="818" y1="475" x2="858" y2="475" stroke="rgba(196,181,253,0.8)" stroke-width="1.1"/>
-  <text x="775" y="480" fill="rgba(196,181,253,0.7)" font-size="11">A₂</text>
-  <!-- Feedback capacitor (arced over top) -->
-  <path d="M858,475 C890,425 722,390 720,438" stroke="rgba(125,211,252,0.7)" stroke-width="1.1" fill="none" stroke-dasharray="4,3"/>
-  <text x="788" y="393" fill="rgba(125,211,252,0.7)" font-size="10" text-anchor="middle">Cf</text>
-  <!-- Input resistor -->
-  <line x1="660" y1="438" x2="680" y2="438" stroke="#D4A017" stroke-width="1.1"/>
-  <polyline points="680,438 690,438 697,420 705,456 713,420 720,438" stroke="#D4A017" stroke-width="1.4" fill="none"/>
-  <text x="700" y="412" fill="rgba(212,160,23,0.8)" font-size="10" text-anchor="middle">Rᵢₙ</text>
-
-  <!-- Step response curve (right side) -->
-  <line x1="960" y1="565" x2="1170" y2="565" stroke="rgba(125,211,252,0.35)" stroke-width="0.9"/>
-  <line x1="960" y1="405" x2="960"  y2="565" stroke="rgba(125,211,252,0.35)" stroke-width="0.9"/>
-  <!-- Axes labels -->
-  <text x="1063" y="400" fill="rgba(125,211,252,0.7)" font-size="10" text-anchor="middle">v(t)</text>
-  <!-- Step (square input) -->
-  <polyline points="960,565 960,448 980,448" stroke="rgba(212,160,23,0.7)" stroke-width="1.3" fill="none"/>
-  <line x1="980" y1="448" x2="1170" y2="448" stroke="rgba(212,160,23,0.5)" stroke-width="0.9" stroke-dasharray="4,3"/>
-  <!-- Exponential rise to steady state -->
-  <path d="M960,565 C985,565 1005,535 1025,510 C1045,485 1065,462 1090,453 C1115,444 1145,449 1170,448"
-        stroke="rgba(125,211,252,0.8)" stroke-width="1.5" fill="none"/>
+  <!-- ══════════════════════════════════════════════════════════════════
+       ZONE 12 — CENTER ACCENT (x=580–770, y=300–480): Differentiator
+       ══════════════════════════════════════════════════════════════════ -->
+  <!-- Horizontal bus -->
+  <line x1="590" y1="388" x2="770" y2="388" stroke="rgba(196,181,253,0.38)" stroke-width="0.9"/>
+  <!-- C inline series -->
+  <line x1="590" y1="388" x2="615" y2="388" stroke="rgba(125,211,252,0.52)" stroke-width="1.0"/>
+  <line x1="615" y1="370" x2="615" y2="406" stroke="rgba(125,211,252,0.80)" stroke-width="1.9"/>
+  <line x1="624" y1="370" x2="624" y2="406" stroke="rgba(125,211,252,0.80)" stroke-width="1.9"/>
+  <line x1="624" y1="388" x2="650" y2="388" stroke="rgba(125,211,252,0.52)" stroke-width="1.0"/>
+  <!-- R to op-amp input -->
+  <polyline points="650,388 659,388 665,372 672,404 679,372 686,404 693,372 700,388 710,388"
+            stroke="rgba(212,160,23,0.62)" stroke-width="1.3" fill="none"/>
+  <line x1="710" y1="388" x2="726" y2="388" stroke="rgba(196,181,253,0.55)" stroke-width="1.0"/>
+  <!-- Small op-amp -->
+  <line x1="726" y1="388" x2="726" y2="376" stroke="rgba(196,181,253,0.55)" stroke-width="1.0"/>
+  <line x1="726" y1="376" x2="738" y2="376" stroke="rgba(196,181,253,0.58)" stroke-width="1.0"/>
+  <line x1="726" y1="400" x2="738" y2="400" stroke="rgba(196,181,253,0.48)" stroke-width="1.0"/>
+  <polygon points="738,360 738,416 792,388" stroke="rgba(196,181,253,0.72)" stroke-width="1.4" fill="none"/>
+  <line x1="792" y1="388" x2="820" y2="388" stroke="rgba(196,181,253,0.55)" stroke-width="1.0"/>
 
 </svg>
 </div>
 
-<!-- ── Top oscilloscope / waveform strip ──────────────────────────────── -->
-<div class="cover-circuit">
-<svg viewBox="0 0 1200 140" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style="width:100%;height:140px;display:block;">
-  <!-- oscilloscope grid lines -->
-  <line x1="0"    y1="28"  x2="1200" y2="28"  stroke="rgba(90,62,237,.13)" stroke-width="0.7"/>
-  <line x1="0"    y1="70"  x2="1200" y2="70"  stroke="rgba(90,62,237,.20)" stroke-width="0.7"/>
-  <line x1="0"    y1="112" x2="1200" y2="112" stroke="rgba(90,62,237,.13)" stroke-width="0.7"/>
-  <line x1="200"  y1="0"   x2="200"  y2="140" stroke="rgba(90,62,237,.10)" stroke-width="0.5"/>
-  <line x1="400"  y1="0"   x2="400"  y2="140" stroke="rgba(90,62,237,.10)" stroke-width="0.5"/>
-  <line x1="600"  y1="0"   x2="600"  y2="140" stroke="rgba(90,62,237,.10)" stroke-width="0.5"/>
-  <line x1="800"  y1="0"   x2="800"  y2="140" stroke="rgba(90,62,237,.10)" stroke-width="0.5"/>
-  <line x1="1000" y1="0"   x2="1000" y2="140" stroke="rgba(90,62,237,.10)" stroke-width="0.5"/>
-  <!-- Fundamental sine wave — purple, large amplitude -->
-  <path d="M0,70 C27,8 93,8 120,70 C147,132 213,132 240,70 C267,8 333,8 360,70 C387,132 453,132 480,70 C507,8 573,8 600,70 C627,132 693,132 720,70 C747,8 813,8 840,70 C867,132 933,132 960,70 C987,8 1053,8 1080,70 C1107,132 1173,132 1200,70"
-        stroke="#7C5CEF" stroke-width="3.0" fill="none" opacity="0.90"/>
-  <!-- 2nd harmonic — gold, medium amplitude -->
-  <path d="M0,70 C13,42 47,42 60,70 C73,98 107,98 120,70 C133,42 167,42 180,70 C193,98 227,98 240,70 C253,42 287,42 300,70 C313,98 347,98 360,70 C373,42 407,42 420,70 C433,98 467,98 480,70 C493,42 527,42 540,70 C553,98 587,98 600,70 C613,42 647,42 660,70 C673,98 707,98 720,70 C733,42 767,42 780,70 C793,98 827,98 840,70 C853,42 887,42 900,70 C913,98 947,98 960,70 C973,42 1007,42 1020,70 C1033,98 1067,98 1080,70 C1093,42 1127,42 1140,70 C1153,98 1187,98 1200,70"
-        stroke="#D4A017" stroke-width="1.8" fill="none" opacity="0.65"/>
-  <!-- 3rd harmonic — cyan, small amplitude -->
-  <path d="M0,70 C9,54 31,54 40,70 C49,86 71,86 80,70 C89,54 111,54 120,70 C129,86 151,86 160,70 C169,54 191,54 200,70 C209,86 231,86 240,70 C249,54 271,54 280,70 C289,86 311,86 320,70 C329,54 351,54 360,70 C369,86 391,86 400,70 C409,54 431,54 440,70 C449,86 471,86 480,70 C489,54 511,54 520,70 C529,86 551,86 560,70 C569,54 591,54 600,70 C609,86 631,86 640,70 C649,54 671,54 680,70 C689,86 711,86 720,70 C729,54 751,54 760,70 C769,86 791,86 800,70 C809,54 831,54 840,70 C849,86 871,86 880,70 C889,54 911,54 920,70 C929,86 951,86 960,70 C969,54 991,54 1000,70 C1009,86 1031,86 1040,70 C1049,54 1071,54 1080,70 C1089,86 1111,86 1120,70 C1129,54 1151,54 1160,70 C1169,86 1191,86 1200,70"
-        stroke="#7dd3fc" stroke-width="1.2" fill="none" opacity="0.45"/>
-  <!-- Decaying transient — cyan, left portion only -->
-  <path d="M0,12 C50,12 90,32 130,50 C170,68 210,68 260,70 C310,72 360,71 440,70"
-        stroke="#7dd3fc" stroke-width="1.6" fill="none" opacity="0.55"/>
-</svg>
-</div>
-
+<!-- ════════════════════════════════════════════════════════════════════
+     COVER CONTENT — title, description, stats, buttons (z-index: 1)
+     ════════════════════════════════════════════════════════════════════ -->
 <div class="cover-content" markdown>
 
 # Circuits 1
@@ -274,118 +487,6 @@ hide:
 
 </div>
 
-</div>
-
-<div class="cover-circuit cover-circuit-bottom">
-<svg viewBox="0 0 1200 150" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style="width:100%;height:150px;display:block;opacity:0.92;">
-
-  <!-- ── Main signal wire ─────────────────────────────────────────────── -->
-  <line x1="0" y1="60" x2="1200" y2="60" stroke="rgba(196,181,253,0.3)" stroke-width="0.8"/>
-
-  <!-- ── Voltage source (left) ───────────────────────────────────────── -->
-  <circle cx="32" cy="60" r="22" stroke="#D4A017" stroke-width="1.8" fill="none" opacity="0.80"/>
-  <text x="32" y="56" fill="#D4A017" font-size="10" text-anchor="middle" opacity="0.85" font-weight="bold">+</text>
-  <text x="32" y="69" fill="#D4A017" font-size="10" text-anchor="middle" opacity="0.85">−</text>
-  <!-- V_s label -->
-  <text x="32" y="18" fill="#D4A017" font-size="9" text-anchor="middle" opacity="0.70">Vₛ</text>
-  <!-- wire right from source -->
-  <line x1="54" y1="60" x2="72" y2="60" stroke="#D4A017" stroke-width="1.8" opacity="0.80"/>
-
-  <!-- ── R₁ (series resistor) ────────────────────────────────────────── -->
-  <polyline points="72,60 85,60 96,34 109,86 122,34 135,86 148,34 161,86 174,60 188,60"
-            stroke="#D4A017" stroke-width="2.0" fill="none" opacity="0.90"/>
-  <text x="130" y="22" fill="#D4A017" font-size="10" text-anchor="middle" opacity="0.80">R₁</text>
-  <!-- wire to node -->
-  <line x1="188" y1="60" x2="232" y2="60" stroke="#D4A017" stroke-width="1.8" opacity="0.75"/>
-  <!-- junction node -->
-  <circle cx="232" cy="60" r="4" fill="#D4A017" opacity="0.85"/>
-
-  <!-- ── C₁ shunt (to ground rail) ───────────────────────────────────── -->
-  <line x1="232" y1="60" x2="232" y2="80" stroke="#7dd3fc" stroke-width="1.5" opacity="0.70"/>
-  <line x1="212" y1="80" x2="252" y2="80" stroke="#7dd3fc" stroke-width="2.5" opacity="0.88"/>
-  <line x1="212" y1="90" x2="252" y2="90" stroke="#7dd3fc" stroke-width="2.5" opacity="0.88"/>
-  <line x1="232" y1="90" x2="232" y2="112" stroke="#7dd3fc" stroke-width="1.5" opacity="0.60"/>
-  <text x="262" y="89" fill="#7dd3fc" font-size="10" opacity="0.80">C₁</text>
-
-  <!-- ── L₁ (inductor coil) ──────────────────────────────────────────── -->
-  <line x1="232" y1="60" x2="270" y2="60" stroke="#D4A017" stroke-width="1.8" opacity="0.75"/>
-  <path d="M270,60 C278,40 294,40 302,60 C310,80 326,80 334,60 C342,40 358,40 366,60 C374,80 390,80 398,60 C406,40 422,40 430,60 C438,80 454,80 462,60"
-        stroke="#D4A017" stroke-width="2.0" fill="none" opacity="0.88"/>
-  <line x1="462" y1="60" x2="500" y2="60" stroke="#D4A017" stroke-width="1.8" opacity="0.75"/>
-  <text x="366" y="22" fill="#D4A017" font-size="10" text-anchor="middle" opacity="0.80">L₁</text>
-  <!-- junction node -->
-  <circle cx="500" cy="60" r="4" fill="#7C5CEF" opacity="0.85"/>
-
-  <!-- ── C₂ shunt (to ground rail) ───────────────────────────────────── -->
-  <line x1="500" y1="60" x2="500" y2="80" stroke="#7dd3fc" stroke-width="1.5" opacity="0.70"/>
-  <line x1="480" y1="80" x2="520" y2="80" stroke="#7dd3fc" stroke-width="2.5" opacity="0.88"/>
-  <line x1="480" y1="90" x2="520" y2="90" stroke="#7dd3fc" stroke-width="2.5" opacity="0.88"/>
-  <line x1="500" y1="90" x2="500" y2="112" stroke="#7dd3fc" stroke-width="1.5" opacity="0.60"/>
-  <text x="530" y="89" fill="#7dd3fc" font-size="10" opacity="0.80">C₂</text>
-
-  <!-- ── R₂ (series) ─────────────────────────────────────────────────── -->
-  <line x1="500" y1="60" x2="548" y2="60" stroke="#D4A017" stroke-width="1.8" opacity="0.75"/>
-  <polyline points="548,60 560,60 570,34 583,86 596,34 609,86 622,34 635,86 648,60 660,60"
-            stroke="#D4A017" stroke-width="2.0" fill="none" opacity="0.85"/>
-  <text x="604" y="22" fill="#D4A017" font-size="10" text-anchor="middle" opacity="0.80">R₂</text>
-
-  <!-- ── Op-amp buffer A₁ ──────────────────────────────────────────────  -->
-  <line x1="660" y1="60" x2="695" y2="60" stroke="#7C5CEF" stroke-width="1.8" opacity="0.75"/>
-  <!-- route signal to + input at y=44 -->
-  <line x1="695" y1="60" x2="695" y2="44" stroke="#7C5CEF" stroke-width="1.5" opacity="0.65"/>
-  <line x1="695" y1="44" x2="726" y2="44" stroke="#7C5CEF" stroke-width="1.5" opacity="0.70"/>
-  <!-- − input (tied to output for unity gain buffer) -->
-  <line x1="695" y1="76" x2="726" y2="76" stroke="#7C5CEF" stroke-width="1.5" opacity="0.55"/>
-  <!-- Op-amp triangle (input x=726, tip x=800) -->
-  <polygon points="726,24 726,96 800,60" stroke="#7C5CEF" stroke-width="2.0" fill="none" opacity="0.85"/>
-  <text x="748" y="65" fill="#7C5CEF" font-size="9" opacity="0.70">+</text>
-  <text x="748" y="81" fill="#7C5CEF" font-size="9" opacity="0.55">−</text>
-  <!-- Output wire + feedback wire back to − -->
-  <line x1="800" y1="60" x2="848" y2="60" stroke="#7C5CEF" stroke-width="1.8" opacity="0.75"/>
-  <!-- Feedback: output → −input -->
-  <path d="M840,60 C840,108 695,108 695,76" stroke="#7C5CEF" stroke-width="1.2" fill="none" opacity="0.50" stroke-dasharray="5,3"/>
-  <!-- junction node at output -->
-  <circle cx="848" cy="60" r="4" fill="#7C5CEF" opacity="0.82"/>
-
-  <!-- ── R₃ (output series) ──────────────────────────────────────────── -->
-  <line x1="848" y1="60" x2="878" y2="60" stroke="#D4A017" stroke-width="1.8" opacity="0.75"/>
-  <polyline points="878,60 890,60 900,34 913,86 926,34 939,86 952,34 965,86 978,60 990,60"
-            stroke="#D4A017" stroke-width="2.0" fill="none" opacity="0.85"/>
-  <text x="934" y="22" fill="#D4A017" font-size="10" text-anchor="middle" opacity="0.80">R₃</text>
-  <line x1="990" y1="60" x2="1028" y2="60" stroke="#D4A017" stroke-width="1.8" opacity="0.75"/>
-  <!-- junction node -->
-  <circle cx="1028" cy="60" r="4" fill="#D4A017" opacity="0.82"/>
-
-  <!-- ── C₃ shunt (output filter) ────────────────────────────────────── -->
-  <line x1="1028" y1="60" x2="1028" y2="80" stroke="#7dd3fc" stroke-width="1.5" opacity="0.70"/>
-  <line x1="1008" y1="80" x2="1048" y2="80" stroke="#7dd3fc" stroke-width="2.5" opacity="0.88"/>
-  <line x1="1008" y1="90" x2="1048" y2="90" stroke="#7dd3fc" stroke-width="2.5" opacity="0.88"/>
-  <line x1="1028" y1="90" x2="1028" y2="112" stroke="#7dd3fc" stroke-width="1.5" opacity="0.60"/>
-  <text x="1058" y="89" fill="#7dd3fc" font-size="10" opacity="0.80">C₃</text>
-
-  <!-- ── V_out terminal ──────────────────────────────────────────────── -->
-  <line x1="1028" y1="60" x2="1100" y2="60" stroke="#7dd3fc" stroke-width="1.8" opacity="0.75"/>
-  <circle cx="1108" cy="60" r="6" stroke="#7dd3fc" stroke-width="2.0" fill="none" opacity="0.85"/>
-  <text x="1122" y="56" fill="#7dd3fc" font-size="10" opacity="0.80" font-weight="bold">V_out</text>
-
-  <!-- ── Ground rail ─────────────────────────────────────────────────── -->
-  <line x1="10" y1="112" x2="1190" y2="112" stroke="rgba(125,211,252,0.40)" stroke-width="1.2"/>
-  <!-- Left return wire (source − to ground rail) -->
-  <line x1="10"  y1="60"  x2="10"  y2="112" stroke="#D4A017" stroke-width="1.5" opacity="0.55"/>
-  <!-- Right return wire (V_out to ground rail for reference) -->
-  <line x1="1150" y1="60" x2="1150" y2="112" stroke="#7dd3fc" stroke-width="1.2" opacity="0.40"/>
-  <!-- Ground symbol at center bottom -->
-  <line x1="600" y1="112" x2="600" y2="122" stroke="#7dd3fc" stroke-width="1.6" opacity="0.60"/>
-  <line x1="582" y1="122" x2="618" y2="122" stroke="#7dd3fc" stroke-width="2.0" opacity="0.60"/>
-  <line x1="588" y1="130" x2="612" y2="130" stroke="#7dd3fc" stroke-width="1.5" opacity="0.50"/>
-  <line x1="595" y1="138" x2="605" y2="138" stroke="#7dd3fc" stroke-width="1.1" opacity="0.40"/>
-  <!-- Second GND symbol (left side) -->
-  <line x1="232" y1="112" x2="232" y2="122" stroke="#7dd3fc" stroke-width="1.4" opacity="0.50"/>
-  <line x1="218" y1="122" x2="246" y2="122" stroke="#7dd3fc" stroke-width="1.7" opacity="0.50"/>
-  <line x1="222" y1="129" x2="242" y2="129" stroke="#7dd3fc" stroke-width="1.2" opacity="0.40"/>
-  <line x1="226" y1="136" x2="238" y2="136" stroke="#7dd3fc" stroke-width="0.9" opacity="0.30"/>
-
-</svg>
 </div>
 
 </div>
