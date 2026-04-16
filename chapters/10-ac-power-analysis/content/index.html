@@ -2581,7 +2581,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#102-real-power" class="md-nav__link">
+  <a href="#102-real-power-average-power" class="md-nav__link">
     <span class="md-ellipsis">
       
         10.2 Real Power (Average Power)
@@ -2625,7 +2625,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#106-power-triangle" class="md-nav__link">
+  <a href="#106-the-power-triangle" class="md-nav__link">
     <span class="md-ellipsis">
       
         10.6 The Power Triangle
@@ -2636,7 +2636,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#107-power-factor" class="md-nav__link">
+  <a href="#107-power-factor-leading-and-lagging" class="md-nav__link">
     <span class="md-ellipsis">
       
         10.7 Power Factor: Leading and Lagging
@@ -2658,7 +2658,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#109-power-in-elements" class="md-nav__link">
+  <a href="#109-power-in-resistors-capacitors-and-inductors" class="md-nav__link">
     <span class="md-ellipsis">
       
         10.9 Power in Resistors, Capacitors, and Inductors
@@ -2669,7 +2669,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#1010-maximum-power-transfer" class="md-nav__link">
+  <a href="#1010-maximum-power-transfer-in-ac" class="md-nav__link">
     <span class="md-ellipsis">
       
         10.10 Maximum Power Transfer in AC
@@ -2680,7 +2680,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#1011-efficiency-and-gain" class="md-nav__link">
+  <a href="#1011-efficiency-and-power-gain" class="md-nav__link">
     <span class="md-ellipsis">
       
         10.11 Efficiency and Power Gain
@@ -2691,7 +2691,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#1012-worked-example" class="md-nav__link">
+  <a href="#1012-worked-example-complete-power-analysis" class="md-nav__link">
     <span class="md-ellipsis">
       
         10.12 Worked Example: Complete Power Analysis
@@ -4737,7 +4737,19 @@
 
 <div class="unit1-styled">
 <h1 id="chapter-10-ac-power-analysis">Chapter 10 — AC Power Analysis</h1>
-<h2 id="101-instantaneous-power" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">10.1 Instantaneous Power</h2>
+<details class="video-overview">
+<summary><strong>Chapter Overview</strong> (click to expand)</summary>
+
+AC power analysis distinguishes between three types of power — real, reactive, and apparent — that together characterize how efficiently energy is delivered to a load. This chapter develops the mathematics of complex power and the power triangle, and explains power factor correction, an essential technique for reducing wasted energy in electrical systems.
+
+**Key Takeaways**
+
+1. Real (average) power P, measured in watts, represents energy actually consumed; reactive power Q, measured in VARs, represents energy oscillating back and forth between source and reactive elements.
+2. Apparent power S is the product of RMS voltage and current, and equals the magnitude of complex power S = P + jQ.
+3. Power factor (cos θ) measures how effectively a load uses apparent power; capacitor banks are added to correct a lagging power factor and reduce transmission losses.
+
+</details>
+<h2 id="101-instantaneous-power">10.1 Instantaneous Power</h2>
 <p><strong>Instantaneous power</strong> is the power at any specific instant:</p>
 <div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
 <div class="arithmatex">\[p(t) = v(t) \cdot i(t)\]</div>
@@ -4745,7 +4757,7 @@
 </div>
 <p>This reveals two components: a <strong>constant term</strong> (the average power) and an <strong>oscillating term</strong> at twice the signal frequency. The oscillating component means power flows back and forth between the source and reactive elements every quarter cycle — it can actually go negative, meaning energy flows <em>back</em> to the source.</p>
 <hr />
-<h2 id="102-real-power" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">10.2 Real Power (Average Power)</h2>
+<h2 id="102-real-power-average-power">10.2 Real Power (Average Power)</h2>
 <p><strong>Real power</strong> (also called average power or active power) is the time-averaged power over one complete cycle. It represents the power that actually does useful work — heating elements, turning motors, producing light and sound.</p>
 <div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
 <div class="arithmatex">\[P = V_{rms} I_{rms} \cos\theta = I_{rms}^2 R\]</div>
@@ -4784,7 +4796,7 @@
 </tbody>
 </table>
 <hr />
-<h2 id="103-reactive-power" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">10.3 Reactive Power</h2>
+<h2 id="103-reactive-power">10.3 Reactive Power</h2>
 <p><strong>Reactive power</strong> (Q) represents energy oscillating between the source and reactive elements without being consumed. It's measured in <strong>volt-amperes reactive (VAR)</strong>.</p>
 <div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
 <div class="arithmatex">\[Q = V_{rms} I_{rms} \sin\theta = I_{rms}^2 X\]</div>
@@ -4792,7 +4804,7 @@
 </div>
 <p>Reactive power doesn't do useful work, but it still requires current to flow — meaning larger wires, transformers, and generators must be sized to carry it. This is why utilities penalize poor power factor.</p>
 <hr />
-<h2 id="104-apparent-power" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">10.4 Apparent Power</h2>
+<h2 id="104-apparent-power">10.4 Apparent Power</h2>
 <p><strong>Apparent power</strong> (S) is the product of RMS voltage and RMS current — the total "power handling" demanded from the source. Measured in <strong>volt-amperes (VA)</strong>.</p>
 <div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
 <div class="arithmatex">\[S = V_{rms} I_{rms} \qquad S^2 = P^2 + Q^2\]</div>
@@ -4804,7 +4816,7 @@
 - <span class="arithmatex">\(Q = 1{,}200 \times 0.6 = 720\)</span> VAR</p>
 <p>The motor does only 960 W of work, but the supply must have capacity for 1,200 VA.</p>
 <hr />
-<h2 id="105-complex-power" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">10.5 Complex Power</h2>
+<h2 id="105-complex-power">10.5 Complex Power</h2>
 <p><strong>Complex power</strong> combines real and reactive power into a single complex number:</p>
 <div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
 <div class="arithmatex">\[\mathbf{S} = P + jQ = \mathbf{V}_{rms}\, \mathbf{I}_{rms}^* = I_{rms}^2 Z\]</div>
@@ -4847,7 +4859,7 @@
 </tbody>
 </table>
 <hr />
-<h2 id="106-power-triangle" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">10.6 The Power Triangle</h2>
+<h2 id="106-the-power-triangle">10.6 The Power Triangle</h2>
 <p>The power triangle shows the geometric relationship between P, Q, and S — they form a right triangle:</p>
 <div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
 <div class="arithmatex">\[S = \sqrt{P^2 + Q^2} \qquad PF = \cos\theta = \frac{P}{S} \qquad \tan\theta = \frac{Q}{P}\]</div>
@@ -4860,7 +4872,7 @@
 </ul>
 <p>The power triangle is identical in shape to the impedance triangle (<span class="arithmatex">\(|Z|\)</span>, R, X).</p>
 <hr />
-<h2 id="107-power-factor" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">10.7 Power Factor: Leading and Lagging</h2>
+<h2 id="107-power-factor-leading-and-lagging">10.7 Power Factor: Leading and Lagging</h2>
 <p><strong>Power factor</strong> (PF) = <span class="arithmatex">\(\cos\theta = P/S\)</span>. It ranges from 0 to 1 and measures how efficiently apparent power converts to real work.</p>
 <p><strong>Lagging power factor</strong> — current lags voltage (inductive loads: motors, transformers, ballasts):
 - <span class="arithmatex">\(\theta &gt; 0\)</span>, <span class="arithmatex">\(Q &gt; 0\)</span>, load absorbs VARs from source</p>
@@ -4903,7 +4915,7 @@
 </tbody>
 </table>
 <hr />
-<h2 id="108-power-factor-correction" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">10.8 Power Factor Correction</h2>
+<h2 id="108-power-factor-correction">10.8 Power Factor Correction</h2>
 <p><strong>Power factor correction</strong> improves PF by adding capacitors in parallel with inductive loads. The capacitors supply reactive power locally, reducing the reactive current drawn from the source.</p>
 <p><strong>Benefits:</strong> reduced line current, less I²R loss, increased infrastructure capacity, avoided utility penalties.</p>
 <p><strong>Correction formula</strong> — to improve from <span class="arithmatex">\(\theta_1\)</span> to <span class="arithmatex">\(\theta_2\)</span>:</p>
@@ -4916,7 +4928,7 @@
 <p><span class="arithmatex">\(C = 6{,}910 / (2\pi \times 60 \times 240^2) = 319\)</span> μF</p>
 <p>A 320 μF capacitor reduces reactive demand from the utility by 6,910 VAR.</p>
 <hr />
-<h2 id="109-power-in-elements" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">10.9 Power in Resistors, Capacitors, and Inductors</h2>
+<h2 id="109-power-in-resistors-capacitors-and-inductors">10.9 Power in Resistors, Capacitors, and Inductors</h2>
 <p>Each passive component has distinct power behavior:</p>
 <p><strong>Resistors</strong> — voltage and current are in phase (<span class="arithmatex">\(\theta = 0\)</span>):</p>
 <div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
@@ -4961,7 +4973,7 @@
 </tbody>
 </table>
 <hr />
-<h2 id="1010-maximum-power-transfer" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">10.10 Maximum Power Transfer in AC</h2>
+<h2 id="1010-maximum-power-transfer-in-ac">10.10 Maximum Power Transfer in AC</h2>
 <p>For maximum power transfer from a source with internal impedance <span class="arithmatex">\(Z_s = R_s + jX_s\)</span> to load <span class="arithmatex">\(Z_L\)</span>:</p>
 <div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
 <div class="arithmatex">\[Z_L = Z_s^* = R_s - jX_s \qquad P_{max} = \frac{|V_s|^2}{4R_s}\]</div>
@@ -4969,7 +4981,7 @@
 </div>
 <p>At conjugate matching: <span class="arithmatex">\(R_L = R_s\)</span> (equal resistances) and <span class="arithmatex">\(X_L = -X_s\)</span> (reactances cancel). The result is resonance — maximum current and maximum power transfer — but efficiency is only 50%. This trade-off is acceptable in RF and audio signal systems; power delivery systems optimize for efficiency instead.</p>
 <hr />
-<h2 id="1011-efficiency-and-gain" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">10.11 Efficiency and Power Gain</h2>
+<h2 id="1011-efficiency-and-power-gain">10.11 Efficiency and Power Gain</h2>
 <p><strong>Efficiency:</strong></p>
 <div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
 <div class="arithmatex">\[\eta = \frac{P_{out}}{P_{in}} \times 100\%\]</div>
@@ -5009,7 +5021,7 @@
 <div class="arithmatex">\[A_P = \frac{P_{out}}{P_{in}} \qquad A_P(dB) = 10\log_{10}\!\left(\frac{P_{out}}{P_{in}}\right)\]</div>
 </div>
 <hr />
-<h2 id="1012-worked-example" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">10.12 Worked Example: Complete Power Analysis</h2>
+<h2 id="1012-worked-example-complete-power-analysis">10.12 Worked Example: Complete Power Analysis</h2>
 <p><strong>Problem:</strong> A series RL load with R = 30 Ω and <span class="arithmatex">\(X_L = 40\)</span> Ω is connected to a 120 V RMS, 60 Hz source. Find all power quantities and the capacitor needed for unity PF correction.</p>
 <p><strong>Step 1 — Impedance and current:</strong></p>
 <p><span class="arithmatex">\(Z = 30 + j40 = 50\angle 53.13°\)</span> Ω <span class="arithmatex">\(\quad I_{rms} = 120/50 = 2.4\)</span> A</p>
@@ -5023,7 +5035,7 @@
 <p><span class="arithmatex">\(Q_C = -230.4\)</span> VAR needed. <span class="arithmatex">\(C = 230.4 / (2\pi \times 60 \times 120^2) = 42.5\)</span> μF</p>
 <p>After correction: current drops from 2.4 A to <span class="arithmatex">\(172.8/120 = 1.44\)</span> A — a 40% reduction!</p>
 <hr />
-<h2 id="1013-chapter-summary" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">10.13 Chapter Summary</h2>
+<h2 id="1013-chapter-summary">10.13 Chapter Summary</h2>
 <div style="background: #F8F6FF; border: 2px solid #D4C8FF; border-radius: 12px; padding: 20px 28px; margin: 1rem 0;">
 <p><strong>The three power quantities:</strong></p>
 <table>

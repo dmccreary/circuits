@@ -2802,7 +2802,7 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#111-introduction" class="md-nav__link">
+  <a href="#111-introduction-how-circuits-hear-the-world" class="md-nav__link">
     <span class="md-ellipsis">
       
         11.1 Introduction: How Circuits Hear the World
@@ -2824,7 +2824,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#113-magnitude-phase" class="md-nav__link">
+  <a href="#113-magnitude-and-phase-response" class="md-nav__link">
     <span class="md-ellipsis">
       
         11.3 Magnitude and Phase Response
@@ -2891,7 +2891,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#115-cutoff" class="md-nav__link">
+  <a href="#115-cutoff-frequency-and-the-half-power-point" class="md-nav__link">
     <span class="md-ellipsis">
       
         11.5 Cutoff Frequency and the Half-Power Point
@@ -2902,7 +2902,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#116-rolloff" class="md-nav__link">
+  <a href="#116-roll-off-rate-and-filter-order" class="md-nav__link">
     <span class="md-ellipsis">
       
         11.6 Roll-Off Rate and Filter Order
@@ -2913,7 +2913,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#117-asymptotic" class="md-nav__link">
+  <a href="#117-asymptotic-approximation" class="md-nav__link">
     <span class="md-ellipsis">
       
         11.7 Asymptotic Approximation
@@ -2963,7 +2963,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#118-poles-zeros" class="md-nav__link">
+  <a href="#118-poles-and-zeros" class="md-nav__link">
     <span class="md-ellipsis">
       
         11.8 Poles and Zeros
@@ -3035,7 +3035,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#1110-practical-circuits" class="md-nav__link">
+  <a href="#1110-practical-filter-circuits-and-worked-examples" class="md-nav__link">
     <span class="md-ellipsis">
       
         11.10 Practical Filter Circuits and Worked Examples
@@ -3096,7 +3096,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#1111-summary" class="md-nav__link">
+  <a href="#1111-chapter-summary" class="md-nav__link">
     <span class="md-ellipsis">
       
         11.11 Chapter Summary
@@ -4899,12 +4899,24 @@
 
 <div class="unit1-styled">
 <h1 id="chapter-11-frequency-response-and-bode-plots">Chapter 11 — Frequency Response and Bode Plots</h1>
-<h2 id="111-introduction" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">11.1 Introduction: How Circuits Hear the World</h2>
+<details class="video-overview">
+<summary><strong>Chapter Overview</strong> (click to expand)</summary>
+
+Frequency response analysis reveals how a circuit treats signals of different frequencies, describing the gain and phase shift at every point in the spectrum through the transfer function H(jω). This chapter introduces Bode plots — logarithmic graphs of magnitude (in decibels) and phase versus frequency — as the standard engineering tool for visualizing and designing circuit frequency behavior.
+
+**Key Takeaways**
+
+1. The transfer function H(jω) = V_out / V_in is a complex-valued function of frequency that fully characterizes a linear circuit's input-output relationship.
+2. Bode magnitude plots use a decibel scale (20 log|H|) and a logarithmic frequency axis, allowing asymptotic straight-line approximations that make hand analysis practical.
+3. Poles and zeros of the transfer function each contribute predictable ±20 dB/decade slopes and ±90° phase shifts to the Bode plot, making design by inspection possible.
+
+</details>
+<h2 id="111-introduction-how-circuits-hear-the-world">11.1 Introduction: How Circuits Hear the World</h2>
 <p>Different musical instruments sound different even when playing the same note. A piano, a violin, and a synthesizer all playing middle C share the same fundamental frequency, but they sound completely different because of their harmonic content — the mix of frequencies above that fundamental.</p>
 <p>Circuits behave the same way. They do not treat all frequencies equally. Some circuits amplify low frequencies and attenuate high ones (like a bass boost). Others pass high frequencies while blocking low ones (like a treble filter). Understanding <em>how</em> a circuit responds to different frequencies is the key to designing audio equalizers, radio receivers, noise filters, and countless other applications.</p>
 <p><strong>Frequency response analysis</strong> asks: "What does this circuit do to <em>all</em> frequencies?" The answer comes in the form of curves called <strong>Bode plots</strong> — named after Hendrik Bode, a Bell Labs engineer who developed these techniques in the 1930s for telephone network analysis.</p>
 <p><strong>Key insight for linear circuits:</strong> When a sinusoidal input at frequency <span class="arithmatex">\(f\)</span> is applied to a linear circuit, the output is always a sinusoid at the <em>same</em> frequency <span class="arithmatex">\(f\)</span> — only the amplitude and phase change. Frequency response tells us exactly how much the amplitude changes and how much the phase shifts at every frequency.</p>
-<h2 id="112-transfer-function" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">11.2 Transfer Function</h2>
+<h2 id="112-transfer-function">11.2 Transfer Function</h2>
 <p>The <strong>transfer function</strong> <span class="arithmatex">\(H(j\omega)\)</span> is the ratio of the output phasor to the input phasor as a function of angular frequency <span class="arithmatex">\(\omega = 2\pi f\)</span>:</p>
 <div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 10px; padding: 16px 20px; margin: 1.2rem 0;">
 
@@ -4956,7 +4968,7 @@
 </tr>
 </tbody>
 </table>
-<h2 id="113-magnitude-phase" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">11.3 Magnitude and Phase Response</h2>
+<h2 id="113-magnitude-and-phase-response">11.3 Magnitude and Phase Response</h2>
 <h3 id="magnitude-response">Magnitude Response</h3>
 <p>The <strong>magnitude response</strong> tells us the gain (or attenuation) that the circuit applies to signals of each frequency. It is often expressed in <strong>decibels (dB)</strong>:</p>
 <div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 10px; padding: 16px 20px; margin: 1.2rem 0;">
@@ -5030,7 +5042,7 @@
 <li><strong>Positive phase</strong>: output <em>leads</em> input (common for high-pass filters at low frequency)</li>
 <li><strong>At the cutoff frequency</strong> of a first-order filter: <span class="arithmatex">\(\phi = \pm 45°\)</span></li>
 </ul>
-<h2 id="114-bode-plots" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">11.4 Bode Plots</h2>
+<h2 id="114-bode-plots">11.4 Bode Plots</h2>
 <p>A <strong>Bode plot</strong> is a pair of graphs that display the frequency response of a circuit:</p>
 <ol>
 <li><strong>Bode magnitude plot</strong> — <span class="arithmatex">\(|H|\)</span> in dB on the vertical axis vs. <span class="arithmatex">\(\log_{10}(f)\)</span> on the horizontal axis</li>
@@ -5077,7 +5089,7 @@
 </table>
 <p>Roll-off rates are quoted in <strong>dB/decade</strong> (more common in the US) or <strong>dB/octave</strong> (common in audio engineering):</p>
 <div class="arithmatex">\[-20\ \mathrm{dB/decade} = -6\ \mathrm{dB/octave}\]</div>
-<h2 id="115-cutoff" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">11.5 Cutoff Frequency and the Half-Power Point</h2>
+<h2 id="115-cutoff-frequency-and-the-half-power-point">11.5 Cutoff Frequency and the Half-Power Point</h2>
 <p>The <strong>cutoff frequency</strong> <span class="arithmatex">\(f_c\)</span> (also called the <strong>corner frequency</strong> or <strong>break frequency</strong>) is the frequency at which the magnitude response falls to <span class="arithmatex">\(1/\sqrt{2} \approx 0.707\)</span> of its passband maximum — exactly <span class="arithmatex">\(-3\)</span> dB:</p>
 <div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 10px; padding: 16px 20px; margin: 1.2rem 0;">
 
@@ -5103,7 +5115,7 @@
 <p class="admonition-title">Three Names, One Frequency</p>
 <p>Cutoff frequency, corner frequency, break frequency, and half-power frequency all refer to the same point <span class="arithmatex">\(f_c\)</span>. In Bode plot construction, "corner" is most common because it is where the asymptotic approximation "corners" or bends.</p>
 </div>
-<h2 id="116-rolloff" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">11.6 Roll-Off Rate and Filter Order</h2>
+<h2 id="116-roll-off-rate-and-filter-order">11.6 Roll-Off Rate and Filter Order</h2>
 <p>The <strong>roll-off rate</strong> describes how quickly the magnitude response decreases beyond the cutoff frequency. It is determined by the <strong>filter order</strong> — the number of independent reactive elements (capacitors and inductors) in the filter circuit.</p>
 <div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 10px; padding: 16px 20px; margin: 1.2rem 0;">
 
@@ -5197,7 +5209,7 @@ where \(n\) is the filter order (number of poles).
 </tr>
 </tbody>
 </table>
-<h2 id="117-asymptotic" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">11.7 Asymptotic Approximation</h2>
+<h2 id="117-asymptotic-approximation">11.7 Asymptotic Approximation</h2>
 <p><strong>Asymptotic approximation</strong> (also called the straight-line Bode approximation) replaces the smooth, curved frequency response with piecewise-linear segments. It makes Bode plots fast to sketch by hand and reveals key behavior at a glance.</p>
 <h3 id="magnitude-asymptotes-for-a-first-order-low-pass-filter">Magnitude Asymptotes for a First-Order Low-Pass Filter</h3>
 <p>For <span class="arithmatex">\(H(j\omega) = \dfrac{1}{1 + j\omega/\omega_c}\)</span>:</p>
@@ -5245,7 +5257,7 @@ where \(n\) is the filter order (number of poles).
 <li>Each <strong>pole</strong> contributes a <span class="arithmatex">\(-90°\)</span> transition spanning one decade on each side of <span class="arithmatex">\(\omega_p\)</span>.</li>
 <li>Each <strong>zero</strong> contributes a <span class="arithmatex">\(+90°\)</span> transition spanning one decade on each side of <span class="arithmatex">\(\omega_z\)</span>.</li>
 </ol>
-<h2 id="118-poles-zeros" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">11.8 Poles and Zeros</h2>
+<h2 id="118-poles-and-zeros">11.8 Poles and Zeros</h2>
 <p><strong>Poles and zeros</strong> are the characteristic frequencies embedded in the transfer function. They come from factoring <span class="arithmatex">\(H(s)\)</span> (the Laplace-domain transfer function, evaluated at <span class="arithmatex">\(s = j\omega\)</span> for frequency response).</p>
 <p><strong>General factored form:</strong></p>
 <div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 10px; padding: 16px 20px; margin: 1.2rem 0;">
@@ -5302,7 +5314,7 @@ where \(n\) is the filter order (number of poles).
 <p class="admonition-title">Poles Determine Filter Order</p>
 <p>The number of poles equals the filter order and equals the number of independent reactive elements. Count poles — not zeros — to determine the roll-off rate.</p>
 </div>
-<h2 id="119-filter-types" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">11.9 Filter Types</h2>
+<h2 id="119-filter-types">11.9 Filter Types</h2>
 <p>A <strong>filter</strong> is a circuit designed to pass signals in certain frequency ranges (the <strong>passband</strong>) while attenuating signals in other ranges (the <strong>stopband</strong>). There are four fundamental filter types:</p>
 <h3 id="low-pass-filter-lpf">Low-Pass Filter (LPF)</h3>
 <p><strong>Passes</strong> frequencies below the cutoff; <strong>blocks</strong> frequencies above the cutoff.</p>
@@ -5392,7 +5404,7 @@ where \(n\) is the filter order (number of poles).
 </tr>
 </tbody>
 </table>
-<h2 id="1110-practical-circuits" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">11.10 Practical Filter Circuits and Worked Examples</h2>
+<h2 id="1110-practical-filter-circuits-and-worked-examples">11.10 Practical Filter Circuits and Worked Examples</h2>
 <h3 id="first-order-rc-low-pass-filter">First-Order RC Low-Pass Filter</h3>
 <p><strong>Circuit:</strong> Series <span class="arithmatex">\(R\)</span>, shunt <span class="arithmatex">\(C\)</span>, output across <span class="arithmatex">\(C\)</span>.</p>
 <div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 10px; padding: 16px 20px; margin: 1.2rem 0;">
@@ -5448,7 +5460,7 @@ where \(n\) is the filter order (number of poles).
 <li>Roll-off: <span class="arithmatex">\(-40\)</span> dB/decade above <span class="arithmatex">\(\omega_0\)</span></li>
 <li>Maximum phase shift: <span class="arithmatex">\(-180°\)</span></li>
 </ul>
-<h2 id="1111-summary" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">11.11 Chapter Summary</h2>
+<h2 id="1111-chapter-summary">11.11 Chapter Summary</h2>
 <p>Frequency response analysis is one of the most powerful and widely applied tools in electrical engineering. The key ideas of this chapter:</p>
 <ol>
 <li>

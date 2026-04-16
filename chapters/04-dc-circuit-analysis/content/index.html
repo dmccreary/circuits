@@ -1370,7 +1370,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#45-nodal-analysis-advanced" class="md-nav__link">
+  <a href="#45-advanced-nodal-and-mesh-analysis" class="md-nav__link">
     <span class="md-ellipsis">
       
         4.5 Advanced Nodal and Mesh Analysis
@@ -1392,7 +1392,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#47-input-output-resistance" class="md-nav__link">
+  <a href="#47-input-resistance-output-resistance-and-the-loading-effect" class="md-nav__link">
     <span class="md-ellipsis">
       
         4.7 Input Resistance, Output Resistance, and the Loading Effect
@@ -4682,7 +4682,19 @@
 
 <div class="unit1-styled">
 <h1 id="chapter-4-dc-circuit-analysis-methods">Chapter 4 — DC Circuit Analysis Methods</h1>
-<h2 id="41-source-transformation" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">4.1 Source Transformation</h2>
+<details class="video-overview">
+<summary><strong>Chapter Overview</strong> (click to expand)</summary>
+
+This chapter presents the most powerful methods for analyzing DC circuits: the node voltage method, the mesh current method, superposition, and the Thevenin and Norton equivalent circuit theorems. These techniques let engineers reduce complex networks to simple models and calculate any desired quantity without solving a full system of equations from scratch every time.
+
+**Key Takeaways**
+
+1. The node voltage and mesh current methods provide systematic procedures for setting up and solving the equations that describe any DC circuit.
+2. The superposition theorem allows each independent source to be analyzed separately, with results added together to find the total response.
+3. Thevenin's and Norton's theorems let you replace any linear network with a simple two-element equivalent, greatly simplifying load analysis and design.
+
+</details>
+<h2 id="41-source-transformation">4.1 Source Transformation</h2>
 <p>Every circuit has sources — things that push energy into the circuit. A <strong>voltage source</strong> forces a specific voltage across its terminals regardless of current. A <strong>current source</strong> forces a specific current through itself regardless of voltage. Here's the punchline: any practical source can be converted between these two forms without changing the behavior at the terminals.</p>
 <p>This is <strong>source transformation</strong>, and it's the circuit equivalent of being ambidextrous. Sometimes a voltage source model is easier to work with; sometimes a current source model is. With source transformation, you get to choose.</p>
 <p><strong>Voltage source → Current source:</strong></p>
@@ -4702,7 +4714,7 @@
 <p><strong>Example:</strong> A 12 V voltage source in series with a 4 Ω resistor transforms to a 3 A current source in parallel with 4 Ω. Verify: if you connect a 2 Ω load, the original gives <span class="arithmatex">\(I = 12/(4+2) = 2\)</span> A; the transformed gives <span class="arithmatex">\(I_L = 3 \times 4/(4+2) = 2\)</span> A. ✓</p>
 <p>Source transformation is most powerful when you chain multiple transformations to consolidate sources — turning a complex network into something you can solve by inspection.</p>
 <hr />
-<h2 id="42-thevenins-theorem" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">4.2 Thévenin's Theorem</h2>
+<h2 id="42-thevenins-theorem">4.2 Thévenin's Theorem</h2>
 <p>Here is one of the most powerful ideas in all of circuit analysis: <strong>any linear circuit with sources and resistors, viewed from two terminals, is electrically equivalent to a single voltage source <span class="arithmatex">\(V_{Th}\)</span> in series with a single resistance <span class="arithmatex">\(R_{Th}\)</span>.</strong></p>
 <p>This is <strong>Thévenin's theorem</strong>, published by Léon Charles Thévenin in 1883. It means that no matter how many components are inside a black box — dozens of resistors, multiple sources, complicated networks — it all collapses to just two elements from the perspective of whatever you connect to it.</p>
 <p><strong>Finding <span class="arithmatex">\(V_{Th}\)</span>:</strong></p>
@@ -4732,7 +4744,7 @@
 Kill the source (short): <span class="arithmatex">\(R_{Th} = 6 \| 4 \)</span> ... wait, R2 is between A and B, so only R1 appears across terminals → <span class="arithmatex">\(R_{Th} = 6 \| \infty\)</span> — actually <span class="arithmatex">\(R_{Th}\)</span> = 6 Ω (R1 in parallel with the shorted source, R2 is the load, not part of the network).</p>
 <p>The Thévenin equivalent is 12 V in series with 6 Ω.</p>
 <hr />
-<h2 id="43-nortons-theorem" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">4.3 Norton's Theorem</h2>
+<h2 id="43-nortons-theorem">4.3 Norton's Theorem</h2>
 <p><strong>Norton's theorem</strong> is Thévenin's theorem wearing different clothes. It states that any linear circuit viewed from two terminals is equivalent to a <strong>current source <span class="arithmatex">\(I_N\)</span> in parallel with a resistance <span class="arithmatex">\(R_N\)</span>.</strong></p>
 <p>The relationship between the two theorems is:</p>
 <div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
@@ -4751,7 +4763,7 @@ Kill the source (short): <span class="arithmatex">\(R_{Th} = 6 \| 4 \)</span> ..
 <p>Use <strong>Thévenin</strong> when the load is in series with other elements, or when you're interested in voltage. Use <strong>Norton</strong> when the load is in parallel with other elements, or when you're interested in current. You can always convert between them.</p>
 </div>
 <hr />
-<h2 id="44-maximum-power-transfer" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">4.4 Maximum Power Transfer</h2>
+<h2 id="44-maximum-power-transfer">4.4 Maximum Power Transfer</h2>
 <p>How do you design a circuit to deliver the most power to a load? This question matters in audio amplifiers (delivering power to speakers), radio transmitters (delivering power to antennas), and sensor interfaces.</p>
 <p>Using the Thévenin equivalent, the circuit looks like <span class="arithmatex">\(V_{Th}\)</span> in series with <span class="arithmatex">\(R_{Th}\)</span>, connected to load <span class="arithmatex">\(R_L\)</span>. The power delivered to the load is:</p>
 <div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
@@ -4765,7 +4777,7 @@ Kill the source (short): <span class="arithmatex">\(R_{Th} = 6 \| 4 \)</span> ..
 <p>The efficiency at maximum power transfer is exactly 50% — half the source power goes to the load, half is dissipated in <span class="arithmatex">\(R_{Th}\)</span>. This is fine for signal applications (you want <em>maximum power</em>, not efficiency) but unacceptable for power delivery applications (power companies would hate 50% efficiency).</p>
 <p><strong>Example:</strong> A source with <span class="arithmatex">\(V_{Th} = 10\)</span> V and <span class="arithmatex">\(R_{Th} = 50\)</span> Ω delivers maximum power when <span class="arithmatex">\(R_L = 50\)</span> Ω. Maximum power: <span class="arithmatex">\(P_{max} = 100 / (4 \times 50) = 0.5\)</span> W.</p>
 <hr />
-<h2 id="45-nodal-analysis-advanced" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">4.5 Advanced Nodal and Mesh Analysis</h2>
+<h2 id="45-advanced-nodal-and-mesh-analysis">4.5 Advanced Nodal and Mesh Analysis</h2>
 <p>You encountered nodal analysis and mesh analysis in Chapter 3. This section extends those methods to handle circuits with dependent sources — a critically important capability for analyzing transistor and op-amp circuits.</p>
 <p><strong>Dependent sources</strong> produce a voltage or current that depends on some other voltage or current in the circuit. There are four types:</p>
 <table>
@@ -4813,7 +4825,7 @@ Kill the source (short): <span class="arithmatex">\(R_{Th} = 6 \| 4 \)</span> ..
 <p>Nodal analysis gives <span class="arithmatex">\(n-1\)</span> equations for <span class="arithmatex">\(n\)</span> nodes. Mesh analysis gives <span class="arithmatex">\(b - n + 1\)</span> equations for <span class="arithmatex">\(b\)</span> branches and <span class="arithmatex">\(n\)</span> nodes. Choose whichever produces fewer equations for the circuit at hand.</p>
 </div>
 <hr />
-<h2 id="46-two-port-networks" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">4.6 Two-Port Networks</h2>
+<h2 id="46-two-port-networks">4.6 Two-Port Networks</h2>
 <p>A <strong>two-port network</strong> is a circuit viewed from two pairs of terminals: an input port and an output port. This is the standard model for amplifiers, filters, and any device with a defined input and output.</p>
 <p>At the input port: voltage <span class="arithmatex">\(V_1\)</span>, current <span class="arithmatex">\(I_1\)</span> (entering).<br />
 At the output port: voltage <span class="arithmatex">\(V_2\)</span>, current <span class="arithmatex">\(I_2\)</span> (entering).</p>
@@ -4827,7 +4839,7 @@ At the output port: voltage <span class="arithmatex">\(V_2\)</span>, current <sp
 <div class="arithmatex">\[\begin{bmatrix} V_1 \\ I_2 \end{bmatrix} = \begin{bmatrix} h_{11} &amp; h_{12} \\ h_{21} &amp; h_{22} \end{bmatrix} \begin{bmatrix} I_1 \\ V_2 \end{bmatrix}\]</div>
 </div>
 <hr />
-<h2 id="47-input-output-resistance" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">4.7 Input Resistance, Output Resistance, and the Loading Effect</h2>
+<h2 id="47-input-resistance-output-resistance-and-the-loading-effect">4.7 Input Resistance, Output Resistance, and the Loading Effect</h2>
 <p>When you connect one circuit to another, they interact. This interaction — called the <strong>loading effect</strong> — is one of the most practically important phenomena in circuit design.</p>
 <p><strong>Input resistance</strong> (<span class="arithmatex">\(R_{in}\)</span>) is the resistance seen looking into the input port of a circuit. Measured as <span class="arithmatex">\(R_{in} = V_{in} / I_{in}\)</span> with the output port open.</p>
 <p><strong>Output resistance</strong> (<span class="arithmatex">\(R_{out}\)</span>) is the Thévenin resistance seen looking back into the output port. Measured with all independent sources killed (but dependent sources remain).</p>
@@ -4840,7 +4852,7 @@ At the output port: voltage <span class="arithmatex">\(V_2\)</span>, current <sp
 - Make the source output resistance <strong>much smaller</strong> than the load input resistance: <span class="arithmatex">\(R_{out,source} \ll R_{in,load}\)</span>
 - This is why ideal voltage amplifiers have <span class="arithmatex">\(R_{out} \to 0\)</span> and <span class="arithmatex">\(R_{in} \to \infty\)</span></p>
 <hr />
-<h2 id="48-chapter-summary" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">4.8 Chapter Summary</h2>
+<h2 id="48-chapter-summary">4.8 Chapter Summary</h2>
 <div style="background: #F8F6FF; border: 2px solid #D4C8FF; border-radius: 12px; padding: 20px 28px; margin: 1rem 0;">
 <p><strong>Core theorems:</strong>
 - <strong>Source transformation</strong>: Voltage source + series R ↔ Current source + parallel R, with <span class="arithmatex">\(I_N = V_S / R\)</span>

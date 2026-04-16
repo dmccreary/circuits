@@ -1732,7 +1732,7 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#61-transient-vs-steady-state" class="md-nav__link">
+  <a href="#61-transient-vs-steady-state-response" class="md-nav__link">
     <span class="md-ellipsis">
       
         6.1 Transient vs. Steady-State Response
@@ -1765,7 +1765,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#64-rc-circuit-discharging" class="md-nav__link">
+  <a href="#64-the-rc-circuit-discharging" class="md-nav__link">
     <span class="md-ellipsis">
       
         6.4 The RC Circuit: Discharging
@@ -1798,7 +1798,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#67-natural-forced-complete-response" class="md-nav__link">
+  <a href="#67-natural-forced-and-complete-response" class="md-nav__link">
     <span class="md-ellipsis">
       
         6.7 Natural, Forced, and Complete Response
@@ -1809,7 +1809,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#68-worked-example" class="md-nav__link">
+  <a href="#68-worked-example-complete-transient-analysis" class="md-nav__link">
     <span class="md-ellipsis">
       
         6.8 Worked Example: Complete Transient Analysis
@@ -4693,7 +4693,19 @@
 
 <div class="unit1-styled">
 <h1 id="chapter-6-transient-analysis-of-rc-and-rl-circuits">Chapter 6 — Transient Analysis of RC and RL Circuits</h1>
-<h2 id="61-transient-vs-steady-state" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">6.1 Transient vs. Steady-State Response</h2>
+<details class="video-overview">
+<summary><strong>Chapter Overview</strong> (click to expand)</summary>
+
+When a switch opens or closes in a circuit containing a capacitor or inductor, the circuit transitions between two steady states through an exponential transient governed by a characteristic time constant. This chapter develops the complete analytical framework for first-order RC and RL circuits, covering both the natural response (energy decay) and the step response (energy charging).
+
+**Key Takeaways**
+
+1. The time constant tau (τ = RC or τ = L/R) determines how quickly a first-order circuit responds — after five time constants, the circuit is essentially at its new steady state.
+2. The natural response is a decaying exponential representing the release of stored energy with no external forcing.
+3. The complete response combines the natural response with the forced (particular) response to describe circuit behavior for any initial conditions and source values.
+
+</details>
+<h2 id="61-transient-vs-steady-state-response">6.1 Transient vs. Steady-State Response</h2>
 <p>Every circuit exists in one of two states: <strong>steady state</strong> or <strong>transient</strong>.</p>
 <p>In <strong>steady state</strong>, all voltages and currents are constant (for DC) or periodic (for AC). Nothing is changing — the circuit has settled to its final behavior. This is the comfortable world of Chapters 1–4.</p>
 <p>A <strong>transient</strong> occurs whenever the circuit is disturbed — a switch opens or closes, a source turns on or off. During the transient, the circuit transitions from one steady state to another. The transient is temporary; eventually the circuit reaches the new steady state.</p>
@@ -4702,7 +4714,7 @@
 - An inductor's current cannot change instantaneously (stored magnetic energy must be released through finite resistance)</p>
 <p>This chapter focuses on <strong>first-order circuits</strong> — circuits with exactly one energy storage element (one capacitor or one inductor). These circuits always produce <strong>exponential</strong> transients.</p>
 <hr />
-<h2 id="62-the-rc-circuit-charging" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">6.2 The RC Circuit: Charging</h2>
+<h2 id="62-the-rc-circuit-charging">6.2 The RC Circuit: Charging</h2>
 <p>Consider a resistor <span class="arithmatex">\(R\)</span> in series with a capacitor <span class="arithmatex">\(C\)</span>, connected to a voltage source <span class="arithmatex">\(V_S\)</span> via a switch closed at <span class="arithmatex">\(t = 0\)</span>. The capacitor starts uncharged (<span class="arithmatex">\(V_C(0) = 0\)</span>).</p>
 <p>Applying KVL around the loop:</p>
 <div class="arithmatex">\[V_S = V_R + V_C = i R + V_C\]</div>
@@ -4752,7 +4764,7 @@
 </tbody>
 </table>
 <hr />
-<h2 id="63-the-time-constant" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">6.3 The Time Constant</h2>
+<h2 id="63-the-time-constant">6.3 The Time Constant</h2>
 <p>The product <span class="arithmatex">\(RC\)</span> appears in the exponent and has units of seconds. It is called the <strong>time constant</strong> <span class="arithmatex">\(\tau\)</span> (tau):</p>
 <div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
 <div class="arithmatex">\[\tau = RC\]</div>
@@ -4767,7 +4779,7 @@
 <p><strong>Example:</strong> An RC circuit with <span class="arithmatex">\(R = 10\)</span> kΩ and <span class="arithmatex">\(C = 47\)</span> μF has <span class="arithmatex">\(\tau = 10\,000 \times 47 \times 10^{-6} = 0.47\)</span> s. After <span class="arithmatex">\(5\tau = 2.35\)</span> s, the capacitor is fully charged.</p>
 <p>The time constant applies equally to the discharging case.</p>
 <hr />
-<h2 id="64-rc-circuit-discharging" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">6.4 The RC Circuit: Discharging</h2>
+<h2 id="64-the-rc-circuit-discharging">6.4 The RC Circuit: Discharging</h2>
 <p>Now consider a capacitor initially charged to <span class="arithmatex">\(V_0\)</span>, connected to a resistor at <span class="arithmatex">\(t = 0\)</span> (with the source removed). The capacitor discharges through the resistor.</p>
 <p>Applying KVL: <span class="arithmatex">\(V_C = -iR\)</span> (current flows opposite to charging direction), which gives:</p>
 <div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
@@ -4780,7 +4792,7 @@
 <p>When finding the time constant, reduce the circuit seen by the capacitor (or inductor) to its Thévenin equivalent. Then <span class="arithmatex">\(\tau = R_{Th} \cdot C\)</span> or <span class="arithmatex">\(\tau = L / R_{Th}\)</span>.</p>
 </div>
 <hr />
-<h2 id="65-the-rl-circuit" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">6.5 The RL Circuit</h2>
+<h2 id="65-the-rl-circuit">6.5 The RL Circuit</h2>
 <p>An <strong>RL circuit</strong> pairs a resistor <span class="arithmatex">\(R\)</span> with an inductor <span class="arithmatex">\(L\)</span>. It behaves as the dual of the RC circuit, with current replacing voltage and inductance replacing capacitance.</p>
 <p><strong>Energizing (switch closed at <span class="arithmatex">\(t = 0\)</span>, inductor initially uncharged):</strong></p>
 <div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
@@ -4830,7 +4842,7 @@
 </tbody>
 </table>
 <hr />
-<h2 id="66-initial-and-final-conditions" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">6.6 Initial and Final Conditions</h2>
+<h2 id="66-initial-and-final-conditions">6.6 Initial and Final Conditions</h2>
 <p>To solve any first-order transient, you need two pieces of information: the <strong>initial condition</strong> and the <strong>final condition</strong>.</p>
 <p><strong>Initial condition <span class="arithmatex">\(x(0^+)\)</span>:</strong></p>
 <p>The value of the state variable immediately after switching. Due to continuity:
@@ -4844,7 +4856,7 @@
 - Capacitor → open circuit
 - Inductor → short circuit</p>
 <hr />
-<h2 id="67-natural-forced-complete-response" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">6.7 Natural, Forced, and Complete Response</h2>
+<h2 id="67-natural-forced-and-complete-response">6.7 Natural, Forced, and Complete Response</h2>
 <p>The complete response of a first-order circuit has two components:</p>
 <p><strong>Natural response</strong> <span class="arithmatex">\(x_n(t)\)</span>: The circuit's response due to its initial stored energy, with no external forcing. It decays to zero:</p>
 <div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
@@ -4864,7 +4876,7 @@
 <li>Write the solution: <span class="arithmatex">\(x(t) = x(\infty) + [x(0) - x(\infty)]e^{-t/\tau}\)</span></li>
 </ol>
 <hr />
-<h2 id="68-worked-example" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">6.8 Worked Example: Complete Transient Analysis</h2>
+<h2 id="68-worked-example-complete-transient-analysis">6.8 Worked Example: Complete Transient Analysis</h2>
 <p><strong>Problem:</strong> A 24 V source drives a circuit with R1 = 6 kΩ in series with a parallel combination of R2 = 12 kΩ and C = 10 μF. The switch closes at <span class="arithmatex">\(t = 0\)</span>. Find <span class="arithmatex">\(V_C(t)\)</span> for <span class="arithmatex">\(t \geq 0\)</span>.</p>
 <p>Assume the capacitor is initially uncharged.</p>
 <p><strong>Step 1 — Initial condition:</strong>
@@ -4882,7 +4894,7 @@ Kill the source (short); Thévenin resistance seen by C = R1 ∥ R2 = (6k × 12k
 </div>
 <p>At <span class="arithmatex">\(t = \tau = 40\)</span> ms: <span class="arithmatex">\(V_C = 16(1 - e^{-1}) = 16 \times 0.632 = 10.1\)</span> V ✓</p>
 <hr />
-<h2 id="69-chapter-summary" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">6.9 Chapter Summary</h2>
+<h2 id="69-chapter-summary">6.9 Chapter Summary</h2>
 <div style="background: #F8F6FF; border: 2px solid #D4C8FF; border-radius: 12px; padding: 20px 28px; margin: 1rem 0;">
 <p><strong>Key results:</strong></p>
 <table>

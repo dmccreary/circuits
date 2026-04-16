@@ -3275,7 +3275,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#132-ideal-op-amp" class="md-nav__link">
+  <a href="#132-the-ideal-op-amp-model" class="md-nav__link">
     <span class="md-ellipsis">
       
         13.2 The Ideal Op-Amp Model
@@ -3314,7 +3314,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#133-open-closed-loop" class="md-nav__link">
+  <a href="#133-open-loop-vs-closed-loop-gain" class="md-nav__link">
     <span class="md-ellipsis">
       
         13.3 Open-Loop vs. Closed-Loop Gain
@@ -3392,7 +3392,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#135-golden-rules" class="md-nav__link">
+  <a href="#135-the-golden-rules-virtual-short-and-virtual-ground" class="md-nav__link">
     <span class="md-ellipsis">
       
         13.5 The Golden Rules: Virtual Short and Virtual Ground
@@ -3492,7 +3492,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#137-non-inverting" class="md-nav__link">
+  <a href="#137-non-inverting-amplifier" class="md-nav__link">
     <span class="md-ellipsis">
       
         13.7 Non-Inverting Amplifier
@@ -3531,7 +3531,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#138-voltage-follower" class="md-nav__link">
+  <a href="#138-voltage-follower-buffer-amplifier" class="md-nav__link">
     <span class="md-ellipsis">
       
         13.8 Voltage Follower (Buffer Amplifier)
@@ -3559,7 +3559,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#139-arithmetic" class="md-nav__link">
+  <a href="#139-arithmetic-circuits" class="md-nav__link">
     <span class="md-ellipsis">
       
         13.9 Arithmetic Circuits
@@ -3609,7 +3609,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#1310-integrator-differentiator" class="md-nav__link">
+  <a href="#1310-integrator-and-differentiator" class="md-nav__link">
     <span class="md-ellipsis">
       
         13.10 Integrator and Differentiator
@@ -3648,7 +3648,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#1311-bandwidth-gbw" class="md-nav__link">
+  <a href="#1311-bandwidth-and-gain-bandwidth-product" class="md-nav__link">
     <span class="md-ellipsis">
       
         13.11 Bandwidth and Gain-Bandwidth Product
@@ -3759,7 +3759,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#1313-summary" class="md-nav__link">
+  <a href="#chapter-summary" class="md-nav__link">
     <span class="md-ellipsis">
       
         Chapter Summary
@@ -5100,7 +5100,19 @@
 
 <div class="unit1-styled">
 <h1 id="chapter-13-operational-amplifiers">Chapter 13 — Operational Amplifiers</h1>
-<h2 id="131-introduction" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">13.1 Introduction</h2>
+<details class="video-overview">
+<summary><strong>Chapter Overview</strong> (click to expand)</summary>
+
+Operational amplifiers are versatile integrated circuits that, combined with just a few external resistors, implement a wide range of signal processing functions with high precision and predictability. This chapter uses the ideal op-amp model and the two golden rules of negative feedback to analyze every fundamental configuration, from inverting and non-inverting amplifiers to integrators and differentiators.
+
+**Key Takeaways**
+
+1. The two golden rules of an ideal op-amp under negative feedback are: no current flows into the inputs, and the differential input voltage is zero.
+2. The closed-loop gain of an inverting amplifier is −R_f/R_1 and of a non-inverting amplifier is 1 + R_f/R_1, set entirely by external resistor ratios.
+3. Op-amps can perform mathematical operations on signals — summing, differencing, integrating, and differentiating — making them the building blocks of analog computation and signal conditioning.
+
+</details>
+<h2 id="131-introduction">13.1 Introduction</h2>
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 If passive components are the nouns of circuit language, <strong style="color: #333;">operational amplifiers</strong> are the verbs. They <em>do</em> things: amplify, buffer, sum, subtract, integrate, differentiate, compare, and oscillate. A single IC costing less than a dollar can perform tasks that would require dozens of discrete transistors and hours of careful matching and biasing.
 </p>
@@ -5110,11 +5122,11 @@ The operational amplifier earned its name from 1940s analog computers, where it 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.5rem;">
 The beauty of op-amp design lies in how <strong style="color: #333;">negative feedback</strong> tames enormous open-loop gain into precise, stable, predictable behavior. With just two rules — and a handful of resistors — you can design amplifiers with exactly the gain you need, every time, regardless of manufacturing variations between individual chips. This chapter teaches you those rules and applies them systematically to the complete family of fundamental op-amp configurations.
 </p>
-<h2 id="132-ideal-op-amp" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">13.2 The Ideal Op-Amp Model</h2>
+<h2 id="132-the-ideal-op-amp-model">13.2 The Ideal Op-Amp Model</h2>
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 The <strong style="color: #333;">ideal op-amp</strong> is a simplified model that makes circuit analysis straightforward. Real op-amps approach this ideal closely enough that the model yields accurate results for the vast majority of designs.
 </p>
-<h3 id="ideal-op-amp-characteristics" style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Ideal Op-Amp Characteristics</h3>
+<h3 id="ideal-op-amp-characteristics">Ideal Op-Amp Characteristics</h3>
 <table>
 <thead>
 <tr>
@@ -5156,7 +5168,7 @@ The <strong style="color: #333;">ideal op-amp</strong> is a simplified model tha
 </tr>
 </tbody>
 </table>
-<h3 id="the-op-amp-symbol" style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">The Op-Amp Symbol</h3>
+<h3 id="the-op-amp-symbol">The Op-Amp Symbol</h3>
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 The standard <strong style="color: #333;">op-amp symbol</strong> is a triangle pointing right with five terminals:
 </p>
@@ -5186,15 +5198,15 @@ where \(A\) is the open-loop gain (typically 100,000 to 1,000,000 for real op-am
 
 </p>
 </div>
-<h2 id="133-open-closed-loop" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">13.3 Open-Loop vs. Closed-Loop Gain</h2>
-<h3 id="open-loop-gain" style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Open-Loop Gain</h3>
+<h2 id="133-open-loop-vs-closed-loop-gain">13.3 Open-Loop vs. Closed-Loop Gain</h2>
+<h3 id="open-loop-gain">Open-Loop Gain</h3>
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 <strong style="color: #333;">Open-loop gain</strong> (\(A_{OL}\)) is the op-amp's intrinsic voltage gain with no external feedback — typically 100,000 (100 dB) or more at DC. This enormous gain means that even a 1 µV input difference would ideally produce a 100 mV output change. In practice, any tiny offset drives the output all the way to one of the power supply rails.
 </p>
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 Open-loop operation is therefore useless for linear amplification but is the basis of <strong>comparator</strong> circuits, where we <em>want</em> the output to saturate at one rail or the other.
 </p>
-<h3 id="closed-loop-gain" style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Closed-Loop Gain</h3>
+<h3 id="closed-loop-gain">Closed-Loop Gain</h3>
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 <strong style="color: #333;">Closed-loop gain</strong> (\(A_{CL}\)) is the overall gain when a feedback network is connected from the output back to one of the inputs. Let \(\beta\) be the fraction of the output fed back to the inverting input. Then:
 </p>
@@ -5238,11 +5250,11 @@ The closed-loop gain depends <strong>only</strong> on the feedback network — n
 </tr>
 </tbody>
 </table>
-<h2 id="134-negative-feedback" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">13.4 Negative Feedback</h2>
+<h2 id="134-negative-feedback">13.4 Negative Feedback</h2>
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 <strong style="color: #333;">Negative feedback</strong> connects a portion of the output signal back to the <em>inverting</em> input. It is the cornerstone of stable, linear op-amp operation.
 </p>
-<h3 id="how-negative-feedback-works" style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">How Negative Feedback Works</h3>
+<h3 id="how-negative-feedback-works">How Negative Feedback Works</h3>
 <ol>
 <li>The output increases slightly due to a change at the input</li>
 <li>A fraction of that output is fed back to the inverting (−) input</li>
@@ -5259,7 +5271,7 @@ The benefits of negative feedback go well beyond stability:
 <li><strong>Reduced output impedance</strong> — the amplifier can drive heavier loads</li>
 <li><strong>Reduced sensitivity</strong> — gain varies only slightly with temperature or supply voltage</li>
 </ul>
-<h3 id="positive-feedback" style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Positive Feedback</h3>
+<h3 id="positive-feedback">Positive Feedback</h3>
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 <strong style="color: #333;">Positive feedback</strong> connects output back to the <em>non-inverting</em> (+) input. Instead of opposing changes, it reinforces them — the circuit is intentionally unstable. Positive feedback is the basis of oscillators and Schmitt triggers (comparators with hysteresis), but is never used for linear amplification.
 </p>
@@ -5287,11 +5299,11 @@ The benefits of negative feedback go well beyond stability:
 </tr>
 </tbody>
 </table>
-<h2 id="135-golden-rules" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">13.5 The Golden Rules: Virtual Short and Virtual Ground</h2>
+<h2 id="135-the-golden-rules-virtual-short-and-virtual-ground">13.5 The Golden Rules: Virtual Short and Virtual Ground</h2>
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 For an ideal op-amp operating with negative feedback, two simple rules solve almost every linear op-amp circuit. These are commonly called the <strong style="color: #333;">golden rules</strong>.
 </p>
-<h3 id="golden-rule-1-virtual-short" style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Golden Rule 1 — Virtual Short</h3>
+<h3 id="golden-rule-1-virtual-short">Golden Rule 1 — Virtual Short</h3>
 <div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 10px; padding: 16px 20px; margin: 1.2rem 0;">
 
 \[V_+ = V_-\]
@@ -5300,7 +5312,7 @@ For an ideal op-amp operating with negative feedback, two simple rules solve alm
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 The voltage at the inverting input equals the voltage at the non-inverting input. This is not a physical short circuit — no wire connects them — but the feedback loop forces them to be equal. The reasoning: with infinite open-loop gain, even a microvolt difference would drive the output to a rail. Negative feedback continuously corrects any difference until it vanishes. The two inputs appear <em>virtually</em> shorted.
 </p>
-<h3 id="golden-rule-2-no-input-current" style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Golden Rule 2 — No Input Current</h3>
+<h3 id="golden-rule-2-no-input-current">Golden Rule 2 — No Input Current</h3>
 <div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 10px; padding: 16px 20px; margin: 1.2rem 0;">
 
 \[I_+ = I_- = 0\]
@@ -5309,7 +5321,7 @@ The voltage at the inverting input equals the voltage at the non-inverting input
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 No current flows into either input terminal. This follows from the infinite input impedance of the ideal op-amp. Any current arriving at a node connected to an op-amp input must flow somewhere else — through the feedback resistor or the source, but never into the op-amp itself.
 </p>
-<h3 id="virtual-ground" style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Virtual Ground</h3>
+<h3 id="virtual-ground">Virtual Ground</h3>
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 <strong style="color: #333;">Virtual ground</strong> is the special — and extremely common — case of the virtual short when the non-inverting input is connected to actual ground:
 </p>
@@ -5327,11 +5339,11 @@ The inverting input node sits at exactly 0 V without being connected directly to
 <p><strong>Rule 2 — No Input Current:</strong> <span class="arithmatex">\(I_+ = I_- = 0\)</span> (no current flows into either input terminal)</p>
 <p><strong>Corollary — Virtual Ground:</strong> When <span class="arithmatex">\(V_+ = 0\)</span>, then <span class="arithmatex">\(V_- = 0\)</span> as well</p>
 </div>
-<h2 id="136-inverting-amplifier" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">13.6 Inverting Amplifier</h2>
+<h2 id="136-inverting-amplifier">13.6 Inverting Amplifier</h2>
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 The <strong style="color: #333;">inverting amplifier</strong> is the most widely used basic op-amp configuration. The input signal connects through an input resistor \(R_i\) to the inverting (−) input, and a feedback resistor \(R_f\) connects from the output back to the inverting input. The non-inverting (+) input is tied to ground.
 </p>
-<h3 id="voltage-gain" style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Voltage Gain</h3>
+<h3 id="voltage-gain">Voltage Gain</h3>
 <div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 10px; padding: 16px 20px; margin: 1.2rem 0;">
 
 \[A_V = -\frac{R_f}{R_i}, \qquad Z_{in} = R_i\]
@@ -5340,7 +5352,7 @@ The <strong style="color: #333;">inverting amplifier</strong> is the most widely
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 The negative sign indicates <strong>phase inversion</strong> — a positive input produces a negative output, and vice versa. The magnitude of gain is set entirely by the resistor ratio.
 </p>
-<h3 id="step-by-step-analysis-using-the-golden-rules" style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Step-by-Step Analysis Using the Golden Rules</h3>
+<h3 id="step-by-step-analysis-using-the-golden-rules">Step-by-Step Analysis Using the Golden Rules</h3>
 <div style="background: #FFF7DD; border: 2px solid #F0D87A; border-radius: 10px; padding: 20px 24px; margin: 1.5rem 0;">
 <p style="color: #B8860B; font-weight: 700; font-size: 1.05rem; margin-top: 0; margin-bottom: 12px;">Worked Analysis — Inverting Amplifier</p>
 <p><strong>Given:</strong> <span class="arithmatex">\(R_i\)</span>, <span class="arithmatex">\(R_f\)</span>, input voltage <span class="arithmatex">\(V_{in}\)</span>. Find <span class="arithmatex">\(V_{out}\)</span>.</p>
@@ -5354,7 +5366,7 @@ The negative sign indicates <strong>phase inversion</strong> — a positive inpu
 <p><strong>Result:</strong></p>
 <div class="arithmatex">\[A_V = \frac{V_{out}}{V_{in}} = -\frac{R_f}{R_i}\]</div>
 </div>
-<h3 id="worked-design-example" style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Worked Design Example</h3>
+<h3 id="worked-design-example">Worked Design Example</h3>
 <div style="background: #FFF7DD; border: 2px solid #F0D87A; border-radius: 10px; padding: 20px 24px; margin: 1.5rem 0;">
 <p style="color: #B8860B; font-weight: 700; font-size: 1.05rem; margin-top: 0; margin-bottom: 12px;">Design — Inverting Amplifier with Gain = −25</p>
 <p><strong>Specification:</strong> Design an inverting amplifier with <span class="arithmatex">\(A_V = -25\)</span>. Use standard 5% resistors.</p>
@@ -5368,11 +5380,11 @@ The negative sign indicates <strong>phase inversion</strong> — a positive inpu
 <div class="arithmatex">\[R_{bias} = \frac{R_i \cdot R_f}{R_i + R_f} = \frac{10\ \text{k} \times 240\ \text{k}}{250\ \text{k}} \approx 9.6\ \text{k}\Omega \approx 10\ \text{k}\Omega\]</div>
 <p><strong>Final design:</strong> <span class="arithmatex">\(R_i = 10\ \text{k}\Omega\)</span>, <span class="arithmatex">\(R_f = 240\ \text{k}\Omega\)</span>, <span class="arithmatex">\(R_{bias} = 10\ \text{k}\Omega\)</span></p>
 </div>
-<h2 id="137-non-inverting" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">13.7 Non-Inverting Amplifier</h2>
+<h2 id="137-non-inverting-amplifier">13.7 Non-Inverting Amplifier</h2>
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 The <strong style="color: #333;">non-inverting amplifier</strong> connects the input signal to the non-inverting (+) input, with a resistor voltage divider providing feedback from the output to the inverting (−) input. The input and output are in phase.
 </p>
-<h3 id="voltage-gain_1" style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Voltage Gain</h3>
+<h3 id="voltage-gain_1">Voltage Gain</h3>
 <div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 10px; padding: 16px 20px; margin: 1.2rem 0;">
 
 \[A_V = 1 + \frac{R_f}{R_i}, \qquad Z_{in} \approx \infty\]
@@ -5381,14 +5393,14 @@ The <strong style="color: #333;">non-inverting amplifier</strong> connects the i
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 The gain is always positive (no phase inversion) and always greater than or equal to 1. The input impedance is extremely high — essentially infinite for the ideal case — because the signal drives the non-inverting input directly.
 </p>
-<h3 id="analysis-using-the-golden-rules" style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Analysis Using the Golden Rules</h3>
+<h3 id="analysis-using-the-golden-rules">Analysis Using the Golden Rules</h3>
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 By the virtual short: \(V_- = V_+ = V_{in}\). The inverting input voltage is set by the feedback voltage divider \(R_i\) and \(R_f\):
 </p>
 <div class="arithmatex">\[V_- = V_{out} \cdot \frac{R_i}{R_i + R_f}\]</div>
 <p>Setting <span class="arithmatex">\(V_- = V_{in}\)</span> and solving for <span class="arithmatex">\(V_{out}\)</span>:</p>
 <div class="arithmatex">\[V_{in} = V_{out} \cdot \frac{R_i}{R_i + R_f} \quad \Rightarrow \quad V_{out} = V_{in}\left(1 + \frac{R_f}{R_i}\right)\]</div>
-<h2 id="138-voltage-follower" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">13.8 Voltage Follower (Buffer Amplifier)</h2>
+<h2 id="138-voltage-follower-buffer-amplifier">13.8 Voltage Follower (Buffer Amplifier)</h2>
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 The <strong style="color: #333;">voltage follower</strong> (also called a <strong>unity-gain buffer</strong> or <strong>buffer amplifier</strong>) is the special case of the non-inverting amplifier where the output is connected directly to the inverting input (\(R_f = 0\), \(R_i = \infty\)).
 </p>
@@ -5405,7 +5417,7 @@ The gain is exactly 1 — the output follows the input. But why use a circuit th
 - Prevent a load from affecting the source voltage in precision measurement
 - Sample-and-hold circuits
 - Active oscilloscope probes</p>
-<h3 id="configuration-comparison" style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Configuration Comparison</h3>
+<h3 id="configuration-comparison">Configuration Comparison</h3>
 <table>
 <thead>
 <tr>
@@ -5440,8 +5452,8 @@ The gain is exactly 1 — the output follows the input. But why use a circuit th
 </tr>
 </tbody>
 </table>
-<h2 id="139-arithmetic" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">13.9 Arithmetic Circuits</h2>
-<h3 id="summing-amplifier" style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Summing Amplifier</h3>
+<h2 id="139-arithmetic-circuits">13.9 Arithmetic Circuits</h2>
+<h3 id="summing-amplifier">Summing Amplifier</h3>
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 The <strong style="color: #333;">summing amplifier</strong> extends the inverting configuration by adding multiple input resistors. Each input signal connects through its own resistor to the virtual ground node at V−. Because the virtual ground prevents any input from affecting the others (they are all driven into a 0 V node), the currents add independently.
 </p>
@@ -5466,7 +5478,7 @@ Applications include audio mixing (combining microphone, instrument, and playbac
 <p><strong>Solution:</strong></p>
 <div class="arithmatex">\[V_{out} = -\frac{R_f}{R}(V_1 + V_2 + V_3) = -\frac{20}{10}(1 + 2 - 0.5) = -2 \times 2.5 = -5\ \text{V}\]</div>
 </div>
-<h3 id="difference-amplifier" style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Difference Amplifier</h3>
+<h3 id="difference-amplifier">Difference Amplifier</h3>
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 The <strong style="color: #333;">difference amplifier</strong> subtracts one signal from another. With four equal resistors (all equal to \(R\)) or with a standard resistor ratio \(R_f/R_i\):
 </p>
@@ -5478,7 +5490,7 @@ The <strong style="color: #333;">difference amplifier</strong> subtracts one sig
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 The output is proportional to the difference of the two inputs. Common-mode signals (equal voltages on both inputs) are rejected. One limitation: the input impedances seen by \(V_1\) and \(V_2\) are not equal, and both are relatively low (\(R_i\) and \(R_i + R_f\) respectively), which can load sensitive sources.
 </p>
-<h3 id="instrumentation-amplifier" style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Instrumentation Amplifier</h3>
+<h3 id="instrumentation-amplifier">Instrumentation Amplifier</h3>
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 The <strong style="color: #333;">instrumentation amplifier</strong> (INA) solves the input impedance problem of the basic difference amplifier. It consists of three op-amps: two input buffer stages (non-inverting) that provide very high input impedance, followed by a precision difference stage.
 </p>
@@ -5494,8 +5506,8 @@ The <strong style="color: #333;">instrumentation amplifier</strong> (INA) solves
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 Applications include bridge sensor amplifiers (strain gauges, load cells), medical biosignal amplifiers (ECG, EEG), and precision thermocouple interfaces.
 </p>
-<h2 id="1310-integrator-differentiator" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">13.10 Integrator and Differentiator</h2>
-<h3 id="integrator-circuit" style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Integrator Circuit</h3>
+<h2 id="1310-integrator-and-differentiator">13.10 Integrator and Differentiator</h2>
+<h3 id="integrator-circuit">Integrator Circuit</h3>
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 The <strong style="color: #333;">integrator</strong> replaces the feedback resistor \(R_f\) with a capacitor \(C\). The output is proportional to the time integral of the input:
 </p>
@@ -5523,7 +5535,7 @@ The gain magnitude is \(|H| = 1/(\omega RC)\) — it increases without bound as 
 <div class="arithmatex">\[V_{out}(t) = -\frac{V_{in}}{RC} \cdot t = -\frac{2\ \text{V}}{1\ \text{ms}} \times 1\ \text{ms} = -2\ \text{V}\]</div>
 <p>The output ramps linearly from 0 V to −2 V in 1 ms. If the input remains constant, the output continues ramping until it saturates at the negative supply rail.</p>
 </div>
-<h3 id="differentiator-circuit" style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Differentiator Circuit</h3>
+<h3 id="differentiator-circuit">Differentiator Circuit</h3>
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 The <strong style="color: #333;">differentiator</strong> replaces the input resistor \(R_i\) with a capacitor \(C\). The output is proportional to the time derivative of the input:
 </p>
@@ -5571,12 +5583,12 @@ The gain increases linearly with frequency — the differentiator is a first-ord
 </tr>
 </tbody>
 </table>
-<h2 id="1311-bandwidth-gbw" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">13.11 Bandwidth and Gain-Bandwidth Product</h2>
-<h3 id="op-amp-bandwidth" style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Op-Amp Bandwidth</h3>
+<h2 id="1311-bandwidth-and-gain-bandwidth-product">13.11 Bandwidth and Gain-Bandwidth Product</h2>
+<h3 id="op-amp-bandwidth">Op-Amp Bandwidth</h3>
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 Real op-amps have finite <strong style="color: #333;">bandwidth</strong>. The open-loop gain \(A_{OL}\) is maximum at DC and rolls off at −20 dB/decade above a dominant pole frequency (often just a few hertz). By the time the gain falls to 1 (0 dB), we reach the <strong>unity-gain frequency</strong> \(f_T\), which is also called the <strong>gain-bandwidth product</strong> (GBW).
 </p>
-<h3 id="gain-bandwidth-product-gbw" style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Gain-Bandwidth Product (GBW)</h3>
+<h3 id="gain-bandwidth-product-gbw">Gain-Bandwidth Product (GBW)</h3>
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 For a single-pole op-amp, the product of closed-loop gain and bandwidth is constant:
 </p>
@@ -5619,7 +5631,7 @@ Higher gain means narrower bandwidth — they trade off against each other. The 
 </table>
 <p><strong>Design rule:</strong> Always verify that <span class="arithmatex">\(A_{CL} \times f_{signal} &lt; \text{GBW}\)</span> before finalizing a design.</p>
 </div>
-<h3 id="slew-rate" style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Slew Rate</h3>
+<h3 id="slew-rate">Slew Rate</h3>
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 <strong style="color: #333;">Slew rate</strong> (SR) is the maximum rate at which the output voltage can change, regardless of the input. It arises from the finite current available to charge internal capacitances.
 </p>
@@ -5642,8 +5654,8 @@ Slew rate limits performance on large-amplitude, high-frequency signals — even
 <div class="arithmatex">\[f_{max} = \frac{SR}{2\pi V_{peak}} = \frac{0.5 \times 10^6\ \text{V/s}}{2\pi \times 10\ \text{V}} = \frac{500{,}000}{62.83} \approx 7.96\ \text{kHz}\]</div>
 <p>Above approximately 8 kHz, the LM741 cannot faithfully reproduce a 10 V peak sinusoid — the output becomes a triangle wave. For audio applications extending to 20 kHz with 10 V output, you need an op-amp with SR &gt; 1.26 V/μs.</p>
 </div>
-<h2 id="1312-practical-limitations" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">13.12 Practical Limitations</h2>
-<h3 id="input-offset-voltage" style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Input Offset Voltage</h3>
+<h2 id="1312-practical-limitations">13.12 Practical Limitations</h2>
+<h3 id="input-offset-voltage">Input Offset Voltage</h3>
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 <strong style="color: #333;">Input offset voltage</strong> (\(V_{OS}\)) is the small differential DC voltage that must be applied between the inputs to make the output exactly zero. It arises from mismatches in the input transistor pair during manufacturing.
 </p>
@@ -5652,7 +5664,7 @@ Slew rate limits performance on large-amplitude, high-frequency signals — even
 <li>Effect at output: <span class="arithmatex">\(V_{OS,out} = V_{OS} \times (1 + R_f/R_i)\)</span> — amplified by closed-loop gain</li>
 <li>Mitigation: use precision op-amps (e.g., OPA2134), add an offset null trim circuit, or AC-couple the signal path</li>
 </ul>
-<h3 id="input-bias-current" style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Input Bias Current</h3>
+<h3 id="input-bias-current">Input Bias Current</h3>
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 <strong style="color: #333;">Input bias current</strong> (\(I_B\)) is the small DC current that must flow into each input terminal for the internal transistors to operate. Although golden rule 2 says this is zero for an ideal op-amp, real op-amps require it.
 </p>
@@ -5662,7 +5674,7 @@ Slew rate limits performance on large-amplitude, high-frequency signals — even
 <li>Effect: creates a voltage error <span class="arithmatex">\(I_B \times R_{source}\)</span> that appears as an input offset</li>
 <li>Mitigation: match source impedances at both inputs; use FET-input op-amps for high-impedance sources</li>
 </ul>
-<h3 id="common-mode-rejection-ratio-cmrr" style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Common-Mode Rejection Ratio (CMRR)</h3>
+<h3 id="common-mode-rejection-ratio-cmrr">Common-Mode Rejection Ratio (CMRR)</h3>
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 <strong style="color: #333;">CMRR</strong> quantifies how well an op-amp rejects signals that appear simultaneously (in common) on both inputs, such as 60 Hz power-line interference or ground noise.
 </p>
@@ -5676,7 +5688,7 @@ Slew rate limits performance on large-amplitude, high-frequency signals — even
 <li>Higher CMRR means better rejection of common-mode interference</li>
 <li>Critical in sensor applications where the signal of interest is small (millivolts) riding on top of a large common-mode voltage (volts)</li>
 </ul>
-<h3 id="op-amp-saturation" style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Op-Amp Saturation</h3>
+<h3 id="op-amp-saturation">Op-Amp Saturation</h3>
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 <strong style="color: #333;">Saturation</strong> occurs when the calculated output voltage exceeds what the power supply can provide. For a ±15 V supply, a conventional op-amp can typically swing to within 1–2 V of each rail, so the actual output limits at approximately ±13 V to ±14 V. When saturated, the circuit is no longer linear and the golden rules do not apply.
 </p>
@@ -5731,7 +5743,7 @@ Slew rate limits performance on large-amplitude, high-frequency signals — even
 </tr>
 </tbody>
 </table>
-<h2 id="1313-summary" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">Chapter Summary</h2>
+<h2 id="chapter-summary">Chapter Summary</h2>
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 Operational amplifiers are the foundation of analog circuit design. Here is a consolidated reference for the key formulas and principles from this chapter:
 </p>

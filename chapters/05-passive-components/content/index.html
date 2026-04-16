@@ -1539,7 +1539,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#52-capacitor-energy-storage" class="md-nav__link">
+  <a href="#52-energy-stored-in-a-capacitor" class="md-nav__link">
     <span class="md-ellipsis">
       
         5.2 Energy Stored in a Capacitor
@@ -1572,7 +1572,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#55-inductor-energy-storage" class="md-nav__link">
+  <a href="#55-energy-stored-in-an-inductor" class="md-nav__link">
     <span class="md-ellipsis">
       
         5.5 Energy Stored in an Inductor
@@ -1627,7 +1627,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#510-decibels" class="md-nav__link">
+  <a href="#510-the-decibel-scale" class="md-nav__link">
     <span class="md-ellipsis">
       
         5.10 The Decibel Scale
@@ -4715,7 +4715,19 @@
 
 <div class="unit1-styled">
 <h1 id="chapter-5-passive-components-resistors-capacitors-and-inductors">Chapter 5 — Passive Components: Resistors, Capacitors, and Inductors</h1>
-<h2 id="51-the-capacitor" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">5.1 The Capacitor</h2>
+<details class="video-overview">
+<summary><strong>Chapter Overview</strong> (click to expand)</summary>
+
+Beyond the resistor, two essential passive components — capacitors and inductors — store energy rather than dissipating it, giving circuits memory and frequency-dependent behavior. This chapter explains the physical construction, V-I relationships, and energy storage properties of all three passive component types, laying the groundwork for transient and AC analysis.
+
+**Key Takeaways**
+
+1. A capacitor stores energy in an electric field and its current is proportional to the rate of change of voltage: i = C dv/dt.
+2. An inductor stores energy in a magnetic field and its voltage is proportional to the rate of change of current: v = L di/dt.
+3. Under DC steady-state conditions, capacitors behave as open circuits and inductors behave as short circuits, which is a key simplification for initial analysis.
+
+</details>
+<h2 id="51-the-capacitor">5.1 The Capacitor</h2>
 <p>A <strong>capacitor</strong> is a component that stores energy in an <strong>electric field</strong>. In its simplest form, it consists of two conductive plates separated by an insulating material called a <strong>dielectric</strong>. When a voltage is applied across the plates, charge accumulates — positive charge on one plate, negative on the other — and an electric field forms between them.</p>
 <p>The relationship between charge and voltage defines <strong>capacitance</strong> <span class="arithmatex">\(C\)</span>:</p>
 <div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
@@ -4739,7 +4751,7 @@
 <li><strong>Voltage across a capacitor cannot change instantaneously.</strong> An instantaneous voltage change (<span class="arithmatex">\(dv/dt \to \infty\)</span>) would require infinite current, which is physically impossible.</li>
 </ol>
 <hr />
-<h2 id="52-capacitor-energy-storage" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">5.2 Energy Stored in a Capacitor</h2>
+<h2 id="52-energy-stored-in-a-capacitor">5.2 Energy Stored in a Capacitor</h2>
 <p>Unlike a resistor, which dissipates energy as heat, a capacitor stores energy and can return it to the circuit later. The energy stored in a charged capacitor is:</p>
 <div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
 <div class="arithmatex">\[E_C = \frac{1}{2} C V^2\]</div>
@@ -4749,7 +4761,7 @@
 <p><strong>Example:</strong> A 100 μF capacitor charged to 12 V stores:
 <span class="arithmatex">\(E = \frac{1}{2} \times 100 \times 10^{-6} \times 144 = 7.2\)</span> mJ</p>
 <hr />
-<h2 id="53-capacitors-in-series-and-parallel" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">5.3 Capacitors in Series and Parallel</h2>
+<h2 id="53-capacitors-in-series-and-parallel">5.3 Capacitors in Series and Parallel</h2>
 <p>Capacitors combine differently from resistors — the formulas are <em>swapped</em>.</p>
 <p><strong>Capacitors in parallel</strong> — plates effectively add together:</p>
 <div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
@@ -4766,7 +4778,7 @@
 </div>
 <p>Series combination increases the effective plate separation (lower capacitance, higher voltage rating). Parallel combination increases effective plate area (higher capacitance).</p>
 <hr />
-<h2 id="54-the-inductor" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">5.4 The Inductor</h2>
+<h2 id="54-the-inductor">5.4 The Inductor</h2>
 <p>An <strong>inductor</strong> is a component that stores energy in a <strong>magnetic field</strong>. In its basic form, it's a coil of wire. When current flows through the coil, it creates a magnetic field. If the current changes, the changing magnetic flux induces a voltage that <em>opposes</em> the change — this is Lenz's Law in action.</p>
 <p>The defining relationship for an inductor:</p>
 <div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
@@ -4784,7 +4796,7 @@
 <p>where <span class="arithmatex">\(N\)</span> is the number of turns, <span class="arithmatex">\(A\)</span> is the cross-sectional area, <span class="arithmatex">\(\ell\)</span> is the coil length, and <span class="arithmatex">\(\mu_r\)</span> is the relative permeability of the core.</p>
 </div>
 <hr />
-<h2 id="55-inductor-energy-storage" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">5.5 Energy Stored in an Inductor</h2>
+<h2 id="55-energy-stored-in-an-inductor">5.5 Energy Stored in an Inductor</h2>
 <p>The energy stored in an inductor's magnetic field:</p>
 <div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
 <div class="arithmatex">\[E_L = \frac{1}{2} L I^2\]</div>
@@ -4832,7 +4844,7 @@
 </tbody>
 </table>
 <hr />
-<h2 id="56-inductors-in-series-and-parallel" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">5.6 Inductors in Series and Parallel</h2>
+<h2 id="56-inductors-in-series-and-parallel">5.6 Inductors in Series and Parallel</h2>
 <p>Inductors combine exactly like resistors (assuming no mutual coupling):</p>
 <p><strong>Inductors in series:</strong></p>
 <div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
@@ -4844,7 +4856,7 @@
 <p>For two: <span class="arithmatex">\(\displaystyle L_{eq} = \frac{L_1 L_2}{L_1 + L_2}\)</span></p>
 </div>
 <hr />
-<h2 id="57-mutual-inductance" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">5.7 Mutual Inductance</h2>
+<h2 id="57-mutual-inductance">5.7 Mutual Inductance</h2>
 <p>When two inductors are placed near each other, the magnetic field of one can influence the other. This is <strong>mutual inductance</strong> <span class="arithmatex">\(M\)</span>, and it is the operating principle of <strong>transformers</strong>.</p>
 <p>If current <span class="arithmatex">\(i_1\)</span> changes in inductor 1, it induces a voltage in inductor 2:</p>
 <div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
@@ -4865,7 +4877,7 @@
 <p><span class="arithmatex">\(+2M\)</span> when fields aid (series-aiding), <span class="arithmatex">\(-2M\)</span> when fields oppose (series-opposing)</p>
 </div>
 <hr />
-<h2 id="58-real-vs-ideal-components" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">5.8 Real vs. Ideal Components</h2>
+<h2 id="58-real-vs-ideal-components">5.8 Real vs. Ideal Components</h2>
 <p>The components you've been analyzing are <strong>ideal</strong>: a capacitor is purely capacitive, an inductor is purely inductive. Real components are more complicated.</p>
 <p><strong>Real capacitors</strong> have:
 - <strong>Equivalent Series Resistance (ESR):</strong> A small resistance in series with the capacitor, representing losses in the plates and leads. Matters in power supply filtering and high-current applications.
@@ -4880,7 +4892,7 @@
 - For RF inductors, use air-core to avoid core losses.
 - Derate voltage and current ratings in design (typically to 80% of maximum).</p>
 <hr />
-<h2 id="59-signal-fundamentals" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">5.9 Signal Fundamentals</h2>
+<h2 id="59-signal-fundamentals">5.9 Signal Fundamentals</h2>
 <p>Before diving into AC circuits, we need the vocabulary to describe signals that change over time.</p>
 <p>A <strong>sinusoidal signal</strong> (the most important signal in electrical engineering) is described by:</p>
 <div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
@@ -4945,7 +4957,7 @@
 <p>When <span class="arithmatex">\(\phi &gt; 0\)</span>, the signal <strong>leads</strong> the reference (arrives earlier in time).<br />
 When <span class="arithmatex">\(\phi &lt; 0\)</span>, the signal <strong>lags</strong> the reference (arrives later in time).</p>
 <hr />
-<h2 id="510-decibels" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">5.10 The Decibel Scale</h2>
+<h2 id="510-the-decibel-scale">5.10 The Decibel Scale</h2>
 <p>The <strong>decibel (dB)</strong> is a logarithmic unit for expressing ratios of power, voltage, or current. It's used everywhere in audio and communications because human hearing is approximately logarithmic and because gains/losses cascade multiplicatively (which becomes addition in dB).</p>
 <p><strong>Power ratio:</strong></p>
 <div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
@@ -5004,7 +5016,7 @@ When <span class="arithmatex">\(\phi &lt; 0\)</span>, the signal <strong>lags</s
 </table>
 <p>The <strong>human hearing range</strong> spans approximately 20 Hz to 20,000 Hz (20 kHz). In amplitude, the ear can handle a power range of about 10¹² (120 dB) from threshold of hearing to threshold of pain.</p>
 <hr />
-<h2 id="511-chapter-summary" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">5.11 Chapter Summary</h2>
+<h2 id="511-chapter-summary">5.11 Chapter Summary</h2>
 <div style="background: #F8F6FF; border: 2px solid #D4C8FF; border-radius: 12px; padding: 20px 28px; margin: 1rem 0;">
 <p><strong>Capacitors:</strong>
 - Store energy in electric fields: <span class="arithmatex">\(E = \frac{1}{2}CV^2\)</span>

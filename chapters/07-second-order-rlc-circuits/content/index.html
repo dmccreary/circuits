@@ -1962,7 +1962,7 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#71-introduction" class="md-nav__link">
+  <a href="#71-introduction-when-circuits-get-dramatic" class="md-nav__link">
     <span class="md-ellipsis">
       
         7.1 Introduction: When Circuits Get Dramatic
@@ -1973,7 +1973,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#72-second-order-circuits" class="md-nav__link">
+  <a href="#72-second-order-circuits-the-mathematical-upgrade" class="md-nav__link">
     <span class="md-ellipsis">
       
         7.2 Second-Order Circuits: The Mathematical Upgrade
@@ -1984,7 +1984,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#73-rlc-circuits" class="md-nav__link">
+  <a href="#73-series-and-parallel-rlc-circuits" class="md-nav__link">
     <span class="md-ellipsis">
       
         7.3 Series and Parallel RLC Circuits
@@ -1995,7 +1995,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#74-characteristic-equation" class="md-nav__link">
+  <a href="#74-the-characteristic-equation" class="md-nav__link">
     <span class="md-ellipsis">
       
         7.4 The Characteristic Equation
@@ -2028,7 +2028,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#77-overdamped-response" class="md-nav__link">
+  <a href="#77-overdamped-response-zeta-1" class="md-nav__link">
     <span class="md-ellipsis">
       
         7.7 Overdamped Response (\(\zeta &gt; 1\))
@@ -2039,7 +2039,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#78-underdamped-response" class="md-nav__link">
+  <a href="#78-underdamped-response-0-zeta-1" class="md-nav__link">
     <span class="md-ellipsis">
       
         7.8 Underdamped Response (\(0 &lt; \zeta &lt; 1\))
@@ -2050,7 +2050,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#79-critically-damped-response" class="md-nav__link">
+  <a href="#79-critically-damped-response-zeta-1" class="md-nav__link">
     <span class="md-ellipsis">
       
         7.9 Critically Damped Response (\(\zeta = 1\))
@@ -2083,7 +2083,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#712-chapter-summary" class="md-nav__link">
+  <a href="#712-key-formulas-summary" class="md-nav__link">
     <span class="md-ellipsis">
       
         7.12 Key Formulas Summary
@@ -4726,7 +4726,19 @@
 
 <div class="unit1-styled">
 <h1 id="chapter-7-second-order-rlc-circuits">Chapter 7 — Second-Order RLC Circuits</h1>
-<h2 id="71-introduction" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">7.1 Introduction: When Circuits Get Dramatic</h2>
+<details class="video-overview">
+<summary><strong>Chapter Overview</strong> (click to expand)</summary>
+
+When both a capacitor and an inductor are present in the same circuit, energy can oscillate back and forth between them, producing behaviors far richer than the simple exponential decay of first-order circuits. This chapter analyzes series and parallel RLC circuits through their characteristic equation, classifying responses as overdamped, critically damped, or underdamped based on the damping ratio.
+
+**Key Takeaways**
+
+1. The characteristic equation of a second-order circuit has two roots whose nature — real and distinct, real and equal, or complex conjugate — determines whether the circuit is overdamped, critically damped, or underdamped.
+2. An underdamped circuit oscillates at the damped natural frequency before settling, while an overdamped circuit decays to steady state without oscillation.
+3. The natural frequency ω₀ and damping ratio ζ are the two key parameters that fully characterize the transient behavior of any second-order circuit.
+
+</details>
+<h2 id="71-introduction-when-circuits-get-dramatic">7.1 Introduction: When Circuits Get Dramatic</h2>
 <p>If first-order RC and RL circuits are like a polite conversation — one thing leads smoothly to another — then second-order RLC circuits are like a heated debate. Things can swing back and forth, overshoot their targets, or even oscillate indefinitely.</p>
 <p>In Chapter 6, you learned how capacitors and inductors store and release energy exponentially. But what happens when you put <em>both</em> energy storage elements in the same circuit? The energy sloshes back and forth between the electric field of the capacitor and the magnetic field of the inductor, like two friends tossing a ball between them. Add some resistance, and the ball gradually loses energy with each toss until everyone gets tired.</p>
 <p>This energy exchange creates behaviors you won't see in simpler circuits:</p>
@@ -4737,7 +4749,7 @@
 </ul>
 <p>Understanding these behaviors unlocks your ability to design everything from radio tuners to shock absorbers to audio equalizers.</p>
 <hr />
-<h2 id="72-second-order-circuits" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">7.2 Second-Order Circuits: The Mathematical Upgrade</h2>
+<h2 id="72-second-order-circuits-the-mathematical-upgrade">7.2 Second-Order Circuits: The Mathematical Upgrade</h2>
 <p>A <strong>second-order circuit</strong> is any circuit whose behavior is described by a second-order differential equation. This happens whenever a circuit contains two independent energy storage elements — typically an inductor and a capacitor.</p>
 <p>The general form of a second-order differential equation is:</p>
 <div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
@@ -4775,7 +4787,7 @@
 </tbody>
 </table>
 <hr />
-<h2 id="73-rlc-circuits" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">7.3 Series and Parallel RLC Circuits</h2>
+<h2 id="73-series-and-parallel-rlc-circuits">7.3 Series and Parallel RLC Circuits</h2>
 <p><strong>Series RLC</strong> — all components share the same current. Applying KVL and differentiating:</p>
 <div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
 <div class="arithmatex">\[\frac{d^2i}{dt^2} + \frac{R}{L}\frac{di}{dt} + \frac{1}{LC}i = \frac{1}{L}\frac{dV_S}{dt}\]</div>
@@ -4836,7 +4848,7 @@ function drawRLC(){
 drawRLC();
 </script>
 <hr />
-<h2 id="74-characteristic-equation" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">7.4 The Characteristic Equation</h2>
+<h2 id="74-the-characteristic-equation">7.4 The Characteristic Equation</h2>
 <p>To solve the homogeneous equation, assume <span class="arithmatex">\(x = Ae^{st}\)</span>. Substituting gives the <strong>characteristic equation</strong>:</p>
 <div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
 <div class="arithmatex">\[s^2 + 2\alpha s + \omega_0^2 = 0\]</div>
@@ -4870,7 +4882,7 @@ drawRLC();
 </tbody>
 </table>
 <hr />
-<h2 id="75-natural-frequency" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">7.5 Natural Frequency</h2>
+<h2 id="75-natural-frequency">7.5 Natural Frequency</h2>
 <p>The <strong>natural frequency</strong> <span class="arithmatex">\(\omega_0\)</span> is the frequency at which an undamped circuit would oscillate forever — the circuit's preferred rhythm:</p>
 <div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
 <div class="arithmatex">\[\omega_0 = \frac{1}{\sqrt{LC}} \text{ rad/s} \qquad f_0 = \frac{1}{2\pi\sqrt{LC}} \text{ Hz}\]</div>
@@ -4964,7 +4976,7 @@ function updateNF(){
 updateNF();
 </script>
 <hr />
-<h2 id="76-damping-ratio" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">7.6 Damping Ratio</h2>
+<h2 id="76-damping-ratio">7.6 Damping Ratio</h2>
 <p>The <strong>damping ratio</strong> <span class="arithmatex">\(\zeta\)</span> is the single dimensionless number that classifies circuit response:</p>
 <div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
 <div class="arithmatex">\[\zeta = \frac{\alpha}{\omega_0}\]</div>
@@ -5007,7 +5019,7 @@ updateNF();
 </tbody>
 </table>
 <hr />
-<h2 id="77-overdamped-response" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">7.7 Overdamped Response (\(\zeta &gt; 1\))</h2>
+<h2 id="77-overdamped-response-zeta-1">7.7 Overdamped Response (<span class="arithmatex">\(\zeta &gt; 1\)</span>)</h2>
 <p>When <span class="arithmatex">\(\zeta &gt; 1\)</span>, the characteristic equation has two distinct negative real roots. The general solution is:</p>
 <div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
 <div class="arithmatex">\[x(t) = A_1 e^{s_1 t} + A_2 e^{s_2 t}\]</div>
@@ -5042,7 +5054,7 @@ function drawOD(){
 drawOD();
 </script>
 <hr />
-<h2 id="78-underdamped-response" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">7.8 Underdamped Response (\(0 &lt; \zeta &lt; 1\))</h2>
+<h2 id="78-underdamped-response-0-zeta-1">7.8 Underdamped Response (<span class="arithmatex">\(0 &lt; \zeta &lt; 1\)</span>)</h2>
 <p>When <span class="arithmatex">\(\zeta &lt; 1\)</span>, the characteristic equation has complex conjugate roots, giving oscillatory behavior:</p>
 <div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
 <div class="arithmatex">\[s_{1,2} = -\alpha \pm j\omega_d \qquad \omega_d = \omega_0\sqrt{1 - \zeta^2}\]</div>
@@ -5086,7 +5098,7 @@ function drawUD(){
 drawUD();
 </script>
 <hr />
-<h2 id="79-critically-damped-response" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">7.9 Critically Damped Response (\(\zeta = 1\))</h2>
+<h2 id="79-critically-damped-response-zeta-1">7.9 Critically Damped Response (<span class="arithmatex">\(\zeta = 1\)</span>)</h2>
 <p>When <span class="arithmatex">\(\zeta = 1\)</span>, there is a repeated root <span class="arithmatex">\(s = -\alpha = -\omega_0\)</span>. The general solution is:</p>
 <div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
 <div class="arithmatex">\[x(t) = (A + Bt)e^{-\omega_0 t}\]</div>
@@ -5124,7 +5136,7 @@ function drawDC(){
 drawDC();
 </script>
 <hr />
-<h2 id="710-resonant-frequency" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">7.10 Resonant Frequency</h2>
+<h2 id="710-resonant-frequency">7.10 Resonant Frequency</h2>
 <p><strong>Resonance</strong> occurs when inductive reactance equals capacitive reactance:</p>
 <div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
 <div class="arithmatex">\[X_L = X_C \implies \omega_r L = \frac{1}{\omega_r C} \implies \omega_r = \frac{1}{\sqrt{LC}} = \omega_0\]</div>
@@ -5163,7 +5175,7 @@ function drawRes(){
 drawRes();
 </script>
 <hr />
-<h2 id="711-quality-factor" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">7.11 Quality Factor</h2>
+<h2 id="711-quality-factor">7.11 Quality Factor</h2>
 <p>The <strong>quality factor</strong> Q characterizes the sharpness of resonance and efficiency of energy storage:</p>
 <div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
 <p>Series RLC: <span class="arithmatex">\(\displaystyle Q = \frac{\omega_0 L}{R} = \frac{1}{R}\sqrt{\frac{L}{C}}\)</span></p>
@@ -5205,7 +5217,7 @@ drawRes();
 <p>Real inductors have winding resistance that caps practical Q at 100–200 for discrete LC circuits. Higher Q requires quartz crystals or mechanical resonators.</p>
 </div>
 <hr />
-<h2 id="712-chapter-summary" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">7.12 Key Formulas Summary</h2>
+<h2 id="712-key-formulas-summary">7.12 Key Formulas Summary</h2>
 <div style="background: #F8F6FF; border: 2px solid #D4C8FF; border-radius: 12px; padding: 20px 28px; margin: 1rem 0;">
 <table>
 <thead>
