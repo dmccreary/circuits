@@ -4564,11 +4564,41 @@ By the end of this chapter, you will be able to identify all four fundamental fi
 
 </details>
 <h2 id="summary">Summary</h2>
-<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 20px 24px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
-<p style="color: #333; line-height: 1.85; font-size: 1.02rem; margin: 0;">
-This chapter introduces frequency response analysis — the study of how a circuit's output magnitude and phase vary with input frequency. Students will learn to derive and interpret transfer functions, construct Bode magnitude and phase plots using asymptotic approximations, and identify the cutoff frequency, roll-off rate, and filter type for any linear circuit. The chapter concludes with practical RC and RLC filter designs and an introduction to poles, zeros, and filter order as tools for shaping frequency response.
-</p>
-</div>
+<h3 id="key-concepts">Key Concepts</h3>
+<ul>
+<li><strong>Transfer function</strong> H(jω) = V_out/V_in: describes gain magnitude and phase shift vs. frequency</li>
+<li><strong>Bode magnitude plot</strong>: gain in dB (<span class="arithmatex">\(20\log|H|\)</span>) vs. log frequency — uses straight-line asymptote approximations</li>
+<li><strong>Bode phase plot</strong>: phase angle in degrees vs. log frequency</li>
+<li><strong>Cutoff frequency</strong> f_c (−3 dB point): frequency where <span class="arithmatex">\(|H| = 1/\sqrt{2} \approx 0.707\)</span>; power drops to half</li>
+<li><strong>Roll-off rate</strong>: −20 dB/decade per pole; second-order filter → −40 dB/decade</li>
+<li>Each <strong>pole</strong> decreases the slope by 20 dB/dec; each <strong>zero</strong> increases it by 20 dB/dec</li>
+<li>Filter types by shape: <strong>low-pass</strong>, <strong>high-pass</strong>, <strong>band-pass</strong>, <strong>band-stop</strong></li>
+</ul>
+<h3 id="important-equations">Important Equations</h3>
+<div class="arithmatex">\[ H(j\omega) = \frac{V_{out}}{V_{in}} \qquad |H|_{dB} = 20\log_{10}|H(j\omega)| \]</div>
+<div class="arithmatex">\[ f_c = \frac{1}{2\pi RC} \quad \text{(first-order RC)} \qquad |H(j\omega_c)| = \frac{1}{\sqrt{2}} \text{ at cutoff} \]</div>
+<p>Roll-off: <span class="arithmatex">\(-20n\)</span> dB/decade for an <span class="arithmatex">\(n\)</span>th-order filter</p>
+<h3 id="what-you-should-understand">What You Should Understand</h3>
+<ul>
+<li>Why Bode plots use a logarithmic frequency axis (circuits operate over many decades of frequency)</li>
+<li>How to sketch the asymptotic Bode plot from the poles and zeros of a transfer function</li>
+<li>The physical meaning of −3 dB: the <strong>half-power point</strong> — not half voltage, half <em>power</em></li>
+<li>How filter order determines roll-off steepness and the number of reactive elements required</li>
+</ul>
+<h3 id="applications">Applications</h3>
+<ul>
+<li>Audio equalizer and tone-control circuit design</li>
+<li>Anti-aliasing low-pass filter before an ADC</li>
+<li>EMI/EMC filter characterization and compliance testing</li>
+<li>Feedback amplifier stability analysis (gain and phase margins)</li>
+</ul>
+<h3 id="quick-review-checklist">Quick Review Checklist</h3>
+<ul>
+<li>[ ] I can write the transfer function for a first-order RC low-pass or high-pass filter</li>
+<li>[ ] I can find the cutoff frequency and calculate the gain in dB at any frequency</li>
+<li>[ ] I can sketch the asymptotic Bode magnitude plot for a first-order filter</li>
+<li>[ ] I understand what each pole and zero contributes to slope and phase in a Bode plot</li>
+</ul>
 <h2 id="concepts-covered">Concepts Covered</h2>
 <div style="background: #F8F6FF; border: 2px solid #D4C8FF; border-radius: 12px; padding: 20px 24px; margin: 1rem 0;">
 <ul style="list-style:none;padding-left:0.5rem;margin:0;">

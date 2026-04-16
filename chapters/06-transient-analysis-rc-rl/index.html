@@ -4570,9 +4570,41 @@ Think of transient analysis as learning to read a circuit's "body language." The
 
 </details>
 <h2 id="summary">Summary</h2>
-<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 20px 24px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
-<p style="color: #333; line-height: 1.85; font-size: 1.02rem; margin: 0;">This chapter analyzes the time-domain behavior of first-order circuits containing resistors with either capacitors (RC) or inductors (RL). Students will learn how these circuits respond to sudden changes like switching events, developing intuition for time constants and exponential responses. The chapter covers charging and discharging behavior, initial and final conditions, and the concepts of natural and forced response. Understanding transient analysis is crucial for analyzing real-world circuits where signals change over time.</p>
-</div>
+<h3 id="key-concepts">Key Concepts</h3>
+<ul>
+<li>The <strong>time constant</strong> τ sets the speed of response to a step input</li>
+<li><strong>RC circuit</strong>: <span class="arithmatex">\(\tau = RC\)</span> — <strong>RL circuit</strong>: <span class="arithmatex">\(\tau = L/R\)</span></li>
+<li>After <strong>1τ</strong>: response reaches ~63.2% of its final value</li>
+<li>After <strong>5τ</strong>: response is considered complete (&gt;99% of final value)</li>
+<li><strong>Natural response</strong>: behavior driven by initial stored energy, no external source</li>
+<li><strong>Forced (step) response</strong>: behavior driven by a suddenly applied DC source</li>
+<li><strong>Complete response</strong> = natural response + forced response</li>
+</ul>
+<h3 id="important-equations">Important Equations</h3>
+<div class="arithmatex">\[ \tau = RC \qquad \tau = \frac{L}{R} \]</div>
+<div class="arithmatex">\[ x(t) = x(\infty) + \bigl[x(0^+) - x(\infty)\bigr]\,e^{-t/\tau} \]</div>
+<p>Where <span class="arithmatex">\(x(0^+)\)</span> is the initial condition and <span class="arithmatex">\(x(\infty)\)</span> is the final (DC steady-state) value.</p>
+<h3 id="what-you-should-understand">What You Should Understand</h3>
+<ul>
+<li><strong>Voltage across a capacitor</strong> and <strong>current through an inductor</strong> cannot change instantaneously</li>
+<li>How to determine <span class="arithmatex">\(v_C(0^+)\)</span> and <span class="arithmatex">\(i_L(0^+)\)</span> from the circuit state immediately before switching</li>
+<li>How to find the final value <span class="arithmatex">\(x(\infty)\)</span> by analyzing the DC steady-state circuit (C = open, L = short)</li>
+<li>The physical meaning of τ: larger τ means slower response</li>
+</ul>
+<h3 id="applications">Applications</h3>
+<ul>
+<li>Power supply filter capacitor hold-up time calculation</li>
+<li>Switch debouncing circuits in digital electronics</li>
+<li>Camera flash charge/discharge timing</li>
+<li>Motor driver current rise-time estimation</li>
+</ul>
+<h3 id="quick-review-checklist">Quick Review Checklist</h3>
+<ul>
+<li>[ ] I can calculate τ for any RC or RL circuit</li>
+<li>[ ] I can determine <span class="arithmatex">\(x(0^+)\)</span> and <span class="arithmatex">\(x(\infty)\)</span> and write the complete step response</li>
+<li>[ ] I can apply the no-instantaneous-change rule for capacitor voltage and inductor current</li>
+<li>[ ] I can sketch the exponential waveform and identify the 1τ, 2τ, and 5τ points</li>
+</ul>
 <h2 id="concepts-covered">Concepts Covered</h2>
 <p>This chapter covers the following 17 concepts from the learning graph:</p>
 <div style="background: #F8F6FF; border: 2px solid #D4C8FF; border-radius: 12px; padding: 20px 24px; margin: 1rem 0;">

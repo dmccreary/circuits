@@ -4564,11 +4564,41 @@ The chapter closes with practical design considerations — grounding strategies
 
 </details>
 <h2 id="summary">Summary</h2>
-<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 20px 24px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
-<p style="color: #333; line-height: 1.85; font-size: 1.02rem; margin: 0;">
-This chapter applies the amplifier and signal-analysis concepts from Chapters 12–14 to the practical domain of audio electronics. Students will understand the complete audio signal chain — from microphone to speaker — and learn to analyze each stage for gain, noise, and distortion. Key quantitative tools include signal-to-noise ratio (SNR), thermal noise calculations, total harmonic distortion (THD), and intermodulation distortion (IMD). Power amplifier classes (A, AB, D) are compared for efficiency and linearity. The chapter concludes with professional grounding and shielding techniques that control noise in real systems.
-</p>
-</div>
+<h3 id="key-concepts">Key Concepts</h3>
+<ul>
+<li><strong>Audio signal chain</strong>: microphone → preamplifier → processing → power amplifier → speaker</li>
+<li><strong>SNR</strong> (Signal-to-Noise Ratio): ratio of signal power to noise power; higher SNR = cleaner audio</li>
+<li><strong>Thermal noise</strong> (Johnson noise): <span class="arithmatex">\(V_n = \sqrt{4kTRB}\)</span> — fundamental noise floor of any resistive element</li>
+<li><strong>THD</strong> (Total Harmonic Distortion): percentage of signal power in harmonics vs. fundamental; lower is better</li>
+<li><strong>IMD</strong> (Intermodulation Distortion): distortion products from two signals mixing in a nonlinear stage</li>
+<li>Power amplifier classes: <strong>Class A</strong> (low distortion, ~25% efficient), <strong>Class AB</strong> (compromise), <strong>Class D</strong> (PWM switching, ~90% efficient)</li>
+<li><strong>Single-point grounding</strong> and <strong>shielded cables</strong> are essential practices for minimizing noise in audio systems</li>
+</ul>
+<h3 id="important-equations">Important Equations</h3>
+<div class="arithmatex">\[ SNR_{dB} = 10\log_{10}\!\left(\frac{P_{signal}}{P_{noise}}\right) \qquad V_n = \sqrt{4kTRB} \]</div>
+<div class="arithmatex">\[ THD = \frac{\sqrt{V_2^2 + V_3^2 + \cdots}}{V_1} \times 100\% \]</div>
+<p>Where k = 1.38 × 10⁻²³ J/K (Boltzmann's constant), T = temperature (K), B = bandwidth (Hz)</p>
+<h3 id="what-you-should-understand">What You Should Understand</h3>
+<ul>
+<li>Why thermal noise sets a fundamental lower bound on SNR regardless of circuit quality</li>
+<li>How Class D amplifiers use PWM switching to achieve high efficiency with low heat dissipation</li>
+<li>Why grounding strategy is as important as circuit design in professional audio systems</li>
+<li>The relationship between THD, IMD, and perceived audio quality (listener fatigue)</li>
+</ul>
+<h3 id="applications">Applications</h3>
+<ul>
+<li>Consumer and professional audio equipment design</li>
+<li>Hearing aids and medical-grade audio amplifiers</li>
+<li>Studio mixing consoles, PA systems, and stage monitors</li>
+<li>Wireless speaker and Bluetooth audio module design</li>
+</ul>
+<h3 id="quick-review-checklist">Quick Review Checklist</h3>
+<ul>
+<li>[ ] I can calculate SNR in dB given signal and noise power (or voltage) values</li>
+<li>[ ] I can estimate the thermal noise floor for a given resistor value and bandwidth</li>
+<li>[ ] I can compare Class A, AB, and D amplifiers on efficiency, distortion, and typical use case</li>
+<li>[ ] I understand the role of shielding and single-point grounding in professional audio noise control</li>
+</ul>
 <h2 id="concepts-covered">Concepts Covered</h2>
 <div style="background: #F8F6FF; border: 2px solid #D4C8FF; border-radius: 12px; padding: 20px 24px; margin: 1rem 0;">
 <ol>

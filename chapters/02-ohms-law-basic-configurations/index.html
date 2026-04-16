@@ -4564,11 +4564,40 @@ From the humble resistor through series and parallel combinations to voltage div
 
 </details>
 <h2 id="summary">Summary</h2>
-<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 20px 24px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
-<p style="color: #333; line-height: 1.85; font-size: 1.02rem; margin: 0;">
-This chapter covers Ohm's Law, the fundamental relationship between voltage, current, and resistance, and introduces the basic circuit configurations used throughout electrical engineering. Students will learn about voltage and current sources, series and parallel circuit arrangements, and how to use voltage and current dividers to analyze circuits. The chapter also introduces resistor properties including color codes, tolerance, and power ratings. After completing this chapter, students will be able to analyze simple resistive circuits and select appropriate components for basic applications.
-</p>
-</div>
+<h3 id="key-concepts">Key Concepts</h3>
+<ul>
+<li><strong>Ohm's Law</strong>: voltage across a resistor is directly proportional to current through it</li>
+<li><strong>Series circuits</strong>: same current flows through all elements; voltages add</li>
+<li><strong>Parallel circuits</strong>: same voltage across all elements; currents add</li>
+<li><strong>Voltage divider</strong>: two series resistors divide voltage in proportion to resistance values</li>
+<li><strong>Current divider</strong>: two parallel resistors divide current inversely proportional to resistance</li>
+<li><strong>Ideal voltage source</strong>: maintains constant terminal voltage regardless of current drawn</li>
+<li><strong>Ideal current source</strong>: maintains constant current regardless of load voltage</li>
+</ul>
+<h3 id="important-equations">Important Equations</h3>
+<div class="arithmatex">\[ V = IR \qquad R_{series} = R_1 + R_2 + \cdots \qquad \frac{1}{R_{parallel}} = \frac{1}{R_1} + \frac{1}{R_2} + \cdots \]</div>
+<div class="arithmatex">\[ V_x = V_s \cdot \frac{R_x}{R_1 + R_2} \quad \text{(voltage divider)} \qquad I_x = I_s \cdot \frac{R_{other}}{R_1 + R_2} \quad \text{(current divider)} \]</div>
+<h3 id="what-you-should-understand">What You Should Understand</h3>
+<ul>
+<li>Why series resistors add directly but parallel resistors combine as reciprocals</li>
+<li>How a voltage divider behaves under no load vs. under a finite load (loading effect)</li>
+<li>The difference between ideal and real (non-ideal) voltage and current sources</li>
+<li>How to read a resistor color code for resistance value, tolerance, and power rating</li>
+</ul>
+<h3 id="applications">Applications</h3>
+<ul>
+<li>Current-limiting resistor selection for LEDs and indicators</li>
+<li>Sensor signal conditioning (thermistor voltage dividers for temperature measurement)</li>
+<li>Battery terminal voltage under load (internal resistance effect)</li>
+<li>Volume control resistor networks in audio circuits</li>
+</ul>
+<h3 id="quick-review-checklist">Quick Review Checklist</h3>
+<ul>
+<li>[ ] I can apply Ohm's Law to find V, I, or R given any two values</li>
+<li>[ ] I can calculate equivalent resistance for series and parallel networks</li>
+<li>[ ] I can design a voltage divider for a specified output ratio</li>
+<li>[ ] I can read a four-band resistor color code for resistance and tolerance</li>
+</ul>
 <h2 id="concepts-covered">Concepts Covered</h2>
 <div style="background: #F8F6FF; border: 2px solid #D4C8FF; border-radius: 12px; padding: 20px 24px; margin: 1rem 0;">
 <ol>

@@ -4564,11 +4564,43 @@ Safety is treated as a first-class subject throughout. Electrical hazards are in
 
 </details>
 <h2 id="summary">Summary</h2>
-<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 20px 24px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
-<p style="color: #333; line-height: 1.85; font-size: 1.02rem; margin: 0;">
-This chapter covers the essential laboratory skills and instruments used throughout the course. Students learn to operate multimeters, oscilloscopes, function generators, DC power supplies, and spectrum analyzers to measure and characterize circuit behavior. The chapter addresses oscilloscope probe selection and compensation, triggering strategies for stable waveform display, and the difference between AC and DC coupling. Practical circuit-building skills — breadboarding, soldering, and a structured debugging methodology — are developed alongside an understanding of measurement errors including loading effects and calibration. Safety practices for working with electrical circuits are emphasized throughout.
-</p>
-</div>
+<h3 id="key-concepts">Key Concepts</h3>
+<ul>
+<li><strong>Multimeter</strong>: measures DC/AC voltage, current, and resistance; indispensable for basic circuit verification</li>
+<li><strong>Oscilloscope</strong>: displays voltage vs. time; probe compensation critical for accurate measurement above ~1 MHz</li>
+<li><strong>Function generator</strong>: produces programmable sine, square, and triangle waveforms for circuit testing</li>
+<li><strong>Triggering</strong>: stabilizes the waveform display; <strong>edge triggering</strong> is the most common mode</li>
+<li><strong>10× probe</strong>: reduces capacitive loading by 10× and increases input impedance 10×; preferred for most measurements</li>
+<li><strong>Loading effect</strong>: instruments draw current and add capacitance, altering the circuit under test</li>
+<li><strong>Structured debugging</strong>: verify power → check signals from source to output → isolate to component</li>
+</ul>
+<h3 id="important-rules-and-relationships">Important Rules and Relationships</h3>
+<ul>
+<li>Oscilloscope bandwidth rule: use scope with BW ≥ <strong>5× the signal frequency</strong> for accurate amplitude measurement</li>
+<li>Probe loading: <span class="arithmatex">\(Z_{scope} \approx 1\,\text{M}\Omega \parallel 10\text{–}20\,\text{pF}\)</span>; 10× probe raises this to <span class="arithmatex">\(10\,\text{M}\Omega \parallel 1\text{–}2\,\text{pF}\)</span></li>
+<li><strong>AC coupling</strong> removes DC offset but distorts signals below the coupling capacitor's corner frequency</li>
+</ul>
+<h3 id="what-you-should-understand">What You Should Understand</h3>
+<ul>
+<li>Why a 10× probe is preferred over a 1× direct probe for most oscilloscope measurements</li>
+<li>How improper triggering causes an unstable, rolling display — and how to fix it</li>
+<li>Why AC coupling is useful for viewing small AC signals on a large DC offset, but misleads at low frequency</li>
+<li>The systematic debugging process: never jump to conclusions before verifying power and ground</li>
+</ul>
+<h3 id="applications">Applications</h3>
+<ul>
+<li>Circuit prototyping and debugging in academic and professional labs</li>
+<li>Production testing, quality control, and compliance verification</li>
+<li>Field troubleshooting of installed electronic systems</li>
+<li>Experimental characterization of filter frequency response</li>
+</ul>
+<h3 id="quick-review-checklist">Quick Review Checklist</h3>
+<ul>
+<li>[ ] I can configure an oscilloscope to display a stable, triggered waveform</li>
+<li>[ ] I can explain the difference between 1× and 10× probes and when to use each</li>
+<li>[ ] I can describe the structured debugging methodology step by step</li>
+<li>[ ] I know when to use AC vs. DC coupling and understand the trade-offs of each</li>
+</ul>
 <h2 id="concepts-covered">Concepts Covered</h2>
 <div style="background: #F8F6FF; border: 2px solid #D4C8FF; border-radius: 12px; padding: 20px 24px; margin: 1rem 0;">
 <ol>

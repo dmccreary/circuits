@@ -4554,11 +4554,40 @@ This chapter introduces alternating current (AC) and the sinusoidal waveforms th
 
 </details>
 <h2 id="summary">Summary</h2>
-<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 20px 24px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
-<p style="color: #333; line-height: 1.85; font-size: 1.02rem; margin: 0;">
-This chapter introduces alternating current (AC) and the sinusoidal waveforms that are fundamental to power systems and signal processing. Students will learn to characterize sinusoids by their amplitude, frequency, period, and phase, and understand the relationships between these parameters. The chapter covers important measurement quantities including peak, peak-to-peak, RMS, and average values. Complex numbers are introduced as the mathematical foundation for phasor analysis in the next chapter.
-</p>
-</div>
+<h3 id="key-concepts">Key Concepts</h3>
+<ul>
+<li>A sinusoidal signal is fully characterized by <strong>amplitude</strong> <span class="arithmatex">\(V_p\)</span>, <strong>frequency</strong> f (or ω), and <strong>phase</strong> φ</li>
+<li><strong>Frequency</strong> f (Hz) and <strong>angular frequency</strong> ω (rad/s) are related by <span class="arithmatex">\(\omega = 2\pi f\)</span></li>
+<li><strong>Period</strong> T = 1/f: the time for one complete cycle</li>
+<li><strong>RMS value</strong>: the DC-equivalent for power; <span class="arithmatex">\(V_{rms} = V_p/\sqrt{2}\)</span> for a pure sinusoid</li>
+<li><strong>Phase shift</strong> φ: time offset between two sinusoids at the same frequency; positive φ means <em>leading</em></li>
+<li><strong>Complex numbers</strong> in rectangular (a + jb) and polar (|Z|∠θ) form underpin all phasor analysis</li>
+<li><strong>Euler's formula</strong>: <span class="arithmatex">\(e^{j\theta} = \cos\theta + j\sin\theta\)</span></li>
+</ul>
+<h3 id="important-equations">Important Equations</h3>
+<div class="arithmatex">\[ v(t) = V_p\cos(\omega t + \phi) \qquad \omega = 2\pi f = \frac{2\pi}{T} \]</div>
+<div class="arithmatex">\[ V_{rms} = \frac{V_p}{\sqrt{2}} \approx 0.707\,V_p \qquad |Z| = \sqrt{a^2 + b^2},\quad \angle Z = \arctan\!\frac{b}{a} \]</div>
+<h3 id="what-you-should-understand">What You Should Understand</h3>
+<ul>
+<li>Why RMS, not peak, is used in power calculations and appliance ratings</li>
+<li>The relationship between the time-domain sinusoid and its phasor representation</li>
+<li>How to add two sinusoids of the same frequency using phasors (amplitude and phase addition)</li>
+<li>How to convert between rectangular and polar complex number forms fluently</li>
+</ul>
+<h3 id="applications">Applications</h3>
+<ul>
+<li>Household AC power (120 V RMS, 60 Hz — North America; 230 V RMS, 50 Hz — Europe)</li>
+<li>Audio signal amplitude specifications and headroom</li>
+<li>Oscilloscope measurements and waveform characterization</li>
+<li>Function generator settings for lab experiments</li>
+</ul>
+<h3 id="quick-review-checklist">Quick Review Checklist</h3>
+<ul>
+<li>[ ] I can write a sinusoidal expression given amplitude, frequency, and phase</li>
+<li>[ ] I can convert between peak, peak-to-peak, and RMS values</li>
+<li>[ ] I can convert a complex number between rectangular and polar form</li>
+<li>[ ] I understand why phase angle matters when combining or comparing two signals</li>
+</ul>
 <h2 id="concepts-covered">Concepts Covered</h2>
 <div style="background: #F8F6FF; border: 2px solid #D4C8FF; border-radius: 12px; padding: 20px 24px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
 <ul style="list-style:none;padding-left:0.5rem;margin:0;">

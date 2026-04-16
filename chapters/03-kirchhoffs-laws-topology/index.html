@@ -4564,11 +4564,38 @@ The chapter covers circuit topology concepts including nodes, branches, loops, a
 
 </details>
 <h2 id="summary">Summary</h2>
-<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 20px 24px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
-<p style="color: #333; line-height: 1.85; font-size: 1.02rem; margin: 0;">
-This chapter introduces Kirchhoff's Voltage Law (KVL) and Kirchhoff's Current Law (KCL), the two fundamental conservation laws that govern all electrical circuits. Students will learn about circuit topology concepts including loops, meshes, and the systematic methods for analyzing complex circuits. The chapter covers node voltage and mesh current methods, including techniques for handling special cases like supernodes and supermeshes. By the end of this chapter, students will have the tools to systematically analyze any DC circuit using matrix-based techniques.
-</p>
-</div>
+<h3 id="key-concepts">Key Concepts</h3>
+<ul>
+<li><strong>KCL</strong> (Kirchhoff's Current Law): the algebraic sum of all currents entering a node equals zero — conservation of charge</li>
+<li><strong>KVL</strong> (Kirchhoff's Voltage Law): the algebraic sum of all voltages around any closed loop equals zero — conservation of energy</li>
+<li><strong>Node voltage method</strong>: assign voltages to nodes relative to ground; write KCL at each non-reference node</li>
+<li><strong>Mesh current method</strong>: assign loop currents to independent meshes; write KVL around each mesh</li>
+<li>A <strong>supernode</strong> arises when a voltage source connects two non-reference nodes</li>
+<li>A <strong>supermesh</strong> arises when a current source is shared between two adjacent mesh loops</li>
+</ul>
+<h3 id="important-equations">Important Equations</h3>
+<div class="arithmatex">\[ \sum I_{in} = \sum I_{out} \quad \text{(KCL at any node)} \qquad \sum V = 0 \quad \text{(KVL around any closed loop)} \]</div>
+<h3 id="what-you-should-understand">What You Should Understand</h3>
+<ul>
+<li>KCL is a statement of charge conservation; KVL is a statement of energy conservation</li>
+<li>How to select a reference node and write the minimum number of independent equations</li>
+<li>Why the number of independent equations equals the number of unknown node voltages or mesh currents</li>
+<li>How supernodes and supermeshes handle voltage and current sources in systematic analysis</li>
+</ul>
+<h3 id="applications">Applications</h3>
+<ul>
+<li>Multi-loop power distribution circuit analysis</li>
+<li>Wheatstone bridge circuits for precision sensor readout</li>
+<li>Ladder networks in filter design</li>
+<li>Foundation of SPICE circuit simulation (nodal analysis engine)</li>
+</ul>
+<h3 id="quick-review-checklist">Quick Review Checklist</h3>
+<ul>
+<li>[ ] I can apply KCL at any node with a consistent current sign convention</li>
+<li>[ ] I can apply KVL around any loop with a consistent polarity convention</li>
+<li>[ ] I can set up and solve a node-voltage system for a three-node circuit</li>
+<li>[ ] I can identify and correctly handle a supernode or supermesh</li>
+</ul>
 <h2 id="concepts-covered">Concepts Covered</h2>
 <div style="background: #F8F6FF; border: 2px solid #D4C8FF; border-radius: 12px; padding: 20px 24px; margin: 1rem 0;">
 <ol>
