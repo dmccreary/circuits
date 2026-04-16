@@ -539,3 +539,206 @@ body {
     box-shadow: 0 0 10px rgba(0, 191, 255, 0.25);
   }
 }
+
+/* ── Audio Summary Card (TTS Summary Player) ─────────────────────────────
+   Mirrors EE2301 audio-player.css; dark purple card injected above each
+   <details class="video-overview"> by tts-summary-player.js
+   ────────────────────────────────────────────────────────────────────── */
+
+.md-typeset .audio-summary {
+  background: linear-gradient(135deg, #1A0C4A 0%, #0D0630 100%);
+  border-radius: 10px;
+  padding: 1.1rem 1.4rem;
+  margin: 0 0 1.2rem 0;
+  border-left: 3px solid #00BFFF;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Header: headphones icon + "AUDIO SUMMARY" label */
+.md-typeset .audio-summary__header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.9rem;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+.md-typeset .audio-summary__header svg { flex-shrink: 0; opacity: 0.6; }
+
+/* Controls row: [play] [====progress====] [stop] */
+.md-typeset .audio-summary__controls {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+/* Shared button base */
+.md-typeset .audio-summary__btn {
+  border-radius: 50%;
+  border: 1.5px solid;
+  background: transparent;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, border-color 0.2s, color 0.2s, transform 0.15s;
+  flex-shrink: 0;
+  padding: 0;
+  line-height: 1;
+}
+.md-typeset .audio-summary__btn:focus-visible {
+  outline: 2px solid #00BFFF;
+  outline-offset: 2px;
+}
+
+/* Play / Pause */
+.md-typeset .tsp-btn-play {
+  width: 40px;
+  height: 40px;
+  border-color: #00BFFF;
+  color: #00BFFF;
+}
+.md-typeset .tsp-btn-play:hover {
+  background: rgba(0, 191, 255, 0.12);
+  transform: scale(1.05);
+}
+.md-typeset .tsp-btn-play svg { width: 16px; height: 16px; }
+.md-typeset .tsp-btn-play .tsp-icon-play { margin-left: 2px; }
+
+/* Stop */
+.md-typeset .tsp-btn-stop {
+  width: 30px;
+  height: 30px;
+  border-color: rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.4);
+  opacity: 0;
+  pointer-events: none;
+}
+.md-typeset .tsp-btn-stop.tsp-stop-vis {
+  opacity: 1;
+  pointer-events: auto;
+}
+.md-typeset .tsp-btn-stop:hover {
+  border-color: rgba(0, 191, 255, 0.5);
+  color: rgba(0, 191, 255, 0.8);
+  background: rgba(0, 191, 255, 0.08);
+}
+.md-typeset .tsp-btn-stop svg { width: 12px; height: 12px; }
+
+/* Progress bar */
+.md-typeset .audio-summary__progress-wrap {
+  flex: 1;
+  min-width: 0;
+}
+.md-typeset .audio-summary__progress {
+  position: relative;
+  width: 100%;
+  height: 5px;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.08);
+  cursor: pointer;
+  overflow: hidden;
+}
+.md-typeset .audio-summary__progress::before {
+  content: '';
+  position: absolute;
+  inset: -8px 0;
+}
+.md-typeset .tsp-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #00BFFF, #33ccff);
+  border-radius: 3px;
+  pointer-events: none;
+  transition: width 0.3s linear;
+}
+.md-typeset .audio-summary__progress:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+/* Sentence counter X / Y */
+.md-typeset .audio-summary__time {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0.3rem;
+  font-size: 0.7rem;
+  color: rgba(255, 255, 255, 0.4);
+  font-variant-numeric: tabular-nums;
+  user-select: none;
+}
+
+/* Speed buttons */
+.md-typeset .audio-summary__speed {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  margin-top: 0.75rem;
+}
+.md-typeset .audio-summary__speed-label {
+  font-size: 0.68rem;
+  color: rgba(255, 255, 255, 0.35);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-right: 0.3rem;
+  white-space: nowrap;
+}
+.md-typeset .audio-summary__speed-btn {
+  padding: 0.15rem 0.55rem;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: transparent;
+  color: rgba(255, 255, 255, 0.45);
+  font-size: 0.72rem;
+  cursor: pointer;
+  transition: all 0.15s;
+  line-height: 1.4;
+}
+.md-typeset .audio-summary__speed-btn:hover {
+  border-color: rgba(0, 191, 255, 0.35);
+  color: rgba(255, 255, 255, 0.75);
+}
+.md-typeset .audio-summary__speed-btn.active {
+  border-color: #00BFFF;
+  background: rgba(0, 191, 255, 0.12);
+  color: #00BFFF;
+  font-weight: 600;
+}
+
+/* Voice selector row */
+.md-typeset .tsp-voice-row {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 0.5rem;
+}
+.md-typeset .tsp-voice-select {
+  background: rgba(255, 255, 255, 0.07);
+  color: rgba(255, 255, 255, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 4px;
+  padding: 0.18rem 0.5rem;
+  font-size: 0.72rem;
+  cursor: pointer;
+  flex: 1;
+  max-width: 280px;
+}
+.md-typeset .tsp-voice-select:focus {
+  outline: 2px solid #00BFFF;
+  outline-offset: 1px;
+}
+.md-typeset .tsp-voice-select option {
+  background: #1A0C4A;
+  color: #fff;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .md-typeset .audio-summary { padding: 0.9rem 1rem; }
+  .md-typeset .tsp-btn-play  { width: 36px; height: 36px; }
+  .md-typeset .audio-summary__speed-btn { padding: 0.15rem 0.4rem; font-size: 0.68rem; }
+  .md-typeset .tsp-voice-select { max-width: 100%; }
+}
+}
