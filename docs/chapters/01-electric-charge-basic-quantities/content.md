@@ -10,7 +10,7 @@ version: 0.04
 
 # Chapter 1 — Electric Charge and Basic Circuit Quantities
 
-<h2 id="11-electric-charge" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">1.1 Electric Charge: Where It All Begins</h2>
+## 1.1 Electric Charge: Where It All Begins
 
 Everything in the electrical world starts with **electric charge**. Charge is a fundamental property of matter, just like mass, but instead of telling you how much "stuff" something has, charge tells you how that stuff will interact electromagnetically.
 
@@ -32,7 +32,7 @@ The fundamental unit of charge is the **coulomb** (C), named after Charles-Augus
 
 ---
 
-<h2 id="12-current" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">1.2 Current: Charge in Motion</h2>
+## 1.2 Current: Charge in Motion
 
 Here's where things get interesting. Charge sitting still is about as useful as a car with no gas — it has potential, but it's not doing anything. When charges *move*, that's when the magic happens. This flow of charge is called **electric current**.
 
@@ -52,7 +52,7 @@ The unit of current is the **ampere** (A), named after André-Marie Ampère. One
 
 Here's a fun fact that trips up a lot of students: in most circuits, the actual electrons move incredibly slowly — often just millimeters per second. This is called *drift velocity*. So why does your light turn on instantly when you flip the switch? Because you're not waiting for specific electrons to arrive; you're waiting for the *electromagnetic field* to propagate, which happens at nearly the speed of light. It's like a pipe full of water: when you turn on the faucet, water comes out the other end immediately, even though the specific water molecules at the faucet won't arrive at the spout for a while.
 
-<h4 style="color: #5A3EED; font-weight: 700; margin-top: 2rem; margin-bottom: 0.8rem;">Diagram: Water Flow Analogy for Electric Current</h4>
+#### Diagram: Water Flow Analogy for Electric Current
 
 <div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
 <iframe src="../../../sims/water-flow-analogy/main.html" width="100%" height="450px" scrolling="no" style="border:none; border-radius:8px; overflow:hidden;"></iframe>
@@ -67,7 +67,7 @@ Learning Objective: Students will be able to explain how electric current flow i
 Link to Microsim: [Water Flow Analogy](../../sims/water-flow-analogy/index.md)
 </details>
 
-<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Conventional Current vs. Electron Flow</h3>
+### Conventional Current vs. Electron Flow
 
 Here's a historical quirk that causes endless confusion: **conventional current** flows from positive to negative, but electrons actually flow from negative to positive. Why? Because when scientists first defined current direction, they didn't know electrons existed. They guessed that positive charges were moving, and they guessed wrong. By the time we figured out the truth, the convention was too deeply embedded to change.
 
@@ -80,7 +80,7 @@ Don't let this keep you up at night. Pick one convention and stick with it. We'l
 
 ---
 
-<h2 id="13-voltage" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">1.3 Voltage: The Electrical "Push"</h2>
+## 1.3 Voltage: The Electrical "Push"
 
 If current is the flow of charge, **voltage** is what makes charges want to flow in the first place. Voltage is the *electrical potential difference* between two points — it's the "pressure" that pushes charges through a circuit.
 
@@ -112,7 +112,7 @@ Here's the crucial point: **voltage is always measured between two points**. You
 
 ---
 
-<h2 id="14-energy-and-power" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">1.4 Electrical Energy and Power: Getting Work Done</h2>
+## 1.4 Electrical Energy and Power: Getting Work Done
 
 Now we can talk about what electricity actually *does* for us: **work**. When charges move through a circuit, they can transfer energy — lighting bulbs, spinning motors, heating elements, or processing information.
 
@@ -138,13 +138,13 @@ $$P = VI = I^2R = \frac{V^2}{R}$$
 
 One watt equals one joule per second. These three forms are all equivalent; use whichever is most convenient for your problem.
 
-<h4 style="color: #5A3EED; font-weight: 700; margin-top: 2rem; margin-bottom: 0.8rem;">Diagram: Power Triangle Visualization</h4>
+#### Diagram: Power Triangle Visualization
 
 <div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
 <iframe src="../../../sims/power-triangle/main.html" width="100%" height="400px" scrolling="no" style="border:none; border-radius:8px; overflow:hidden;"></iframe>
 </div>
 
-<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">A Note on Energy Units</h3>
+### A Note on Energy Units
 
 Your electricity bill doesn't list energy in joules — it uses **kilowatt-hours (kWh)**. One kilowatt-hour is the energy consumed when using 1000 watts for one hour:
 
@@ -154,7 +154,7 @@ So when you leave a 100W light bulb on for 10 hours, you use 1 kWh of energy. At
 
 ---
 
-<h2 id="15-resistance" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">1.5 Resistance: The Opposition</h2>
+## 1.5 Resistance: The Opposition
 
 Not all materials let charges flow through them equally. **Resistance** is the property that opposes the flow of current. It's like friction for electricity.
 
@@ -188,7 +188,7 @@ The unit of resistance is the **ohm** (Ω), represented by the Greek letter omeg
 
 ---
 
-<h2 id="16-conductance" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">1.6 Conductance: The Flip Side</h2>
+## 1.6 Conductance: The Flip Side
 
 **Conductance** is simply the reciprocal of resistance — it measures how easily current flows rather than how much it's opposed:
 
@@ -206,7 +206,7 @@ Why bother with conductance? In some analyses, especially with parallel circuits
 
 ---
 
-<h2 id="17-ground" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">1.7 Electrical Ground: The Reference Point</h2>
+## 1.7 Electrical Ground: The Reference Point
 
 Remember how we said voltage is always measured between two points? Well, we need to pick a reference point for our measurements, and that reference is called **electrical ground**.
 
@@ -218,7 +218,7 @@ Ground is typically defined as 0V, and all other voltages in a circuit are measu
 
 The key insight is that ground doesn't necessarily mean "connected to the physical earth." It's just a convenient reference point we all agree to call 0V.
 
-<h4 style="color: #5A3EED; font-weight: 700; margin-top: 2rem; margin-bottom: 0.8rem;">Diagram: Ground Symbol Reference</h4>
+#### Diagram: Ground Symbol Reference
 
 <div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
 <iframe src="../../../sims/ground-symbols/main.html" width="100%" height="350px" scrolling="no" style="border:none; border-radius:8px; overflow:hidden;"></iframe>
@@ -226,7 +226,7 @@ The key insight is that ground doesn't necessarily mean "connected to the physic
 
 ---
 
-<h2 id="18-schematic-symbols" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">1.8 Circuit Schematic Symbols: The Language of Circuits</h2>
+## 1.8 Circuit Schematic Symbols: The Language of Circuits
 
 Just as musicians read sheet music, electrical engineers read **circuit schematics**. These diagrams use standardized symbols to represent components and their connections. Learning these symbols is like learning an alphabet — once you know them, you can read any circuit diagram.
 
@@ -241,7 +241,7 @@ Just as musicians read sheet music, electrical engineers read **circuit schemati
 | Wire | Straight line | Ideal conductor (0Ω) |
 | Node | Dot at wire junction | Connection point |
 
-<h4 style="color: #5A3EED; font-weight: 700; margin-top: 2rem; margin-bottom: 0.8rem;">Diagram: Interactive Circuit Symbol Flashcards</h4>
+#### Diagram: Interactive Circuit Symbol Flashcards
 
 <div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
 <iframe src="../../../sims/circuit-symbol-flashcards/main.html" width="100%" height="482px" scrolling="no" style="border:none; border-radius:8px; overflow:hidden;"></iframe>
@@ -249,7 +249,7 @@ Just as musicians read sheet music, electrical engineers read **circuit schemati
 
 ---
 
-<h2 id="19-nodes-branches" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">1.9 Nodes and Branches: Circuit Anatomy</h2>
+## 1.9 Nodes and Branches: Circuit Anatomy
 
 To analyze circuits, we need vocabulary for describing their structure. Two fundamental concepts are **nodes** and **branches**.
 
@@ -267,7 +267,7 @@ Consider a simple circuit with a battery and two resistors:
 - If the resistors are in series, you have 2 nodes and 2 branches
 - If the resistors are in parallel, you have 2 nodes and 3 branches (one for each resistor plus the battery)
 
-<h4 style="color: #5A3EED; font-weight: 700; margin-top: 2rem; margin-bottom: 0.8rem;">Diagram: Node and Branch Identification Trainer</h4>
+#### Diagram: Node and Branch Identification Trainer
 
 <div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
 <iframe src="../../../sims/node-branch-trainer/main.html" width="100%" height="500px" scrolling="no" style="border:none; border-radius:8px; overflow:hidden;"></iframe>
@@ -275,7 +275,7 @@ Consider a simple circuit with a battery and two resistors:
 
 ---
 
-<h2 id="110-open-short" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">1.10 Open Circuits and Short Circuits: The Extremes</h2>
+## 1.10 Open Circuits and Short Circuits: The Extremes
 
 Two special circuit conditions that every engineer must understand are **open circuits** and **short circuits**. These represent the extreme cases of resistance.
 
@@ -302,7 +302,7 @@ A **short circuit** has zero resistance — current can flow with no voltage dro
 
 ---
 
-<h2 id="111-power-dissipation" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">1.11 Power Dissipation: Where the Energy Goes</h2>
+## 1.11 Power Dissipation: Where the Energy Goes
 
 When current flows through a resistance, electrical energy is converted to heat. This is called **power dissipation**, and it's governed by our power equations:
 
@@ -322,7 +322,7 @@ Power dissipation enables many applications:
 
 Every resistor has a **power rating** — the maximum power it can safely dissipate without damage. Common ratings are 1/8W, 1/4W, 1/2W, 1W, and 2W for small resistors. Exceeding this rating will cause the resistor to overheat, potentially changing its resistance value, failing open, or even catching fire.
 
-<h4 style="color: #5A3EED; font-weight: 700; margin-top: 2rem; margin-bottom: 0.8rem;">Diagram: Power Dissipation Calculator</h4>
+#### Diagram: Power Dissipation Calculator
 
 <div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
 <iframe src="../../../sims/power-dissipation-calc/main.html" width="100%" height="400px" scrolling="no" style="border:none; border-radius:8px; overflow:hidden;"></iframe>
@@ -330,7 +330,7 @@ Every resistor has a **power rating** — the maximum power it can safely dissip
 
 ---
 
-<h2 id="112-si-units" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">1.12 SI Units for Circuits: Speaking the Language</h2>
+## 1.12 SI Units for Circuits: Speaking the Language
 
 Throughout this course and your entire career in electrical engineering, you'll use the **International System of Units (SI)**. Consistency in units prevents errors and allows engineers worldwide to communicate precisely.
 
@@ -358,7 +358,7 @@ The SI prefix system lets us express very large or very small quantities conveni
 
 ---
 
-<h2 id="113-example" style="color: #5A3EED !important; border-left: none !important; border-bottom: 2px solid #5A3EED; padding-left: 0 !important; padding-bottom: 0.4rem; font-weight: 800; margin-top: 2.2rem; margin-bottom: 0.8rem;">1.13 Putting It All Together: A Worked Example</h2>
+## 1.13 Putting It All Together: A Worked Example
 
 Let's see how all these concepts connect in a simple example. Consider a circuit with a 9V battery connected to a 1kΩ resistor.
 
@@ -386,7 +386,7 @@ A standard 1/4W (250mW) resistor can easily handle this power level.
 
 ---
 
-<h2 style="color: #5A3EED !important; border-bottom: 2px solid #5A3EED; padding-bottom: 0.3rem; font-weight: 700; margin-top: 2rem;">Chapter Summary</h2>
+## Chapter Summary
 
 <div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 20px 24px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
 <p style="color: #333; line-height: 1.85; font-size: 1.02rem; margin: 0;">
@@ -394,7 +394,7 @@ You've just acquired the vocabulary of electrical engineering. Electric charge (
 </p>
 </div>
 
-<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">Key Equations Reference</h3>
+### Key Equations Reference
 
 <div style="background: #F8F6FF; border: 2px solid #D4C8FF; border-radius: 12px; padding: 20px 24px; margin: 1rem 0;" markdown>
 
@@ -410,7 +410,7 @@ You've just acquired the vocabulary of electrical engineering. Electric charge (
 
 </div>
 
-<h3 style="color: #5A3EED; font-weight: 700; margin-top: 1.8rem; margin-bottom: 0.6rem;">What's Next</h3>
+### What's Next
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.5rem;">
 Chapter 2 builds directly on these foundations, introducing Ohm's Law in full detail and applying it to series circuits, parallel circuits, voltage dividers, and current dividers. The resistor — your new favorite component — takes center stage.
