@@ -331,7 +331,7 @@ extra_css:
 
 extra_javascript:
   - js/extra.js
-  - js/tts-reader.js
+  - js/tts-summary-player.js
   - js/audio-reader.js
   # configure KaTeX for rendering LaTeX math using backslash delimiters
   - js/katex.js
