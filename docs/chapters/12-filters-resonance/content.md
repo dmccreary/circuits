@@ -26,7 +26,12 @@ Filters are circuits designed to selectively pass or block signals based on thei
 ## 12.1 Introduction
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
-Every time you turn up the bass on a speaker system, tune a radio to your favourite station, or record a voice while suppressing background hiss, a <strong style="color: #333;">filter circuit</strong> is doing the work. Filters are selective frequency processors — they pass some frequencies largely unchanged while attenuating others. Chapter 11 showed you how to describe and measure this behaviour using transfer functions and Bode plots. Now it is time to design circuits that actually produce those responses.
+Every time you turn up the bass on a speaker system, tune a radio to your favourite station, or record a voice while suppressing background hiss, a <strong style="color: #333;">filter circuit</strong> is doing the work. Filters are selective frequency processors — they pass some frequencies largely unchanged while attenuating others.
+
+<div class="mascot rezi" markdown>
+**Definition: Filter**
+A filter is a circuit that selectively passes signals in a specified frequency range (the **passband**) while attenuating signals in other ranges (the **stopband**). Filters are characterized by their type (low-pass, high-pass, band-pass, band-stop), their cutoff frequency \(f_c\), and their roll-off rate in dB/decade. The boundary between passband and stopband is conventionally defined at the −3 dB point.
+</div> Chapter 11 showed you how to describe and measure this behaviour using transfer functions and Bode plots. Now it is time to design circuits that actually produce those responses.
 </p>
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
@@ -89,7 +94,15 @@ The <strong style="color: #333;">RC high-pass filter</strong> places the capacit
 \[H(j\omega) = \frac{R}{R + 1/(j\omega C)} = \frac{j\omega RC}{1 + j\omega RC}\]
 </div>
 
-<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 0.6rem;">The cutoff frequency is identical to the low-pass version with the same R and C:</p>
+<p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 0.6rem;">The cutoff frequency is identical to the low-pass version with the same R and C:
+
+<div class="mascot ohmy" markdown>
+**Key Formula: RC Filter Cutoff Frequency**
+
+\[f_c = \frac{1}{2\pi RC} \qquad R = \frac{1}{2\pi f_c C}\]
+
+This single formula applies to both low-pass and high-pass RC filters — the same R and C give the same \(f_c\), just with different topologies. To design: pick a convenient capacitor value (e.g., 10 nF), then calculate the required resistor. Round to the nearest standard E24 value.
+</div></p>
 
 <div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 10px; padding: 16px 20px; margin: 1.2rem 0;">
 \[f_c = \frac{1}{2\pi RC}\]
@@ -243,6 +256,11 @@ Given specifications \(f_0\) and Q (or equivalently \(f_0\) and BW), the design 
 
 **Disadvantages:** Gain ≤ 1, loading changes response, large inductors needed at audio frequencies, limited Q in some topologies.
 
+<div class="mascot sparky" markdown>
+**Common Mistake: Loading Shifts the Cutoff Frequency of Passive Filters**
+When you connect a load resistor \(R_L\) across the output of an RC low-pass filter, \(R_L\) appears in parallel with the capacitor's Thevenin network — it effectively reduces the resistance in the RC time constant. The actual cutoff frequency becomes \(f_c = 1/(2\pi (R \| R_L) C)\), which is **higher** than designed. Always verify that \(R_L \gg R\) for a passive filter, or use an active filter (with an op-amp output stage) to eliminate loading entirely.
+</div>
+
 ### 12.4.2 Active Filters
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 0.8rem;">
@@ -252,6 +270,11 @@ Given specifications \(f_0\) and Q (or equivalently \(f_0\) and BW), the design 
 **Advantages:** Gain > 1 possible, no inductors, no inter-stage loading, high Q achievable with simple RC components, easy to adjust.
 
 **Disadvantages:** Power supply required, gain-bandwidth product of op-amp limits high-frequency operation, adds noise and potential distortion.
+
+<div class="mascot cappy" markdown>
+**Pro Tip: Choose Active Filters for Audio, Passive for RF**
+At audio frequencies (20 Hz–20 kHz), inductors large enough for useful filter designs would be bulky, expensive, and lossy — active RC filters are almost always the better choice. At radio frequencies (MHz and above), op-amps run out of bandwidth, making passive LC or transmission-line filters necessary. The crossover point is roughly 1 MHz: below it, prefer active; above it, passive.
+</div>
 
 | Property | Passive | Active |
 |----------|---------|--------|

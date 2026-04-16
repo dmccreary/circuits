@@ -83,6 +83,11 @@ Parallel RLC: \(\quad \alpha = \dfrac{1}{2RC}, \qquad \omega_0 = \dfrac{1}{\sqrt
 
 Notice that \(\omega_0\) is the same for both configurations — it depends only on L and C.
 
+<div class="mascot sparky" markdown>
+**Common Mistake: Using the Wrong α Formula for Series vs Parallel**
+The damping coefficient \(\alpha\) has **different formulas** for series and parallel RLC circuits. Series: \(\alpha = R/2L\). Parallel: \(\alpha = 1/(2RC)\). Students frequently swap these — especially the placement of R. Notice that in series circuits, more R means more damping (larger \(\alpha\)), while in parallel circuits, more R means *less* damping (smaller \(\alpha\)). Always verify which topology you have before plugging in.
+</div>
+
 <div class="msim-box"><button class="msim-btn" onclick="toggleFS(this)">⛶ Fullscreen</button>
 <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:8px;">
 <label style="font-size:0.9em;">R (Ω): <input type="range" id="rlcR" min="1" max="200" value="20" step="1" oninput="drawRLC()"><strong id="rlcRv">20</strong></label>
@@ -169,6 +174,14 @@ The **natural frequency** \(\omega_0\) is the frequency at which an undamped cir
 
 The natural frequency depends only on L and C, not on R. Resistance controls how quickly oscillations die out, but not their frequency.
 
+<div class="mascot ohmy" markdown>
+**Key Formula: Natural Frequency**
+
+\[\omega_0 = \frac{1}{\sqrt{LC}} \text{ rad/s} \qquad f_0 = \frac{1}{2\pi\sqrt{LC}} \text{ Hz}\]
+
+The natural frequency is the same for both series and parallel RLC circuits — it depends only on L and C, not on R. Resistance controls damping (how fast oscillations die out) but not the oscillation frequency.
+</div>
+
 | L (mH) | C (μF) | f₀ (Hz) | Audio Equivalent |
 |--------|--------|---------|------------------|
 | 100 | 100 | 50.3 | Low bass hum |
@@ -233,6 +246,11 @@ updateNF();
 ## 7.6 Damping Ratio
 
 The **damping ratio** \(\zeta\) is the single dimensionless number that classifies circuit response:
+
+<div class="mascot rezi" markdown>
+**Definition: Damping Ratio (ζ)**
+The damping ratio \(\zeta = \alpha/\omega_0\) is the dimensionless parameter that classifies the transient response of a second-order circuit. When \(\zeta > 1\) the response is overdamped (no oscillation); when \(\zeta = 1\) it is critically damped (fastest settling without overshoot); when \(\zeta < 1\) it is underdamped (oscillates while decaying). The quality factor \(Q = 1/(2\zeta)\) is its inverse.
+</div>
 
 <div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
 
@@ -364,6 +382,11 @@ When \(\zeta = 1\), there is a repeated root \(s = -\alpha = -\omega_0\). The ge
 </div>
 
 Critical damping gives the fastest possible return to equilibrium *without* overshoot. It's the design target for galvanometers, analog meters, automotive suspension, and camera stabilization — any application where overshoot is unacceptable but speed matters.
+
+<div class="mascot cappy" markdown>
+**Pro Tip: Critical Damping Is the Engineer's Sweet Spot**
+In most control and measurement applications, critically damped (\(\zeta = 1\)) is the ideal design target: you reach the final value as quickly as possible without oscillating past it. To achieve critical damping in a series RLC circuit, set \(R = 2\sqrt{L/C}\). In practice, designers often aim slightly underdamped (\(\zeta \approx 0.7\)) to allow a small, controlled overshoot in exchange for 30% faster settling.
+</div>
 
 <div class="msim-box"><button class="msim-btn" onclick="toggleFS(this)">⛶ Fullscreen</button>
 <div style="display:flex;gap:16px;flex-wrap:wrap;margin-bottom:6px;">

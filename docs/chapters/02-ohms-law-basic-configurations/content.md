@@ -61,6 +61,11 @@ If physics has \(E = mc^2\), then electrical engineering has Ohm's Law. It's equ
 
 Georg Simon Ohm discovered this relationship in 1827, and engineers have been grateful ever since.
 
+<div class="mascot rezi" markdown>
+**Definition: Ohm's Law**
+Ohm's Law states that the voltage \(V\) across a resistor is directly proportional to the current \(I\) through it, with the constant of proportionality being the resistance \(R\): \(V = IR\). This relationship holds for any **ohmic** (linear) component — one whose resistance remains constant regardless of the applied voltage or current.
+</div>
+
 <div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
 
 **Ohm's Law**
@@ -131,6 +136,11 @@ Use whichever form is most convenient given the known quantities.
 Every resistor has a **power rating** — the maximum power it can safely dissipate without damage. Common values are 1/8W, 1/4W, 1/2W, and 1W for through-hole resistors. A resistor will happily try to dissipate whatever power you throw at it — exceed the rating and you'll see discoloration, smell burning, and eventually witness component failure.
 
 Smart engineers practice **derating** — operating a component below its maximum specifications to improve reliability and lifespan. A common rule of thumb: derate to 50–70% of the rated maximum. If your calculation shows 0.4W dissipation, use a 1W resistor, not a 1/2W unit right at the edge.
+
+<div class="mascot cappy" markdown>
+**Pro Tip: Always Derate Resistors**
+Never select a resistor with a power rating that exactly matches your calculated dissipation. If your circuit dissipates 0.3 W, a 1/4 W (0.25 W) resistor will fail, and a 1/2 W unit running at 60% is borderline. Pick the next standard rating that gives you at least 2× headroom — in this case, a 1 W resistor. Your circuit will run cooler, the resistor will last longer, and you'll thank yourself when you revisit the design years later.
+</div>
 
 ---
 
@@ -243,6 +253,14 @@ $$R_{total} = \frac{R_1 \cdot R_2}{R_1 + R_2}$$
 
 A key insight: **the total resistance of a parallel combination is always less than the smallest individual resistor**. Adding more parallel paths makes it easier for current to flow.
 
+<div class="mascot ohmy" markdown>
+**Key Formula: Parallel Resistance**
+
+\[\frac{1}{R_{total}} = \frac{1}{R_1} + \frac{1}{R_2} + \cdots + \frac{1}{R_n} \qquad \text{(two resistors: } R_{total} = \frac{R_1 R_2}{R_1 + R_2}\text{)}\]
+
+The parallel combination is always **less** than the smallest resistor. For two equal resistors in parallel, the result is exactly half of one resistor.
+</div>
+
 #### Diagram: Parallel Circuit Analysis
 
 <div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
@@ -320,6 +338,11 @@ Notice: more current flows through the **smaller** resistance — the path of le
     In a current divider, current through a branch increases when the *other* branch has higher resistance.
 
     When in doubt, use Ohm's Law directly rather than memorizing formulas you might misapply.
+
+<div class="mascot sparky" markdown>
+**Common Mistake: The Current Divider Formula Is "Backwards"**
+Students memorize the voltage divider as \(V_{out} = V_{in} \cdot \frac{R_2}{R_1 + R_2}\) and then write the current divider as \(I_1 = I_{total} \cdot \frac{R_1}{R_1 + R_2}\) — which is wrong. The correct formula uses the **other** resistor in the numerator: \(I_1 = I_{total} \cdot \frac{R_2}{R_1 + R_2}\). More current flows through the path with **lower** resistance. If you forget, just use Ohm's Law directly: find the common voltage across both branches, then divide by each resistance.
+</div>
 
 ---
 

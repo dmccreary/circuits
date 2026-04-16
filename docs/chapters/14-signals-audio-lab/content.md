@@ -30,7 +30,12 @@ Every circuit you have analysed so far has a well-defined response to a sinusoid
 </p>
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
-The key is a remarkable result discovered by Jean-Baptiste Joseph Fourier around 1807: <strong style="color: #333;">any periodic signal can be expressed as a sum of sinusoids</strong>. This is the Fourier series. Once a signal is expressed as a sum of sinusoids, linearity means you can apply the transfer function to each sinusoid independently and add the results. The Fourier series thereby transforms a difficult problem — system response to an arbitrary waveform — into a family of easy problems, each solved with the phasor techniques already in your toolkit.
+The key is a remarkable result discovered by Jean-Baptiste Joseph Fourier around 1807: <strong style="color: #333;">any periodic signal can be expressed as a sum of sinusoids</strong>. This is the Fourier series.
+
+<div class="mascot rezi" markdown>
+**Definition: Fourier Series**
+A Fourier series represents any periodic signal \(f(t)\) with period \(T\) as a DC component plus an infinite sum of harmonically related sinusoids: \(f(t) = a_0 + \sum_{n=1}^{\infty}[a_n\cos(n\omega_0 t) + b_n\sin(n\omega_0 t)]\), where \(\omega_0 = 2\pi/T\) is the fundamental angular frequency. Each sinusoidal term is called a **harmonic**; the \(n\)th harmonic has frequency \(nf_0\).
+</div> Once a signal is expressed as a sum of sinusoids, linearity means you can apply the transfer function to each sinusoid independently and add the results. The Fourier series thereby transforms a difficult problem — system response to an arbitrary waveform — into a family of easy problems, each solved with the phasor techniques already in your toolkit.
 </p>
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
@@ -89,6 +94,14 @@ The three coefficient formulas follow from the orthogonality of sines and cosine
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 The limits of integration can be any convenient interval of length \(T\), such as \([-T/2,\ T/2]\). Choose whichever limits make the integrand simplest.
+
+<div class="mascot ohmy" markdown>
+**Key Formula: Fourier Coefficient Integrals**
+
+\[a_0 = \frac{1}{T}\int_0^T f(t)\,dt \qquad a_n = \frac{2}{T}\int_0^T f(t)\cos(n\omega_0 t)\,dt \qquad b_n = \frac{2}{T}\int_0^T f(t)\sin(n\omega_0 t)\,dt\]
+
+\(a_0\) is the **average value** (DC component). The factor of \(2/T\) in \(a_n\) and \(b_n\) — but \(1/T\) in \(a_0\) — is a common source of errors; don't apply the factor of 2 to the DC term.
+</div>
 </p>
 
 ### Amplitude–Phase Form
@@ -293,6 +306,11 @@ Always inspect the waveform for all three symmetries before integrating. A wavef
 </p>
 </div>
 
+<div class="mascot cappy" markdown>
+**Pro Tip: Check Symmetry Before Computing Any Integrals**
+Before touching a Fourier coefficient integral, spend 30 seconds checking all three symmetries: even (\(f(-t) = f(t)\) → all \(b_n = 0\)), odd (\(f(-t) = -f(t)\) → all \(a_n = 0\) and \(a_0 = 0\)), half-wave (\(f(t+T/2) = -f(t)\) → all even harmonics = 0). A typical square wave has both odd and half-wave symmetry, cutting the work to just computing \(b_n\) for odd \(n\) — eliminating \(a_0\), all \(a_n\), and all even \(b_n\) in one inspection.
+</div>
+
 ## 14.6 Common Waveforms and Their Spectra
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
@@ -364,6 +382,11 @@ Spectral characteristics:</p>
 | Square | Odd only (\(n = 1, 3, 5, \ldots\)) | \(1/n\) | Sharp corners |
 | Triangle | Odd only (\(n = 1, 3, 5, \ldots\)) | \(1/n^2\) | Smooth (no discontinuity in \(f\)) |
 | Sawtooth | All (\(n = 1, 2, 3, \ldots\)) | \(1/n\) | Sharp reset |
+
+<div class="mascot sparky" markdown>
+**Common Mistake: Assuming Square and Triangle Waves Have the Same Harmonic Decay**
+Both square and triangle waves contain only **odd** harmonics, so students sometimes assume their spectra look the same. They don't — the amplitude of the \(n\)th harmonic decays as \(1/n\) for a square wave but as \(1/n^2\) for a triangle wave. This means the triangle wave's higher harmonics are far weaker: at the 9th harmonic, the triangle is 81× weaker than the square at the same fundamental level. Smoother waveform = faster amplitude decay.
+</div>
 
 ## 14.7 Applications
 

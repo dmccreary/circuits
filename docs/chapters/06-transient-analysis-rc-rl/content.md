@@ -92,6 +92,11 @@ The time constant is the single most important parameter describing a first-orde
 - At \(t = \tau\): the circuit is **63.2%** of the way from its initial to final value
 - At \(t = 5\tau\): the circuit is **99.3%** complete — engineers consider this "done"
 
+<div class="mascot rezi" markdown>
+**Definition: Time Constant (τ)**
+The time constant \(\tau\) is the characteristic time that determines how quickly a first-order circuit responds to a change. For an RC circuit \(\tau = RC\); for an RL circuit \(\tau = L/R\). After one time constant, the state variable has traveled 63.2% of the way from its initial to its final value. After five time constants, the response is 99.3% complete.
+</div>
+
 **Physical interpretation:** \(\tau\) is the time it would take the capacitor to charge to \(V_S\) if the initial rate of change were maintained. It's the "natural pace" of the circuit.
 
 **Example:** An RC circuit with \(R = 10\) kΩ and \(C = 47\) μF has \(\tau = 10\,000 \times 47 \times 10^{-6} = 0.47\) s. After \(5\tau = 2.35\) s, the capacitor is fully charged.
@@ -118,6 +123,11 @@ The capacitor voltage decays exponentially from \(V_0\) toward 0. The time const
 
 !!! tip "Finding τ in a Complex Circuit"
     When finding the time constant, reduce the circuit seen by the capacitor (or inductor) to its Thévenin equivalent. Then \(\tau = R_{Th} \cdot C\) or \(\tau = L / R_{Th}\).
+
+<div class="mascot cappy" markdown>
+**Pro Tip: Find τ Using Thévenin Resistance**
+To find the time constant in any circuit, temporarily remove the capacitor (or inductor), kill all independent sources, and calculate the resistance looking into the two terminals where the component was connected. That is \(R_{Th}\), and \(\tau = R_{Th} \cdot C\) (or \(L/R_{Th}\) for RL). This Thévenin approach works for any circuit complexity and is far easier than solving the differential equation from scratch.
+</div>
 
 ---
 
@@ -159,6 +169,11 @@ where \(L\) is in henrys (H), \(R\) is in ohms (Ω), and \(\tau\) is in seconds 
 
 !!! warning "Inductor Voltage Spike"
     When you abruptly open a switch carrying inductor current, the inductor tries to maintain its current instantaneously, producing a very large voltage spike: \(v = L\,di/dt\) with \(di/dt \to \infty\). This can damage switches and semiconductors. In practice, a **freewheeling diode** or snubber circuit is placed across the inductor to provide a controlled discharge path.
+
+<div class="mascot fusi" markdown>
+**Safety Warning: Inductor Voltage Spikes Can Destroy Components**
+Never abruptly disconnect an inductor carrying current — the resulting voltage spike can reach hundreds or thousands of volts, destroying transistors, MOSFETs, and control ICs in microseconds. Always include a **freewheeling diode** (flyback diode) across any inductive load — motors, solenoids, relay coils — when driven by a semiconductor switch. The diode provides a safe discharge path and clamps the spike. This is not optional in a real circuit design.
+</div>
 
 **RC and RL duality:**
 
@@ -216,6 +231,14 @@ The complete response of a first-order circuit has two components:
 </div>
 
 This is the **universal step-response formula** — it solves *any* first-order DC transient. Once you know \(x(0)\), \(x(\infty)\), and \(\tau\), you're done.
+
+<div class="mascot ohmy" markdown>
+**Key Formula: Universal First-Order Step Response**
+
+\[x(t) = x(\infty) + \bigl[x(0) - x(\infty)\bigr]\, e^{-t/\tau}\]
+
+This single formula solves **any** first-order DC transient — RC or RL, charging or discharging. Find three numbers: the initial value \(x(0)\), the final value \(x(\infty)\), and the time constant \(\tau = R_{Th}C\) or \(L/R_{Th}\). Plug in and you're done.
+</div>
 
 **Procedure for first-order transient analysis:**
 

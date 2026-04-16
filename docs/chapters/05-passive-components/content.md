@@ -29,6 +29,11 @@ A **capacitor** is a component that stores energy in an **electric field**. In i
 
 The relationship between charge and voltage defines **capacitance** \(C\):
 
+<div class="mascot rezi" markdown>
+**Definition: Capacitance**
+Capacitance \(C\) is the measure of a component's ability to store electric charge per unit voltage: \(C = Q/V\), measured in farads (F). A capacitor stores energy in the electric field between two conductors separated by a dielectric. Its defining circuit equation is \(i_C = C\,dv_C/dt\) — current flows only when voltage is **changing**.
+</div>
+
 <div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
 
 \[C = \frac{Q}{V}\]
@@ -63,6 +68,14 @@ This is the defining equation of a capacitor. Two immediate consequences:
 
 1. **A capacitor passes no DC current.** If \(dv/dt = 0\) (constant voltage), then \(i = 0\). Capacitors block DC.
 2. **Voltage across a capacitor cannot change instantaneously.** An instantaneous voltage change (\(dv/dt \to \infty\)) would require infinite current, which is physically impossible.
+
+<div class="mascot ohmy" markdown>
+**Key Formula: Capacitor V-I Relationship**
+
+\[i_C = C\frac{dv_C}{dt} \qquad v_C(t) = \frac{1}{C}\int i_C\,dt + v_C(0)\]
+
+Current flows through a capacitor only when its voltage is **changing**. At DC steady state (\(dv/dt = 0\)), a capacitor carries zero current — it behaves as an **open circuit**.
+</div>
 
 ---
 
@@ -110,6 +123,11 @@ For two capacitors: \(\displaystyle C_{eq} = \frac{C_1 C_2}{C_1 + C_2}\)
 !!! tip "Memory Aid"
     Capacitors combine like resistors but with the series/parallel rules **reversed**: parallel capacitors add directly (like series resistors), and series capacitors use the reciprocal formula (like parallel resistors).
 
+<div class="mascot sparky" markdown>
+**Common Mistake: Mixing Up Series/Parallel Rules for Capacitors**
+The combination rules for capacitors are the **opposite** of resistors. Parallel capacitors **add** (\(C_{eq} = C_1 + C_2\)), just like series resistors. Series capacitors use the **reciprocal formula**, just like parallel resistors. Students who memorize only the resistor rules and flip them randomly will get this wrong half the time. Remember: more plates in parallel → more capacitance → they add directly.
+</div>
+
 Series combination increases the effective plate separation (lower capacitance, higher voltage rating). Parallel combination increases effective plate area (higher capacitance).
 
 ---
@@ -156,6 +174,11 @@ The energy stored in an inductor's magnetic field:
 </div>
 
 The **duality** between capacitors and inductors is complete:
+
+<div class="mascot cappy" markdown>
+**Pro Tip: DC Steady-State Shortcuts**
+At DC steady state (all transients have died away), apply these two rules instantly: **Capacitor → open circuit** (no DC current flows through it), **Inductor → short circuit** (no voltage across it). These shortcuts let you find initial conditions and final values without solving differential equations. Replace every capacitor with a break in the wire and every inductor with a wire, then solve the remaining resistive circuit using Ohm's Law.
+</div>
 
 | Property | Capacitor | Inductor |
 |----------|-----------|----------|

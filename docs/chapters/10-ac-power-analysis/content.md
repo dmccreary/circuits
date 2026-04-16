@@ -53,6 +53,11 @@ Measured in **watts (W)**. \(\theta = \theta_v - \theta_i\) is the phase angle b
 
 The factor \(\cos\theta\) is the **power factor** — it determines how much of the apparent power does useful work. Your electric bill is based on real power (kilowatt-hours).
 
+<div class="mascot rezi" markdown>
+**Definition: Real (Average) Power**
+Real power \(P\) is the time-averaged power consumed by a load, measured in watts (W): \(P = V_{rms} I_{rms} \cos\theta = I_{rms}^2 R\). It represents energy that is actually converted into heat, light, or mechanical work. The power factor \(\cos\theta\) tells you what fraction of the apparent power is real — your electricity bill charges for real power, not apparent power.
+</div>
+
 | Phase Angle θ | cos θ | Interpretation |
 |---------------|-------|----------------|
 | 0° | 1.00 | Pure resistive — all power is real |
@@ -75,6 +80,11 @@ Inductive loads: \(Q > 0\) (lagging). Capacitive loads: \(Q < 0\) (leading).
 </div>
 
 Reactive power doesn't do useful work, but it still requires current to flow — meaning larger wires, transformers, and generators must be sized to carry it. This is why utilities penalize poor power factor.
+
+<div class="mascot sparky" markdown>
+**Common Mistake: Thinking Reactive Power Is "Wasted"**
+Reactive power \(Q\) is not wasted — it is energy that oscillates back and forth between the source and reactive elements (inductors and capacitors) but is never consumed. The problem is that it requires real current to flow through real wire resistance, causing genuine power loss (\(I^2 R\)) in the distribution system. So reactive power itself isn't wasted, but the extra current it demands **does** cause real losses in transmission lines.
+</div>
 
 ---
 
@@ -108,6 +118,14 @@ The motor does only 960 W of work, but the supply must have capacity for 1,200 V
 \[\mathbf{S} = P + jQ = \mathbf{V}_{rms}\, \mathbf{I}_{rms}^* = I_{rms}^2 Z\]
 
 where \(\mathbf{I}^*\) is the complex conjugate of the current phasor.
+
+<div class="mascot ohmy" markdown>
+**Key Formula: Complex Power**
+
+\[\mathbf{S} = P + jQ = \mathbf{V}_{rms}\,\mathbf{I}_{rms}^* = I_{rms}^2 Z\]
+
+Use the **complex conjugate** of the current phasor (\(\mathbf{I}^*\)), not the current itself. This ensures the real part gives \(P = I^2 R\) and the imaginary part gives \(Q = I^2 X\). Forgetting the conjugate gives a result with opposite sign for \(Q\).
+</div>
 
 </div>
 
@@ -164,6 +182,11 @@ The power triangle is identical in shape to the impedance triangle (\(|Z|\), R, 
 **Power factor correction** improves PF by adding capacitors in parallel with inductive loads. The capacitors supply reactive power locally, reducing the reactive current drawn from the source.
 
 **Benefits:** reduced line current, less I²R loss, increased infrastructure capacity, avoided utility penalties.
+
+<div class="mascot cappy" markdown>
+**Pro Tip: Power Factor Correction Always Uses Capacitors in Parallel**
+Industrial loads (motors, transformers) are inductive and draw lagging current — they need VARs supplied from the grid. Adding a capacitor **in parallel** with the load provides those VARs locally, reducing the reactive current the utility must supply. Always connect the correction capacitor in parallel with the load, never in series — series connection changes the impedance seen by the load and alters circuit behavior unpredictably.
+</div>
 
 **Correction formula** — to improve from \(\theta_1\) to \(\theta_2\):
 
