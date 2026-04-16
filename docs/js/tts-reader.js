@@ -321,7 +321,10 @@
     details.classList.add('tts-details-active');
     updateButton(btn, 'playing');
     startKeepAlive();
-    speakNextChunk();
+    /* Chrome requires a brief gap after synth.cancel() before synth.speak().
+       Calling speak() in the same tick can produce a silent 'synthesis-failed'
+       error.  A 50 ms delay is imperceptible but reliably prevents the race. */
+    setTimeout(speakNextChunk, 50);
   }
 
   function togglePlay(btn, details) {
@@ -344,7 +347,11 @@
     if (details.getAttribute('data-tts-ready')) return;
     details.setAttribute('data-tts-ready', 'true');
 
-    wrapSentences(details);
+    /* Note: wrapSentences is intentionally skipped here.
+       Running a sentence regex on raw innerHTML wraps block-level HTML tags
+       (p, ol, li) inside inline <span> elements, which corrupts the DOM and
+       breaks the plain-text fallback.  We rely on getOverviewText + splitIntoChunks
+       instead, which extracts clean textContent and is always reliable. */
 
     var container = document.createElement('div');
     container.className = 'tts-controls';
