@@ -157,6 +157,22 @@ nav:
     - Thevenin Equivalent Circuit: sims/thevenin-concept/index.md
     - Voltage Divider Calculator: sims/voltage-divider/index.md
     - Water Flow Analogy: sims/water-flow-analogy/index.md
+    - Circuit Node & Branch Identifier: sims/node-branch-trainer/index.md
+    - Power Dissipation Calculator: sims/power-dissipation-calc/index.md
+    - Resistor Physical Structure: sims/resistor-physical-structure/index.md
+    - Ohm's Law Calculator: sims/ohms-law-calculator/index.md
+    - Resistor Color Code Reader: sims/resistor-color-code/index.md
+    - Potentiometer Voltage Divider: sims/potentiometer/index.md
+    - Linear vs Nonlinear I-V: sims/linear-vs-nonlinear/index.md
+    - KCL Node Visualization: sims/kcl-node-viz/index.md
+    - KVL Loop Walkthrough: sims/kvl-loop-walkthrough/index.md
+    - Circuit Topology Explorer: sims/circuit-topology-explorer/index.md
+    - Supernode Analysis: sims/supernode-analysis/index.md
+    - Mesh vs Supermesh: sims/mesh-supermesh-compare/index.md
+    - Superposition Demonstrator: sims/superposition-demo/index.md
+    - Delta-Wye Transform: sims/delta-wye-transform/index.md
+    - Circuit Simplification: sims/circuit-simplification/index.md
+    - Matrix Equation Builder: sims/matrix-equation-builder/index.md
     - prompts/circuit-similarity/index.md
     - prompts/top-100-circuits/top-100-circuits.md
     - sims/circuit-similarity/index.md
