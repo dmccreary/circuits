@@ -4729,12 +4729,20 @@ This chapter presents the most powerful methods for analyzing DC circuits: the n
 <p class="admonition-title">Direction Matters</p>
 <p>When transforming, the polarity of the voltage source and the direction of the current source must be consistent. The current arrow in the current source model should point from − to + <em>through</em> the source (the direction positive current would flow from the equivalent voltage source's positive terminal through the external circuit).</p>
 </div>
+<div class="mascot sparky">
+<p><strong>Common Mistake: Getting the Current Direction Backwards in Source Transformation</strong>
+When converting a voltage source (+ terminal up, series resistor) to a current source, the current arrow must point <strong>into</strong> the node that was connected to the + terminal. Students often reverse this. A quick check: short the output terminals of both forms and verify the short-circuit current matches in magnitude and direction before proceeding.</p>
+</div>
 <p><strong>Example:</strong> A 12 V voltage source in series with a 4 Ω resistor transforms to a 3 A current source in parallel with 4 Ω. Verify: if you connect a 2 Ω load, the original gives <span class="arithmatex">\(I = 12/(4+2) = 2\)</span> A; the transformed gives <span class="arithmatex">\(I_L = 3 \times 4/(4+2) = 2\)</span> A. ✓</p>
 <p>Source transformation is most powerful when you chain multiple transformations to consolidate sources — turning a complex network into something you can solve by inspection.</p>
 <hr />
 <h2 id="42-thevenins-theorem">4.2 Thévenin's Theorem</h2>
 <p>Here is one of the most powerful ideas in all of circuit analysis: <strong>any linear circuit with sources and resistors, viewed from two terminals, is electrically equivalent to a single voltage source <span class="arithmatex">\(V_{Th}\)</span> in series with a single resistance <span class="arithmatex">\(R_{Th}\)</span>.</strong></p>
 <p>This is <strong>Thévenin's theorem</strong>, published by Léon Charles Thévenin in 1883. It means that no matter how many components are inside a black box — dozens of resistors, multiple sources, complicated networks — it all collapses to just two elements from the perspective of whatever you connect to it.</p>
+<div class="mascot rezi">
+<p><strong>Definition: Thévenin's Theorem</strong>
+Any linear two-terminal circuit containing sources and resistors can be replaced by an equivalent circuit consisting of a single voltage source <span class="arithmatex">\(V_{Th}\)</span> (equal to the open-circuit voltage) in series with a single resistance <span class="arithmatex">\(R_{Th}\)</span> (equal to the resistance seen at the terminals with all independent sources deactivated). The behavior at the terminals is identical to the original circuit for any load.</p>
+</div>
 <p><strong>Finding <span class="arithmatex">\(V_{Th}\)</span>:</strong></p>
 <p>Remove the load (open the terminals). <span class="arithmatex">\(V_{Th}\)</span> equals the open-circuit voltage <span class="arithmatex">\(V_{oc}\)</span> across those terminals.</p>
 <div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
@@ -4780,6 +4788,10 @@ Kill the source (short): <span class="arithmatex">\(R_{Th} = 6 \| 4 \)</span> ..
 <p class="admonition-title">Thévenin or Norton?</p>
 <p>Use <strong>Thévenin</strong> when the load is in series with other elements, or when you're interested in voltage. Use <strong>Norton</strong> when the load is in parallel with other elements, or when you're interested in current. You can always convert between them.</p>
 </div>
+<div class="mascot cappy">
+<p><strong>Pro Tip: Thévenin vs Norton — Pick Based on Load Type</strong>
+If your load is a single resistor and you want to quickly sweep different load values, Thévenin is usually easier — just plug <span class="arithmatex">\(R_L\)</span> into the voltage-divider formula. If your load is a current source or your circuit already has many parallel elements, Norton saves algebra. And remember: they give identical external behavior, so you can always convert mid-problem if you change your mind.</p>
+</div>
 <hr />
 <h2 id="44-maximum-power-transfer">4.4 Maximum Power Transfer</h2>
 <p>How do you design a circuit to deliver the most power to a load? This question matters in audio amplifiers (delivering power to speakers), radio transmitters (delivering power to antennas), and sensor interfaces.</p>
@@ -4793,6 +4805,11 @@ Kill the source (short): <span class="arithmatex">\(R_{Th} = 6 \| 4 \)</span> ..
 <p>Maximum power transferred: <span class="arithmatex">\(\displaystyle P_{max} = \frac{V_{Th}^2}{4 R_{Th}}\)</span></p>
 </div>
 <p>The efficiency at maximum power transfer is exactly 50% — half the source power goes to the load, half is dissipated in <span class="arithmatex">\(R_{Th}\)</span>. This is fine for signal applications (you want <em>maximum power</em>, not efficiency) but unacceptable for power delivery applications (power companies would hate 50% efficiency).</p>
+<div class="mascot ohmy">
+<p><strong>Key Formula: Maximum Power Transfer</strong></p>
+<div class="arithmatex">\[R_L = R_{Th} \qquad P_{max} = \frac{V_{Th}^2}{4\,R_{Th}}\]</div>
+<p>Maximum power flows to the load when the load resistance <strong>equals</strong> the Thévenin resistance. At this condition the efficiency is exactly 50% — acceptable for signal work, unacceptable for power distribution.</p>
+</div>
 <p><strong>Example:</strong> A source with <span class="arithmatex">\(V_{Th} = 10\)</span> V and <span class="arithmatex">\(R_{Th} = 50\)</span> Ω delivers maximum power when <span class="arithmatex">\(R_L = 50\)</span> Ω. Maximum power: <span class="arithmatex">\(P_{max} = 100 / (4 \times 50) = 0.5\)</span> W.</p>
 <hr />
 <h2 id="45-advanced-nodal-and-mesh-analysis">4.5 Advanced Nodal and Mesh Analysis</h2>

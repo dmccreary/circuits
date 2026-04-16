@@ -4793,6 +4793,10 @@ When a switch opens or closes in a circuit containing a capacitor or inductor, t
 <li>At <span class="arithmatex">\(t = \tau\)</span>: the circuit is <strong>63.2%</strong> of the way from its initial to final value</li>
 <li>At <span class="arithmatex">\(t = 5\tau\)</span>: the circuit is <strong>99.3%</strong> complete — engineers consider this "done"</li>
 </ul>
+<div class="mascot rezi">
+<p><strong>Definition: Time Constant (τ)</strong>
+The time constant <span class="arithmatex">\(\tau\)</span> is the characteristic time that determines how quickly a first-order circuit responds to a change. For an RC circuit <span class="arithmatex">\(\tau = RC\)</span>; for an RL circuit <span class="arithmatex">\(\tau = L/R\)</span>. After one time constant, the state variable has traveled 63.2% of the way from its initial to its final value. After five time constants, the response is 99.3% complete.</p>
+</div>
 <p><strong>Physical interpretation:</strong> <span class="arithmatex">\(\tau\)</span> is the time it would take the capacitor to charge to <span class="arithmatex">\(V_S\)</span> if the initial rate of change were maintained. It's the "natural pace" of the circuit.</p>
 <p><strong>Example:</strong> An RC circuit with <span class="arithmatex">\(R = 10\)</span> kΩ and <span class="arithmatex">\(C = 47\)</span> μF has <span class="arithmatex">\(\tau = 10\,000 \times 47 \times 10^{-6} = 0.47\)</span> s. After <span class="arithmatex">\(5\tau = 2.35\)</span> s, the capacitor is fully charged.</p>
 <p>The time constant applies equally to the discharging case.</p>
@@ -4808,6 +4812,10 @@ When a switch opens or closes in a circuit containing a capacitor or inductor, t
 <div class="admonition tip">
 <p class="admonition-title">Finding τ in a Complex Circuit</p>
 <p>When finding the time constant, reduce the circuit seen by the capacitor (or inductor) to its Thévenin equivalent. Then <span class="arithmatex">\(\tau = R_{Th} \cdot C\)</span> or <span class="arithmatex">\(\tau = L / R_{Th}\)</span>.</p>
+</div>
+<div class="mascot cappy">
+<p><strong>Pro Tip: Find τ Using Thévenin Resistance</strong>
+To find the time constant in any circuit, temporarily remove the capacitor (or inductor), kill all independent sources, and calculate the resistance looking into the two terminals where the component was connected. That is <span class="arithmatex">\(R_{Th}\)</span>, and <span class="arithmatex">\(\tau = R_{Th} \cdot C\)</span> (or <span class="arithmatex">\(L/R_{Th}\)</span> for RL). This Thévenin approach works for any circuit complexity and is far easier than solving the differential equation from scratch.</p>
 </div>
 <hr />
 <h2 id="65-the-rl-circuit">6.5 The RL Circuit</h2>
@@ -4831,6 +4839,10 @@ When a switch opens or closes in a circuit containing a capacitor or inductor, t
 <div class="admonition warning">
 <p class="admonition-title">Inductor Voltage Spike</p>
 <p>When you abruptly open a switch carrying inductor current, the inductor tries to maintain its current instantaneously, producing a very large voltage spike: <span class="arithmatex">\(v = L\,di/dt\)</span> with <span class="arithmatex">\(di/dt \to \infty\)</span>. This can damage switches and semiconductors. In practice, a <strong>freewheeling diode</strong> or snubber circuit is placed across the inductor to provide a controlled discharge path.</p>
+</div>
+<div class="mascot fusi">
+<p><strong>Safety Warning: Inductor Voltage Spikes Can Destroy Components</strong>
+Never abruptly disconnect an inductor carrying current — the resulting voltage spike can reach hundreds or thousands of volts, destroying transistors, MOSFETs, and control ICs in microseconds. Always include a <strong>freewheeling diode</strong> (flyback diode) across any inductive load — motors, solenoids, relay coils — when driven by a semiconductor switch. The diode provides a safe discharge path and clamps the spike. This is not optional in a real circuit design.</p>
 </div>
 <p><strong>RC and RL duality:</strong></p>
 <table>
@@ -4886,6 +4898,11 @@ When a switch opens or closes in a circuit containing a capacitor or inductor, t
 <div class="arithmatex">\[x(t) = x(\infty) + \bigl[x(0) - x(\infty)\bigr]\, e^{-t/\tau}\]</div>
 </div>
 <p>This is the <strong>universal step-response formula</strong> — it solves <em>any</em> first-order DC transient. Once you know <span class="arithmatex">\(x(0)\)</span>, <span class="arithmatex">\(x(\infty)\)</span>, and <span class="arithmatex">\(\tau\)</span>, you're done.</p>
+<div class="mascot ohmy">
+<p><strong>Key Formula: Universal First-Order Step Response</strong></p>
+<div class="arithmatex">\[x(t) = x(\infty) + \bigl[x(0) - x(\infty)\bigr]\, e^{-t/\tau}\]</div>
+<p>This single formula solves <strong>any</strong> first-order DC transient — RC or RL, charging or discharging. Find three numbers: the initial value <span class="arithmatex">\(x(0)\)</span>, the final value <span class="arithmatex">\(x(\infty)\)</span>, and the time constant <span class="arithmatex">\(\tau = R_{Th}C\)</span> or <span class="arithmatex">\(L/R_{Th}\)</span>. Plug in and you're done.</p>
+</div>
 <p><strong>Procedure for first-order transient analysis:</strong></p>
 <ol>
 <li>Find <span class="arithmatex">\(x(0)\)</span>: analyze circuit at DC steady state before switching (C → open, L → short)</li>

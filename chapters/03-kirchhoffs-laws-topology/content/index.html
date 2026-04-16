@@ -5108,6 +5108,12 @@ Kirchhoff's two laws — the Current Law (KCL) and the Voltage Law (KVL) — are
 </div>
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.5rem;">
 Equivalently, the total current flowing into a node equals the total current flowing out. By convention, currents entering a node are assigned positive signs and currents leaving are assigned negative signs. Consistent application of this sign convention ensures correct results.
+
+</p>
+<div class="mascot rezi">
+**Definition: Kirchhoff's Current Law (KCL)**
+KCL states that the algebraic sum of all currents at any node in a circuit equals zero: \(\sum i_k = 0\). This is a direct consequence of conservation of charge — charge cannot accumulate at a junction. Equivalently, the sum of currents flowing **into** a node always equals the sum of currents flowing **out**.
+</div>
 </p>
 <h4 id="diagram-kcl-node-visualization">Diagram: KCL Node Visualization</h4>
 <div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
@@ -5167,6 +5173,11 @@ Therefore: <span class="arithmatex">\(I_3 = -8\)</span> A — the negative sign 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 <strong style="color: #333;">Kirchhoff's Voltage Law</strong> is a consequence of conservation of energy. It states that the algebraic sum of all voltages around any closed loop in a circuit must equal zero. When traversing a closed path, voltage rises from sources are exactly balanced by voltage drops across resistive elements.
 </p>
+<div class="mascot ohmy">
+<p><strong>Key Formula: Kirchhoff's Voltage Law (KVL)</strong></p>
+<div class="arithmatex">\[\sum_{k=1}^{n} v_k = 0\]</div>
+<p>Travel around any closed loop in any direction — the voltages across all elements must sum to zero. Assign <strong>+</strong> when you travel from − to + through a source or against current through a resistor; assign <strong>−</strong> otherwise. The loop direction you choose doesn't affect the final answer.</p>
+</div>
 <div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
 <div class="arithmatex">\[\sum_{k=1}^{n} v_k = 0\]</div>
 </div>
@@ -5272,6 +5283,12 @@ The <strong style="color: #333;">reference node</strong> serves as the zero-pote
 <p style="color: #2E7D32; font-weight: 700; font-size: 1.08rem; margin-top: 0; margin-bottom: 10px;">Reference Node Selection Guidelines</p>
 <p style="color: #333; line-height: 1.75; margin-bottom: 0;">
 Choose the node with the greatest number of connections to minimize the number of required equations. If a ground symbol is present in the schematic, use that node. The negative terminal of a voltage source is often a convenient choice.
+
+</p>
+<div class="mascot cappy">
+**Pro Tip: Choose the Reference Node Strategically**
+Pick the node connected to the most branches as your reference (ground). This maximizes the number of node voltages that are directly known from voltage sources, reducing the number of equations you must solve. In a circuit with a battery, the battery's negative terminal is almost always the best reference node — it locks one node to 0 V and the other to the source voltage instantly.
+</div>
 </p>
 </div>
 <h3 id="node-voltage-example">Node Voltage Example</h3>
@@ -5321,6 +5338,12 @@ The <strong style="color: #333;">mesh current method</strong> takes the compleme
 <h3 id="mesh-current-sign-convention">Mesh Current Sign Convention</h3>
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1rem;">
 When two meshes share a branch, the actual branch current is determined by the combination of both mesh currents:
+
+</p>
+<div class="mascot sparky">
+**Common Mistake: Forgetting Shared-Branch Currents in Mesh Analysis**
+When two mesh currents pass through the same branch in **opposite** directions, the actual branch current is the **difference**, not the sum. Students often write \(I_{branch} = I_1 + I_2\) when it should be \(I_1 - I_2\). Always draw arrows for every mesh current before writing equations, and explicitly check the direction of each mesh current through each shared branch.
+</div>
 </p>
 <div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 24px 28px; margin: 1.5rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
 <table>

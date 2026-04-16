@@ -4942,6 +4942,10 @@ Frequency response analysis reveals how a circuit treats signals of different fr
 
 </div>
 <p>Because <span class="arithmatex">\(H(j\omega)\)</span> is a complex number, it has both magnitude and phase:</p>
+<div class="mascot rezi">
+<p><strong>Definition: Transfer Function</strong>
+The transfer function <span class="arithmatex">\(H(j\omega) = \mathbf{V}_{out}/\mathbf{V}_{in}\)</span> is a complex-valued function of frequency that fully characterizes a linear circuit's input-output relationship. Its magnitude <span class="arithmatex">\(|H|\)</span> gives the gain (or attenuation) at each frequency; its phase <span class="arithmatex">\(\angle H\)</span> gives the phase shift. At DC (<span class="arithmatex">\(\omega = 0\)</span>) and as <span class="arithmatex">\(\omega \to \infty\)</span>, the transfer function reduces to simple voltage-divider ratios.</p>
+</div>
 <div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 10px; padding: 16px 20px; margin: 1.2rem 0;">
 
 \[H(j\omega) = |H(j\omega)|\,\angle\,\phi(\omega)\]
@@ -5133,6 +5137,11 @@ Frequency response analysis reveals how a circuit treats signals of different fr
 <p class="admonition-title">Three Names, One Frequency</p>
 <p>Cutoff frequency, corner frequency, break frequency, and half-power frequency all refer to the same point <span class="arithmatex">\(f_c\)</span>. In Bode plot construction, "corner" is most common because it is where the asymptotic approximation "corners" or bends.</p>
 </div>
+<div class="mascot ohmy">
+<p><strong>Key Formula: Cutoff Frequency</strong></p>
+<div class="arithmatex">\[f_c = \frac{1}{2\pi RC} \qquad \omega_c = \frac{1}{RC}\ \text{rad/s}\]</div>
+<p>At <span class="arithmatex">\(f_c\)</span>: magnitude is <span class="arithmatex">\(-3\)</span> dB (0.707× passband), phase is <span class="arithmatex">\(\pm 45°\)</span>. This formula applies to first-order RC filters. For RL filters use <span class="arithmatex">\(\omega_c = R/L\)</span>. For higher-order filters, the cutoff frequency is set by component values in the prototype design.</p>
+</div>
 <h2 id="116-roll-off-rate-and-filter-order">11.6 Roll-Off Rate and Filter Order</h2>
 <p>The <strong>roll-off rate</strong> describes how quickly the magnitude response decreases beyond the cutoff frequency. It is determined by the <strong>filter order</strong> — the number of independent reactive elements (capacitors and inductors) in the filter circuit.</p>
 <div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 10px; padding: 16px 20px; margin: 1.2rem 0;">
@@ -5261,6 +5270,10 @@ where \(n\) is the filter order (number of poles).
 </tbody>
 </table>
 <p>The actual phase at the corner is exactly <span class="arithmatex">\(-45°\)</span>, and the asymptote error peaks at about <span class="arithmatex">\(5.7°\)</span> at one decade above or below the corner.</p>
+<div class="mascot cappy">
+<p><strong>Pro Tip: The Asymptotic Bode Plot Is Accurate Enough for Most Design</strong>
+The straight-line (asymptotic) Bode approximation has a maximum error of only 3 dB at the corner frequency and less than 1 dB more than a decade away. For hand calculations, design iterations, and quick sanity checks, this is more than adequate. Only use the exact formula when you need to verify a final design or are very close to a specification boundary.</p>
+</div>
 <h3 id="step-by-step-bode-plot-construction">Step-by-Step Bode Plot Construction</h3>
 <ol>
 <li><strong>Factor</strong> <span class="arithmatex">\(H(j\omega)\)</span> into standard pole/zero form (see Section 11.8).</li>
@@ -5331,6 +5344,10 @@ where \(n\) is the filter order (number of poles).
 <div class="admonition note">
 <p class="admonition-title">Poles Determine Filter Order</p>
 <p>The number of poles equals the filter order and equals the number of independent reactive elements. Count poles — not zeros — to determine the roll-off rate.</p>
+</div>
+<div class="mascot sparky">
+<p><strong>Common Mistake: Confusing Poles and Zeros on a Bode Plot</strong>
+A <strong>pole</strong> causes the magnitude slope to drop by 20 dB/decade and the phase to shift −90°. A <strong>zero</strong> causes the slope to increase by 20 dB/decade and the phase to shift +90°. These are opposite effects, and mixing them up produces completely wrong Bode plots. Remember: poles are in the <strong>denominator</strong> (they make the denominator larger → gain decreases); zeros are in the <strong>numerator</strong> (they make the numerator larger → gain increases).</p>
 </div>
 <h2 id="119-filter-types">11.9 Filter Types</h2>
 <p>A <strong>filter</strong> is a circuit designed to pass signals in certain frequency ranges (the <strong>passband</strong>) while attenuating signals in other ranges (the <strong>stopband</strong>). There are four fundamental filter types:</p>

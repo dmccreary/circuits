@@ -4932,6 +4932,10 @@ This chapter introduces the fundamental electrical quantities that every circuit
 </details>
 <h2 id="11-electric-charge-where-it-all-begins">1.1 Electric Charge: Where It All Begins</h2>
 <p>Everything in the electrical world starts with <strong>electric charge</strong>. Charge is a fundamental property of matter, just like mass, but instead of telling you how much "stuff" something has, charge tells you how that stuff will interact electromagnetically.</p>
+<div class="mascot rezi">
+<p><strong>Definition: Electric Charge</strong>
+Electric charge is a fundamental property of matter measured in coulombs (C). It comes in two types — positive and negative — where opposite charges attract and like charges repel. The charge of one electron is <span class="arithmatex">\(-1.602 \times 10^{-19}\)</span> C; one coulomb equals approximately <span class="arithmatex">\(6.24 \times 10^{18}\)</span> electrons worth of charge.</p>
+</div>
 <p>Here's the key insight: there are exactly two types of charge, which we creatively call <em>positive</em> and <em>negative</em>. (Benjamin Franklin made this naming choice in the 1750s, and we've been stuck with it ever since. Thanks, Ben.) Opposite charges attract, like charges repel. Simple as that.</p>
 <p>The fundamental unit of charge is the <strong>coulomb</strong> (C), named after Charles-Augustin de Coulomb. One coulomb is actually a <em>huge</em> amount of charge — roughly 6.24 × 10¹⁸ electrons worth. In practical circuits, we usually deal with much smaller quantities like microcoulombs (μC) or nanocoulombs (nC).</p>
 <table>
@@ -5015,6 +5019,10 @@ This chapter introduces the fundamental electrical quantities that every circuit
 <li><strong>Electron flow</strong>: Flows from − to + (what actually happens in wires)</li>
 </ul>
 <p>Don't let this keep you up at night. Pick one convention and stick with it. We'll use conventional current throughout this course.</p>
+<div class="mascot sparky">
+<p><strong>Common Mistake: Confusing Conventional Current with Electron Flow</strong>
+Conventional current flows from <strong>+</strong> to <strong>−</strong>, but electrons actually move from <strong>−</strong> to <strong>+</strong>. This historical accident trips up students constantly. The good news: as long as you consistently use conventional current direction in your analysis, all the math works out correctly. Never mix the two conventions in the same problem.</p>
+</div>
 <hr />
 <h2 id="13-voltage-the-electrical-push">1.3 Voltage: The Electrical "Push"</h2>
 <p>If current is the flow of charge, <strong>voltage</strong> is what makes charges want to flow in the first place. Voltage is the <em>electrical potential difference</em> between two points — it's the "pressure" that pushes charges through a circuit.</p>
@@ -5077,6 +5085,11 @@ This chapter introduces the fundamental electrical quantities that every circuit
 <div class="arithmatex">\[P = VI = I^2R = \frac{V^2}{R}\]</div>
 </div>
 <p>One watt equals one joule per second. These three forms are all equivalent; use whichever is most convenient for your problem.</p>
+<div class="mascot ohmy">
+<p><strong>Key Formula: The Power Trio</strong></p>
+<div class="arithmatex">\[P = VI = I^2R = \frac{V^2}{R}\]</div>
+<p>All three forms give the same result — choose based on what you know. Use <span class="arithmatex">\(P = VI\)</span> when you have both voltage and current, <span class="arithmatex">\(P = I^2R\)</span> when you know current and resistance, and <span class="arithmatex">\(P = V^2/R\)</span> when you know voltage and resistance.</p>
+</div>
 <h4 id="diagram-power-triangle-visualization">Diagram: Power Triangle Visualization</h4>
 <div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
 <iframe height="400px" scrolling="no" src="../../../sims/power-triangle/main.html" style="border:none; border-radius:8px; overflow:hidden;" width="100%"></iframe>
@@ -5304,6 +5317,10 @@ This chapter introduces the fundamental electrical quantities that every circuit
 <li><strong>Current-sensing resistors</strong> convert current to a measurable voltage drop</li>
 </ul>
 <p>Every resistor has a <strong>power rating</strong> — the maximum power it can safely dissipate without damage. Common ratings are 1/8W, 1/4W, 1/2W, 1W, and 2W for small resistors. Exceeding this rating will cause the resistor to overheat, potentially changing its resistance value, failing open, or even catching fire.</p>
+<div class="mascot fusi">
+<p><strong>Safety Warning: Resistor Power Ratings</strong>
+Always calculate the actual power dissipation in a resistor and verify it is well below the component's power rating — ideally at 50% or less for reliability. A resistor running near its rated limit will be uncomfortably hot to touch, may drift in value, and can fail catastrophically. In lab work, a burning smell is your first warning sign; shut down the circuit immediately.</p>
+</div>
 <h4 id="diagram-power-dissipation-calculator">Diagram: Power Dissipation Calculator</h4>
 <div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
 <iframe height="400px" scrolling="no" src="../../../sims/power-dissipation-calc/main.html" style="border:none; border-radius:8px; overflow:hidden;" width="100%"></iframe>
@@ -5397,6 +5414,10 @@ This chapter introduces the fundamental electrical quantities that every circuit
 <div class="admonition tip">
 <p class="admonition-title">Dimensional Analysis Is Your Friend</p>
 <p>When you're not sure if your answer is correct, check the units. If you're calculating current and your answer comes out in volts, something went wrong. This simple technique catches more errors than you'd expect.</p>
+</div>
+<div class="mascot cappy">
+<p><strong>Pro Tip: Dimensional Analysis Catches Errors</strong>
+Before accepting any numerical answer, verify the units. Write out the units at each algebraic step: <span class="arithmatex">\(\frac{\text{V}}{\Omega} = \frac{\text{V}}{\text{V/A}} = \text{A}\)</span>. If the units don't simplify to what you expect, you made an algebra mistake somewhere. This habit alone will save you hours of debugging on exams and in the lab.</p>
 </div>
 <hr />
 <h2 id="113-putting-it-all-together-a-worked-example">1.13 Putting It All Together: A Worked Example</h2>

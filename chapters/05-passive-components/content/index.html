@@ -4748,6 +4748,10 @@ Beyond the resistor, two essential passive components — capacitors and inducto
 <h2 id="51-the-capacitor">5.1 The Capacitor</h2>
 <p>A <strong>capacitor</strong> is a component that stores energy in an <strong>electric field</strong>. In its simplest form, it consists of two conductive plates separated by an insulating material called a <strong>dielectric</strong>. When a voltage is applied across the plates, charge accumulates — positive charge on one plate, negative on the other — and an electric field forms between them.</p>
 <p>The relationship between charge and voltage defines <strong>capacitance</strong> <span class="arithmatex">\(C\)</span>:</p>
+<div class="mascot rezi">
+<p><strong>Definition: Capacitance</strong>
+Capacitance <span class="arithmatex">\(C\)</span> is the measure of a component's ability to store electric charge per unit voltage: <span class="arithmatex">\(C = Q/V\)</span>, measured in farads (F). A capacitor stores energy in the electric field between two conductors separated by a dielectric. Its defining circuit equation is <span class="arithmatex">\(i_C = C\,dv_C/dt\)</span> — current flows only when voltage is <strong>changing</strong>.</p>
+</div>
 <div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
 <div class="arithmatex">\[C = \frac{Q}{V}\]</div>
 <p>where <span class="arithmatex">\(C\)</span> is capacitance in farads (F), <span class="arithmatex">\(Q\)</span> is charge in coulombs (C), and <span class="arithmatex">\(V\)</span> is voltage in volts (V).</p>
@@ -4768,6 +4772,11 @@ Beyond the resistor, two essential passive components — capacitors and inducto
 <li><strong>A capacitor passes no DC current.</strong> If <span class="arithmatex">\(dv/dt = 0\)</span> (constant voltage), then <span class="arithmatex">\(i = 0\)</span>. Capacitors block DC.</li>
 <li><strong>Voltage across a capacitor cannot change instantaneously.</strong> An instantaneous voltage change (<span class="arithmatex">\(dv/dt \to \infty\)</span>) would require infinite current, which is physically impossible.</li>
 </ol>
+<div class="mascot ohmy">
+<p><strong>Key Formula: Capacitor V-I Relationship</strong></p>
+<div class="arithmatex">\[i_C = C\frac{dv_C}{dt} \qquad v_C(t) = \frac{1}{C}\int i_C\,dt + v_C(0)\]</div>
+<p>Current flows through a capacitor only when its voltage is <strong>changing</strong>. At DC steady state (<span class="arithmatex">\(dv/dt = 0\)</span>), a capacitor carries zero current — it behaves as an <strong>open circuit</strong>.</p>
+</div>
 <hr />
 <h2 id="52-energy-stored-in-a-capacitor">5.2 Energy Stored in a Capacitor</h2>
 <p>Unlike a resistor, which dissipates energy as heat, a capacitor stores energy and can return it to the circuit later. The energy stored in a charged capacitor is:</p>
@@ -4793,6 +4802,10 @@ Beyond the resistor, two essential passive components — capacitors and inducto
 <div class="admonition tip">
 <p class="admonition-title">Memory Aid</p>
 <p>Capacitors combine like resistors but with the series/parallel rules <strong>reversed</strong>: parallel capacitors add directly (like series resistors), and series capacitors use the reciprocal formula (like parallel resistors).</p>
+</div>
+<div class="mascot sparky">
+<p><strong>Common Mistake: Mixing Up Series/Parallel Rules for Capacitors</strong>
+The combination rules for capacitors are the <strong>opposite</strong> of resistors. Parallel capacitors <strong>add</strong> (<span class="arithmatex">\(C_{eq} = C_1 + C_2\)</span>), just like series resistors. Series capacitors use the <strong>reciprocal formula</strong>, just like parallel resistors. Students who memorize only the resistor rules and flip them randomly will get this wrong half the time. Remember: more plates in parallel → more capacitance → they add directly.</p>
 </div>
 <p>Series combination increases the effective plate separation (lower capacitance, higher voltage rating). Parallel combination increases effective plate area (higher capacitance).</p>
 <hr />
@@ -4820,6 +4833,10 @@ Beyond the resistor, two essential passive components — capacitors and inducto
 <div class="arithmatex">\[E_L = \frac{1}{2} L I^2\]</div>
 </div>
 <p>The <strong>duality</strong> between capacitors and inductors is complete:</p>
+<div class="mascot cappy">
+<p><strong>Pro Tip: DC Steady-State Shortcuts</strong>
+At DC steady state (all transients have died away), apply these two rules instantly: <strong>Capacitor → open circuit</strong> (no DC current flows through it), <strong>Inductor → short circuit</strong> (no voltage across it). These shortcuts let you find initial conditions and final values without solving differential equations. Replace every capacitor with a break in the wire and every inductor with a wire, then solve the remaining resistive circuit using Ohm's Law.</p>
+</div>
 <table>
 <thead>
 <tr>
