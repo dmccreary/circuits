@@ -57,8 +57,6 @@
     
       <link rel="stylesheet" href="../../../css/extra.css">
     
-      <link rel="stylesheet" href="../../../css/mascots.css">
-    
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
     
     <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
@@ -4607,20 +4605,6 @@
       
         
       
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
     
     
     
@@ -4952,8 +4936,6 @@
       
         
       
-        
-      
     
     
     
@@ -5161,10 +5143,6 @@ Ohm's Law — the simple relationship V = IR — is the foundational equation of
 <h2 id="22-ohms-law-the-e-mc2-of-circuits">2.2 Ohm's Law: The E = mc² of Circuits</h2>
 <p>If physics has <span class="arithmatex">\(E = mc^2\)</span>, then electrical engineering has Ohm's Law. It's equally fundamental, considerably more practical for everyday use, and thankfully much easier to derive.</p>
 <p>Georg Simon Ohm discovered this relationship in 1827, and engineers have been grateful ever since.</p>
-<div class="mascot rezi">
-<p><strong>Definition: Ohm's Law</strong>
-Ohm's Law states that the voltage <span class="arithmatex">\(V\)</span> across a resistor is directly proportional to the current <span class="arithmatex">\(I\)</span> through it, with the constant of proportionality being the resistance <span class="arithmatex">\(R\)</span>: <span class="arithmatex">\(V = IR\)</span>. This relationship holds for any <strong>ohmic</strong> (linear) component — one whose resistance remains constant regardless of the applied voltage or current.</p>
-</div>
 <div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
 <p><strong>Ohm's Law</strong></p>
 <div class="arithmatex">\[V = I \cdot R\]</div>
@@ -5227,10 +5205,6 @@ Ohm's Law states that the voltage <span class="arithmatex">\(V\)</span> across a
 <h3 id="component-power-rating-and-derating">Component Power Rating and Derating</h3>
 <p>Every resistor has a <strong>power rating</strong> — the maximum power it can safely dissipate without damage. Common values are 1/8W, 1/4W, 1/2W, and 1W for through-hole resistors. A resistor will happily try to dissipate whatever power you throw at it — exceed the rating and you'll see discoloration, smell burning, and eventually witness component failure.</p>
 <p>Smart engineers practice <strong>derating</strong> — operating a component below its maximum specifications to improve reliability and lifespan. A common rule of thumb: derate to 50–70% of the rated maximum. If your calculation shows 0.4W dissipation, use a 1W resistor, not a 1/2W unit right at the edge.</p>
-<div class="mascot cappy">
-<p><strong>Pro Tip: Always Derate Resistors</strong>
-Never select a resistor with a power rating that exactly matches your calculated dissipation. If your circuit dissipates 0.3 W, a 1/4 W (0.25 W) resistor will fail, and a 1/2 W unit running at 60% is borderline. Pick the next standard rating that gives you at least 2× headroom — in this case, a 1 W resistor. Your circuit will run cooler, the resistor will last longer, and you'll thank yourself when you revisit the design years later.</p>
-</div>
 <hr />
 <h2 id="24-resistor-color-codes-and-tolerance">2.4 Resistor Color Codes and Tolerance</h2>
 <p>Those colored bands on resistors aren't decorative — they encode the resistance value. Learning to read them is like learning a secret language, except the secret is just "how many ohms."</p>
@@ -5395,11 +5369,6 @@ Never select a resistor with a power rating that exactly matches your calculated
 <div class="arithmatex">\[R_{total} = \frac{R_1 \cdot R_2}{R_1 + R_2}\]</div>
 </div>
 <p>A key insight: <strong>the total resistance of a parallel combination is always less than the smallest individual resistor</strong>. Adding more parallel paths makes it easier for current to flow.</p>
-<div class="mascot ohmy">
-<p><strong>Key Formula: Parallel Resistance</strong></p>
-<div class="arithmatex">\[\frac{1}{R_{total}} = \frac{1}{R_1} + \frac{1}{R_2} + \cdots + \frac{1}{R_n} \qquad \text{(two resistors: } R_{total} = \frac{R_1 R_2}{R_1 + R_2}\text{)}\]</div>
-<p>The parallel combination is always <strong>less</strong> than the smallest resistor. For two equal resistors in parallel, the result is exactly half of one resistor.</p>
-</div>
 <h4 id="diagram-parallel-circuit-analysis">Diagram: Parallel Circuit Analysis</h4>
 <div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
 <iframe height="500px" scrolling="no" src="../../../sims/parallel-circuit/main.html" style="border:none; border-radius:8px; overflow:hidden;" width="100%"></iframe>
@@ -5450,10 +5419,6 @@ Never select a resistor with a power rating that exactly matches your calculated
 <p>In a voltage divider, output voltage increases with R2 (the bottom resistor).
 In a current divider, current through a branch increases when the <em>other</em> branch has higher resistance.</p>
 <p>When in doubt, use Ohm's Law directly rather than memorizing formulas you might misapply.</p>
-</div>
-<div class="mascot sparky">
-<p><strong>Common Mistake: The Current Divider Formula Is "Backwards"</strong>
-Students memorize the voltage divider as <span class="arithmatex">\(V_{out} = V_{in} \cdot \frac{R_2}{R_1 + R_2}\)</span> and then write the current divider as <span class="arithmatex">\(I_1 = I_{total} \cdot \frac{R_1}{R_1 + R_2}\)</span> — which is wrong. The correct formula uses the <strong>other</strong> resistor in the numerator: <span class="arithmatex">\(I_1 = I_{total} \cdot \frac{R_2}{R_1 + R_2}\)</span>. More current flows through the path with <strong>lower</strong> resistance. If you forget, just use Ohm's Law directly: find the common voltage across both branches, then divide by each resistance.</p>
 </div>
 <hr />
 <h2 id="211-potentiometers-variable-resistance">2.11 Potentiometers: Variable Resistance</h2>
@@ -5699,7 +5664,7 @@ Chapter 3 introduces Kirchhoff's Laws — the two fundamental conservation princ
       <div class="md-copyright">
   
     <div class="md-copyright__highlight">
-      Copyright &copy; 2024, 2025, 2026 Dan McCreary. Licensed under <a href="license/">CC BY-NC-SA 4.0</a> for non-commercial use.
+      Copyright &copy; 2024&ndash;2026 Dan McCreary and Circuits 1 Team. Licensed under <a href="license/">CC BY-NC-SA 4.0</a>.
     </div>
   
   

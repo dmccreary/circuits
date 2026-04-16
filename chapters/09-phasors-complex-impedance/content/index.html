@@ -57,8 +57,6 @@
     
       <link rel="stylesheet" href="../../../css/extra.css">
     
-      <link rel="stylesheet" href="../../../css/mascots.css">
-    
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
     
     <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
@@ -4467,20 +4465,6 @@
       
         
       
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
     
     
     
@@ -4812,8 +4796,6 @@
       
         
       
-        
-      
     
     
     
@@ -5010,10 +4992,6 @@ Phasors transform time-domain sinusoidal analysis into straightforward complex-n
 <p class="admonition-title">Why Cosine as Reference?</p>
 <p>Engineers typically use cosine (not sine) as the reference for phasor analysis because it aligns naturally with the real axis on the complex plane. A phasor at angle 0° corresponds to a cosine wave. Converting from sine is easy: <span class="arithmatex">\(\sin(\omega t) = \cos(\omega t - 90°)\)</span>.</p>
 </div>
-<div class="mascot cappy">
-<p><strong>Pro Tip: Always Convert Sine to Cosine Before Writing Phasors</strong>
-Phasor analysis uses cosine as its reference. If your source is <span class="arithmatex">\(v(t) = V_m \sin(\omega t + \phi)\)</span>, rewrite it as <span class="arithmatex">\(V_m \cos(\omega t + \phi - 90°)\)</span> first, then form the phasor <span class="arithmatex">\(V_m \angle(\phi - 90°)\)</span>. Mixing cosine and sine references in the same problem is a guaranteed way to get phase angles wrong by 90°.</p>
-</div>
 <h4 id="diagram-phasor-transformation-visualizer">Diagram: Phasor Transformation Visualizer</h4>
 <iframe height="500px" scrolling="no" src="../../../sims/phasor-transform/main.html" style="overflow: hidden;" width="100%"></iframe>
 <details>
@@ -5144,10 +5122,6 @@ Bloom Verb: calculate</p>
 <p><strong>Impedance (<span class="arithmatex">\(Z\)</span>)</strong> is the complex ratio of voltage phasor to current phasor:</p>
 <div class="arithmatex">\[Z = \frac{\mathbf{V}}{\mathbf{I}}\]</div>
 <p>Impedance plays the same role in AC circuits that resistance plays in DC circuits. In fact, Ohm's law works perfectly with impedance:</p>
-<div class="mascot rezi">
-<p><strong>Definition: Impedance</strong>
-Impedance <span class="arithmatex">\(Z\)</span> is the complex generalization of resistance for AC circuits, defined as <span class="arithmatex">\(Z = \mathbf{V}/\mathbf{I}\)</span> in the phasor domain, measured in ohms (Ω). Its real part <span class="arithmatex">\(R\)</span> is resistance (dissipates power) and its imaginary part <span class="arithmatex">\(X\)</span> is reactance (stores and returns power). Unlike resistance, impedance depends on frequency.</p>
-</div>
 <div class="arithmatex">\[\mathbf{V} = \mathbf{I} \cdot Z\]</div>
 <p>But unlike resistance (which is just a real number), impedance is complex:</p>
 <div class="arithmatex">\[Z = R + jX\]</div>
@@ -5183,11 +5157,6 @@ Impedance <span class="arithmatex">\(Z\)</span> is the complex generalization of
 </tr>
 </tbody>
 </table>
-<div class="mascot ohmy">
-<p><strong>Key Formula: Component Impedances</strong></p>
-<div class="arithmatex">\[Z_R = R \qquad Z_L = j\omega L \qquad Z_C = \frac{1}{j\omega C} = \frac{-j}{\omega C}\]</div>
-<p>Resistors have real, frequency-independent impedance. Inductors have positive imaginary impedance that grows with frequency. Capacitors have negative imaginary impedance that shrinks with frequency. All combine using the same series and parallel rules as DC resistors — just with complex arithmetic.</p>
-</div>
 <h3 id="reactance-the-imaginary-part">Reactance: The Imaginary Part</h3>
 <p><strong>Reactance (<span class="arithmatex">\(X\)</span>)</strong> is the imaginary component of impedance. It represents opposition to current that <em>doesn't</em> dissipate power—instead, it stores energy temporarily and returns it to the circuit.</p>
 <p><strong>Inductive Reactance (<span class="arithmatex">\(X_L\)</span>):</strong>
@@ -5434,10 +5403,6 @@ Bloom Verb: calculate</p>
 [Y = \frac{1}{R + jX} = \frac{R - jX}{R^2 + X^2}]</p>
 <p>So: <span class="arithmatex">\(G = \frac{R}{R^2 + X^2}\)</span> and <span class="arithmatex">\(B = \frac{-X}{R^2 + X^2}\)</span></p>
 <p>Note: <span class="arithmatex">\(G \neq 1/R\)</span> unless <span class="arithmatex">\(X = 0\)</span>!</p>
-<div class="mascot sparky">
-<p><strong>Common Mistake: Conductance Is Not Simply 1/Resistance When Reactance Is Present</strong>
-In DC circuits <span class="arithmatex">\(G = 1/R\)</span>. In AC circuits with complex impedance <span class="arithmatex">\(Z = R + jX\)</span>, the conductance <span class="arithmatex">\(G = R/(R^2 + X^2)\)</span>, which is <strong>not</strong> equal to <span class="arithmatex">\(1/R\)</span> unless <span class="arithmatex">\(X = 0\)</span>. Similarly, susceptance <span class="arithmatex">\(B = -X/(R^2+X^2)\)</span>, not <span class="arithmatex">\(1/X\)</span>. Only take the reciprocal of the entire complex impedance, then separate real and imaginary parts. Never reciprocate R and X separately.</p>
-</div>
 <h2 id="ac-resistance-and-power-factor">AC Resistance and Power Factor</h2>
 <p>In AC circuits, <strong>AC resistance</strong> (also called effective resistance) includes all power-dissipating effects, which may differ from DC resistance due to:</p>
 <ul>
@@ -5984,7 +5949,7 @@ Bloom Verb: explain</p>
       <div class="md-copyright">
   
     <div class="md-copyright__highlight">
-      Copyright &copy; 2024, 2025, 2026 Dan McCreary. Licensed under <a href="license/">CC BY-NC-SA 4.0</a> for non-commercial use.
+      Copyright &copy; 2024&ndash;2026 Dan McCreary and Circuits 1 Team. Licensed under <a href="license/">CC BY-NC-SA 4.0</a>.
     </div>
   
   

@@ -57,8 +57,6 @@
     
       <link rel="stylesheet" href="../../../css/extra.css">
     
-      <link rel="stylesheet" href="../../../css/mascots.css">
-    
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
     
     <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
@@ -4616,20 +4614,6 @@
       
         
       
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
     
     
     
@@ -4961,8 +4945,6 @@
       
         
       
-        
-      
     
     
     
@@ -5141,10 +5123,6 @@ An ammeter is connected <strong>in series</strong> — the circuit must be broke
 <p class="admonition-title">Never Connect an Ammeter in Parallel</p>
 <p>Connecting an ammeter across a component creates a near-short circuit. The meter's low resistance will draw very large current, blowing the meter's internal fuse and potentially damaging the circuit. Always insert the meter in series.</p>
 </div>
-<div class="mascot sparky">
-<p><strong>Common Mistake: Measuring Current Without Breaking the Circuit</strong>
-A surprisingly common error is attempting to measure current by touching the ammeter probes to two nodes without breaking the wire — in other words, connecting the meter in parallel rather than in series. The meter's near-zero resistance creates a short circuit across whatever is between those two nodes, blowing the fuse and potentially damaging components. Always break the circuit and insert the meter into the gap.</p>
-</div>
 <h3 id="resistance-measurement">Resistance Measurement</h3>
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 The ohmmeter applies a known test current and measures the resulting voltage drop to calculate resistance. For accurate results, the component must be <strong>disconnected from the circuit</strong> (or at minimum, power must be removed and capacitors discharged). Parallel paths through other circuit elements will cause the meter to read a lower value than the actual component resistance.
@@ -5321,10 +5299,6 @@ A <strong>10X probe</strong> includes an internal 9 MΩ series resistor that, co
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 Use the 10X probe for the vast majority of measurements. Use 1X only when measuring signals too small to resolve with 10X attenuation.
 </p>
-<div class="mascot cappy">
-<p><strong>Pro Tip: Default to the 10X Probe</strong>
-Unless you are measuring signals smaller than ~10 mV, always use the 10X probe. The reduced input capacitance (~10 pF vs. ~100 pF) avoids loading high-impedance circuits and prevents the probe itself from shifting the cutoff frequency of RC networks. Many confusing "wrong" measurements — roll-off that appears too early, oscillations that appear and disappear when the probe is touched — vanish when a properly compensated 10X probe replaces a 1X probe.</p>
-</div>
 <h3 id="probe-compensation-procedure">Probe Compensation Procedure</h3>
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 A 10X probe contains a small adjustable capacitor (trimmer) in parallel with the 9 MΩ resistor. This trimmer must be adjusted to match the oscilloscope's input capacitance. An improperly compensated probe distorts the frequency response — most visibly on square waves:
@@ -5472,10 +5446,6 @@ When a circuit does not behave as expected, a systematic debugging strategy find
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 Every measurement instrument, when connected to a circuit, interacts with that circuit. Understanding how instruments load the circuit — and quantifying the resulting measurement error — is essential for interpreting readings correctly.
 </p>
-<div class="mascot rezi">
-<p><strong>Definition: Loading Error</strong>
-Loading error is the systematic measurement error introduced when an instrument's own impedance forms a voltage divider with the circuit's Thévenin resistance. A voltmeter with finite input impedance <span class="arithmatex">\(R_{meter}\)</span> draws current from the circuit, causing the measured voltage to be lower than the true open-circuit voltage. Loading error increases as the source impedance rises relative to the meter impedance.</p>
-</div>
 <h3 id="voltage-measurement-loading-error">Voltage Measurement Loading Error</h3>
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 When a voltmeter with internal resistance \(R_{meter}\) is connected across a source with Thevenin resistance \(R_{source}\), the meter and source resistance form a voltage divider. The meter reads:
@@ -5492,11 +5462,6 @@ The fractional loading error is:
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 The loading error is negligible when \(R_{meter} \gg R_{source}\). A 10 MΩ meter measuring across a 1 kΩ source introduces only 0.01% error. The same meter measuring across a 1 MΩ source introduces nearly 9% error.
 </p>
-<div class="mascot ohmy">
-<p><strong>Key Formula: Voltage Divider Loading Error</strong></p>
-<div class="arithmatex">\[V_{measured} = V_{actual} \times \frac{R_{meter}}{R_{meter} + R_{source}}\]</div>
-<p>The fractional error is <span class="arithmatex">\(R_{source}/(R_{meter} + R_{source})\)</span>. To keep error below 1%, you need <span class="arithmatex">\(R_{meter} &gt; 99 \times R_{source}\)</span> — at least 100× larger than the source impedance. Rule of thumb: a 10 MΩ DMM reads accurately in circuits with source impedance below ~100 kΩ.</p>
-</div>
 <div style="background: #FFF7DD; border: 2px solid #F0D87A; border-radius: 10px; padding: 24px; margin: 1.5rem 0;">
 <p style="color: #B8860B; font-weight: 700; font-size: 1.08rem; margin-top: 0; margin-bottom: 14px;">Worked Example — Loading Error Calculation</p>
 <p style="color: #555; line-height: 1.75;">
@@ -5540,10 +5505,6 @@ Electrical hazards are invisible and act faster than human reflexes. The safety 
 <li><strong>Inspect equipment.</strong> Before use, check cables and probes for cracked insulation, damaged connectors, or exposed conductors. Do not use damaged equipment.</li>
 <li><strong>Never work alone on high-voltage equipment.</strong> At voltages above mains level (120/240 V AC), a second person must be present and know how to cut power and provide first aid.</li>
 </ol>
-<div class="mascot fusi">
-<p><strong>Safety Warning: Electrical Shock and Capacitor Stored Energy</strong>
-Even lab bench power supplies can deliver dangerous currents if a fault path exists through the body. At 50 V DC across dry skin, current through the chest can reach 5 mA — enough to be painful and disorienting. Mains-connected equipment (oscilloscopes, power supplies) shares a ground that is referenced to earth — probing line-voltage circuits with a standard oscilloscope probe can expose the chassis to mains potential and risk electrocution. Always use an isolation transformer when measuring inside mains-connected equipment, discharge large electrolytic capacitors through a resistor before touching internal nodes, and apply the one-hand rule whenever a circuit cannot be de-energized.</p>
-</div>
 <h3 id="voltage-hazard-thresholds">Voltage Hazard Thresholds</h3>
 <div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 10px; padding: 16px 20px; margin: 1.2rem 0;">
 
@@ -5645,7 +5606,7 @@ Even lab bench power supplies can deliver dangerous currents if a fault path exi
       <div class="md-copyright">
   
     <div class="md-copyright__highlight">
-      Copyright &copy; 2024, 2025, 2026 Dan McCreary. Licensed under <a href="license/">CC BY-NC-SA 4.0</a> for non-commercial use.
+      Copyright &copy; 2024&ndash;2026 Dan McCreary and Circuits 1 Team. Licensed under <a href="license/">CC BY-NC-SA 4.0</a>.
     </div>
   
   

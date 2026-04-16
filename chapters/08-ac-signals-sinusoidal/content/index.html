@@ -57,8 +57,6 @@
     
       <link rel="stylesheet" href="../../../css/extra.css">
     
-      <link rel="stylesheet" href="../../../css/mascots.css">
-    
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
     
     <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
@@ -4505,20 +4503,6 @@
       
         
       
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
     
     
     
@@ -4850,8 +4834,6 @@
       
         
       
-        
-      
     
     
     
@@ -5055,10 +5037,6 @@ Alternating current signals are the language of power systems and communications
 <p><strong>The great AC/DC debate:</strong> Thomas Edison championed DC, while Nikola Tesla and George Westinghouse promoted AC. AC won for power distribution because transformers allowed high-voltage transmission with low losses. DC has made a comeback in some applications (data centers, solar panels, electric vehicles) but AC still reigns for the grid.</p>
 <h2 id="sinusoidal-waveforms-natures-favorite-curve">Sinusoidal Waveforms: Nature's Favorite Curve</h2>
 <p>A <strong>sinusoidal waveform</strong> (or sinusoid) is a mathematical curve describing smooth, repetitive oscillation. It's defined by the sine or cosine function:</p>
-<div class="mascot rezi">
-<p><strong>Sinusoidal Waveform</strong></p>
-<p>A signal that follows a sine or cosine curve: <span class="arithmatex">\(v(t) = V_m \sin(\omega t + \phi)\)</span>, where <span class="arithmatex">\(V_m\)</span> is the peak amplitude, <span class="arithmatex">\(\omega\)</span> is the angular frequency in rad/s, and <span class="arithmatex">\(\phi\)</span> is the phase angle.</p>
-</div>
 <div class="arithmatex">\[v(t) = V_m \sin(\omega t + \phi)\]</div>
 <p>Or equivalently:</p>
 <div class="arithmatex">\[v(t) = V_m \cos(\omega t + \phi - 90°)\]</div>
@@ -5193,9 +5171,9 @@ Bloom Verb: explain</p>
 </tr>
 </tbody>
 </table>
-<div class="mascot cappy">
-<p><strong>Why RMS Matters</strong></p>
-<p>RMS (Root Mean Square) is the most important AC measurement because it directly relates to power. A 120V RMS AC source delivers the same heating power to a resistor as a 120V DC source. This is why your wall outlet is rated at 120V RMS — that's the effective voltage for power delivery.</p>
+<div class="admonition tip">
+<p class="admonition-title">Why RMS Matters</p>
+<p>RMS (Root Mean Square) is the most important AC measurement because it directly relates to power. A 120V RMS AC source delivers the same heating power to a resistor as a 120V DC source. This is why your wall outlet is rated at 120V RMS—that's the effective voltage for power delivery.</p>
 </div>
 <h3 id="frequency-and-period">Frequency and Period</h3>
 <p><strong>Frequency (<span class="arithmatex">\(f\)</span>)</strong> tells you how many complete cycles occur per second:
@@ -5257,10 +5235,6 @@ Bloom Verb: explain</p>
 <p>[v_1(t) = V_m \sin(\omega t)]
 [v_2(t) = V_m \sin(\omega t + 90°) = V_m \cos(\omega t)]</p>
 <p>When we say "<span class="arithmatex">\(v_2\)</span> leads <span class="arithmatex">\(v_1\)</span> by 90°," we mean <span class="arithmatex">\(v_2\)</span> reaches its peak earlier in time.</p>
-<div class="mascot sparky">
-<p><strong>Phase angle units — watch out!</strong></p>
-<p>Phase angles can be expressed in <strong>degrees</strong> or <strong>radians</strong>. Never mix them in a calculation. When using a calculator, check whether it's in DEG or RAD mode. A common mistake: plugging degrees into <span class="arithmatex">\(\sin(\omega t + \phi)\)</span> when <span class="arithmatex">\(\omega t\)</span> is in radians.</p>
-</div>
 <h4 id="diagram-phase-relationship-visualizer">Diagram: Phase Relationship Visualizer</h4>
 <iframe height="450px" scrolling="no" src="../../../sims/phase-relationship/main.html" style="overflow: hidden;" width="100%"></iframe>
 <details>
@@ -5467,10 +5441,6 @@ Bloom Verb: explain</p>
 </details>
 <h2 id="complex-numbers-your-new-best-friend">Complex Numbers: Your New Best Friend</h2>
 <p>If you've been dreading complex numbers, prepare for a surprise: they're going to make your life <em>easier</em>. Complex numbers provide a compact way to represent both magnitude and phase in a single mathematical object.</p>
-<div class="mascot rezi">
-<p><strong>Complex Number</strong></p>
-<p>A number of the form <span class="arithmatex">\(z = a + jb\)</span>, where <span class="arithmatex">\(a\)</span> is the <strong>real part</strong> and <span class="arithmatex">\(b\)</span> is the <strong>imaginary part</strong>. In engineering, <span class="arithmatex">\(j = \sqrt{-1}\)</span> (not <span class="arithmatex">\(i\)</span>, which is reserved for current).</p>
-</div>
 <p><strong>Definition:</strong> A complex number <span class="arithmatex">\(z\)</span> has a real part and an imaginary part:
 [z = a + jb]</p>
 <p>Where:</p>
@@ -5536,8 +5506,8 @@ Bloom Verb: explain</p>
 </tr>
 </tbody>
 </table>
-<div class="mascot cappy">
-<p><strong>Choosing the Right Form</strong></p>
+<div class="admonition tip">
+<p class="admonition-title">Choosing the Right Form</p>
 <p>Use rectangular form for addition/subtraction, polar form for multiplication/division. Your calculator can switch between them, but understanding both builds intuition for what complex numbers represent.</p>
 </div>
 <h4 id="diagram-complex-number-visualizer">Diagram: Complex Number Visualizer</h4>
@@ -5581,13 +5551,6 @@ Bloom Verb: calculate</p>
 </details>
 <h3 id="eulers-formula-the-bridge-between-worlds">Euler's Formula: The Bridge Between Worlds</h3>
 <p><strong>Euler's formula</strong> is one of the most beautiful equations in mathematics:</p>
-<div class="mascot ohmy">
-<p><strong>Euler's Formula</strong></p>
-<div class="arithmatex">\[e^{j\theta} = \cos\theta + j\sin\theta\]</div>
-<p>Differentiation of a sinusoid becomes multiplication by <span class="arithmatex">\(j\omega\)</span>:</p>
-<div class="arithmatex">\[\frac{d}{dt}e^{j\omega t} = j\omega \cdot e^{j\omega t}\]</div>
-<p>This is why phasors make AC circuit analysis so powerful — derivatives turn into algebra.</p>
-</div>
 <div class="arithmatex">\[e^{j\theta} = \cos\theta + j\sin\theta\]</div>
 <p>This connects exponentials with trigonometry, allowing us to write complex numbers as:</p>
 <div class="arithmatex">\[z = re^{j\theta}\]</div>
@@ -6031,7 +5994,7 @@ The argument of sine is <span class="arithmatex">\(2\pi \cdot 60 \cdot t\)</span
       <div class="md-copyright">
   
     <div class="md-copyright__highlight">
-      Copyright &copy; 2024, 2025, 2026 Dan McCreary. Licensed under <a href="license/">CC BY-NC-SA 4.0</a> for non-commercial use.
+      Copyright &copy; 2024&ndash;2026 Dan McCreary and Circuits 1 Team. Licensed under <a href="license/">CC BY-NC-SA 4.0</a>.
     </div>
   
   

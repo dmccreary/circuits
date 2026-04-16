@@ -57,8 +57,6 @@
     
       <link rel="stylesheet" href="../../../css/extra.css">
     
-      <link rel="stylesheet" href="../../../css/mascots.css">
-    
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
     
     <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
@@ -4269,20 +4267,6 @@
       
         
       
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
     
     
     
@@ -4614,8 +4598,6 @@
       
         
       
-        
-      
     
     
     
@@ -4782,10 +4764,6 @@ AC power analysis distinguishes between three types of power — real, reactive,
 <p>Measured in <strong>watts (W)</strong>. <span class="arithmatex">\(\theta = \theta_v - \theta_i\)</span> is the phase angle between voltage and current.</p>
 </div>
 <p>The factor <span class="arithmatex">\(\cos\theta\)</span> is the <strong>power factor</strong> — it determines how much of the apparent power does useful work. Your electric bill is based on real power (kilowatt-hours).</p>
-<div class="mascot rezi">
-<p><strong>Definition: Real (Average) Power</strong>
-Real power <span class="arithmatex">\(P\)</span> is the time-averaged power consumed by a load, measured in watts (W): <span class="arithmatex">\(P = V_{rms} I_{rms} \cos\theta = I_{rms}^2 R\)</span>. It represents energy that is actually converted into heat, light, or mechanical work. The power factor <span class="arithmatex">\(\cos\theta\)</span> tells you what fraction of the apparent power is real — your electricity bill charges for real power, not apparent power.</p>
-</div>
 <table>
 <thead>
 <tr>
@@ -4825,10 +4803,6 @@ Real power <span class="arithmatex">\(P\)</span> is the time-averaged power cons
 <p>Inductive loads: <span class="arithmatex">\(Q &gt; 0\)</span> (lagging). Capacitive loads: <span class="arithmatex">\(Q &lt; 0\)</span> (leading).</p>
 </div>
 <p>Reactive power doesn't do useful work, but it still requires current to flow — meaning larger wires, transformers, and generators must be sized to carry it. This is why utilities penalize poor power factor.</p>
-<div class="mascot sparky">
-<p><strong>Common Mistake: Thinking Reactive Power Is "Wasted"</strong>
-Reactive power <span class="arithmatex">\(Q\)</span> is not wasted — it is energy that oscillates back and forth between the source and reactive elements (inductors and capacitors) but is never consumed. The problem is that it requires real current to flow through real wire resistance, causing genuine power loss (<span class="arithmatex">\(I^2 R\)</span>) in the distribution system. So reactive power itself isn't wasted, but the extra current it demands <strong>does</strong> cause real losses in transmission lines.</p>
-</div>
 <hr />
 <h2 id="104-apparent-power">10.4 Apparent Power</h2>
 <p><strong>Apparent power</strong> (S) is the product of RMS voltage and RMS current — the total "power handling" demanded from the source. Measured in <strong>volt-amperes (VA)</strong>.</p>
@@ -4847,11 +4821,6 @@ Reactive power <span class="arithmatex">\(Q\)</span> is not wasted — it is ene
 <div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
 <div class="arithmatex">\[\mathbf{S} = P + jQ = \mathbf{V}_{rms}\, \mathbf{I}_{rms}^* = I_{rms}^2 Z\]</div>
 <p>where <span class="arithmatex">\(\mathbf{I}^*\)</span> is the complex conjugate of the current phasor.</p>
-<div class="mascot ohmy">
-<p><strong>Key Formula: Complex Power</strong></p>
-<div class="arithmatex">\[\mathbf{S} = P + jQ = \mathbf{V}_{rms}\,\mathbf{I}_{rms}^* = I_{rms}^2 Z\]</div>
-<p>Use the <strong>complex conjugate</strong> of the current phasor (<span class="arithmatex">\(\mathbf{I}^*\)</span>), not the current itself. This ensures the real part gives <span class="arithmatex">\(P = I^2 R\)</span> and the imaginary part gives <span class="arithmatex">\(Q = I^2 X\)</span>. Forgetting the conjugate gives a result with opposite sign for <span class="arithmatex">\(Q\)</span>.</p>
-</div>
 </div>
 <table>
 <thead>
@@ -4949,10 +4918,6 @@ Reactive power <span class="arithmatex">\(Q\)</span> is not wasted — it is ene
 <h2 id="108-power-factor-correction">10.8 Power Factor Correction</h2>
 <p><strong>Power factor correction</strong> improves PF by adding capacitors in parallel with inductive loads. The capacitors supply reactive power locally, reducing the reactive current drawn from the source.</p>
 <p><strong>Benefits:</strong> reduced line current, less I²R loss, increased infrastructure capacity, avoided utility penalties.</p>
-<div class="mascot cappy">
-<p><strong>Pro Tip: Power Factor Correction Always Uses Capacitors in Parallel</strong>
-Industrial loads (motors, transformers) are inductive and draw lagging current — they need VARs supplied from the grid. Adding a capacitor <strong>in parallel</strong> with the load provides those VARs locally, reducing the reactive current the utility must supply. Always connect the correction capacitor in parallel with the load, never in series — series connection changes the impedance seen by the load and alters circuit behavior unpredictably.</p>
-</div>
 <p><strong>Correction formula</strong> — to improve from <span class="arithmatex">\(\theta_1\)</span> to <span class="arithmatex">\(\theta_2\)</span>:</p>
 <div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
 <div class="arithmatex">\[Q_C = P(\tan\theta_1 - \tan\theta_2) \qquad C = \frac{Q_C}{\omega\, V_{rms}^2}\]</div>
@@ -5192,7 +5157,7 @@ Industrial loads (motors, transformers) are inductive and draw lagging current �
       <div class="md-copyright">
   
     <div class="md-copyright__highlight">
-      Copyright &copy; 2024, 2025, 2026 Dan McCreary. Licensed under <a href="license/">CC BY-NC-SA 4.0</a> for non-commercial use.
+      Copyright &copy; 2024&ndash;2026 Dan McCreary and Circuits 1 Team. Licensed under <a href="license/">CC BY-NC-SA 4.0</a>.
     </div>
   
   

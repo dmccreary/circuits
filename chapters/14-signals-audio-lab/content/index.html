@@ -57,8 +57,6 @@
     
       <link rel="stylesheet" href="../../../css/extra.css">
     
-      <link rel="stylesheet" href="../../../css/mascots.css">
-    
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
     
     <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
@@ -4492,20 +4490,6 @@
       
         
       
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
     
     
     
@@ -4837,8 +4821,6 @@
       
         
       
-        
-      
     
     
     
@@ -4995,15 +4977,8 @@ Fourier series analysis reveals that any periodic signal can be decomposed into 
 Every circuit you have analysed so far has a well-defined response to a sinusoidal input: the transfer function \(H(j\omega)\) scales the amplitude and shifts the phase. But real-world signals — speech, music, clock pulses, sensor readings — are rarely pure sinusoids. They are complex waveforms whose shape changes from moment to moment. How do you predict what a filter or amplifier will do to such a signal?
 </p>
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
-The key is a remarkable result discovered by Jean-Baptiste Joseph Fourier around 1807: <strong style="color: #333;">any periodic signal can be expressed as a sum of sinusoids</strong>. This is the Fourier series.
-
+The key is a remarkable result discovered by Jean-Baptiste Joseph Fourier around 1807: <strong style="color: #333;">any periodic signal can be expressed as a sum of sinusoids</strong>. This is the Fourier series. Once a signal is expressed as a sum of sinusoids, linearity means you can apply the transfer function to each sinusoid independently and add the results. The Fourier series thereby transforms a difficult problem — system response to an arbitrary waveform — into a family of easy problems, each solved with the phasor techniques already in your toolkit.
 </p>
-<div class="mascot rezi">
-**Definition: Fourier Series**
-A Fourier series represents any periodic signal \(f(t)\) with period \(T\) as a DC component plus an infinite sum of harmonically related sinusoids: \(f(t) = a_0 + \sum_{n=1}^{\infty}[a_n\cos(n\omega_0 t) + b_n\sin(n\omega_0 t)]\), where \(\omega_0 = 2\pi/T\) is the fundamental angular frequency. Each sinusoidal term is called a **harmonic**; the \(n\)th harmonic has frequency \(nf_0\).
-</div>
-<p>Once a signal is expressed as a sum of sinusoids, linearity means you can apply the transfer function to each sinusoid independently and add the results. The Fourier series thereby transforms a difficult problem — system response to an arbitrary waveform — into a family of easy problems, each solved with the phasor techniques already in your toolkit.
-</p></p>
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 The Fourier series also provides a second, equally important viewpoint: the <strong style="color: #333;">frequency domain</strong>. Rather than plotting a signal versus time, you plot its amplitude and phase versus frequency. This frequency-domain picture — called the <strong style="color: #333;">spectrum</strong> — reveals which frequencies carry the signal's energy. The spectrum is the language of filter design, audio engineering, communications, and signal processing. Learning to read and compute spectra is a foundational skill for any circuits engineer.
 </p>
@@ -5046,15 +5021,6 @@ The three coefficient formulas follow from the orthogonality of sines and cosine
 </div>
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 The limits of integration can be any convenient interval of length \(T\), such as \([-T/2,\ T/2]\). Choose whichever limits make the integrand simplest.
-
-</p>
-<div class="mascot ohmy">
-**Key Formula: Fourier Coefficient Integrals**
-
-\[a_0 = \frac{1}{T}\int_0^T f(t)\,dt \qquad a_n = \frac{2}{T}\int_0^T f(t)\cos(n\omega_0 t)\,dt \qquad b_n = \frac{2}{T}\int_0^T f(t)\sin(n\omega_0 t)\,dt\]
-
-\(a_0\) is the **average value** (DC component). The factor of \(2/T\) in \(a_n\) and \(b_n\) — but \(1/T\) in \(a_0\) — is a common source of errors; don't apply the factor of 2 to the DC term.
-</div>
 </p>
 <h3 id="amplitudephase-form">Amplitude–Phase Form</h3>
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 0.8rem;">
@@ -5290,10 +5256,6 @@ When this condition holds, the contributions from even-numbered harmonics cancel
 Always inspect the waveform for all three symmetries before integrating. A waveform can have more than one type simultaneously — for example, a square wave that is both odd and half-wave symmetric. Each identified symmetry halves (or more) the number of coefficients you must actually compute.
 </p>
 </div>
-<div class="mascot cappy">
-<p><strong>Pro Tip: Check Symmetry Before Computing Any Integrals</strong>
-Before touching a Fourier coefficient integral, spend 30 seconds checking all three symmetries: even (<span class="arithmatex">\(f(-t) = f(t)\)</span> → all <span class="arithmatex">\(b_n = 0\)</span>), odd (<span class="arithmatex">\(f(-t) = -f(t)\)</span> → all <span class="arithmatex">\(a_n = 0\)</span> and <span class="arithmatex">\(a_0 = 0\)</span>), half-wave (<span class="arithmatex">\(f(t+T/2) = -f(t)\)</span> → all even harmonics = 0). A typical square wave has both odd and half-wave symmetry, cutting the work to just computing <span class="arithmatex">\(b_n\)</span> for odd <span class="arithmatex">\(n\)</span> — eliminating <span class="arithmatex">\(a_0\)</span>, all <span class="arithmatex">\(a_n\)</span>, and all even <span class="arithmatex">\(b_n\)</span> in one inspection.</p>
-</div>
 <h2 id="146-common-waveforms-and-their-spectra">14.6 Common Waveforms and Their Spectra</h2>
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 Three waveforms appear so often in electronics that their Fourier series are worth memorising. Each has a characteristic spectral signature that immediately suggests which harmonics dominate and how quickly they decay.
@@ -5383,10 +5345,6 @@ Spectral characteristics:</p>
 </tr>
 </tbody>
 </table>
-<div class="mascot sparky">
-<p><strong>Common Mistake: Assuming Square and Triangle Waves Have the Same Harmonic Decay</strong>
-Both square and triangle waves contain only <strong>odd</strong> harmonics, so students sometimes assume their spectra look the same. They don't — the amplitude of the <span class="arithmatex">\(n\)</span>th harmonic decays as <span class="arithmatex">\(1/n\)</span> for a square wave but as <span class="arithmatex">\(1/n^2\)</span> for a triangle wave. This means the triangle wave's higher harmonics are far weaker: at the 9th harmonic, the triangle is 81× weaker than the square at the same fundamental level. Smoother waveform = faster amplitude decay.</p>
-</div>
 <h2 id="147-applications">14.7 Applications</h2>
 <h3 id="audio-timbre-and-musical-instruments">Audio Timbre and Musical Instruments</h3>
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
@@ -5618,7 +5576,7 @@ This chapter developed the Fourier series as the bridge between time-domain wave
       <div class="md-copyright">
   
     <div class="md-copyright__highlight">
-      Copyright &copy; 2024, 2025, 2026 Dan McCreary. Licensed under <a href="license/">CC BY-NC-SA 4.0</a> for non-commercial use.
+      Copyright &copy; 2024&ndash;2026 Dan McCreary and Circuits 1 Team. Licensed under <a href="license/">CC BY-NC-SA 4.0</a>.
     </div>
   
   
