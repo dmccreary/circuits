@@ -252,6 +252,7 @@ nav:
 
   - About:
     - About This Course: about.md
+    - Authors: about/authors.md
     - Course Description: course-description.md
     - Circuits:
       - List of Circuits: circuits/index.md
@@ -337,7 +338,7 @@ extra_javascript:
   - https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js
   - https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js
 
-copyright: Copyright &copy; 2024, 2025, 2026 Dan McCreary. Licensed under <a href="license/">CC BY-NC-SA 4.0</a> for non-commercial use.
+copyright: Copyright &copy; 2024&ndash;2026 Dan McCreary and Circuits 1 Team. Licensed under <a href="license/">CC BY-NC-SA 4.0</a>.
 
 extra:
   schema: https://dmccreary.github.io/intelligent-textbooks/ns/textbook/v1
