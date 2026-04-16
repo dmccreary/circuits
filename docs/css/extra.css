@@ -216,6 +216,24 @@ details.video-overview[open] > summary {
   border-radius: 12px;
   overflow: hidden;
   margin: -0.8rem -1.6rem 0;
+  position: relative;  /* needed for absolute-positioned circuit overlay */
+}
+
+/* Full-cover background circuit art overlay */
+.cover-bg-circuit {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+/* Lift content layers above the background overlay */
+.cover-circuit,
+.cover-content,
+.cover-circuit-bottom {
+  position: relative;
+  z-index: 1;
 }
 
 .cover-content {
@@ -464,9 +482,10 @@ details.video-overview[open] > summary {
  *   .md-footer__button      – icon wrapper
  */
 
-/* Container */
+/* Container — explicit white background so cards sit on a clean surface */
 .md-footer {
-  background: transparent;
+  background: #ffffff;
+  border-top: 1px solid #E8E0FF;
   color: inherit;
 }
 
@@ -601,13 +620,13 @@ details.video-overview[open] > summary {
   color: #5A3EED;
 }
 
-/* Bottom meta bar */
+/* Bottom meta bar — purple matching the site header, not dark charcoal */
 .md-footer-meta {
-  background-color: #2c2c3a;
+  background-color: #5A3EED;
 }
 
 .md-footer-meta.md-typeset a {
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 0.78);
 }
 
 .md-footer-meta.md-typeset a:hover {
