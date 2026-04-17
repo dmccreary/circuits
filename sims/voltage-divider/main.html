@@ -25,16 +25,14 @@ const SCHEM_W = 330;          // left schematic panel width
 const PANEL_X = SCHEM_W;      // right calculator panel starts here
 const CTRL_Y  = 380;          // y where controls begin
 
-// ── Circuits 1 design-system palette ─────────────────────────────────────
-const C_BG        = [238, 241, 251];   // #eef1fb — light indigo tint
-const C_CTRL      = [221, 225, 240];   // #dde1f0 — muted indigo control area
-const C_PANEL     = [244, 246, 255];   // panel background
-const C_DEEP      = [26,  35,  126];   // dark indigo — titles
-const C_ACCENT    = [57,  73,  171];   // indigo — #3949ab
-const C_MEDIUM    = [92, 107,  192];   // medium indigo
-const C_WARN      = [198,  40,   40];  // red
-const C_OK        = [46,  125,   50];  // green
-const C_HIGHLIGHT = [249, 168,   37];  // amber gold — Vout node
+// ── colours ──────────────────────────────────────────────────────────────
+const C_BG        = [245, 248, 252];
+const C_CTRL      = [230, 235, 240];
+const C_PANEL     = [240, 244, 250];
+const C_ACCENT    = [0,   100, 180];   // blue
+const C_WARN      = [200,  50,  30];   // red
+const C_OK        = [30,  140,  60];   // green
+const C_HIGHLIGHT = [255, 200,   0];   // yellow for Vout node
 
 // ── state ─────────────────────────────────────────────────────────────────
 let mode = 'findVout';   // 'findVout' | 'findR2'
@@ -551,6 +549,5 @@ function resetSim() {
 }
 </script>
 </main>
-<script src="../../js/microsim-controls.js"></script>
 </body>
 </html>
