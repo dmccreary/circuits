@@ -1,6 +1,5 @@
 # Circuits Frequently Asked Questions
 
-
 #### How do I apply Ohm's Law to calculate voltage, current, and resistance in a circuit?
 
 #### What is the difference between series and parallel circuits?
@@ -226,7 +225,3 @@
 #### What are the methods for frequency stabilization in oscillator circuits?
 
 #### How do I select appropriate filters for signal conditioning in circuits?
-
-o1
-
-##### You said:

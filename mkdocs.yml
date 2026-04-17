@@ -287,9 +287,9 @@ nav:
 
 theme:
   name: material
+  # use sparky the mascot neutral pose as the logo for the site
+  logo: img/mascots/neutral.png
   favicon: img/favicon.ico
-  icon:
-    logo: material/chip
   font:
     text: Roboto
     code: JetBrains Mono
