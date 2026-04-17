@@ -1,15 +1,14 @@
-#
+# FAQ Prompt
 
-## Prompt
 
-```linenums="0"
-You are an experience teacher of an undergraduate circuits course.  You have taught the course many times.  Each time you teach the course you see the same questions come up over and over.  Please generate a list of the 100 more common questions and order them from the most commonly occuring question to the least commonly occuring question.
 
-Only list the question, don't provide the answer.  Use a single sentence to describe the question.
+!!! prompt
+    You are an experience teacher of an undergraduate circuits course.  You have taught the course many times.  Each time you teach the course you see the same questions come up over and over.  Please generate a list of the 100 more common questions and order them from the most commonly occuring question to the least commonly occuring question.
 
-For each question, place it question text in a level four Markdown header.
-Return a single Markdown file that can be downloaded.
-```
+    Only list the question, don't provide the answer.  Use a single sentence to describe the question.
+
+    For each question, place it question text in a level four Markdown header.
+    Return a single Markdown file that can be downloaded.
 
 ## Response
 
