@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+  <title>Nodal Analysis Step-Through</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.7/p5.min.js"></script>
+  <script src="../circuit-lib/circuit-lib.js"></script>
+  <style>
+    body { margin: 0; background: #f0f0f0; display: flex; justify-content: center; }
+    canvas { display: block; }
+  </style>
+</head>
+<body>
+<main></main>
+<script>
+// Nodal Analysis Step-Through MicroSim
+// Walks through the complete nodal analysis procedure for a three-node circuit.
+//
+// Circuit values (chosen for clean integer solutions):
+//   Vs = 10V  R1 = 1kΩ  R2 = 2kΩ  R3 = 2kΩ  R4 = 4kΩ
+// Solution:   V1 = 6V   V2 = 4V
+// Branch currents: I_R1=4mA  I_R2=3mA  I_R3=1mA  I_R4=1mA
+//
+// Bloom Level: Apply (L3) — execute the nodal analysis procedure
+
+// ── Canvas layout ─────────────────────────────────────────────────────────────
+const CW     = 660;   // canvas width (fixed)
+const DRAW_H = 480;   // drawing region height
+const CTRL_H = 80;    // controls strip height
+const CH     = DRAW_H + CTRL_H;  // 560
+
+// ── Panel split ───────────────────────────────────────────────────────────────
+const CIRC_W = 450;              // left (circuit) panel width
+const EQ_X   = 458;              // equation panel x-start
+const EQ_W   = CW - EQ_X - 4;   // ~198px
+
+// ── Circuit node positions ────────────────────────────────────────────────────
+const VS_X   = 65;   // voltage source x-center
+const V1_X   = 240;  // V1 node x
+const V2_X   = 390;  // V2 node x
+const TOP_Y  = 120;  // top rail y
+const GND_Y  = 380;  // ground rail y
+const SRC_CY = 250;  // voltage source circle center y
+const SRC_R  = 38;   // voltage source circle radius
+
+// ── Step state ────────────────────────────────────────────────────────────────
+let currentStep = 1;
+const TOTAL_STEPS = 6;
+let showAllCurrents = false;
+
+// ── Canvas-based controls ─────────────────────────────────────────────────────
+let btnPrev, btnNext, btnReset, cbCurrents;
+
+// ── Orientation constants (not defined by p5.js or circuit-lib.js) ───────────
+const HORIZONTAL = 0;
+const VERTICAL   = 1;
+
+// ── lineWidth global required by circuit-lib.js ───────────────────────────────
+let lineWidth = 2;
+
+// ─────────────────────────────────────────────────────────────────────────────
+function setup() {
+  const canvas = createCanvas(CW, CH);
+  canvas.parent(document.querySelector('main') || document.body);
+
+  const BY = DRAW_H + 22;
+  const BH = 30;
+  btnPrev    = { x: 15,  y: BY, w: 90,  h: BH, label: '← Prev' };
+  btnNext    = { x: 115, y: BY, w: 110, h: BH, label: 'Next Step →' };
+  btnReset   = { x: 235, y: BY, w: 70,  h: BH, label: 'Reset' };
+  cbCurrents = { x: 320, y: BY + 6, sz: 18, label: 'Show All Currents' };
+
+  describe('Nodal analysis step-through: six steps from node identification through branch current calculation', LABEL);
+}
+
+function draw() {
+  background(240);
+
+  // Drawing region
+  fill('aliceblue');
+  stroke('silver');
+  strokeWeight(1);
+  rect(0, 0, CW, DRAW_H);
+
+  // Equation panel background
+  fill(255, 255, 220);
+  stroke('#ccc');
+  strokeWeight(1);
+  rect(EQ_X - 3, 5, EQ_W + 3, DRAW_H - 10, 6);
+
+  // Control strip
+  fill(245);
+  stroke('silver');
+  strokeWeight(1);
+  rect(0, DRAW_H, CW, CTRL_H);
+
+  // Panel divider line
+  stroke(200);
+  strokeWeight(1);
+  line(CIRC_W, 10, CIRC_W, DRAW_H - 10);
+
+  // Title
+  fill(30);
+  noStroke();
+  textFont('sans-serif');
+  textSize(17);
+  textAlign(CENTER, TOP);
+  text('Nodal Analysis — Three-Node Circuit', CIRC_W / 2, 10);
+
+  // Draw layers in order
+  drawCircuit();
+  drawHighlights();
+  if (showAllCurrents || currentStep >= 2) {
+    drawCurrentArrows(showAllCurrents || currentStep === 6);
+  }
+  drawEquationPanel();
+  drawControls();
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// CIRCUIT DRAWING
+// ─────────────────────────────────────────────────────────────────────────────
+
+function drawCircuit() {
+  stroke(0);
+  strokeWeight(lineWidth);
+  noFill();
+
+  // ── Voltage source (left vertical arm) ──
+  // Wire: VS+ terminal (top rail) → top of circle
+  line(VS_X, TOP_Y, VS_X, SRC_CY - SRC_R);
+  // Wire: bottom of circle → GND rail
+  line(VS_X, SRC_CY + SRC_R, VS_X, GND_Y);
+  // Circle symbol
+  noFill(); stroke(0); strokeWeight(lineWidth);
+  circle(VS_X, SRC_CY, SRC_R * 2);
+  // + / − inside
+  fill(0); noStroke();
+  textFont('sans-serif');
+  textSize(16); textAlign(CENTER, CENTER);
+  text('+', VS_X, SRC_CY - 15);
+  text('−', VS_X, SRC_CY + 15);
+  // Value label (right of source circle, clear of R1 which is at TOP_Y=120)
+  textSize(12); textAlign(LEFT, CENTER);
+  text('Vs=10V', VS_X + SRC_R + 6, SRC_CY);
+
+  stroke(0); strokeWeight(lineWidth); noFill();
+
+  // ── Top rail: VS+ → R1 → V1 ──
+  line(VS_X, TOP_Y, VS_X + 25, TOP_Y);                           // pre-R1 wire
+  drawResistor(VS_X + 25, TOP_Y - 20, 120, 40, lineWidth, HORIZONTAL, 'R1=1kΩ', TOP);
+  line(VS_X + 25 + 120, TOP_Y, V1_X, TOP_Y);                    // post-R1 wire
+
+  // ── Top rail: V1 → R3 → V2 ──
+  line(V1_X, TOP_Y, V1_X + 15, TOP_Y);                           // pre-R3 wire
+  drawResistor(V1_X + 15, TOP_Y - 20, 105, 40, lineWidth, HORIZONTAL, 'R3=2kΩ', TOP);
+  line(V1_X + 15 + 105, TOP_Y, V2_X, TOP_Y);                    // post-R3 wire
+
+  // ── R2 vertical: V1 → GND (midline at V1_X) ──
+  drawResistor(V1_X - 12, TOP_Y, 24, GND_Y - TOP_Y, lineWidth, VERTICAL, 'R2=2kΩ', RIGHT);
+
+  // ── R4 vertical: V2 → GND (midline at V2_X) ──
+  drawResistor(V2_X - 12, TOP_Y, 24, GND_Y - TOP_Y, lineWidth, VERTICAL, 'R4=4kΩ', RIGHT);
+
+  // ── Bottom ground rail ──
+  stroke(0); strokeWeight(lineWidth);
+  line(VS_X, GND_Y, V2_X, GND_Y);
+
+  // ── GND symbols ──
+  drawGND(VS_X,  GND_Y);
+  drawGND(V1_X,  GND_Y);
+  drawGND(V2_X,  GND_Y);
+
+  // ── Node junction dots ──
+  fill(40, 80, 210);
+  noStroke();
+  circle(V1_X, TOP_Y, 14);
+  circle(V2_X, TOP_Y, 14);
+
+  // ── Node labels ──
+  fill(0); noStroke();
+  textFont('sans-serif');
+  textSize(14); textAlign(CENTER, BOTTOM);
+  text('V₁', V1_X, TOP_Y - 30);
+  text('V₂', V2_X, TOP_Y - 30);
+
+  // ── Solved voltage callouts (steps 5 & 6) ──
+  if (currentStep >= 5) {
+    fill(0, 130, 20); noStroke();
+    textStyle(BOLD); textSize(14);
+    text('6V', V1_X, TOP_Y - 47);
+    text('4V', V2_X, TOP_Y - 47);
+    textStyle(NORMAL);
+  }
+}
+
+function drawGND(x, y) {
+  stroke(0); strokeWeight(lineWidth);
+  line(x,       y,      x,      y + 10);
+  line(x - 14,  y + 10, x + 14, y + 10);
+  line(x - 9,   y + 17, x + 9,  y + 17);
+  line(x - 4,   y + 23, x + 4,  y + 23);
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// HIGHLIGHTS PER STEP
+// ─────────────────────────────────────────────────────────────────────────────
+
+function drawHighlights() {
+  noStroke();
+  const colV    = GND_Y - TOP_Y + 80;
+  const colTopY = TOP_Y - 65;
+  switch (currentStep) {
+    case 1:
+      // Highlight all nodes (yellow halos)
+      fill(255, 210, 0, 100);
+      circle(V1_X, TOP_Y, 48);
+      circle(V2_X, TOP_Y, 48);
+      circle(VS_X, TOP_Y, 32);
+      circle(V1_X, GND_Y, 32);
+      circle(V2_X, GND_Y, 32);
+      circle(VS_X, GND_Y, 32);
+      // GND reference note
+      fill(50, 120, 50); noStroke();
+      textFont('sans-serif'); textSize(11); textAlign(LEFT, TOP);
+      text('← GND = 0V reference', VS_X + 10, GND_Y + 30);
+      break;
+    case 2:
+      // Highlight V1 column
+      fill(255, 200, 40, 80);
+      rect(V1_X - 52, colTopY, 104, colV, 10);
+      break;
+    case 3:
+      // Highlight V2 column
+      fill(255, 200, 40, 80);
+      rect(V2_X - 52, colTopY, 104, colV, 10);
+      break;
+    case 4:
+      // Both columns — blue tint for matrix context
+      fill(100, 170, 255, 70);
+      rect(V1_X - 52, colTopY, 104, colV, 10);
+      rect(V2_X - 52, colTopY, 104, colV, 10);
+      break;
+    case 5:
+      // Green glow — solution found
+      fill(0, 210, 90, 110);
+      circle(V1_X, TOP_Y, 58);
+      circle(V2_X, TOP_Y, 58);
+      break;
+    case 6:
+      // Orange tint over the entire top rail (all branches active)
+      fill(255, 140, 0, 55);
+      rect(VS_X - 10, TOP_Y - 70, V2_X - VS_X + 20, 85, 8);
+      break;
+  }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// CURRENT DIRECTION ARROWS
+// ─────────────────────────────────────────────────────────────────────────────
+
+function drawCurrentArrows(showValues) {
+  const arY = TOP_Y - 65;  // y position of horizontal arrows (above R labels)
+
+  // I_R1: rightward above R1 (Vs → V1)
+  drawArrow(VS_X + 55, arY, VS_X + 115, arY, color(180, 30, 30));
+  // I_R2: downward through R2 (V1 → GND)
+  drawArrow(V1_X + 30, TOP_Y + 100, V1_X + 30, TOP_Y + 170, color(180, 30, 30));
+  // I_R3: rightward above R3 (V1 → V2)
+  drawArrow(V1_X + 50, arY, V1_X + 90, arY, color(180, 30, 30));
+  // I_R4: downward through R4 (V2 → GND)
+  drawArrow(V2_X + 30, TOP_Y + 100, V2_X + 30, TOP_Y + 170, color(180, 30, 30));
+
+  if (showValues) {
+    fill(150, 20, 20); noStroke();
+    textFont('sans-serif'); textSize(11); textAlign(CENTER, CENTER);
+    text('4mA', VS_X + 85, arY - 12);
+    text('3mA', V1_X + 48, TOP_Y + 140);
+    text('1mA', V1_X + 70, arY - 12);
+    text('1mA', V2_X + 48, TOP_Y + 140);
+  }
+}
+
+function drawArrow(x1, y1, x2, y2, col) {
+  push();
+  stroke(col); fill(col); strokeWeight(1.5);
+  line(x1, y1, x2, y2);
+  let ang = atan2(y2 - y1, x2 - x1);
+  translate(x2, y2);
+  rotate(ang);
+  triangle(0, 0, -10, -5, -10, 5);
+  pop();
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// EQUATION PANEL
+// ─────────────────────────────────────────────────────────────────────────────
+
+function drawEquationPanel() {
+  const px = EQ_X + 5;
+  let   py = 22;
+  const lh = 20;
+
+  // Step title
+  const titles = [
+    'Step 1: Identify Nodes',
+    'Step 2: KCL at Node V\u2081',
+    'Step 3: KCL at Node V\u2082',
+    'Step 4: Matrix Form',
+    'Step 5: Solve',
+    'Step 6: Branch Currents'
+  ];
+  fill(20, 55, 160); noStroke();
+  textFont('sans-serif');
+  textSize(13); textStyle(BOLD); textAlign(LEFT, TOP);
+  text(titles[currentStep - 1], px, py);
+  textStyle(NORMAL);
+  py += 28;
+
+  // Divider
+  stroke(190); strokeWeight(1);
+  line(px, py, EQ_X + EQ_W - 6, py);
+  noStroke(); py += 10;
+
+  textFont('monospace');
+  textSize(11); textAlign(LEFT, TOP);
+
+  switch (currentStep) {
+    case 1:
+      eqLines(px, py, lh, [
+        ['k', 'Nodes:'],
+        ['n', 'GND  = 0V (ref.)'],
+        ['n', 'V\u2081   = ? (unknown)'],
+        ['n', 'V\u2082   = ? (unknown)'],
+        ['w', ''],
+        ['k', 'Component values:'],
+        ['d', 'Vs = 10 V'],
+        ['d', 'R1 = 1 k\u03A9'],
+        ['d', 'R2 = 2 k\u03A9'],
+        ['d', 'R3 = 2 k\u03A9'],
+        ['d', 'R4 = 4 k\u03A9'],
+      ]);
+      break;
+
+    case 2:
+      eqLines(px, py, lh, [
+        ['k', '\u03A3 currents leaving V\u2081:'],
+        ['w', ''],
+        ['p', '(V\u2081-Vs)/R1 + V\u2081/R2'],
+        ['p', '  + (V\u2081-V\u2082)/R3 = 0'],
+        ['w', ''],
+        ['k', 'Multiply \xD7 2k\u03A9:'],
+        ['p', '2(V\u2081-10)+V\u2081'],
+        ['p', '  +(V\u2081-V\u2082)=0'],
+        ['p', '4V\u2081 - V\u2082 = 20'],
+        ['w', ''],
+        ['g', '\u25BA Eq.(1):'],
+        ['g', '  4V\u2081 - V\u2082 = 20'],
+      ]);
+      break;
+
+    case 3:
+      eqLines(px, py, lh, [
+        ['k', '\u03A3 currents leaving V\u2082:'],
+        ['w', ''],
+        ['p', '(V\u2082-V\u2081)/R3'],
+        ['p', '  + V\u2082/R4 = 0'],
+        ['w', ''],
+        ['k', 'Multiply \xD7 4k\u03A9:'],
+        ['p', '2(V\u2082-V\u2081) + V\u2082 = 0'],
+        ['w', ''],
+        ['g', '\u25BA Eq.(2):'],
+        ['g', '  -2V\u2081 + 3V\u2082 = 0'],
+      ]);
+      break;
+
+    case 4:
+      eqLines(px, py, lh, [
+        ['k', 'System AX = b:'],
+        ['w', ''],
+        ['n', '| 4  -1| |V\u2081|   |20|'],
+        ['n', '|-2   3| |V\u2082| = | 0|'],
+        ['w', ''],
+        ['d', 'Row 1 \u2190 Eq.(1):'],
+        ['d', '  4V\u2081 - V\u2082 = 20'],
+        ['w', ''],
+        ['d', 'Row 2 \u2190 Eq.(2):'],
+        ['d', '  -2V\u2081 + 3V\u2082 = 0'],
+      ]);
+      break;
+
+    case 5:
+      eqLines(px, py, lh, [
+        ['k', 'From Eq.(2):'],
+        ['p', '-2V\u2081 + 3V\u2082 = 0'],
+        ['p', 'V\u2081 = 3V\u2082 / 2'],
+        ['w', ''],
+        ['k', 'Sub into Eq.(1):'],
+        ['p', '4(3V\u2082/2) - V\u2082 = 20'],
+        ['p', '6V\u2082 - V\u2082 = 20'],
+        ['p', '5V\u2082 = 20'],
+        ['w', ''],
+        ['G', '\u25BA V\u2082 = 4 V'],
+        ['G', '\u25BA V\u2081 = 3\xD74/2 = 6 V'],
+      ]);
+      break;
+
+    case 6:
+      eqLines(px, py, lh, [
+        ['k', 'I = (V_high - V_low)/R'],
+        ['w', ''],
+        ['r', 'I1=(10-6)/1k = 4 mA'],
+        ['r', 'I2= 6/2k    = 3 mA'],
+        ['r', 'I3=(6-4)/2k = 1 mA'],
+        ['r', 'I4= 4/4k    = 1 mA'],
+        ['w', ''],
+        ['g', 'KCL check @ V\u2081:'],
+        ['g', 'I1 = I2 + I3'],
+        ['g', '4 = 3 + 1  \u2713'],
+        ['g', ''],
+        ['g', 'KCL check @ V\u2082:'],
+        ['g', 'I3 = I4'],
+        ['g', '1 = 1  \u2713'],
+      ]);
+      break;
+  }
+}
+
+// Draw an array of [colorCode, text] lines
+// Color codes: k=black/label  d=dark  n=navy  p=purple  g=green  G=bold-green
+//              r=red  w=blank
+function eqLines(px, py, lh, lines) {
+  for (let [c, t] of lines) {
+    if      (c === 'n') fill(0, 40, 160);
+    else if (c === 'p') fill(110, 0, 160);
+    else if (c === 'g') fill(0, 130, 30);
+    else if (c === 'G') { fill(0, 130, 30); textStyle(BOLD); }
+    else if (c === 'r') fill(160, 20, 20);
+    else if (c === 'd') fill(60);
+    else if (c === 'k') { fill(40); textStyle(BOLD); }
+    else fill(240, 240, 240);  // 'w' = invisible (blank line)
+    noStroke(); text(t, px, py);
+    textStyle(NORMAL);
+    py += lh;
+  }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// CONTROLS
+// ─────────────────────────────────────────────────────────────────────────────
+
+function drawControls() {
+  drawBtn(btnPrev,  currentStep > 1);
+  drawBtn(btnNext,  currentStep < TOTAL_STEPS);
+  drawBtn(btnReset, true);
+
+  // Checkbox background
+  stroke(90); strokeWeight(1.5);
+  fill(255);
+  rect(cbCurrents.x, cbCurrents.y, cbCurrents.sz, cbCurrents.sz, 3);
+  if (showAllCurrents) {
+    // Checkmark
+    stroke(0, 140, 0); strokeWeight(2.5); noFill();
+    let cx = cbCurrents.x, cy = cbCurrents.y, sz = cbCurrents.sz;
+    line(cx + 3, cy + sz * 0.5, cx + sz * 0.45, cy + sz - 4);
+    line(cx + sz * 0.45, cy + sz - 4, cx + sz - 2, cy + 3);
+  }
+  fill(40); noStroke();
+  textFont('sans-serif'); textSize(13); textAlign(LEFT, CENTER);
+  text(cbCurrents.label,
+       cbCurrents.x + cbCurrents.sz + 6,
+       cbCurrents.y + cbCurrents.sz / 2);
+
+  // Step indicator
+  fill(70); noStroke();
+  textSize(13); textAlign(CENTER, CENTER);
+  text('Step ' + currentStep + ' / ' + TOTAL_STEPS,
+       CW - 60, DRAW_H + CTRL_H / 2);
+}
+
+function drawBtn(b, enabled) {
+  fill(enabled ? color(55, 115, 200) : color(175));
+  stroke(enabled ? color(35, 85, 165) : color(145));
+  strokeWeight(1);
+  rect(b.x, b.y, b.w, b.h, 5);
+  fill(255); noStroke();
+  textFont('sans-serif'); textSize(13); textAlign(CENTER, CENTER);
+  text(b.label, b.x + b.w / 2, b.y + b.h / 2);
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// INTERACTION
+// ─────────────────────────────────────────────────────────────────────────────
+
+function mousePressed() {
+  if (inBtn(btnPrev) && currentStep > 1) {
+    currentStep--;
+  } else if (inBtn(btnNext) && currentStep < TOTAL_STEPS) {
+    currentStep++;
+  } else if (inBtn(btnReset)) {
+    currentStep = 1;
+    showAllCurrents = false;
+  } else {
+    let cx = cbCurrents.x, cy = cbCurrents.y, sz = cbCurrents.sz;
+    if (mouseX >= cx && mouseX <= cx + sz &&
+        mouseY >= cy && mouseY <= cy + sz) {
+      showAllCurrents = !showAllCurrents;
+    }
+  }
+}
+
+function inBtn(b) {
+  return mouseX >= b.x && mouseX <= b.x + b.w &&
+         mouseY >= b.y && mouseY <= b.y + b.h;
+}
+</script>
+</body>
+</html>

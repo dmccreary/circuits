@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+<title>Exponential Properties MicroSim</title>
+<script src="https://cdn.jsdelivr.net/npm/p5@1.11.7/lib/p5.js"></script>
+<style>
+  body { margin: 0; padding: 0; background: #e8eaf0; }
+  canvas { display: block; }
+</style>
+</head>
+<body>
+<main></main>
+<script>
+// ============================================================
+// Exponential Properties MicroSim
+// Chapter 6 – Bloom L4 (Analyze)
+// Examine: tangent-line property, constant-ratio property,
+// and derivative relationship dV/dt = -(V - Vf)/τ
+// ============================================================
+
+const CW  = 640;
+const CH  = 505;
+const Vs  = 12;   // normalized source voltage (V)
+
+// ── Plot geometry ──────────────────────────────────────────
+const ML = 62, MR = 20, MT = 28, MB = 48;
+const GX  = ML;
+const GY  = MT;
+const GW  = CW - ML - MR;    // 558
+const GH  = 262;
+const CTRL_Y = GY + GH + MB; // 338  (top of control area)
+
+// ── τ slider ───────────────────────────────────────────────
+const TAU_LM  = 178;
+const TAU_SX  = TAU_LM + 4;
+const TAU_SW  = CW - TAU_SX - 20;
+const TAU_MIN = 0.4;
+const TAU_MAX = 3.6;
+
+// ── State ──────────────────────────────────────────────────
+let tau      = 1.5;
+let isRising = true;
+let showRatio = true;
+let tDrag    = 1.5;   // time of draggable point (seconds)
+let isDrag   = false;
+let isTauDrag = false;
+let tauFrac  = (tau - TAU_MIN) / (TAU_MAX - TAU_MIN);
+
+// ── Curve functions ────────────────────────────────────────
+function Vf()        { return isRising ? Vs : 0;  }
+function V0()        { return isRising ? 0  : Vs; }
+function Vt(t)       { return Vf() + (V0() - Vf()) * Math.exp(-t / tau); }
+function slopeAt(t)  { return -(Vt(t) - Vf()) / tau; }
+
+// ── Coordinate maps ────────────────────────────────────────
+function tToX(t)  { return GX + (t / (5 * tau)) * GW; }
+function vToY(v)  { return GY + GH - (v / (Vs * 1.12)) * GH; }
+function xToT(px) { return ((px - GX) / GW) * 5 * tau; }
+
+// ── τ-multiple percentage labels ──────────────────────────
+const PCTS_RISE = ["63.2%", "86.5%", "95.0%", "98.2%", "99.3%"];
+const PCTS_FALL = ["36.8%", "13.5%", " 5.0%", " 1.8%", " 0.7%"];
+
+// ══════════════════════════════════════════════════════════
+// SETUP
+// ══════════════════════════════════════════════════════════
+function setup() {
+  createCanvas(CW, CH).parent(select('main').elt);
+  textFont('Arial');
+}
+
+// ══════════════════════════════════════════════════════════
+// MAIN DRAW
+// ══════════════════════════════════════════════════════════
+function draw() {
+  background(232, 234, 240);
+
+  const tMax = 5 * tau;
+  const t    = constrain(tDrag, 0.001, tMax * 0.96);
+  const vt   = Vt(t);
+  const sl   = slopeAt(t);
+  const vf   = Vf();
+
+  // Plot panel background
+  fill(252, 253, 255); stroke(185); strokeWeight(1);
+  rect(GX - 2, GY - 2, GW + 4, GH + 4, 3);
+
+  drawGrid(tMax);
+  drawAxes(tMax);
+
+  // Vf reference line (drawn first, under everything)
+  const pyVf = vToY(vf);
+  stroke(140); strokeWeight(1.2);
+  setDash([5, 4]);
+  line(GX, pyVf, GX + GW, pyVf);
+  setDash([]);
+  fill(130); noStroke(); textAlign(LEFT, BOTTOM); textSize(9);
+  text("V_f = " + vf.toFixed(0) + " V", GX + 4, pyVf - 3);
+
+  drawTangentLine(t, vt, sl, vf, tMax);
+  if (showRatio) drawRatioMarks(t, tMax);
+  drawCurve(tMax);
+  drawInterceptMark(t, vf, tMax);
+  drawDraggablePoint(t, vt, sl);
+
+  drawControls(t, vt, sl, vf, tMax);
+}
+
+// ══════════════════════════════════════════════════════════
+// PLOT COMPONENTS
+// ══════════════════════════════════════════════════════════
+
+function drawGrid(tMax) {
+  // Horizontal voltage grid
+  stroke(218); strokeWeight(0.8);
+  for (let i = 1; i <= 4; i++) {
+    const py = vToY((i / 4) * Vs);
+    line(GX, py, GX + GW, py);
+  }
+  // Vertical τ grid
+  for (let i = 1; i <= 5; i++) {
+    setDash([4, 4]);
+    stroke(215); line(tToX(i * tau), GY, tToX(i * tau), GY + GH);
+    setDash([]);
+  }
+}
+
+function drawAxes(tMax) {
+  stroke(70); strokeWeight(1.8);
+  line(GX, GY, GX, GY + GH);
+  line(GX, GY + GH, GX + GW, GY + GH);
+
+  // y-axis ticks and labels
+  for (let i = 0; i <= 4; i++) {
+    const v  = (i / 4) * Vs;
+    const py = vToY(v);
+    stroke(70); strokeWeight(1.8);
+    line(GX - 4, py, GX, py);
+    fill(70); noStroke(); textAlign(RIGHT, CENTER); textSize(9);
+    text(v.toFixed(0), GX - 6, py);
+  }
+  // y-axis label
+  push(); fill(60); noStroke(); textSize(10); textAlign(CENTER, CENTER);
+  translate(GX - 48, GY + GH / 2); rotate(-HALF_PI);
+  text("Voltage  V(t)  [V]", 0, 0); pop();
+
+  // x-axis ticks and labels
+  const pcts = isRising ? PCTS_RISE : PCTS_FALL;
+  for (let i = 0; i <= 5; i++) {
+    const px = tToX(i * tau);
+    stroke(70); strokeWeight(1.8);
+    line(px, GY + GH, px, GY + GH + 5);
+    fill(70); noStroke(); textAlign(CENTER, TOP); textSize(9);
+    text(i === 0 ? "0" : i + "τ", px, GY + GH + 6);
+    if (i >= 1) {
+      fill(140); textSize(7.5);
+      text(pcts[i - 1], px, GY + GH + 17);
+    }
+  }
+  fill(70); noStroke(); textAlign(CENTER, TOP); textSize(9);
+  text("Time  (τ = " + tau.toFixed(2) + " s)", GX + GW / 2, GY + GH + 28);
+}
+
+// ── Exponential curve ──────────────────────────────────────
+function drawCurve(tMax) {
+  stroke(50, 100, 215); strokeWeight(3); noFill();
+  beginShape();
+  for (let px = 0; px <= GW; px += 2) {
+    const t = (px / GW) * tMax;
+    vertex(GX + px, vToY(Vt(t)));
+  }
+  endShape();
+}
+
+// ── Tangent line ───────────────────────────────────────────
+// Key property: tangent at t hits Vf at exactly t + τ
+function drawTangentLine(t, vt, slope, vf, tMax) {
+  // L(s) = vt + slope*(s - t)
+  // Extend: s from max(0, t-1.5τ) to min(tMax, t+2.2τ)
+  const s0 = max(0, t - tau * 1.3);
+  const s1 = min(tMax, t + tau * 2.3);
+
+  let x0 = tToX(s0), y0 = vToY(vt + slope * (s0 - t));
+  let x1 = tToX(s1), y1 = vToY(vt + slope * (s1 - t));
+
+  // Clip y to plot bounds
+  const yTop = GY - 2, yBot = GY + GH + 2;
+  if (y0 < yTop) { const dx = (yTop - y0) / (y1 - y0) * (x1 - x0); x0 += dx; y0 = yTop; }
+  if (y0 > yBot) { const dx = (yBot - y0) / (y1 - y0) * (x1 - x0); x0 += dx; y0 = yBot; }
+  if (y1 < yTop) { const dx = (yTop - y1) / (y0 - y1) * (x0 - x1); x1 += dx; y1 = yTop; }
+  if (y1 > yBot) { const dx = (yBot - y1) / (y0 - y1) * (x0 - x1); x1 += dx; y1 = yBot; }
+
+  stroke(50, 185, 80); strokeWeight(2.5);
+  setDash([7, 4]);
+  line(x0, y0, x1, y1);
+  setDash([]);
+}
+
+// ── Intercept mark (t+τ, Vf) ──────────────────────────────
+function drawInterceptMark(t, vf, tMax) {
+  const tInt = t + tau;
+  const pyVf = vToY(vf);
+  const onScreen = tInt <= tMax * 1.01;
+
+  // τ span bracket (purple double-arrow, inside plot near bottom)
+  const pxT  = tToX(t);
+  const pxTI = onScreen ? tToX(tInt) : GX + GW - 2;
+  const brY  = GY + GH - 14;
+
+  stroke(145, 50, 210); strokeWeight(2);
+  line(pxT + 2, brY, pxTI - 2, brY);
+  // left arrowhead
+  line(pxT + 2, brY, pxT + 9,  brY - 5);
+  line(pxT + 2, brY, pxT + 9,  brY + 5);
+  // right arrowhead
+  line(pxTI - 2, brY, pxTI - 9, brY - 5);
+  line(pxTI - 2, brY, pxTI - 9, brY + 5);
+  fill(145, 50, 210); noStroke(); textAlign(CENTER, BOTTOM); textSize(10);
+  text("τ", (pxT + pxTI) / 2, brY - 2);
+
+  if (!onScreen) {
+    fill(210, 150, 0); noStroke(); textSize(9); textAlign(RIGHT, TOP);
+    text("intercept at t+τ → off-screen", GX + GW - 4, pyVf + 4);
+    return;
+  }
+
+  // Vertical dashed line at t+τ
+  stroke(215, 155, 0); strokeWeight(1.5);
+  setDash([4, 3]);
+  line(tToX(tInt), GY, tToX(tInt), GY + GH);
+  setDash([]);
+
+  // Gold circle at intercept (t+τ, Vf)
+  fill(220, 165, 0); stroke(175, 130, 0); strokeWeight(2.2);
+  circle(tToX(tInt), pyVf, 15);
+  fill(255); noStroke(); textAlign(CENTER, CENTER); textSize(8); fontStyle(BOLD);
+  text("✓", tToX(tInt), pyVf);
+
+  // Label at intercept
+  const lx = tToX(tInt);
+  const labRight = lx + 10 < GX + GW - 80;
+  fill(210, 150, 0); noStroke(); textSize(9);
+  textAlign(labRight ? LEFT : RIGHT, BOTTOM);
+  text("t + τ = " + tInt.toFixed(2) + " s", labRight ? lx + 9 : lx - 9, pyVf - 3);
+}
+
+// ── Constant-ratio marks ───────────────────────────────────
+function drawRatioMarks(t, tMax) {
+  const vf = Vf();
+  const cols = [
+    [0, 160, 155],
+    [0, 135, 185],
+    [20, 110, 200],
+    [40,  90, 200],
+  ];
+  for (let k = 0; k <= 3; k++) {
+    const tk = t + k * tau;
+    if (tk > tMax * 1.01) break;
+    const vtk = Vt(min(tk, tMax));
+    const px  = tToX(min(tk, tMax));
+    const py  = vToY(vtk);
+    const pyF = vToY(vf);
+    const gap = abs(vtk - vf);
+    const c   = cols[min(k, cols.length - 1)];
+
+    // Vertical gap bar from curve point to Vf line
+    stroke(...c, k === 0 ? 220 : 160);
+    strokeWeight(k === 0 ? 2.5 : 1.8);
+    setDash(k > 0 ? [3, 3] : []);
+    line(px, min(py, pyF), px, max(py, pyF));
+    setDash([]);
+
+    // Circle at curve point (skip k=0, that's the draggable point)
+    if (k > 0) {
+      fill(...c); stroke(255); strokeWeight(1.5);
+      circle(px, py, 9);
+    }
+
+    // Gap label on the bar midpoint
+    const midY = (py + pyF) / 2;
+    if (gap > 0.4 && px + 38 < GX + GW && abs(py - pyF) > 16) {
+      fill(...c); noStroke(); textSize(8); textAlign(LEFT, CENTER);
+      if (k === 0) {
+        text(gap.toFixed(2) + " V", px + 4, midY);
+      } else {
+        text(gap.toFixed(2) + " V", px + 5, midY);
+        // ratio annotation
+        const prevGap = abs(Vt(t + (k-1)*tau) - vf);
+        if (prevGap > 0.01) {
+          fill(...c, 180); textSize(7);
+          text("= e⁻¹ ×", px + 5, midY + 10);
+        }
+      }
+    }
+  }
+}
+
+// ── Draggable point ────────────────────────────────────────
+function drawDraggablePoint(t, vt, slope) {
+  const px = tToX(t);
+  const py = vToY(vt);
+
+  // Glow
+  fill(220, 72, 40, 55); noStroke();
+  circle(px, py, 30);
+
+  // Main circle
+  fill(220, 72, 40); stroke(175, 45, 20); strokeWeight(2.5);
+  circle(px, py, 20);
+
+  // Slope arrow (tangent direction, short segment)
+  const dtW = 0.45 * tau;
+  const ax0 = tToX(max(0, t - dtW)), ay0 = vToY(vt + slope * (-dtW));
+  const ax1 = tToX(min(5*tau, t + dtW)), ay1 = vToY(vt + slope * (dtW));
+  stroke(50, 185, 80); strokeWeight(2.2);
+  line(ax0, ay0, ax1, ay1);
+  // Arrowhead at right end
+  const ang = atan2(ay1 - ay0, ax1 - ax0);
+  line(ax1, ay1, ax1 - 9*cos(ang-0.4), ay1 - 9*sin(ang-0.4));
+  line(ax1, ay1, ax1 - 9*cos(ang+0.4), ay1 - 9*sin(ang+0.4));
+
+  // Value label (above or below depending on room)
+  const lblAbove = py > GY + GH * 0.5;
+  fill(40, 30, 140); noStroke(); textAlign(CENTER, lblAbove ? BOTTOM : TOP); textSize(9);
+  const lbl = "t=" + t.toFixed(2) + "s   V=" + vt.toFixed(2) + "V";
+  text(lbl, px, lblAbove ? py - 13 : py + 13);
+
+  // "drag" hint on first draw (always shown subtly)
+  fill(150); noStroke(); textAlign(CENTER, BOTTOM); textSize(8);
+  text("◀ drag ▶", px, py + (lblAbove ? 3 : -14));
+}
+
+// ══════════════════════════════════════════════════════════
+// CONTROLS AREA
+// ══════════════════════════════════════════════════════════
+function drawControls(t, vt, sl, vf, tMax) {
+  fill(225, 228, 240); noStroke();
+  rect(0, CTRL_Y - 1, CW, CH - CTRL_Y + 1);
+  stroke(195); strokeWeight(1);
+  line(0, CTRL_Y, CW, CTRL_Y);
+
+  // ── Button row ──────────────────────────────────────────
+  drawBtn("▲ Rising",   isRising,   14,  CTRL_Y + 10, 88,  26);
+  drawBtn("▼ Falling",  !isRising,  110, CTRL_Y + 10, 88,  26);
+  drawBtn("Ratio Marks " + (showRatio ? "●" : "○"), false, 210, CTRL_Y + 10, 125, 26);
+
+  // ── τ slider ────────────────────────────────────────────
+  const sLabelY = CTRL_Y + 52;
+  fill(80); noStroke(); textAlign(RIGHT, CENTER); textSize(10);
+  text("τ = " + tau.toFixed(2) + " s", TAU_SX - 6, sLabelY);
+  fill(80); textSize(9); textAlign(LEFT, CENTER);
+  text("Time constant:", 14, sLabelY);
+
+  fill(200); stroke(172); strokeWeight(1.5);
+  rect(TAU_SX, sLabelY - 5, TAU_SW, 10, 5);
+  fill(80, 100, 195, 175); noStroke();
+  if (tauFrac > 0) rect(TAU_SX, sLabelY - 5, tauFrac * TAU_SW, 10, 5);
+  const hx = TAU_SX + tauFrac * TAU_SW;
+  fill(255); stroke(80, 100, 195); strokeWeight(2.2);
+  circle(hx, sLabelY, 17);
+  fill(80, 100, 195); noStroke(); circle(hx, sLabelY, 6);
+
+  // ── Info panel ──────────────────────────────────────────
+  const iy = CTRL_Y + 70;
+  fill(246, 249, 255); stroke(200); strokeWeight(1);
+  rect(10, iy, CW - 20, CH - iy - 6, 5);
+
+  const tauS   = tau.toFixed(3) + " s";
+  const vfS    = vf.toFixed(1) + " V";
+  const vtS    = vt.toFixed(3) + " V";
+  const slS    = sl.toFixed(3) + " V/s";
+  const tIntS  = (t + tau).toFixed(3) + " s";
+  const gapS   = abs(vt - vf).toFixed(3) + " V";
+  const tNext  = t + tau;
+  const vNext  = tNext <= 5*tau ? Vt(tNext) : null;
+  const gapNxt = vNext !== null ? abs(vNext - vf).toFixed(3) + " V" : "—";
+  const ratioV = vNext !== null && abs(vt-vf) > 0.01
+               ? (abs(vNext-vf)/abs(vt-vf)).toFixed(4)
+               : "—";
+
+  const LH = 17;  // line height
+
+  // Row 1: point info
+  fill(40); noStroke(); textAlign(LEFT, TOP); textSize(10);
+  text("Point: t = " + t.toFixed(3) + " s    V(t) = " + vtS +
+       "    (" + (abs(vt - V0()) / abs(Vf() - V0()) * 100).toFixed(1) + "% complete)", 18, iy + 8);
+
+  // Row 2: derivative / slope (green)
+  fill(40, 175, 75);
+  text("dV/dt  =  –(V – V_f) / τ  =  –(" + vtS + " – " + vfS + ") / " + tauS + "  =  " + slS, 18, iy + 8 + LH);
+
+  // Row 3: tangent-line property (gold)
+  fill(200, 145, 0);
+  text("Tangent property:  tangent at any t hits V_f at  t + τ  =  " + tIntS + "  ✓ (always true)", 18, iy + 8 + 2*LH);
+
+  // Row 4: constant-ratio property (teal)
+  if (showRatio) {
+    fill(0, 150, 150);
+    text("Ratio property:  gap to V_f at t = " + gapS +
+         ";  at t+τ = " + gapNxt + ";  ratio = " + ratioV + " ≈ e⁻¹ = 0.3679", 18, iy + 8 + 3*LH);
+  }
+}
+
+function drawBtn(label, active, x, y, w, h) {
+  fill(active ? color(195, 215, 255) : 228);
+  stroke(158); strokeWeight(1);
+  rect(x, y, w, h, 5);
+  fill(active ? color(35, 58, 165) : 60);
+  noStroke(); textAlign(CENTER, CENTER); textSize(10);
+  text(label, x + w / 2, y + h / 2);
+}
+
+function setDash(arr) { drawingContext.setLineDash(arr); }
+
+// ── p5.js doesn't have fontStyle, so ignore that call safely
+function fontStyle() {}
+
+// ══════════════════════════════════════════════════════════
+// MOUSE INTERACTION
+// ══════════════════════════════════════════════════════════
+function mousePressed() {
+  // Buttons
+  if (inR(14,  CTRL_Y+10, 88,  26)) { isRising = true;    return; }
+  if (inR(110, CTRL_Y+10, 88,  26)) { isRising = false;   return; }
+  if (inR(210, CTRL_Y+10, 125, 26)) { showRatio = !showRatio; return; }
+
+  // τ slider
+  const sy = CTRL_Y + 52;
+  if (abs(mouseY - sy) < 14 && mouseX >= TAU_SX - 12 && mouseX <= TAU_SX + TAU_SW + 12) {
+    isTauDrag = true; applyTau(mouseX); return;
+  }
+
+  // Draggable point
+  const pt = constrain(tDrag, 0.001, 5 * tau * 0.96);
+  if (dist(mouseX, mouseY, tToX(pt), vToY(Vt(pt))) < 20) {
+    isDrag = true; return;
+  }
+
+  // Click anywhere in plot to jump point
+  if (mouseX >= GX && mouseX <= GX + GW && mouseY >= GY && mouseY <= GY + GH) {
+    tDrag = constrain(xToT(mouseX), 0.001, 5 * tau * 0.96);
+  }
+}
+
+function mouseDragged() {
+  if (isTauDrag) applyTau(mouseX);
+  if (isDrag) tDrag = constrain(xToT(mouseX), 0.001, 5 * tau * 0.96);
+}
+function mouseReleased() { isDrag = false; isTauDrag = false; }
+
+function applyTau(mx) {
+  tauFrac = constrain((mx - TAU_SX) / TAU_SW, 0, 1);
+  tau     = TAU_MIN + tauFrac * (TAU_MAX - TAU_MIN);
+  tDrag   = constrain(tDrag, 0.001, 5 * tau * 0.96);
+}
+
+function inR(x, y, w, h) {
+  return mouseX >= x && mouseX <= x + w && mouseY >= y && mouseY <= y + h;
+}
+
+</script>
+</body>
+</html>

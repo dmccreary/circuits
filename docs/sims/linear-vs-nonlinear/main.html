@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Linear vs Nonlinear I-V Characteristics</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+  <style>
+    body { margin: 0; padding: 0; background: #e8eaf0; display: flex; justify-content: center; }
+    canvas { display: block; }
+  </style>
+</head>
+<body>
+<script>
+new p5(function(p) {
+  // Shared voltage slider (canvas-based)
+  let vSlider = { x: 200, y: 488, w: 420, val: 1.0, min: -2.0, max: 2.0 };
+  let draggingSlider = false;
+
+  // Resistor value slider
+  let rSlider = { x: 60, y: 430, w: 180, val: 100, min: 10, max: 10000 };
+  let draggingR = false;
+
+  // Panel geometry
+  let leftPanelX  = 20,  leftPanelW  = 380;
+  let rightPanelX = 420, rightPanelW = 380;
+  let panelY = 55, panelH = 340;
+  let marginL = 60, marginR = 20, marginT = 40, marginB = 50;
+
+  // Diode constants
+  const IS = 1e-12;
+  const VT = 0.02585;  // thermal voltage at 25°C
+
+  p.setup = function() {
+    p.createCanvas(820, 520);
+  };
+
+  p.draw = function() {
+    p.background('#e8eaf0');
+    drawTitle();
+    drawLeftPanel();
+    drawRightPanel();
+    drawVoltageSlider();
+    drawRSlider();
+  };
+
+  function drawTitle() {
+    p.fill(30);
+    p.noStroke();
+    p.textSize(18);
+    p.textAlign(p.CENTER, p.TOP);
+    p.textStyle(p.BOLD);
+    p.text('Linear vs Nonlinear I-V Characteristics', 410, 8);
+    p.textStyle(p.NORMAL);
+  }
+
+  // ── LEFT PANEL: Linear (Resistor) ────────────────────────────────────
+
+  function drawLeftPanel() {
+    let px = leftPanelX, pw = leftPanelW;
+    let py = panelY, ph = panelH;
+
+    // Panel background
+    p.fill(245, 248, 255);
+    p.stroke(80, 120, 200);
+    p.strokeWeight(2);
+    p.rect(px, py, pw, ph, 8);
+
+    // Panel title
+    p.fill(50, 80, 180);
+    p.noStroke();
+    p.rect(px, py, pw, 30, 8, 8, 0, 0);
+    p.fill(255);
+    p.textSize(14);
+    p.textAlign(p.CENTER, p.CENTER);
+    p.textStyle(p.BOLD);
+    p.text('Linear Element (Resistor)', px + pw / 2, py + 15);
+    p.textStyle(p.NORMAL);
+
+    // Graph area
+    let gx = px + marginL, gy = py + marginT + 30;
+    let gw = pw - marginL - marginR;
+    let gh = ph - marginT - marginB - 30;
+
+    drawAxes(gx, gy, gw, gh, 'Voltage (V)', 'Current (mA)',
+             -12, 12, -120, 120);
+
+    // Resistor line: I = V/R
+    let R = rSlider.val;
+    p.stroke(50, 100, 220);
+    p.strokeWeight(2.5);
+    p.noFill();
+    p.beginShape();
+    for (let v = -12; v <= 12; v += 0.2) {
+      let I_mA = (v / R) * 1000;
+      if (I_mA < -120 || I_mA > 120) continue;
+      let sx = mapV(v, -12, 12, gx, gx + gw);
+      let sy = mapI(I_mA, -120, 120, gy, gy + gh);
+      p.vertex(sx, sy);
+    }
+    p.endShape();
+
+    // Moving dot at current voltage
+    let Vapp = vSlider.val;
+    let Ires_mA = (Vapp / R) * 1000;
+    Ires_mA = p.constrain(Ires_mA, -120, 120);
+    let dotX = mapV(Vapp, -12, 12, gx, gx + gw);
+    let dotY = mapI(Ires_mA, -120, 120, gy, gy + gh);
+    p.fill(220, 50, 50);
+    p.noStroke();
+    p.circle(dotX, dotY, 12);
+
+    // Readout
+    p.fill(50, 80, 180);
+    p.textSize(12);
+    p.textAlign(p.LEFT, p.TOP);
+    p.text('V = ' + Vapp.toFixed(2) + ' V', gx + 4, gy + 4);
+    p.text('I = ' + Ires_mA.toFixed(1) + ' mA', gx + 4, gy + 18);
+    p.text('R = ' + formatR(R), gx + 4, gy + 32);
+
+    // Labels
+    p.fill(60, 100, 200);
+    p.textSize(12);
+    p.textAlign(p.LEFT, p.BOTTOM);
+    p.textStyle(p.ITALIC);
+    p.text('Ohmic behavior', gx + gw - 110, gy + gh - 8);
+    p.text('I = V / R', gx + gw - 70, gy + gh + 10);
+    p.textStyle(p.NORMAL);
+
+    // Slope annotation
+    let slopeStr = 'Slope = 1/R = ' + (1000 / R).toFixed(1) + ' mA/V';
+    p.fill(100);
+    p.textSize(11);
+    p.textAlign(p.CENTER, p.BOTTOM);
+    p.text(slopeStr, px + pw / 2, py + ph - 6);
+  }
+
+  // ── RIGHT PANEL: Nonlinear (Diode) ───────────────────────────────────
+
+  function drawRightPanel() {
+    let px = rightPanelX, pw = rightPanelW;
+    let py = panelY, ph = panelH;
+
+    // Panel background
+    p.fill(245, 255, 248);
+    p.stroke(80, 160, 80);
+    p.strokeWeight(2);
+    p.rect(px, py, pw, ph, 8);
+
+    // Panel title
+    p.fill(30, 130, 60);
+    p.noStroke();
+    p.rect(px, py, pw, 30, 8, 8, 0, 0);
+    p.fill(255);
+    p.textSize(14);
+    p.textAlign(p.CENTER, p.CENTER);
+    p.textStyle(p.BOLD);
+    p.text('Nonlinear Element (Diode)', px + pw / 2, py + 15);
+    p.textStyle(p.NORMAL);
+
+    // Graph area
+    let gx = px + marginL, gy = py + marginT + 30;
+    let gw = pw - marginL - marginR;
+    let gh = ph - marginT - marginB - 30;
+
+    drawAxes(gx, gy, gw, gh, 'Voltage (V)', 'Current (mA)', -2, 2, 0, 120);
+
+    // Diode curve: I = Is * (exp(V/VT) - 1), clipped at 120mA
+    p.stroke(30, 160, 60);
+    p.strokeWeight(2.5);
+    p.noFill();
+    p.beginShape();
+    for (let v = -2; v <= 2; v += 0.01) {
+      let I = IS * (Math.exp(v / VT) - 1);
+      let I_mA = I * 1000;
+      I_mA = p.constrain(I_mA, 0, 120);
+      let sx = mapV(v, -2, 2, gx, gx + gw);
+      let sy = mapI(I_mA, 0, 120, gy, gy + gh);
+      p.vertex(sx, sy);
+    }
+    p.endShape();
+
+    // Moving dot
+    let Vapp = p.constrain(vSlider.val, -2, 2);
+    let Idiode = IS * (Math.exp(Vapp / VT) - 1);
+    let Idiode_mA = p.constrain(Idiode * 1000, 0, 120);
+    let dotX = mapV(Vapp, -2, 2, gx, gx + gw);
+    let dotY = mapI(Idiode_mA, 0, 120, gy, gy + gh);
+    p.fill(220, 50, 50);
+    p.noStroke();
+    p.circle(dotX, dotY, 12);
+
+    // Readout
+    p.fill(30, 130, 60);
+    p.textSize(12);
+    p.textAlign(p.LEFT, p.TOP);
+    p.text('V = ' + Vapp.toFixed(2) + ' V', gx + 4, gy + 4);
+    let dStr = Idiode_mA < 0.01 ? '≈ 0 mA' : Idiode_mA.toFixed(2) + ' mA';
+    p.text('I = ' + dStr, gx + 4, gy + 18);
+    p.text('Is = 1 pA', gx + 4, gy + 32);
+
+    // Forward voltage annotation
+    p.stroke(180, 50, 50, 160);
+    p.strokeWeight(1);
+    p.setLineDash([4, 3]);
+    let vf_x = mapV(0.6, -2, 2, gx, gx + gw);
+    p.line(vf_x, gy, vf_x, gy + gh);
+    p.setLineDash([]);
+    p.fill(180, 50, 50);
+    p.noStroke();
+    p.textSize(10);
+    p.textAlign(p.LEFT, p.CENTER);
+    p.text('Vf ≈ 0.6V', vf_x + 3, gy + 20);
+
+    // Labels
+    p.fill(30, 140, 60);
+    p.textSize(12);
+    p.textAlign(p.LEFT, p.BOTTOM);
+    p.textStyle(p.ITALIC);
+    p.text('Exponential behavior', gx + gw - 150, gy + gh - 8);
+    p.text('I = Is(e^(V/Vt)−1)', gx + gw - 140, gy + gh + 10);
+    p.textStyle(p.NORMAL);
+    p.fill(100);
+    p.textSize(11);
+    p.textAlign(p.CENTER, p.BOTTOM);
+    p.text('Vt = 25.85 mV (thermal voltage)', px + pw / 2, py + ph - 6);
+  }
+
+  // ── Axes ─────────────────────────────────────────────────────────────
+
+  function drawAxes(gx, gy, gw, gh, xLabel, yLabel, vMin, vMax, iMin, iMax) {
+    // Background grid
+    p.stroke(200);
+    p.strokeWeight(1);
+    for (let i = 0; i <= 4; i++) {
+      let x = gx + (i / 4) * gw;
+      p.line(x, gy, x, gy + gh);
+      let y = gy + (i / 4) * gh;
+      p.line(gx, y, gx + gw, y);
+    }
+
+    // Axis lines
+    p.stroke(80);
+    p.strokeWeight(2);
+    // x-axis (I=0 line)
+    let zeroY = mapI(0, iMin, iMax, gy, gy + gh);
+    p.line(gx, zeroY, gx + gw, zeroY);
+    // y-axis (V=0 line)
+    let zeroX = mapV(0, vMin, vMax, gx, gx + gw);
+    p.line(zeroX, gy, zeroX, gy + gh);
+
+    // Tick labels x
+    p.fill(60);
+    p.noStroke();
+    p.textSize(10);
+    p.textAlign(p.CENTER, p.TOP);
+    let vStep = (vMax - vMin) / 4;
+    for (let i = 0; i <= 4; i++) {
+      let v = vMin + i * vStep;
+      let x = gx + (i / 4) * gw;
+      p.text(v.toFixed(v === Math.round(v) ? 0 : 1), x, zeroY + 4);
+    }
+
+    // Tick labels y
+    p.textAlign(p.RIGHT, p.CENTER);
+    let iStep = (iMax - iMin) / 4;
+    for (let i = 0; i <= 4; i++) {
+      let iv = iMin + i * iStep;
+      let y = gy + gh - (i / 4) * gh;
+      p.text(iv.toFixed(0), gx - 4, y);
+    }
+
+    // Axis labels
+    p.fill(40);
+    p.textSize(12);
+    p.textAlign(p.CENTER, p.BOTTOM);
+    p.text(xLabel, gx + gw / 2, gy + gh + 36);
+    p.push();
+    p.translate(gx - 44, gy + gh / 2);
+    p.rotate(-p.HALF_PI);
+    p.textAlign(p.CENTER, p.CENTER);
+    p.text(yLabel, 0, 0);
+    p.pop();
+  }
+
+  // ── Voltage slider ────────────────────────────────────────────────────
+
+  function drawVoltageSlider() {
+    let sl = vSlider;
+
+    p.fill(240);
+    p.stroke(160);
+    p.strokeWeight(1);
+    p.rect(sl.x - 10, sl.y - 20, sl.w + 20, 40, 6);
+
+    // Track
+    p.stroke(180);
+    p.strokeWeight(5);
+    p.line(sl.x, sl.y, sl.x + sl.w, sl.y);
+
+    // Fill
+    let t = (sl.val - sl.min) / (sl.max - sl.min);
+    let tx = sl.x + t * sl.w;
+    p.stroke(180, 60, 60);
+    p.strokeWeight(5);
+    p.line(sl.x, sl.y, tx, sl.y);
+
+    // Thumb
+    p.fill(200, 60, 60);
+    p.noStroke();
+    p.circle(tx, sl.y, 18);
+
+    // Label
+    p.fill(30);
+    p.noStroke();
+    p.textSize(14);
+    p.textAlign(p.RIGHT, p.CENTER);
+    p.textStyle(p.BOLD);
+    p.text('Applied Voltage: ' + sl.val.toFixed(2) + ' V', sl.x - 15, sl.y);
+    p.textStyle(p.NORMAL);
+
+    // Min/max labels
+    p.fill(80);
+    p.textSize(11);
+    p.textAlign(p.CENTER, p.TOP);
+    p.text(sl.min + ' V', sl.x, sl.y + 12);
+    p.text(sl.max + ' V', sl.x + sl.w, sl.y + 12);
+  }
+
+  function drawRSlider() {
+    let sl = rSlider;
+    let sy = sl.y;
+
+    // Track
+    p.stroke(180);
+    p.strokeWeight(4);
+    p.line(sl.x, sy, sl.x + sl.w, sy);
+
+    let t = (Math.log10(sl.val) - Math.log10(sl.min)) /
+            (Math.log10(sl.max) - Math.log10(sl.min));
+    let tx = sl.x + t * sl.w;
+
+    p.stroke(80, 120, 200);
+    p.strokeWeight(4);
+    p.line(sl.x, sy, tx, sy);
+
+    p.fill(60, 80, 200);
+    p.noStroke();
+    p.circle(tx, sy, 14);
+
+    p.fill(30);
+    p.textSize(12);
+    p.textAlign(p.LEFT, p.CENTER);
+    p.text('R (linear): ' + formatR(sl.val), sl.x, sy - 14);
+    p.fill(80);
+    p.textSize(10);
+    p.textAlign(p.CENTER, p.TOP);
+    p.text('10Ω', sl.x, sy + 8);
+    p.text('10kΩ', sl.x + sl.w, sy + 8);
+  }
+
+  // ── Helpers ───────────────────────────────────────────────────────────
+
+  function mapV(v, vMin, vMax, x0, x1) {
+    return p.map(v, vMin, vMax, x0, x1);
+  }
+  function mapI(I, iMin, iMax, y0, y1) {
+    return p.map(I, iMin, iMax, y1, y0);  // y increases downward
+  }
+
+  function formatR(R) {
+    if (R >= 1000) return (R / 1000).toFixed(R < 10000 ? 1 : 0) + ' kΩ';
+    return Math.round(R) + ' Ω';
+  }
+
+  // Polyfill for setLineDash
+  p.setLineDash = function(list) {
+    p.drawingContext.setLineDash(list);
+  };
+
+  // ── Interaction ───────────────────────────────────────────────────────
+
+  p.mousePressed = function() {
+    let sl = vSlider;
+    if (p.mouseY >= sl.y - 12 && p.mouseY <= sl.y + 12 &&
+        p.mouseX >= sl.x - 10 && p.mouseX <= sl.x + sl.w + 10) {
+      draggingSlider = true;
+      updateVSlider();
+      return;
+    }
+    let rs = rSlider;
+    if (p.mouseY >= rs.y - 10 && p.mouseY <= rs.y + 10 &&
+        p.mouseX >= rs.x - 10 && p.mouseX <= rs.x + rs.w + 10) {
+      draggingR = true;
+      updateRSlider();
+    }
+  };
+
+  p.mouseDragged = function() {
+    if (draggingSlider) updateVSlider();
+    if (draggingR) updateRSlider();
+  };
+
+  p.mouseReleased = function() {
+    draggingSlider = false;
+    draggingR = false;
+  };
+
+  function updateVSlider() {
+    let sl = vSlider;
+    let t = p.constrain((p.mouseX - sl.x) / sl.w, 0, 1);
+    sl.val = sl.min + t * (sl.max - sl.min);
+    sl.val = Math.round(sl.val * 100) / 100;
+  }
+
+  function updateRSlider() {
+    let rs = rSlider;
+    let t = p.constrain((p.mouseX - rs.x) / rs.w, 0, 1);
+    let logVal = Math.log10(rs.min) + t * (Math.log10(rs.max) - Math.log10(rs.min));
+    rs.val = Math.round(Math.pow(10, logVal));
+  }
+});
+</script>
+</body>
+</html>

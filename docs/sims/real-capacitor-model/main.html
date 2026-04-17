@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real Capacitor Model</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+    <style>
+        body { margin: 0; padding: 0; background: #f0f0f0; display: flex; justify-content: center; }
+        canvas { display: block; }
+    </style>
+</head>
+<body>
+<script>
+// Real Capacitor Model MicroSim
+// Chapter 5: Passive Components
+// Impedance vs frequency for ideal and real (ESR + ESL) capacitor
+
+const CANVAS_WIDTH  = 670;
+const DRAW_HEIGHT   = 310;
+const CONTROL_HEIGHT = 90;
+const CANVAS_HEIGHT  = DRAW_HEIGHT + CONTROL_HEIGHT;
+
+const CIRC_W  = 220;
+const PLOT_X  = CIRC_W + 10;
+const PLOT_W  = CANVAS_WIDTH - PLOT_X - 10;
+const PLOT_H  = DRAW_HEIGHT - 20;
+
+let capSlider, esrSlider, eslSlider;
+let freqCursor = -1;  // log10 frequency under mouse
+
+function setup() {
+    let cnv = createCanvas(CANVAS_WIDTH, CANVAS_HEIGHT);
+    cnv.parent(document.body);
+    textFont('monospace');
+
+    let sy = DRAW_HEIGHT + 10;
+    capSlider = createSlider(1, 100, 10, 1);
+    capSlider.position(155, sy); capSlider.size(140); capSlider.style('cursor','pointer');
+
+    esrSlider = createSlider(1, 1000, 50, 1);   // mΩ
+    esrSlider.position(155, sy + 26); esrSlider.size(140); esrSlider.style('cursor','pointer');
+
+    eslSlider = createSlider(1, 100, 10, 1);    // nH
+    eslSlider.position(155, sy + 52); eslSlider.size(140); eslSlider.style('cursor','pointer');
+}
+
+function draw() {
+    let C   = capSlider.value() * 1e-6;    // F
+    let ESR = esrSlider.value() * 1e-3;    // Ω
+    let ESL = eslSlider.value() * 1e-9;    // H
+
+    // Self-resonant frequency
+    let SRF = 1 / (TWO_PI * sqrt(ESL * C));
+
+    background(240);
+    drawCircuits(C, ESR, ESL, SRF);
+    drawPlot(C, ESR, ESL, SRF);
+    drawControls(C, ESR, ESL, SRF);
+}
+
+function impedance(f, C, ESR, ESL, ideal) {
+    let omega = TWO_PI * f;
+    if (ideal) {
+        return 1 / (omega * C);  // |Zc| = 1/ωC
+    }
+    // Z = ESR + j(ωESL - 1/ωC)
+    let re = ESR;
+    let im = omega * ESL - 1 / (omega * C);
+    return sqrt(re * re + im * im);
+}
+
+function drawCircuits(C, ESR, ESL, SRF) {
+    fill(255); stroke(180); strokeWeight(1);
+    rect(4, 4, CIRC_W - 8, DRAW_HEIGHT - 8, 6);
+
+    noStroke(); fill(40); textSize(11); textAlign(CENTER);
+    text("Capacitor Models", CIRC_W / 2, 20);
+
+    // ---- Ideal capacitor ----
+    let ix = CIRC_W / 2, iy = 80;
+    noStroke(); fill(80); textSize(10); textAlign(CENTER);
+    text("Ideal", ix, iy - 25);
+    // Capacitor plates
+    stroke(80,80,200); strokeWeight(2.5);
+    line(ix - 16, iy - 8, ix + 16, iy - 8);
+    line(ix - 16, iy + 8, ix + 16, iy + 8);
+    stroke(100); strokeWeight(1.5);
+    line(ix, iy - 8, ix, iy - 28);
+    line(ix, iy + 8, ix, iy + 28);
+    noStroke(); fill(80,80,200); textSize(9); textAlign(LEFT);
+    text("C=" + capSlider.value() + "µF", ix + 20, iy + 4);
+
+    // ---- Real capacitor ----
+    let ry2 = 210;
+    noStroke(); fill(80); textSize(10); textAlign(CENTER);
+    text("Real", ix, ry2 - 65);
+
+    // Wire
+    stroke(100); strokeWeight(1.5);
+    line(ix, ry2 - 60, ix, ry2 + 50);
+
+    // ESL (inductor coil)
+    let coilY = ry2 - 40;
+    stroke(80,160,80); strokeWeight(2);
+    noFill();
+    for (let i = 0; i < 3; i++) {
+        arc(ix, coilY + i * 10, 16, 10, PI, TWO_PI);
+    }
+    noStroke(); fill(80,160,80); textSize(9); textAlign(LEFT);
+    text("ESL=" + eslSlider.value() + "nH", ix + 12, coilY + 14);
+
+    // ESR (resistor)
+    let resY = ry2;
+    stroke(180,100,0); strokeWeight(2); noFill();
+    beginShape();
+    for (let i = 0; i < 6; i++) {
+        vertex(ix - 10 + (20 * i / 6), resY - 5 + (i % 2 === 0 ? -6 : 6));
+    }
+    vertex(ix + 10, resY - 5);
+    endShape();
+    noStroke(); fill(180,100,0); textSize(9); textAlign(LEFT);
+    text("ESR=" + esrSlider.value() + "mΩ", ix + 12, resY + 4);
+
+    // C (capacitor plates)
+    let capY = ry2 + 28;
+    stroke(80,80,200); strokeWeight(2.5);
+    line(ix - 14, capY - 6, ix + 14, capY - 6);
+    line(ix - 14, capY + 6, ix + 14, capY + 6);
+    noStroke(); fill(80,80,200); textSize(9); textAlign(LEFT);
+    text("C=" + capSlider.value() + "µF", ix + 12, capY + 4);
+
+    // SRF label
+    noStroke(); fill(200,60,60); textSize(9); textAlign(CENTER);
+    text("SRF = " + formatFreq(SRF), CIRC_W / 2, DRAW_HEIGHT - 20);
+    fill(100); textSize(8);
+    text("f = 1/(2π√LC)", CIRC_W / 2, DRAW_HEIGHT - 8);
+}
+
+function drawPlot(C, ESR, ESL, SRF) {
+    let px = PLOT_X, py = 8, pw = PLOT_W, ph = PLOT_H;
+    fill(255); stroke(180); strokeWeight(1);
+    rect(px, py, pw, ph, 6);
+
+    // Axes setup — log freq 10Hz to 1GHz, log impedance
+    let logFmin = 1, logFmax = 9;   // 10^1 to 10^9
+    let logZmin = -3, logZmax = 4;  // 1mΩ to 10kΩ
+
+    let plotX = px + 48, plotY = py + 14;
+    let plotW = pw - 58, plotH = ph - 28;
+
+    // Grid
+    stroke(230); strokeWeight(0.5);
+    for (let lf = logFmin; lf <= logFmax; lf++) {
+        let x = map(lf, logFmin, logFmax, plotX, plotX + plotW);
+        line(x, plotY, x, plotY + plotH);
+    }
+    for (let lz = logZmin; lz <= logZmax; lz++) {
+        let y = map(lz, logZmin, logZmax, plotY + plotH, plotY);
+        line(plotX, y, plotX + plotW, y);
+    }
+
+    // Axis labels
+    noStroke(); fill(100); textSize(8); textAlign(CENTER);
+    let freqLabels = ["10Hz","100Hz","1kHz","10kHz","100kHz","1MHz","10MHz","100MHz","1GHz"];
+    for (let i = 0; i < freqLabels.length; i++) {
+        let x = map(logFmin + i, logFmin, logFmax, plotX, plotX + plotW);
+        text(freqLabels[i], x, plotY + plotH + 10);
+    }
+    textAlign(RIGHT);
+    let zLabels = ["1mΩ","10mΩ","0.1Ω","1Ω","10Ω","100Ω","1kΩ","10kΩ"];
+    for (let i = 0; i < zLabels.length; i++) {
+        let y = map(logZmin + i, logZmin, logZmax, plotY + plotH, plotY);
+        text(zLabels[i], plotX - 2, y + 3);
+    }
+
+    // Title
+    noStroke(); fill(40); textSize(10); textAlign(CENTER);
+    text("Impedance vs Frequency", plotX + plotW / 2, plotY - 3);
+
+    // Clip to plot area
+    let steps = 300;
+
+    // Ideal curve (blue)
+    stroke(80, 80, 200); strokeWeight(1.5); noFill();
+    beginShape();
+    for (let i = 0; i <= steps; i++) {
+        let lf = map(i, 0, steps, logFmin, logFmax);
+        let f  = pow(10, lf);
+        let Z  = impedance(f, C, ESR, ESL, true);
+        let lz = log(Z) / log(10);
+        if (lz < logZmin || lz > logZmax) { endShape(); beginShape(); continue; }
+        let x = map(lf, logFmin, logFmax, plotX, plotX + plotW);
+        let y = map(lz, logZmin, logZmax, plotY + plotH, plotY);
+        vertex(x, y);
+    }
+    endShape();
+
+    // Real curve (red)
+    stroke(200, 60, 60); strokeWeight(2); noFill();
+    beginShape();
+    for (let i = 0; i <= steps; i++) {
+        let lf = map(i, 0, steps, logFmin, logFmax);
+        let f  = pow(10, lf);
+        let Z  = impedance(f, C, ESR, ESL, false);
+        let lz = log(Z) / log(10);
+        if (lz < logZmin - 0.5 || lz > logZmax + 0.5) { endShape(); beginShape(); continue; }
+        lz = constrain(lz, logZmin, logZmax);
+        let x = map(lf, logFmin, logFmax, plotX, plotX + plotW);
+        let y = map(lz, logZmin, logZmax, plotY + plotH, plotY);
+        vertex(x, y);
+    }
+    endShape();
+
+    // SRF vertical line
+    let srfLog = log(SRF) / log(10);
+    if (srfLog >= logFmin && srfLog <= logFmax) {
+        let srfX = map(srfLog, logFmin, logFmax, plotX, plotX + plotW);
+        stroke(200, 60, 60, 160); strokeWeight(1); drawingContext.setLineDash([4, 4]);
+        line(srfX, plotY, srfX, plotY + plotH);
+        drawingContext.setLineDash([]);
+        noStroke(); fill(200, 60, 60); textSize(8); textAlign(CENTER);
+        text("SRF", srfX, plotY + 10);
+    }
+
+    // Region labels
+    noStroke(); textSize(8); textAlign(CENTER);
+    let cap_x = map((logFmin + srfLog) / 2, logFmin, logFmax, plotX, plotX + plotW);
+    let ind_x = map((srfLog + logFmax) / 2, logFmin, logFmax, plotX, plotX + plotW);
+    fill(80,80,200,160); text("Capacitive", constrain(cap_x, plotX+20, plotX+plotW-20), plotY+plotH-8);
+    fill(80,160,80,160); text("Inductive", constrain(ind_x, plotX+20, plotX+plotW-20), plotY+plotH-8);
+
+    // Legend
+    noStroke(); fill(80,80,200); textSize(9); textAlign(LEFT);
+    text("── Ideal", plotX + 4, plotY + 18);
+    fill(200,60,60);
+    text("── Real (ESR+ESL)", plotX + 4, plotY + 30);
+
+    // ESR floor line
+    let esrLog = log(ESR) / log(10);
+    if (esrLog >= logZmin && esrLog <= logZmax) {
+        let esrY = map(esrLog, logZmin, logZmax, plotY + plotH, plotY);
+        stroke(180,100,0,140); strokeWeight(1); drawingContext.setLineDash([3,3]);
+        line(plotX, esrY, plotX + plotW, esrY);
+        drawingContext.setLineDash([]);
+        noStroke(); fill(180,100,0); textSize(8); textAlign(RIGHT);
+        text("ESR floor", plotX + plotW - 2, esrY - 2);
+    }
+
+    // Mouse cursor readout
+    if (mouseX >= plotX && mouseX <= plotX + plotW &&
+        mouseY >= plotY && mouseY <= plotY + plotH) {
+        let lf = map(mouseX, plotX, plotX + plotW, logFmin, logFmax);
+        let f  = pow(10, lf);
+        let Zi = impedance(f, C, ESR, ESL, true);
+        let Zr = impedance(f, C, ESR, ESL, false);
+        stroke(120,120,120,160); strokeWeight(1);
+        line(mouseX, plotY, mouseX, plotY + plotH);
+        noStroke(); fill(40);
+        textSize(9); textAlign(LEFT);
+        let tx = mouseX + 5 < plotX + plotW - 80 ? mouseX + 5 : mouseX - 90;
+        text("f=" + formatFreq(f), tx, plotY + 20);
+        fill(80,80,200); text("Ideal: " + formatZ(Zi), tx, plotY + 32);
+        fill(200,60,60); text("Real:  " + formatZ(Zr), tx, plotY + 44);
+    }
+}
+
+function drawControls(C, ESR, ESL, SRF) {
+    fill(245); stroke(180); strokeWeight(1);
+    rect(0, DRAW_HEIGHT, CANVAS_WIDTH, CONTROL_HEIGHT);
+
+    noStroke(); fill(50); textSize(11); textAlign(RIGHT);
+    text("Cap: " + capSlider.value() + " µF",     150, DRAW_HEIGHT + 22);
+    text("ESR: " + esrSlider.value() + " mΩ",     150, DRAW_HEIGHT + 48);
+    text("ESL: " + eslSlider.value() + " nH",     150, DRAW_HEIGHT + 74);
+
+    noStroke(); fill(80); textSize(10); textAlign(LEFT);
+    text("SRF = " + formatFreq(SRF) + "  |  At SRF: Z_min = ESR = " + formatZ(ESR * 1e-3 / 1e-3 * 1e-3),
+        310, DRAW_HEIGHT + 30);
+    fill(120); textSize(9);
+    text("Below SRF: capacitive (Z↓ with f)   Above SRF: inductive (Z↑ with f)", 310, DRAW_HEIGHT + 50);
+    text("Hover over plot to read impedance values", 310, DRAW_HEIGHT + 65);
+}
+
+function formatFreq(f) {
+    if (f >= 1e9) return (f/1e9).toFixed(2) + " GHz";
+    if (f >= 1e6) return (f/1e6).toFixed(2) + " MHz";
+    if (f >= 1e3) return (f/1e3).toFixed(2) + " kHz";
+    return f.toFixed(1) + " Hz";
+}
+function formatZ(Z) {
+    if (Z >= 1e3) return (Z/1e3).toFixed(2) + " kΩ";
+    if (Z >= 1)   return Z.toFixed(3) + " Ω";
+    if (Z >= 1e-3) return (Z*1e3).toFixed(2) + " mΩ";
+    return (Z*1e6).toFixed(2) + " µΩ";
+}
+</script>
+</body>
+</html>

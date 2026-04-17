@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phasor Domain Circuit Solver</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+    <style>
+        body { margin: 0; padding: 0; background: #f0f0f0; display: flex; justify-content: center; }
+        canvas { display: block; }
+    </style>
+</head>
+<body>
+<script>
+// Phasor Domain Circuit Solver
+// Chapter 9: Phasors and Complex Impedance
+// Series RLC AC circuit — Left: impedance table | Right: phasor diagram
+
+const CANVAS_WIDTH   = 670;
+const DRAW_HEIGHT    = 470;
+const CONTROL_HEIGHT = 80;
+const CANVAS_HEIGHT  = DRAW_HEIGHT + CONTROL_HEIGHT;
+
+const LEFT_W  = 280;
+const RIGHT_X = LEFT_W + 6;
+const RIGHT_W = CANVAS_WIDTH - RIGHT_X - 4;
+
+const VS = 100;  // Source voltage magnitude (fixed, reference phasor)
+
+let rSlider, lSlider, cSlider, fSlider;
+
+function setup() {
+    let cnv = createCanvas(CANVAS_WIDTH, CANVAS_HEIGHT);
+    cnv.parent(document.body);
+    textFont('monospace');
+
+    let sy = DRAW_HEIGHT + 8;
+
+    rSlider = createSlider(1, 100, 10, 1);
+    rSlider.position(65, sy);
+    rSlider.size(100);
+    rSlider.style('cursor', 'pointer');
+
+    lSlider = createSlider(1, 100, 20, 1);   // mH
+    lSlider.position(230, sy);
+    lSlider.size(100);
+    lSlider.style('cursor', 'pointer');
+
+    cSlider = createSlider(1, 200, 50, 1);   // µF
+    cSlider.position(395, sy);
+    cSlider.size(100);
+    cSlider.style('cursor', 'pointer');
+
+    fSlider = createSlider(10, 2000, 159, 1);  // Hz
+    fSlider.position(540, sy);
+    fSlider.size(100);
+    fSlider.style('cursor', 'pointer');
+}
+
+function draw() {
+    let R  = rSlider.value();
+    let L  = lSlider.value() * 1e-3;    // H
+    let C  = cSlider.value() * 1e-6;    // F
+    let f  = fSlider.value();
+    let w  = TWO_PI * f;
+
+    let XL = w * L;
+    let XC = 1 / (w * C);
+    let X  = XL - XC;
+    let Zmag = sqrt(R * R + X * X);
+    let theta = atan2(X, R);  // impedance angle
+
+    // Current phasor: I = Vs/Z, Vs = 100∠0°
+    let Im   = VS / Zmag;
+    let phiI = -theta;  // current angle = -impedance angle
+
+    // Component voltages
+    let VR = Im * R;      // in phase with I
+    let VL = Im * XL;     // 90° ahead of I
+    let VC = Im * XC;     // 90° behind I
+
+    let f0   = 1 / (TWO_PI * sqrt(L * C));
+    let atRes = abs(f - f0) / max(f0, 1) < 0.02;
+
+    background(240);
+    drawImpedanceTable(R, XL, XC, X, Zmag, theta, Im, phiI, VR, VL, VC, f, f0, atRes, L, C);
+    drawPhasorDiagram(R, XL, XC, X, Zmag, theta, Im, phiI, VR, VL, VC, atRes);
+    drawControls(R, L, C, f, f0, Zmag, Im, theta);
+}
+
+// ─── Left: step-by-step impedance table ──────────────────────────────────────
+function drawImpedanceTable(R, XL, XC, X, Zmag, theta, Im, phiI, VR, VL, VC, f, f0, atRes, L, C) {
+    fill(255); stroke(180); strokeWeight(1);
+    rect(4, 4, LEFT_W - 6, DRAW_HEIGHT - 8, 6);
+
+    noStroke(); fill(40); textSize(11); textAlign(CENTER);
+    text("Series RLC — Phasor Solution", LEFT_W / 2, 20);
+
+    let lx = 12, row = 34, rh = 18;
+
+    // Step 1: Impedances
+    drawSectionHeader(lx, row, LEFT_W - 18, "Step 1: Component Impedances", color(30, 80, 180));
+    row += 20;
+
+    fill(50); textSize(10); textAlign(LEFT);
+    text("Z_R  = R         = " + R.toFixed(1) + " Ω", lx + 4, row); row += rh;
+    text("Z_L  = jXL       = j" + XL.toFixed(2) + " Ω", lx + 4, row); row += rh;
+    let xcStr = XC.toFixed(2);
+    text("Z_C  = -jXC      = -j" + xcStr + " Ω", lx + 4, row); row += rh + 4;
+
+    // Step 2: Total impedance
+    drawSectionHeader(lx, row, LEFT_W - 18, "Step 2: Total Impedance", color(130, 30, 200));
+    row += 20;
+
+    fill(50); textSize(10); textAlign(LEFT);
+    let xStr = X >= 0 ? "+j" + X.toFixed(2) : "-j" + abs(X).toFixed(2);
+    text("Z_T = R " + xStr + " Ω", lx + 4, row); row += rh;
+    text("    = " + R.toFixed(1) + " + j(" + XL.toFixed(2) + "-" + XC.toFixed(2) + ")", lx + 4, row); row += rh;
+    fill(130, 30, 200); textSize(11);
+    text("|Z_T| = " + Zmag.toFixed(3) + " Ω", lx + 4, row); row += rh;
+    text(" θ_Z  = " + degrees(theta).toFixed(1) + "°", lx + 4, row); row += rh + 4;
+
+    // Step 3: Current
+    drawSectionHeader(lx, row, LEFT_W - 18, "Step 3: Current Phasor", color(30, 160, 60));
+    row += 20;
+
+    fill(50); textSize(10); textAlign(LEFT);
+    text("I = V_s / Z_T", lx + 4, row); row += rh;
+    text("  = 100∠0° / " + Zmag.toFixed(2) + "∠" + degrees(theta).toFixed(1) + "°", lx + 4, row); row += rh;
+    fill(30, 160, 60); textSize(11);
+    text("|I| = " + Im.toFixed(3) + " A", lx + 4, row); row += rh;
+    text("φ_I = " + degrees(phiI).toFixed(1) + "°", lx + 4, row); row += rh + 4;
+
+    // Step 4: Voltages
+    drawSectionHeader(lx, row, LEFT_W - 18, "Step 4: Component Voltages", color(180, 80, 0));
+    row += 20;
+
+    fill(50); textSize(10); textAlign(LEFT);
+    text("V_R = I·R   = " + VR.toFixed(2) + "∠" + degrees(phiI).toFixed(0) + "° V", lx + 4, row); row += rh;
+    text("V_L = I·jXL = " + VL.toFixed(2) + "∠" + (degrees(phiI) + 90).toFixed(0) + "° V", lx + 4, row); row += rh;
+    text("V_C = -jXCI = " + VC.toFixed(2) + "∠" + (degrees(phiI) - 90).toFixed(0) + "° V", lx + 4, row); row += rh + 4;
+
+    // KVL check
+    drawSectionHeader(lx, row, LEFT_W - 18, "KVL Verification", color(180, 30, 30));
+    row += 20;
+
+    // Re-assemble phasor sum: VR + VL + VC should equal VS∠0
+    let vRe = VR * cos(phiI) + VL * cos(phiI + HALF_PI) + VC * cos(phiI - HALF_PI);
+    let vIm = VR * sin(phiI) + VL * sin(phiI + HALF_PI) + VC * sin(phiI - HALF_PI);
+    let vMag = sqrt(vRe * vRe + vIm * vIm);
+
+    fill(50); textSize(10); textAlign(LEFT);
+    text("V_R+V_L+V_C = " + vMag.toFixed(2) + " V", lx + 4, row); row += rh;
+    let ok = abs(vMag - VS) < 0.5;
+    fill(ok ? color(0, 140, 0) : color(180, 0, 0));
+    text(ok ? "✓ Matches V_s = 100 V" : "✗ Check parameters", lx + 4, row); row += rh + 4;
+
+    // Resonance indicator
+    if (atRes) {
+        fill(255, 240, 200); stroke(200, 160, 60); strokeWeight(1.5);
+        rect(lx, row, LEFT_W - 18, 32, 4);
+        noStroke(); fill(140, 90, 0); textSize(10); textAlign(CENTER);
+        text("⚡ AT RESONANCE: XL=XC, Z=R, I=max", lx + (LEFT_W - 18) / 2, row + 12);
+        text("f₀ = " + f0.toFixed(1) + " Hz", lx + (LEFT_W - 18) / 2, row + 26);
+    } else {
+        noStroke(); fill(120); textSize(9); textAlign(LEFT);
+        text("Resonance at f₀ = " + f0.toFixed(1) + " Hz", lx + 4, row + 10);
+        text("(adjust f slider)", lx + 4, row + 22);
+    }
+}
+
+function drawSectionHeader(x, y, w, title, col) {
+    fill(col); noStroke();
+    rect(x, y, w, 16, 3);
+    fill(255); textSize(10); textAlign(LEFT);
+    text(title, x + 5, y + 12);
+}
+
+// ─── Right: phasor diagram ───────────────────────────────────────────────────
+function drawPhasorDiagram(R, XL, XC, X, Zmag, theta, Im, phiI, VR, VL, VC, atRes) {
+    let px = RIGHT_X, py = 4, pw = RIGHT_W - 4, ph = DRAW_HEIGHT - 8;
+    fill(255); stroke(180); strokeWeight(1);
+    rect(px, py, pw, ph, 6);
+
+    noStroke(); fill(40); textSize(12); textAlign(CENTER);
+    text("Voltage Phasor Diagram", px + pw / 2, py + 18);
+
+    let cx = px + pw / 2;
+    let cy = py + ph * 0.55;
+    let maxV = max(VS, VR, VL, VC, 10);
+    let r = min(pw, ph) * 0.34;
+    let scale = r / maxV;
+
+    // Axes
+    stroke(180); strokeWeight(1);
+    line(px + 10, cy, px + pw - 6, cy);
+    line(cx, py + 30, cx, py + ph - 10);
+    noStroke(); fill(120); textSize(9);
+    textAlign(LEFT); text("Re →", px + pw - 28, cy - 4);
+    textAlign(CENTER); text("Im ↑", cx + 14, py + 38);
+
+    // Reference circle
+    noFill(); stroke(220); strokeWeight(1);
+    drawingContext.setLineDash([3, 4]);
+    ellipse(cx, cy, r * 2, r * 2);
+    drawingContext.setLineDash([]);
+
+    // V_s (source, 100∠0°, orange)
+    let vsX = cx + VS * scale, vsY = cy;
+    stroke(200, 100, 0); strokeWeight(2.5);
+    line(cx, cy, vsX, vsY);
+    drawArrowHead(cx, cy, vsX, vsY, color(200, 100, 0));
+    noStroke(); fill(200, 100, 0); textSize(10); textAlign(LEFT);
+    text("V_s=100∠0°", vsX + 4, vsY - 4);
+
+    // V_R (in phase with I)
+    let vRX = cx + VR * cos(phiI) * scale;
+    let vRY = cy - VR * sin(phiI) * scale;
+    stroke(30, 100, 200); strokeWeight(2);
+    line(cx, cy, vRX, vRY);
+    drawArrowHead(cx, cy, vRX, vRY, color(30, 100, 200));
+    noStroke(); fill(30, 100, 200); textSize(10); textAlign(LEFT);
+    text("V_R=" + VR.toFixed(1) + "V", vRX + 4, vRY + 4);
+
+    // V_L (90° ahead of I)
+    let phVL = phiI + HALF_PI;
+    let vLX = cx + VL * cos(phVL) * scale;
+    let vLY = cy - VL * sin(phVL) * scale;
+    stroke(200, 50, 50); strokeWeight(2);
+    line(cx, cy, vLX, vLY);
+    drawArrowHead(cx, cy, vLX, vLY, color(200, 50, 50));
+    noStroke(); fill(200, 50, 50); textSize(10); textAlign(LEFT);
+    let vLLbl = vLX < cx ? vLX - 60 : vLX + 4;
+    text("V_L=" + VL.toFixed(1) + "V", vLLbl, vLY - 4);
+
+    // V_C (90° behind I)
+    let phVC = phiI - HALF_PI;
+    let vCX = cx + VC * cos(phVC) * scale;
+    let vCY = cy - VC * sin(phVC) * scale;
+    stroke(0, 130, 180); strokeWeight(2);
+    line(cx, cy, vCX, vCY);
+    drawArrowHead(cx, cy, vCX, vCY, color(0, 130, 180));
+    noStroke(); fill(0, 130, 180); textSize(10); textAlign(LEFT);
+    let vCLbl = vCX < cx ? vCX - 60 : vCX + 4;
+    text("V_C=" + VC.toFixed(1) + "V", vCLbl, vCY + 12);
+
+    // Current I direction (scaled)
+    let ImScale = min(r / Im, r * 2);
+    let iX = cx + Im * cos(phiI) * ImScale * 0.7;
+    let iY = cy - Im * sin(phiI) * ImScale * 0.7;
+    stroke(30, 180, 60); strokeWeight(2);
+    drawingContext.setLineDash([6, 4]);
+    line(cx, cy, iX, iY);
+    drawingContext.setLineDash([]);
+    drawArrowHead(cx, cy, iX, iY, color(30, 180, 60));
+    noStroke(); fill(30, 180, 60); textSize(10); textAlign(LEFT);
+    text("I=" + Im.toFixed(2) + "A ∠" + degrees(phiI).toFixed(0) + "°", iX + 4, iY + 4);
+
+    // Legend
+    let legY = py + ph - 90;
+    let legX = px + 10;
+    noStroke(); textSize(9); textAlign(LEFT);
+    fill(200, 100, 0);  text("━ V_s (source)", legX, legY);
+    fill(30, 100, 200); text("━ V_R (resistor)", legX, legY + 14);
+    fill(200, 50, 50);  text("━ V_L (inductor)", legX, legY + 28);
+    fill(0, 130, 180);  text("━ V_C (capacitor)", legX, legY + 42);
+    fill(30, 180, 60);  text("╌ I (current)", legX, legY + 56);
+
+    if (atRes) {
+        fill(200, 150, 0); textSize(9);
+        text("At resonance: V_L = V_C (cancel!)", legX, legY + 74);
+    }
+}
+
+// ─── Controls ────────────────────────────────────────────────────────────────
+function drawControls(R, L, C, f, f0, Zmag, Im, theta) {
+    fill(245); stroke(180); strokeWeight(1);
+    rect(0, DRAW_HEIGHT, CANVAS_WIDTH, CONTROL_HEIGHT);
+
+    noStroke(); fill(50); textSize(10); textAlign(RIGHT);
+    text("R:", 60, DRAW_HEIGHT + 20);
+    text("L:", 225, DRAW_HEIGHT + 20);
+    text("C:", 390, DRAW_HEIGHT + 20);
+    text("f:", 535, DRAW_HEIGHT + 20);
+
+    fill(20, 80, 180); textSize(10); textAlign(LEFT);
+    text(R + " Ω", 60, DRAW_HEIGHT + 34);
+    text((L * 1e3).toFixed(0) + " mH", 225, DRAW_HEIGHT + 34);
+    text((C * 1e6).toFixed(0) + " µF", 390, DRAW_HEIGHT + 34);
+    text(f + " Hz", 535, DRAW_HEIGHT + 34);
+
+    noStroke(); fill(80); textSize(10); textAlign(LEFT);
+    text("|Z|=" + Zmag.toFixed(2) + "Ω   |I|=" + Im.toFixed(3) + "A   θ=" + degrees(theta).toFixed(1) + "°   f₀=" + f0.toFixed(0) + "Hz", 14, DRAW_HEIGHT + 64);
+}
+
+function drawArrowHead(x1, y1, x2, y2, col) {
+    let ang = atan2(y2 - y1, x2 - x1);
+    let sz = 8;
+    fill(col); noStroke();
+    push();
+    translate(x2, y2);
+    rotate(ang);
+    triangle(0, 0, -sz, -sz / 2.5, -sz, sz / 2.5);
+    pop();
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bandwidth and Selectivity</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+    <style>
+        body { margin: 0; padding: 0; background: #f0f0f0; display: flex; justify-content: center; }
+        canvas { display: block; }
+    </style>
+</head>
+<body>
+<script>
+// Bandwidth and Selectivity
+// Chapter 9: Phasors and Complex Impedance
+// Frequency response |H(f)| showing Q factor effect on bandwidth
+
+const CANVAS_WIDTH   = 670;
+const DRAW_HEIGHT    = 370;
+const CONTROL_HEIGHT = 80;
+const CANVAS_HEIGHT  = DRAW_HEIGHT + CONTROL_HEIGHT;
+
+// Plot area
+const PLX = 58, PLY = 42, PLW = 450, PLH = 270;
+// Info panel
+const IPX = PLX + PLW + 12, IPY = PLY, IPW = CANVAS_WIDTH - IPX - 8, IPH = PLH;
+
+let qSlider, f0Slider;
+let showMultiple = false;
+let dbMode = false;
+let multiBtn = { x: 10, y: DRAW_HEIGHT + 22, w: 130, h: 26 };
+let dbBtn    = { x: 150, y: DRAW_HEIGHT + 22, w: 110, h: 26 };
+
+// Multi-Q curves to show
+const MULTI_Q = [2, 5, 10, 25, 50];
+const MULTI_COLS = [
+    [180, 80, 0],
+    [180, 0, 100],
+    [0, 120, 200],
+    [0, 160, 80],
+    [120, 0, 200]
+];
+
+function setup() {
+    let cnv = createCanvas(CANVAS_WIDTH, CANVAS_HEIGHT);
+    cnv.parent(document.body);
+    textFont('monospace');
+
+    let sy = DRAW_HEIGHT + 10;
+
+    qSlider = createSlider(1, 100, 10, 1);
+    qSlider.position(310, sy);
+    qSlider.size(140);
+    qSlider.style('cursor', 'pointer');
+
+    f0Slider = createSlider(100, 5000, 1000, 50);
+    f0Slider.position(310, sy + 34);
+    f0Slider.size(140);
+    f0Slider.style('cursor', 'pointer');
+}
+
+function draw() {
+    let Q  = qSlider.value();
+    let f0 = f0Slider.value();
+
+    background(240);
+    drawPlot(Q, f0);
+    drawInfoPanel(Q, f0);
+    drawControls(Q, f0);
+}
+
+// H(f) = 1 / sqrt(1 + Q^2 * (f/f0 - f0/f)^2)
+function H(f, f0, Q) {
+    let ratio = f / f0 - f0 / f;
+    return 1 / sqrt(1 + Q * Q * ratio * ratio);
+}
+
+function fToX(f, f0) {
+    let fMin = f0 * 0.1, fMax = f0 * 10;
+    return map(log(f) / log(10), log(fMin) / log(10), log(fMax) / log(10), PLX, PLX + PLW);
+}
+
+function hToY(h) {
+    if (dbMode) {
+        let db = 20 * log(max(h, 0.001)) / log(10);
+        return map(db, -40, 0, PLY + PLH, PLY);
+    }
+    return map(h, 0, 1, PLY + PLH, PLY);
+}
+
+function drawPlot(Q, f0) {
+    let fMin = f0 * 0.1, fMax = f0 * 10;
+
+    fill(255); stroke(180); strokeWeight(1);
+    rect(PLX - 6, PLY - 6, PLW + 14, PLH + 14, 4);
+
+    // Grid
+    stroke(235); strokeWeight(1);
+    let hLines = dbMode ? [-40, -30, -20, -10, -6, -3, 0] : [0.25, 0.5, 0.707, 1.0];
+    for (let h of hLines) {
+        let y = dbMode ? map(h, -40, 0, PLY + PLH, PLY) : map(h, 0, 1, PLY + PLH, PLY);
+        if (y >= PLY && y <= PLY + PLH) {
+            stroke(h === -3 || h === 0.707 ? color(180, 140, 140) : color(235));
+            strokeWeight(h === -3 || h === 0.707 ? 1.5 : 1);
+            drawingContext.setLineDash(h === -3 || h === 0.707 ? [4, 3] : []);
+            line(PLX, y, PLX + PLW, y);
+            drawingContext.setLineDash([]);
+
+            // -3dB label
+            if ((dbMode && h === -3) || (!dbMode && h === 0.707)) {
+                noStroke(); fill(180, 80, 80); textSize(9); textAlign(RIGHT);
+                text(dbMode ? "-3 dB" : "0.707", PLX - 2, y + 3);
+            }
+        }
+    }
+
+    // Frequency decade lines
+    let decades = [];
+    for (let d = floor(log(fMin) / log(10)); d <= ceil(log(fMax) / log(10)); d++) {
+        decades.push(pow(10, d));
+    }
+    for (let fd of decades) {
+        let x = fToX(fd, f0);
+        if (x >= PLX && x <= PLX + PLW) {
+            stroke(235); strokeWeight(1); drawingContext.setLineDash([]);
+            line(x, PLY, x, PLY + PLH);
+        }
+    }
+
+    // Axes
+    stroke(120); strokeWeight(1.5);
+    line(PLX, PLY, PLX, PLY + PLH);
+    line(PLX, PLY + PLH, PLX + PLW, PLY + PLH);
+
+    // Multiple Q curves (background)
+    if (showMultiple) {
+        for (let i = 0; i < MULTI_Q.length; i++) {
+            let Qi = MULTI_Q[i];
+            let col = MULTI_COLS[i];
+            stroke(col[0], col[1], col[2], 160); strokeWeight(1.5); noFill();
+            beginShape();
+            for (let px = PLX; px <= PLX + PLW; px++) {
+                let f = pow(10, map(px, PLX, PLX + PLW, log(fMin) / log(10), log(fMax) / log(10)));
+                let h = H(f, f0, Qi);
+                vertex(px, hToY(h));
+            }
+            endShape();
+        }
+    }
+
+    // Main curve (selected Q)
+    stroke(30, 100, 200); strokeWeight(3); noFill();
+    beginShape();
+    for (let px = PLX; px <= PLX + PLW; px++) {
+        let f = pow(10, map(px, PLX, PLX + PLW, log(fMin) / log(10), log(fMax) / log(10)));
+        let h = H(f, f0, Q);
+        vertex(px, hToY(h));
+    }
+    endShape();
+
+    // f0 line
+    let xF0 = fToX(f0, f0);
+    stroke(100, 60, 180); strokeWeight(1.5);
+    drawingContext.setLineDash([5, 4]);
+    line(xF0, PLY, xF0, PLY + PLH);
+    drawingContext.setLineDash([]);
+    noStroke(); fill(100, 60, 180); textSize(9); textAlign(CENTER);
+    text("f₀", xF0, PLY - 4);
+
+    // Bandwidth markers (f1, f2)
+    let BW = f0 / Q;
+    let f1 = f0 * (sqrt(1 + 1 / (4 * Q * Q)) - 1 / (2 * Q));
+    let f2 = f0 * (sqrt(1 + 1 / (4 * Q * Q)) + 1 / (2 * Q));
+    let xF1 = fToX(f1, f0), xF2 = fToX(f2, f0);
+    let yBW = hToY(0.707);
+
+    if (xF1 >= PLX && xF2 <= PLX + PLW) {
+        stroke(180, 80, 80); strokeWeight(1.5);
+        drawingContext.setLineDash([4, 3]);
+        line(xF1, PLY, xF1, PLY + PLH);
+        line(xF2, PLY, xF2, PLY + PLH);
+        drawingContext.setLineDash([]);
+
+        // BW span arrow
+        stroke(180, 80, 80); strokeWeight(2);
+        line(xF1, yBW, xF2, yBW);
+        fill(180, 80, 80); noStroke();
+        triangle(xF1, yBW, xF1 + 6, yBW - 3, xF1 + 6, yBW + 3);
+        triangle(xF2, yBW, xF2 - 6, yBW - 3, xF2 - 6, yBW + 3);
+        noStroke(); textSize(9); textAlign(CENTER);
+        text("BW = " + fmtHz(BW), (xF1 + xF2) / 2, yBW - 6);
+
+        // f1, f2 labels
+        fill(180, 80, 80); textSize(8); textAlign(CENTER);
+        text(fmtHz(f1), xF1, PLY + PLH + 12);
+        text(fmtHz(f2), xF2, PLY + PLH + 12);
+    }
+
+    // Passband shading
+    if (xF1 >= PLX && xF2 <= PLX + PLW) {
+        fill(30, 100, 200, 30); noStroke();
+        beginShape();
+        vertex(xF1, PLY + PLH);
+        for (let px = round(xF1); px <= round(xF2); px++) {
+            let f = pow(10, map(px, PLX, PLX + PLW, log(fMin) / log(10), log(fMax) / log(10)));
+            vertex(px, hToY(H(f, f0, Q)));
+        }
+        vertex(xF2, PLY + PLH);
+        endShape(CLOSE);
+    }
+
+    // Axis labels
+    noStroke(); fill(80); textSize(9); textAlign(CENTER);
+    for (let fd of decades) {
+        let x = fToX(fd, f0);
+        if (x >= PLX && x <= PLX + PLW) {
+            text(fmtHz(fd), x, PLY + PLH + 22);
+        }
+    }
+    text("Frequency (Hz)", PLX + PLW / 2, PLY + PLH + 34);
+
+    // Y-axis labels
+    if (!dbMode) {
+        for (let h of [0, 0.25, 0.5, 0.707, 1.0]) {
+            let y = map(h, 0, 1, PLY + PLH, PLY);
+            if (y >= PLY && y <= PLY + PLH) {
+                fill(100); textSize(8); textAlign(RIGHT);
+                text(h === 0.707 ? "0.707" : h.toFixed(2), PLX - 4, y + 3);
+            }
+        }
+    }
+
+    push(); translate(16, PLY + PLH / 2); rotate(-HALF_PI);
+    noStroke(); fill(80); textSize(10); textAlign(CENTER);
+    text(dbMode ? "|H(f)| (dB)" : "|H(f)|", 0, 0);
+    pop();
+
+    // Multiple Q legend
+    if (showMultiple) {
+        for (let i = 0; i < MULTI_Q.length; i++) {
+            let col = MULTI_COLS[i];
+            stroke(col[0], col[1], col[2]); strokeWeight(2);
+            line(PLX + 6 + i * 82, PLY + 14, PLX + 22 + i * 82, PLY + 14);
+            noStroke(); fill(col[0], col[1], col[2]); textSize(9); textAlign(LEFT);
+            text("Q=" + MULTI_Q[i], PLX + 25 + i * 82, PLY + 18);
+        }
+    }
+}
+
+// ─── Info panel ───────────────────────────────────────────────────────────────
+function drawInfoPanel(Q, f0) {
+    fill(255); stroke(180); strokeWeight(1);
+    rect(IPX, IPY - 6, IPW, IPH + 14, 4);
+
+    let BW = f0 / Q;
+    let f1 = f0 * (sqrt(1 + 1 / (4 * Q * Q)) - 1 / (2 * Q));
+    let f2 = f0 * (sqrt(1 + 1 / (4 * Q * Q)) + 1 / (2 * Q));
+
+    let lx = IPX + 6, row = IPY + 10, rh = 18;
+
+    noStroke(); fill(40); textSize(11); textAlign(CENTER);
+    text("Summary", IPX + IPW / 2, row); row += rh + 4;
+
+    fill(100, 30, 200); textSize(10); textAlign(LEFT);
+    text("f₀ = " + fmtHz(f0), lx, row); row += rh;
+    text("Q  = " + Q, lx, row); row += rh;
+
+    fill(30, 100, 200);
+    text("BW = f₀/Q", lx, row); row += rh;
+    text("   = " + fmtHz(BW), lx, row); row += rh + 4;
+
+    fill(180, 80, 80);
+    text("-3dB points:", lx, row); row += rh;
+    text("f₁ = " + fmtHz(f1), lx, row); row += rh;
+    text("f₂ = " + fmtHz(f2), lx, row); row += rh + 4;
+
+    // Selectivity table
+    fill(60); textSize(9); textAlign(LEFT);
+    text("Q → Selectivity:", lx, row); row += rh;
+    let rows = [[1,"100%","Poor"],[5,"20%","Fair"],[10,"10%","Mod."],[50,"2%","Good"],[100,"1%","Excel"]];
+    for (let [q, bwPct, sel] of rows) {
+        let highlight = abs(Q - q) < 3;
+        if (highlight) { fill(230, 240, 255); noStroke(); rect(lx - 2, row - 11, IPW - 10, 14, 2); }
+        fill(highlight ? color(30, 60, 180) : color(80)); textSize(9);
+        text("Q=" + q + ": BW=" + bwPct + " " + sel, lx + 2, row);
+        row += rh - 2;
+    }
+}
+
+// ─── Controls ────────────────────────────────────────────────────────────────
+function drawControls(Q, f0) {
+    fill(245); stroke(180); strokeWeight(1);
+    rect(0, DRAW_HEIGHT, CANVAS_WIDTH, CONTROL_HEIGHT);
+
+    // Multi-Q toggle
+    let mb = multiBtn;
+    fill(showMultiple ? color(60, 120, 200) : color(180));
+    stroke(showMultiple ? color(40, 90, 160) : color(130)); strokeWeight(1);
+    rect(mb.x, mb.y, mb.w, mb.h, 4);
+    noStroke(); fill(showMultiple ? 255 : 50); textSize(10); textAlign(CENTER, CENTER);
+    text("Multi-Q Curves", mb.x + mb.w / 2, mb.y + mb.h / 2);
+
+    // dB toggle
+    let db = dbBtn;
+    fill(dbMode ? color(60, 120, 200) : color(180));
+    stroke(dbMode ? color(40, 90, 160) : color(130)); strokeWeight(1);
+    rect(db.x, db.y, db.w, db.h, 4);
+    noStroke(); fill(dbMode ? 255 : 50); textSize(10); textAlign(CENTER, CENTER);
+    text(dbMode ? "dB Scale ✓" : "Linear Scale", db.x + db.w / 2, db.y + db.h / 2);
+
+    noStroke(); fill(50); textSize(10); textAlign(RIGHT);
+    text("Q factor:", 305, DRAW_HEIGHT + 22);
+    text("f₀:", 305, DRAW_HEIGHT + 56);
+
+    fill(20, 80, 180); textSize(10); textAlign(LEFT);
+    text(Q, 455, DRAW_HEIGHT + 22);
+    text(fmtHz(f0), 455, DRAW_HEIGHT + 56);
+
+    let BW = f0 / Q;
+    fill(80); textSize(10); textAlign(LEFT);
+    text("BW = " + fmtHz(BW), 520, DRAW_HEIGHT + 38);
+}
+
+function fmtHz(f) {
+    if (f >= 1e6) return (f / 1e6).toPrecision(3) + " MHz";
+    if (f >= 1e3) return (f / 1e3).toPrecision(3) + " kHz";
+    return f.toPrecision(3) + " Hz";
+}
+
+function mousePressed() {
+    let mb = multiBtn;
+    if (mouseX >= mb.x && mouseX <= mb.x + mb.w &&
+        mouseY >= mb.y && mouseY <= mb.y + mb.h) {
+        showMultiple = !showMultiple;
+    }
+    let db = dbBtn;
+    if (mouseX >= db.x && mouseX <= db.x + db.w &&
+        mouseY >= db.y && mouseY <= db.y + db.h) {
+        dbMode = !dbMode;
+    }
+}
+</script>
+</body>
+</html>
