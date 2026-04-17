@@ -112,8 +112,7 @@
   <nav class="md-header__inner md-grid" aria-label="Header">
     <a href="../../.." title="Circuits 1" class="md-header__button md-logo" aria-label="Circuits 1" data-md-component="logo">
       
-  
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6 4h12v1h3v2h-3v2h3v2h-3v2h3v2h-3v2h3v2h-3v1H6v-1H3v-2h3v-2H3v-2h3v-2H3V9h3V7H3V5h3zm5 11v3h1v-3zm2 0v3h1v-3zm2 0v3h1v-3z"/></svg>
+  <img src="../../../img/mascots/neutral.png" alt="logo">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -400,8 +399,7 @@
   <label class="md-nav__title" for="__drawer">
     <a href="../../.." title="Circuits 1" class="md-nav__button md-logo" aria-label="Circuits 1" data-md-component="logo">
       
-  
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6 4h12v1h3v2h-3v2h3v2h-3v2h3v2h-3v2h3v2h-3v1H6v-1H3v-2h3v-2H3v-2h3v-2H3V9h3V7H3V5h3zm5 11v3h1v-3zm2 0v3h1v-3zm2 0v3h1v-3z"/></svg>
+  <img src="../../../img/mascots/neutral.png" alt="logo">
 
     </a>
     Circuits 1
@@ -4208,6 +4206,11 @@ This chapter introduces the fundamental electrical quantities that every circuit
 3. Power (P equals V times I) is the rate of energy transfer in watts, and every resistor has a maximum power rating that must not be exceeded in a safe design.
 
 </details>
+<div class="admonition mascot-welcome">
+<p class="admonition-title">Welcome from Sparky</p>
+<p><img src="../../../img/mascots/welcome.png" class="mascot-admonition-img" alt="Sparky waving welcome">
+Hi, I'm Sparky! I'll pop up through the book to introduce ideas, flag the mistakes that trip students up, and cheer you on when you reach a milestone. Chapter 1 gives you the vocabulary every engineer uses — charge, current, voltage, resistance, and power — so everything after this can build on it.</p>
+</div>
 <h2 id="11-electric-charge-where-it-all-begins">1.1 Electric Charge: Where It All Begins</h2>
 <p>Everything in the electrical world starts with <strong>electric charge</strong>. Charge is a fundamental property of matter, just like mass, but instead of telling you how much "stuff" something has, charge tells you how that stuff will interact electromagnetically.</p>
 <div class="mascot rezi">
@@ -4345,9 +4348,9 @@ Conventional current flows from <strong>+</strong> to <strong>−</strong>, but 
 </tr>
 </tbody>
 </table>
-<div class="admonition warning">
-<p class="admonition-title">Safety First</p>
-<p>Voltages above about 50V can be dangerous to humans under certain conditions. While we'll mostly work with low-voltage circuits in the lab, always treat electricity with respect. The wall outlet in your room can absolutely kill you. Don't be a statistic.</p>
+<div class="mascot sparky">
+<p><strong>Safety First: Voltages Above 50V Can Kill</strong>
+Voltages above about 50V can be dangerous to humans under certain conditions. While we'll mostly work with low-voltage circuits in the lab, always treat electricity with respect. The wall outlet in your room can absolutely kill you. Don't be a statistic.</p>
 </div>
 <hr />
 <h2 id="14-electrical-energy-and-power-getting-work-done">1.4 Electrical Energy and Power: Getting Work Done</h2>
@@ -4428,9 +4431,10 @@ Conventional current flows from <strong>+</strong> to <strong>−</strong>, but 
 </tr>
 </tbody>
 </table>
-<div class="admonition note">
+<div class="admonition mascot-tip">
 <p class="admonition-title">Not Everything Obeys Ohm's Law</p>
-<p>Ohm's Law applies to <em>ohmic</em> (linear) materials where resistance is constant regardless of voltage or current. Many real devices — like diodes, transistors, and even light bulbs — are <em>non-ohmic</em>, meaning their resistance changes with operating conditions. We'll explore some of these in later chapters.</p>
+<p><img src="../../../img/mascots/tip.png" class="mascot-admonition-img" alt="Sparky giving a tip">
+Ohm's Law applies to <em>ohmic</em> (linear) materials where resistance is constant regardless of voltage or current. Many real devices — like diodes, transistors, and even light bulbs — are <em>non-ohmic</em>, meaning their resistance changes with operating conditions. We'll explore these in later chapters.</p>
 </div>
 <hr />
 <h2 id="16-conductance-the-flip-side">1.6 Conductance: The Flip Side</h2>
@@ -4547,9 +4551,9 @@ Conventional current flows from <strong>+</strong> to <strong>−</strong>, but 
 <li>Current can be very large (limited only by other circuit elements)</li>
 <li>This is often dangerous because excessive current causes overheating</li>
 </ul>
-<div class="admonition danger">
-<p class="admonition-title">Short Circuits Are Dangerous</p>
-<p>Never create an unintentional short circuit, especially across a power source. A short across a battery can cause it to rapidly overheat, potentially causing fire or explosion. Circuit breakers and fuses exist specifically to protect against short-circuit conditions.</p>
+<div class="mascot sparky">
+<p><strong>Short Circuits Are Dangerous</strong>
+Never create an unintentional short circuit, especially across a power source. A short across a battery can cause it to rapidly overheat, potentially causing fire or explosion. Circuit breakers and fuses exist specifically to protect against short-circuit conditions.</p>
 </div>
 <table>
 <thead>
@@ -4698,6 +4702,11 @@ Always calculate the actual power dissipation in a resistor and verify it is wel
 Before accepting any numerical answer, verify the units. Write out the units at each algebraic step: <span class="arithmatex">\(\frac{\text{V}}{\Omega} = \frac{\text{V}}{\text{V/A}} = \text{A}\)</span>. If the units don't simplify to what you expect, you made an algebra mistake somewhere. This habit alone will save you hours of debugging on exams and in the lab.</p>
 </div>
 <hr />
+<div class="admonition mascot-encouraging">
+<p class="admonition-title">You're Closer Than You Think</p>
+<p><img src="../../../img/mascots/encouraging.png" class="mascot-admonition-img" alt="Sparky encouraging">
+If all of those equations feel like a lot at once, don't worry — the next section puts every piece together in one small worked example. You already know more than you think; we're just going to use it.</p>
+</div>
 <h2 id="113-putting-it-all-together-a-worked-example">1.13 Putting It All Together: A Worked Example</h2>
 <p>Let's see how all these concepts connect in a simple example. Consider a circuit with a 9V battery connected to a 1kΩ resistor.</p>
 <p><strong>What we know:</strong>
@@ -4713,6 +4722,11 @@ Before accepting any numerical answer, verify the units. Write out the units at 
 <p><strong>In terms of energy</strong>, if this circuit runs for one hour:</p>
 <div class="arithmatex">\[W = Pt = (0.081\text{ W})(3600\text{ s}) = 291.6\text{ J}\]</div>
 <hr />
+<div class="admonition mascot-celebration">
+<p class="admonition-title">You Made It Through Chapter 1</p>
+<p><img src="../../../img/mascots/celebration.png" class="mascot-admonition-img" alt="Sparky celebrating">
+That's a real milestone — you now speak the language of circuits. Every chapter from here uses the same five quantities you just met: charge, current, voltage, resistance, and power. When you see them again in Chapter 2, they'll already feel like old friends.</p>
+</div>
 <h2 id="chapter-summary">Chapter Summary</h2>
 <div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 20px 24px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
 <p style="color: #333; line-height: 1.85; font-size: 1.02rem; margin: 0;">
