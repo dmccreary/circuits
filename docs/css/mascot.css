@@ -19,14 +19,14 @@
 .md-typeset .admonition.mascot-tip,
 .md-typeset .admonition.mascot-warning,
 .md-typeset .admonition.mascot-celebration,
-.md-typeset .admonition.mascot-encourage,
+.md-typeset .admonition.mascot-encouraging,
 .md-typeset .admonition.mascot-neutral,
 .md-typeset details.mascot-welcome,
 .md-typeset details.mascot-thinking,
 .md-typeset details.mascot-tip,
 .md-typeset details.mascot-warning,
 .md-typeset details.mascot-celebration,
-.md-typeset details.mascot-encourage,
+.md-typeset details.mascot-encouraging,
 .md-typeset details.mascot-neutral {
   font-size: inherit;
 }
@@ -92,13 +92,13 @@
 }
 
 /* ---- Encourage (difficult content) — blue ---- */
-.md-typeset .admonition.mascot-encourage,
-.md-typeset details.mascot-encourage {
+.md-typeset .admonition.mascot-encouraging,
+.md-typeset details.mascot-encouraging {
   border-color: #0277bd;
   background-color: #e1f5fe;
 }
-.md-typeset .mascot-encourage > .admonition-title,
-.md-typeset .mascot-encourage > summary {
+.md-typeset .mascot-encouraging > .admonition-title,
+.md-typeset .mascot-encouraging > summary {
   background-color: #0277bd;
   color: white;
 }
