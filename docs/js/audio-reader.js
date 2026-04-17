@@ -8,6 +8,9 @@
 
   if (!('speechSynthesis' in window)) return;
 
+  // Do not run audio reader on MicroSim pages
+  if (window.location.pathname.indexOf('/sims/') !== -1) return;
+
   const synth = window.speechSynthesis;
   let isPlaying = false;
   let isPaused = false;

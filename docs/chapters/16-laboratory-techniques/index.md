@@ -112,7 +112,7 @@ The **oscilloscope** displays voltage as a function of time—the single most im
 
 #### Diagram: Oscilloscope Interface Guide
 
-<iframe src="../../sims/oscilloscope-guide/main.html" width="100%" height="550px" scrolling="no" style="overflow: hidden;"></iframe>
+<iframe src="../../sims/oscilloscope/main.html" width="100%" height="550px" scrolling="no" style="overflow: hidden;"></iframe>
 
 <details markdown="1">
 <summary>Oscilloscope Interface Guide</summary>

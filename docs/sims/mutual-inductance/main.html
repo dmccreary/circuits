@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mutual Inductance</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+    <style>
+        body { margin: 0; padding: 0; background: #f0f0f0; display: flex; justify-content: center; }
+        canvas { display: block; }
+    </style>
+</head>
+<body>
+<script>
+// Mutual Inductance MicroSim
+// Chapter 5: Passive Components
+// Two coils with animated magnetic field coupling
+
+const CANVAS_WIDTH   = 670;
+const DRAW_HEIGHT    = 370;
+const CONTROL_HEIGHT = 100;
+const CANVAS_HEIGHT  = DRAW_HEIGHT + CONTROL_HEIGHT;
+
+// Panels
+const COIL_W  = 430;
+const INFO_X  = COIL_W + 8;
+const INFO_W  = CANVAS_WIDTH - INFO_X - 6;
+
+// Sliders
+let currentSlider, sepSlider, alignSlider;
+let ironCore = false;
+let ironBtn  = { x: 0, y: 0, w: 120, h: 24 };
+
+// Sim state
+let animTime = 0;
+let isAnimating = true;
+let startStopBtn = { x: 0, y: 0, w: 100, h: 24 };
+
+// Coil geometry
+const L1 = 10e-3;   // 10 mH
+const L2 = 10e-3;
+
+function setup() {
+    let cnv = createCanvas(CANVAS_WIDTH, CANVAS_HEIGHT);
+    cnv.parent(document.body);
+    textFont('monospace');
+
+    let sy = DRAW_HEIGHT + 14;
+    currentSlider = createSlider(0, 100, 60, 1);
+    currentSlider.position(160, sy); currentSlider.size(160); currentSlider.style('cursor','pointer');
+
+    sepSlider = createSlider(1, 10, 4, 1);
+    sepSlider.position(160, sy + 28); sepSlider.size(160); sepSlider.style('cursor','pointer');
+
+    alignSlider = createSlider(0, 100, 80, 1);
+    alignSlider.position(160, sy + 56); alignSlider.size(160); alignSlider.style('cursor','pointer');
+
+    ironBtn.x = 340; ironBtn.y = sy + 24; ironBtn.w = 120; ironBtn.h = 24;
+    startStopBtn.x = 340; startStopBtn.y = sy + 56; startStopBtn.w = 100; startStopBtn.h = 24;
+}
+
+function draw() {
+    let I1_peak  = currentSlider.value() / 100;       // 0–1 A
+    let sepLevel = sepSlider.value();                   // 1–10
+    let align    = alignSlider.value() / 100;          // 0–1
+    let coreK    = ironCore ? 0.97 : 0.05;
+
+    // Coupling coefficient affected by separation and alignment
+    let geoFactor = align * map(sepLevel, 1, 10, 0.95, 0.1);
+    let k = constrain(coreK * geoFactor + (ironCore ? 0 : geoFactor * 0.8), 0, 0.99);
+    let M = k * sqrt(L1 * L2);                        // H
+
+    // Sinusoidal current in coil 1
+    if (isAnimating) animTime += deltaTime / 1000;
+    let omega = TWO_PI * 50;                           // 50 Hz
+    let I1    = I1_peak * sin(omega * animTime);
+    let dI1dt = I1_peak * omega * cos(omega * animTime);
+    let V2    = M * dI1dt;                             // Faraday's law
+
+    background(240);
+    drawCoilPanel(I1, I1_peak, k, M, V2, sepLevel, align);
+    drawInfoPanel(I1_peak, k, M, V2, sepLevel, align);
+    drawControls(I1_peak, sepLevel, align);
+}
+
+function drawCoilPanel(I1, I1_peak, k, M, V2, sepLevel, align) {
+    fill(255); stroke(180); strokeWeight(1);
+    rect(4, 4, COIL_W - 8, DRAW_HEIGHT - 8, 6);
+
+    noStroke(); fill(40); textSize(12); textAlign(CENTER);
+    text("Magnetic Field Coupling", COIL_W / 2, 22);
+
+    // Coil positions
+    let cy1 = DRAW_HEIGHT / 2;
+    let sepPx = map(sepLevel, 1, 10, 60, 200);
+    let cx1 = COIL_W / 2 - sepPx / 2;
+    let cx2 = COIL_W / 2 + sepPx / 2;
+    let alignOff = map(align, 0, 1, 60, 0);  // vertical misalignment
+    let cy2 = cy1 + alignOff;
+
+    // Iron core
+    if (ironCore) {
+        fill(160, 130, 90); noStroke();
+        rect(cx1 - 60, cy1 - 8, cx2 - cx1 + 120, 16, 4);
+        fill(80); textSize(9); textAlign(CENTER);
+        text("Iron Core", COIL_W / 2, cy1 - 12);
+    }
+
+    // ---- Field lines ----
+    let nLines = ironCore ? 12 : 6;
+    let fieldStrength = abs(I1) / max(I1_peak, 0.001);
+    let lineAlpha = map(fieldStrength, 0, 1, 30, 200);
+
+    for (let i = 0; i < nLines; i++) {
+        let t = i / nLines;
+        let r = map(t, 0, 1, 20, 90);
+        // Elliptical field lines around coil 1
+        let col = lerpColor(color(220,120,50,lineAlpha), color(50,120,220,lineAlpha), k);
+        stroke(col); strokeWeight(1); noFill();
+        let xOff = ironCore ? sepPx * 0.4 : 0;
+        ellipse(cx1 + xOff * t, cy1, r * (1 + k * t), r * 0.5);
+    }
+
+    // ---- Coil 1 ----
+    drawCoilSymbol(cx1, cy1, I1, I1_peak, "Coil 1 (L1)", color(200,80,80));
+
+    // ---- Coil 2 ----
+    let I2_ind = I1 * k * 0.7;  // approximate induced effect
+    drawCoilSymbol(cx2, cy2, I2_ind, I1_peak, "Coil 2 (L2)", color(80,80,200));
+
+    // ---- Current arrow on coil 1 ----
+    if (abs(I1) > 0.02) {
+        let dir = I1 > 0 ? 1 : -1;
+        stroke(200,80,80); strokeWeight(2); fill(200,80,80);
+        drawArrow(cx1 - 30, cy1 - 40, cx1 + 30 * dir, cy1 - 40);
+        noStroke(); textSize(9); fill(200,80,80); textAlign(CENTER);
+        text("I1=" + abs(I1).toFixed(3) + "A", cx1, cy1 - 52);
+    }
+
+    // ---- Induced voltage indicator on coil 2 ----
+    let vScale = constrain(abs(V2), 0, 10);
+    if (vScale > 0.01) {
+        let vColor = V2 > 0 ? color(80,180,80) : color(180,80,180);
+        fill(vColor); noStroke();
+        ellipse(cx2, cy2 - 44, map(vScale, 0, 10, 4, 18), map(vScale, 0, 10, 4, 18));
+        noStroke(); fill(vColor); textSize(9); textAlign(CENTER);
+        text("V2=" + V2.toFixed(2) + "V", cx2, cy2 - 56);
+    }
+
+    // k label
+    noStroke(); fill(80); textSize(10); textAlign(CENTER);
+    text("k = " + k.toFixed(3) + "  |  M = " + formatInductance(M), COIL_W / 2, DRAW_HEIGHT - 14);
+}
+
+function drawCoilSymbol(cx, cy, I, Ipeak, label, col) {
+    let n = 5, r = 12, spacing = r * 1.8;
+    let totalW = n * spacing;
+    let startX = cx - totalW / 2;
+
+    stroke(col); strokeWeight(2.5); noFill();
+    // Draw coil humps
+    for (let i = 0; i < n; i++) {
+        let hx = startX + i * spacing + spacing / 2;
+        arc(hx, cy, spacing, r * 2, PI, TWO_PI);
+    }
+    // Leads
+    line(startX, cy, startX - 14, cy);
+    line(startX + totalW, cy, startX + totalW + 14, cy);
+
+    // Fill color shows current magnitude
+    let alpha = map(abs(I), 0, max(Ipeak, 0.001), 40, 180);
+    fill(red(col), green(col), blue(col), alpha);
+    noStroke();
+    rect(startX - 14, cy - 8, totalW + 28, 16, 3);
+    stroke(col); strokeWeight(2.5); noFill();
+    for (let i = 0; i < n; i++) {
+        let hx = startX + i * spacing + spacing / 2;
+        arc(hx, cy, spacing, r * 2, PI, TWO_PI);
+    }
+    line(startX, cy, startX - 14, cy);
+    line(startX + totalW, cy, startX + totalW + 14, cy);
+
+    noStroke(); fill(col); textSize(10); textAlign(CENTER);
+    text(label, cx, cy + r + 18);
+}
+
+function drawArrow(x1, y1, x2, y2) {
+    let headLen = 8;
+    stroke(200, 80, 80); strokeWeight(2);
+    line(x1, y1, x2, y2);
+    let angle = atan2(y2 - y1, x2 - x1);
+    fill(200, 80, 80); noStroke();
+    triangle(x2, y2,
+        x2 - headLen * cos(angle - PI/6), y2 - headLen * sin(angle - PI/6),
+        x2 - headLen * cos(angle + PI/6), y2 - headLen * sin(angle + PI/6));
+}
+
+function drawInfoPanel(I1_peak, k, M, V2, sepLevel, align) {
+    let px = INFO_X, py = 6, pw = INFO_W - 2, ph = DRAW_HEIGHT - 12;
+    fill(250); stroke(180); strokeWeight(1);
+    rect(px, py, pw, ph, 6);
+
+    noStroke(); fill(40); textSize(11); textAlign(LEFT);
+    let ry = py + 20;
+    text("Parameters:", px + 8, ry); ry += 18;
+    fill(80); textSize(10);
+    text("L1 = L2 = 10 mH", px + 8, ry); ry += 16;
+    text("k  = " + k.toFixed(3), px + 8, ry); ry += 16;
+    text("M  = " + formatInductance(M), px + 8, ry); ry += 16;
+    text("I1 = " + I1_peak.toFixed(2) + " A pk", px + 8, ry); ry += 16;
+    text("V2 = " + abs(V2).toFixed(3) + " V pk", px + 8, ry); ry += 20;
+
+    // Coupling category
+    let kCat = k < 0.1 ? "Loose" : k < 0.5 ? "Medium" : k < 0.9 ? "Tight" : "Very Tight";
+    fill(40); textSize(10);
+    text("Coupling:", px + 8, ry); ry += 14;
+    let catColor = k < 0.1 ? color(180,80,80) : k < 0.5 ? color(180,140,0) : color(40,140,40);
+    fill(catColor); textSize(11);
+    text(kCat, px + 8, ry); ry += 22;
+
+    // k bar
+    fill(80); textSize(9); textAlign(LEFT);
+    text("k:", px + 8, ry + 10);
+    let barW = pw - 28;
+    fill(230); stroke(180); strokeWeight(1);
+    rect(px + 22, ry, barW, 14, 3);
+    fill(catColor); noStroke();
+    rect(px + 22, ry, barW * k, 14, 3);
+    ry += 26;
+
+    fill(80); noStroke(); textSize(9); textAlign(LEFT);
+    text("0", px + 22, ry);
+    textAlign(RIGHT);
+    text("1", px + 22 + barW, ry);
+    ry += 14;
+
+    // Core toggle indicator
+    fill(ironCore ? color(80,140,80) : color(140,80,80));
+    textSize(10); textAlign(LEFT);
+    text("Core: " + (ironCore ? "Iron ↑k" : "Air"), px + 8, ry); ry += 20;
+
+    // Equation
+    fill(60); textSize(9);
+    text("V2 = M·dI1/dt", px + 8, ry); ry += 13;
+    text("M = k√(L1·L2)", px + 8, ry);
+}
+
+function drawControls(I1_peak, sepLevel, align) {
+    fill(245); stroke(180); strokeWeight(1);
+    rect(0, DRAW_HEIGHT, CANVAS_WIDTH, CONTROL_HEIGHT);
+
+    noStroke(); fill(50); textSize(11); textAlign(RIGHT);
+    text("Current: " + (I1_peak).toFixed(2) + " A", 155, DRAW_HEIGHT + 26);
+    text("Separation: " + sepLevel, 155, DRAW_HEIGHT + 54);
+    text("Alignment: " + alignSlider.value() + "%", 155, DRAW_HEIGHT + 82);
+
+    // Iron core button
+    fill(ironCore ? color(60,140,60) : color(100,100,140));
+    stroke(ironCore ? color(40,100,40) : color(70,70,110));
+    strokeWeight(1);
+    rect(ironBtn.x, ironBtn.y, ironBtn.w, ironBtn.h, 4);
+    noStroke(); fill(255); textSize(10); textAlign(CENTER, CENTER);
+    text(ironCore ? "Iron Core: ON" : "Iron Core: OFF", ironBtn.x + ironBtn.w/2, ironBtn.y + ironBtn.h/2);
+
+    // Start/Stop button
+    fill(isAnimating ? color(60,120,200) : color(80,140,80));
+    stroke(isAnimating ? color(40,90,170) : color(50,100,50));
+    strokeWeight(1);
+    rect(startStopBtn.x, startStopBtn.y, startStopBtn.w, startStopBtn.h, 4);
+    noStroke(); fill(255); textSize(10); textAlign(CENTER, CENTER);
+    text(isAnimating ? "Stop" : "Start", startStopBtn.x + startStopBtn.w/2, startStopBtn.y + startStopBtn.h/2);
+}
+
+function mousePressed() {
+    if (inBtn(ironBtn))      ironCore = !ironCore;
+    if (inBtn(startStopBtn)) isAnimating = !isAnimating;
+}
+
+function inBtn(btn) {
+    return mouseX >= btn.x && mouseX <= btn.x + btn.w &&
+           mouseY >= btn.y && mouseY <= btn.y + btn.h;
+}
+
+function formatInductance(L) {
+    if (L >= 1)    return L.toFixed(3) + " H";
+    if (L >= 1e-3) return (L*1e3).toFixed(3) + " mH";
+    return (L*1e6).toFixed(3) + " µH";
+}
+</script>
+</body>
+</html>

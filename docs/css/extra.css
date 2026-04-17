@@ -1,17 +1,107 @@
-.md-header__button.md-logo {
-    margin: 0;
-    padding: 0;
-}
-.md-header__button.md-logo img, .md-header__button.md-logo svg {
-    height: 60px;
-    width: 60px;
+/* ── Brand Colors — match Intelligent Textbook header style ──────────────── */
+:root {
+    --md-primary-fg-color:              #5A3EED;
+    --md-primary-fg-color--light:       #7A5CFF;
+    --md-primary-fg-color--dark:        #4527A0;
+    --md-primary-bg-color:              #ffffff;
+    --md-primary-bg-color--light:       #F6F1FF;
+    --md-accent-fg-color:               #D4A017;
+    --md-accent-fg-color--transparent:  rgba(212, 160, 23, 0.1);
 }
 
-/* Make Maroon the Primary Color */
-:root {
-    --md-primary-fg-color: #800000;
-    --md-primary-fg-color--light: #a04545;
-    --md-primary-fg-color--dark: #600000;
+/* Header bar — solid purple */
+.md-header {
+    background-color: #5A3EED;
+}
+
+/* Top navigation tabs — same purple background */
+.md-tabs {
+    background-color: #5A3EED;
+}
+
+/* Active and hovered tab text — gold accent */
+.md-tabs__link--active,
+.md-tabs__link:hover {
+    color: #D4A017 !important;
+}
+
+/* Sidebar active link — purple */
+.md-nav__link--active {
+    color: #5A3EED !important;
+    font-weight: 600;
+}
+
+/* Sidebar hover — gold accent */
+.md-nav__link:hover {
+    color: #D4A017 !important;
+}
+
+/* ── EE2301 Styled Chapter Support ─────────────────────────────────────── */
+
+/* Wrapper class for restyled chapters */
+.unit1-styled {
+    max-width: 100%;
+}
+
+/* Chapter section headings — h2 (major sections like 1.1, 1.2 …) */
+.md-typeset .unit1-styled h2 {
+    color: #5A3EED !important;
+    border-bottom: 2px solid #5A3EED;
+    padding-bottom: 0.4rem;
+    font-weight: 800;
+    margin-top: 2.2rem;
+    margin-bottom: 0.8rem;
+    border-left: none !important;
+    padding-left: 0 !important;
+}
+
+/* h3 — subsections */
+.md-typeset .unit1-styled h3 {
+    color: #5A3EED !important;
+    font-weight: 700;
+    margin-top: 1.8rem;
+    margin-bottom: 0.6rem;
+    border-left: none !important;
+    padding-left: 0 !important;
+}
+
+/* h4 — diagram labels and minor sub-headings */
+.md-typeset .unit1-styled h4 {
+    color: #5A3EED !important;
+    font-weight: 700;
+    margin-top: 2rem;
+    margin-bottom: 0.8rem;
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+/* Collapsible chapter overview */
+details.video-overview {
+    background: #F8F6FF;
+    border: 2px solid #D4C8FF;
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin: 1rem 0 1.5rem 0;
+    box-shadow: 0 2px 8px rgba(90,61,237,0.07);
+}
+
+details.video-overview > summary {
+    cursor: pointer;
+    font-size: 1.1rem;
+    color: #5A3EED;
+    margin-bottom: 0.5rem;
+}
+
+details.video-overview[open] > summary {
+    margin-bottom: 1rem;
+    border-bottom: 1px solid #D4C8FF;
+    padding-bottom: 0.5rem;
+}
+
+/* Remove blue iframe border inside styled chapters */
+.unit1-styled iframe {
+    border: none !important;
 }
 
 /* Container to control the iframe size and scaling */
@@ -55,117 +145,513 @@
   background-color: #0041a4; /* Darker blue on hover */
 }
 
-/* ── Audio Reader Player ────────────────────────────────────────────────── */
 
-/* Push page content up so the bar never covers text */
-body {
-  padding-bottom: 56px;
+/* ── Chapter 7 Styled Components ──────────────────────────────────────── */
+
+.chapter-styled { max-width: 100%; }
+
+.chapter-styled h1 {
+  color: #5A3EED !important;
+  font-weight: 800;
+  border-bottom: 3px solid #D4A017;
+  padding-bottom: 0.4rem;
 }
 
-#audio-reader {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  z-index: 9999;
-  background: #800000;
+.chapter-styled h2 {
+  color: #D4A017 !important;
+  border-left: 4px solid #D4A017;
+  padding-left: 0.7rem;
+  font-weight: 700;
+}
+
+.chapter-styled h3 { color: #5A3EED !important; font-weight: 600; }
+.chapter-styled h4 { color: #5A3EED !important; font-weight: 600; }
+
+.chapter-styled hr {
+  border: none; height: 2px;
+  background: linear-gradient(90deg, #D4A017, #5A3EED, #D4A017);
+  margin: 2rem 0;
+}
+
+.chapter-styled .concepts-box {
+  background: #F8F6FF; border: 2px solid #D4C8FF;
+  border-radius: 12px; padding: 20px 24px; margin: 1rem 0;
+}
+
+.chapter-styled .prereq-box {
+  background: #FFF8E1; border: 2px solid #FFE082;
+  border-radius: 12px; padding: 20px 24px; margin: 1rem 0;
+}
+
+/* MicroSim containers */
+.msim-box {
+  background: #fff; border: 1px solid #e0e0e0;
+  border-radius: 8px; padding: 12px; margin: 1rem 0;
+  position: relative; transition: all 0.3s ease;
+}
+
+.msim-box.msim-fs {
+  position: fixed !important; top: 0; left: 0;
+  width: 100vw !important; height: 100vh !important;
+  z-index: 9999; border-radius: 0;
+  overflow-y: auto; padding: 20px 30px; box-sizing: border-box;
+}
+
+.msim-btn {
+  position: absolute; top: 8px; right: 8px;
+  padding: 4px 12px; border: 1px solid #5A3EED;
+  border-radius: 4px; background: #F8F6FF;
+  color: #5A3EED; cursor: pointer;
+  font-size: 0.8em; font-weight: 600; z-index: 10;
+}
+
+.msim-btn:hover { background: #5A3EED; color: #fff; }
+.msim-box.msim-fs .msim-btn { position: fixed; top: 12px; right: 12px; }
+
+/* ── Cover Page ─────────────────────────────────────────────────────────── */
+
+.cover-page {
+  background: radial-gradient(ellipse at 50% -10%, #2D1A6E 0%, #1A0C4A 40%, #0D0630 70%, #060018 100%);
   color: #fff;
-  padding: 8px 16px;
-  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.35);
-  transition: transform 0.2s ease;
+  border-radius: 12px;
+  overflow: hidden;
+  margin: -0.8rem -1.6rem 0;
+  position: relative;  /* needed for absolute-positioned circuit overlay */
 }
 
-#audio-reader.audio-reader--hidden {
-  transform: translateY(100%);
+/* Full-cover background circuit art overlay */
+.cover-bg-circuit {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
 }
 
-#audio-reader-inner {
+/* Lift content layers above the background overlay */
+.cover-circuit,
+.cover-content,
+.cover-circuit-bottom {
+  position: relative;
+  z-index: 1;
+}
+
+.cover-content {
+  text-align: center;
+}
+
+.md-typeset .cover-content h1 {
+  color: #fff !important;
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.4rem;
+  text-shadow: 0 2px 20px rgba(124, 92, 239, 0.6);
+  border-bottom: none !important;
+}
+
+.cover-institution {
+  color: rgba(255,255,255,0.75);
+  font-size: 1rem;
+  line-height: 1.65;
+  margin: 0.5rem 0;
+}
+
+.cover-description {
+  color: rgba(255,255,255,0.62);
+  font-size: 0.93rem;
+  line-height: 1.65;
+  margin: 0.4rem 0 0;
+}
+
+.cover-stats {
   display: flex;
-  align-items: center;
-  gap: 10px;
-  max-width: 1280px;
-  margin: 0 auto;
+  justify-content: center;
+  gap: 2rem;
   flex-wrap: wrap;
 }
 
-#audio-reader-title {
-  font-weight: bold;
-  font-size: 0.88rem;
-  white-space: nowrap;
+.stat-item {
+  text-align: center;
+  min-width: 90px;
 }
 
-#audio-reader button {
-  background: rgba(255, 255, 255, 0.92);
-  color: #800000;
-  border: none;
-  border-radius: 4px;
-  padding: 4px 10px;
-  cursor: pointer;
-  font-size: 0.82rem;
+.stat-number {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: #D4A017;
+  line-height: 1;
+}
+
+.stat-label {
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.6);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-top: 0.3rem;
+}
+
+.cover-buttons .md-button {
+  color: rgba(255,255,255,0.88);
+  border-color: rgba(255,255,255,0.28);
+  background: rgba(255,255,255,0.07);
+}
+
+.cover-buttons .md-button--primary {
+  background: #5A3EED;
+  border-color: #5A3EED;
+  color: #fff;
+}
+
+@media (max-width: 600px) {
+  .cover-stats { gap: 1.2rem; }
+  .stat-number { font-size: 1.8rem; }
+}
+
+/* ── TTS Reader Controls (Chapter Overview Narration) ───────────────────── */
+
+.md-typeset .tts-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0.8rem 0 0.2rem 0;
+  padding: 0.3rem 0.6rem;
+  border-radius: 6px;
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+  border-left: 3px solid transparent;
+}
+
+.md-typeset .tts-controls.tts-active {
+  border-left-color: #00BFFF;
+  box-shadow: -2px 0 10px rgba(0, 191, 255, 0.15);
+}
+
+.md-typeset .tts-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 1rem;
+  border: 2px solid #5A3EED;
+  border-radius: 24px;
+  background: white;
+  color: #4527A0;
+  font-size: 0.9rem;
   font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.md-typeset .tts-btn:hover {
+  background: #5A3EED;
+  color: white;
+}
+
+.md-typeset .tts-btn:focus {
+  outline: 3px solid #7A5CFF;
+  outline-offset: 2px;
+}
+
+.md-typeset .tts-play[data-state="playing"] {
+  background: #5A3EED;
+  color: white;
+}
+
+.md-typeset .tts-stop {
+  border-color: #ef9a9a;
+  color: #e57373;
+  padding: 0.4rem 0.85rem;
+  font-weight: 500;
+  font-size: 0.85rem;
+}
+
+.md-typeset .tts-stop:hover {
+  background: #ef9a9a;
+  color: white;
+  border-color: #ef9a9a;
+}
+
+.md-typeset .tts-icon {
+  font-size: 0.85rem;
+}
+
+/* ── Sentence Highlighting ──────────────────────────────────────────────── */
+
+.md-typeset details.video-overview .tts-sentence {
+  border-radius: 2px;
+  padding: 1px 2px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.md-typeset details.video-overview .tts-sentence:hover {
+  background-color: rgba(90, 62, 237, 0.08);
+}
+
+.md-typeset details.video-overview .tts-sentence.tts-reading {
+  background-color: rgba(0, 191, 255, 0.14);
+}
+
+/* ── TTS Progress Bar ───────────────────────────────────────────────────── */
+
+.md-typeset .tts-progress-wrap {
+  flex-basis: 100%;
+  display: none;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.3rem;
+}
+
+.md-typeset .tts-controls.tts-active .tts-progress-wrap {
+  display: flex;
+}
+
+.md-typeset .tts-progress {
+  -webkit-appearance: none;
+  appearance: none;
+  flex: 1;
+  height: 4px;
+  border-radius: 2px;
+  background: linear-gradient(to right, #00BFFF var(--tts-fill, 0%), #e0e0e0 var(--tts-fill, 0%));
+  outline: none;
+  cursor: pointer;
+}
+
+.md-typeset .tts-progress::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #00BFFF;
+  border: none;
+  cursor: pointer;
+}
+
+.md-typeset .tts-progress::-moz-range-thumb {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #00BFFF;
+  border: none;
+  cursor: pointer;
+}
+
+.md-typeset .tts-progress::-moz-range-track {
+  height: 4px;
+  border-radius: 2px;
+  background: linear-gradient(to right, #00BFFF var(--tts-fill, 0%), #e0e0e0 var(--tts-fill, 0%));
+}
+
+.md-typeset .tts-progress-label {
+  font-size: 0.72rem;
+  color: #5A3EED;
+  font-variant-numeric: tabular-nums;
   white-space: nowrap;
-  transition: background 0.15s;
 }
 
-#audio-reader button:hover {
-  background: #fff;
+/* ── Active Reading Indicator (pulsing glow on details box) ─────────────── */
+
+@keyframes tts-details-glow {
+  0%, 100% { box-shadow: 0 0 6px rgba(0, 191, 255, 0.15); }
+  50%      { box-shadow: 0 0 14px rgba(0, 191, 255, 0.35); }
 }
 
-#audio-reader-minimize {
+.md-typeset details.video-overview.tts-details-active {
+  border-color: #00BFFF !important;
+  animation: tts-details-glow 3s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .md-typeset details.video-overview.tts-details-active {
+    animation: none;
+    box-shadow: 0 0 10px rgba(0, 191, 255, 0.25);
+  }
+}
+
+/* ── Footer Navigation (Previous / Next) ────────────────────────────────── */
+/*
+ * Styled to match EE2301 textbook: compact rounded cards with purple icon
+ * circles, clean typography, and subtle lift-on-hover interaction.
+ *
+ * Selectors target standard MkDocs Material classes:
+ *   .md-footer              – outer <footer>
+ *   .md-footer__inner       – <nav> holding prev/next links
+ *   .md-footer__link        – each <a> (--prev / --next)
+ *   .md-footer__direction   – "Previous" / "Next" label
+ *   .md-footer__title       – wrapper around page title
+ *   .md-footer__button      – icon wrapper
+ */
+
+/* Container — explicit white background so cards sit on a clean surface */
+.md-footer {
+  background: #ffffff;
+  border-top: 1px solid #E8E0FF;
+  color: inherit;
+}
+
+.md-footer__inner.md-grid {
+  display: flex !important;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding: 2rem 0.75rem 1.25rem;
+  max-width: 61rem;
+}
+
+/* Card (shared) */
+.md-footer__link {
+  flex: 1 1 0;
+  display: flex !important;
+  align-items: center;
+  gap: 1rem;
+  background: #F6F1FF;
+  border: 1.5px solid #C8B7FF;
+  border-radius: 14px;
+  padding: 1.15rem 1.5rem;
+  margin: 0;
+  max-width: 50%;
+  box-shadow: 0 2px 8px rgba(90, 62, 237, 0.07);
+  text-decoration: none !important;
+  opacity: 1 !important;
+  transition: background 0.22s ease,
+              border-color 0.22s ease,
+              box-shadow 0.22s ease,
+              transform 0.18s ease;
+}
+
+/* Hover / focus */
+.md-footer__link:hover,
+.md-footer__link:focus-visible {
+  background: #EEE6FF;
+  border-color: #7A5CFF;
+  box-shadow: 0 6px 18px rgba(90, 62, 237, 0.16);
+  transform: translateY(-3px);
+}
+
+.md-footer__link:active {
+  transform: translateY(-1px);
+  box-shadow: 0 3px 10px rgba(90, 62, 237, 0.12);
+}
+
+/* Previous card: icon left, text right */
+.md-footer__link--prev {
+  flex-direction: row;
+  text-align: left;
+}
+
+/* Next card: text left, icon right */
+.md-footer__link--next {
+  flex-direction: row;
+  text-align: right;
   margin-left: auto;
-  font-size: 1rem !important;
-  padding: 2px 8px !important;
+  margin-right: 0;
 }
 
-#audio-reader-speed-label,
-#audio-reader-voice-label {
+/* Material hides the prev title by default — force it visible */
+.md-footer__link--prev .md-footer__title {
+  display: block !important;
+}
+
+/* Icon circle */
+.md-footer__button.md-icon {
+  flex-shrink: 0;
   display: flex;
   align-items: center;
-  gap: 5px;
-  font-size: 0.8rem;
-  color: rgba(255, 255, 255, 0.9);
-  white-space: nowrap;
-}
-
-#audio-reader select {
-  background: rgba(255, 255, 255, 0.92);
-  color: #222;
-  border: none;
-  border-radius: 4px;
-  padding: 3px 5px;
-  font-size: 0.8rem;
-  cursor: pointer;
-}
-
-#audio-reader-status {
-  font-size: 0.75rem;
-  opacity: 0.75;
-  white-space: nowrap;
-}
-
-/* Minimized pill ── */
-#audio-reader-pill {
-  display: none;
-  position: fixed;
-  bottom: 12px;
-  right: 16px;
-  z-index: 9999;
-  background: #800000;
-  color: #fff;
-  border: none;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  margin: 0;
+  padding: 0;
   border-radius: 50%;
-  width: 44px;
-  height: 44px;
-  font-size: 1.3rem;
-  cursor: pointer;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
-  transition: background 0.15s;
+  background: #5A3EED;
+  transition: background 0.22s ease,
+              transform 0.18s ease;
 }
 
-#audio-reader-pill:hover {
-  background: #a04545;
+.md-footer__link:hover .md-footer__button.md-icon {
+  background: #4527A0;
+  transform: scale(1.1);
 }
 
-#audio-reader-pill.audio-reader-pill--visible {
+/* Arrow SVG — white, fills the circle */
+.md-footer__button.md-icon svg {
+  fill: #fff;
+  width: 1.35rem;
+  height: 1.35rem;
+}
+
+/* Title block */
+.md-footer__title {
+  flex-grow: 1;
+  min-width: 0;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #2F2F2F;
+  margin: 0;
+  padding: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* "PREVIOUS" / "NEXT" direction label */
+.md-footer__direction {
   display: block;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #5A3EED;
+  opacity: 1;
+  margin-bottom: 0.25rem;
+}
+
+/* Page title ellipsis */
+.md-footer__title .md-ellipsis {
+  display: block;
+  color: #2F2F2F;
+  font-weight: 500;
+  font-size: 0.92rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.md-footer__link:hover .md-footer__title .md-ellipsis {
+  color: #5A3EED;
+}
+
+/* Bottom meta bar — purple matching the site header, not dark charcoal */
+.md-footer-meta {
+  background-color: #5A3EED;
+}
+
+.md-footer-meta.md-typeset a {
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.md-footer-meta.md-typeset a:hover {
+  color: #D4A017;
+}
+
+/* Mobile: stack cards vertically */
+@media screen and (max-width: 720px) {
+  .md-footer__inner.md-grid {
+    flex-direction: column;
+    gap: 0.85rem;
+    padding: 1.25rem 0.75rem 1rem;
+  }
+
+  .md-footer__link {
+    max-width: 100%;
+    flex: none;
+  }
+
+  .md-footer__link--next {
+    margin-left: 0;
+  }
+
+  .md-footer__button.md-icon {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
 }

@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reactance vs Frequency</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+    <style>
+        body { margin: 0; padding: 0; background: #f0f0f0; display: flex; justify-content: center; }
+        canvas { display: block; }
+    </style>
+</head>
+<body>
+<script>
+// Reactance vs Frequency
+// Chapter 9: Phasors and Complex Impedance
+// Log-log plot: XL (red, rising) and XC (blue, falling) vs frequency
+
+const CANVAS_WIDTH   = 670;
+const DRAW_HEIGHT    = 370;
+const CONTROL_HEIGHT = 80;
+const CANVAS_HEIGHT  = DRAW_HEIGHT + CONTROL_HEIGHT;
+
+// Plot area
+const PLX = 60, PLY = 40, PLW = 540, PLH = 280;
+
+let lSlider, cSlider, fSlider;
+let logMode = true;
+let logBtn = { x: 510, y: DRAW_HEIGHT + 28, w: 110, h: 28 };
+
+// L: 0.1mH - 100mH (log), C: 1nF - 100µF (log), f: 10Hz - 1MHz (log)
+const L_MIN = 0.0001, L_MAX = 0.1;      // H
+const C_MIN = 1e-9,   C_MAX = 100e-6;   // F
+const F_MIN = 10,     F_MAX = 1e6;      // Hz
+
+function setup() {
+    let cnv = createCanvas(CANVAS_WIDTH, CANVAS_HEIGHT);
+    cnv.parent(document.body);
+    textFont('monospace');
+
+    let sy = DRAW_HEIGHT + 10;
+
+    lSlider = createSlider(0, 100, 33, 0.5);   // maps to log scale
+    lSlider.position(70, sy);
+    lSlider.size(130);
+    lSlider.style('cursor', 'pointer');
+
+    cSlider = createSlider(0, 100, 40, 0.5);
+    cSlider.position(280, sy);
+    cSlider.size(130);
+    cSlider.style('cursor', 'pointer');
+
+    fSlider = createSlider(0, 100, 50, 0.5);
+    fSlider.position(70, sy + 32);
+    fSlider.size(340);
+    fSlider.style('cursor', 'pointer');
+}
+
+function logMap(t, lo, hi) {
+    return lo * pow(hi / lo, t / 100);
+}
+
+function draw() {
+    let L  = logMap(lSlider.value(), L_MIN, L_MAX);
+    let C  = logMap(cSlider.value(), C_MIN, C_MAX);
+    let f  = logMap(fSlider.value(), F_MIN, F_MAX);
+    let f0 = 1 / (TWO_PI * sqrt(L * C));
+
+    background(240);
+    drawPlot(L, C, f, f0);
+    drawInfoPanel(L, C, f, f0);
+    drawControls(L, C, f, f0);
+}
+
+function drawPlot(L, C, fMark, f0) {
+    // Background
+    fill(255); stroke(180); strokeWeight(1);
+    rect(PLX - 6, PLY - 6, PLW + 14, PLH + 14, 4);
+
+    // Grid lines (log)
+    let fDecades = [10, 100, 1e3, 1e4, 1e5, 1e6];
+    let xDecades = [1, 10, 100, 1e3, 1e4];
+
+    stroke(235); strokeWeight(1);
+    for (let fd of fDecades) {
+        let x = fToX(fd);
+        if (x >= PLX && x <= PLX + PLW) line(x, PLY, x, PLY + PLH);
+    }
+    for (let xd of xDecades) {
+        let y = xToY(xd);
+        if (y >= PLY && y <= PLY + PLH) line(PLX, y, PLX + PLW, y);
+    }
+
+    // Axes
+    stroke(120); strokeWeight(1.5);
+    line(PLX, PLY, PLX, PLY + PLH);
+    line(PLX, PLY + PLH, PLX + PLW, PLY + PLH);
+
+    // Axis labels (frequency)
+    noStroke(); fill(80); textSize(9); textAlign(CENTER);
+    for (let fd of fDecades) {
+        let x = fToX(fd);
+        if (x < PLX || x > PLX + PLW) continue;
+        text(fmtHz(fd), x, PLY + PLH + 14);
+        stroke(160); strokeWeight(1);
+        line(x, PLY + PLH, x, PLY + PLH + 4);
+        noStroke();
+    }
+
+    // Reactance axis labels
+    textAlign(RIGHT);
+    for (let xd of xDecades) {
+        let y = xToY(xd);
+        if (y < PLY || y > PLY + PLH) continue;
+        text(fmtOhm(xd), PLX - 4, y + 4);
+        stroke(160); strokeWeight(1);
+        line(PLX - 3, y, PLX, y);
+        noStroke();
+    }
+
+    // Axis titles
+    noStroke(); fill(60); textSize(11); textAlign(CENTER);
+    text("Frequency (Hz)", PLX + PLW / 2, PLY + PLH + 30);
+    push();
+    translate(18, PLY + PLH / 2);
+    rotate(-HALF_PI);
+    text("Reactance (Ω)", 0, 0);
+    pop();
+
+    // Clip to plot area
+    drawingContext.save();
+    drawingContext.beginPath();
+    drawingContext.rect(PLX, PLY, PLW, PLH);
+    drawingContext.clip();
+
+    // XL curve (red)
+    stroke(200, 50, 50); strokeWeight(2); noFill();
+    beginShape();
+    for (let i = 0; i <= PLW; i++) {
+        let f = xToF(PLX + i);
+        let XL = TWO_PI * f * L;
+        let y = xToY(XL);
+        vertex(PLX + i, y);
+    }
+    endShape();
+
+    // XC curve (blue)
+    stroke(40, 100, 220); strokeWeight(2); noFill();
+    beginShape();
+    for (let i = 0; i <= PLW; i++) {
+        let f = xToF(PLX + i);
+        let XC = 1 / (TWO_PI * f * C);
+        let y = xToY(XC);
+        vertex(PLX + i, y);
+    }
+    endShape();
+
+    drawingContext.restore();
+
+    // Resonant frequency vertical line
+    let xf0 = fToX(f0);
+    if (xf0 >= PLX && xf0 <= PLX + PLW) {
+        stroke(100, 60, 180); strokeWeight(1.5);
+        drawingContext.setLineDash([5, 4]);
+        line(xf0, PLY, xf0, PLY + PLH);
+        drawingContext.setLineDash([]);
+        noStroke(); fill(100, 60, 180); textSize(10); textAlign(CENTER);
+        text("f₀", xf0, PLY - 6);
+        let XatF0 = TWO_PI * f0 * L;
+        let yF0 = xToY(XatF0);
+        if (yF0 >= PLY && yF0 <= PLY + PLH) {
+            fill(100, 60, 180); noStroke();
+            ellipse(xf0, yF0, 8, 8);
+            textSize(9); textAlign(LEFT);
+            text("XL=XC=" + fmtOhm(XatF0), xf0 + 5, yF0 - 4);
+        }
+    }
+
+    // Current frequency marker
+    let xFm = fToX(fMark);
+    if (xFm >= PLX && xFm <= PLX + PLW) {
+        let XL = TWO_PI * fMark * L;
+        let XC = 1 / (TWO_PI * fMark * C);
+        let yL = xToY(XL), yC = xToY(XC);
+
+        stroke(50); strokeWeight(2);
+        drawingContext.setLineDash([3, 3]);
+        line(xFm, PLY, xFm, PLY + PLH);
+        drawingContext.setLineDash([]);
+
+        // Dots at current frequency
+        fill(200, 50, 50); noStroke();
+        if (yL >= PLY && yL <= PLY + PLH) ellipse(xFm, yL, 9, 9);
+        fill(40, 100, 220);
+        if (yC >= PLY && yC <= PLY + PLH) ellipse(xFm, yC, 9, 9);
+    }
+
+    // Curve labels
+    noStroke(); fill(200, 50, 50); textSize(10); textAlign(LEFT);
+    text("XL = 2πfL  (rises with f)", PLX + 8, PLY + 20);
+    fill(40, 100, 220);
+    text("XC = 1/(2πfC)  (falls with f)", PLX + 8, PLY + PLH - 10);
+}
+
+function drawInfoPanel(L, C, fMark, f0) {
+    let px = PLX + PLW + 12, py = PLY - 6, pw = CANVAS_WIDTH - px - 6, ph = PLH + 14;
+    fill(252); stroke(200); strokeWeight(1);
+    rect(px, py, pw, ph, 4);
+
+    let XL  = TWO_PI * fMark * L;
+    let XC  = 1 / (TWO_PI * fMark * C);
+    let X0  = TWO_PI * f0 * L;
+
+    noStroke(); fill(40); textSize(11); textAlign(CENTER);
+    text("At cursor f:", px + pw / 2, py + 18);
+
+    fill(200, 50, 50); textSize(10); textAlign(LEFT);
+    text("XL =", px + 6, py + 36);
+    text(fmtOhm(XL), px + 6, py + 50);
+
+    fill(40, 100, 220);
+    text("XC =", px + 6, py + 70);
+    text(fmtOhm(XC), px + 6, py + 84);
+
+    noStroke(); fill(60); textSize(10); textAlign(LEFT);
+    let diff = XL - XC;
+    let diffStr = diff >= 0 ? "XL > XC" : "XC > XL";
+    fill(abs(diff) < 1 ? color(100, 60, 180) : color(80));
+    text(diffStr, px + 6, py + 102);
+
+    // Resonance info
+    noStroke(); fill(40); textSize(10); textAlign(CENTER);
+    text("─── Resonance ───", px + pw / 2, py + 122);
+    fill(100, 60, 180); textSize(10); textAlign(LEFT);
+    text("f₀ =", px + 6, py + 140);
+    text(fmtHz(f0), px + 6, py + 154);
+    text("XL=XC =", px + 6, py + 172);
+    text(fmtOhm(X0), px + 6, py + 186);
+
+    // Component values
+    noStroke(); fill(40); textSize(10); textAlign(CENTER);
+    text("─── Components ───", px + pw / 2, py + 210);
+    fill(80); textSize(10); textAlign(LEFT);
+    text("L = " + fmtH(L), px + 6, py + 228);
+    text("C = " + fmtF(C), px + 6, py + 244);
+}
+
+function drawControls(L, C, f, f0) {
+    fill(245); stroke(180); strokeWeight(1);
+    rect(0, DRAW_HEIGHT, CANVAS_WIDTH, CONTROL_HEIGHT);
+
+    noStroke(); fill(50); textSize(10); textAlign(RIGHT);
+    text("Inductance L:", 65, DRAW_HEIGHT + 20);
+    text("Frequency f:", 65, DRAW_HEIGHT + 52);
+    text("Capacitance C:", 275, DRAW_HEIGHT + 20);
+
+    fill(20, 80, 180); textSize(10); textAlign(LEFT);
+    text(fmtH(L), 205, DRAW_HEIGHT + 20);
+    text(fmtHz(f), 415, DRAW_HEIGHT + 52);
+    text(fmtF(C), 415, DRAW_HEIGHT + 20);
+
+    // Log/linear toggle
+    let lb = logBtn;
+    fill(logMode ? color(60, 120, 200) : color(180));
+    stroke(logMode ? color(40, 90, 160) : color(130));
+    strokeWeight(1);
+    rect(lb.x, lb.y, lb.w, lb.h, 4);
+    noStroke(); fill(logMode ? 255 : 50); textSize(10); textAlign(CENTER, CENTER);
+    text(logMode ? "Log Scale ✓" : "Linear Scale", lb.x + lb.w / 2, lb.y + lb.h / 2);
+}
+
+// ─── Mapping helpers ─────────────────────────────────────────────────────────
+const X_MIN = 0.1, X_MAX = 1e5;  // reactance range (Ω)
+
+function fToX(f) {
+    return map(log(f) / log(10), log(F_MIN) / log(10), log(F_MAX) / log(10), PLX, PLX + PLW);
+}
+function xToF(px) {
+    let t = map(px, PLX, PLX + PLW, 0, 1);
+    return pow(10, map(t, 0, 1, log(F_MIN) / log(10), log(F_MAX) / log(10)));
+}
+function xToY(X) {
+    X = max(X, 0.01);
+    return map(log(X) / log(10), log(X_MIN) / log(10), log(X_MAX) / log(10), PLY + PLH, PLY);
+}
+
+// ─── Formatters ──────────────────────────────────────────────────────────────
+function fmtHz(f) {
+    if (f >= 1e6) return (f / 1e6).toPrecision(3) + " MHz";
+    if (f >= 1e3) return (f / 1e3).toPrecision(3) + " kHz";
+    return f.toPrecision(3) + " Hz";
+}
+function fmtOhm(x) {
+    if (x >= 1e6) return (x / 1e6).toPrecision(3) + " MΩ";
+    if (x >= 1e3) return (x / 1e3).toPrecision(3) + " kΩ";
+    return x.toPrecision(3) + " Ω";
+}
+function fmtH(h) {
+    if (h >= 1)    return h.toPrecision(3) + " H";
+    if (h >= 1e-3) return (h * 1e3).toPrecision(3) + " mH";
+    return (h * 1e6).toPrecision(3) + " µH";
+}
+function fmtF(c) {
+    if (c >= 1e-3) return (c * 1e3).toPrecision(3) + " mF";
+    if (c >= 1e-6) return (c * 1e6).toPrecision(3) + " µF";
+    if (c >= 1e-9) return (c * 1e9).toPrecision(3) + " nF";
+    return (c * 1e12).toPrecision(3) + " pF";
+}
+
+function mousePressed() {
+    let lb = logBtn;
+    if (mouseX >= lb.x && mouseX <= lb.x + lb.w &&
+        mouseY >= lb.y && mouseY <= lb.y + lb.h) {
+        logMode = !logMode;
+    }
+}
+</script>
+</body>
+</html>

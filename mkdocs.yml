@@ -7,71 +7,188 @@ repo_url: 'https://github.com/dmccreary/circuits'
 edit_uri: 'blob/master/docs'
 
 nav:
-  - Home: index.md
-  - About This Course: about.md
-  - Course Description: course-description.md
+  - Cover: index.md
+
   - Chapters:
     - List of Chapters: chapters/index.md
-    - 1. Electric Charge and Quantities: chapters/01-electric-charge-basic-quantities/index.md
-    - 2. Ohm's Law and Configurations: chapters/02-ohms-law-basic-configurations/index.md
-    - 3. Kirchhoff's Laws and Topology: chapters/03-kirchhoffs-laws-topology/index.md
-    - 4. DC Circuit Analysis: chapters/04-dc-circuit-analysis/index.md
-    - 5. Passive Components: chapters/05-passive-components/index.md
-    - 6. Transient Analysis RC/RL: chapters/06-transient-analysis-rc-rl/index.md
-    - 7. Second-Order RLC Circuits: chapters/07-second-order-rlc-circuits/index.md
-    - 8. AC Signals and Sinusoids: chapters/08-ac-signals-sinusoidal/index.md
-    - 9. Phasors and Impedance: chapters/09-phasors-complex-impedance/index.md
-    - 10. AC Power Analysis: chapters/10-ac-power-analysis/index.md
-    - 11. Frequency Response and Bode: chapters/11-frequency-response-bode/index.md
-    - 12. Filters and Resonance: chapters/12-filters-resonance/index.md
-    - 13. Operational Amplifiers: chapters/13-operational-amplifiers/index.md
-    - 14. Signal Analysis and Fourier: chapters/14-signals-audio-lab/index.md
-    - 15. Audio Applications: chapters/15-audio-applications/index.md
-    - 16. Laboratory Techniques: chapters/16-laboratory-techniques/index.md
+    - 1. Electric Charge and Quantities:
+      - Overview: chapters/01-electric-charge-basic-quantities/index.md
+      - Content: chapters/01-electric-charge-basic-quantities/content.md
+      - Glossary: chapters/01-electric-charge-basic-quantities/glossary.md
+      - Problems: chapters/01-electric-charge-basic-quantities/problems.md
+      - Quiz: chapters/01-electric-charge-basic-quantities/quiz.md
+    - 2. Ohm's Law and Configurations:
+      - Overview: chapters/02-ohms-law-basic-configurations/index.md
+      - Content: chapters/02-ohms-law-basic-configurations/content.md
+      - Glossary: chapters/02-ohms-law-basic-configurations/glossary.md
+      - Problems: chapters/02-ohms-law-basic-configurations/problems.md
+      - Quiz: chapters/02-ohms-law-basic-configurations/quiz.md
+    - 3. Kirchhoff's Laws and Topology:
+      - Overview: chapters/03-kirchhoffs-laws-topology/index.md
+      - Content: chapters/03-kirchhoffs-laws-topology/content.md
+      - Glossary: chapters/03-kirchhoffs-laws-topology/glossary.md
+      - Problems: chapters/03-kirchhoffs-laws-topology/problems.md
+      - Quiz: chapters/03-kirchhoffs-laws-topology/quiz.md
+    - 4. DC Circuit Analysis:
+      - Overview: chapters/04-dc-circuit-analysis/index.md
+      - Content: chapters/04-dc-circuit-analysis/content.md
+      - Glossary: chapters/04-dc-circuit-analysis/glossary.md
+      - Problems: chapters/04-dc-circuit-analysis/problems.md
+      - Quiz: chapters/04-dc-circuit-analysis/quiz.md
+    - 5. Passive Components:
+      - Overview: chapters/05-passive-components/index.md
+      - Content: chapters/05-passive-components/content.md
+      - Glossary: chapters/05-passive-components/glossary.md
+      - Problems: chapters/05-passive-components/problems.md
+      - Quiz: chapters/05-passive-components/quiz.md
+    - 6. Transient Analysis RC/RL:
+      - Overview: chapters/06-transient-analysis-rc-rl/index.md
+      - Content: chapters/06-transient-analysis-rc-rl/content.md
+      - Glossary: chapters/06-transient-analysis-rc-rl/glossary.md
+      - Problems: chapters/06-transient-analysis-rc-rl/problems.md
+      - Practice Problems: chapters/06-transient-analysis-rc-rl/practice.md
+      - Quiz: chapters/06-transient-analysis-rc-rl/quiz.md
+    - 7. Second-Order RLC Circuits:
+      - Overview: chapters/07-second-order-rlc-circuits/index.md
+      - Content: chapters/07-second-order-rlc-circuits/content.md
+      - Glossary: chapters/07-second-order-rlc-circuits/glossary.md
+      - Problems: chapters/07-second-order-rlc-circuits/problems.md
+      - Quiz: chapters/07-second-order-rlc-circuits/quiz.md
+    - 8. AC Signals and Sinusoids:
+      - Overview: chapters/08-ac-signals-sinusoidal/index.md
+      - Content: chapters/08-ac-signals-sinusoidal/content.md
+      - Glossary: chapters/08-ac-signals-sinusoidal/glossary.md
+      - Problems: chapters/08-ac-signals-sinusoidal/problems.md
+      - Quiz: chapters/08-ac-signals-sinusoidal/quiz.md
+    - 9. Phasors and Impedance:
+      - Overview: chapters/09-phasors-complex-impedance/index.md
+      - Content: chapters/09-phasors-complex-impedance/content.md
+      - Glossary: chapters/09-phasors-complex-impedance/glossary.md
+      - Problems: chapters/09-phasors-complex-impedance/problems.md
+      - Quiz: chapters/09-phasors-complex-impedance/quiz.md
+    - 10. AC Power Analysis:
+      - Overview: chapters/10-ac-power-analysis/index.md
+      - Content: chapters/10-ac-power-analysis/content.md
+      - Glossary: chapters/10-ac-power-analysis/glossary.md
+      - Problems: chapters/10-ac-power-analysis/problems.md
+      - Practice Problems: chapters/10-ac-power-analysis/practice.md
+      - Quiz: chapters/10-ac-power-analysis/quiz.md
+    - 11. Frequency Response and Bode:
+      - Overview: chapters/11-frequency-response-bode/index.md
+      - Content: chapters/11-frequency-response-bode/content.md
+      - Glossary: chapters/11-frequency-response-bode/glossary.md
+      - Problems: chapters/11-frequency-response-bode/problems.md
+      - Practice Problems: chapters/11-frequency-response-bode/practice.md
+      - Quiz: chapters/11-frequency-response-bode/quiz.md
+    - 12. Filters and Resonance:
+      - Overview: chapters/12-filters-resonance/index.md
+      - Content: chapters/12-filters-resonance/content.md
+      - Glossary: chapters/12-filters-resonance/glossary.md
+      - Problems: chapters/12-filters-resonance/problems.md
+      - Practice Problems: chapters/12-filters-resonance/practice.md
+      - Quiz: chapters/12-filters-resonance/quiz.md
+    - 13. Operational Amplifiers:
+      - Overview: chapters/13-operational-amplifiers/index.md
+      - Content: chapters/13-operational-amplifiers/content.md
+      - Glossary: chapters/13-operational-amplifiers/glossary.md
+      - Problems: chapters/13-operational-amplifiers/problems.md
+      - Quiz: chapters/13-operational-amplifiers/quiz.md
+    - 14. Signal Analysis and Fourier:
+      - Overview: chapters/14-signals-audio-lab/index.md
+      - Content: chapters/14-signals-audio-lab/content.md
+      - Glossary: chapters/14-signals-audio-lab/glossary.md
+      - Problems: chapters/14-signals-audio-lab/problems.md
+      - Quiz: chapters/14-signals-audio-lab/quiz.md
+    - 15. Audio Applications:
+      - Overview: chapters/15-audio-applications/index.md
+      - Content: chapters/15-audio-applications/content.md
+      - Glossary: chapters/15-audio-applications/glossary.md
+      - Problems: chapters/15-audio-applications/problems.md
+      - Quiz: chapters/15-audio-applications/quiz.md
+    - 16. Laboratory Techniques:
+      - Overview: chapters/16-laboratory-techniques/index.md
+      - Content: chapters/16-laboratory-techniques/content.md
+      - Glossary: chapters/16-laboratory-techniques/glossary.md
+      - Problems: chapters/16-laboratory-techniques/problems.md
+      - Quiz: chapters/16-laboratory-techniques/quiz.md
 
   - MicroSims:
     - Introduction: sims/index.md
-    - Water Flow Analogy: sims/water-flow-analogy/index.md
-    - Power Triangle: sims/power-triangle/index.md
-    - Ground Symbols: sims/ground-symbols/index.md
-    - Circuit Symbol Flashcards: sims/circuit-symbol-flashcards/index.md
-    - Learning Graph: sims/learning-graph/index.md
+    - Audio Signal Chain: sims/audio-signal-chain/index.md
     - Background Grid: sims/background-grid/index.md
-    - Simple DC Circuit: sims/dc-circuit/index.md
+    - Bandwidth and Selectivity: sims/bandwidth-selectivity/index.md
+    - Capacitor Charging: sims/capacitor-charging/index.md
+    - Capacitor Combinations: sims/capacitor-combinations/index.md
+    - Circuit Symbol Flashcards: sims/circuit-symbol-flashcards/index.md
+    - Current Meter: sims/current-meter/index.md
     - DC Circuit V2: sims/dc-circuit/circuits-v2.md
-    - Natural Frequency Calculator: sims/natural-frequency-calculator/index.md
-    - RC Charging: sims/rc-charging/index.md
-    - RL Energizing: sims/rl-charging/index.md
-    - RLC Transient Response: sims/rlc-circuit/index.md
+    - Decibel Scale: sims/decibel-scale/index.md
+    - Exponential Properties: sims/exponential-properties/index.md
     - Filter Frequency Response: sims/filter-frequency-response/index.md
     - First-Order Filters: sims/first-order-filters/index.md
-    - Second-Order Filter Designer: sims/second-order-filter/index.md
-    - Audio Signal Chain: sims/audio-signal-chain/index.md
-    - Op-Amp Golden Rules: sims/opamp-golden-rules/index.md
-    - Op-Amp Configurations: sims/opamp-configurations/index.md
+    - Ground Symbols: sims/ground-symbols/index.md
+    - I-V Characteristics: sims/iv-characteristics/index.md
+    - Impedance Triangle: sims/impedance-triangle/index.md
+    - Initial and Final Conditions: sims/initial-final-conditions/index.md
     - Kirchhoff's Laws: sims/kirchhoffs-law/index.md
+    - Learning Graph: sims/learning-graph/index.md
+    - Learning Graph Viewer: sims/graph-viewer/index.md
+    - Mutual Inductance: sims/mutual-inductance/index.md
+    - Natural Frequency Calculator: sims/natural-frequency-calculator/index.md
     - Ohm's Law Triangle: sims/ohms-triangle/index.md
+    - Op-Amp Configurations: sims/opamp-configurations/index.md
+    - Op-Amp Golden Rules: sims/opamp-golden-rules/index.md
+    - Oscilloscope Guide: sims/oscilloscope/index.md
+    - Parallel Circuit Analysis: sims/parallel-circuit/index.md
+    - Parallel Plate Capacitor: sims/parallel-plate-capacitor/index.md
+    - Phasor Addition: sims/phasor-addition/index.md
+    - Phasor Circuit Solver: sims/phasor-circuit-solver/index.md
+    - Phasor Transformation: sims/phasor-transform/index.md
+    - Power Triangle: sims/power-triangle/index.md
+    - RC Charging: sims/rc-charging/index.md
+    - RC/RL Applications: sims/rc-rl-applications/index.md
+    - Reactance vs Frequency: sims/reactance-frequency/index.md
+    - Real Capacitor Model: sims/real-capacitor-model/index.md
+    - Resonance Comparison: sims/resonance-comparison/index.md
+    - RL Energizing: sims/rl-charging/index.md
+    - RLC Transient Response: sims/rlc-circuit/index.md
+    - RMS Calculation: sims/rms-calculation/index.md
+    - Second-Order Filter Designer: sims/second-order-filter/index.md
+    - Series Circuit Analysis: sims/series-circuit/index.md
+    - Series-Parallel Circuit Analysis: sims/series-parallel-circuit/index.md
+    - Signal Parameters: sims/signal-parameters/index.md
+    - Sinusoidal Waveform Anatomy: sims/sinusoid-anatomy/index.md
+    - Phase Relationship Visualizer: sims/phase-relationship/index.md
+    - DC and AC Component Separator: sims/dc-ac-separator/index.md
+    - Time Domain vs Frequency Domain: sims/time-frequency-domain/index.md
+    - Complex Number Visualizer: sims/complex-number-viz/index.md
+    - Euler's Formula Unit Circle: sims/euler-circle/index.md
+    - Gain and Decibel Converter: sims/gain-db-converter/index.md
+    - Simple DC Circuit: sims/dc-circuit/index.md
+    - Thevenin Equivalent Circuit: sims/thevenin-concept/index.md
+    - Voltage Divider Calculator: sims/voltage-divider/index.md
+    - Water Flow Analogy: sims/water-flow-analogy/index.md
+    - Circuit Node & Branch Identifier: sims/node-branch-trainer/index.md
+    - Power Dissipation Calculator: sims/power-dissipation-calc/index.md
+    - Resistor Physical Structure: sims/resistor-physical-structure/index.md
+    - Ohm's Law Calculator: sims/ohms-law-calculator/index.md
+    - Resistor Color Code Reader: sims/resistor-color-code/index.md
+    - Potentiometer Voltage Divider: sims/potentiometer/index.md
+    - Linear vs Nonlinear I-V: sims/linear-vs-nonlinear/index.md
+    - KCL Node Visualization: sims/kcl-node-viz/index.md
+    - KVL Loop Walkthrough: sims/kvl-loop-walkthrough/index.md
+    - Circuit Topology Explorer: sims/circuit-topology-explorer/index.md
+    - Supernode Analysis: sims/supernode-analysis/index.md
+    - Mesh vs Supermesh: sims/mesh-supermesh-compare/index.md
+    - Superposition Demonstrator: sims/superposition-demo/index.md
+    - Delta-Wye Transform: sims/delta-wye-transform/index.md
+    - Circuit Simplification: sims/circuit-simplification/index.md
+    - Matrix Equation Builder: sims/matrix-equation-builder/index.md
     - prompts/circuit-similarity/index.md
     - prompts/top-100-circuits/top-100-circuits.md
     - sims/circuit-similarity/index.md
     - sims/templates/index.md
 
-  - Circuits:
-    - List of Circuits: circuits/index.md
-    - SchemaDraw: circuits/schemadraw/index.md
-    - Test Table: circuits/schemadraw/test-table.md
-
-  - Supplementary Sections:
-    - Table of Contents: old-sections/index.md
-    - Introduction: old-sections/01-intro/index.md
-    - Voltage Across a Capacitor: old-sections/05-voltage-across-a-capacitor/index.md
-    - Circuit Laws: old-sections/02-laws/index.md
-    - Diodes: old-sections/50-diode/index.md
-    - Transistors:
-       - Introduction: old-sections/60-transistors/index.md
-       - LED Driver Circuit: old-sections/60-transistors/led-circuit.md
-    - MOSFETs: old-sections/70-mosfet/index.md
-  
   - Learning Graph:
     - Introduction: learning-graph/index.md
     - Concept List: learning-graph/concept-list.md
@@ -80,9 +197,11 @@ nav:
     - Concept Taxonomy: learning-graph/concept-taxonomy.md
     - Taxonomy Distribution: learning-graph/taxonomy-distribution.md
     - Chapter Metrics: learning-graph/chapter-metrics.md
+    - Book Metrics: learning-graph/book-metrics.md
     - FAQ Quality Report: learning-graph/faq-quality-report.md
+    - Mascot Style Guide: learning-graph/mascot-test.md
 
-  - Sample Prompts:
+  - Prompts:
     - Introduction: prompts/index.md
     - Learning Via Simulations: prompts/learning-via-interactive-simulations.md
     - Top 100 Circuits:
@@ -95,7 +214,7 @@ nav:
       - Generating Circuit Diagrams with Mermaid: prompts/circuit-diagrams/gen-circuit-diagrams-mermaid.md
     - Current-Voltage Plots: prompts/current-voltage-plots/index.md
     - Adding LaTeX Equations: prompts/adding-latex-equations.md
-    - Common Formulas: 
+    - Common Formulas:
       - Introduction: prompts/formulas/index.md
       - Full List: prompts/formulas/full.md
     - Frequently Asked Questions: prompts/frequently-asked-questions.md
@@ -116,7 +235,8 @@ nav:
     - Metaphors and Stories: prompts/metaphors-and-stories.md
     - Glossary Terms: prompts/glossary-terms.md
     - Similarity Plot: prompts/similarity-plot/index.md
-  
+    - Circuit Diagram Skill: prompts/circuit-diagram-skill.md
+    - Generate Chapter Content: prompts/generate-chapter-content.md
     - Component Tests:
       - Introduction: sims/components.md
       - Circuit Library Test: sims/circuit-lib/index.md
@@ -131,32 +251,62 @@ nav:
       - Animated Wire: sims/animated-wire/index.md
       - Wire: sims/wire/index.md
 
-  - FAQ: faq.md
+  - FAQ:
+    - General FAQ: faq.md
+    - Circuits FAQ: faq/index.md
+    - Series and Parallel: faq/series-and-parallel/index.md
 
   - Glossary: glossary.md
-  - How We Built This Site: how-we-built-this-site.md
-  - Feature Checklist: feature-checklist.md
-  - References: references.md
-  - License: license.md
-  - Contact: contact.md
+
+  - About:
+    - About This Course: about.md
+    - Course Mascots: mascots.md
+    - Course Description: course-description.md
+    - Circuits:
+      - List of Circuits: circuits/index.md
+      - SchemaDraw: circuits/schemadraw/index.md
+      - Test Table: circuits/schemadraw/test-table.md
+    - Supplementary Sections:
+      - Table of Contents: old-sections/index.md
+      - Introduction: old-sections/01-intro/index.md
+      - Voltage Across a Capacitor: old-sections/05-voltage-across-a-capacitor/index.md
+      - Circuit Laws: old-sections/02-laws/index.md
+      - Diodes: old-sections/50-diode/index.md
+      - Transistors:
+        - Introduction: old-sections/60-transistors/index.md
+        - LED Driver Circuit: old-sections/60-transistors/led-circuit.md
+      - MOSFETs: old-sections/70-mosfet/index.md
+      - Frequency Response: old-sections/10-frequency-response/index.md
+    - How We Built This Site: how-we-built-this-site.md
+    - Feature Checklist: feature-checklist.md
+    - References: references.md
+    - License: license.md
+    - Contact: contact.md
  
 # Dan's MicroSite Standards from here down
 
 theme:
   name: material
-  logo: img/course-logo.png
   favicon: img/favicon.ico
+  icon:
+    logo: material/chip
+  font:
+    text: Roboto
+    code: JetBrains Mono
   palette:
-    primary: 'blue'
-    accent: 'orange'
+    - scheme: default
+      primary: deep purple
+      accent: amber
   include_sidebar: true
   features:
     - content.code.copy
+    - navigation.tabs
+    - navigation.sections
     - navigation.expand
     - navigation.path
     - navigation.prune
     - navigation.indexes
-    - toc.follow
+    - toc.integrate
     - navigation.top
     # this adds the prev and next icons in the footer
     - navigation.footer
@@ -173,6 +323,7 @@ markdown_extensions:
   - pymdownx.details
   - pymdownx.superfences
   - attr_list
+  - md_in_html
   - pymdownx.highlight:
       linenums: true
   # enable LaTeX extensions with KaTeX
@@ -185,11 +336,13 @@ markdown_extensions:
 
 extra_css:
   - css/extra.css
+  - css/mascots.css
+  - css/mascot.css
   - https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css
 
 extra_javascript:
   - js/extra.js
-  - js/audio-reader.js
+  - js/tts-reader.js
   # configure KaTeX for rendering LaTeX math using backslash delimiters
   - js/katex.js
   - https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js

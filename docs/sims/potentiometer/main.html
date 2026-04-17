@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Potentiometer Simulator</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+<style>
+  body { margin: 0; background: #e8eaf0; display: flex; justify-content: center; padding: 10px; font-family: Arial, sans-serif; }
+  canvas { border-radius: 8px; box-shadow: 0 4px 16px rgba(0,0,0,0.18); }
+</style>
+</head>
+<body>
+<script>
+// ============================================================
+// Potentiometer MicroSim
+// Bloom L3 – Demonstrate variable voltage divider
+// ============================================================
+
+const CW = 820, CH = 420;
+
+// ---- State ----
+let pos      = 0.5;    // wiper position 0.0–1.0
+let vin      = 5.0;    // input voltage
+let rTotal   = 10000;  // total resistance (Ω)
+const R_OPTS = [1000, 10000, 100000];
+const R_LBLS = ['1 kΩ', '10 kΩ', '100 kΩ'];
+let rIdx     = 1;      // default 10kΩ
+
+// Knob geometry
+const KNX = 190, KNY = 195, KNR = 88;  // knob center & radius
+const KNOB_R = 32;
+const START_ANG = Math.PI * 0.75;       // 135° (bottom-left) = 0%
+const SWEEP     = Math.PI * 1.5;        // 270° total sweep
+let dragging = false;
+
+// Slider: position (beneath knob area)
+const SL_POS = { x:60, y:340, w:260 };
+// Vin slider (right panel)
+const SL_VIN = { x:490, y:55, w:220 };
+// R buttons
+const RBTN_Y = 105;
+
+function posToAngle(p2) { return START_ANG + p2 * SWEEP; }
+function angleToPos(a) {
+  let n = ((a - START_ANG) / SWEEP);
+  return Math.max(0, Math.min(1, n));
+}
+function rUpper() { return rTotal * (1 - pos); }
+function rLower() { return rTotal * pos; }
+function vout()   { return vin * pos; }
+
+function fmtR(v) {
+  if (v >= 1e6) return +(v/1e6).toPrecision(3) + ' MΩ';
+  if (v >= 1e3) return +(v/1e3).toPrecision(3) + ' kΩ';
+  return +v.toPrecision(3) + ' Ω';
+}
+function fmtV(v) { return v.toFixed(3) + ' V'; }
+
+new p5(function(p) {
+
+  p.setup = function() {
+    p.createCanvas(CW, CH);
+    p.textFont('Arial');
+  };
+
+  p.draw = function() {
+    p.background(232, 234, 240);
+    drawDivider();
+    drawKnobPanel();
+    drawSchematic();
+    drawControlPanel();
+  };
+
+  // ---- Centre divider line ----
+  function drawDivider() {
+    p.stroke(180,185,200); p.strokeWeight(1);
+    p.line(420, 10, 420, CH-10);
+  }
+
+  // ============================================================
+  // LEFT PANEL – Physical potentiometer
+  // ============================================================
+  function drawKnobPanel() {
+    // Panel bg
+    p.fill(245,247,255); p.noStroke();
+    p.rect(8, 8, 406, CH-16, 8);
+
+    p.fill(30,30,60); p.noStroke(); p.textSize(14); p.textStyle(p.BOLD);
+    p.textAlign(p.CENTER,p.TOP);
+    p.text('Potentiometer', 210, 18);
+    p.textStyle(p.NORMAL);
+
+    drawKnob();
+    drawTerminalLabels();
+    drawPositionSlider();
+    drawPosReadout();
+  }
+
+  function drawKnob() {
+    // Outer track arc (270° sweep, gray)
+    p.noFill(); p.stroke(180); p.strokeWeight(14);
+    p.arc(KNX, KNY, KNR*2, KNR*2, START_ANG, START_ANG + SWEEP);
+
+    // Colored portion of track (0% to pos)
+    const curAng = posToAngle(pos);
+
+    // Lower (red) = 0 to wiper
+    p.stroke(200, 50, 50); p.strokeWeight(14);
+    p.arc(KNX, KNY, KNR*2, KNR*2, START_ANG, curAng);
+
+    // Upper (blue) = wiper to end
+    if (pos < 0.999) {
+      p.stroke(50, 80, 200); p.strokeWeight(14);
+      p.arc(KNX, KNY, KNR*2, KNR*2, curAng, START_ANG + SWEEP);
+    }
+
+    // Tick marks at 0%, 25%, 50%, 75%, 100%
+    for (let t=0; t<=4; t++) {
+      const a = START_ANG + (t/4)*SWEEP;
+      const inner = KNR - 20, outer2 = KNR + 6;
+      p.stroke(120); p.strokeWeight(2);
+      p.line(KNX+Math.cos(a)*inner, KNY+Math.sin(a)*inner,
+             KNX+Math.cos(a)*outer2, KNY+Math.sin(a)*outer2);
+      // Tick label
+      const lx = KNX + Math.cos(a)*(KNR+22);
+      const ly = KNY + Math.sin(a)*(KNR+22);
+      p.noStroke(); p.fill(80,80,100); p.textSize(10); p.textAlign(p.CENTER,p.CENTER);
+      p.text(t*25+'%', lx, ly);
+    }
+
+    // Potentiometer body circle
+    p.fill(60,55,50); p.stroke(40); p.strokeWeight(2);
+    p.circle(KNX, KNY, KNOB_R*2 + 30);
+
+    // Knob body
+    p.fill(90,85,80); p.stroke(50); p.strokeWeight(1.5);
+    p.circle(KNX, KNY, KNOB_R*2);
+
+    // Knob indicator line
+    const ia = posToAngle(pos);
+    p.stroke(255,220,60); p.strokeWeight(3);
+    p.line(KNX, KNY,
+           KNX + Math.cos(ia)*(KNOB_R-4),
+           KNY + Math.sin(ia)*(KNOB_R-4));
+
+    // Wiper terminal (bottom)
+    const wiperA = posToAngle(pos);
+    const tx = KNX + Math.cos(wiperA)*(KNR + 16);
+    const ty = KNY + Math.sin(wiperA)*(KNR + 16);
+    // Draw wiper pin
+    p.fill(255,220,60); p.stroke(180,140,0); p.strokeWeight(2);
+    p.circle(tx, ty, 10);
+  }
+
+  function drawTerminalLabels() {
+    // Terminal dots on the track arc
+    const aStart = START_ANG, aEnd = START_ANG + SWEEP;
+    const dotR = KNR;
+
+    // Terminal 1 (CCW end = 0%) — R_upper connects here
+    const t1x = KNX+Math.cos(aStart)*dotR, t1y = KNY+Math.sin(aStart)*dotR;
+    // Terminal 3 (CW end = 100%) — bottom of divider
+    const t3x = KNX+Math.cos(aEnd)*dotR,   t3y = KNY+Math.sin(aEnd)*dotR;
+    // Terminal 2 (wiper)
+    const wiperA = posToAngle(pos);
+    const t2x = KNX+Math.cos(wiperA)*(dotR+16), t2y = KNY+Math.sin(wiperA)*(dotR+16);
+
+    [[t1x,t1y,'Pin 1\n(Vin)',[50,80,200]],
+     [t3x,t3y,'Pin 3\n(GND)',[140,30,30]],
+    ].forEach(([x,y,lbl,col]) => {
+      p.fill(...col); p.noStroke(); p.circle(x,y,10);
+      p.fill(...col); p.textSize(10); p.textAlign(p.CENTER,p.CENTER);
+      p.text(lbl, x + (x<KNX ? -22 : 22), y);
+    });
+
+    p.fill(180,130,0); p.noStroke(); p.circle(t2x,t2y,8);
+    p.fill(140,100,0); p.textSize(10); p.textAlign(p.CENTER,p.TOP);
+    p.text('Wiper\n(Vout)', t2x, t2y+8);
+  }
+
+  function drawPositionSlider() {
+    const {x,y,w} = SL_POS;
+    // Track
+    p.fill(180,185,200); p.noStroke(); p.rect(x, y-4, w, 8, 4);
+    // Fill
+    p.fill(50,130,220); p.rect(x, y-4, w*pos, 8, 4);
+    // Thumb
+    const tx2 = x + w*pos;
+    p.fill(255); p.stroke(100,130,200); p.strokeWeight(2);
+    p.circle(tx2, y, 18);
+    // Label
+    p.noStroke(); p.fill(50,50,80); p.textSize(11); p.textAlign(p.LEFT,p.CENTER);
+    p.text('Position:', x, y-18);
+    p.textAlign(p.RIGHT,p.CENTER);
+    p.text((pos*100).toFixed(1)+'%', x+w, y-18);
+  }
+
+  function drawPosReadout() {
+    const x=60, y=368;
+    p.noStroke(); p.fill(50,50,80); p.textSize(11); p.textAlign(p.LEFT,p.TOP);
+    p.text(`R_upper (blue): ${fmtR(rUpper())}`, x, y);
+    p.text(`R_lower (red):  ${fmtR(rLower())}`, x, y+18);
+  }
+
+  // ============================================================
+  // RIGHT PANEL – Schematic + controls
+  // ============================================================
+  function drawSchematic() {
+    const ox = 430, oy = 8;
+    p.fill(245,247,255); p.noStroke();
+    p.rect(ox, oy, CW-ox-8, 250, 8);
+
+    p.fill(30,30,60); p.textSize(14); p.textStyle(p.BOLD);
+    p.textAlign(p.CENTER,p.TOP);
+    p.text('Equivalent Circuit', ox + (CW-ox-8)/2, oy+10);
+    p.textStyle(p.NORMAL);
+
+    // Schematic layout: Vin source on left, two resistors stacked on right
+    const scx = 620, vtop = oy+45, vbot = oy+230;
+    const rcx = 710;  // resistor column
+    const wiperY = vtop + (vbot-vtop)*(1-pos); // wiper moves DOWN as pos increases
+
+    // Vin source
+    drawVsource(scx, vtop, vbot);
+
+    // Top wire: Vin+ to top of R_upper
+    p.stroke(50,80,200); p.strokeWeight(2); p.noFill();
+    p.line(scx, vtop, rcx, vtop);
+
+    // Bottom wire: Vin- to bottom of R_lower
+    p.stroke(140,30,30); p.strokeWeight(2);
+    p.line(scx, vbot, rcx, vbot);
+
+    // R_upper (blue): vtop to wiperY
+    drawResistorV(p, rcx, vtop, wiperY, `R₁ = ${fmtR(rUpper())}`, [50,80,200]);
+
+    // R_lower (red): wiperY to vbot
+    drawResistorV(p, rcx, wiperY, vbot, `R₂ = ${fmtR(rLower())}`, [180,40,40]);
+
+    // Wiper wire to Vout
+    const voutX = rcx + 55;
+    p.stroke(160,110,0); p.strokeWeight(2);
+    p.line(rcx, wiperY, voutX, wiperY);
+    // Vout dot
+    p.fill(200,150,0); p.noStroke(); p.circle(voutX, wiperY, 10);
+    // Vout label
+    p.fill(140,90,0); p.textSize(12); p.textAlign(p.LEFT,p.CENTER);
+    p.text('Vout = ' + fmtV(vout()), voutX+8, wiperY);
+
+    // Vin labels
+    p.noStroke(); p.fill(50,80,200); p.textSize(11); p.textAlign(p.RIGHT,p.CENTER);
+    p.text('Vin = '+fmtV(vin), scx-35, vtop);
+    p.fill(140,30,30); p.textAlign(p.RIGHT,p.CENTER);
+    p.text('GND', scx-35, vbot);
+
+    // Junction dots
+    [[rcx,vtop],[rcx,vbot],[rcx,wiperY]].forEach(([x,y]) => {
+      p.fill(30,30,30); p.noStroke(); p.circle(x,y,7);
+    });
+
+    // Formula
+    p.fill(50,50,90); p.textSize(11); p.textAlign(p.CENTER,p.TOP);
+    p.text('Vout = Vin × R₂ / (R₁+R₂) = Vin × pos', scx+10, vbot+10);
+  }
+
+  function drawVsource(x, y1, y2) {
+    const cy=(y1+y2)/2, r=24;
+    p.stroke(60,60,80); p.strokeWeight(2); p.noFill();
+    p.line(x, y1, x, cy-r);
+    p.line(x, cy+r, x, y2);
+    p.circle(x, cy, r*2);
+    p.noStroke(); p.fill(60,60,80); p.textSize(14); p.textAlign(p.CENTER,p.CENTER);
+    p.text('+', x, cy-r*0.4);
+    p.text('−', x, cy+r*0.45);
+    p.textSize(11); p.textAlign(p.RIGHT,p.CENTER);
+    p.text(fmtV(vin), x-r-4, cy);
+  }
+
+  function drawResistorV(p2, cx, y1, y2, lbl, col) {
+    if (Math.abs(y2-y1) < 8) {
+      // Too small to draw — just a wire
+      p2.stroke(...col); p2.strokeWeight(2); p2.noFill();
+      p2.line(cx, y1, cx, y2);
+      return;
+    }
+    const cy=(y1+y2)/2, rh=Math.min(30, Math.abs(y2-y1)*0.38), rw=12, n=6;
+    p2.stroke(...col); p2.strokeWeight(2); p2.noFill();
+    p2.line(cx, y1, cx, cy-rh);
+    p2.line(cx, cy+rh, cx, y2);
+    p2.beginShape();
+    p2.vertex(cx, cy-rh);
+    for (let i=0;i<n;i++) {
+      const yy = cy-rh + (2*rh)/n*(i+0.5);
+      p2.vertex(cx + (i%2===0?rw:-rw), yy);
+    }
+    p2.vertex(cx, cy+rh);
+    p2.endShape();
+    // Label to the right
+    p2.noStroke(); p2.fill(...col); p2.textSize(11); p2.textAlign(p2.LEFT,p2.CENTER);
+    p2.text(lbl, cx+18, cy);
+  }
+
+  function drawControlPanel() {
+    const ox=430, oy=268;
+    p.fill(220,225,242); p.noStroke();
+    p.rect(ox, oy, CW-ox-8, CH-oy-8, 8);
+
+    p.fill(30,30,60); p.textSize(13); p.textStyle(p.BOLD);
+    p.textAlign(p.LEFT,p.TOP);
+    p.text('Controls', ox+14, oy+10);
+    p.textStyle(p.NORMAL);
+
+    // Vin slider
+    drawLabelledSlider('Input Voltage (Vin):', SL_VIN, vin, 1, 12,
+      v => vin = v, fmtV(vin));
+
+    // Resistance selector buttons
+    p.fill(50,50,80); p.textSize(12); p.textAlign(p.LEFT,p.TOP);
+    p.text('Total Resistance:', ox+14, RBTN_Y);
+    R_LBLS.forEach((lbl,i) => {
+      const bx = ox+14 + i*76, by=RBTN_Y+18, bw=70, bh=28;
+      p.fill(i===rIdx ? [60,100,200] : [140,155,190]); p.noStroke();
+      p.rect(bx, by, bw, bh, 6);
+      p.fill(255); p.textSize(12); p.textAlign(p.CENTER,p.CENTER);
+      p.text(lbl, bx+bw/2, by+bh/2);
+    });
+
+    // Live readout
+    const rx=ox+14, ry=RBTN_Y+58;
+    p.noStroke(); p.fill(40,40,80); p.textSize(12); p.textAlign(p.LEFT,p.TOP);
+    p.text(`R₁ (upper) = ${fmtR(rUpper())}`, rx, ry);
+    p.text(`R₂ (lower) = ${fmtR(rLower())}`, rx, ry+18);
+    p.text(`Vin = ${fmtV(vin)}`, rx+200, ry);
+
+    // Vout large
+    p.fill(140,90,0); p.textSize(22); p.textStyle(p.BOLD);
+    p.textAlign(p.LEFT,p.TOP);
+    p.text('Vout = ' + fmtV(vout()), rx, ry+38);
+    p.textStyle(p.NORMAL);
+
+    // Divider equation
+    p.fill(80,80,110); p.textSize(11); p.textAlign(p.LEFT,p.TOP);
+    p.text(`= ${fmtV(vin)} × ${(pos*100).toFixed(1)}% = ${fmtV(vout())}`, rx+6, ry+66);
+  }
+
+  function drawLabelledSlider(label, sl, val, mn, mx2, setter, dispVal) {
+    const {x,y,w} = sl;
+    const t = (val-mn)/(mx2-mn);
+    // Label
+    p.noStroke(); p.fill(50,50,80); p.textSize(11); p.textAlign(p.LEFT,p.CENTER);
+    p.text(label, 430+14, y);
+    p.textAlign(p.RIGHT,p.CENTER);
+    p.text(dispVal, x+w, y);
+    // Track
+    p.fill(180,185,200); p.noStroke(); p.rect(x, y+12, w, 7, 3);
+    p.fill(50,130,220); p.rect(x, y+12, w*t, 7, 3);
+    // Thumb
+    const tx2 = x + w*t;
+    p.fill(255); p.stroke(100,130,200); p.strokeWeight(2);
+    p.circle(tx2, y+15, 18);
+  }
+
+  // ============================================================
+  // Input handling
+  // ============================================================
+  p.mousePressed = function() {
+    // Resistance buttons
+    const oy=268;
+    R_LBLS.forEach((lbl,i) => {
+      const bx = 430+14 + i*76, by=RBTN_Y+18, bw=70, bh=28;
+      if (p.mouseX>=bx && p.mouseX<=bx+bw && p.mouseY>=by && p.mouseY<=by+bh) {
+        rIdx=i; rTotal=R_OPTS[i];
+      }
+    });
+
+    // Start knob drag?
+    const dx=p.mouseX-KNX, dy=p.mouseY-KNY;
+    if (Math.sqrt(dx*dx+dy*dy) <= KNR+20) dragging=true;
+
+    // Position slider click
+    checkSliderClick();
+    checkVinSliderClick();
+  };
+
+  p.mouseDragged = function() {
+    if (dragging) {
+      const dx=p.mouseX-KNX, dy=p.mouseY-KNY;
+      let a = Math.atan2(dy, dx);
+      // Normalise angle to 0–2π
+      if (a < 0) a += 2*Math.PI;
+      // Clamp to START_ANG…START_ANG+SWEEP
+      let relA = a - START_ANG;
+      // Handle wrap-around (atan2 discontinuity)
+      if (relA < -Math.PI) relA += 2*Math.PI;
+      if (relA > Math.PI)  relA -= 2*Math.PI;
+      pos = Math.max(0, Math.min(1, relA / SWEEP));
+    }
+    checkSliderDrag();
+    checkVinSliderDrag();
+  };
+
+  p.mouseReleased = function() { dragging=false; };
+
+  function checkSliderClick() {
+    const {x,y,w} = SL_POS;
+    if (p.mouseX>=x && p.mouseX<=x+w && p.mouseY>=y-12 && p.mouseY<=y+12)
+      pos = Math.max(0, Math.min(1, (p.mouseX-x)/w));
+  }
+  function checkSliderDrag() {
+    const {x,y,w} = SL_POS;
+    if (p.mouseX>=x-10 && p.mouseX<=x+w+10 && p.mouseY>=y-15 && p.mouseY<=y+15)
+      pos = Math.max(0, Math.min(1, (p.mouseX-x)/w));
+  }
+  function checkVinSliderClick() {
+    const {x,y,w} = SL_VIN;
+    if (p.mouseX>=x && p.mouseX<=x+w && p.mouseY>=y+3 && p.mouseY<=y+28)
+      vin = Math.max(1, Math.min(12, 1 + ((p.mouseX-x)/w)*11));
+  }
+  function checkVinSliderDrag() {
+    const {x,y,w} = SL_VIN;
+    if (p.mouseX>=x-10 && p.mouseX<=x+w+10 && p.mouseY>=y && p.mouseY<=y+30)
+      vin = Math.max(1, Math.min(12, 1 + ((p.mouseX-x)/w)*11));
+  }
+
+}); // end p5
+</script>
+</body>
+</html>
