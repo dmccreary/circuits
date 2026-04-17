@@ -6,7 +6,12 @@
       "Bash(git add *)",
       "Bash(git commit -m ' *)",
       "Bash(git push *)",
-      "Bash(mkdocs gh-deploy *)"
+      "Bash(mkdocs gh-deploy *)",
+      "Read(//Users/dan/Documents/ws/claude-skills/skills/book-installer/**)",
+      "Read(//Users/dan/Documents/ws/claude-skills/skills/book-installer/references/**)",
+      "Bash(chmod +x /Users/dan/Documents/ws/claude-skills/skills/book-installer/scripts/validate-chapter-mascots.py)",
+      "Bash(python3 /Users/dan/Documents/ws/claude-skills/skills/book-installer/scripts/validate-chapter-mascots.py /Users/dan/Documents/ws/circuits/docs/learning-graph/mascot-test.md)",
+      "Bash(python3 /Users/dan/Documents/ws/claude-skills/skills/book-installer/scripts/validate-chapter-mascots.py /Users/dan/Documents/ws/circuits/docs/chapters/01-electric-charge-basic-quantities/content.md)"
     ]
   }
 }
