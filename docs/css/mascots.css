@@ -97,7 +97,7 @@
   border-bottom: 1px solid rgba(234, 88, 12, 0.2);
 }
 .mascot.sparky::before {
-  background-image: url('../img/mascots/sparky.svg');
+  background-image: url('../img/mascots/warning.png');
 }
 .mascot.sparky::after {
   content: 'Sparky — Warning';

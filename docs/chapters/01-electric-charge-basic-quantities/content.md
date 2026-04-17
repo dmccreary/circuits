@@ -23,6 +23,10 @@ This chapter introduces the fundamental electrical quantities that every circuit
 
 </details>
 
+!!! mascot-welcome "Welcome from Sparky"
+    <img src="../../../img/mascots/welcome.png" class="mascot-admonition-img" alt="Sparky waving welcome">
+    Hi, I'm Sparky! I'll pop up through the book to introduce ideas, flag the mistakes that trip students up, and cheer you on when you reach a milestone. Chapter 1 gives you the vocabulary every engineer uses — charge, current, voltage, resistance, and power — so everything after this can build on it.
+
 ## 1.1 Electric Charge: Where It All Begins
 
 Everything in the electrical world starts with **electric charge**. Charge is a fundamental property of matter, just like mass, but instead of telling you how much "stuff" something has, charge tells you how that stuff will interact electromagnetically.
@@ -130,8 +134,10 @@ Here's the crucial point: **voltage is always measured between two points**. You
 | European wall outlet (RMS) | 230 V |
 | High-voltage transmission line | 115,000 – 765,000 V |
 
-!!! warning "Safety First"
-    Voltages above about 50V can be dangerous to humans under certain conditions. While we'll mostly work with low-voltage circuits in the lab, always treat electricity with respect. The wall outlet in your room can absolutely kill you. Don't be a statistic.
+<div class="mascot sparky" markdown>
+**Safety First: Voltages Above 50V Can Kill**
+Voltages above about 50V can be dangerous to humans under certain conditions. While we'll mostly work with low-voltage circuits in the lab, always treat electricity with respect. The wall outlet in your room can absolutely kill you. Don't be a statistic.
+</div>
 
 ---
 
@@ -214,8 +220,9 @@ The unit of resistance is the **ohm** (Ω), represented by the Greek letter omeg
 | Glass | 10¹⁰ – 10¹⁴ Ω·m | Insulator |
 | Rubber | ~10¹³ Ω·m | Insulator |
 
-!!! note "Not Everything Obeys Ohm's Law"
-    Ohm's Law applies to *ohmic* (linear) materials where resistance is constant regardless of voltage or current. Many real devices — like diodes, transistors, and even light bulbs — are *non-ohmic*, meaning their resistance changes with operating conditions. We'll explore some of these in later chapters.
+!!! mascot-tip "Not Everything Obeys Ohm's Law"
+    <img src="../../../img/mascots/tip.png" class="mascot-admonition-img" alt="Sparky giving a tip">
+    Ohm's Law applies to *ohmic* (linear) materials where resistance is constant regardless of voltage or current. Many real devices — like diodes, transistors, and even light bulbs — are *non-ohmic*, meaning their resistance changes with operating conditions. We'll explore these in later chapters.
 
 ---
 
@@ -322,8 +329,10 @@ A **short circuit** has zero resistance — current can flow with no voltage dro
 - Current can be very large (limited only by other circuit elements)
 - This is often dangerous because excessive current causes overheating
 
-!!! danger "Short Circuits Are Dangerous"
-    Never create an unintentional short circuit, especially across a power source. A short across a battery can cause it to rapidly overheat, potentially causing fire or explosion. Circuit breakers and fuses exist specifically to protect against short-circuit conditions.
+<div class="mascot sparky" markdown>
+**Short Circuits Are Dangerous**
+Never create an unintentional short circuit, especially across a power source. A short across a battery can cause it to rapidly overheat, potentially causing fire or explosion. Circuit breakers and fuses exist specifically to protect against short-circuit conditions.
+</div>
 
 | Condition | Resistance | Current | Voltage Across |
 |-----------|------------|---------|----------------|
@@ -399,6 +408,10 @@ Before accepting any numerical answer, verify the units. Write out the units at 
 
 ---
 
+!!! mascot-encouraging "You're Closer Than You Think"
+    <img src="../../../img/mascots/encouraging.png" class="mascot-admonition-img" alt="Sparky encouraging">
+    If all of those equations feel like a lot at once, don't worry — the next section puts every piece together in one small worked example. You already know more than you think; we're just going to use it.
+
 ## 1.13 Putting It All Together: A Worked Example
 
 Let's see how all these concepts connect in a simple example. Consider a circuit with a 9V battery connected to a 1kΩ resistor.
@@ -426,6 +439,10 @@ A standard 1/4W (250mW) resistor can easily handle this power level.
 \[W = Pt = (0.081\text{ W})(3600\text{ s}) = 291.6\text{ J}\]
 
 ---
+
+!!! mascot-celebration "You Made It Through Chapter 1"
+    <img src="../../../img/mascots/celebration.png" class="mascot-admonition-img" alt="Sparky celebrating">
+    That's a real milestone — you now speak the language of circuits. Every chapter from here uses the same five quantities you just met: charge, current, voltage, resistance, and power. When you see them again in Chapter 2, they'll already feel like old friends.
 
 ## Chapter Summary
 
