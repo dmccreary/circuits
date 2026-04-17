@@ -237,6 +237,7 @@ nav:
     - Similarity Plot: prompts/similarity-plot/index.md
     - Circuit Diagram Skill: prompts/circuit-diagram-skill.md
     - Generate Chapter Content: prompts/generate-chapter-content.md
+    - Mascot Student Update Letter: prompts/mascot-student-update-letter.md
     - Component Tests:
       - Introduction: sims/components.md
       - Circuit Library Test: sims/circuit-lib/index.md
