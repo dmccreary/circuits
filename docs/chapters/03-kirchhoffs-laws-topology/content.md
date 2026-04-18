@@ -107,7 +107,7 @@ Correct application of KVL requires a consistent sign convention. The standard a
 #### Diagram: KVL Loop Walkthrough
 
 <div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
-<iframe src="../../../sims/kvl-loop-walkthrough/main.html" width="100%" height="520px" scrolling="no" style="border:none; border-radius:8px; overflow:hidden;"></iframe>
+<iframe src="../../../sims/kvl-loop-walkthrough/main.html" width="100%" height="630px" scrolling="no" style="border:none; border-radius:8px; overflow:hidden;"></iframe>
 </div>
 
 ### KVL Example: Single Loop Circuit

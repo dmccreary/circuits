@@ -5,7 +5,7 @@ description: Animated step-by-step walkthrough of Kirchhoff's Voltage Law, traci
 
 # KVL Loop Walkthrough
 
-<iframe src="main.html" width="100%" height="500px" scrolling="no"></iframe>
+<iframe src="main.html" width="100%" height="630px" scrolling="no"></iframe>
 
 [Run in fullscreen](main.html){ .md-button .md-button--primary }
 
