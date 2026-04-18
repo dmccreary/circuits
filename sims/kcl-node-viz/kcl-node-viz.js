@@ -4,7 +4,7 @@
 
 // ── Canvas & Layout ───────────────────────────────────────────────────────────
 let canvasW;
-const DRAW_H   = 320;
+const DRAW_H   = 340;
 const STATUS_H = 60;
 const CTRL_H   = 148;
 const canvasH  = DRAW_H + STATUS_H + CTRL_H;
@@ -24,7 +24,7 @@ const C_RED_D   = [183, 28,  28];
 const C_NODE_BG = [26,  35, 126];
 
 // ── Branch config ─────────────────────────────────────────────────────────────
-const BRANCH_LEN = 105;
+const BRANCH_LEN = 120;
 // top, right, bottom, left (Math.PI used — safe before p5 loads)
 const ANGLES  = [-Math.PI / 2, 0, Math.PI / 2, Math.PI];
 const LABELS  = ['I₁', 'I₂', 'I₃', 'I₄'];
@@ -73,7 +73,7 @@ function updateSize() {
 
 function buildLayout() {
     cx = canvasW / 2;
-    cy = 185;  // node center Y — leaves room for title above and status below
+    cy = 192;  // node center Y — leaves room for title above and status below
     sliderX = SL_LABEL_W + 20;
     sliderW = canvasW - sliderX - SL_VAL_W - 18;
 }
