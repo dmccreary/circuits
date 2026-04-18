@@ -42,7 +42,7 @@ Equivalently, the total current flowing into a node equals the total current flo
 #### Diagram: KCL Node Visualization
 
 <div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
-<iframe src="../../../sims/kcl-node-viz/main.html" width="100%" height="500px" scrolling="no" style="border:none; border-radius:8px; overflow:hidden;"></iframe>
+<iframe src="../../../sims/kcl-node-viz/main.html" width="100%" height="530px" scrolling="no" style="border:none; border-radius:8px; overflow:hidden;"></iframe>
 </div>
 
 ### Applying KCL
