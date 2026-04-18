@@ -30,7 +30,7 @@ let r2y1, r2y2;    // R2 box y-extents (vertical)
 let r3x1, r3x2;    // R3 box x-extents (horizontal, x1 > x2 = traversal goes left)
 
 const LOOP_H     = 256;
-const LOOP_TOP_Y = 68;
+const LOOP_TOP_Y = 96;
 
 // ── Canvas layout regions ─────────────────────────────────────────────────────
 const PANEL_Y  = 374;
@@ -163,7 +163,7 @@ function drawTitle() {
     textStyle(NORMAL);
     fill(...C_ACC);
     textSize(11);
-    text('Walk clockwise  ·  + for voltage rises  ·  − for drops  ·  ΣV = 0', cx, 32);
+    text('Walk clockwise  ·  + for voltage rises  ·  − for drops  ·  ΣV = 0', cx, 38);
 }
 
 // ── Circuit ───────────────────────────────────────────────────────────────────
@@ -357,9 +357,9 @@ function drawVAnnotation(step) {
     let ax, ay;
     switch (step.element) {
         case 'battery': ax = loopLeft - 56;  ay = midY;        break;
-        case 'r1':      ax = cx;             ay = loopTop - 46; break;
+        case 'r1':      ax = cx;             ay = loopTop + 44; break;
         case 'r2':      ax = loopRight + 54; ay = midY;        break;
-        case 'r3':      ax = cx;             ay = loopBot + 38; break;
+        case 'r3':      ax = cx;             ay = loopBot - 44; break;
         default: return;
     }
 
