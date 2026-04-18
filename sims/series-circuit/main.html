@@ -2,14 +2,17 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
 <title>Series Circuit Analysis</title>
 <script src="https://cdn.jsdelivr.net/npm/p5@1.11.7/lib/p5.js"></script>
 <script src="../circuit-lib/circuit-lib.js"></script>
-<style>
-  body { margin: 0; padding: 0; background: #e8eaf0; }
-  canvas { display: block; }
-</style>
+    <style>
+        html, body { margin: 0; padding: 0; height: 100%; overflow: hidden; }
+        body { font-family: Arial, Helvetica, sans-serif; background: #e8eaf0; }
+        main { display: block; }
+        canvas { display: block; }
+    </style>
 </head>
 <body>
 <main></main>
@@ -111,7 +114,7 @@ function setup() {
 // ══════════════════════════════════════════════════════════
 function draw() {
     if (isAnimating) animationTime += deltaTime;
-    background(232, 234, 240);
+    background(238, 241, 251);   // #eef1fb — Circuits 1 drawing-area tint
     drawSchematic();
     drawInfoPanel();
     drawControls();
@@ -399,8 +402,8 @@ function panelDivider(x, y, w) {
 // CONTROLS
 // ══════════════════════════════════════════════════════════
 function drawControls() {
-    // Control area background
-    fill(218, 224, 240);
+    // Control area background — Circuits 1 muted indigo
+    fill(221, 225, 240);   // #dde1f0
     noStroke();
     rect(0, circuitH, CW, controlH, 0, 0, 8, 8);
 
@@ -457,13 +460,13 @@ function drawSlider(label, val, mn, mx, cy, dispVal) {
     noStroke();
     rect(SL_X, cy - 4, SL_W, 8, 4);
 
-    // Track (filled portion)
-    fill(70, 110, 200);
+    // Track (filled portion) — Circuits 1 indigo
+    fill(57, 73, 171);    // #3949ab
     rect(SL_X, cy - 4, SL_W * t, 8, 4);
 
     // Thumb
     fill(255);
-    stroke(75, 110, 200);
+    stroke(57, 73, 171);
     strokeWeight(2);
     circle(tx, cy, 18);
 }
@@ -540,5 +543,6 @@ function applySliderDrag() {
     recalculate();
 }
 </script>
+<script src="../../js/microsim-controls.js"></script>
 </body>
 </html>
