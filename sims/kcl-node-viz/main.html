@@ -10,6 +10,31 @@
         body { font-family: Arial, Helvetica, sans-serif; background: #eef1fb; }
         main { display: flex; justify-content: center; }
         canvas { display: block; }
+
+        /* Numeric input fields for each current */
+        .kcl-input {
+            width: 60px;
+            height: 24px;
+            padding: 2px 6px;
+            border: 1.5px solid #9fa8da;
+            border-radius: 5px;
+            font-size: 12px;
+            font-family: Arial, Helvetica, sans-serif;
+            text-align: right;
+            background: #ffffff;
+            color: #1a237e;
+            box-sizing: border-box;
+            outline: none;
+            transition: border-color 0.15s, box-shadow 0.15s;
+        }
+        .kcl-input:focus {
+            border-color: #3949ab;
+            box-shadow: 0 0 0 2px rgba(57, 73, 171, 0.2);
+        }
+        /* Hide browser number spinners */
+        .kcl-input::-webkit-inner-spin-button,
+        .kcl-input::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+        .kcl-input[type=number] { -moz-appearance: textfield; }
     </style>
     <script src="kcl-node-viz.js"></script>
 </head>

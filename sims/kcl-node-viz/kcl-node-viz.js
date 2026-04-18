@@ -1,5 +1,5 @@
 // KCL Node Visualization MicroSim — Chapter 3
-// Professional redesign: clean layout, animated currents, real-time KCL check
+// Animated KCL demo with numeric inputs + sliders, real-time ΣI check
 'use strict';
 
 // ── Canvas & Layout ───────────────────────────────────────────────────────────
@@ -19,38 +19,36 @@ const C_PRIMARY = [57,  73, 171];
 const C_ACCENT  = [92, 107, 192];
 const C_GREEN   = [27, 153,  80];
 const C_GREEN_D = [27,  94,  32];
-const C_RED     = [211, 47,  47];
-const C_RED_D   = [183, 28,  28];
-const C_NODE_BG = [26,  35, 126];
+const C_RED     = [211,  47,  47];
+const C_RED_D   = [183,  28,  28];
+const C_NODE_BG = [26,   35, 126];
 
 // ── Branch config ─────────────────────────────────────────────────────────────
 const BRANCH_LEN = 120;
-// top, right, bottom, left (Math.PI used — safe before p5 loads)
-const ANGLES  = [-Math.PI / 2, 0, Math.PI / 2, Math.PI];
-const LABELS  = ['I₁', 'I₂', 'I₃', 'I₄'];
-const DEFAULTS = [3, 2, -4, -1];
-let currents  = [...DEFAULTS];
+const ANGLES     = [-Math.PI / 2, 0, Math.PI / 2, Math.PI]; // top right bottom left
+const LABELS     = ['I₁', 'I₂', 'I₃', 'I₄'];
+const DEFAULTS   = [3, 2, -4, -1];
+let   currents   = [...DEFAULTS];
 
-// Per-branch label alignment  [textAlignH, textAlignY-offset-px]
-// We compute positions manually; record h-align constant name for use in draw
+// Branch label positions relative to node center
 const LBL_CFG = [
-    // top:    label above endpoint
-    { dx: 0,  dy: -BRANCH_LEN - 16, ha: 'CENTER', va: 'BOTTOM' },
-    // right:  label right of endpoint
-    { dx: BRANCH_LEN + 26, dy: 0, ha: 'LEFT',   va: 'CENTER' },
-    // bottom: label below endpoint
-    { dx: 0,  dy: BRANCH_LEN + 14, ha: 'CENTER', va: 'TOP'    },
-    // left:   label left of endpoint
-    { dx: -BRANCH_LEN - 26, dy: 0, ha: 'RIGHT',  va: 'CENTER' },
+    { dx: 0,               dy: -BRANCH_LEN - 16 },  // top
+    { dx:  BRANCH_LEN + 26, dy: 0               },  // right
+    { dx: 0,               dy:  BRANCH_LEN + 14 },  // bottom
+    { dx: -BRANCH_LEN - 26, dy: 0               },  // left
 ];
 
-// ── Slider layout ─────────────────────────────────────────────────────────────
-const SL_LABEL_W = 56;   // px reserved for left label
-const SL_VAL_W   = 70;   // px reserved for right value
+// ── Slider + input layout ─────────────────────────────────────────────────────
+const INPUT_W    = 60;   // width of numeric input box (px)
+const INPUT_GAP  = 10;   // gap between input right-edge and slider left-edge
+const SL_LABEL_W = 52;   // space reserved for label text on far left
+const SL_VAL_W   = 58;   // space for value display on far right
 const SL_H       = 7;
 const KNOB_R     = 9;
+
 let sliderX, sliderW;
 let sliders = [];
+let inputs  = [];        // p5.js DOM input elements
 
 // ── Particles ─────────────────────────────────────────────────────────────────
 let dots = [];
@@ -64,6 +62,7 @@ function setup() {
     buildLayout();
     buildSliders();
     buildDots();
+    buildInputs();   // must come after buildSliders (needs slider positions)
 }
 
 function updateSize() {
@@ -73,16 +72,17 @@ function updateSize() {
 
 function buildLayout() {
     cx = canvasW / 2;
-    cy = 192;  // node center Y — leaves room for title above and status below
-    sliderX = SL_LABEL_W + 20;
-    sliderW = canvasW - sliderX - SL_VAL_W - 18;
+    cy = 192;
+    // Slider starts after: left-margin + label + gap + input + gap
+    sliderX = SL_LABEL_W + 8 + INPUT_W + INPUT_GAP;   // = 130
+    sliderW = canvasW - sliderX - SL_VAL_W - 16;
 }
 
 function buildSliders() {
     sliders = [];
     const firstY = DRAW_H + STATUS_H + 30;
     for (let i = 0; i < 4; i++) {
-        sliders.push({ x: sliderX, y: firstY + i * 28, val: currents[i], drag: false });
+        sliders.push({ x: sliderX, y: firstY + i * 28, val: DEFAULTS[i], drag: false });
     }
 }
 
@@ -95,16 +95,57 @@ function buildDots() {
     }
 }
 
+// ── Numeric inputs ────────────────────────────────────────────────────────────
+function buildInputs() {
+    for (const inp of inputs) inp.remove();
+    inputs = [];
+
+    for (let i = 0; i < 4; i++) {
+        const idx = i;
+        const inp = createInput(nf(DEFAULTS[idx], 1, 1));
+        inp.attribute('type', 'number');
+        inp.attribute('step', '0.5');
+        inp.attribute('min', '-5');
+        inp.attribute('max', '5');
+        inp.addClass('kcl-input');
+
+        // Typing → update slider val immediately
+        inp.input(() => {
+            const v = parseFloat(inp.value());
+            if (isFinite(v) && !isNaN(v)) {
+                sliders[idx].val = constrain(v, -5, 5);
+            }
+        });
+
+        inputs.push(inp);
+    }
+    positionInputs();
+}
+
+function positionInputs() {
+    if (inputs.length === 0) return;
+    const cvs = document.querySelector('canvas');
+    if (!cvs) return;
+    const rect = cvs.getBoundingClientRect();
+    for (let i = 0; i < 4; i++) {
+        const s = sliders[i];
+        // Input sits between label and slider in canvas x-space
+        inputs[i].position(
+            rect.left + s.x - INPUT_W - INPUT_GAP,
+            rect.top  + s.y - 12    // 12 ≈ half the 24px input height
+        );
+    }
+}
+
 // ── Draw loop ─────────────────────────────────────────────────────────────────
 function draw() {
     background(C_BG_DRAW);
 
-    // Control area background
     noStroke();
     fill(C_BG_CTRL);
     rect(0, DRAW_H, canvasW, STATUS_H + CTRL_H);
 
-    // Sync current values from sliders
+    // Pull current values from sliders (inputs update sliders directly)
     for (let i = 0; i < 4; i++) currents[i] = sliders[i].val;
 
     drawTitle();
@@ -149,42 +190,33 @@ function drawBranches() {
         fill(col);
         ellipse(ex, ey, 13, 13);
 
-        // Direction arrow at ~52% along branch (clear of node)
+        // Directional arrow at 52% along branch
         if (abs(v) > 0.05) {
             const mid = 0.52;
             const ax  = cx + cos(a) * BRANCH_LEN * mid;
             const ay  = cy + sin(a) * BRANCH_LEN * mid;
-            // Positive = entering node → arrow points toward node (angle + PI)
+            // Positive = toward node (arrow + PI)
             const arrAngle = v > 0 ? a + Math.PI : a;
             const sz = map(abs(v), 0, 5, 7, 14);
             push();
             translate(ax, ay);
             rotate(arrAngle);
-            fill(col);
-            noStroke();
+            fill(col); noStroke();
             triangle(0, 0, -sz * 1.7, -sz * 0.55, -sz * 1.7, sz * 0.55);
             pop();
         }
 
-        // Label with white pill background
-        const cfg = LBL_CFG[i];
-        const lx  = cx + cfg.dx;
-        const ly  = cy + cfg.dy;
-        const sg  = v >= 0 ? '+' : '';
-        const lbl = LABELS[i] + ' = ' + sg + nf(v, 1, 1) + ' A';
-
-        // Background pill
+        // Label pill
+        const lx = cx + LBL_CFG[i].dx;
+        const ly = cy + LBL_CFG[i].dy;
+        const sg = v >= 0 ? '+' : '';
         noStroke();
         fill(255, 255, 255, 210);
-        const tw = 78, th = 20;
-        rect(lx - tw / 2, ly - th / 2, tw, th, 5);
-
-        // Label text
+        rect(lx - 39, ly - 10, 78, 20, 5);
         fill(v >= 0 ? color(...C_GREEN_D) : color(...C_RED_D));
         textAlign(CENTER, CENTER);
-        textSize(12);
-        textStyle(BOLD);
-        text(lbl, lx, ly);
+        textSize(12); textStyle(BOLD);
+        text(LABELS[i] + ' = ' + sg + nf(v, 1, 1) + ' A', lx, ly);
         textStyle(NORMAL);
     }
 }
@@ -213,20 +245,11 @@ function animateDots() {
 // ── Central node ──────────────────────────────────────────────────────────────
 function drawNode() {
     noStroke();
-    // Outer halo
-    fill(...C_PRIMARY, 30);
-    ellipse(cx, cy, 52, 52);
-    // Inner glow
-    fill(...C_PRIMARY, 55);
-    ellipse(cx, cy, 38, 38);
-    // Solid core
-    fill(...C_NODE_BG);
-    ellipse(cx, cy, 26, 26);
-    // Label
+    fill(...C_PRIMARY, 30);  ellipse(cx, cy, 52, 52);
+    fill(...C_PRIMARY, 55);  ellipse(cx, cy, 38, 38);
+    fill(...C_NODE_BG);      ellipse(cx, cy, 26, 26);
     fill(255);
-    textAlign(CENTER, CENTER);
-    textSize(12);
-    textStyle(BOLD);
+    textAlign(CENTER, CENTER); textSize(12); textStyle(BOLD);
     text('N', cx, cy);
     textStyle(NORMAL);
 }
@@ -235,43 +258,28 @@ function drawNode() {
 function drawStatusBar() {
     const sum = currents.reduce((a, b) => a + b, 0);
     const ok  = abs(sum) < 0.05;
+    const sy  = DRAW_H + 4;
+    const ph  = STATUS_H - 10;
 
-    const sy = DRAW_H + 4;
-    const pw = canvasW - 20;
-    const ph = STATUS_H - 10;
-
-    // Background
     noStroke();
     fill(ok ? color(232, 245, 233) : color(253, 237, 237));
-    rect(10, sy, pw, ph, 10);
-
-    // Border
+    rect(10, sy, canvasW - 20, ph, 10);
     stroke(ok ? color(76, 175, 80) : color(229, 57, 53));
-    strokeWeight(1.5);
-    noFill();
-    rect(10, sy, pw, ph, 10);
+    strokeWeight(1.5); noFill();
+    rect(10, sy, canvasW - 20, ph, 10);
 
     const midY = sy + ph / 2;
-
-    // Left: ΣI value
     noStroke();
-    fill(30);
-    textAlign(LEFT, CENTER);
-    textSize(14);
-    textStyle(BOLD);
-    text('ΣI = ' + (sum >= 0 ? '+' : '') + nf(sum, 1, 2) + ' A', 22, midY);
-    textStyle(NORMAL);
 
-    // Center: equation reminder
+    fill(30);
+    textAlign(LEFT, CENTER); textSize(14); textStyle(BOLD);
+    text('ΣI = ' + (sum >= 0 ? '+' : '') + nf(sum, 1, 2) + ' A', 22, midY);
+
     fill(...C_ACCENT);
-    textAlign(CENTER, CENTER);
-    textSize(12);
+    textAlign(CENTER, CENTER); textSize(12); textStyle(NORMAL);
     text('( must equal 0 for KCL )', cx, midY);
 
-    // Right: status
-    textAlign(RIGHT, CENTER);
-    textSize(13);
-    textStyle(BOLD);
+    textAlign(RIGHT, CENTER); textSize(13); textStyle(BOLD);
     if (ok) {
         fill(...C_GREEN);
         text('✓ KCL Satisfied', canvasW - 22, midY);
@@ -287,12 +295,9 @@ function drawStatusBar() {
 function drawControlPanel() {
     const panelY = DRAW_H + STATUS_H;
 
-    // Section header
-    noStroke();
-    fill(...C_DEEP);
-    textAlign(CENTER, TOP);
-    textSize(11);
-    textStyle(BOLD);
+    // Header
+    noStroke(); fill(...C_DEEP);
+    textAlign(CENTER, TOP); textSize(11); textStyle(BOLD);
     text('Adjust Currents    ( + = entering node   |   − = leaving node )', cx, panelY + 6);
     textStyle(NORMAL);
 
@@ -303,45 +308,40 @@ function drawControlPanel() {
         const knobX = map(v, -5, 5, s.x, s.x + sliderW);
         const zeroX = map(0,  -5, 5, s.x, s.x + sliderW);
 
-        // Left label
-        noStroke();
-        fill(30);
-        textAlign(RIGHT, CENTER);
-        textSize(12);
-        textStyle(BOLD);
-        text(LABELS[i] + ':', s.x - 10, s.y);
+        // Label — right-aligned just before input box
+        noStroke(); fill(30);
+        textAlign(RIGHT, CENTER); textSize(12); textStyle(BOLD);
+        text(LABELS[i] + ':', s.x - INPUT_W - INPUT_GAP - 6, s.y);
         textStyle(NORMAL);
 
+        // "A" unit — between input and slider
+        fill(80);
+        textAlign(CENTER, CENTER); textSize(11);
+        text('A', s.x - INPUT_GAP / 2, s.y);
+
         // Track background
-        stroke(195);
-        strokeWeight(SL_H);
-        strokeCap(ROUND);
+        stroke(195); strokeWeight(SL_H); strokeCap(ROUND);
         line(s.x, s.y, s.x + sliderW, s.y);
 
         // Colored fill from zero to knob
-        stroke(col);
-        strokeWeight(SL_H - 1);
+        stroke(col); strokeWeight(SL_H - 1);
         line(zeroX, s.y, knobX, s.y);
 
         // Zero tick
-        stroke(120);
-        strokeWeight(1.5);
+        stroke(120); strokeWeight(1.5);
         line(zeroX, s.y - 8, zeroX, s.y + 8);
 
-        // Knob: white ring + color fill
-        noStroke();
-        fill(255);
+        // Knob
+        noStroke(); fill(255);
         ellipse(knobX, s.y, KNOB_R * 2 + 6, KNOB_R * 2 + 6);
         fill(col);
         ellipse(knobX, s.y, KNOB_R * 2, KNOB_R * 2);
 
-        // Right value
+        // Right value display
         noStroke();
         fill(v >= 0 ? color(...C_GREEN_D) : color(...C_RED_D));
-        textAlign(LEFT, CENTER);
-        textSize(12);
-        textStyle(BOLD);
-        text((v >= 0 ? '+' : '') + nf(v, 1, 1) + ' A', s.x + sliderW + 10, s.y);
+        textAlign(LEFT, CENTER); textSize(11); textStyle(BOLD);
+        text((v >= 0 ? '+' : '') + nf(v, 1, 1) + ' A', s.x + sliderW + 8, s.y);
         textStyle(NORMAL);
     }
 }
@@ -355,11 +355,16 @@ function mousePressed() {
 }
 
 function mouseDragged() {
-    for (const s of sliders) {
+    for (let i = 0; i < sliders.length; i++) {
+        const s = sliders[i];
         if (!s.drag) continue;
         let nv = map(mouseX, s.x, s.x + sliderW, -5, 5);
         nv = round(nv * 2) / 2;   // snap to 0.5 A steps
         s.val = constrain(nv, -5, 5);
+        // Sync input field unless user is actively typing in it
+        if (inputs[i] && document.activeElement !== inputs[i].elt) {
+            inputs[i].value(nf(s.val, 1, 1));
+        }
     }
 }
 
@@ -377,4 +382,5 @@ function windowResized() {
     resizeCanvas(canvasW, canvasH);
     buildLayout();
     buildSliders();
+    positionInputs();   // reposition without rebuilding
 }
