@@ -5,7 +5,9 @@ description: Interactive demonstration of the superposition principle showing ho
 
 # Superposition Principle Demonstrator
 
-<iframe src="main.html" width="100%" height="500px" scrolling="no"></iframe>
+<iframe src="main.html" width="100%"
+    style="height:680px; display:block; border:none;"
+    scrolling="no"></iframe>
 
 [Run in fullscreen](main.html){ .md-button .md-button--primary }
 
