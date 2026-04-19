@@ -5,6 +5,7 @@ let canvasHeight = 500;   // placeholder; recomputed in buildLayout()
 const margin    = 14;
 const controlsY = 305;   // y where the two bottom panels begin
 
+let vin = 10;   // main supply voltage (controlled by dropdown)
 let vs = 5;
 let r1 = 1000, r2 = 2000, r3 = 1000;
 
@@ -53,8 +54,8 @@ const colGround      = [90,  105, 120];
 
 let nodePos = {};
 
-let vsDropdown;
-const VS_PRESETS = [1, 2, 3, 5, 8, 10, 12, 15, 20];
+let vinDropdown;
+const VIN_PRESETS = [5, 8, 10, 12, 15, 20, 24];
 
 // ── Setup ─────────────────────────────────────────────────────────────────────
 
@@ -64,7 +65,7 @@ function setup() {
     canvas.parent(document.querySelector('main'));
     textFont('Arial');
     initSliders();
-    initVsDropdown();
+    initVinDropdown();
     buildLayout();   // computes true canvasHeight and calls resizeCanvas()
 
     // Respond to height-request from parent page (e.g., on focus after fullscreen exit)
@@ -121,28 +122,24 @@ function initSliders() {
     });
 }
 
-function initVsDropdown() {
-    vsDropdown = createSelect();
-    VS_PRESETS.forEach(v => vsDropdown.option(v + ' V', String(v)));
-    vsDropdown.value('5');  // match initial vs
+function initVinDropdown() {
+    vinDropdown = createSelect();
+    VIN_PRESETS.forEach(v => vinDropdown.option(v + ' V', String(v)));
+    vinDropdown.value('10');  // match initial vin=10
 
-    vsDropdown.style('font-size',    '12px');
-    vsDropdown.style('font-family',  'Arial,sans-serif');
-    vsDropdown.style('padding',      '3px 5px');
-    vsDropdown.style('border',       '1.5px solid #94a3b8');
-    vsDropdown.style('border-radius','4px');
-    vsDropdown.style('background',   '#f8fafc');
-    vsDropdown.style('color',        '#1e293b');
-    vsDropdown.style('cursor',       'pointer');
-    vsDropdown.style('position',     'absolute');
-    vsDropdown.style('width',        '72px');
+    vinDropdown.style('font-size',    '12px');
+    vinDropdown.style('font-family',  'Arial,sans-serif');
+    vinDropdown.style('padding',      '3px 5px');
+    vinDropdown.style('border',       '1.5px solid #94a3b8');
+    vinDropdown.style('border-radius','4px');
+    vinDropdown.style('background',   '#f8fafc');
+    vinDropdown.style('color',        '#1e293b');
+    vinDropdown.style('cursor',       'pointer');
+    vinDropdown.style('position',     'absolute');
+    vinDropdown.style('width',        '72px');
 
-    vsDropdown.changed(() => {
-        const val = parseFloat(vsDropdown.value());
-        vs = val;
-        sliders[0].val = val;
-        sliders[0].inp.value(sliders[0].fmt(val));
-        sliders[0].setter(val);
+    vinDropdown.elt.addEventListener('change', function() {
+        vin = parseFloat(this.value);
         solved = false;
     });
 }
@@ -235,10 +232,10 @@ function buildLayout() {
         s.inp.size(INPUT_W);
     });
 
-    // Position Vs dropdown to the right of the circuit, level with the voltage source
-    const ddCanvasX = nodePos.n2.x + 52;
-    const ddCanvasY = nodePos.n1.y - 10;
-    vsDropdown.position(offX + ddCanvasX, offY + ddCanvasY);
+    // Position Vin dropdown to the left of the main source, vertically centered on it
+    const ddCanvasX = nodePos.src_top.x - 74;
+    const ddCanvasY = (nodePos.src_top.y + nodePos.src_bot.y) / 2 - 13;
+    vinDropdown.position(offX + ddCanvasX, offY + ddCanvasY);
 }
 
 // ── Draw ──────────────────────────────────────────────────────────────────────
@@ -247,7 +244,7 @@ function draw() {
     background(colBg);
     drawTitleBar();
     drawCircuit();
-    drawVsDropdownLabel();
+    drawVinDropdownLabel();
     if (showSupernode) drawSupernodeBoundary();
     drawNodeLabels();
     if (solved) drawSolvedValues();
@@ -427,7 +424,7 @@ function drawEquationCards() {
 
     drawEqCard(cx, y, cw, cardH,
         'KCL at Supernode Boundary',
-        '(10\u2013V\u2081)/R1 = V\u2081/R2 + V\u2082/R3',
+        '(' + vin + '\u2013V\u2081)/R1 = V\u2081/R2 + V\u2082/R3',
         'Sum currents leaving the combined supernode envelope.',
         colBlueBg, colAccent);
 
@@ -567,7 +564,7 @@ function drawMainSource(x1, y1, x2, y2) {
     text('+', cx2, cy2-6);
     textSize(16); text('\u2013', cx2, cy2+7);
     textSize(12); textStyle(BOLD);
-    text('10V', cx2-r-22, cy2);
+    text(vin + 'V', cx2-r-22, cy2);
     textStyle(NORMAL);
 }
 
@@ -608,13 +605,13 @@ function drawSupernodeBoundary() {
     textStyle(NORMAL);
 }
 
-function drawVsDropdownLabel() {
-    // "Vs preset" label drawn just above the dropdown position
-    const ddCx = nodePos.n2.x + 52 + 36;  // dropdown left + half width (72/2=36)
-    const ddTop = nodePos.n1.y - 10;
+function drawVinDropdownLabel() {
+    // "Vin" label drawn just above the dropdown
+    const ddCx = nodePos.src_top.x - 74 + 36;  // dropdown center x
+    const ddTop = (nodePos.src_top.y + nodePos.src_bot.y) / 2 - 13;
     noStroke(); fill(colTextLight);
     textSize(9.5); textAlign(CENTER, BOTTOM); textStyle(NORMAL);
-    text('Vs preset', ddCx, ddTop - 3);
+    text('Vin preset', ddCx, ddTop - 3);
 }
 
 function drawNodeLabels() {
@@ -649,9 +646,9 @@ function drawSolvedValues() {
 
 function solveCircuit() {
     // Constraint: V1-V2=Vs → V2=V1-Vs
-    // KCL: (10-V1)/R1 = V1/R2 + V2/R3
-    // → 10/R1 + Vs/R3 = V1*(1/R1+1/R2+1/R3)
-    v1 = (10/r1 + vs/r3) / (1/r1 + 1/r2 + 1/r3);
+    // KCL: (Vin-V1)/R1 = V1/R2 + V2/R3
+    // → Vin/R1 + Vs/R3 = V1*(1/R1+1/R2+1/R3)
+    v1 = (vin/r1 + vs/r3) / (1/r1 + 1/r2 + 1/r3);
     v2 = v1 - vs;
     solved = true;
 }
