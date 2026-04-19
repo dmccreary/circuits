@@ -1,7 +1,7 @@
 // Supernode Analysis MicroSim — v3 (overlap fix + numeric inputs)
 
 let canvasWidth;
-const canvasHeight = 710;
+const canvasHeight = 740;
 const margin = 14;
 
 let vs = 5;
@@ -189,11 +189,19 @@ function buildLayout() {
         s.inp.size(INPUT_W);
     });
 
-    supernodeCbX = leftPanelX + 10;
-    supernodeCbY = sliderStartY + sliderGap * 4 + 6;
+    // Anchor Solve button to panel bottom — robust regardless of slider count
+    const panelBottom = controlsY + (canvasHeight - controlsY - margin);
+    solveBtn.w = leftPanelW - 24;  // nearly full panel width
+    solveBtn.h = 38;
+    solveBtn.x = leftPanelX + 12;
+    solveBtn.y = panelBottom - solveBtn.h - 14;  // 14px above panel bottom
 
-    solveBtn.x = leftPanelX + (leftPanelW - solveBtn.w) / 2;
-    solveBtn.y = supernodeCbY + 30;
+    // Checkbox sits just above the Solve button
+    supernodeCbX = leftPanelX + 10;
+    supernodeCbY = solveBtn.y - 34;
+    // Verify: last slider input box bottom = sliderStartY + 3*sliderGap + 12
+    // With sliderStartY=406, sliderGap=48: last input bottom = 406+144+12 = 562
+    // supernodeCbY ~= solveBtn.y - 34; with solveBtn.y=674: cbY=640. Gap=78px. ✓
 }
 
 // ─── Draw ─────────────────────────────────────────────────────────────────────
