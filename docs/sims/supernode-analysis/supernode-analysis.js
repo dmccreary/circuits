@@ -148,9 +148,9 @@ function buildLayout() {
     rightPanelX = floor(canvasWidth / 2) + floor(panelGap / 2);
     rightPanelW = canvasWidth - rightPanelX - margin;
 
-    // Circuit — circTop=128 keeps labels (at y=94,96) clear of pill (y=50-80)
+    // Circuit — circTop=155 leaves room for the two-line supernode label above the dashed ellipse
     const cx      = canvasWidth / 2;
-    const circTop = 128;
+    const circTop = 155;
     const circBot = 268;
     const n1x     = cx - 75;
     const n2x     = cx + 75;
@@ -515,9 +515,10 @@ function drawVoltageSource(x1, y1, x2, y2, label) {
     text('+', cx2-7, cy2);
     textSize(16); text('\u2013', cx2+8, cy2);
 
-    // Label above circle — cy2-r-12 = circTop-30 = 98  (pill ends y=80, gap 18px)
-    textSize(12); textStyle(BOLD);
-    text(label+' = '+vs.toFixed(1)+'V', cx2, cy2-r-12);
+    // Identifier label below the circle (value is shown in the supernode boundary label above)
+    noStroke(); fill(colSource);
+    textSize(10); textAlign(CENTER, TOP); textStyle(BOLD);
+    text(label, cx2, cy2+r+5);
     textStyle(NORMAL);
 }
 
@@ -557,10 +558,17 @@ function drawSupernodeBoundary() {
     ellipse(cx2, cy2, ew, eh);
     drawingContext.setLineDash([]);
 
-    // Label: cy2 - eh/2 - 4 = circTop - 31.5 = 96  (pill ends y=80, gap 16px ✓)
-    noStroke(); fill(colSupernode);
-    textSize(11); textAlign(CENTER, BOTTOM); textStyle(BOLD);
-    text('Supernode', cx2, cy2-eh/2-4);
+    // Two-line label above the dashed ellipse: "Supernode" (bold) over "Vs = X.X V" (lighter)
+    const topEdge = cy2 - eh / 2;
+    noStroke(); textAlign(CENTER, BOTTOM);
+
+    // Lower line: Vs value (smaller, normal weight)
+    fill(colSupernode); textSize(10); textStyle(NORMAL);
+    text('Vs\u2009=\u2009' + vs.toFixed(1) + '\u202FV', cx2, topEdge - 5);
+
+    // Upper line: "Supernode" heading (bold, slightly larger)
+    textSize(12); textStyle(BOLD);
+    text('Supernode', cx2, topEdge - 5 - 15);
     textStyle(NORMAL);
 }
 
