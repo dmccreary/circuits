@@ -22,7 +22,7 @@ let v1 = 0,  v2 = 0;
 let leftPanelX, leftPanelW, rightPanelX, rightPanelW;
 
 // Left-panel column widths
-const LABEL_W      = 30;
+const LABEL_W      = 40;
 const INPUT_W      = 62;
 const UNIT_W       = 28;
 const TRACK_OFFSET = LABEL_W + INPUT_W + UNIT_W + 8;
