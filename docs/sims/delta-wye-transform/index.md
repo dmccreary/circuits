@@ -5,7 +5,9 @@ description: Interactive Δ-Y and Y-Δ resistor network transformer showing the 
 
 # Delta-Wye Transformation
 
-<iframe src="main.html" width="100%" height="500px" scrolling="no"></iframe>
+<iframe src="main.html" width="100%"
+    style="height:760px; display:block; border:none;"
+    scrolling="no"></iframe>
 
 [Run in fullscreen](main.html){ .md-button .md-button--primary }
 
