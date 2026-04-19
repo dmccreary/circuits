@@ -5,7 +5,7 @@ description: Interactive nodal analysis simulator that handles voltage sources b
 
 # Supernode Analysis
 
-<iframe src="main.html" width="100%" height="730px" scrolling="no"></iframe>
+<iframe src="main.html" width="100%" height="760px" scrolling="no"></iframe>
 
 [Run in fullscreen](main.html){ .md-button .md-button--primary }
 
