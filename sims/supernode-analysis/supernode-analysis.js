@@ -16,6 +16,7 @@ let showSupernode = true;
 let supernodeCbX, supernodeCbY;
 
 let solveBtn = { x: 0, y: 0, w: 100, h: 32 };
+let resetBtn = { x: 0, y: 0, w: 100, h: 32 };
 let solved   = false;
 let v1 = 0,  v2 = 0;
 
@@ -209,10 +210,16 @@ function buildLayout() {
     supernodeCbY = lastInputBottom + 22;   // 22px gap below last slider
 
     const cbBottom = supernodeCbY + 16;    // checkbox is 16px tall
-    solveBtn.w = leftPanelW - 24;          // nearly full panel width
+    const btnGap = 8;
+    solveBtn.w = floor((leftPanelW - 24 - btnGap) * 0.62);
     solveBtn.h = 32;
     solveBtn.x = leftPanelX + 12;
-    solveBtn.y = cbBottom + 18;            // 18px below checkbox
+    solveBtn.y = cbBottom + 18;
+
+    resetBtn.w = leftPanelW - 24 - btnGap - solveBtn.w;
+    resetBtn.h = 32;
+    resetBtn.x = solveBtn.x + solveBtn.w + btnGap;
+    resetBtn.y = solveBtn.y;
 
     // ── Canvas height: exactly enough for all content ─────────────────────────
     const minH = solveBtn.y + solveBtn.h + 22;  // 22px bottom padding
@@ -315,6 +322,7 @@ function drawLeftPanel() {
     for (const s of sliders) drawOneSlider(s);
     drawSupernodeCheckbox();
     drawSolveButton();
+    drawResetButton();
 }
 
 function drawOneSlider(s) {
@@ -382,6 +390,20 @@ function drawSolveButton() {
     textAlign(CENTER, CENTER);
     textStyle(BOLD);
     text('Solve \u25B6', b.x+b.w/2, b.y+b.h/2);
+    textStyle(NORMAL);
+}
+
+function drawResetButton() {
+    const b = resetBtn;
+    const hovering = mouseInRect(b.x, b.y, b.w, b.h);
+    noStroke();
+    fill(hovering ? [180, 180, 185] : [148, 163, 184]);
+    rect(b.x, b.y, b.w, b.h, 7);
+    fill(255);
+    textSize(12);
+    textAlign(CENTER, CENTER);
+    textStyle(BOLD);
+    text('Reset', b.x+b.w/2, b.y+b.h/2);
     textStyle(NORMAL);
 }
 
@@ -666,6 +688,8 @@ function mousePressed() {
     }
     const b=solveBtn;
     if (mouseInRect(b.x, b.y, b.w, b.h)) { solveCircuit(); return; }
+    const r=resetBtn;
+    if (mouseInRect(r.x, r.y, r.w, r.h)) { v1=0; v2=0; solved=false; return; }
 }
 
 function mouseDragged() {
