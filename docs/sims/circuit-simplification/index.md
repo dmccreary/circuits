@@ -5,7 +5,9 @@ description: Step-by-step animated resistor network reduction tool that highligh
 
 # Circuit Simplification Steps
 
-<iframe src="main.html" width="100%" height="500px" scrolling="no"></iframe>
+<iframe src="main.html" width="100%"
+    style="height:730px; display:block; border:none;"
+    scrolling="no"></iframe>
 
 [Run in fullscreen](main.html){ .md-button .md-button--primary }
 
