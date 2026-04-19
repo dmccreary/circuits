@@ -1,842 +1,615 @@
-// Circuit Simplification MicroSim
-//
-// Step-by-step simplification of a Wheatstone bridge circuit
-// using Delta-to-Wye transformation. Shows each simplification
-// step with highlighting, formulas, and a log panel.
-
 'use strict';
 
-// -- Canvas layout --
-let containerWidth;
-const canvasH = 580;
+// ── Palette ──────────────────────────────────────────────────────────────────
+const COL_BG      = [245, 248, 252];
+const COL_PANEL   = [255, 255, 255];
+const COL_WIRE    = [50,  55,  70];
+const COL_NODE    = [40, 100, 200];
+const COL_DELTA   = [210,  65,  45];   // R1, R2, R5 (delta resistors)
+const COL_WYE     = [25,  150,  75];   // Ra', Rb', Rc' (wye)
+const COL_NEUTRAL = [70,   70,  80];   // R3, R4 (unchanged)
+const COL_SERIES  = [195, 135,  25];   // Rs1, Rs2 (series combined)
+const COL_RESULT  = [30,  100, 200];   // Req
+const COL_VS      = [180,  50,  50];
+const COL_BTN     = [50,  110, 220];
+const COL_BTN_DIS = [170, 175, 185];
+const COL_BTN_RED = [195,  60,  60];
+const COL_SEG_BG  = [215, 220, 232];
 
-// -- Colours --
-const BG         = [245, 248, 252];
-const WIRE_COL   = [50, 55, 70];
-const NODE_COL   = [40, 100, 200];
-const RES_COL    = [70, 70, 70];
-const HIGHLIGHT1 = [220, 60, 50];
-const HIGHLIGHT2 = [40, 160, 80];
-const HIGHLIGHT3 = [200, 140, 30];
-const VS_COL     = [180, 50, 50];
-const BTN_COL    = [50, 110, 220];
-const BTN_HOVER  = [35, 85, 190];
-const BTN_DISABLED = [160, 160, 170];
-const LOG_BG     = [255, 255, 255];
-const PANEL_BG   = [252, 252, 255];
+// ── State ─────────────────────────────────────────────────────────────────────
+let R  = [10, 30, 20, 40, 50];   // R1..R5
+let Vs = 12;
+const STEPS = 6;
+let step = 0;
 
-// -- Default resistor values --
-const R_VALS = [10, 20, 30, 40, 50];  // R1..R5
-const VS = 12;
+// ── Computed values ───────────────────────────────────────────────────────────
+let Ra, Rb, Rc, Rs1, Rs2, Rpar, Req;
 
-// -- Step definitions --
-const STEP_COUNT = 6;
-let currentStep = 0;
+// ── Canvas ────────────────────────────────────────────────────────────────────
+let cw;
+const canvasH = 710;
 
-// -- Log entries --
-let logEntries = [];
+// ── Layout objects ────────────────────────────────────────────────────────────
+let dP, lP;                 // diagram panel, log panel
+let btnPrev, btnNext, btnReset;
+let tlDots = [];
 
-// -- Button geometry --
-let nextBtn = {};
-let resetBtn = {};
+// ── DOM inputs ────────────────────────────────────────────────────────────────
+let inpElems = [];
 
-// -- Circuit drawing area --
-let circX, circY, circW, circH;
-let logX, logY, logW, logH;
+// ── Step content ──────────────────────────────────────────────────────────────
+const STEP_TITLES = [
+    'Original Bridge Circuit',
+    'Identify \u0394 Network',
+    'Compute Y Equivalents',
+    'Replace \u0394 with Y',
+    'Combine Series Pairs',
+    'Parallel \u2192 Final Req'
+];
 
-// -- Computed values for steps --
-let Ra_wye, Rb_wye, Rc_wye;
-let R_series1, R_series2;
-let R_parallel;
-let R_eq;
+const EXPLANATIONS = [
+    'A Wheatstone bridge has no two resistors that are purely in series or parallel — direct reduction is impossible. We need a special technique.',
+    'R1, R2, and R5 form a \u0394 (delta) loop connecting nodes A, B, and C. Converting this triangle into a Y network will unlock the simplification.',
+    'Apply \u0394\u2192Y: each Y resistor = product of its two adjacent \u0394 resistors \u00F7 sum of all three. A new center node N appears.',
+    'The delta is gone. N connects to A (Ra\u2019), B (Rb\u2019), and C (Rc\u2019). The existing R3 and R4 remain, connecting B and C to node D.',
+    'Rb\u2019 and R3 share the same current path B\u2013D \u2192 series pair Rs1. Rc\u2019 and R4 share path C\u2013D \u2192 Rs2. Combine each.',
+    'Rs1 and Rs2 both connect N to D \u2192 they are in parallel. Add Ra\u2019 in series from A to N. Req = Ra\u2019 + (Rs1 \u2016 Rs2).'
+];
 
-// =====================================================================
+// ── Setup ─────────────────────────────────────────────────────────────────────
 function setup() {
-    updateCanvasSize();
-    let cnv = createCanvas(containerWidth, canvasH);
+    cw = min(floor(document.querySelector('main').getBoundingClientRect().width), 960);
+    cw = max(cw, 560);
+    let cnv = createCanvas(cw, canvasH);
     cnv.parent(document.querySelector('main'));
-    computeLayout();
-    precomputeValues();
-    initLog();
     textFont('Arial');
+    buildLayout();
+    makeInputElems();
+    compute();
     noLoop();
-    redraw();
-}
-
-function updateCanvasSize() {
-    containerWidth = min(floor(document.querySelector('main').getBoundingClientRect().width), 960);
-    containerWidth = max(containerWidth, 560);
+    setTimeout(reportHeight, 150);
 }
 
 function windowResized() {
-    updateCanvasSize();
-    resizeCanvas(containerWidth, canvasH);
-    computeLayout();
+    cw = min(floor(document.querySelector('main').getBoundingClientRect().width), 960);
+    cw = max(cw, 560);
+    buildLayout();
+    repositionInputs();
+    resizeCanvas(cw, canvasH);
     redraw();
 }
 
-function computeLayout() {
-    let cw = containerWidth;
+function buildLayout() {
+    let pw = floor(cw * 0.55);
+    dP = { x: 12, y: 58, w: pw,                 h: 342 };
+    lP = { x: pw + 22, y: 58, w: cw - pw - 34,  h: 342 };
 
-    // Circuit area: left 60%
-    circX = 20;
-    circY = 55;
-    circW = cw * 0.58;
-    circH = 400;
+    let btnY = 566, bw = 90, bh = 34, gap = 14;
+    let mid  = cw / 2;
+    btnPrev  = { x: mid - bw * 1.5 - gap, y: btnY, w: bw, h: bh };
+    btnNext  = { x: mid - bw / 2,          y: btnY, w: bw, h: bh };
+    btnReset = { x: mid + bw / 2 + gap,    y: btnY, w: bw, h: bh };
 
-    // Log panel: right 35%
-    logW = cw * 0.34;
-    logX = cw - logW - 15;
-    logY = 55;
-    logH = 400;
-
-    // Buttons
-    let btnY = 475;
-    let btnW = 100;
-    let btnH = 32;
-    let gap = 20;
-    let totalW = btnW * 2 + gap;
-    let startX = cw / 2 - totalW / 2;
-
-    nextBtn = { x: startX, y: btnY, w: btnW, h: btnH };
-    resetBtn = { x: startX + btnW + gap, y: btnY, w: btnW, h: btnH };
+    tlDots = [];
+    let tlY = 622, tlL = cw * 0.10, tlR = cw * 0.90;
+    for (let i = 0; i < STEPS; i++) {
+        tlDots.push({ x: tlL + (tlR - tlL) * i / (STEPS - 1), y: tlY });
+    }
 }
 
-function precomputeValues() {
-    // Delta formed by R1, R2, R5 (nodes A, B, D)
-    // Using delta: R1 (A-B), R2 (B-D), R5 (A-D)
-    let r1 = R_VALS[0], r2 = R_VALS[1], r3 = R_VALS[2], r4 = R_VALS[3], r5 = R_VALS[4];
+function reportHeight() {
+    try { window.parent.postMessage({ type: 'microsim-height', height: canvasH }, '*'); } catch (e) {}
+}
 
-    // Delta of R1, R2, R5 around nodes A, B, D
+// ── HTML inputs ───────────────────────────────────────────────────────────────
+function makeInputElems() {
+    let defaults = [...R, Vs];
+    for (let i = 0; i < 6; i++) {
+        let inp = createInput(str(defaults[i]));
+        inp.parent(document.querySelector('main'));
+        inp.style('width',         '52px');
+        inp.style('font-size',     '12px');
+        inp.style('padding',       '2px 4px');
+        inp.style('border',        '1px solid #bbb');
+        inp.style('border-radius', '3px');
+        inp.style('text-align',    'right');
+        inp.style('position',      'absolute');
+        inp.style('box-sizing',    'border-box');
+        const idx = i;
+        function handler() {
+            let v = parseFloat(this.value);
+            if (!isNaN(v) && v > 0) {
+                if (idx < 5) R[idx] = v; else Vs = v;
+                compute();
+                redraw();
+            }
+        }
+        inp.elt.addEventListener('change', handler);
+        inp.elt.addEventListener('input',  handler);
+        inpElems.push(inp);
+    }
+    repositionInputs();
+}
+
+function repositionInputs() {
+    let canvas = document.querySelector('canvas');
+    if (!canvas) return;
+    let rect = canvas.getBoundingClientRect();
+    let colW = (cw - 40) / 3;
+    // Two rows of 3: row0 y=494, row1 y=530
+    for (let i = 0; i < 6; i++) {
+        let col = i % 3, row = floor(i / 3);
+        let px = rect.left + 20 + col * colW + 34;
+        let py = rect.top  + 494 + row * 36 - 13;
+        inpElems[i].style('left', px + 'px');
+        inpElems[i].style('top',  py + 'px');
+    }
+}
+
+// ── Compute ───────────────────────────────────────────────────────────────────
+function compute() {
+    let r1 = R[0], r2 = R[1], r3 = R[2], r4 = R[3], r5 = R[4];
+    // Delta: R1(A-B), R2(A-C), R5(B-C)   →   Wye centre N
     let sum = r1 + r2 + r5;
-    Ra_wye = (r1 * r5) / sum;  // node A: between R1 and R5
-    Rb_wye = (r1 * r2) / sum;  // node B: between R1 and R2
-    Rc_wye = (r2 * r5) / sum;  // node D: between R2 and R5
-
-    // After wye replacement:
-    // Series: Ra_wye + R3 (top path from center to C)
-    // Series: Rc_wye + R4 (bottom path from center to C)
-    R_series1 = Ra_wye + r3;   // top series
-    R_series2 = Rc_wye + r4;   // bottom series
-
-    // Parallel combination of the two series paths
-    R_parallel = (R_series1 * R_series2) / (R_series1 + R_series2);
-
-    // Total: Rb_wye (from B to center) + parallel combination
-    R_eq = Rb_wye + R_parallel;
+    Ra  = (r1 * r2) / sum;   // N → A
+    Rb  = (r1 * r5) / sum;   // N → B
+    Rc  = (r2 * r5) / sum;   // N → C
+    Rs1 = Rb + r3;            // N-B-D path
+    Rs2 = Rc + r4;            // N-C-D path
+    Rpar = (Rs1 * Rs2) / (Rs1 + Rs2);
+    Req  = Ra + Rpar;
 }
 
-function initLog() {
-    logEntries = [
-        { step: 0, text: 'Bridge circuit with R1=' + R_VALS[0] + 'Ω, R2=' + R_VALS[1] + 'Ω, R3=' + R_VALS[2] + 'Ω, R4=' + R_VALS[3] + 'Ω, R5=' + R_VALS[4] + 'Ω' }
-    ];
-}
-
-// =====================================================================
-// DRAW
-// =====================================================================
+// ── Draw ──────────────────────────────────────────────────────────────────────
 function draw() {
-    background(BG);
+    background(COL_BG);
     drawTitle();
-    drawCircuitPanel();
-    drawCircuit();
+    drawDiagPanel();
+    drawCircuitStep();
     drawLogPanel();
-    drawButtons();
-    drawStepInfo();
+    drawExplanation();
+    drawInputPanel();
+    drawNavButtons();
+    drawTimeline();
 }
 
+// ── Title ─────────────────────────────────────────────────────────────────────
 function drawTitle() {
-    fill(30);
-    noStroke();
-    textAlign(CENTER, TOP);
-    textSize(18);
-    textStyle(BOLD);
-    text('Circuit Simplification: Bridge Circuit', containerWidth / 2, 10);
+    noStroke(); textAlign(CENTER, TOP);
+    textSize(19); textStyle(BOLD); fill(30);
+    text('Bridge Circuit Simplification', cw / 2, 10);
     textStyle(NORMAL);
-    textSize(12);
-    fill(100);
-    text('Step-by-step Delta-to-Wye simplification  |  Vs = ' + VS + 'V', containerWidth / 2, 34);
+    textSize(12); fill(110);
+    text('Step-by-step \u0394\u2013Y transformation  \u00B7  6 guided steps', cw / 2, 36);
 }
 
-function drawCircuitPanel() {
-    fill(PANEL_BG);
-    stroke(220);
-    strokeWeight(1);
-    rect(circX - 5, circY - 5, circW + 10, circH + 10, 8);
-}
+// ── Diagram panel ─────────────────────────────────────────────────────────────
+function drawDiagPanel() {
+    fill(COL_PANEL); stroke(220); strokeWeight(1);
+    rect(dP.x, dP.y, dP.w, dP.h, 8);
 
-function drawLogPanel() {
-    fill(LOG_BG);
-    stroke(220);
-    strokeWeight(1);
-    rect(logX - 5, logY - 5, logW + 10, logH + 10, 8);
+    // Step badge
+    let bx = dP.x + 10, by = dP.y + 10;
+    fill(COL_BTN); noStroke();
+    rect(bx, by, 72, 22, 4);
+    fill(255); textSize(11); textStyle(BOLD); textAlign(LEFT, CENTER);
+    text('Step ' + step + ' / ' + (STEPS - 1), bx + 6, by + 11);
 
-    // Title
-    fill(50);
-    noStroke();
-    textSize(13);
-    textStyle(BOLD);
-    textAlign(LEFT, TOP);
-    text('Operations Log', logX + 5, logY + 5);
-    textStyle(NORMAL);
-
-    // Step indicator
-    fill(100);
-    textSize(11);
-    text('Step ' + currentStep + ' / ' + (STEP_COUNT - 1), logX + 5, logY + 24);
-
-    // Draw log entries
-    let ly = logY + 45;
-    textSize(11);
-    for (let i = 0; i < logEntries.length; i++) {
-        let entry = logEntries[i];
-        let isActive = entry.step === currentStep;
-
-        if (isActive) {
-            fill(240, 245, 255);
-            noStroke();
-            rect(logX, ly - 3, logW, 42, 4);
-        }
-
-        fill(isActive ? [30, 70, 160] : [80, 80, 80]);
-        textAlign(LEFT, TOP);
-        textStyle(isActive ? BOLD : NORMAL);
-
-        let wrappedText = wrapText(entry.text, logW - 15);
-        for (let j = 0; j < wrappedText.length; j++) {
-            text(wrappedText[j], logX + 5, ly + j * 14);
-        }
-        ly += max(wrappedText.length, 1) * 14 + 8;
-
-        if (ly > logY + logH - 10) break;
-    }
+    // Step title
+    fill(50); textStyle(BOLD); textSize(12); textAlign(LEFT, TOP);
+    text(STEP_TITLES[step], bx + 80, by + 5);
     textStyle(NORMAL);
 }
 
-function wrapText(txt, maxW) {
-    let words = txt.split(' ');
-    let lines = [];
-    let currentLine = '';
-    for (let w of words) {
-        let testLine = currentLine ? currentLine + ' ' + w : w;
-        if (textWidth(testLine) > maxW && currentLine) {
-            lines.push(currentLine);
-            currentLine = w;
-        } else {
-            currentLine = testLine;
-        }
-    }
-    if (currentLine) lines.push(currentLine);
-    return lines;
+// ── Circuit dispatcher ────────────────────────────────────────────────────────
+function drawCircuitStep() {
+    let cx  = dP.x + dP.w / 2;
+    let cy  = dP.y + 36 + (dP.h - 50) / 2;
+    let sp  = min(dP.w * 0.265, 100);
+    let vsp = min((dP.h - 60) * 0.35, 100);
+
+    if      (step <= 2) drawOriginal(cx, cy, sp, vsp);
+    else if (step === 3) drawWye    (cx, cy, sp, vsp);
+    else if (step === 4) drawSeries (cx, cy, sp, vsp);
+    else                 drawFinal  (cx, cy, sp, vsp);
 }
 
-// =====================================================================
-// CIRCUIT DRAWING (per step)
-// =====================================================================
-function drawCircuit() {
-    push();
-    translate(circX, circY);
+// ── Step 0–2: diamond bridge ──────────────────────────────────────────────────
+function drawOriginal(cx, cy, sp, vsp) {
+    // Diamond: A=top  B=left  C=right  D=bottom
+    let A = { x: cx,      y: cy - vsp };
+    let B = { x: cx - sp, y: cy       };
+    let C = { x: cx + sp, y: cy       };
+    let D = { x: cx,      y: cy + vsp };
 
-    let cx = circW / 2;
-    let cy = circH / 2;
-    let spread = min(circW * 0.35, 150);
-    let vSpread = min(circH * 0.3, 120);
+    let dCol = (step >= 1) ? COL_DELTA : COL_NEUTRAL;
 
-    if (currentStep <= 2) {
-        drawBridgeCircuit(cx, cy, spread, vSpread);
-    } else if (currentStep === 3) {
-        drawWyeReplacedCircuit(cx, cy, spread, vSpread);
-    } else if (currentStep === 4) {
-        drawSeriesCombinedCircuit(cx, cy, spread, vSpread);
-    } else {
-        drawFinalCircuit(cx, cy, spread, vSpread);
-    }
+    // Voltage source left of B, spanning A-level to D-level
+    let vsX = cx - sp - 44;
+    drawVsCircle(vsX, cy - vsp, vsX, cy + vsp);
+    stroke(COL_WIRE); strokeWeight(2);
+    line(vsX, cy - vsp, A.x, A.y);
+    line(vsX, cy + vsp, D.x, D.y);
 
-    pop();
-}
+    // Resistors
+    drawResEdge(A.x, A.y, B.x, B.y, 'R1=' + R[0] + '\u03A9', dCol,       14);
+    drawResEdge(A.x, A.y, C.x, C.y, 'R2=' + R[1] + '\u03A9', dCol,      -14);
+    drawResEdge(B.x, B.y, D.x, D.y, 'R3=' + R[2] + '\u03A9', COL_NEUTRAL, 14);
+    drawResEdge(C.x, C.y, D.x, D.y, 'R4=' + R[3] + '\u03A9', COL_NEUTRAL,-14);
+    drawResEdge(B.x, B.y, C.x, C.y, 'R5=' + R[4] + '\u03A9', dCol,      -14);
 
-// Step 0, 1, 2: Original bridge circuit
-function drawBridgeCircuit(cx, cy, sp, vsp) {
-    // Nodes: A (left-top), B (left-bottom), C (right), D (top)
-    // Layout: Left=source, top-left=A, bottom-left=B, top-right=D, bottom-right=C
-    let nodeA = { x: cx - sp, y: cy - vsp, label: 'A' };
-    let nodeB = { x: cx - sp, y: cy + vsp, label: 'B' };
-    let nodeC = { x: cx + sp, y: cy + vsp, label: 'C' };
-    let nodeD = { x: cx + sp, y: cy - vsp, label: 'D' };
-
-    // Voltage source: A to B (left side)
-    drawVoltageSource(nodeA.x - 30, nodeA.y, nodeB.x - 30, nodeB.y);
-    // Connect source to nodes
-    strokeWeight(2);
-    stroke(WIRE_COL);
-    line(nodeA.x - 30, nodeA.y, nodeA.x, nodeA.y);
-    line(nodeB.x - 30, nodeB.y, nodeB.x, nodeB.y);
-
-    // R1: A to D (top)
-    let r1Col = (currentStep === 1 || currentStep === 2) ? HIGHLIGHT1 : RES_COL;
-    drawResistor(nodeA.x, nodeA.y, nodeD.x, nodeD.y, 'R1=' + R_VALS[0] + 'Ω', r1Col, -16);
-
-    // R3: A to C (diagonal or via mid)
-    let r3Col = RES_COL;
-    drawResistor(nodeA.x, nodeA.y + 5, nodeC.x, nodeC.y - 5, 'R3=' + R_VALS[2] + 'Ω', r3Col, 0);
-
-    // R2: B to D
-    let r2Col = (currentStep === 1 || currentStep === 2) ? HIGHLIGHT1 : RES_COL;
-    drawResistor(nodeB.x, nodeB.y, nodeD.x, nodeD.y, 'R2=' + R_VALS[1] + 'Ω', r2Col, 0);
-
-    // R4: B to C (bottom)
-    let r4Col = RES_COL;
-    drawResistor(nodeB.x, nodeB.y, nodeC.x, nodeC.y, 'R4=' + R_VALS[3] + 'Ω', r4Col, 16);
-
-    // R5: D to C (right)
-    let r5Col = (currentStep === 1 || currentStep === 2) ? HIGHLIGHT1 : RES_COL;
-    drawResistor(nodeD.x, nodeD.y, nodeC.x, nodeC.y, 'R5=' + R_VALS[4] + 'Ω', r5Col, -16);
-
-    // Draw nodes
-    drawNode(nodeA.x, nodeA.y, 'A');
-    drawNode(nodeB.x, nodeB.y, 'B');
-    drawNode(nodeC.x, nodeC.y, 'C');
-    drawNode(nodeD.x, nodeD.y, 'D');
-
-    // Step-specific highlights
-    if (currentStep === 0) {
-        fill(80);
-        noStroke();
-        textSize(11);
-        textAlign(CENTER, BOTTOM);
-        text('Bridge circuit: cannot simplify with series/parallel alone', cx, circH - 10);
-    }
-
-    if (currentStep === 1) {
-        // Highlight the delta
+    // Step 1+: highlight delta triangle
+    if (step >= 1) {
         noFill();
-        stroke(HIGHLIGHT1[0], HIGHLIGHT1[1], HIGHLIGHT1[2], 80);
-        strokeWeight(3);
-        triangle(nodeA.x, nodeA.y, nodeB.x, nodeB.y, nodeD.x, nodeD.y);
-
-        fill(HIGHLIGHT1);
-        noStroke();
-        textSize(11);
-        textAlign(CENTER, BOTTOM);
-        text('Identified Delta: R1, R2, R5 around nodes A, B, D', cx, circH - 10);
+        stroke(COL_DELTA[0], COL_DELTA[1], COL_DELTA[2], 50);
+        strokeWeight(18); strokeCap(ROUND);
+        triangle(A.x, A.y, B.x, B.y, C.x, C.y);
+        strokeCap(SQUARE); strokeWeight(2);
     }
 
-    if (currentStep === 2) {
-        noFill();
-        stroke(HIGHLIGHT1[0], HIGHLIGHT1[1], HIGHLIGHT1[2], 80);
-        strokeWeight(3);
-        triangle(nodeA.x, nodeA.y, nodeB.x, nodeB.y, nodeD.x, nodeD.y);
+    drawBigNode(A.x, A.y, 'A', ABOVE);
+    drawBigNode(B.x, B.y, 'B', LEFT);
+    drawBigNode(C.x, C.y, 'C', RIGHT);
+    drawBigNode(D.x, D.y, 'D', BELOW);
 
-        fill(HIGHLIGHT1);
-        noStroke();
-        textSize(10);
-        textAlign(CENTER, BOTTOM);
-        let sum = R_VALS[0] + R_VALS[1] + R_VALS[4];
-        text('Delta→Wye: Sum = R1+R2+R5 = ' + sum + 'Ω', cx, circH - 28);
-        text(
-            'Ra=' + nf(Ra_wye, 0, 2) + 'Ω   Rb=' + nf(Rb_wye, 0, 2) + 'Ω   Rc=' + nf(Rc_wye, 0, 2) + 'Ω',
-            cx, circH - 12
-        );
+    if (step === 2) {
+        noStroke(); fill(COL_WYE); textSize(10); textAlign(CENTER, TOP);
+        text("Ra'\u2009=\u2009" + nf(Ra,0,2) + '\u03A9   Rb\u2019=\u2009' + nf(Rb,0,2) +
+             '\u03A9   Rc\u2019=\u2009' + nf(Rc,0,2) + '\u03A9', cx, cy + vsp + 16);
     }
 }
 
-// Step 3: Wye replaced
-function drawWyeReplacedCircuit(cx, cy, sp, vsp) {
-    // After replacing delta (A,B,D) with wye, we have a center node N
-    let nodeA = { x: cx - sp * 0.7, y: cy - vsp * 0.6 };
-    let nodeB = { x: cx - sp * 0.7, y: cy + vsp * 0.6 };
-    let nodeC = { x: cx + sp, y: cy };
-    let nodeN = { x: cx - sp * 0.1, y: cy };  // Wye center
+// ── Step 3: wye-replaced ──────────────────────────────────────────────────────
+function drawWye(cx, cy, sp, vsp) {
+    let A = { x: cx,          y: cy - vsp       };
+    let B = { x: cx - sp,     y: cy + vsp * 0.4 };
+    let C = { x: cx + sp,     y: cy + vsp * 0.4 };
+    let D = { x: cx,          y: cy + vsp       };
+    let N = { x: cx,          y: cy - vsp * 0.15 };
 
-    // Voltage source: A to B
-    drawVoltageSource(nodeA.x - 40, nodeA.y, nodeB.x - 40, nodeB.y);
-    strokeWeight(2);
-    stroke(WIRE_COL);
-    line(nodeA.x - 40, nodeA.y, nodeA.x, nodeA.y);
-    line(nodeB.x - 40, nodeB.y, nodeB.x, nodeB.y);
+    let vsX = cx - sp - 44;
+    drawVsCircle(vsX, cy - vsp, vsX, cy + vsp);
+    stroke(COL_WIRE); strokeWeight(2);
+    line(vsX, cy - vsp, A.x, A.y);
+    line(vsX, cy + vsp, D.x, D.y);
 
-    // Ra_wye: A to N
-    drawResistor(nodeA.x, nodeA.y, nodeN.x, nodeN.y,
-        'Ra\'=' + nf(Ra_wye, 0, 1) + 'Ω', HIGHLIGHT2, 0);
+    drawResEdge(N.x, N.y, A.x, A.y, "Ra'=" + nf(Ra,0,1) + '\u03A9', COL_WYE,     12);
+    drawResEdge(N.x, N.y, B.x, B.y, "Rb'=" + nf(Rb,0,1) + '\u03A9', COL_WYE,    -12);
+    drawResEdge(N.x, N.y, C.x, C.y, "Rc'=" + nf(Rc,0,1) + '\u03A9', COL_WYE,     12);
+    drawResEdge(B.x, B.y, D.x, D.y, 'R3=' + R[2] + '\u03A9',        COL_NEUTRAL,  14);
+    drawResEdge(C.x, C.y, D.x, D.y, 'R4=' + R[3] + '\u03A9',        COL_NEUTRAL, -14);
 
-    // Rb_wye: B to N
-    drawResistor(nodeB.x, nodeB.y, nodeN.x, nodeN.y,
-        'Rb\'=' + nf(Rb_wye, 0, 1) + 'Ω', HIGHLIGHT2, 0);
-
-    // R3: A to C (top path goes A -> N via Ra', then up-right to C)
-    // Actually after wye, the connections are:
-    // Ra' from A to N, R3 from A to C, Rc' from D(now N) to C, R4 from B to C
-    // Let me restructure: the wye center connects to A, B, and where D was
-    // The node D is eliminated. Its connections (R5 to A, R2 to B, R1 to ?) get replaced.
-
-    // Actually let me redraw properly:
-    // Original delta: R1(A-D), R2(B-D), R5(D-C) -- wait, let me recheck
-    // From precompute: Delta of R1, R2, R5 around nodes A, B, D
-    // R1: A-B (connecting A and B... no that's wrong)
-
-    // Let me use the bridge topology:
-    // A--R1--D, A--R3--C, B--R2--D, B--R4--C, D--R5--C
-    // Delta around A, B, D: edges R1(A-D), R2(B-D), and the path A-B
-    // Hmm actually the delta I chose in precompute is R1, R2, R5
-    // where sum = r1 + r2 + r5 and the nodes are implicit.
-
-    // For the visual, after wye transform of delta(A,B,D):
-    // Wye center N connects to A, B, and D-position
-    // Ra' = node going toward A
-    // Rb' = node going toward B
-    // Rc' = node going toward (old D position), which connects to R5->C
-    // Then R3 still connects A to C, R4 still connects B to C
-
-    // Simpler topology for visual:
-    // N is center, Ra' goes up-left to A, Rb' goes down-left to B, Rc' goes right
-    // From Rc' endpoint, R5 used to go to C -- but R5 was part of delta.
-    //
-    // OK let me reconsider the delta choice. In precompute:
-    // Delta of R1, R2, R5 around nodes A, B, D
-    // After wye transform, N replaces the internal triangle.
-    // N-A has Ra_wye, N-B has Rb_wye, N-D has Rc_wye
-    // But D node still connects to C via R5... NO, R5 was part of the delta.
-    //
-    // Let me reconsider. Bridge: A-top-left, B-bottom-left, C-right, D-top-right
-    // Edges: R1(A-D top), R2(B-D diagonal), R3(A-C diagonal), R4(B-C bottom), R5(D-C right)
-    // Choose delta around D: R1(A-D), R2(B-D), R5(D-C)
-    // Replace with wye at center N:
-    //   N-A = R1*R5/(R1+R2+R5) = 10*50/80 = 6.25  -- this is Ra_wye
-    //   N-B = R1*R2/(R1+R2+R5) = 10*20/80 = 2.5    -- this is Rb_wye
-    //   N-C = R2*R5/(R1+R2+R5) = 20*50/80 = 12.5   -- this is Rc_wye
-    // Then remaining: R3(A-C) and R4(B-C) still exist.
-    // Top path: N --Ra'--> A --R3--> C => series Ra'+R3 = 6.25+30 = 36.25
-    // Bot path: N --Rc'--> C         => just Rc' = 12.5  WAIT no.
-    //
-    // After replacing delta at D:
-    // N connects to A (Ra'), B (Rb'), C (Rc')
-    // Remaining edges: R3(A-C) and R4(B-C)
-    // From N: two paths to C:
-    //   Path 1: N -> A (Ra') -> C (R3): series = Ra' + R3
-    //   Path 2: N -> C (Rc'): just Rc'... but also B connects to C via R4
-    // And from Vs: A to B, with N branching.
-    //
-    // Actually the circuit after wye:
-    // Source: + at A, - at B
-    // From A: Ra' to N
-    // From B: Rb' to N
-    // Wait, that means both A and B connect to N directly.
-    // Also A connects to C via R3, B connects to C via R4.
-    // And N connects to C via Rc'.
-    //
-    // Hmm, this doesn't simplify as nicely. Let me reconsider which delta to pick.
-    //
-    // Better choice: pick the delta that creates nice series after transform.
-    // Delta around A: R1(A-D), R3(A-C), and... there's no direct B-D or B-C that
-    // completes a triangle with A. Let me think about this differently.
-    //
-    // Actually the standard approach for a Wheatstone bridge:
-    // Nodes: 1(top/source+), 2(left), 3(right), 4(bottom/source-)
-    // R1: 1-2, R2: 1-3, R3: 2-4, R4: 3-4, R5: 2-3 (bridge)
-    // Delta at nodes 1,2,3: R1(1-2), R2(1-3), R5(2-3)
-    // Wye: N in center
-    //   N-1 = R1*R2/(R1+R2+R5)
-    //   N-2 = R1*R5/(R1+R2+R5)
-    //   N-3 = R2*R5/(R1+R2+R5)
-    // Then: N-2 in series with R3(2-4) -> top path N to 4
-    //        N-3 in series with R4(3-4) -> bottom path N to 4
-    // These two parallel -> then add N-1 in series with source
-    // That's the clean simplification!
-
-    // Let me just draw the post-wye topology visually:
-    // B (source-) on left, N in middle, C (source+... mapped to node 4) on right
-    // Two paths from N to C: top and bottom, then Rb' from source to N
-
-    // Source on left
-    let srcTop = { x: cx - sp, y: cy - vsp * 0.5 };
-    let srcBot = { x: cx - sp, y: cy + vsp * 0.5 };
-
-    drawVoltageSource(srcTop.x - 25, srcTop.y, srcBot.x - 25, srcBot.y);
-    stroke(WIRE_COL); strokeWeight(2);
-    line(srcTop.x - 25, srcTop.y, srcTop.x, srcTop.y);
-    line(srcBot.x - 25, srcBot.y, srcBot.x, srcBot.y);
-
-    // Node 1 (top of source)
-    // Rb_wye from node1 to N
-    let n1 = { x: srcTop.x, y: srcTop.y };
-    let nCenter = { x: cx - sp * 0.15, y: cy };
-
-    // Wire from source top to split point
-    stroke(WIRE_COL); strokeWeight(2);
-    line(n1.x, n1.y, n1.x, nCenter.y);
-
-    // Rb' (N-1): from node1 down to N center
-    drawResistor(n1.x, nCenter.y, nCenter.x, nCenter.y,
-        'Rb\'=' + nf(Rb_wye, 0, 1) + 'Ω', HIGHLIGHT2, -16);
-
-    // Top path: Ra' + R3
-    let topMid = { x: cx + sp * 0.3, y: cy - vsp * 0.6 };
-    let rightNode = { x: cx + sp * 0.8, y: cy };
-
-    stroke(WIRE_COL); strokeWeight(2);
-    line(nCenter.x, nCenter.y, nCenter.x, topMid.y);
-
-    drawResistor(nCenter.x, topMid.y, topMid.x, topMid.y,
-        'Ra\'=' + nf(Ra_wye, 0, 1) + 'Ω', HIGHLIGHT2, -16);
-    drawResistor(topMid.x, topMid.y, rightNode.x, topMid.y,
-        'R3=' + R_VALS[2] + 'Ω', RES_COL, -16);
-
-    stroke(WIRE_COL); strokeWeight(2);
-    line(rightNode.x, topMid.y, rightNode.x, rightNode.y);
-
-    // Bottom path: Rc' + R4
-    let botMid = { x: cx + sp * 0.3, y: cy + vsp * 0.6 };
-
-    stroke(WIRE_COL); strokeWeight(2);
-    line(nCenter.x, nCenter.y, nCenter.x, botMid.y);
-
-    drawResistor(nCenter.x, botMid.y, botMid.x, botMid.y,
-        'Rc\'=' + nf(Rc_wye, 0, 1) + 'Ω', HIGHLIGHT2, 18);
-    drawResistor(botMid.x, botMid.y, rightNode.x, botMid.y,
-        'R4=' + R_VALS[3] + 'Ω', RES_COL, 18);
-
-    stroke(WIRE_COL); strokeWeight(2);
-    line(rightNode.x, botMid.y, rightNode.x, rightNode.y);
-
-    // Wire from right node back down to source bottom
-    line(rightNode.x, rightNode.y, rightNode.x, srcBot.y);
-    line(rightNode.x, srcBot.y, srcBot.x, srcBot.y);
-
-    // Nodes
-    drawNode(n1.x, nCenter.y, '');
-    drawNode(nCenter.x, nCenter.y, 'N');
-    drawNode(nCenter.x, topMid.y, '');
-    drawNode(nCenter.x, botMid.y, '');
-    drawNode(rightNode.x, rightNode.y, '');
-
-    fill(HIGHLIGHT2);
-    noStroke();
-    textSize(10);
-    textAlign(CENTER, BOTTOM);
-    text('Delta replaced with Wye (green resistors)', cx, circH - 10);
+    drawBigNode(A.x, A.y, 'A', ABOVE);
+    drawBigNode(B.x, B.y, 'B', LEFT);
+    drawBigNode(C.x, C.y, 'C', RIGHT);
+    drawBigNode(D.x, D.y, 'D', BELOW);
+    drawWyeNode(N.x, N.y, 'N');
 }
 
-// Step 4: Series combined
-function drawSeriesCombinedCircuit(cx, cy, sp, vsp) {
-    let srcTop = { x: cx - sp, y: cy - vsp * 0.4 };
-    let srcBot = { x: cx - sp, y: cy + vsp * 0.4 };
+// ── Step 4: series-combined H-bridge ─────────────────────────────────────────
+function drawSeries(cx, cy, sp, vsp) {
+    let srcX  = cx - sp * 0.98;
+    let srcY1 = cy - vsp * 0.48;
+    let srcY2 = cy + vsp * 0.48;
 
-    drawVoltageSource(srcTop.x - 25, srcTop.y, srcBot.x - 25, srcBot.y);
-    stroke(WIRE_COL); strokeWeight(2);
-    line(srcTop.x - 25, srcTop.y, srcTop.x, srcTop.y);
-    line(srcBot.x - 25, srcBot.y, srcBot.x, srcBot.y);
+    drawVsCircle(srcX, srcY1, srcX, srcY2);
 
-    let n1 = { x: srcTop.x, y: cy };
-    stroke(WIRE_COL); strokeWeight(2);
-    line(srcTop.x, srcTop.y, n1.x, n1.y);
+    // Wire from source+ down to mid level, then right to N via Ra'
+    let Alx = srcX, Aly = cy;
+    let Nx  = cx - sp * 0.25, Ny = cy;
+    let topY = cy - vsp * 0.42;
+    let botY = cy + vsp * 0.42;
+    let Rx   = cx + sp * 0.72;
 
-    // Rb' to center
-    let nCenter = { x: cx - sp * 0.2, y: cy };
-    drawResistor(n1.x, n1.y, nCenter.x, nCenter.y,
-        'Rb\'=' + nf(Rb_wye, 0, 1) + 'Ω', RES_COL, -16);
+    stroke(COL_WIRE); strokeWeight(2);
+    line(srcX, srcY1, Alx, srcY1);   // top rail left
+    line(Alx, srcY1, Alx, Aly);      // wire down to mid
 
-    // Top: combined series
-    let topY = cy - vsp * 0.55;
-    let rightNode = { x: cx + sp * 0.7, y: cy };
+    drawResEdge(Alx, Aly, Nx, Ny, "Ra'=" + nf(Ra,0,1) + '\u03A9', COL_WYE, -14);
 
-    stroke(WIRE_COL); strokeWeight(2);
-    line(nCenter.x, nCenter.y, nCenter.x, topY);
+    stroke(COL_WIRE); strokeWeight(2);
+    line(Nx, Ny, Nx, topY);
+    line(Nx, Ny, Nx, botY);
 
-    drawResistor(nCenter.x, topY, rightNode.x, topY,
-        'Rs1=' + nf(R_series1, 0, 1) + 'Ω', HIGHLIGHT3, -16);
+    drawResEdge(Nx, topY, Rx, topY, 'Rs1=' + nf(Rs1,0,1) + '\u03A9', COL_SERIES, -14);
+    drawResEdge(Nx, botY, Rx, botY, 'Rs2=' + nf(Rs2,0,1) + '\u03A9', COL_SERIES,  14);
 
-    stroke(WIRE_COL); strokeWeight(2);
-    line(rightNode.x, topY, rightNode.x, rightNode.y);
+    stroke(COL_WIRE); strokeWeight(2);
+    line(Rx, topY, Rx, cy);
+    line(Rx, botY, Rx, cy);
+    line(Rx, cy,   Rx, srcY2);
+    line(Rx, srcY2, srcX, srcY2);
 
-    // Bottom: combined series
-    let botY = cy + vsp * 0.55;
-    stroke(WIRE_COL); strokeWeight(2);
-    line(nCenter.x, nCenter.y, nCenter.x, botY);
+    drawBigNode(Alx, Aly, 'A', ABOVE);
+    drawWyeNode(Nx,  Ny,  'N');
+    drawBigNode(Rx,  cy,  'D', BELOW);
 
-    drawResistor(nCenter.x, botY, rightNode.x, botY,
-        'Rs2=' + nf(R_series2, 0, 1) + 'Ω', HIGHLIGHT3, 18);
-
-    stroke(WIRE_COL); strokeWeight(2);
-    line(rightNode.x, botY, rightNode.x, rightNode.y);
-
-    // Return to source
-    line(rightNode.x, rightNode.y, rightNode.x, srcBot.y);
-    line(rightNode.x, srcBot.y, srcBot.x, srcBot.y);
-
-    drawNode(nCenter.x, nCenter.y, 'N');
-    drawNode(rightNode.x, rightNode.y, '');
-
-    fill(HIGHLIGHT3);
-    noStroke();
-    textSize(10);
-    textAlign(CENTER, BOTTOM);
-    text('Series: Ra\'+R3 = ' + nf(R_series1, 0, 2) + 'Ω,  Rc\'+R4 = ' + nf(R_series2, 0, 2) + 'Ω', cx, circH - 10);
+    noStroke(); fill(COL_SERIES); textSize(10); textAlign(LEFT, TOP);
+    text('Rs1 = Rb\u2019+R3 = ' + nf(Rs1,0,2) + '\u03A9', Nx + 4, topY - 22);
+    text('Rs2 = Rc\u2019+R4 = ' + nf(Rs2,0,2) + '\u03A9', Nx + 4, botY + 8);
 }
 
-// Step 5: Final Req
-function drawFinalCircuit(cx, cy, sp, vsp) {
-    let srcTop = { x: cx - sp * 0.4, y: cy - vsp * 0.4 };
-    let srcBot = { x: cx - sp * 0.4, y: cy + vsp * 0.4 };
+// ── Step 5: final Req ─────────────────────────────────────────────────────────
+function drawFinal(cx, cy, sp, vsp) {
+    let srcX  = cx - sp * 0.55;
+    let srcY1 = cy - vsp * 0.38;
+    let srcY2 = cy + vsp * 0.38;
+    let rX2   = cx + sp * 0.55;
 
-    drawVoltageSource(srcTop.x - 25, srcTop.y, srcBot.x - 25, srcBot.y);
-    stroke(WIRE_COL); strokeWeight(2);
-    line(srcTop.x - 25, srcTop.y, srcTop.x, srcTop.y);
-    line(srcBot.x - 25, srcBot.y, srcBot.x, srcBot.y);
+    drawVsCircle(srcX - 28, srcY1, srcX - 28, srcY2);
+    stroke(COL_WIRE); strokeWeight(2);
+    line(srcX - 28, srcY1, srcX, srcY1);
+    line(srcX, srcY1, srcX, cy);
 
-    // Single equivalent resistor
-    let leftX = srcTop.x;
-    let rightX = cx + sp * 0.5;
-    let midY = cy;
+    drawResEdge(srcX, cy, rX2, cy, 'Req = ' + nf(Req,0,2) + '\u03A9', COL_RESULT, -18);
 
-    stroke(WIRE_COL); strokeWeight(2);
-    line(leftX, srcTop.y, leftX, midY);
+    stroke(COL_WIRE); strokeWeight(2);
+    line(rX2, cy, rX2, srcY2);
+    line(rX2, srcY2, srcX - 28, srcY2);
 
-    drawResistor(leftX, midY, rightX, midY,
-        'Req=' + nf(R_eq, 0, 2) + 'Ω', [40, 130, 200], -18);
-
-    stroke(WIRE_COL); strokeWeight(2);
-    line(rightX, midY, rightX, srcBot.y);
-    line(rightX, srcBot.y, srcBot.x, srcBot.y);
-
-    // Display final values prominently
     noStroke();
-    fill(40, 130, 200);
-    textSize(16);
-    textStyle(BOLD);
-    textAlign(CENTER, CENTER);
-    text('Req = ' + nf(R_eq, 0, 2) + ' Ω', cx, cy + vsp + 20);
-
-    let current = VS / R_eq;
-    fill(VS_COL);
-    textSize(13);
-    text('I = Vs/Req = ' + VS + '/' + nf(R_eq, 0, 2) + ' = ' + nf(current, 0, 3) + ' A', cx, cy + vsp + 45);
+    fill(COL_RESULT); textSize(17); textStyle(BOLD); textAlign(CENTER, CENTER);
+    text('Req = ' + nf(Req,0,2) + ' \u03A9', cx, cy + vsp * 0.58);
+    fill(COL_VS); textSize(13);
+    text('I = Vs/Req = ' + nf(Vs / Req,0,4) + ' A', cx, cy + vsp * 0.80);
     textStyle(NORMAL);
-
-    fill(80);
-    textSize(10);
-    textAlign(CENTER, BOTTOM);
-    text('Simplification complete!', cx, circH - 10);
 }
 
-// =====================================================================
-// PRIMITIVE DRAWING
-// =====================================================================
-function drawResistor(x1, y1, x2, y2, label, col, labelOffset) {
+// ── Drawing primitives ────────────────────────────────────────────────────────
+const ABOVE = 0, BELOW = 1, LEFT = 2, RIGHT = 3;
+
+function drawResEdge(x1, y1, x2, y2, lbl, col, lblOff) {
     let dx = x2 - x1, dy = y2 - y1;
     let len = sqrt(dx * dx + dy * dy);
     if (len < 1) return;
-    let ux = dx / len, uy = dy / len;
-    let px = -uy, py = ux;
+    let ux = dx / len, uy = dy / len, px = -uy, py = ux;
 
-    let resLen = len * 0.5;
-    let startF = 0.5 - resLen / (2 * len);
-    let endF = 0.5 + resLen / (2 * len);
+    const sf = 0.28, ef = 0.72;
+    stroke(COL_WIRE); strokeWeight(2);
+    line(x1, y1, x1 + dx * sf, y1 + dy * sf);
+    line(x1 + dx * ef, y1 + dy * ef, x2, y2);
 
-    // Wires
-    stroke(WIRE_COL);
-    strokeWeight(2);
-    line(x1, y1, x1 + dx * startF, y1 + dy * startF);
-    line(x1 + dx * endF, y1 + dy * endF, x2, y2);
-
-    // Zigzag
-    stroke(col);
-    strokeWeight(2.5);
-    noFill();
-    let zigN = 5;
-    let zigAmp = 5;
-    let sx = x1 + dx * startF;
-    let sy = y1 + dy * startF;
-    let segDx = (dx * (endF - startF)) / zigN;
-    let segDy = (dy * (endF - startF)) / zigN;
-
+    stroke(col); strokeWeight(2.5); noFill();
+    let n = 5, amp = 5;
+    let sx = x1 + dx * sf, sy = y1 + dy * sf;
+    let sdx = dx * (ef - sf) / n, sdy = dy * (ef - sf) / n;
     beginShape();
     vertex(sx, sy);
-    for (let j = 0; j < zigN; j++) {
-        let sign = (j % 2 === 0) ? 1 : -1;
-        let mx = sx + segDx * (j + 0.5) + px * zigAmp * sign;
-        let my = sy + segDy * (j + 0.5) + py * zigAmp * sign;
-        vertex(mx, my);
+    for (let j = 0; j < n; j++) {
+        let s = (j % 2 === 0) ? 1 : -1;
+        vertex(sx + sdx * (j + 0.5) + px * amp * s,
+               sy + sdy * (j + 0.5) + py * amp * s);
     }
-    vertex(x1 + dx * endF, y1 + dy * endF);
+    vertex(x1 + dx * ef, y1 + dy * ef);
     endShape();
 
-    // Label
-    if (label) {
-        let midX = (x1 + x2) / 2 + px * labelOffset;
-        let midY = (y1 + y2) / 2 + py * labelOffset;
-        fill(col);
-        noStroke();
-        textSize(10);
-        textAlign(CENTER, CENTER);
-        textStyle(BOLD);
-        text(label, midX, midY);
+    if (lbl) {
+        let mx = (x1 + x2) / 2 + px * lblOff;
+        let my = (y1 + y2) / 2 + py * lblOff;
+        noStroke(); fill(col);
+        textSize(10); textStyle(BOLD); textAlign(CENTER, CENTER);
+        text(lbl, mx, my);
         textStyle(NORMAL);
     }
 }
 
-function drawVoltageSource(x1, y1, x2, y2) {
-    let cx = (x1 + x2) / 2;
-    let cy = (y1 + y2) / 2;
-    let r = 14;
-
-    stroke(WIRE_COL);
-    strokeWeight(2);
-    line(x1, y1, cx, cy - r);
-    line(cx, cy + r, x2, y2);
-
-    // Circle
-    noFill();
-    stroke(VS_COL);
-    strokeWeight(2);
-    circle(cx, cy, r * 2);
-
-    // + and -
-    fill(VS_COL);
-    noStroke();
-    textSize(12);
-    textAlign(CENTER, CENTER);
-    textStyle(BOLD);
-    text('+', cx, cy - r * 0.4);
-    text('-', cx, cy + r * 0.4);
+function drawVsCircle(x1, y1, x2, y2) {
+    let vcx = (x1 + x2) / 2, vcy = (y1 + y2) / 2, r = 14;
+    stroke(COL_WIRE); strokeWeight(2);
+    line(x1, y1, vcx, vcy - r);
+    line(vcx, vcy + r, x2, y2);
+    noFill(); stroke(COL_VS); strokeWeight(2);
+    circle(vcx, vcy, r * 2);
+    noStroke(); fill(COL_VS);
+    textSize(11); textStyle(BOLD); textAlign(CENTER, CENTER);
+    text('+', vcx, vcy - r * 0.42);
+    text('\u2212', vcx, vcy + r * 0.42);
     textStyle(NORMAL);
-
-    // Label
-    textSize(9);
-    fill(VS_COL);
-    textAlign(LEFT, CENTER);
-    text(VS + 'V', cx + r + 4, cy);
+    textSize(9); textAlign(LEFT, CENTER);
+    text(Vs + 'V', vcx + r + 4, vcy);
 }
 
-function drawNode(x, y, label) {
-    fill(NODE_COL);
-    noStroke();
-    circle(x, y, 8);
-    if (label) {
-        fill(30);
-        textSize(11);
-        textStyle(BOLD);
-        textAlign(CENTER, BOTTOM);
-        text(label, x, y - 7);
+function drawBigNode(x, y, lbl, pos) {
+    fill(COL_NODE); noStroke();
+    circle(x, y, 13);
+    if (lbl) {
+        fill(30); textSize(12); textStyle(BOLD);
+        if      (pos === ABOVE) { textAlign(CENTER, BOTTOM); text(lbl, x, y - 10); }
+        else if (pos === BELOW) { textAlign(CENTER, TOP);    text(lbl, x, y + 10); }
+        else if (pos === LEFT)  { textAlign(RIGHT,  CENTER); text(lbl, x - 10, y); }
+        else                    { textAlign(LEFT,   CENTER); text(lbl, x + 10, y); }
         textStyle(NORMAL);
     }
 }
 
-// =====================================================================
-// BUTTONS
-// =====================================================================
-function drawButtons() {
-    // Next Step
-    let b = nextBtn;
-    let canNext = currentStep < STEP_COUNT - 1;
-    let hoverN = canNext && isInsideRect(mouseX, mouseY, b.x, b.y, b.w, b.h);
-    fill(canNext ? (hoverN ? BTN_HOVER : BTN_COL) : BTN_DISABLED);
-    noStroke();
-    rect(b.x, b.y, b.w, b.h, 6);
-    fill(255);
-    textSize(13);
-    textAlign(CENTER, CENTER);
-    textStyle(BOLD);
-    text('Next Step', b.x + b.w / 2, b.y + b.h / 2);
-
-    // Reset
-    b = resetBtn;
-    let hoverR = isInsideRect(mouseX, mouseY, b.x, b.y, b.w, b.h);
-    fill(hoverR ? [180, 50, 50] : [200, 70, 70]);
-    rect(b.x, b.y, b.w, b.h, 6);
-    fill(255);
-    text('Reset', b.x + b.w / 2, b.y + b.h / 2);
+function drawWyeNode(x, y, lbl) {
+    fill(COL_WYE); noStroke();
+    circle(x, y, 12);
+    fill(30); textSize(12); textStyle(BOLD);
+    textAlign(RIGHT, CENTER); text(lbl, x - 9, y);
     textStyle(NORMAL);
 }
 
-function drawStepInfo() {
-    // Step progress bar
-    let barX = nextBtn.x;
-    let barY = nextBtn.y + nextBtn.h + 14;
-    let barW = resetBtn.x + resetBtn.w - nextBtn.x;
-    let barH = 6;
+// ── Log panel ─────────────────────────────────────────────────────────────────
+function drawLogPanel() {
+    fill(COL_PANEL); stroke(220); strokeWeight(1);
+    rect(lP.x, lP.y, lP.w, lP.h, 8);
 
-    fill(220);
-    noStroke();
-    rect(barX, barY, barW, barH, 3);
+    noStroke(); fill(50); textSize(12); textStyle(BOLD);
+    textAlign(LEFT, TOP);
+    text('Operations Log', lP.x + 10, lP.y + 10);
+    textStyle(NORMAL);
 
-    fill(BTN_COL);
-    let progress = currentStep / (STEP_COUNT - 1);
-    rect(barX, barY, barW * progress, barH, 3);
-
-    // Step dots
-    for (let i = 0; i < STEP_COUNT; i++) {
-        let dotX = barX + (barW * i) / (STEP_COUNT - 1);
-        fill(i <= currentStep ? BTN_COL : [200, 200, 200]);
-        noStroke();
-        circle(dotX, barY + barH / 2, 10);
-        fill(255);
-        textSize(7);
-        textAlign(CENTER, CENTER);
-        text(i, dotX, barY + barH / 2);
-    }
-
-    // Step description
-    let descriptions = [
-        'Original bridge circuit',
-        'Identify delta configuration',
-        'Calculate wye equivalents',
-        'Replace delta with wye',
-        'Combine series resistors',
-        'Combine parallel + final Req'
-    ];
-    fill(80);
-    textSize(11);
-    textAlign(CENTER, TOP);
-    noStroke();
-    text('Step ' + currentStep + ': ' + descriptions[currentStep], containerWidth / 2, barY + 16);
-}
-
-// =====================================================================
-// INPUT HANDLING
-// =====================================================================
-function mousePressed() {
-    // Next Step button
-    if (currentStep < STEP_COUNT - 1 &&
-        isInsideRect(mouseX, mouseY, nextBtn.x, nextBtn.y, nextBtn.w, nextBtn.h)) {
-        currentStep++;
-        addLogEntry();
-        redraw();
-        return;
-    }
-
-    // Reset button
-    if (isInsideRect(mouseX, mouseY, resetBtn.x, resetBtn.y, resetBtn.w, resetBtn.h)) {
-        currentStep = 0;
-        initLog();
-        redraw();
-        return;
-    }
-}
-
-function addLogEntry() {
-    let r1 = R_VALS[0], r2 = R_VALS[1], r3 = R_VALS[2], r4 = R_VALS[3], r5 = R_VALS[4];
+    let r1=R[0], r2=R[1], r3=R[2], r4=R[3], r5=R[4];
     let sum = r1 + r2 + r5;
 
-    let entries = {
-        1: 'Identify Delta: R1(' + r1 + '), R2(' + r2 + '), R5(' + r5 + ') around nodes A, B, D',
-        2: 'Delta-to-Wye: Ra\'=' + nf(Ra_wye, 0, 2) + 'Ω, Rb\'=' + nf(Rb_wye, 0, 2) + 'Ω, Rc\'=' + nf(Rc_wye, 0, 2) + 'Ω  (sum=' + sum + ')',
-        3: 'Replace delta with wye resistors. R3 and R4 remain.',
-        4: 'Series: Ra\'+R3 = ' + nf(R_series1, 0, 2) + 'Ω,  Rc\'+R4 = ' + nf(R_series2, 0, 2) + 'Ω',
-        5: 'Parallel: ' + nf(R_series1, 0, 2) + ' || ' + nf(R_series2, 0, 2) + ' = ' + nf(R_parallel, 0, 2) + 'Ω. Req = Rb\' + Rp = ' + nf(R_eq, 0, 2) + 'Ω. I = ' + nf(VS / R_eq, 0, 3) + 'A'
-    };
+    const LOG = [
+        { title: 'Initial Values',
+          lines: ['R1='+r1+'\u03A9  R2='+r2+'\u03A9  R3='+r3+'\u03A9',
+                  'R4='+r4+'\u03A9  R5='+r5+'\u03A9  Vs='+Vs+'V',
+                  'Cannot reduce by series/parallel.'] },
+        { title: 'Delta Identified',
+          lines: ['\u0394: R1(A\u2013B), R2(A\u2013C), R5(B\u2013C)',
+                  '\u03A3 = '+r1+'+'+r2+'+'+r5+' = '+sum+'\u03A9'] },
+        { title: '\u0394\u2192Y Formulas',
+          lines: ["Ra' = R1\u00B7R2/\u03A3 = "+nf(Ra,0,2)+'\u03A9',
+                  "Rb' = R1\u00B7R5/\u03A3 = "+nf(Rb,0,2)+'\u03A9',
+                  "Rc' = R2\u00B7R5/\u03A3 = "+nf(Rc,0,2)+'\u03A9'] },
+        { title: 'Y Replaces Delta',
+          lines: ['Node N at wye centre.',
+                  "N\u2013A: Ra'="+nf(Ra,0,2)+'\u03A9',
+                  "N\u2013B: Rb'="+nf(Rb,0,2)+'\u03A9  (then R3 to D)',
+                  "N\u2013C: Rc'="+nf(Rc,0,2)+'\u03A9  (then R4 to D)'] },
+        { title: 'Series Reduction',
+          lines: ['Rs1 = Rb\u2019+R3 = '+nf(Rb,0,1)+'+'+r3+' = '+nf(Rs1,0,2)+'\u03A9',
+                  'Rs2 = Rc\u2019+R4 = '+nf(Rc,0,1)+'+'+r4+' = '+nf(Rs2,0,2)+'\u03A9'] },
+        { title: 'Final Result',
+          lines: ['Rp = Rs1\u2016Rs2 = '+nf(Rpar,0,2)+'\u03A9',
+                  "Req = Ra'+Rp = "+nf(Ra,0,2)+'+'+nf(Rpar,0,2),
+                  '    = '+nf(Req,0,2)+'\u03A9',
+                  'I = '+Vs+'/'+nf(Req,0,2)+' = '+nf(Vs/Req,0,4)+'A'] }
+    ];
 
-    if (entries[currentStep]) {
-        logEntries.push({ step: currentStep, text: entries[currentStep] });
+    let ly = lP.y + 32;
+    for (let i = 0; i <= step && i < LOG.length; i++) {
+        if (ly > lP.y + lP.h - 10) break;
+        let e = LOG[i];
+        let active = (i === step);
+
+        if (active) {
+            noStroke(); fill(235, 242, 255);
+            rect(lP.x + 4, ly - 2, lP.w - 8, e.lines.length * 14 + 22, 4);
+        }
+
+        // Step badge
+        fill(active ? COL_BTN : [155, 160, 170]); noStroke();
+        rect(lP.x + 8, ly + 1, 18, 13, 3);
+        fill(255); textSize(9); textAlign(CENTER, CENTER);
+        text(i, lP.x + 17, ly + 7.5);
+
+        // Title
+        fill(active ? COL_BTN : [80, 80, 90]);
+        textSize(11); textStyle(BOLD); textAlign(LEFT, TOP);
+        text(e.title, lP.x + 32, ly);
+        textStyle(NORMAL);
+        ly += 16;
+
+        for (let j = 0; j < e.lines.length; j++) {
+            fill(active ? [30, 50, 110] : [105, 105, 115]);
+            textSize(10); textAlign(LEFT, TOP);
+            text(e.lines[j], lP.x + 12, ly, lP.w - 20);
+            ly += 14;
+        }
+        ly += 7;
     }
 }
 
-function mouseMoved() {
-    redraw();
+// ── Explanation ───────────────────────────────────────────────────────────────
+function drawExplanation() {
+    const y0 = 410, h = 60;
+    let col = step <= 2 ? COL_DELTA : (step === 5 ? COL_RESULT : COL_WYE);
+
+    noStroke(); fill(col[0], col[1], col[2], 22);
+    rect(12, y0, cw - 24, h, 6);
+    stroke(col[0], col[1], col[2], 110); strokeWeight(1.5); noFill();
+    rect(12, y0, cw - 24, h, 6);
+
+    fill(col); noStroke();
+    rect(12, y0, 5, h, 6, 0, 0, 6);
+
+    fill(40); noStroke(); textSize(12); textAlign(LEFT, CENTER);
+    text(EXPLANATIONS[step], 26, y0 + h / 2, cw - 52);
 }
 
-// =====================================================================
-// UTILITY
-// =====================================================================
-function isInsideRect(mx, my, rx, ry, rw, rh) {
-    return mx >= rx && mx <= rx + rw && my >= ry && my <= ry + rh;
+// ── Input panel ───────────────────────────────────────────────────────────────
+function drawInputPanel() {
+    const y0 = 480, h = 74;
+    noStroke(); fill(COL_PANEL);
+    rect(0, y0, cw, h);
+    stroke(225); strokeWeight(1);
+    line(0, y0, cw, y0);
+
+    noStroke(); fill(95); textSize(11); textAlign(LEFT, TOP);
+    text('Edit resistor values to explore different circuits:', 20, y0 + 6);
+
+    let labels = ['R1', 'R2', 'R3', 'R4', 'R5', 'Vs'];
+    let units  = ['\u03A9', '\u03A9', '\u03A9', '\u03A9', '\u03A9', 'V'];
+    let colW   = (cw - 40) / 3;
+
+    for (let i = 0; i < 6; i++) {
+        let col = i % 3, row = floor(i / 3);
+        let lx  = 20 + col * colW;
+        let ly  = y0 + 22 + row * 36;
+
+        fill(55); textSize(12); textStyle(BOLD); textAlign(RIGHT, CENTER);
+        text(labels[i] + ':', lx + 30, ly);
+        textStyle(NORMAL);
+
+        // Unit after the 52px-wide input box
+        fill(90); textSize(11); textAlign(LEFT, CENTER);
+        text(units[i], lx + 34 + 56, ly);
+    }
+}
+
+// ── Nav buttons ───────────────────────────────────────────────────────────────
+function drawNavButtons() {
+    drawBtn(btnPrev,  '\u25C0 Prev', step > 0            ? COL_BTN     : COL_BTN_DIS);
+    drawBtn(btnNext,  'Next \u25BA', step < STEPS - 1    ? COL_BTN     : COL_BTN_DIS);
+    drawBtn(btnReset, 'Reset',        COL_BTN_RED);
+}
+
+function drawBtn(b, lbl, col) {
+    noStroke(); fill(col);
+    rect(b.x, b.y, b.w, b.h, 6);
+    fill(255); textSize(13); textStyle(BOLD); textAlign(CENTER, CENTER);
+    text(lbl, b.x + b.w / 2, b.y + b.h / 2);
+    textStyle(NORMAL);
+}
+
+// ── Timeline ──────────────────────────────────────────────────────────────────
+function drawTimeline() {
+    let tlL = tlDots[0].x, tlR = tlDots[STEPS - 1].x, tlY = tlDots[0].y;
+
+    stroke(210); strokeWeight(3);
+    line(tlL, tlY, tlR, tlY);
+    stroke(COL_BTN); strokeWeight(3);
+    line(tlL, tlY, tlL + (tlR - tlL) * step / (STEPS - 1), tlY);
+
+    let abbr = ['Orig', '\u0394 ID', 'Calc Y', 'Y Sub', 'Series', 'Final'];
+    for (let i = 0; i < STEPS; i++) {
+        let d = tlDots[i];
+        let done = (i <= step);
+        fill(done ? COL_BTN : [210, 215, 225]); noStroke();
+        circle(d.x, d.y, 24);
+        fill(done ? 255 : [130, 135, 148]);
+        textSize(9); textStyle(BOLD); textAlign(CENTER, CENTER);
+        text(i, d.x, d.y);
+        textStyle(NORMAL);
+        fill(done ? [50, 80, 160] : [140, 145, 158]);
+        textSize(9); textAlign(CENTER, TOP);
+        text(abbr[i], d.x, d.y + 14);
+    }
+
+    // Current step label
+    fill(70); noStroke(); textSize(11); textAlign(CENTER, TOP);
+    text(STEP_TITLES[step], cw / 2, tlDots[0].y + 30);
+}
+
+// ── Mouse ─────────────────────────────────────────────────────────────────────
+function mousePressed() {
+    if (step > 0 && inBtn(btnPrev))  { step--;          redraw(); return; }
+    if (step < STEPS-1 && inBtn(btnNext)) { step++;     redraw(); return; }
+    if (inBtn(btnReset))             { step = 0;        redraw(); return; }
+
+    for (let i = 0; i < tlDots.length; i++) {
+        let d = tlDots[i];
+        if (dist(mouseX, mouseY, d.x, d.y) < 15) { step = i; redraw(); return; }
+    }
+}
+
+function mouseMoved() { redraw(); }
+
+function inBtn(b) {
+    return mouseX >= b.x && mouseX <= b.x + b.w &&
+           mouseY >= b.y && mouseY <= b.y + b.h;
 }
