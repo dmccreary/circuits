@@ -53,6 +53,9 @@ const colGround      = [90,  105, 120];
 
 let nodePos = {};
 
+let vsDropdown;
+const VS_PRESETS = [1, 2, 3, 5, 8, 10, 12, 15, 20];
+
 // ── Setup ─────────────────────────────────────────────────────────────────────
 
 function setup() {
@@ -61,6 +64,7 @@ function setup() {
     canvas.parent(document.querySelector('main'));
     textFont('Arial');
     initSliders();
+    initVsDropdown();
     buildLayout();   // computes true canvasHeight and calls resizeCanvas()
 
     // Respond to height-request from parent page (e.g., on focus after fullscreen exit)
@@ -114,6 +118,32 @@ function initSliders() {
         inp.elt.addEventListener('blur', () => inp.value(c.fmt(s.val)));
 
         return s;
+    });
+}
+
+function initVsDropdown() {
+    vsDropdown = createSelect();
+    VS_PRESETS.forEach(v => vsDropdown.option(v + ' V', String(v)));
+    vsDropdown.value('5');  // match initial vs
+
+    vsDropdown.style('font-size',    '12px');
+    vsDropdown.style('font-family',  'Arial,sans-serif');
+    vsDropdown.style('padding',      '3px 5px');
+    vsDropdown.style('border',       '1.5px solid #94a3b8');
+    vsDropdown.style('border-radius','4px');
+    vsDropdown.style('background',   '#f8fafc');
+    vsDropdown.style('color',        '#1e293b');
+    vsDropdown.style('cursor',       'pointer');
+    vsDropdown.style('position',     'absolute');
+    vsDropdown.style('width',        '72px');
+
+    vsDropdown.changed(() => {
+        const val = parseFloat(vsDropdown.value());
+        vs = val;
+        sliders[0].val = val;
+        sliders[0].inp.value(sliders[0].fmt(val));
+        sliders[0].setter(val);
+        solved = false;
     });
 }
 
@@ -204,6 +234,11 @@ function buildLayout() {
         s.inp.position(offX + leftPanelX + LABEL_W + 4, offY + s.y - inputH / 2);
         s.inp.size(INPUT_W);
     });
+
+    // Position Vs dropdown to the right of the circuit, level with the voltage source
+    const ddCanvasX = nodePos.n2.x + 52;
+    const ddCanvasY = nodePos.n1.y - 10;
+    vsDropdown.position(offX + ddCanvasX, offY + ddCanvasY);
 }
 
 // ── Draw ──────────────────────────────────────────────────────────────────────
@@ -212,6 +247,7 @@ function draw() {
     background(colBg);
     drawTitleBar();
     drawCircuit();
+    drawVsDropdownLabel();
     if (showSupernode) drawSupernodeBoundary();
     drawNodeLabels();
     if (solved) drawSolvedValues();
@@ -570,6 +606,15 @@ function drawSupernodeBoundary() {
     textSize(12); textStyle(BOLD);
     text('Supernode', cx2, topEdge - 5 - 15);
     textStyle(NORMAL);
+}
+
+function drawVsDropdownLabel() {
+    // "Vs preset" label drawn just above the dropdown position
+    const ddCx = nodePos.n2.x + 52 + 36;  // dropdown left + half width (72/2=36)
+    const ddTop = nodePos.n1.y - 10;
+    noStroke(); fill(colTextLight);
+    textSize(9.5); textAlign(CENTER, BOTTOM); textStyle(NORMAL);
+    text('Vs preset', ddCx, ddTop - 3);
 }
 
 function drawNodeLabels() {
