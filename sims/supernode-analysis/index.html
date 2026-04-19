@@ -3121,32 +3121,9 @@
 
 
 <h1 id="supernode-analysis">Supernode Analysis</h1>
-<iframe id="supernode-sim" src="main.html" width="100%"
-    style="height:620px; display:block; border:none; overflow:hidden;"
+<iframe src="main.html" width="100%"
+    style="height:620px; display:block; border:none;"
     scrolling="no"></iframe>
-
-<script>
-(function () {
-    var iframe = document.getElementById('supernode-sim');
-
-    // Receive the canvas height from the sim and resize the iframe to match
-    window.addEventListener('message', function (e) {
-        if (e.data && e.data.type === 'microsim-height' && iframe) {
-            iframe.style.height = (e.data.height + 20) + 'px';
-        }
-    });
-
-    // When the user returns to this tab (e.g. after closing the fullscreen tab),
-    // ask the iframe to re-send its height so we can restore it correctly
-    window.addEventListener('focus', function () {
-        if (iframe && iframe.contentWindow) {
-            try {
-                iframe.contentWindow.postMessage({ type: 'microsim-height-request' }, '*');
-            } catch (err) {}
-        }
-    });
-})();
-</script>
 
 <p><a class="md-button md-button--primary" href="main.html">Run in fullscreen</a></p>
 <h2 id="description">Description</h2>
@@ -3268,6 +3245,8 @@
     
     
       <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../js/iframe-resize.js"></script>
       
         <script src="../../js/extra.js"></script>
       
