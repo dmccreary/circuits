@@ -5,7 +5,7 @@ description: Interactive graph-based tool that lets students add nodes and branc
 
 # Circuit Topology Explorer
 
-<iframe src="main.html" width="100%" height="500px" scrolling="no"></iframe>
+<iframe src="main.html" width="100%" height="640px" scrolling="no"></iframe>
 
 [Run in fullscreen](main.html){ .md-button .md-button--primary }
 

@@ -305,9 +305,8 @@ hide:
 
   <!-- ══════════════════════════════════════════════════════════════════════
        ZONE 5 — LEFT-MID UPPER (x=210–395, y=238–462): LC Resonant Tank
-       Faded: sits in transition zone approaching center safe area.
        ══════════════════════════════════════════════════════════════════════ -->
-  <g opacity="0.35">
+  <g opacity="0.90">
   <!-- Tank top wire -->
   <line x1="218" y1="268" x2="388" y2="268" stroke="rgba(220,170,30,0.85)" stroke-width="2.0"/>
   <!-- Inductor L humps on top wire x=243–363 -->
@@ -336,9 +335,8 @@ hide:
 
   <!-- ══════════════════════════════════════════════════════════════════════
        ZONE 5B — LEFT-MID LOWER (x=210–395, y=478–685): Diode rectifier + RC
-       Faded: transition zone toward center.
        ══════════════════════════════════════════════════════════════════════ -->
-  <g opacity="0.32">
+  <g opacity="0.88">
   <!-- Horizontal wire y=545 -->
   <line x1="218" y1="545" x2="390" y2="545" stroke="rgba(200,185,255,0.72)" stroke-width="1.8"/>
   <!-- Diode symbol (triangle + bar) -->
@@ -365,24 +363,15 @@ hide:
   <line x1="294" y1="618" x2="310" y2="618" stroke="rgba(100,220,255,0.58)" stroke-width="1.3"/>
   </g>
 
-  <!-- ══════════════════════════════════════════════════════════════════════
-       CENTER VIGNETTE — radial dim behind text/button region
-       Suppresses any residual grid/trace lines behind the content.
-       ══════════════════════════════════════════════════════════════════════ -->
-  <defs>
-    <radialGradient id="center-dim" cx="50%" cy="50%" r="50%" fx="50%" fy="50%"
-                    gradientUnits="userSpaceOnUse" x1="600" y1="460">
-      <stop offset="0%"   stop-color="rgba(6,0,24,0.28)"/>
-      <stop offset="100%" stop-color="rgba(6,0,24,0.00)"/>
-    </radialGradient>
-  </defs>
-  <ellipse cx="600" cy="460" rx="380" ry="260" fill="url(#center-dim)"/>
+  <!-- Text legibility overlay — subtle dark rect behind title/content only -->
+  <rect x="252" y="226" width="696" height="462" rx="18"
+        fill="rgba(4,0,20,0.30)" />
 
   <!-- ══════════════════════════════════════════════════════════════════════
-       ZONE 6 — CENTER SAFE ZONE (x=320–880, y=238–685): Barely-visible texture
-       Ultra-low opacity — keeps center clear for title/text/buttons.
+       ZONE 6 — CENTER (x=320–880, y=238–685): Visible circuit texture
+       Low opacity so text remains readable, but circuits are present.
        ══════════════════════════════════════════════════════════════════════ -->
-  <g opacity="0.04">
+  <g opacity="0.28">
     <!-- Three-node mesh: N1=(445,355), N2=(755,355), N3=(600,565) -->
     <circle cx="445" cy="355" r="7" fill="rgba(220,170,30,1)"/>
     <circle cx="755" cy="355" r="7" fill="rgba(220,170,30,1)"/>
@@ -418,9 +407,8 @@ hide:
 
   <!-- ══════════════════════════════════════════════════════════════════════
        ZONE 7 — RIGHT-MID UPPER (x=815–995, y=238–462): RC Ladder chain
-       Faded: sits in transition zone approaching center safe area.
        ══════════════════════════════════════════════════════════════════════ -->
-  <g opacity="0.35">
+  <g opacity="0.90">
   <!-- Horizontal bus y=315 -->
   <line x1="815" y1="315" x2="992" y2="315" stroke="rgba(220,170,30,0.80)" stroke-width="1.8"/>
   <!-- R1 -->
@@ -449,9 +437,8 @@ hide:
 
   <!-- ══════════════════════════════════════════════════════════════════════
        ZONE 7B — RIGHT-MID LOWER (x=815–995, y=480–685): Op-amp differentiator
-       Faded: transition zone toward center.
        ══════════════════════════════════════════════════════════════════════ -->
-  <g opacity="0.32">
+  <g opacity="0.88">
   <!-- C series input -->
   <line x1="818" y1="565" x2="843" y2="565" stroke="rgba(100,220,255,0.80)" stroke-width="1.8"/>
   <line x1="843" y1="547" x2="843" y2="583" stroke="rgba(100,220,255,1.0)" stroke-width="3.0"/>

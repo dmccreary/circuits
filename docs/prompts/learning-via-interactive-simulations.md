@@ -56,7 +56,7 @@ Certainly! In an undergraduate circuits course, several topics are particularly 
 
 - **Simulation Application**: Interactive plots of I-V characteristics allow students to see how diodes and transistors respond to different input voltages. They can experiment with biasing conditions and observe the effects on current flow.
 
-Example: [Diode Current-Voltage Simulation](../sections/50-diode/index.md)
+Example: [Diode Current-Voltage Simulation](../sims/iv-characteristics/index.md)
 
 ### Operational Amplifiers (Op-Amps)
 
