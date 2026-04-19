@@ -1,58 +1,65 @@
-// Supernode Analysis MicroSim
-// Circuit with voltage source between two non-reference nodes creating a supernode
+// Supernode Analysis MicroSim — v3 (overlap fix + numeric inputs)
 
 let canvasWidth;
-const canvasHeight = 480;
-const margin = 20;
+const canvasHeight = 680;
+const margin = 14;
 
-// Circuit parameters
-let vs = 5;       // Voltage source (V)
-let r1 = 1000;    // R1 (ohms)
-let r2 = 2000;    // R2 (ohms)
-let r3 = 1000;    // R3 (ohms)
+let vs = 5;
+let r1 = 1000, r2 = 2000, r3 = 1000;
 
-// Slider data
 let sliders = [];
 let activeSlider = -1;
 
-// Supernode boundary toggle
 let showSupernode = true;
 let supernodeCbX, supernodeCbY;
 
-// Solve button
-let solveBtn = { x: 0, y: 0, w: 80, h: 30 };
+let solveBtn = { x: 0, y: 0, w: 110, h: 34 };
 let solved = false;
-let v1 = 0, v2 = 0; // Node voltages
+let v1 = 0, v2 = 0;
 
-// Colors
-const colBg = [248, 250, 252];
-const colPanel = [255, 255, 255];
-const colBorder = [203, 213, 225];
-const colText = [30, 41, 59];
-const colTextLight = [100, 116, 139];
-const colNode = [59, 130, 246];
-const colWire = [51, 65, 85];
-const colSource = [239, 68, 68];
-const colResistor = [107, 114, 128];
-const colSupernode = [147, 51, 234];    // purple
-const colSupernodeFill = [147, 51, 234, 25];
-const colAccent = [59, 130, 246];
-const colGreen = [34, 197, 94];
-const colHover = [241, 245, 249];
+let leftPanelX, leftPanelW, rightPanelX, rightPanelW;
+const controlsY = 362;
+
+// Layout constants for left panel columns
+const LABEL_W  = 30;   // px for "Vs", "R1" text
+const INPUT_W  = 62;   // input box width
+const UNIT_W   = 28;   // unit label width ("kΩ")
+const TRACK_OFFSET = LABEL_W + INPUT_W + UNIT_W + 8; // sliderTrackX offset from leftPanelX
+
+const colBg          = [245, 247, 250];
+const colPanel       = [255, 255, 255];
+const colPanelHead   = [241, 245, 249];
+const colBorder      = [203, 213, 225];
+const colText        = [30,  41,  59];
+const colTextLight   = [100, 116, 139];
+const colNode        = [59,  130, 246];
+const colWire        = [51,  65,  85];
+const colSource      = [210, 45,  45];
+const colResistor    = [80,  95,  115];
+const colSupernode   = [147, 51,  234];
+const colAccent      = [59,  130, 246];
+const colGreen       = [22,  163, 74];
+const colGreenBg     = [240, 253, 244];
+const colYellow      = [161, 98,  7];
+const colYellowBg    = [255, 251, 235];
+const colBlueBg      = [239, 246, 255];
+const colHover       = [241, 245, 249];
 const colSliderTrack = [203, 213, 225];
-const colSliderThumb = [59, 130, 246];
-const colBtnBg = [59, 130, 246];
-const colBtnHover = [37, 99, 235];
-const colGround = [107, 114, 128];
+const colSliderThumb = [59,  130, 246];
+const colBtnBg       = [59,  130, 246];
+const colBtnHover    = [37,  99,  235];
+const colGround      = [90,  105, 120];
 
-// Node positions (set in setup)
 let nodePos = {};
+
+// ─── Setup ───────────────────────────────────────────────────────────────────
 
 function setup() {
     canvasWidth = min(floor(document.querySelector('main').getBoundingClientRect().width), 800);
     const canvas = createCanvas(canvasWidth, canvasHeight);
     canvas.parent(document.querySelector('main'));
     textFont('Arial');
+    initSliders();
     buildLayout();
 }
 
@@ -62,234 +69,489 @@ function windowResized() {
     buildLayout();
 }
 
-function buildLayout() {
-    // Circuit layout
-    // Topology:
-    //   Node 1 ---[Vs]+--- Node 2
-    //     |                  |
-    //    [R1]              [R2]
-    //     |                  |
-    //   GND ----[R3]---- GND (Node 0, reference)
-    //
-    // Better: standard supernode circuit
-    //        Node1 ----[Vs]---- Node2
-    //          |                   |
-    //         [R1]               [R2]
-    //          |                   |
-    //         GND ------[R3]----- GND
-    //
-    // Actually, let's have a proper topology:
-    //   Vs connects Node1 to Node2 (floating source)
-    //   R1 from Node1 to GND
-    //   R2 from Node2 to GND
-    //   R3 from Node2 to GND (or Node1 to GND for variety)
-    //   ... We need R3 somewhere meaningful.
-    //
-    // Classic supernode: Is = source from GND to Node1, Vs between Node1-Node2
-    // Let me use: current source Is or another arrangement.
-    //
-    // Simpler practical circuit:
-    //   Independent source Vs1 from GND to Node1 through R1
-    //   Dependent source Vs between Node1 and Node2
-    //   R2 from Node2 to GND
-    //   R3 from Node1 to GND
-    //
-    // Let's do the classic textbook supernode:
-    //          +---[R1]---Node1---[Vs]---Node2---[R2]---+
-    //          |            |                      |      |
-    //         [Vs_main]    [R3]                  (nothing)|
-    //          |            |                      |      |
-    //         GND---------GND--------------------GND----GND
-    //
-    // Simplest meaningful:
-    //   Vs_in (10V) connected from GND to Node_A through R1
-    //   Vs (floating) between Node1 and Node2
-    //   R2 from Node1 to GND, R3 from Node2 to GND
-    //
-    // Even simpler textbook version:
-    //   A voltage source V_s is connected between Node1 and Node2 (both non-ref)
-    //   R1 from a main voltage source to Node1
-    //   R2 from Node1 to GND
-    //   R3 from Node2 to GND
-    //   Main source: 10V from left
-    //
-    // Final chosen circuit:
-    //   Left: 10V source from GND up to top wire
-    //   Top wire goes right, through R1 to Node1
-    //   Node1 connects via Vs to Node2 (the supernode pair)
-    //   Node1 connects via R2 to GND
-    //   Node2 connects via R3 to GND
-    //   This gives us a proper supernode (Vs between Node1 and Node2)
-    //   Main source is fixed at 10V.
-
-    let cx = canvasWidth / 2;
-    let circTop = 70;
-    let circBot = 260;
-    let circLeft = max(60, cx - 220);
-    let circRight = min(canvasWidth - 60, cx + 220);
-    let midX = (circLeft + circRight) / 2;
-    let n1x = midX - 60;
-    let n2x = midX + 80;
-
-    nodePos = {
-        src_top: { x: circLeft, y: circTop },
-        n1: { x: n1x, y: circTop },
-        n2: { x: n2x, y: circTop },
-        src_bot: { x: circLeft, y: circBot },
-        n1_bot: { x: n1x, y: circBot },
-        n2_bot: { x: n2x, y: circBot },
-        gnd_left: { x: circLeft, y: circBot },
-        gnd_right: { x: circRight, y: circBot }
-    };
-
-    // Sliders
-    let sliderX = margin + 10;
-    let sliderW = min(canvasWidth - 2 * margin - 20, 200);
-    let sliderY = 300;
-    let sliderGap = 38;
-
-    sliders = [
-        { x: sliderX, y: sliderY, w: sliderW, label: 'Vs', unit: 'V', min: 1, max: 20, val: vs, fmt: (v) => v.toFixed(1), setter: (v) => { vs = v; } },
-        { x: sliderX, y: sliderY + sliderGap, w: sliderW, label: 'R1', unit: 'kΩ', min: 100, max: 10000, val: r1, fmt: (v) => (v / 1000).toFixed(1), setter: (v) => { r1 = v; } },
-        { x: sliderX, y: sliderY + sliderGap * 2, w: sliderW, label: 'R2', unit: 'kΩ', min: 100, max: 10000, val: r2, fmt: (v) => (v / 1000).toFixed(1), setter: (v) => { r2 = v; } },
-        { x: sliderX, y: sliderY + sliderGap * 3, w: sliderW, label: 'R3', unit: 'kΩ', min: 100, max: 10000, val: r3, fmt: (v) => (v / 1000).toFixed(1), setter: (v) => { r3 = v; } }
+// Create slider configs and DOM input elements once
+function initSliders() {
+    const configs = [
+        { label: 'Vs', unit: 'V',  min: 1,   max: 20,    val: vs,
+          fmt:      (v) => v.toFixed(1),
+          toRaw:    (s) => parseFloat(s),
+          setter:   (v) => { vs = v; } },
+        { label: 'R1', unit: 'kΩ', min: 100, max: 10000, val: r1,
+          fmt:      (v) => (v / 1000).toFixed(2),
+          toRaw:    (s) => parseFloat(s) * 1000,
+          setter:   (v) => { r1 = v; } },
+        { label: 'R2', unit: 'kΩ', min: 100, max: 10000, val: r2,
+          fmt:      (v) => (v / 1000).toFixed(2),
+          toRaw:    (s) => parseFloat(s) * 1000,
+          setter:   (v) => { r2 = v; } },
+        { label: 'R3', unit: 'kΩ', min: 100, max: 10000, val: r3,
+          fmt:      (v) => (v / 1000).toFixed(2),
+          toRaw:    (s) => parseFloat(s) * 1000,
+          setter:   (v) => { r3 = v; } },
     ];
 
-    // Supernode checkbox position
-    supernodeCbX = sliderX;
-    supernodeCbY = sliderY + sliderGap * 4 + 5;
+    sliders = configs.map(c => {
+        const inp = createInput(c.fmt(c.val));
+        applyInputStyle(inp);
 
-    // Solve button
-    solveBtn.x = sliderX + sliderW + 40;
-    solveBtn.y = sliderY + sliderGap * 2 - 5;
-    solveBtn.w = 90;
-    solveBtn.h = 34;
+        const s = {
+            label:  c.label,
+            unit:   c.unit,
+            min:    c.min,
+            max:    c.max,
+            val:    c.val,
+            fmt:    c.fmt,
+            setter: c.setter,
+            inp:    inp,
+            trackX: 0,
+            trackW: 0,
+            y:      0,
+        };
 
-    solved = false;
+        // Sync input → slider/variable
+        inp.input(() => {
+            const raw = c.toRaw(inp.value());
+            if (isNaN(raw) || raw <= 0) return;
+            const clamped = constrain(raw, c.min, c.max);
+            s.val = clamped;
+            c.setter(clamped);
+            solved = false;
+        });
+
+        // Normalize display on blur
+        inp.elt.addEventListener('blur', () => {
+            inp.value(c.fmt(s.val));
+        });
+
+        return s;
+    });
 }
+
+function applyInputStyle(inp) {
+    inp.style('font-size',   '12px');
+    inp.style('font-family', 'Arial, sans-serif');
+    inp.style('padding',     '3px 6px');
+    inp.style('border',      '1.5px solid #94a3b8');
+    inp.style('border-radius','4px');
+    inp.style('text-align',  'right');
+    inp.style('color',       '#1e293b');
+    inp.style('background',  '#f8fafc');
+    inp.style('box-sizing',  'border-box');
+    inp.style('outline',     'none');
+    inp.style('position',    'absolute');
+    inp.size(INPUT_W);
+}
+
+function buildLayout() {
+    const panelGap = 10;
+    leftPanelX  = margin;
+    leftPanelW  = floor(canvasWidth / 2) - margin - floor(panelGap / 2);
+    rightPanelX = floor(canvasWidth / 2) + floor(panelGap / 2);
+    rightPanelW = canvasWidth - rightPanelX - margin;
+
+    // Circuit pushed well below header (pill ends at y≈80; circTop=150 gives ≥35px gap)
+    const cx      = canvasWidth / 2;
+    const circTop = 150;
+    const circBot = 310;
+    const n1x     = cx - 75;
+    const n2x     = cx + 75;
+    const srcX    = max(margin + 20, cx - 210);
+
+    nodePos = {
+        src_top: { x: srcX, y: circTop },
+        src_bot: { x: srcX, y: circBot },
+        n1:      { x: n1x,  y: circTop },
+        n2:      { x: n2x,  y: circTop },
+        n1_bot:  { x: n1x,  y: circBot },
+        n2_bot:  { x: n2x,  y: circBot },
+    };
+
+    // Slider geometry
+    const sliderTrackX = leftPanelX + TRACK_OFFSET;
+    const sliderTrackW = leftPanelW - TRACK_OFFSET - 10;
+    const sliderStartY = controlsY + 44;
+    const sliderGap    = 48;
+    const inputH       = 24;
+
+    // Canvas page offset for DOM input positioning
+    const cr   = document.querySelector('canvas').getBoundingClientRect();
+    const offX = cr.left + window.scrollX;
+    const offY = cr.top  + window.scrollY;
+
+    sliders.forEach((s, i) => {
+        s.y      = sliderStartY + i * sliderGap;
+        s.trackX = sliderTrackX;
+        s.trackW = sliderTrackW;
+
+        const inputPageX = offX + leftPanelX + LABEL_W + 4;
+        const inputPageY = offY + s.y - inputH / 2;
+        s.inp.position(inputPageX, inputPageY);
+        s.inp.size(INPUT_W);
+    });
+
+    supernodeCbX = leftPanelX + 10;
+    supernodeCbY = sliderStartY + sliderGap * 4 + 6;
+
+    solveBtn.x = leftPanelX + (leftPanelW - solveBtn.w) / 2;
+    solveBtn.y = supernodeCbY + 30;
+}
+
+// ─── Draw ─────────────────────────────────────────────────────────────────────
 
 function draw() {
     background(colBg);
-    drawTitle();
+    drawTitleBar();
     drawCircuit();
     if (showSupernode) drawSupernodeBoundary();
     drawNodeLabels();
     if (solved) drawSolvedValues();
+    drawSectionDivider();
+    drawLeftPanel();
+    drawRightPanel();
+}
+
+// Title + explanation bar (y: 0–88)
+function drawTitleBar() {
+    noStroke();
+    fill(colText);
+    textSize(17);
+    textAlign(LEFT, TOP);
+    textStyle(BOLD);
+    text('Supernode Analysis', margin, 9);
+    textStyle(NORMAL);
+
+    fill(colTextLight);
+    textSize(11);
+    text('Nodal analysis when a voltage source connects two non-reference nodes', margin, 31);
+
+    // Explanation pill  (ends at y=80; circuit top is 150 → safe gap)
+    const py = 50, pw = canvasWidth - 2 * margin, ph = 30;
+    fill(colBlueBg);
+    stroke(colAccent[0], colAccent[1], colAccent[2], 90);
+    strokeWeight(1);
+    rect(margin, py, pw, ph, 5);
+    noStroke();
+    fill(35, 90, 185);
+    textSize(11);
+    textAlign(LEFT, CENTER);
+    textStyle(ITALIC);
+    text(
+        'A supernode encloses Node\u2081 and Node\u2082 joined by Vs. ' +
+        'Apply KCL to the combined boundary, then add constraint: V\u2081 \u2013 V\u2082 = Vs.',
+        margin + 10, py + ph / 2
+    );
+    textStyle(NORMAL);
+}
+
+function drawSectionDivider() {
+    stroke(colBorder);
+    strokeWeight(1);
+    line(margin, controlsY - 6, canvasWidth - margin, controlsY - 6);
+}
+
+// ─── Left Panel (Controls) ────────────────────────────────────────────────────
+
+function drawLeftPanel() {
+    const panelH = canvasHeight - controlsY - margin;
+
+    fill(colPanel);
+    stroke(colBorder);
+    strokeWeight(1);
+    rect(leftPanelX, controlsY, leftPanelW, panelH, 6);
+
+    fill(colPanelHead);
+    noStroke();
+    rect(leftPanelX, controlsY, leftPanelW, 28, 6, 6, 0, 0);
+
+    fill(colText);
+    textSize(12);
+    textAlign(LEFT, CENTER);
+    textStyle(BOLD);
+    text('Controls', leftPanelX + 10, controlsY + 14);
+    textStyle(NORMAL);
+
     drawSliders();
     drawSupernodeCheckbox();
     drawSolveButton();
-    drawEquations();
 }
 
-function drawTitle() {
-    fill(colText);
+function drawSliders() {
+    for (const s of sliders) drawOneSlider(s);
+}
+
+function drawOneSlider(s) {
+    const thumbR = 8;
+    const trackY = s.y + 10;
+    const frac   = (s.val - s.min) / (s.max - s.min);
+    const thumbX = s.trackX + frac * s.trackW;
+
+    // Label
     noStroke();
-    textSize(16);
+    fill(colText);
+    textSize(12);
+    textAlign(LEFT, CENTER);
+    textStyle(BOLD);
+    text(s.label, leftPanelX + 8, s.y);
+    textStyle(NORMAL);
+
+    // Unit label (between input box and slider track)
+    fill(colTextLight);
+    textSize(10);
+    textAlign(LEFT, CENTER);
+    text(s.unit, leftPanelX + LABEL_W + INPUT_W + 6, s.y);
+
+    // Track background
+    stroke(colSliderTrack);
+    strokeWeight(3);
+    line(s.trackX, trackY, s.trackX + s.trackW, trackY);
+
+    // Filled portion
+    stroke(colSliderThumb);
+    strokeWeight(3);
+    line(s.trackX, trackY, thumbX, trackY);
+
+    // Thumb
+    const hovering = dist(mouseX, mouseY, thumbX, trackY) < thumbR + 5;
+    noStroke();
+    fill(hovering ? colBtnHover : colSliderThumb);
+    ellipse(thumbX, trackY, thumbR * 2, thumbR * 2);
+    fill(255);
+    ellipse(thumbX, trackY, thumbR - 1, thumbR - 1);
+}
+
+function drawSupernodeCheckbox() {
+    const size = 16;
+    const hovering = mouseInRect(supernodeCbX, supernodeCbY, size + 160, size);
+    stroke(colBorder);
+    strokeWeight(1.5);
+    fill(showSupernode ? colSupernode : (hovering ? colHover : colPanel));
+    rect(supernodeCbX, supernodeCbY, size, size, 3);
+    if (showSupernode) {
+        stroke(255);
+        strokeWeight(2);
+        noFill();
+        line(supernodeCbX + 3, supernodeCbY + 8,  supernodeCbX + 7,  supernodeCbY + 12);
+        line(supernodeCbX + 7, supernodeCbY + 12, supernodeCbX + 13, supernodeCbY + 4);
+    }
+    noStroke();
+    fill(colText);
+    textSize(12);
+    textAlign(LEFT, CENTER);
+    text('Show Supernode Boundary', supernodeCbX + size + 7, supernodeCbY + size / 2);
+}
+
+function drawSolveButton() {
+    const b = solveBtn;
+    const hovering = mouseInRect(b.x, b.y, b.w, b.h);
+    noStroke();
+    fill(hovering ? colBtnHover : colBtnBg);
+    rect(b.x, b.y, b.w, b.h, 7);
+    fill(255);
+    textSize(13);
+    textAlign(CENTER, CENTER);
+    textStyle(BOLD);
+    text('Solve \u25B6', b.x + b.w / 2, b.y + b.h / 2);
+    textStyle(NORMAL);
+}
+
+// ─── Right Panel (Analysis) ───────────────────────────────────────────────────
+
+function drawRightPanel() {
+    const panelH = canvasHeight - controlsY - margin;
+
+    fill(colPanel);
+    stroke(colBorder);
+    strokeWeight(1);
+    rect(rightPanelX, controlsY, rightPanelW, panelH, 6);
+
+    fill(colPanelHead);
+    noStroke();
+    rect(rightPanelX, controlsY, rightPanelW, 28, 6, 6, 0, 0);
+
+    fill(colText);
+    textSize(12);
+    textAlign(LEFT, CENTER);
+    textStyle(BOLD);
+    text('Analysis', rightPanelX + 10, controlsY + 14);
+    textStyle(NORMAL);
+
+    drawEquationCards();
+}
+
+function drawEquationCards() {
+    const cx    = rightPanelX + 10;
+    const cw    = rightPanelW - 20;
+    let   y     = controlsY + 38;
+    const cardH = 54;
+    const gap   = 8;
+
+    drawEqCard(cx, y, cw, cardH,
+        'Constraint Equation',
+        'V\u2081 \u2013 V\u2082 = Vs = ' + vs.toFixed(1) + ' V',
+        'The voltage source fixes the difference between V\u2081 and V\u2082.',
+        colYellowBg, colYellow);
+
+    y += cardH + gap;
+
+    drawEqCard(cx, y, cw, cardH,
+        'KCL at Supernode Boundary',
+        '(10\u2013V\u2081)/R1 = V\u2081/R2 + V\u2082/R3',
+        'Sum currents leaving the combined supernode envelope.',
+        colBlueBg, colAccent);
+
+    y += cardH + gap;
+
+    if (solved) {
+        drawResultCard(cx, y, cw, cardH + 16);
+    } else {
+        fill(248, 249, 251);
+        stroke(colBorder);
+        strokeWeight(1);
+        rect(cx, y, cw, cardH, 5);
+        noStroke();
+        fill(colTextLight);
+        textSize(11);
+        textAlign(CENTER, CENTER);
+        textStyle(ITALIC);
+        text('Press \u201CSolve \u25B6\u201D to calculate node voltages', cx + cw / 2, y + cardH / 2);
+        textStyle(NORMAL);
+    }
+}
+
+function drawEqCard(x, y, w, h, title, eq, note, bgColor, accentColor) {
+    fill(bgColor);
+    stroke(accentColor[0], accentColor[1], accentColor[2], 110);
+    strokeWeight(1);
+    rect(x, y, w, h, 5);
+
+    noStroke();
+    fill(accentColor);
+    rect(x, y, 4, h, 5, 0, 0, 5);
+
+    textSize(10);
     textAlign(LEFT, TOP);
     textStyle(BOLD);
-    text('Supernode Analysis', margin + 5, 10);
+    text(title, x + 12, y + 7);
     textStyle(NORMAL);
-    textSize(11);
+
+    fill(colText);
+    textSize(12.5);
+    textStyle(BOLD);
+    text(eq, x + 12, y + 21);
+    textStyle(NORMAL);
+
     fill(colTextLight);
-    text('Voltage source Vs between Node 1 and Node 2 (non-reference nodes)', margin + 5, 30);
+    textSize(9.5);
+    text(note, x + 12, y + 38);
 }
 
-function drawCircuit() {
-    let p = nodePos;
+function drawResultCard(x, y, w, h) {
+    fill(colGreenBg);
+    stroke(colGreen[0], colGreen[1], colGreen[2], 140);
+    strokeWeight(1.5);
+    rect(x, y, w, h, 5);
 
-    // Ground bus (bottom wire)
+    noStroke();
+    fill(colGreen);
+    rect(x, y, 4, h, 5, 0, 0, 5);
+
+    fill(colGreen);
+    textSize(10);
+    textAlign(LEFT, TOP);
+    textStyle(BOLD);
+    text('Solved Node Voltages', x + 12, y + 7);
+    textStyle(NORMAL);
+
+    fill(colText);
+    textSize(14);
+    textStyle(BOLD);
+    textAlign(LEFT, TOP);
+    text('V\u2081 = ' + v1.toFixed(3) + ' V', x + 12,    y + 22);
+    text('V\u2082 = ' + v2.toFixed(3) + ' V', x + w / 2, y + 22);
+    textStyle(NORMAL);
+
+    fill(colTextLight);
+    textSize(9.5);
+    text(
+        'Check: V\u2081\u2013V\u2082 = ' + (v1 - v2).toFixed(3) + ' V  =  Vs (' + vs.toFixed(1) + ' V) \u2713',
+        x + 12, y + h - 16
+    );
+}
+
+// ─── Circuit Drawing ──────────────────────────────────────────────────────────
+
+function drawCircuit() {
+    const p = nodePos;
+
     stroke(colWire);
     strokeWeight(2.5);
-    line(p.src_bot.x, p.src_bot.y, p.n2_bot.x, p.n2_bot.y);
+    line(p.src_bot.x, p.src_bot.y, p.n2_bot.x, p.n2_bot.y); // ground bus
+    line(p.src_top.x, p.src_top.y, p.src_bot.x, p.src_bot.y); // left vertical
+    line(p.src_top.x, p.src_top.y, p.n1.x,      p.n1.y);     // top wire to N1
 
-    // Left vertical wire (main source side)
-    line(p.src_top.x, p.src_top.y, p.src_bot.x, p.src_bot.y);
-
-    // Top wire from source to Node1
-    line(p.src_top.x, p.src_top.y, p.n1.x, p.n1.y);
-
-    // R1: between source top and Node1 (on top wire)
     drawResistor(p.src_top.x, p.src_top.y, p.n1.x, p.n1.y, 'R1');
-
-    // Vs: between Node1 and Node2 (floating voltage source - the supernode creator)
     drawVoltageSource(p.n1.x, p.n1.y, p.n2.x, p.n2.y, 'Vs');
 
-    // R2: Node1 to GND (vertical)
+    stroke(colWire);
+    strokeWeight(2.5);
     line(p.n1.x, p.n1.y, p.n1_bot.x, p.n1_bot.y);
     drawResistor(p.n1.x, p.n1.y, p.n1_bot.x, p.n1_bot.y, 'R2');
 
-    // R3: Node2 to GND (vertical)
+    stroke(colWire);
+    strokeWeight(2.5);
     line(p.n2.x, p.n2.y, p.n2_bot.x, p.n2_bot.y);
     drawResistor(p.n2.x, p.n2.y, p.n2_bot.x, p.n2_bot.y, 'R3');
 
-    // Main source: 10V on the left side
     drawMainSource(p.src_top.x, p.src_top.y, p.src_bot.x, p.src_bot.y);
-
-    // Ground symbol
     drawGroundSymbol((p.src_bot.x + p.n2_bot.x) / 2, p.src_bot.y);
 }
 
 function drawResistor(x1, y1, x2, y2, label) {
-    let dx = x2 - x1;
-    let dy = y2 - y1;
-    let len2 = sqrt(dx * dx + dy * dy);
-    if (len2 === 0) return;
-    let ux = dx / len2;
-    let uy = dy / len2;
-    let px = -uy;
-    let py = ux;
+    const dx = x2 - x1, dy = y2 - y1;
+    const len = sqrt(dx * dx + dy * dy);
+    if (len === 0) return;
+    const ux = dx / len, uy = dy / len;
+    const px = -uy,      py = ux;
 
-    let rLen = 36;
-    let startFrac = 0.5 - rLen / (2 * len2);
-    let endFrac = 0.5 + rLen / (2 * len2);
-
-    let sx = x1 + dx * startFrac;
-    let sy = y1 + dy * startFrac;
-    let ex = x1 + dx * endFrac;
-    let ey = y1 + dy * endFrac;
+    const rLen = 40;
+    const sf = 0.5 - rLen / (2 * len);
+    const ef = 0.5 + rLen / (2 * len);
+    const sx = x1 + dx * sf, sy = y1 + dy * sf;
+    const ex = x1 + dx * ef, ey = y1 + dy * ef;
 
     stroke(colWire);
     strokeWeight(2.5);
     line(x1, y1, sx, sy);
     line(ex, ey, x2, y2);
 
-    let numZags = 6;
-    let zagAmp = 6;
     stroke(colResistor);
     strokeWeight(2);
     noFill();
     beginShape();
     vertex(sx, sy);
-    for (let i = 1; i < numZags; i++) {
-        let t = i / numZags;
-        let zx = sx + (ex - sx) * t;
-        let zy = sy + (ey - sy) * t;
-        let side = (i % 2 === 0) ? 1 : -1;
-        vertex(zx + px * zagAmp * side, zy + py * zagAmp * side);
+    for (let i = 1; i < 6; i++) {
+        const t    = i / 6;
+        const side = (i % 2 === 0) ? 1 : -1;
+        vertex(sx + (ex - sx) * t + px * 7 * side,
+               sy + (ey - sy) * t + py * 7 * side);
     }
     vertex(ex, ey);
     endShape();
 
-    let lx = (sx + ex) / 2 + px * 16;
-    let ly = (sy + ey) / 2 + py * 16;
     noStroke();
     fill(colResistor);
     textSize(12);
     textAlign(CENTER, CENTER);
     textStyle(BOLD);
-    text(label, lx, ly);
+    text(label, (sx + ex) / 2 + px * 18, (sy + ey) / 2 + py * 18);
     textStyle(NORMAL);
 }
 
 function drawVoltageSource(x1, y1, x2, y2, label) {
-    let cx2 = (x1 + x2) / 2;
-    let cy2 = (y1 + y2) / 2;
-    let r = 16;
-    let dx = x2 - x1;
-    let dy = y2 - y1;
-    let len2 = sqrt(dx * dx + dy * dy);
-    let ux = dx / len2;
-    let uy = dy / len2;
+    const cx2 = (x1 + x2) / 2, cy2 = (y1 + y2) / 2;
+    const r   = 18;
+    const len = dist(x1, y1, x2, y2);
+    const ux  = (x2 - x1) / len, uy = (y2 - y1) / len;
 
     stroke(colWire);
     strokeWeight(2.5);
@@ -301,335 +563,163 @@ function drawVoltageSource(x1, y1, x2, y2, label) {
     noFill();
     ellipse(cx2, cy2, r * 2, r * 2);
 
-    fill(colSource);
     noStroke();
+    fill(colSource);
     textSize(14);
     textAlign(CENTER, CENTER);
     text('+', cx2 - 7, cy2);
     textSize(16);
-    text('\u2013', cx2 + 7, cy2);
+    text('\u2013', cx2 + 8, cy2);
 
+    // Label drawn ABOVE circle — cy2 - r - 14 = circTop - 32 = 118, well above pill (ends y=80)
     textSize(12);
     textStyle(BOLD);
-    text(label + ' = ' + vs.toFixed(1) + 'V', cx2, cy2 - r - 12);
+    text(label + ' = ' + vs.toFixed(1) + 'V', cx2, cy2 - r - 14);
     textStyle(NORMAL);
 }
 
 function drawMainSource(x1, y1, x2, y2) {
-    let cx2 = (x1 + x2) / 2;
-    let cy2 = (y1 + y2) / 2;
-    let r = 16;
+    const cx2 = (x1 + x2) / 2, cy2 = (y1 + y2) / 2;
+    const r   = 18;
 
-    // Source is drawn on the wire (already drawn)
-    // Just draw the circle symbol
     stroke(colSource);
     strokeWeight(2);
     noFill();
     ellipse(cx2, cy2, r * 2, r * 2);
 
-    fill(colSource);
     noStroke();
+    fill(colSource);
     textSize(14);
     textAlign(CENTER, CENTER);
     text('+', cx2, cy2 - 6);
     textSize(16);
-    text('\u2013', cx2, cy2 + 6);
+    text('\u2013', cx2, cy2 + 7);
 
     textSize(12);
     textStyle(BOLD);
-    text('10V', cx2 - r - 20, cy2);
+    text('10V', cx2 - r - 22, cy2);
     textStyle(NORMAL);
 }
 
 function drawGroundSymbol(x, y) {
     stroke(colGround);
     strokeWeight(2);
-    let w1 = 16, w2 = 10, w3 = 4;
-    let gap = 4;
-    line(x - w1, y + 4, x + w1, y + 4);
-    line(x - w2, y + 4 + gap, x + w2, y + 4 + gap);
-    line(x - w3, y + 4 + gap * 2, x + w3, y + 4 + gap * 2);
+    const gap = 5;
+    line(x - 18, y + 4,         x + 18, y + 4);
+    line(x - 11, y + 4 + gap,   x + 11, y + 4 + gap);
+    line(x - 5,  y + 4 + gap*2, x + 5,  y + 4 + gap*2);
 
     noStroke();
     fill(colGround);
-    textSize(11);
+    textSize(10);
     textAlign(CENTER, TOP);
-    text('GND (Ref)', x, y + 18);
+    text('GND (Ref)', x, y + 20);
 }
 
 function drawSupernodeBoundary() {
-    let p = nodePos;
-    let n1 = p.n1;
-    let n2 = p.n2;
+    const p   = nodePos;
+    const cx2 = (p.n1.x + p.n2.x) / 2;
+    const cy2 = p.n1.y;
+    const ew  = (p.n2.x - p.n1.x) + 76;
+    const eh  = 60;
 
-    // Dashed ellipse around Node1, Vs, Node2
-    let cx2 = (n1.x + n2.x) / 2;
-    let cy2 = n1.y;
-    let ew = (n2.x - n1.x) + 70;
-    let eh = 55;
+    noStroke();
+    fill(147, 51, 234, 22);
+    ellipse(cx2, cy2, ew, eh);
 
     stroke(colSupernode);
-    strokeWeight(2);
-    drawingContext.setLineDash([8, 5]);
+    strokeWeight(2.2);
+    drawingContext.setLineDash([9, 5]);
     noFill();
     ellipse(cx2, cy2, ew, eh);
-
-    // Fill with semi-transparent
-    fill(colSupernodeFill[0], colSupernodeFill[1], colSupernodeFill[2], colSupernodeFill[3]);
-    noStroke();
     drawingContext.setLineDash([]);
-    ellipse(cx2, cy2, ew, eh);
 
-    // Label
+    // "Supernode" label: cy2 - eh/2 - 4 = 150 - 34 = 116  (pill ends y=80, gap=36px)
     noStroke();
     fill(colSupernode);
-    textSize(12);
-    textAlign(CENTER, CENTER);
+    textSize(11);
+    textAlign(CENTER, BOTTOM);
     textStyle(BOLD);
-    text('Supernode', cx2, cy2 - eh / 2 - 10);
+    text('Supernode', cx2, cy2 - eh / 2 - 4);
     textStyle(NORMAL);
-    drawingContext.setLineDash([]);
 }
 
 function drawNodeLabels() {
-    let p = nodePos;
+    const p = nodePos;
+    const r = 13;
 
-    // Node 1
-    fill(colNode);
-    noStroke();
-    ellipse(p.n1.x, p.n1.y, 20, 20);
-    fill(255);
-    textSize(11);
-    textAlign(CENTER, CENTER);
-    textStyle(BOLD);
-    text('1', p.n1.x, p.n1.y);
-    textStyle(NORMAL);
-
-    // Node 2
-    fill(colNode);
-    ellipse(p.n2.x, p.n2.y, 20, 20);
-    fill(255);
-    textSize(11);
-    textStyle(BOLD);
-    text('2', p.n2.x, p.n2.y);
-    textStyle(NORMAL);
-
-    // Source node (top-left junction)
-    fill(colNode[0], colNode[1], colNode[2], 150);
-    noStroke();
-    // No label needed, it's connected to the 10V source
+    [{ pt: p.n1, n: '1' }, { pt: p.n2, n: '2' }].forEach(({ pt, n }) => {
+        stroke(colNode);
+        strokeWeight(2);
+        fill(colNode);
+        ellipse(pt.x, pt.y, r * 2, r * 2);
+        fill(255);
+        noStroke();
+        textSize(11);
+        textAlign(CENTER, CENTER);
+        textStyle(BOLD);
+        text(n, pt.x, pt.y);
+        textStyle(NORMAL);
+    });
 }
 
 function drawSolvedValues() {
-    let p = nodePos;
+    const p = nodePos;
 
-    // V1 label near Node 1
-    fill(colGreen);
-    noStroke();
-    textSize(13);
-    textAlign(CENTER, TOP);
-    textStyle(BOLD);
-
-    // V1 box
-    let v1Str = 'V1 = ' + v1.toFixed(2) + 'V';
-    let v1w = textWidth(v1Str) + 14;
-    let v1x = p.n1.x;
-    let v1y = p.n1.y + 14;
-    fill(255);
-    stroke(colGreen);
-    strokeWeight(1.5);
-    rect(v1x - v1w / 2, v1y, v1w, 22, 4);
-    fill(colGreen);
-    noStroke();
-    textAlign(CENTER, CENTER);
-    text(v1Str, v1x, v1y + 11);
-
-    // V2 box
-    let v2Str = 'V2 = ' + v2.toFixed(2) + 'V';
-    let v2w = textWidth(v2Str) + 14;
-    let v2x = p.n2.x;
-    let v2y = p.n2.y + 14;
-    fill(255);
-    stroke(colGreen);
-    strokeWeight(1.5);
-    rect(v2x - v2w / 2, v2y, v2w, 22, 4);
-    fill(colGreen);
-    noStroke();
-    text(v2Str, v2x, v2y + 11);
-    textStyle(NORMAL);
-}
-
-function drawSliders() {
-    for (let i = 0; i < sliders.length; i++) {
-        drawSlider(sliders[i]);
-    }
-}
-
-function drawSlider(s) {
-    let thumbR = 8;
-    let trackY = s.y + 10;
-
-    // Label
-    fill(colText);
-    noStroke();
-    textSize(12);
-    textAlign(LEFT, CENTER);
-    textStyle(BOLD);
-    text(s.label + ':', s.x, s.y);
-    textStyle(NORMAL);
-
-    // Value display
-    textAlign(RIGHT, CENTER);
-    fill(colAccent);
-    textSize(12);
-    text(s.fmt(s.val) + ' ' + s.unit, s.x + s.w, s.y);
-
-    // Track
-    stroke(colSliderTrack);
-    strokeWeight(3);
-    line(s.x, trackY, s.x + s.w, trackY);
-
-    // Filled track
-    let frac = (s.val - s.min) / (s.max - s.min);
-    let thumbX = s.x + frac * s.w;
-    stroke(colSliderThumb);
-    strokeWeight(3);
-    line(s.x, trackY, thumbX, trackY);
-
-    // Thumb
-    let hovering = dist(mouseX, mouseY, thumbX, trackY) < thumbR + 4;
-    fill(hovering ? colBtnHover : colSliderThumb);
-    noStroke();
-    ellipse(thumbX, trackY, thumbR * 2, thumbR * 2);
-    fill(255);
-    ellipse(thumbX, trackY, thumbR, thumbR);
-}
-
-function drawSupernodeCheckbox() {
-    let size = 16;
-    let hovering = mouseInRect(supernodeCbX, supernodeCbY, size + 120, size);
-    stroke(colBorder);
-    strokeWeight(1.5);
-    fill(showSupernode ? colSupernode : (hovering ? colHover : colPanel));
-    rect(supernodeCbX, supernodeCbY, size, size, 3);
-    if (showSupernode) {
-        stroke(255);
-        strokeWeight(2);
-        noFill();
-        line(supernodeCbX + 3, supernodeCbY + 8, supernodeCbX + 7, supernodeCbY + 12);
-        line(supernodeCbX + 7, supernodeCbY + 12, supernodeCbX + 13, supernodeCbY + 4);
-    }
-    noStroke();
-    fill(colText);
-    textSize(12);
-    textAlign(LEFT, CENTER);
-    text('Show Supernode', supernodeCbX + size + 6, supernodeCbY + size / 2);
-}
-
-function drawSolveButton() {
-    let b = solveBtn;
-    let hovering = mouseInRect(b.x, b.y, b.w, b.h);
-    fill(hovering ? colBtnHover : colBtnBg);
-    noStroke();
-    rect(b.x, b.y, b.w, b.h, 6);
-    fill(255);
-    textSize(14);
-    textAlign(CENTER, CENTER);
-    textStyle(BOLD);
-    text('Solve', b.x + b.w / 2, b.y + b.h / 2);
-    textStyle(NORMAL);
-}
-
-function drawEquations() {
-    let eqX = solveBtn.x - 20;
-    let eqY = solveBtn.y + solveBtn.h + 20;
-
-    fill(colText);
-    noStroke();
-    textSize(12);
-    textAlign(LEFT, TOP);
-    textStyle(BOLD);
-    text('Equations:', eqX, eqY);
-    textStyle(NORMAL);
-
-    let lineH = 18;
-    eqY += lineH + 4;
-
-    textSize(11);
-    fill(colTextLight);
-
-    // Constraint equation: V1 - V2 = Vs
-    text('Constraint:  V1 \u2013 V2 = Vs = ' + vs.toFixed(1) + 'V', eqX, eqY);
-    eqY += lineH;
-
-    // Supernode KCL: currents leaving supernode = currents entering
-    // (10 - V1)/R1 = V1/R2 + V2/R3
-    // Actually from our circuit:
-    // At supernode (Node1 + Node2): sum of currents = 0
-    // Current into Node1 through R1: (10 - V1)/R1
-    // Current out of Node1 through R2: V1/R2
-    // Current out of Node2 through R3: V2/R3
-    // KCL: (10-V1)/R1 = V1/R2 + V2/R3
-    let r1k = (r1 / 1000).toFixed(1);
-    let r2k = (r2 / 1000).toFixed(1);
-    let r3k = (r3 / 1000).toFixed(1);
-    text('KCL:  (10\u2013V1)/R1 = V1/R2 + V2/R3', eqX, eqY);
-    eqY += lineH;
-
-    if (solved) {
+    function voltageTag(nx, ny, label, val) {
+        const str = label + ' = ' + val.toFixed(2) + ' V';
+        noStroke();
+        textSize(12);
+        const tw = textWidth(str) + 14;
+        const tx = nx - tw / 2;
+        const ty = ny + 16;
+        fill(colGreenBg);
+        stroke(colGreen[0], colGreen[1], colGreen[2], 180);
+        strokeWeight(1.5);
+        rect(tx, ty, tw, 22, 4);
+        noStroke();
         fill(colGreen);
+        textAlign(CENTER, CENTER);
         textStyle(BOLD);
-        text('V1 = ' + v1.toFixed(3) + 'V,  V2 = ' + v2.toFixed(3) + 'V', eqX, eqY);
+        text(str, nx, ty + 11);
         textStyle(NORMAL);
     }
+
+    voltageTag(p.n1.x, p.n1.y, 'V\u2081', v1);
+    voltageTag(p.n2.x, p.n2.y, 'V\u2082', v2);
 }
 
-function solveCircuit() {
-    // Circuit:
-    // 10V source -> R1 -> Node1 -> Vs -> Node2
-    //                      |               |
-    //                     R2              R3
-    //                      |               |
-    //                     GND             GND
-    //
-    // Constraint: V1 - V2 = Vs
-    // KCL at supernode: (10 - V1)/R1 = V1/R2 + V2/R3
-    //
-    // Substituting V2 = V1 - Vs into KCL:
-    // (10 - V1)/R1 = V1/R2 + (V1 - Vs)/R3
-    // (10 - V1)/R1 = V1/R2 + V1/R3 - Vs/R3
-    // 10/R1 - V1/R1 = V1/R2 + V1/R3 - Vs/R3
-    // 10/R1 + Vs/R3 = V1*(1/R1 + 1/R2 + 1/R3)
-    // V1 = (10/R1 + Vs/R3) / (1/R1 + 1/R2 + 1/R3)
+// ─── Solve ────────────────────────────────────────────────────────────────────
 
-    let numerator = 10 / r1 + vs / r3;
-    let denominator = 1 / r1 + 1 / r2 + 1 / r3;
-    v1 = numerator / denominator;
+function solveCircuit() {
+    // Constraint: V1 - V2 = Vs  →  V2 = V1 - Vs
+    // KCL: (10-V1)/R1 = V1/R2 + V2/R3
+    // → 10/R1 + Vs/R3 = V1*(1/R1 + 1/R2 + 1/R3)
+    v1 = (10 / r1 + vs / r3) / (1 / r1 + 1 / r2 + 1 / r3);
     v2 = v1 - vs;
     solved = true;
 }
 
+// ─── Interaction ──────────────────────────────────────────────────────────────
+
 function mousePressed() {
-    // Check sliders
     for (let i = 0; i < sliders.length; i++) {
-        let s = sliders[i];
-        let frac = (s.val - s.min) / (s.max - s.min);
-        let thumbX = s.x + frac * s.w;
-        let trackY = s.y + 10;
+        const s      = sliders[i];
+        const frac   = (s.val - s.min) / (s.max - s.min);
+        const thumbX = s.trackX + frac * s.trackW;
+        const trackY = s.y + 10;
         if (dist(mouseX, mouseY, thumbX, trackY) < 14) {
             activeSlider = i;
             return;
         }
     }
 
-    // Check supernode checkbox
-    if (mouseInRect(supernodeCbX, supernodeCbY, 130, 16)) {
+    if (mouseInRect(supernodeCbX, supernodeCbY, 170, 16)) {
         showSupernode = !showSupernode;
         return;
     }
 
-    // Check solve button
-    let b = solveBtn;
+    const b = solveBtn;
     if (mouseInRect(b.x, b.y, b.w, b.h)) {
         solveCircuit();
         return;
@@ -637,21 +727,19 @@ function mousePressed() {
 }
 
 function mouseDragged() {
-    if (activeSlider >= 0) {
-        let s = sliders[activeSlider];
-        let frac = constrain((mouseX - s.x) / s.w, 0, 1);
-        let newVal;
-        if (s.label === 'Vs') {
-            newVal = s.min + frac * (s.max - s.min);
-            newVal = round(newVal * 2) / 2; // snap to 0.5
-        } else {
-            newVal = s.min + frac * (s.max - s.min);
-            newVal = round(newVal / 100) * 100; // snap to 100
-        }
-        s.val = constrain(newVal, s.min, s.max);
-        s.setter(s.val);
-        solved = false; // reset when parameters change
+    if (activeSlider < 0) return;
+    const s    = sliders[activeSlider];
+    const frac = constrain((mouseX - s.trackX) / s.trackW, 0, 1);
+    let newVal;
+    if (s.label === 'Vs') {
+        newVal = round((s.min + frac * (s.max - s.min)) * 2) / 2;
+    } else {
+        newVal = round((s.min + frac * (s.max - s.min)) / 100) * 100;
     }
+    s.val = constrain(newVal, s.min, s.max);
+    s.setter(s.val);
+    s.inp.value(s.fmt(s.val)); // keep input box in sync with slider
+    solved = false;
 }
 
 function mouseReleased() {
