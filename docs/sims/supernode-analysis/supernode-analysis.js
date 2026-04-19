@@ -62,6 +62,13 @@ function setup() {
     textFont('Arial');
     initSliders();
     buildLayout();   // computes true canvasHeight and calls resizeCanvas()
+
+    // Respond to height-request from parent page (e.g., on focus after fullscreen exit)
+    window.addEventListener('message', function(e) {
+        if (e.data && e.data.type === 'microsim-height-request') {
+            postHeightToParent();
+        }
+    });
 }
 
 function windowResized() {
@@ -125,6 +132,13 @@ function styleInput(inp) {
     inp.size(INPUT_W);
 }
 
+// Tell the parent page the exact canvas height so it can resize the iframe
+function postHeightToParent() {
+    if (window.parent !== window) {
+        window.parent.postMessage({ type: 'microsim-height', height: canvasHeight }, '*');
+    }
+}
+
 // ── Layout (recomputes canvas height bottom-up) ───────────────────────────────
 
 function buildLayout() {
@@ -179,6 +193,7 @@ function buildLayout() {
         canvasHeight = minH;
         resizeCanvas(canvasWidth, canvasHeight);
     }
+    postHeightToParent();
 
     // ── Position DOM inputs now that canvas size is final ─────────────────────
     const cr   = document.querySelector('canvas').getBoundingClientRect();

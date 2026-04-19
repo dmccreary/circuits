@@ -5,7 +5,32 @@ description: Interactive nodal analysis simulator that handles voltage sources b
 
 # Supernode Analysis
 
-<iframe src="main.html" width="100%" height="630px" scrolling="no"></iframe>
+<iframe id="supernode-sim" src="main.html" width="100%"
+    style="height:620px; display:block; border:none; overflow:hidden;"
+    scrolling="no"></iframe>
+
+<script>
+(function () {
+    var iframe = document.getElementById('supernode-sim');
+
+    // Receive the canvas height from the sim and resize the iframe to match
+    window.addEventListener('message', function (e) {
+        if (e.data && e.data.type === 'microsim-height' && iframe) {
+            iframe.style.height = (e.data.height + 20) + 'px';
+        }
+    });
+
+    // When the user returns to this tab (e.g. after closing the fullscreen tab),
+    // ask the iframe to re-send its height so we can restore it correctly
+    window.addEventListener('focus', function () {
+        if (iframe && iframe.contentWindow) {
+            try {
+                iframe.contentWindow.postMessage({ type: 'microsim-height-request' }, '*');
+            } catch (err) {}
+        }
+    });
+})();
+</script>
 
 [Run in fullscreen](main.html){ .md-button .md-button--primary }
 
