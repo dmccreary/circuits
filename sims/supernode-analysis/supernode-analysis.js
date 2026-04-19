@@ -232,8 +232,8 @@ function buildLayout() {
         s.inp.size(INPUT_W);
     });
 
-    // Position Vin dropdown to the left of the main source, vertically centered on it
-    const ddCanvasX = nodePos.src_top.x - 74;
+    // Position Vin dropdown to the right of the circuit (always clear of components)
+    const ddCanvasX = nodePos.n2.x + 52;
     const ddCanvasY = (nodePos.src_top.y + nodePos.src_bot.y) / 2 - 13;
     vinDropdown.position(offX + ddCanvasX, offY + ddCanvasY);
 }
@@ -606,8 +606,8 @@ function drawSupernodeBoundary() {
 }
 
 function drawVinDropdownLabel() {
-    // "Vin" label drawn just above the dropdown
-    const ddCx = nodePos.src_top.x - 74 + 36;  // dropdown center x
+    // "Vin preset" label drawn just above the dropdown
+    const ddCx = nodePos.n2.x + 52 + 36;  // dropdown center x (left + half-width)
     const ddTop = (nodePos.src_top.y + nodePos.src_bot.y) / 2 - 13;
     noStroke(); fill(colTextLight);
     textSize(9.5); textAlign(CENTER, BOTTOM); textStyle(NORMAL);
