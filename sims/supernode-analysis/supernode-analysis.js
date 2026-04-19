@@ -1,7 +1,7 @@
 // Supernode Analysis MicroSim — v3 (overlap fix + numeric inputs)
 
 let canvasWidth;
-const canvasHeight = 680;
+const canvasHeight = 710;
 const margin = 14;
 
 let vs = 5;
