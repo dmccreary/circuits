@@ -101,6 +101,31 @@ Roll-off: \(-20n\) dB/decade for an \(n\)th-order filter
 
 ---
 
+## Interactive MicroSims
+
+<div markdown style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 20px 24px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+
+This chapter includes four interactive simulations. Use them alongside the reading to explore concepts hands-on.
+
+| Section | Simulation | What it shows |
+|---------|-----------|---------------|
+| 11.4 | [Filter Frequency Response](../../../sims/filter-frequency-response/index.md) | Bode magnitude and phase plots for RC filters |
+| 11.6 | [Bandwidth and Selectivity](../../../sims/bandwidth-selectivity/index.md) | How Q factor controls bandwidth; -3 dB markers |
+| 11.9 | [First-Order Filters](../../../sims/first-order-filters/index.md) | LP, HP filter responses and cutoff frequency |
+| 11.10 | [Second-Order Filter](../../../sims/second-order-filter/index.md) | Butterworth, underdamped, and overdamped responses |
+
+</div>
+
+### Filter Frequency Response — Interactive Walkthrough
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe src="../../../sims/filter-frequency-response/main.html" width="100%"
+    style="height:550px; display:block; border:none; border-radius:8px;"
+    scrolling="no"></iframe>
+</div>
+
+---
+
 ## Prerequisites
 
 <div markdown style="background: #F8F6FF; border: 2px solid #D4C8FF; border-radius: 12px; padding: 20px 24px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">

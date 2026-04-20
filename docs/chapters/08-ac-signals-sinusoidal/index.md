@@ -78,6 +78,32 @@ This chapter introduces alternating current (AC) and the sinusoidal waveforms th
 </ul>
 </div>
 
+---
+
+## Interactive MicroSims
+
+<div markdown style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 20px 24px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+
+This chapter includes three interactive simulations. Use them alongside the reading to explore concepts hands-on.
+
+| Section | Simulation | What it shows |
+|---------|-----------|---------------|
+| Amplitude | [RMS Calculation](../../../sims/rms-calculation/index.md) | Peak, RMS, and average values; relationship between them |
+| Time/Freq | [Harmonic Explorer](../../../sims/harmonic-explorer/index.md) | Sine wave harmonics and Fourier composition |
+| Time/Freq | [Time-to-Frequency](../../../sims/time-to-frequency/index.md) | Live time-domain to frequency-domain transformation |
+
+</div>
+
+### RMS Calculation — Interactive Walkthrough
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe src="../../../sims/rms-calculation/main.html" width="100%"
+    style="height:550px; display:block; border:none; border-radius:8px;"
+    scrolling="no"></iframe>
+</div>
+
+---
+
 ## Prerequisites
 
 <div style="background: #F8F6FF; border: 2px solid #D4C8FF; border-radius: 12px; padding: 20px 24px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">

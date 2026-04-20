@@ -94,6 +94,30 @@ This chapter introduces the three damping regimes (overdamped, critically damped
 
 ---
 
+## Interactive MicroSims
+
+<div markdown style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 20px 24px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+
+This chapter includes three interactive simulations. Use them alongside the reading to explore concepts hands-on.
+
+| Section | Simulation | What it shows |
+|---------|-----------|---------------|
+| 7.3 | [RLC Circuit Explorer](../../../sims/rlc-circuit/index.md) | Series and parallel RLC step response; adjustable R, L, C |
+| 7.5 | [Natural Frequency Calculator](../../../sims/natural-frequency-calculator/index.md) | ω₀ and f₀ from L and C; undamped oscillation visualized |
+| 7.10 | [Resonance Comparison](../../../sims/resonance-comparison/index.md) | Series vs parallel resonance: impedance and current vs frequency |
+
+</div>
+
+### RLC Circuit Explorer — Interactive Walkthrough
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe src="../../../sims/rlc-circuit/main.html" width="100%"
+    style="height:550px; display:block; border:none; border-radius:8px;"
+    scrolling="no"></iframe>
+</div>
+
+---
+
 ## Prerequisites
 
 <div markdown style="background: #F8F6FF; border: 2px solid #D4C8FF; border-radius: 12px; padding: 20px 24px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
