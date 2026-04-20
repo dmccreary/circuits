@@ -3973,6 +3973,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Reading Waveform Parameters">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-oscilloscope-simulator" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Diagram: Oscilloscope Simulator
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
         
       </ul>
@@ -4089,6 +4106,45 @@
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Phase Measurement">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-i-v-characteristics-explorer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Diagram: I-V Characteristics Explorer
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#diagram-linear-vs-nonlinear-components" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Diagram: Linear vs. Nonlinear Components
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#diagram-rcrl-circuit-applications" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Diagram: RC/RL Circuit Applications
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -5163,6 +5219,10 @@ The <strong>vertical sensitivity</strong> sets the voltage scale in volts per di
 | RMS voltage | \(V_{rms} = V_p / \sqrt{2}\) for sinusoids |
 
 </div>
+<h4 id="diagram-oscilloscope-simulator">Diagram: Oscilloscope Simulator</h4>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe height="550px" scrolling="no" src="../../../sims/oscilloscope/main.html" style="border:none; border-radius:8px; overflow:hidden;" width="100%"></iframe>
+</div>
 <hr />
 <h2 id="164-the-function-generator">16.4 The Function Generator</h2>
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
@@ -5228,7 +5288,9 @@ For <strong>DC voltage</strong> at a node, connect the DMM black probe to ground
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 For <strong>current</strong>, the preferred indirect method using an oscilloscope avoids breaking the circuit: insert a known small resistor (called a <strong>sense resistor</strong>) in series with the branch of interest, measure the voltage across it with the oscilloscope, and calculate:
 </p>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
 <div class="arithmatex">\[I = \frac{V_{sense}}{R_{sense}}\]</div>
+</div>
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 Choose \(R_{sense}\) small enough that its voltage drop does not significantly affect circuit operation (typically 1–10 Ω for milliamp-range circuits).
 </p>
@@ -5236,7 +5298,9 @@ Choose \(R_{sense}\) small enough that its voltage drop does not significantly a
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 With an oscilloscope, measure the period \(T\) by counting the number of horizontal divisions between two identical points on consecutive cycles (e.g., rising zero crossings), then multiplying by the s/div setting:
 </p>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
 <div class="arithmatex">\[f = \frac{1}{T}\]</div>
+</div>
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 For higher accuracy, use the oscilloscope's automatic frequency measurement or a dedicated frequency counter, which can resolve frequency to many more significant figures than counting divisions.
 </p>
@@ -5271,6 +5335,18 @@ A 2 kHz sinusoidal voltage is applied to an RC circuit. On the oscilloscope (tim
 <p style="color: #555; line-height: 1.75;">
 The output lags the input by 108°. This is consistent with an RC low-pass circuit operating well above its corner frequency.
 </p>
+</div>
+<h4 id="diagram-i-v-characteristics-explorer">Diagram: I-V Characteristics Explorer</h4>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe height="550px" scrolling="no" src="../../../sims/iv-characteristics/main.html" style="border:none; border-radius:8px; overflow:hidden;" width="100%"></iframe>
+</div>
+<h4 id="diagram-linear-vs-nonlinear-components">Diagram: Linear vs. Nonlinear Components</h4>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe height="550px" scrolling="no" src="../../../sims/linear-vs-nonlinear/main.html" style="border:none; border-radius:8px; overflow:hidden;" width="100%"></iframe>
+</div>
+<h4 id="diagram-rcrl-circuit-applications">Diagram: RC/RL Circuit Applications</h4>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe height="550px" scrolling="no" src="../../../sims/rc-rl-applications/main.html" style="border:none; border-radius:8px; overflow:hidden;" width="100%"></iframe>
 </div>
 <hr />
 <h2 id="167-oscilloscope-probes-and-compensation">16.7 Oscilloscope Probes and Compensation</h2>
