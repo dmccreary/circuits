@@ -109,6 +109,14 @@ This chapter includes nine interactive simulations. Use them alongside the readi
 
 </div>
 
+### Matrix Equation Builder — Interactive Walkthrough
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe src="../../../sims/matrix-equation-builder/main.html" width="100%"
+    style="height:790px; display:block; border:none; border-radius:8px;"
+    scrolling="no"></iframe>
+</div>
+
 ---
 
 ## Prerequisites
