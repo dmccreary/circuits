@@ -19,33 +19,34 @@ const C_NODES  = [180, 148, 18];
 const C_MESH   = [170, 60,  160];
 
 // ── Layout ────────────────────────────────────────────────────────────────────
-const M       = 12;      // outer margin
-const TOP_Y   = 54;      // top panels start y
-const TOP_H   = 308;     // top panels height
-const GAP     = 10;      // between top and matrix panel
-const MAT_Y   = TOP_Y + TOP_H + GAP;   // 372
-const MAT_H   = 362;
-const canvasH = MAT_Y + MAT_H + 16;    // 750
-const CTRL_W  = 240;     // controls panel width
+const M       = 12;       // outer margin
+const TOP_Y   = 54;       // top panels start y
+const TOP_H   = 322;      // top panels height (increased for label + new segmented pos)
+const GAP     = 10;
+const MAT_Y   = TOP_Y + TOP_H + GAP;   // 386
+const MAT_H   = 368;
+const canvasH = MAT_Y + MAT_H + 16;    // 770
+const CTRL_W  = 240;      // controls panel width
+
+// Matrix equation cell sizes
+const CW = 118, CH = 54;  // cell width, cell height
+const VW = 50,  RW = 94;  // variable-vector width, RHS-vector width
 
 // ── State ─────────────────────────────────────────────────────────────────────
 let cw;
 let Vs = 12, R1 = 2000, R2 = 4000, R3 = 3000;
-let method    = 'node';  // 'node' | 'mesh'
-let buildStep = -1;      // -1 = all visible; 0..3 = step-by-step reveal
+let method    = 'node';
+let buildStep = -1;
 let solved    = false;
 let showLinks = false;
 let sV1 = 0, sV2 = 0, sI1 = 0, sI2 = 0;
 let animProg  = 0;
 
-// HTML input elements
-let inputEls = [];   // [{el, param, rowY}]
-// Canvas-drawn sliders
-let sliders = [];
+let inputEls = [];
+let sliders  = [];
 let dragging = null;
-// Canvas-drawn buttons / controls
 let btnBuild, btnSolve, btnLinks;
-let segCtrl = [];    // [{x,y,w,h,mode,label}]
+let segCtrl  = [];
 
 // ── Derived helpers ───────────────────────────────────────────────────────────
 function ctrlX() { return cw - M - CTRL_W; }
@@ -86,29 +87,28 @@ const PARAMS = [
     { param: 'R3', min: 100, max: 10000, step: 100, unit: 'Ω'  },
 ];
 
-function currentVal(param) {
-    if (param === 'Vs') return Vs;
-    if (param === 'R1') return R1;
-    if (param === 'R2') return R2;
+function currentVal(p) {
+    if (p === 'Vs') return Vs;
+    if (p === 'R1') return R1;
+    if (p === 'R2') return R2;
     return R3;
 }
 
 function buildControls() {
     for (let ie of inputEls) ie.el.remove();
     inputEls = [];
-    sliders   = [];
+    sliders  = [];
 
-    let cx0     = ctrlX();
-    let rowH    = 56;
-    let firstY  = TOP_Y + 52;   // below mode segmented control
-    let trkW    = CTRL_W - 24;
-    let trkX    = cx0 + 12;
+    let cx0    = ctrlX();
+    let rowH   = 54;
+    let firstY = TOP_Y + 62;   // below "Analysis Method" label + seg control
+    let trkX   = cx0 + 12;
+    let trkW   = CTRL_W - 24;
 
     PARAMS.forEach((p, i) => {
         let rowY = firstY + i * rowH;
         let val  = currentVal(p.param);
 
-        // HTML numeric input
         let el = createInput(String(val), 'number');
         el.attribute('min', p.min);
         el.attribute('max', p.max);
@@ -126,7 +126,6 @@ function buildControls() {
         el.style('box-sizing', 'border-box');
         el.parent(document.body);
 
-        // Closure to capture param
         (function(param, step, mn, mx) {
             el.input(function() {
                 let v = parseFloat(this.elt.value);
@@ -143,34 +142,33 @@ function buildControls() {
         sliders.push({
             param: p.param, unit: p.unit,
             min: p.min, max: p.max, step: p.step,
-            val,
-            trkX, trkY: rowY + 34, trkW
+            val, trkX, trkY: rowY + 36, trkW
         });
     });
 
-    // Segmented mode control
+    // Segmented mode control (below "Analysis Method" label)
     let segW = (CTRL_W - 24) / 2;
-    let segY = TOP_Y + 12;
+    let segY = TOP_Y + 30;   // shifted down to make room for label above
     segCtrl = [
         { x: cx0 + 12,          y: segY, w: segW - 2, h: 28, mode: 'node', label: 'Node Voltage' },
         { x: cx0 + 12 + segW,   y: segY, w: segW - 2, h: 28, mode: 'mesh', label: 'Mesh Current' },
     ];
 
-    // Buttons
+    // Equal-width buttons at bottom of controls panel
     let btnY = TOP_Y + TOP_H - 36;
-    let bw3  = floor((CTRL_W - 28) / 3);
-    btnBuild = { x: cx0 + 12,            y: btnY, w: bw3,     h: 28, label: 'Build',  action: 'build' };
-    btnSolve = { x: cx0 + 12 + bw3 + 2,  y: btnY, w: bw3,     h: 28, label: 'Solve',  action: 'solve' };
-    btnLinks = { x: cx0 + 12 + bw3*2+4,  y: btnY, w: CTRL_W-28-bw3*2, h: 28, label: 'Links', action: 'links' };
+    let bw   = floor((CTRL_W - 30) / 3);
+    btnBuild = { x: cx0 + 12,           y: btnY, w: bw, h: 28, label: 'Build',  action: 'build' };
+    btnSolve = { x: cx0 + 12 + bw + 3,  y: btnY, w: bw, h: 28, label: 'Solve',  action: 'solve' };
+    btnLinks = { x: cx0 + 12 + bw*2+6,  y: btnY, w: bw, h: 28, label: 'Links',  action: 'links' };
 }
 
 function repositionInputs() {
     let canvasEl = document.querySelector('canvas');
     if (!canvasEl) return;
-    let rect  = canvasEl.getBoundingClientRect();
-    let sx    = rect.left + (window.scrollX || 0);
-    let sy    = rect.top  + (window.scrollY || 0);
-    let cx0   = ctrlX();
+    let rect = canvasEl.getBoundingClientRect();
+    let sx   = rect.left + (window.scrollX || 0);
+    let sy   = rect.top  + (window.scrollY || 0);
+    let cx0  = ctrlX();
 
     for (let ie of inputEls) {
         ie.el.position(sx + cx0 + CTRL_W - 78, sy + ie.rowY + 4);
@@ -181,9 +179,7 @@ function repositionInputs() {
 function draw() {
     background(C_BG);
 
-    if (animProg < 1 && buildStep >= 0) {
-        animProg = min(animProg + 0.05, 1);
-    }
+    if (animProg < 1 && buildStep >= 0) animProg = min(animProg + 0.05, 1);
 
     drawTitle();
     drawCircuitPanel();
@@ -195,20 +191,14 @@ function draw() {
 
 // ── Title bar ─────────────────────────────────────────────────────────────────
 function drawTitle() {
-    noStroke();
-    fill(C_DARK);
-    textSize(17);
-    textStyle(BOLD);
-    textAlign(LEFT, TOP);
+    noStroke(); fill(C_DARK);
+    textSize(17); textStyle(BOLD); textAlign(LEFT, TOP);
     text('Matrix Equation Builder', M, 10);
     textStyle(NORMAL);
-
-    fill(C_MUTED);
-    textSize(12);
-    let sub = method === 'node'
+    fill(C_MUTED); textSize(12);
+    text(method === 'node'
         ? 'Node Voltage Method  →  [G][V] = [I]'
-        : 'Mesh Current Method  →  [Z][I] = [V]';
-    text(sub, M, 31);
+        : 'Mesh Current Method  →  [Z][I] = [V]', M, 32);
 }
 
 // ── Circuit panel ─────────────────────────────────────────────────────────────
@@ -216,7 +206,6 @@ function drawCircuitPanel() {
     let pw = cktW(), ph = TOP_H;
     drawCard(M, TOP_Y, pw, ph);
 
-    // Panel title
     noStroke(); fill(C_DARK);
     textSize(12); textStyle(BOLD); textAlign(LEFT, TOP);
     text('Circuit Diagram', M + 12, TOP_Y + 10);
@@ -225,61 +214,43 @@ function drawCircuitPanel() {
     let pcx = M + pw / 2;
     let pcy = TOP_Y + ph / 2 + 10;
 
-    // Node positions
-    let nA   = { x: pcx - 90, y: pcy - 62 };  // V1 (top-left)
-    let nB   = { x: pcx + 90, y: pcy - 62 };  // V2 (top-right)
+    let nA   = { x: pcx - 90, y: pcy - 66 };
+    let nB   = { x: pcx + 90, y: pcy - 66 };
     let gndY = pcy + 82;
-    let midL = pcy + 14;   // junction between Vs top and R1 bottom on left branch
+    let midL = pcy + 14;
 
-    // Draw wires first
     stroke(C_WIRE); strokeWeight(2.5);
-    line(nA.x, nA.y, nB.x, nB.y);        // top wire
-    line(nA.x, nA.y, nA.x, gndY);        // left branch (components will overlay)
-    line(nB.x, nB.y, nB.x, gndY);        // right branch
-    line(nA.x, gndY, nB.x, gndY);        // bottom wire
+    line(nA.x, nA.y, nB.x, nB.y);
+    line(nA.x, nA.y, nA.x, gndY);
+    line(nB.x, nB.y, nB.x, gndY);
+    line(nA.x, gndY, nB.x, gndY);
 
-    // Voltage source: left branch, lower half (gndY → midL)
     drawVsrc(nA.x, gndY, midL);
-
-    // R1: left branch, upper half (midL → nA.y)
     drawResistorV(nA.x, midL, nA.y, 'R1', -28);
-
-    // R2: horizontal top (nA → nB)
     drawResistorH(nA.x + 14, nA.y, nB.x - 14, nB.y, 'R2');
-
-    // R3: right branch (nB.y → gndY)
     drawResistorV(nB.x, nB.y, gndY, 'R3', 20);
-
-    // Ground symbol centered at bottom
     drawGround((nA.x + nB.x) / 2, gndY);
 
-    // Vs label
     fill(C_VS); noStroke();
     textSize(12); textStyle(BOLD); textAlign(RIGHT, CENTER);
     text('Vs = ' + Vs + ' V', nA.x - 24, (gndY + midL) / 2);
     textStyle(NORMAL);
 
-    // Mesh arrows (mesh mode)
     if (method === 'mesh') {
         let mcy = (nA.y + gndY) / 2;
-        drawMeshArrow(pcx - 35, mcy, solved ? 'I₁=' + (sI1 * 1000).toFixed(2) + 'mA' : 'I₁');
-        drawMeshArrow(pcx + 55, mcy, solved ? 'I₂=' + (sI2 * 1000).toFixed(2) + 'mA' : 'I₂');
+        drawMeshArrow(pcx - 35, mcy, solved ? 'I₁=' + (sI1 * 1000).toFixed(2) + ' mA' : 'I₁');
+        drawMeshArrow(pcx + 55, mcy, solved ? 'I₂=' + (sI2 * 1000).toFixed(2) + ' mA' : 'I₂');
     }
 
-    // Node dots and labels
     drawNode(nA.x, nA.y, 'V₁', method === 'node' && solved ? sV1 : null, LEFT);
     drawNode(nB.x, nB.y, 'V₂', method === 'node' && solved ? sV2 : null, RIGHT);
 }
 
-function drawCard(x, y, w, h) {
-    // Drop shadow
-    noStroke();
-    fill(0, 0, 0, 14);
+function drawCard(x, y, w, h, tint) {
+    noStroke(); fill(0, 0, 0, 14);
     rect(x + 3, y + 3, w, h, 10);
-    // Card
-    fill(C_CARD);
-    stroke(C_BORDER);
-    strokeWeight(1);
+    fill(tint ? tint : C_CARD);
+    stroke(C_BORDER); strokeWeight(1);
     rect(x, y, w, h, 10);
 }
 
@@ -292,8 +263,7 @@ function drawVsrc(x, yBot, yTop) {
     ellipse(x, my, r * 2, r * 2);
     fill(C_VS); noStroke();
     textSize(12); textAlign(CENTER, CENTER);
-    text('+', x, my - 6);
-    text('−', x, my + 6);
+    text('+', x, my - 6); text('−', x, my + 6);
 }
 
 function drawResistorV(x, y1, y2, label, labelDx) {
@@ -302,14 +272,11 @@ function drawResistorV(x, y1, y2, label, labelDx) {
     line(x, y1, x, my - rh / 2);
     line(x, my + rh / 2, x, y2);
     fill(255); stroke([148, 128, 72]); strokeWeight(1.5);
-    rectMode(CENTER);
-    rect(x, my, 14, rh, 2);
-    rectMode(CORNER);
+    rectMode(CENTER); rect(x, my, 14, rh, 2); rectMode(CORNER);
     fill(C_DARK); noStroke();
     textSize(11); textStyle(BOLD);
     textAlign(labelDx < 0 ? RIGHT : LEFT, CENTER);
-    text(label, x + labelDx, my);
-    textStyle(NORMAL);
+    text(label, x + labelDx, my); textStyle(NORMAL);
 }
 
 function drawResistorH(x1, y, x2, y2, label) {
@@ -318,14 +285,10 @@ function drawResistorH(x1, y, x2, y2, label) {
     line(x1, y, mx - rw / 2, y);
     line(mx + rw / 2, y, x2, y);
     fill(255); stroke([148, 128, 72]); strokeWeight(1.5);
-    rectMode(CENTER);
-    rect(mx, y, rw, 14, 2);
-    rectMode(CORNER);
+    rectMode(CENTER); rect(mx, y, rw, 14, 2); rectMode(CORNER);
     fill(C_DARK); noStroke();
-    textSize(11); textStyle(BOLD);
-    textAlign(CENTER, TOP);
-    text(label, mx, y + 10);
-    textStyle(NORMAL);
+    textSize(11); textStyle(BOLD); textAlign(CENTER, TOP);
+    text(label, mx, y + 10); textStyle(NORMAL);
 }
 
 function drawGround(x, y) {
@@ -342,32 +305,27 @@ function drawNode(x, y, label, solvedVal, side) {
     fill(solvedVal !== null ? [30, 170, 70] : C_NODEF);
     stroke(solvedVal !== null ? [20, 130, 55] : C_NODES);
     strokeWeight(2);
-    ellipse(x, y, 14, 14);
+    ellipse(x, y, 16, 16);
     noStroke(); fill(C_DARK);
-    textSize(12); textStyle(BOLD);
-    textAlign(CENTER, BOTTOM);
-    text(label, x, y - 6);
+    textSize(14); textStyle(BOLD); textAlign(CENTER, BOTTOM);   // larger label
+    text(label, x, y - 8);
     if (solvedVal !== null) {
-        fill([20, 130, 55]);
-        textSize(11);
+        fill([20, 130, 55]); textSize(11);
         textAlign(side === LEFT ? RIGHT : LEFT, CENTER);
-        text(solvedVal.toFixed(3) + ' V', side === LEFT ? x - 10 : x + 10, y);
+        text(solvedVal.toFixed(3) + ' V', side === LEFT ? x - 12 : x + 12, y);
     }
     textStyle(NORMAL);
 }
 
 function drawMeshArrow(x, y, label) {
     push();
-    noFill(); stroke(C_MESH[0], C_MESH[1], C_MESH[2], 180);
-    strokeWeight(1.5);
+    noFill(); stroke(C_MESH[0], C_MESH[1], C_MESH[2], 180); strokeWeight(1.5);
     arc(x, y, 36, 36, PI * 0.25, PI * 1.6);
     let ax = x + 18 * cos(PI * 1.6), ay = y + 18 * sin(PI * 1.6);
     fill(C_MESH[0], C_MESH[1], C_MESH[2], 180); noStroke();
     triangle(ax - 4, ay - 2, ax + 2, ay - 7, ax + 3, ay + 2);
-    fill(C_MESH); textSize(10); textStyle(BOLD);
-    textAlign(CENTER, TOP);
-    text(label, x, y + 20);
-    textStyle(NORMAL);
+    fill(C_MESH); textSize(10); textStyle(BOLD); textAlign(CENTER, TOP);
+    text(label, x, y + 20); textStyle(NORMAL);
     pop();
 }
 
@@ -376,51 +334,46 @@ function drawControlsPanel() {
     let cx0 = ctrlX();
     drawCard(cx0, TOP_Y, CTRL_W, TOP_H);
 
-    // Panel title
-    noStroke(); fill(C_DARK);
-    textSize(12); textStyle(BOLD); textAlign(LEFT, TOP);
-    text('Parameters', cx0 + 12, TOP_Y + 10);
+    // "Analysis Method" label above segmented control
+    noStroke(); fill(C_MUTED);
+    textSize(10); textStyle(BOLD); textAlign(CENTER, TOP);
+    text('ANALYSIS METHOD', cx0 + CTRL_W / 2, TOP_Y + 12);
     textStyle(NORMAL);
 
     // Segmented control
     for (let sg of segCtrl) {
         let active = sg.mode === method;
         fill(active ? C_ACCENT : [225, 228, 236]);
-        stroke(active ? C_ACCENT : C_BORDER);
-        strokeWeight(1);
+        stroke(active ? C_ACCENT : C_BORDER); strokeWeight(1);
         rect(sg.x, sg.y, sg.w, sg.h, 5);
-        noStroke();
-        fill(active ? 255 : C_DARK);
+        noStroke(); fill(active ? 255 : C_DARK);
         textSize(11); textStyle(BOLD); textAlign(CENTER, CENTER);
         text(sg.label, sg.x + sg.w / 2, sg.y + sg.h / 2);
         textStyle(NORMAL);
     }
 
-    // Parameter rows: label + unit hint + slider
+    // Parameter rows
     let labels = { Vs: 'Vs', R1: 'R1', R2: 'R2', R3: 'R3' };
-    let hints  = { Vs: 'V', R1: 'Ω', R2: 'Ω', R3: 'Ω' };
 
     for (let s of sliders) {
-        let rowY = s.trkY - 34;
-        // Label
+        let rowY = s.trkY - 36;
+
+        // Row label (left)
         noStroke(); fill(C_DARK);
         textSize(12); textStyle(BOLD); textAlign(LEFT, TOP);
         text(labels[s.param], cx0 + 12, rowY + 6);
         textStyle(NORMAL);
 
-        // Unit hint (to left of input box)
-        fill(C_MUTED); textSize(11);
-        textAlign(RIGHT, TOP);
-        // Show formatted value + unit as hint text
+        // Formatted unit display (right of label, left of input box)
         let fmtHint = s.param === 'Vs' ? s.val + ' V'
                     : s.val >= 1000 ? (s.val / 1000).toFixed(1) + ' kΩ'
                     : s.val + ' Ω';
+        fill(C_MUTED); textSize(11); textAlign(RIGHT, TOP);
         text(fmtHint, cx0 + CTRL_W - 84, rowY + 8);
 
-        // Slider track
+        // Slider track (full width)
         let frac = (s.val - s.min) / (s.max - s.min);
         let tx = s.trkX, ty = s.trkY, tw = s.trkW;
-
         stroke(C_BORDER); strokeWeight(3); noFill();
         line(tx, ty, tx + tw, ty);
         stroke(C_ACCENT); strokeWeight(3);
@@ -429,249 +382,258 @@ function drawControlsPanel() {
         ellipse(tx + frac * tw, ty, 13, 13);
     }
 
-    // Buttons
-    drawBtn(btnBuild, C_ACCENT,       [30, 90, 210]);
-    drawBtn(btnSolve, [25, 145, 65],  [18, 115, 50]);
-    drawBtn(btnLinks, showLinks ? [120, 80, 180] : [150, 158, 172], null);
-
-    // Build step indicator
+    // Step indicator (above buttons)
+    noStroke(); fill(C_MUTED); textSize(10); textAlign(CENTER, TOP);
     if (buildStep >= 0) {
-        noStroke(); fill(C_MUTED);
-        textSize(10); textAlign(CENTER, TOP);
-        text('Step ' + (buildStep + 1) + ' / 4', cx0 + CTRL_W / 2, TOP_Y + TOP_H - 64);
+        text('Entry ' + (buildStep + 1) + ' of 4 revealed', cx0 + CTRL_W / 2, TOP_Y + TOP_H - 54);
+    } else {
+        text('Click Build to start', cx0 + CTRL_W / 2, TOP_Y + TOP_H - 54);
     }
+
+    // Equal-width buttons
+    drawBtn(btnBuild, C_ACCENT,      [30, 90, 210]);
+    drawBtn(btnSolve, [25, 145, 65], [18, 115, 50]);
+    drawBtn(btnLinks, showLinks ? [120, 80, 180] : [150, 158, 172], null);
 }
 
 function drawBtn(b, col, hoverCol) {
     if (!b) return;
-    let hover = hoverCol && mouseX >= b.x && mouseX <= b.x + b.w && mouseY >= b.y && mouseY <= b.y + b.h;
-    fill(hover ? hoverCol : col);
-    noStroke();
+    let hover = hoverCol && mouseX >= b.x && mouseX <= b.x + b.w &&
+                            mouseY >= b.y && mouseY <= b.y + b.h;
+    fill(hover ? hoverCol : col); noStroke();
     rect(b.x, b.y, b.w, b.h, 5);
-    fill(255); textSize(11); textStyle(BOLD);
-    textAlign(CENTER, CENTER);
+    fill(255); textSize(11); textStyle(BOLD); textAlign(CENTER, CENTER);
     text(b.label, b.x + b.w / 2, b.y + b.h / 2);
     textStyle(NORMAL);
 }
 
 // ── Matrix panel ──────────────────────────────────────────────────────────────
 function drawMatrixPanel() {
-    drawCard(M, MAT_Y, cw - M * 2, MAT_H);
+    // Slightly tinted card to visually emphasise this section
+    drawCard(M, MAT_Y, cw - M * 2, MAT_H, [250, 252, 255]);
 
-    // ── Explanation strip ────────────────────────────────────────────────────
+    // ── Explanation strip ─────────────────────────────────────────────────────
     noStroke(); fill(C_DARK);
     textSize(13); textStyle(BOLD); textAlign(LEFT, TOP);
-    let eqTitle = method === 'node' ? '[G] · [V] = [I]' : '[Z] · [I] = [V]';
-    text(eqTitle, M + 16, MAT_Y + 12);
+    text(method === 'node' ? 'Nodal Analysis:  [G] · [V] = [I]'
+                           : 'Mesh Analysis:  [Z] · [I] = [V]',
+         M + 18, MAT_Y + 12);
     textStyle(NORMAL);
 
-    fill(C_MUTED); textSize(11);
-    let line1 = method === 'node'
-        ? 'Diagonal G\u2096\u2096 = sum of conductances at node k  ·  Off-diagonal G\u2096\u2097 = −shared conductance'
-        : 'Diagonal Z\u2096\u2096 = sum of resistances in loop k  ·  Off-diagonal Z\u2096\u2097 = −shared resistance';
-    text(line1, M + 16, MAT_Y + 32);
+    fill(C_MUTED); textSize(11); textAlign(LEFT, TOP);
+    text(method === 'node'
+        ? 'Diagonal G\u2096\u2096 = sum of conductances at node k   ·   Off-diagonal G\u2096\u2097 = −(shared conductance between nodes k and j)'
+        : 'Diagonal Z\u2096\u2096 = sum of resistances in loop k   ·   Off-diagonal Z\u2096\u2097 = −(shared resistance between loops k and j)',
+         M + 18, MAT_Y + 34);
 
-    let line2 = method === 'node'
-        ? 'Highlighted in blue: diagonal terms  ·  Red: off-diagonal  ·  Green: source current vector'
-        : 'Highlighted in blue: diagonal terms  ·  Red: off-diagonal  ·  Green: source voltage vector';
-    text(line2, M + 16, MAT_Y + 48);
+    // ── Matrix equation ───────────────────────────────────────────────────────
+    // Total horizontal span from leftmost bracket tip to rightmost tip: ~526px
+    // Centre this within the card.
+    let panelW = cw - 2 * M;
+    let span   = 526;
+    let matX   = M + max(0, floor((panelW - span) / 2)) + 15;
 
-    // ── Matrix equation ──────────────────────────────────────────────────────
-    let cellW = 120, cellH = 52;
-    let matH2 = cellH * 2;
-    let eqY   = MAT_Y + 80;
+    let eqY  = MAT_Y + 70;    // top of cell rows
+    let brkY = eqY - 6;       // top of brackets
+    let brkH = 2 * CH + 12;   // bracket height
 
-    // Compute entries
-    let e11, e12, e21, e22, r1, r2, lbl1, lbl2, varL1, varL2;
+    // Equation-block x-positions (all measured from matX):
+    let gRBX  = matX + 2 * CW + 8;     // G right bracket vert line
+    let dotCx = gRBX + 25;             // multiplication dot centre
+    let vLBX  = dotCx + 21;            // variable-vector left bracket vert line
+    let vCx   = vLBX + 6 + VW / 2;    // variable-vector centre x
+    let vRBX  = vLBX + 6 + VW + 6;    // variable-vector right bracket vert line
+    let eqCx  = vRBX + 25;            // equals sign centre
+    let rLBX  = eqCx + 21;            // RHS left bracket vert line
+    let rCx   = rLBX + 6 + RW / 2;   // RHS centre x
+    let rRBX  = rLBX + 6 + RW + 6;   // RHS right bracket vert line
+
+    // ── Column labels (consistent 2-line headers above each block) ────────────
+    let lbl1Y = brkY - 22;  // upper line of label
+    let lbl2Y = brkY - 8;   // lower line (type e.g. "[G]")
+
+    fill(C_MUTED); textSize(9); textAlign(CENTER, BOTTOM);
+    text(method === 'node' ? 'Conductance Matrix' : 'Impedance Matrix',
+         matX + CW, lbl1Y);
+    fill(C_DIAG); textSize(11); textStyle(BOLD);
+    text(method === 'node' ? '[G]' : '[Z]', matX + CW, lbl2Y);
+    textStyle(NORMAL);
+
+    fill(C_MUTED); textSize(9);
+    text(method === 'node' ? 'Node Voltage Vector' : 'Mesh Current Vector', vCx, lbl1Y);
+    fill(C_DARK); textSize(11); textStyle(BOLD);
+    text(method === 'node' ? '[V]' : '[I]', vCx, lbl2Y);
+    textStyle(NORMAL);
+
+    fill(C_MUTED); textSize(9);
+    text(method === 'node' ? 'Source Current Vector' : 'Source Voltage Vector', rCx, lbl1Y);
+    fill(C_RHS); textSize(11); textStyle(BOLD);
+    text(method === 'node' ? '[I]' : '[V]', rCx, lbl2Y);
+    textStyle(NORMAL);
+
+    // ── Compute matrix entries ────────────────────────────────────────────────
+    let e11s, e12s, e21s, e22s, r1s, r2s, lbl11, lbl12, lbl21, lbl22;
+    let varL1, varL2;
+
     if (method === 'node') {
-        let g1 = 1 / R1, g2 = 1 / R2, g3 = 1 / R3;
-        e11 = g1 + g2; e12 = -g2; e21 = -g2; e22 = g2 + g3;
-        r1 = Vs / R1; r2 = 0;
-        e11 = fmtG(e11); e12 = fmtG(e12); e21 = fmtG(e21); e22 = fmtG(e22);
-        r1 = fmtI(Vs / R1); r2 = '0 mA';
-        lbl1 = '1/R1+1/R2'; lbl2 = '1/R2+1/R3';
+        let g1 = 1/R1, g2 = 1/R2, g3 = 1/R3;
+        e11s = fmtG(g1+g2);  e12s = fmtG(-g2);
+        e21s = fmtG(-g2);    e22s = fmtG(g2+g3);
+        r1s  = fmtI(Vs/R1);  r2s  = '0 mA';
+        lbl11 = '1/R1+1/R2'; lbl12 = '−1/R2';
+        lbl21 = '−1/R2';     lbl22 = '1/R2+1/R3';
         varL1 = 'V₁'; varL2 = 'V₂';
     } else {
-        e11 = R1 + R2; e12 = -R2; e21 = -R2; e22 = R2 + R3;
-        r1 = Vs + ' V'; r2 = '0 V';
-        e11 = fmtR(e11); e12 = fmtR(e12); e21 = fmtR(e21); e22 = fmtR(e22);
-        lbl1 = 'R1+R2'; lbl2 = 'R2+R3';
+        e11s = fmtR(R1+R2); e12s = fmtR(-R2);
+        e21s = fmtR(-R2);   e22s = fmtR(R2+R3);
+        r1s  = Vs + ' V';   r2s  = '0 V';
+        lbl11 = 'R1+R2'; lbl12 = '−R2';
+        lbl21 = '−R2';   lbl22 = 'R2+R3';
         varL1 = 'I₁'; varL2 = 'I₂';
     }
 
     let entries = [
-        { r:0, c:0, val:e11, desc:lbl1,   color:C_DIAG, diag:true },
-        { r:0, c:1, val:e12, desc:'-R2 shared', color:C_OFFD, diag:false },
-        { r:1, c:0, val:e21, desc:'-R2 shared', color:C_OFFD, diag:false },
-        { r:1, c:1, val:e22, desc:lbl2,   color:C_DIAG, diag:true },
+        { r:0, c:0, val:e11s, desc:lbl11, color:C_DIAG },
+        { r:0, c:1, val:e12s, desc:lbl12, color:C_OFFD },
+        { r:1, c:0, val:e21s, desc:lbl21, color:C_OFFD },
+        { r:1, c:1, val:e22s, desc:lbl22, color:C_DIAG },
     ];
 
-    // Center the whole equation horizontally
-    let matW    = cellW * 2;
-    let dotW    = 24;
-    let vecW    = 42;
-    let eqsW    = 26;
-    let rhsW    = 90;
-    let totalEqW = matW + dotW + vecW + eqsW + rhsW + 24; // brackets + spacing
-    let eqLeft  = M + 16 + (cw - M * 2 - 32 - totalEqW) / 2;
-    eqLeft      = max(eqLeft, M + 16);
+    // ── Draw brackets ─────────────────────────────────────────────────────────
+    drawBracket(matX - 8, brkY, brkH, false);
+    drawBracket(gRBX, brkY, brkH, true);
+    drawBracket(vLBX, brkY, brkH, false);
+    drawBracket(vRBX, brkY, brkH, true);
+    drawBracket(rLBX, brkY, brkH, false);
+    drawBracket(rRBX, brkY, brkH, true);
 
-    let matX = eqLeft;
-
-    // [G] matrix brackets
-    drawBracket(matX - 8, eqY - 6, matH2 + 12, false);
-    drawBracket(matX + matW + 8, eqY - 6, matH2 + 12, true);
-
-    // Matrix cells
-    for (let e of entries) {
-        let ex = matX + e.c * cellW;
-        let ey = eqY + e.r * cellH;
-        let show = (buildStep < 0) || (entries.indexOf(e) <= buildStep);
-        let alpha = show ? (entries.indexOf(e) === buildStep && animProg < 1 ? animProg : 1) : 0;
+    // ── Draw matrix cells ─────────────────────────────────────────────────────
+    for (let i = 0; i < entries.length; i++) {
+        let e  = entries[i];
+        let ex = matX + e.c * CW;
+        let ey = eqY  + e.r * CH;
+        let show  = buildStep < 0 || i <= buildStep;
+        let alpha = show ? (i === buildStep && animProg < 1 ? animProg : 1) : 0;
 
         if (alpha > 0) {
-            // Cell background
             noStroke();
-            fill(e.color[0], e.color[1], e.color[2], alpha * 35);
-            rect(ex + 2, ey + 2, cellW - 4, cellH - 4, 5);
+            fill(e.color[0], e.color[1], e.color[2], alpha * 30);
+            rect(ex + 3, ey + 3, CW - 6, CH - 6, 5);
 
-            // Value
+            // Main value (centred, slightly above middle to leave room for desc)
             fill(e.color[0], e.color[1], e.color[2], alpha * 255);
-            textSize(14); textStyle(BOLD); textAlign(CENTER, CENTER);
-            text(e.val, ex + cellW / 2, ey + cellH / 2 - 7);
+            textSize(13); textStyle(BOLD); textAlign(CENTER, CENTER);
+            text(e.val, ex + CW / 2, ey + CH / 2 - 9);
             textStyle(NORMAL);
 
-            // Description subscript
-            textSize(9); fill(e.color[0], e.color[1], e.color[2], alpha * 160);
+            // Description below value
+            textSize(9); fill(e.color[0], e.color[1], e.color[2], alpha * 150);
             textAlign(CENTER, BOTTOM);
-            text(e.desc, ex + cellW / 2, ey + cellH - 4);
-
-            // Diagonal/off badge (small dot)
-            fill(e.color[0], e.color[1], e.color[2], alpha * 200);
-            ellipse(ex + cellW - 10, ey + 10, 6, 6);
+            text(e.desc, ex + CW / 2, ey + CH - 6);
         }
 
-        // Cell dividing lines (always draw)
+        // Cell grid lines
         stroke(C_BORDER); strokeWeight(0.8);
-        if (e.c < 1) line(ex + cellW, ey + 2, ex + cellW, ey + cellH - 2);
-        if (e.r < 1) line(ex + 2, ey + cellH, ex + cellW - 2, ey + cellH);
-    }
-    noStroke();
-
-    // Dot operator
-    fill(C_DARK); textSize(22); textAlign(CENTER, CENTER);
-    let dotX = matX + matW + 14;
-    text('·', dotX, eqY + cellH);
-
-    // [V] or [I] variable vector
-    let vecX = dotX + 18;
-    drawBracket(vecX, eqY - 6, matH2 + 12, false);
-    fill(C_DARK); textSize(15); textStyle(BOLD); textAlign(CENTER, CENTER);
-    text(varL1, vecX + vecW / 2, eqY + cellH / 2);
-    text(varL2, vecX + vecW / 2, eqY + cellH + cellH / 2);
-    textStyle(NORMAL);
-    drawBracket(vecX + vecW, eqY - 6, matH2 + 12, true);
-
-    // Equals
-    fill(C_DARK); textSize(22); textAlign(CENTER, CENTER);
-    let eqSignX = vecX + vecW + 18;
-    text('=', eqSignX, eqY + cellH);
-
-    // [I] or [V] RHS vector
-    let rhsX = eqSignX + 20;
-    drawBracket(rhsX, eqY - 6, matH2 + 12, false);
-    let rhsVals = [r1, r2];
-    for (let ri = 0; ri < 2; ri++) {
-        let ry = eqY + ri * cellH;
+        if (e.c < 1) line(ex + CW, ey + 3, ex + CW, ey + CH - 3);
+        if (e.r < 1) line(ex + 3, ey + CH, ex + CW - 3, ey + CH);
         noStroke();
-        fill(C_RHS[0], C_RHS[1], C_RHS[2], 40);
-        rect(rhsX + 2, ry + 2, rhsW - 4, cellH - 4, 5);
+    }
+
+    // ── Operators ────────────────────────────────────────────────────────────
+    fill(C_DARK);
+    textSize(22); textAlign(CENTER, CENTER);
+    text('·', dotCx, eqY + CH);  // dot at matrix vertical centre
+    text('=', eqCx,  eqY + CH);  // equals at same y
+
+    // ── Variable vector entries ───────────────────────────────────────────────
+    fill(C_DARK); textSize(15); textStyle(BOLD); textAlign(CENTER, CENTER);
+    text(varL1, vCx, eqY + CH / 2);
+    text(varL2, vCx, eqY + CH + CH / 2);
+    textStyle(NORMAL);
+
+    // ── RHS vector entries ────────────────────────────────────────────────────
+    for (let ri = 0; ri < 2; ri++) {
+        let ry = eqY + ri * CH;
+        noStroke();
+        fill(C_RHS[0], C_RHS[1], C_RHS[2], 35);
+        rect(rLBX + 6, ry + 3, RW - 6, CH - 6, 5);
         fill(C_RHS); textSize(13); textStyle(BOLD); textAlign(CENTER, CENTER);
-        text(rhsVals[ri], rhsX + rhsW / 2, ry + cellH / 2);
+        text(ri === 0 ? r1s : r2s, rCx, ry + CH / 2);
         textStyle(NORMAL);
     }
-    drawBracket(rhsX + rhsW, eqY - 6, matH2 + 12, true);
 
-    // ── Column labels above matrix ───────────────────────────────────────────
-    fill(C_MUTED); textSize(10); textAlign(CENTER, BOTTOM);
-    let colLabel = method === 'node' ? '[G] Conductance Matrix' : '[Z] Impedance Matrix';
-    text(colLabel, matX + matW / 2, eqY - 8);
+    // ── Legend row ────────────────────────────────────────────────────────────
+    let legY = eqY + 2 * CH + 24;
+    drawLegendDot(matX,       legY, C_DIAG, 'Diagonal: sum of conductances at node');
+    drawLegendDot(matX + 264, legY, C_OFFD, 'Off-diagonal: negative shared conductance');
+    drawLegendDot(matX + 528, legY, C_RHS,  'Source vector: injected current (or voltage)');
 
-    let vecLabel = method === 'node' ? '[V] Node\nVoltages' : '[I] Mesh\nCurrents';
-    textSize(10); textAlign(CENTER, BOTTOM);
-    text(method === 'node' ? '[V]' : '[I]', vecX + vecW / 2, eqY - 8);
+    // ── Hint / step counter ───────────────────────────────────────────────────
+    let hintY = legY + 20;
+    fill(C_MUTED); textSize(11); textAlign(CENTER, TOP);
+    if (buildStep < 0) {
+        text('Click  Build  to construct the matrix [G] and vector [I] entry by entry   ·   Click  Solve  to compute node voltages',
+             cw / 2, hintY);
+    } else if (buildStep < 3) {
+        text('Entry ' + (buildStep + 1) + ' of 4 revealed  ·  Click  Build  again to reveal the next entry',
+             cw / 2, hintY);
+    } else if (!solved) {
+        text('Matrix fully constructed  ·  Click  Solve  to compute ' +
+             (method === 'node' ? 'V₁ and V₂' : 'I₁ and I₂'),
+             cw / 2, hintY);
+    }
 
-    let rhsLabel = method === 'node' ? '[I] Source\nCurrents' : '[V] Source\nVoltages';
-    textAlign(CENTER, BOTTOM);
-    text(method === 'node' ? '[I]' : '[V]', rhsX + rhsW / 2, eqY - 8);
-
-    // ── Legend ──────────────────────────────────────────────────────────────
-    let legY = eqY + matH2 + 22;
-    drawLegendDot(matX, legY, C_DIAG, 'Diagonal: sum of conductances at node');
-    drawLegendDot(matX + 260, legY, C_OFFD, 'Off-diagonal: negative shared conductance');
-    drawLegendDot(matX + 520 < cw - M * 2 - 32 + matX ? matX + 520 : matX, legY + 18, C_RHS, 'Source vector entry');
-
-    // ── Solution display ─────────────────────────────────────────────────────
+    // ── Solution display ──────────────────────────────────────────────────────
     if (solved) {
-        let solY = legY + 42;
-        // Solution pill
-        fill(C_DIAG[0], C_DIAG[1], C_DIAG[2], 22);
+        let solY = hintY + 4;
         noStroke();
-        rect(M + 16, solY - 6, cw - M * 2 - 32, 44, 6);
+        fill(C_DIAG[0], C_DIAG[1], C_DIAG[2], 20);
+        rect(M + 18, solY - 4, cw - M * 2 - 36, 40, 6);
 
-        fill(C_DARK); textSize(13); textStyle(BOLD);
-        textAlign(LEFT, TOP);
-        text('Solution:', M + 24, solY + 2);
+        fill(C_DARK); textSize(12); textStyle(BOLD); textAlign(LEFT, TOP);
+        text('Solution:', M + 26, solY + 6);
         textStyle(NORMAL);
 
         if (method === 'node') {
-            fill(C_SOL); textSize(15); textStyle(BOLD);
-            textAlign(LEFT, TOP);
-            text('V₁ = ' + sV1.toFixed(3) + ' V', M + 120, solY + 2);
-            text('V₂ = ' + sV2.toFixed(3) + ' V', M + 310, solY + 2);
+            fill(C_SOL); textSize(15); textStyle(BOLD); textAlign(LEFT, TOP);
+            text('V₁ = ' + sV1.toFixed(3) + ' V', M + 120, solY + 4);
+            text('V₂ = ' + sV2.toFixed(3) + ' V', M + 310, solY + 4);
         } else {
-            fill(C_MESH); textSize(15); textStyle(BOLD);
-            textAlign(LEFT, TOP);
-            text('I₁ = ' + (sI1 * 1000).toFixed(3) + ' mA', M + 120, solY + 2);
-            text('I₂ = ' + (sI2 * 1000).toFixed(3) + ' mA', M + 310, solY + 2);
+            fill(C_MESH); textSize(15); textStyle(BOLD); textAlign(LEFT, TOP);
+            text('I₁ = ' + (sI1 * 1000).toFixed(3) + ' mA', M + 120, solY + 4);
+            text('I₂ = ' + (sI2 * 1000).toFixed(3) + ' mA', M + 310, solY + 4);
         }
         textStyle(NORMAL);
     }
-
-    // ── "not yet built" hint ─────────────────────────────────────────────────
-    if (buildStep < 0) {
-        fill(C_MUTED); textSize(11); textAlign(CENTER, TOP);
-        text('Press  Build  to reveal matrix entries step by step  ·  Press  Solve  to compute solution', cw / 2, eqY + matH2 + 10);
-    }
 }
 
-function drawBracket(x, y, h, rightSide) {
+// Square-bracket drawing (x = position of the vertical line)
+function drawBracket(x, y, h, isRight) {
     stroke(C_DARK); strokeWeight(2.5); noFill();
-    let tipLen = 7;
-    if (!rightSide) {
-        line(x - tipLen, y, x, y);
-        line(x, y, x, y + h);
-        line(x, y + h, x - tipLen, y + h);
+    let t = 8;   // tip length
+    if (!isRight) {
+        line(x - t, y,     x, y);
+        line(x,     y,     x, y + h);
+        line(x - t, y + h, x, y + h);
     } else {
-        line(x + tipLen, y, x, y);
-        line(x, y, x, y + h);
-        line(x, y + h, x + tipLen, y + h);
+        line(x + t, y,     x, y);
+        line(x,     y,     x, y + h);
+        line(x + t, y + h, x, y + h);
     }
 }
 
 function drawLegendDot(x, y, col, label) {
-    fill(col); noStroke();
-    ellipse(x + 6, y + 5, 10, 10);
+    fill(col); noStroke(); ellipse(x + 6, y + 5, 10, 10);
     fill(C_MUTED); textSize(10); textAlign(LEFT, TOP);
-    text(label, x + 14, y);
+    text(label, x + 16, y);
 }
 
 // ── Correspondence lines ──────────────────────────────────────────────────────
 function drawCorrespondenceLines() {
     let pcx  = M + cktW() / 2;
     let pcy  = TOP_Y + TOP_H / 2 + 10;
-    let nA   = { x: pcx - 90, y: pcy - 62 };
-    let nB   = { x: pcx + 90, y: pcy - 62 };
+    let nA   = { x: pcx - 90, y: pcy - 66 };
+    let nB   = { x: pcx + 90, y: pcy - 66 };
     let gndY = pcy + 82;
     let midL = pcy + 14;
 
@@ -679,19 +641,16 @@ function drawCorrespondenceLines() {
     let r2Pos = { x: (nA.x + nB.x) / 2, y: nA.y };
     let r3Pos = { x: nB.x, y: (nB.y + gndY) / 2 };
 
-    let cellW = 120, cellH = 52;
-    let matH2 = cellH * 2;
-    let eqY   = MAT_Y + 80;
-    let totalEqW = cellW * 2 + 24 + 42 + 26 + 90 + 24;
-    let eqLeft = M + 16 + (cw - M * 2 - 32 - totalEqW) / 2;
-    eqLeft = max(eqLeft, M + 16);
-    let matX = eqLeft;
+    // Recompute matX (same formula as drawMatrixPanel)
+    let panelW = cw - 2 * M;
+    let matX   = M + max(0, floor((panelW - 526) / 2)) + 15;
+    let eqY    = MAT_Y + 70;
 
     let cellCentres = [
-        { x: matX + cellW / 2,         y: eqY + cellH / 2 },
-        { x: matX + cellW + cellW / 2,  y: eqY + cellH / 2 },
-        { x: matX + cellW / 2,         y: eqY + cellH + cellH / 2 },
-        { x: matX + cellW + cellW / 2,  y: eqY + cellH + cellH / 2 },
+        { x: matX + CW / 2,        y: eqY + CH / 2 },
+        { x: matX + CW + CW / 2,   y: eqY + CH / 2 },
+        { x: matX + CW / 2,        y: eqY + CH + CH / 2 },
+        { x: matX + CW + CW / 2,   y: eqY + CH + CH / 2 },
     ];
 
     let links = [
@@ -706,12 +665,11 @@ function drawCorrespondenceLines() {
         let cc = cellCentres[lk.cell];
         drawingContext.setLineDash([5, 5]);
         for (let t of lk.targets) {
-            stroke(lk.col[0], lk.col[1], lk.col[2], 120);
+            stroke(lk.col[0], lk.col[1], lk.col[2], 130);
             strokeWeight(1.5);
             line(cc.x, cc.y, t.x, t.y);
-            fill(lk.col[0], lk.col[1], lk.col[2], 180);
-            noStroke();
-            ellipse(t.x, t.y, 7, 7);
+            fill(lk.col[0], lk.col[1], lk.col[2], 200);
+            noStroke(); ellipse(t.x, t.y, 7, 7);
         }
     }
     drawingContext.setLineDash([]);
@@ -723,67 +681,48 @@ function fmtG(v) {
     if (abs(ms) < 0.001) return '0 mS';
     return (ms >= 0 ? '' : '−') + abs(ms).toFixed(3) + ' mS';
 }
-function fmtI(v) {
-    return (v * 1000).toFixed(3) + ' mA';
-}
+function fmtI(v) { return (v * 1000).toFixed(3) + ' mA'; }
 function fmtR(v) {
-    let sign = v < 0 ? '−' : '';
-    let av = abs(v);
+    let sign = v < 0 ? '−' : '', av = abs(v);
     return sign + (av >= 1000 ? (av / 1000).toFixed(1) + ' kΩ' : av + ' Ω');
 }
 
 // ── Solve ─────────────────────────────────────────────────────────────────────
 function solveSystem() {
     if (method === 'node') {
-        let g1 = 1/R1, g2 = 1/R2, g3 = 1/R3;
-        let a = g1+g2, b = -g2, c = -g2, d = g2+g3;
-        let rr1 = Vs/R1, rr2 = 0;
-        let det = a*d - b*c;
+        let g1=1/R1, g2=1/R2, g3=1/R3;
+        let a=g1+g2, b=-g2, c=-g2, d=g2+g3;
+        let rr1=Vs/R1, rr2=0, det=a*d-b*c;
         sV1 = (rr1*d - b*rr2) / det;
         sV2 = (a*rr2 - rr1*c) / det;
     } else {
-        let a = R1+R2, b = -R2, c = -R2, d = R2+R3;
-        let rr1 = Vs, rr2 = 0;
-        let det = a*d - b*c;
+        let a=R1+R2, b=-R2, c=-R2, d=R2+R3;
+        let rr1=Vs, rr2=0, det=a*d-b*c;
         sI1 = (rr1*d - b*rr2) / det;
         sI2 = (a*rr2 - rr1*c) / det;
     }
-    solved = true;
-    buildStep = 3;
-    animProg  = 1;
+    solved = true; buildStep = 3; animProg = 1;
 }
 
 // ── Mouse events ──────────────────────────────────────────────────────────────
 function mousePressed() {
-    // Sliders
     for (let s of sliders) {
         let frac = (s.val - s.min) / (s.max - s.min);
-        let tx = s.trkX + frac * s.trkW;
-        if (dist(mouseX, mouseY, tx, s.trkY) < 14) {
-            dragging = s;
-            return;
+        if (dist(mouseX, mouseY, s.trkX + frac * s.trkW, s.trkY) < 14) {
+            dragging = s; return;
         }
     }
-
-    // Segmented control
     for (let sg of segCtrl) {
         if (inRect(sg)) {
-            method    = sg.mode;
-            buildStep = -1;
-            solved    = false;
-            animProg  = 0;
-            return;
+            method = sg.mode; buildStep = -1; solved = false; animProg = 0; return;
         }
     }
-
-    // Buttons
     for (let b of [btnBuild, btnSolve, btnLinks]) {
         if (!b) continue;
         if (inRect(b)) {
             if (b.action === 'build') {
                 buildStep = buildStep >= 3 ? 0 : buildStep + 1;
-                animProg  = 0;
-                solved    = false;
+                animProg = 0; solved = false;
             } else if (b.action === 'solve') {
                 solveSystem();
             } else if (b.action === 'links') {
@@ -799,13 +738,9 @@ function mouseDragged() {
     if (!dragging) return;
     let s    = dragging;
     let frac = constrain((mouseX - s.trkX) / s.trkW, 0, 1);
-    let raw  = s.min + frac * (s.max - s.min);
-    s.val    = constrain(Math.round(raw / s.step) * s.step, s.min, s.max);
+    s.val    = constrain(Math.round((s.min + frac * (s.max - s.min)) / s.step) * s.step, s.min, s.max);
     setParam(s.param, s.val);
-    // Update input box
-    for (let ie of inputEls) {
-        if (ie.param === s.param) ie.el.value(String(s.val));
-    }
+    for (let ie of inputEls) if (ie.param === s.param) ie.el.value(String(s.val));
     if (solved) solveSystem();
 }
 
