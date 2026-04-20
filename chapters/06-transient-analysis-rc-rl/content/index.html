@@ -1751,6 +1751,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="6.2 The RC Circuit: Charging">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-rc-charging" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Diagram: RC Charging
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1761,6 +1778,23 @@
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="6.3 The Time Constant">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-time-constant" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Diagram: Time Constant
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1773,6 +1807,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="6.4 The RC Circuit: Discharging">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-rc-discharging" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Diagram: RC Discharging
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1783,6 +1834,23 @@
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="6.5 The RL Circuit">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-rl-circuit-charging" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Diagram: RL Circuit Charging
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1795,6 +1863,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="6.6 Initial and Final Conditions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-initial-and-final-conditions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Diagram: Initial and Final Conditions
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1805,6 +1890,23 @@
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="6.7 Natural, Forced, and Complete Response">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-exponential-properties" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Diagram: Exponential Properties
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -4726,6 +4828,10 @@ When a switch opens or closes in a circuit containing a capacitor or inductor, t
 <div class="arithmatex">\[i(t) = \frac{V_S}{R} e^{-t/RC}\]</div>
 </div>
 <p>The capacitor voltage starts at 0 and rises exponentially toward <span class="arithmatex">\(V_S\)</span>. The current starts at <span class="arithmatex">\(V_S/R\)</span> (as if the capacitor were a short circuit) and decays to zero as the capacitor charges.</p>
+<h4 id="diagram-rc-charging">Diagram: RC Charging</h4>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe height="550px" scrolling="no" src="../../../sims/rc-charging/main.html" style="border:none; border-radius:8px; overflow:hidden;" width="100%"></iframe>
+</div>
 <p><strong>Charging behavior at key moments:</strong></p>
 <table>
 <thead>
@@ -4778,6 +4884,10 @@ When a switch opens or closes in a circuit containing a capacitor or inductor, t
 <p><strong>Physical interpretation:</strong> <span class="arithmatex">\(\tau\)</span> is the time it would take the capacitor to charge to <span class="arithmatex">\(V_S\)</span> if the initial rate of change were maintained. It's the "natural pace" of the circuit.</p>
 <p><strong>Example:</strong> An RC circuit with <span class="arithmatex">\(R = 10\)</span> kΩ and <span class="arithmatex">\(C = 47\)</span> μF has <span class="arithmatex">\(\tau = 10\,000 \times 47 \times 10^{-6} = 0.47\)</span> s. After <span class="arithmatex">\(5\tau = 2.35\)</span> s, the capacitor is fully charged.</p>
 <p>The time constant applies equally to the discharging case.</p>
+<h4 id="diagram-time-constant">Diagram: Time Constant</h4>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe height="550px" scrolling="no" src="../../../sims/time-constant/main.html" style="border:none; border-radius:8px; overflow:hidden;" width="100%"></iframe>
+</div>
 <hr />
 <h2 id="64-the-rc-circuit-discharging">6.4 The RC Circuit: Discharging</h2>
 <p>Now consider a capacitor initially charged to <span class="arithmatex">\(V_0\)</span>, connected to a resistor at <span class="arithmatex">\(t = 0\)</span> (with the source removed). The capacitor discharges through the resistor.</p>
@@ -4787,6 +4897,10 @@ When a switch opens or closes in a circuit containing a capacitor or inductor, t
 <div class="arithmatex">\[i(t) = -\frac{V_0}{R} e^{-t/\tau}\]</div>
 </div>
 <p>The capacitor voltage decays exponentially from <span class="arithmatex">\(V_0\)</span> toward 0. The time constant <span class="arithmatex">\(\tau = RC\)</span> governs the discharge rate just as it governs charging.</p>
+<h4 id="diagram-rc-discharging">Diagram: RC Discharging</h4>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe height="550px" scrolling="no" src="../../../sims/rc-discharging/main.html" style="border:none; border-radius:8px; overflow:hidden;" width="100%"></iframe>
+</div>
 <div class="admonition tip">
 <p class="admonition-title">Finding τ in a Complex Circuit</p>
 <p>When finding the time constant, reduce the circuit seen by the capacitor (or inductor) to its Thévenin equivalent. Then <span class="arithmatex">\(\tau = R_{Th} \cdot C\)</span> or <span class="arithmatex">\(\tau = L / R_{Th}\)</span>.</p>
@@ -4813,6 +4927,10 @@ When a switch opens or closes in a circuit containing a capacitor or inductor, t
 <div class="admonition warning">
 <p class="admonition-title">Inductor Voltage Spike</p>
 <p>When you abruptly open a switch carrying inductor current, the inductor tries to maintain its current instantaneously, producing a very large voltage spike: <span class="arithmatex">\(v = L\,di/dt\)</span> with <span class="arithmatex">\(di/dt \to \infty\)</span>. This can damage switches and semiconductors. In practice, a <strong>freewheeling diode</strong> or snubber circuit is placed across the inductor to provide a controlled discharge path.</p>
+</div>
+<h4 id="diagram-rl-circuit-charging">Diagram: RL Circuit Charging</h4>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe height="550px" scrolling="no" src="../../../sims/rl-charging/main.html" style="border:none; border-radius:8px; overflow:hidden;" width="100%"></iframe>
 </div>
 <p><strong>RC and RL duality:</strong></p>
 <table>
@@ -4855,6 +4973,10 @@ When a switch opens or closes in a circuit containing a capacitor or inductor, t
 <p>The DC steady-state value as <span class="arithmatex">\(t \to \infty\)</span>. Analyze the circuit at DC steady state with the new switch configuration:
 - Capacitor → open circuit
 - Inductor → short circuit</p>
+<h4 id="diagram-initial-and-final-conditions">Diagram: Initial and Final Conditions</h4>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe height="550px" scrolling="no" src="../../../sims/initial-final-conditions/main.html" style="border:none; border-radius:8px; overflow:hidden;" width="100%"></iframe>
+</div>
 <hr />
 <h2 id="67-natural-forced-and-complete-response">6.7 Natural, Forced, and Complete Response</h2>
 <p>The complete response of a first-order circuit has two components:</p>
@@ -4868,6 +4990,10 @@ When a switch opens or closes in a circuit containing a capacitor or inductor, t
 <div class="arithmatex">\[x(t) = x(\infty) + \bigl[x(0) - x(\infty)\bigr]\, e^{-t/\tau}\]</div>
 </div>
 <p>This is the <strong>universal step-response formula</strong> — it solves <em>any</em> first-order DC transient. Once you know <span class="arithmatex">\(x(0)\)</span>, <span class="arithmatex">\(x(\infty)\)</span>, and <span class="arithmatex">\(\tau\)</span>, you're done.</p>
+<h4 id="diagram-exponential-properties">Diagram: Exponential Properties</h4>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe height="550px" scrolling="no" src="../../../sims/exponential-properties/main.html" style="border:none; border-radius:8px; overflow:hidden;" width="100%"></iframe>
+</div>
 <p><strong>Procedure for first-order transient analysis:</strong></p>
 <ol>
 <li>Find <span class="arithmatex">\(x(0)\)</span>: analyze circuit at DC steady state before switching (C → open, L → short)</li>

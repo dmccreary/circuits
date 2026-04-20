@@ -1345,6 +1345,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="4.2 Thévenin&#39;s Theorem">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-thevenins-theorem" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Diagram: Thévenin's Theorem
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1377,6 +1394,34 @@
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="4.5 Advanced Nodal and Mesh Analysis">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-nodal-analysis-steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Diagram: Nodal Analysis Steps
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#diagram-mesh-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Diagram: Mesh Analysis
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -4743,6 +4788,10 @@ This chapter presents the most powerful methods for analyzing DC circuits: the n
 <p><span class="arithmatex">\(V_{Th} = 30 \times \frac{4}{6+4} = 12\)</span> V.<br />
 Kill the source (short): <span class="arithmatex">\(R_{Th} = 6 \| 4 \)</span> ... wait, R2 is between A and B, so only R1 appears across terminals → <span class="arithmatex">\(R_{Th} = 6 \| \infty\)</span> — actually <span class="arithmatex">\(R_{Th}\)</span> = 6 Ω (R1 in parallel with the shorted source, R2 is the load, not part of the network).</p>
 <p>The Thévenin equivalent is 12 V in series with 6 Ω.</p>
+<h4 id="diagram-thevenins-theorem">Diagram: Thévenin's Theorem</h4>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe height="550px" scrolling="no" src="../../../sims/thevenin-concept/main.html" style="border:none; border-radius:8px; overflow:hidden;" width="100%"></iframe>
+</div>
 <hr />
 <h2 id="43-nortons-theorem">4.3 Norton's Theorem</h2>
 <p><strong>Norton's theorem</strong> is Thévenin's theorem wearing different clothes. It states that any linear circuit viewed from two terminals is equivalent to a <strong>current source <span class="arithmatex">\(I_N\)</span> in parallel with a resistance <span class="arithmatex">\(R_N\)</span>.</strong></p>
@@ -4823,6 +4872,14 @@ Kill the source (short): <span class="arithmatex">\(R_{Th} = 6 \| 4 \)</span> ..
 <div class="admonition tip">
 <p class="admonition-title">Counting Equations</p>
 <p>Nodal analysis gives <span class="arithmatex">\(n-1\)</span> equations for <span class="arithmatex">\(n\)</span> nodes. Mesh analysis gives <span class="arithmatex">\(b - n + 1\)</span> equations for <span class="arithmatex">\(b\)</span> branches and <span class="arithmatex">\(n\)</span> nodes. Choose whichever produces fewer equations for the circuit at hand.</p>
+</div>
+<h4 id="diagram-nodal-analysis-steps">Diagram: Nodal Analysis Steps</h4>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe height="550px" scrolling="no" src="../../../sims/nodal-analysis-steps/main.html" style="border:none; border-radius:8px; overflow:hidden;" width="100%"></iframe>
+</div>
+<h4 id="diagram-mesh-analysis">Diagram: Mesh Analysis</h4>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe height="550px" scrolling="no" src="../../../sims/mesh-analysis/main.html" style="border:none; border-radius:8px; overflow:hidden;" width="100%"></iframe>
 </div>
 <hr />
 <h2 id="46-two-port-networks">4.6 Two-Port Networks</h2>
