@@ -41,9 +41,17 @@ The chapter closes with practical design considerations — grounding strategies
 
 ### Important Equations
 
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
+
 \[ SNR_{dB} = 10\log_{10}\!\left(\frac{P_{signal}}{P_{noise}}\right) \qquad V_n = \sqrt{4kTRB} \]
 
+</div>
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
+
 \[ THD = \frac{\sqrt{V_2^2 + V_3^2 + \cdots}}{V_1} \times 100\% \]
+
+</div>
 
 Where k = 1.38 × 10⁻²³ J/K (Boltzmann's constant), T = temperature (K), B = bandwidth (Hz)
 
@@ -84,6 +92,30 @@ Where k = 1.38 × 10⁻²³ J/K (Boltzmann's constant), T = temperature (K), B =
 10. Intermodulation Distortion
 11. Clipping
 
+</div>
+
+---
+
+## Interactive MicroSims
+
+<div markdown style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 20px 24px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+
+This chapter includes three interactive simulations. Use them alongside the reading to explore concepts hands-on.
+
+| Section | Simulation | What it shows |
+|---------|-----------|---------------|
+| 15.2 | [Audio Signal Chain](../../../sims/audio-signal-chain/index.md) | Complete audio path from mic to speaker |
+| 15.4 | [Audio Amplifier Chain](../../../sims/audio-amp-chain/index.md) | Amplifier stages and gain budgeting |
+| 15.7 | [Distortion Types](../../../sims/distortion-types/index.md) | Harmonic distortion, clipping, and nonlinear effects |
+
+</div>
+
+### Audio Signal Chain — Interactive Walkthrough
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe src="../../../sims/audio-signal-chain/main.html" width="100%"
+    style="height:550px; display:block; border:none; border-radius:8px;"
+    scrolling="no"></iframe>
 </div>
 
 ---

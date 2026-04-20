@@ -39,11 +39,23 @@ This chapter develops the Fourier series from first principles and builds the to
 
 ### Important Equations
 
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
+
 \[ f(t) = a_0 + \sum_{n=1}^{\infty}\bigl[a_n\cos(n\omega_0 t) + b_n\sin(n\omega_0 t)\bigr] \]
+
+</div>
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
 
 \[ a_0 = \frac{1}{T}\int_0^T f(t)\,dt \qquad a_n = \frac{2}{T}\int_0^T f(t)\cos(n\omega_0 t)\,dt \qquad b_n = \frac{2}{T}\int_0^T f(t)\sin(n\omega_0 t)\,dt \]
 
+</div>
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
+
 \[ f_0 = 1/T \quad \text{(fundamental frequency)} \]
+
+</div>
 
 ### What You Should Understand
 
@@ -81,6 +93,29 @@ This chapter develops the Fourier series from first principles and builds the to
 9. Odd Symmetry
 10. Half-Wave Symmetry
 
+</div>
+
+---
+
+## Interactive MicroSims
+
+<div markdown style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 20px 24px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+
+This chapter includes two interactive simulations. Use them alongside the reading to explore concepts hands-on.
+
+| Section | Simulation | What it shows |
+|---------|-----------|---------------|
+| 14.3 | [Harmonic Explorer](../../../sims/harmonic-explorer/index.md) | Harmonics and Fourier composition of waveforms |
+| 14.4 | [Signal Parameters](../../../sims/signal-parameters/index.md) | Amplitude, frequency, and phase spectrum visualization |
+
+</div>
+
+### Harmonic Explorer — Interactive Walkthrough
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe src="../../../sims/harmonic-explorer/main.html" width="100%"
+    style="height:550px; display:block; border:none; border-radius:8px;"
+    scrolling="no"></iframe>
 </div>
 
 ---

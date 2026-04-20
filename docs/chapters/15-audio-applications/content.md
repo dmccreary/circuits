@@ -70,6 +70,12 @@ The concept of <strong style="color: #333;">line level</strong> (nominally 0 dBV
 Notice that a dynamic microphone generates a signal 1000 times smaller in voltage than a CD player. That enormous range — 60 dB — is why preamplifier design is one of the most demanding disciplines in analog electronics.
 </p>
 
+#### Diagram: Audio Signal Chain — Interactive Walkthrough
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe src="../../../sims/audio-signal-chain/main.html" width="100%" height="550px" scrolling="no" style="border:none; border-radius:8px; overflow:hidden;"></iframe>
+</div>
+
 <div style="background: #FFF7DD; border: 2px solid #F0D87A; border-radius: 10px; padding: 16px 20px; margin: 1.2rem 0;">
 <p style="color: #B8860B; font-weight: 700; margin-top: 0; margin-bottom: 8px;">The Noise Cascade Principle</p>
 <p style="color: #555; line-height: 1.75; margin: 0;">
@@ -171,6 +177,12 @@ In a <strong style="color: #333;">Class B</strong> amplifier, two complementary 
 | B | 180° | ~70% | High (crossover) | Moderate | Rarely used alone |
 | AB | 180°–360° | ~60% | Low | Moderate | Most audio amplifiers |
 | D | Switching | >90% | Low (modern) | Low | Portable, subwoofers |
+
+#### Diagram: Audio Amplifier Chain — Stages and Gain Budgeting
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe src="../../../sims/audio-amp-chain/main.html" width="100%" height="550px" scrolling="no" style="border:none; border-radius:8px; overflow:hidden;"></iframe>
+</div>
 
 ## 15.5 Signal-to-Noise Ratio and Noise Floor
 
@@ -448,6 +460,12 @@ Soft clipping emphasizes even harmonics (2nd, 4th) more than odd harmonics, whic
 
 \[\text{Headroom} = 20\log_{10}\!\left(\frac{V_{clip}}{V_{nominal}}\right) \text{ dB}\]
 
+</div>
+
+#### Diagram: Distortion Types — Harmonic Distortion, Clipping, and Nonlinear Effects
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe src="../../../sims/distortion-types/main.html" width="100%" height="550px" scrolling="no" style="border:none; border-radius:8px; overflow:hidden;"></iframe>
 </div>
 
 ## 15.10 Practical Design: Grounding, Shielding, and Balanced Connections

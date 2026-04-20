@@ -143,6 +143,18 @@ At audio frequencies, inductors needed for low cutoff frequencies would need to 
 | RL Low-Pass | \(R/(2\pi L)\) | Power supply chokes |
 | RL High-Pass | \(R/(2\pi L)\) | Switching power circuits |
 
+#### Diagram: Filter Frequency Response Explorer
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe src="../../../sims/filter-frequency-response/main.html" width="100%" height="550px" scrolling="no" style="border:none; border-radius:8px; overflow:hidden;"></iframe>
+</div>
+
+#### Diagram: First-Order LP/HP Filter
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe src="../../../sims/first-order-filters/main.html" width="100%" height="550px" scrolling="no" style="border:none; border-radius:8px; overflow:hidden;"></iframe>
+</div>
+
 ---
 
 ## 12.3 Second-Order Filters and Resonance
@@ -227,6 +239,24 @@ Given specifications \(f_0\) and Q (or equivalently \(f_0\) and BW), the design 
 \[R = \frac{2\pi \times 10{,}000 \times 10 \times 10^{-3}}{10} = \frac{628.3}{10} = 62.8\ \Omega\quad(\text{use } 62\ \Omega)\]
 
 <p style="color: #555; line-height: 1.75; margin-bottom: 0;"><strong>Result:</strong> \(BW = R/(2\pi L) = 62.8/(2\pi \times 0.01) = 1{,}000\) Hz. The filter passes 9.5 kHz to 10.5 kHz.</p>
+</div>
+
+#### Diagram: Resonance Comparison: Series vs Parallel
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe src="../../../sims/resonance-comparison/main.html" width="100%" height="550px" scrolling="no" style="border:none; border-radius:8px; overflow:hidden;"></iframe>
+</div>
+
+#### Diagram: Second-Order Filter Responses
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe src="../../../sims/second-order-filter/main.html" width="100%" height="550px" scrolling="no" style="border:none; border-radius:8px; overflow:hidden;"></iframe>
+</div>
+
+#### Diagram: Bandwidth and Selectivity Explorer
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe src="../../../sims/bandwidth-selectivity/main.html" width="100%" height="550px" scrolling="no" style="border:none; border-radius:8px; overflow:hidden;"></iframe>
 </div>
 
 ---
@@ -418,6 +448,12 @@ In a cascade of stages, the total gain in dB is the arithmetic sum of individual
 | 100 | +40 dB |
 | 1,000 | +60 dB |
 
+#### Diagram: Decibel Scale and Audio Level Converter
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe src="../../../sims/decibel-scale/main.html" width="100%" height="550px" scrolling="no" style="border:none; border-radius:8px; overflow:hidden;"></iframe>
+</div>
+
 ---
 
 ## 12.8 Headroom and Dynamic Range
@@ -521,6 +557,12 @@ Each gain stage must be designed with adequate headroom so that transient peaks 
 <p style="color: #555; line-height: 1.75; margin-bottom: 0.5rem;"><strong>Required gain:</strong> \(A_{dB} = +1.8 - (-50) = 51.8\) dB</p>
 <p style="color: #555; line-height: 1.75; margin-bottom: 0.5rem;"><strong>Linear gain:</strong> \(A_V = 10^{51.8/20} = 10^{2.59} \approx 389\)</p>
 <p style="color: #555; line-height: 1.75; margin-bottom: 0;"><strong>Implementation:</strong> Two cascaded inverting stages: \(A_{V1} = -20\) (26 dB), \(A_{V2} = -20\) (26 dB). Total = 52 dB ≈ 52 dB. Design each stage with \(R_f = 20\ R_i\).</p>
+</div>
+
+#### Diagram: Complete Audio Signal Chain
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe src="../../../sims/audio-signal-chain/main.html" width="100%" height="550px" scrolling="no" style="border:none; border-radius:8px; overflow:hidden;"></iframe>
 </div>
 
 ---

@@ -163,6 +163,12 @@ Harmonics with \(n = 1, 3, 5, \ldots\) are called <strong>odd harmonics</strong>
 </p>
 </div>
 
+#### Diagram: Harmonic Explorer — Fourier Waveform Composition
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe src="../../../sims/harmonic-explorer/main.html" width="100%" height="550px" scrolling="no" style="border:none; border-radius:8px; overflow:hidden;"></iframe>
+</div>
+
 ## 14.4 Spectrum Representation
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
@@ -200,6 +206,12 @@ The total average power of a periodic signal equals the sum of the powers in its
 
 This means you can calculate total power either from the waveform directly or from the spectrum — both methods give the same answer.
 </p>
+</div>
+
+#### Diagram: Signal Parameters — Amplitude, Frequency, and Phase Spectrum
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe src="../../../sims/signal-parameters/main.html" width="100%" height="550px" scrolling="no" style="border:none; border-radius:8px; overflow:hidden;"></iframe>
 </div>
 
 ## 14.5 Waveform Symmetry

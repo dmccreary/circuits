@@ -43,9 +43,17 @@ The chapter then systematically develops the fundamental configurations: the inv
 
 ### Important Equations
 
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
+
 \[ A_v = -\frac{R_f}{R_1} \quad \text{(inverting)} \qquad A_v = 1 + \frac{R_f}{R_1} \quad \text{(non-inverting)} \]
 
+</div>
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
+
 \[ V_{out} = -R_f\!\left(\frac{V_1}{R_1} + \frac{V_2}{R_2}\right) \quad \text{(summing)} \qquad GBW = A_v \times BW \]
+
+</div>
 
 ### What You Should Understand
 
@@ -103,6 +111,29 @@ The chapter then systematically develops the fundamental configurations: the inv
 29. Op-Amp Saturation
 30. Rail-to-Rail Op-Amp
 
+</div>
+
+---
+
+## Interactive MicroSims
+
+<div markdown style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 20px 24px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+
+This chapter includes two interactive simulations. Use them alongside the reading to explore concepts hands-on.
+
+| Section | Simulation | What it shows |
+|---------|-----------|---------------|
+| 13.5 | [Op-Amp Golden Rules](../../../sims/opamp-golden-rules/index.md) | Virtual short and virtual ground principles |
+| 13.9 | [Op-Amp Configurations](../../../sims/opamp-configurations/index.md) | Inverting, non-inverting, summing, and other circuits |
+
+</div>
+
+### Op-Amp Golden Rules — Interactive Walkthrough
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe src="../../../sims/opamp-golden-rules/main.html" width="100%"
+    style="height:550px; display:block; border:none; border-radius:8px;"
+    scrolling="no"></iframe>
 </div>
 
 ---

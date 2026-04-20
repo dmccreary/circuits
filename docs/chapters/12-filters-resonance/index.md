@@ -40,9 +40,17 @@ The chapter then applies these principles to audio engineering: how bass and tre
 
 ### Important Equations
 
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
+
 \[ f_c = \frac{1}{2\pi RC} \quad \text{(RC filter)} \qquad f_c = \frac{R}{2\pi L} \quad \text{(RL filter)} \]
 
+</div>
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
+
 \[ f_0 = \frac{1}{2\pi\sqrt{LC}} \quad \text{(resonant frequency)} \qquad Q = \frac{f_0}{BW} \qquad BW = \frac{f_0}{Q} \]
+
+</div>
 
 ### What You Should Understand
 
@@ -92,6 +100,34 @@ The chapter then applies these principles to audio engineering: how bass and tre
 21. Microphone
 22. Speaker
 
+</div>
+
+---
+
+## Interactive MicroSims
+
+<div markdown style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 20px 24px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+
+This chapter includes seven interactive simulations. Use them alongside the reading to explore concepts hands-on.
+
+| Section | Simulation | What it shows |
+|---------|-----------|---------------|
+| 12.2 | [Filter Frequency Response](../../../sims/filter-frequency-response/index.md) | Bode magnitude and phase for RC filters |
+| 12.2 | [First-Order Filters](../../../sims/first-order-filters/index.md) | LP and HP filter responses and cutoff frequency |
+| 12.3 | [Resonance Comparison](../../../sims/resonance-comparison/index.md) | Series vs parallel RLC resonance |
+| 12.3 | [Second-Order Filter](../../../sims/second-order-filter/index.md) | Butterworth, underdamped, overdamped responses |
+| 12.3 | [Bandwidth and Selectivity](../../../sims/bandwidth-selectivity/index.md) | Q factor, -3 dB bandwidth, selectivity |
+| 12.7 | [Decibel Scale](../../../sims/decibel-scale/index.md) | dB values, dBV, dBu conversions |
+| 12.10 | [Audio Signal Chain](../../../sims/audio-signal-chain/index.md) | Complete audio path from mic to speaker |
+
+</div>
+
+### Filter Frequency Response — Interactive Walkthrough
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe src="../../../sims/filter-frequency-response/main.html" width="100%"
+    style="height:550px; display:block; border:none; border-radius:8px;"
+    scrolling="no"></iframe>
 </div>
 
 ---

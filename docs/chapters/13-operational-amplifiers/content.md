@@ -222,6 +222,12 @@ The inverting input node sits at exactly 0 V without being connected directly to
 **Corollary — Virtual Ground:** When \(V_+ = 0\), then \(V_- = 0\) as well
 </div>
 
+#### Diagram: Op-Amp Golden Rules — Interactive Walkthrough
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe src="../../../sims/opamp-golden-rules/main.html" width="100%" height="550px" scrolling="no" style="border:none; border-radius:8px; overflow:hidden;"></iframe>
+</div>
+
 ## 13.6 Inverting Amplifier
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
@@ -316,11 +322,19 @@ The gain is always positive (no phase inversion) and always greater than or equa
 By the virtual short: \(V_- = V_+ = V_{in}\). The inverting input voltage is set by the feedback voltage divider \(R_i\) and \(R_f\):
 </p>
 
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
+
 \[V_- = V_{out} \cdot \frac{R_i}{R_i + R_f}\]
+
+</div>
 
 Setting \(V_- = V_{in}\) and solving for \(V_{out}\):
 
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
+
 \[V_{in} = V_{out} \cdot \frac{R_i}{R_i + R_f} \quad \Rightarrow \quad V_{out} = V_{in}\left(1 + \frac{R_f}{R_i}\right)\]
+
+</div>
 
 ## 13.8 Voltage Follower (Buffer Amplifier)
 
@@ -426,6 +440,12 @@ The <strong style="color: #333;">instrumentation amplifier</strong> (INA) solves
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 Applications include bridge sensor amplifiers (strain gauges, load cells), medical biosignal amplifiers (ECG, EEG), and precision thermocouple interfaces.
 </p>
+
+#### Diagram: Op-Amp Configurations — Inverting, Non-Inverting, Summing, and More
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe src="../../../sims/opamp-configurations/main.html" width="100%" height="550px" scrolling="no" style="border:none; border-radius:8px; overflow:hidden;"></iframe>
+</div>
 
 ## 13.10 Integrator and Differentiator
 
