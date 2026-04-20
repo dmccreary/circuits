@@ -149,7 +149,11 @@ A **decade** is a 10× change in frequency. An **octave** is a 2× change in fre
 
 Roll-off rates are quoted in **dB/decade** (more common in the US) or **dB/octave** (common in audio engineering):
 
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
+
 \[-20\ \mathrm{dB/decade} = -6\ \mathrm{dB/octave}\]
+
+</div>
 
 #### Diagram: Filter Frequency Response
 
@@ -169,7 +173,11 @@ The **cutoff frequency** \(f_c\) (also called the **corner frequency** or **brea
 
 **Why is this the "half-power" point?** Power is proportional to voltage squared:
 
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
+
 \[P \propto |V|^2 \propto |H|^2\]
+
+</div>
 
 When \(|H|\) drops to \(0.707\), power drops to \((0.707)^2 = 0.5\) — exactly half. Hence the cutoff frequency is also called the **half-power point** or **\(-3\) dB point**.
 
@@ -241,11 +249,19 @@ For \(H(j\omega) = \dfrac{1}{1 + j\omega/\omega_c}\):
 
 **Below cutoff** (\(\omega \ll \omega_c\)):
 
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
+
 \[\left|H\right| \approx 1 \quad \Rightarrow \quad 0\ \mathrm{dB}\ (\text{flat line})\]
+
+</div>
 
 **Above cutoff** (\(\omega \gg \omega_c\)):
 
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
+
 \[\left|H\right| \approx \frac{\omega_c}{\omega} \quad \Rightarrow \quad -20\ \mathrm{dB/decade\ slope}\]
+
+</div>
 
 The two asymptotes meet at \(\omega = \omega_c\) (the corner frequency). The actual curve deviates from the asymptote by a maximum of \(-3\) dB at the corner and \(-1\) dB one decade away.
 
@@ -356,7 +372,11 @@ A **filter** is a circuit designed to pass signals in certain frequency ranges (
 
 For a series RLC band-pass filter:
 
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
+
 \[f_0 = \frac{1}{2\pi\sqrt{LC}} \qquad BW = \frac{R}{2\pi L} \qquad Q = \frac{f_0}{BW}\]
+
+</div>
 
 The **quality factor** \(Q\) measures selectivity: high \(Q\) means a narrow, selective passband.
 
@@ -366,7 +386,11 @@ The **quality factor** \(Q\) measures selectivity: high \(Q\) means a narrow, se
 
 **Blocks** a narrow band of frequencies around a center frequency \(f_0\); **passes** all other frequencies. When the rejected band is extremely narrow, it is called a **notch filter**.
 
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
+
 \[f_0 = \frac{1}{2\pi\sqrt{LC}} \qquad Q = \frac{f_0}{BW}\]
+
+</div>
 
 - A high-\(Q\) band-reject filter is a notch filter.
 - **Applications:** 60 Hz hum removal from audio, interference rejection in instrumentation, acoustic feedback suppression
@@ -402,10 +426,15 @@ The **quality factor** \(Q\) measures selectivity: high \(Q\) means a narrow, se
 
 **Worked Example:** Design an RC low-pass filter with \(f_c = 1\) kHz using \(C = 10\) nF.
 
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
+
 \[R = \frac{1}{2\pi f_c C} = \frac{1}{2\pi \times 1{,}000 \times 10 \times 10^{-9}} = 15{,}915\ \Omega \approx 15.9\ \mathrm{k\Omega}\]
 
 At \(f = 10\) kHz (one decade above cutoff), the asymptotic approximation gives:
+
 \[\left|H\right| \approx -20\ \mathrm{dB}\]
+
+</div>
 
 The exact value: \(|H| = 1/\sqrt{1+10^2} = 1/\sqrt{101} \approx 0.0995 = -20.04\ \mathrm{dB}\) — nearly identical to the asymptote.
 
@@ -441,11 +470,15 @@ Phase transitions from \(+90°\) at DC to \(0°\) at high frequency, passing thr
 
 **Worked Example:** A series RLC circuit has \(L = 10\ \mu\mathrm{H}\), \(C = 100\ \mathrm{pF}\), \(R = 10\ \Omega\). Find center frequency, bandwidth, and Q.
 
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
+
 \[f_0 = \frac{1}{2\pi\sqrt{10\times10^{-6} \times 100\times10^{-12}}} = \frac{1}{2\pi\times10^{-8}} \approx 15.9\ \mathrm{MHz}\]
 
 \[BW = \frac{10}{2\pi \times 10\times10^{-6}} \approx 159\ \mathrm{kHz}\]
 
 \[Q = \frac{15.9\ \mathrm{MHz}}{159\ \mathrm{kHz}} = 100\]
+
+</div>
 
 This is a highly selective filter — useful for AM radio receiver tuning.
 

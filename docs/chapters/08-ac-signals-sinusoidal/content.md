@@ -19,7 +19,7 @@ Alternating current signals are the language of power systems and communications
 
 </details>
 
-## Introduction: Why the World Runs on Waves
+## 8.1 Introduction: Why the World Runs on Waves
 
 Walk into any room, flip a light switch, and you're tapping into a global network of energy that flows back and forth, back and forth—60 times per second in the Americas, 50 times per second in most of the rest of the world. This isn't a design flaw or a compromise; it's a deliberate choice that makes modern electrical power possible.
 
@@ -27,7 +27,9 @@ Welcome to the world of **alternating current (AC)**, where voltages and current
 
 In this chapter, you'll learn to describe these dancing signals mathematically, extract meaningful measurements from them, and prepare for the powerful analytical tools (phasors!) that make AC circuit analysis surprisingly elegant. You'll also meet complex numbers—not because we want to make your life complicated, but because they make *this* math beautifully simple.
 
-## Alternating Current: The Back-and-Forth Flow
+---
+
+## 8.2 Alternating Current: The Back-and-Forth Flow
 
 **Alternating current (AC)** is electric current that periodically reverses direction. Unlike direct current (DC), where electrons flow steadily in one direction like a river, AC electrons shuffle back and forth like commuters in a subway car.
 
@@ -48,15 +50,25 @@ In this chapter, you'll learn to describe these dancing signals mathematically, 
 
 **The great AC/DC debate:** Thomas Edison championed DC, while Nikola Tesla and George Westinghouse promoted AC. AC won for power distribution because transformers allowed high-voltage transmission with low losses. DC has made a comeback in some applications (data centers, solar panels, electric vehicles) but AC still reigns for the grid.
 
-## Sinusoidal Waveforms: Nature's Favorite Curve
+---
+
+## 8.3 Sinusoidal Waveforms: Nature's Favorite Curve
 
 A **sinusoidal waveform** (or sinusoid) is a mathematical curve describing smooth, repetitive oscillation. It's defined by the sine or cosine function:
 
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
+
 \[v(t) = V_m \sin(\omega t + \phi)\]
+
+</div>
 
 Or equivalently:
 
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
+
 \[v(t) = V_m \cos(\omega t + \phi - 90°)\]
+
+</div>
 
 Where:
 
@@ -128,16 +140,36 @@ Implementation: p5.js
 Different applications require different ways of characterizing amplitude:
 
 **Peak Value (\(V_p\) or \(V_m\)):** The maximum instantaneous value from zero
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
+
 \[V_p = V_m\]
 
+</div>
+
 **Peak-to-Peak Value (\(V_{pp}\)):** The total swing from minimum to maximum
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
+
 \[V_{pp} = 2V_m\]
 
+</div>
+
 **RMS Value (\(V_{rms}\)):** The "equivalent DC" value for power calculations
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
+
 \[V_{rms} = \frac{V_m}{\sqrt{2}} \approx 0.707 \times V_m\]
 
+</div>
+
 **Average Value (\(V_{avg}\)):** The mean value over one half-cycle (full-cycle average is zero!)
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
+
 \[V_{avg} = \frac{2V_m}{\pi} \approx 0.637 \times V_m\]
+
+</div>
 
 | Measurement | Formula | For 120V RMS Wall Outlet |
 |-------------|---------|-------------------------|
@@ -158,13 +190,28 @@ Different applications require different ways of characterizing amplitude:
 ### Frequency and Period
 
 **Frequency (\(f\))** tells you how many complete cycles occur per second:
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
+
 \[f = \frac{1}{T} \text{ Hz}\]
 
+</div>
+
 **Period (\(T\))** is the time for one complete cycle:
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
+
 \[T = \frac{1}{f} \text{ seconds}\]
 
+</div>
+
 **Angular frequency (\(\omega\))** converts frequency to radians:
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
+
 \[\omega = 2\pi f \text{ rad/s}\]
+
+</div>
 
 | Standard | Frequency | Period | Angular Frequency |
 |----------|-----------|--------|-------------------|
@@ -184,8 +231,12 @@ Different applications require different ways of characterizing amplitude:
 - **90° out of phase** (quadrature): One peaks when the other crosses zero
 - **180° out of phase** (antiphase): Peaks of one align with troughs of the other
 
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
+
 \[v_1(t) = V_m \sin(\omega t)\]
 \[v_2(t) = V_m \sin(\omega t + 90°) = V_m \cos(\omega t)\]
+
+</div>
 
 When we say "\(v_2\) leads \(v_1\) by 90°," we mean \(v_2\) reaches its peak earlier in time.
 
@@ -234,7 +285,9 @@ Canvas layout:
 Implementation: p5.js
 </details>
 
-## Signals: The Language of Information
+---
+
+## 8.4 Signals: The Language of Information
 
 A **signal** is any quantity that varies with time and conveys information. Signals are everywhere:
 
@@ -246,7 +299,12 @@ A **signal** is any quantity that varies with time and conveys information. Sign
 ### Periodic and Aperiodic Signals
 
 **Periodic signal:** A signal that repeats exactly after a fixed time interval (the period T).
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
+
 \[x(t) = x(t + T) \text{ for all } t\]
+
+</div>
 
 Examples: Power line voltage, clock signals, musical tones
 
@@ -266,14 +324,28 @@ Examples: Single pulse, speech, transients, noise
 Any signal can be decomposed into:
 
 **DC Component:** The average (constant) value of the signal
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
+
 \[V_{DC} = \frac{1}{T}\int_0^T v(t) \, dt\]
 
+</div>
+
 **AC Component:** The time-varying part that oscillates around the DC level
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
+
 \[v_{AC}(t) = v(t) - V_{DC}\]
+
+</div>
 
 A pure sinusoid centered at zero has no DC component. Add a constant offset, and you've introduced DC:
 
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
+
 \[v(t) = V_{DC} + V_m \sin(\omega t)\]
+
+</div>
 
 This decomposition is crucial in electronics:
 
@@ -323,7 +395,9 @@ Canvas layout:
 Implementation: p5.js
 </details>
 
-## Time Domain and Frequency Domain: Two Perspectives
+---
+
+## 8.5 Time Domain and Frequency Domain: Two Perspectives
 
 Every signal can be viewed from two complementary perspectives:
 
@@ -407,12 +481,19 @@ Implementation: p5.js
 <iframe src="../../../sims/time-to-frequency/main.html" width="100%" height="550px" scrolling="no" style="border:none; border-radius:8px; overflow:hidden;"></iframe>
 </div>
 
-## Complex Numbers: Your New Best Friend
+---
+
+## 8.6 Complex Numbers: Your New Best Friend
 
 If you've been dreading complex numbers, prepare for a surprise: they're going to make your life *easier*. Complex numbers provide a compact way to represent both magnitude and phase in a single mathematical object.
 
 **Definition:** A complex number \(z\) has a real part and an imaginary part:
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
+
 \[z = a + jb\]
+
+</div>
 
 Where:
 
@@ -430,7 +511,12 @@ Where:
 ### Rectangular Form
 
 **Rectangular form** (or Cartesian form) expresses a complex number as:
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
+
 \[z = a + jb\]
+
+</div>
 
 This form is best for:
 
@@ -448,7 +534,12 @@ Multiplication: \((a_1 + jb_1)(a_2 + jb_2) = (a_1 a_2 - b_1 b_2) + j(a_1 b_2 + a
 ### Polar Form
 
 **Polar form** expresses a complex number using magnitude and angle:
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
+
 \[z = r \angle \theta = r(\cos\theta + j\sin\theta)\]
+
+</div>
 
 Where:
 
@@ -529,26 +620,47 @@ Implementation: p5.js
 
 **Euler's formula** is one of the most beautiful equations in mathematics:
 
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
+
 \[e^{j\theta} = \cos\theta + j\sin\theta\]
+
+</div>
 
 This connects exponentials with trigonometry, allowing us to write complex numbers as:
 
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
+
 \[z = re^{j\theta}\]
+
+</div>
 
 **Why this matters for circuits:**
 
 The sinusoid \(v(t) = V_m \cos(\omega t + \phi)\) can be written as:
 
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
+
 \[v(t) = \text{Re}\{V_m e^{j(\omega t + \phi)}\}\]
+
+</div>
 
 This exponential form makes differentiation trivial:
 
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
+
 \[\frac{d}{dt}e^{j\omega t} = j\omega e^{j\omega t}\]
+
+</div>
 
 Differentiation just multiplies by \(j\omega\)! This is why complex exponentials (and phasors) are so powerful for AC analysis.
 
 **Euler's identity** (the "most beautiful equation"):
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
+
 \[e^{j\pi} + 1 = 0\]
+
+</div>
 
 This single equation connects five fundamental constants: \(e\), \(j\), \(\pi\), 1, and 0.
 
@@ -607,17 +719,29 @@ Instructional Rationale: Step-through reveals the fundamental connection between
 Implementation: p5.js
 </details>
 
-## Signal Amplitude: Beyond Peak Values
+---
+
+## 8.7 Signal Amplitude: Beyond Peak Values
 
 We've already introduced peak, peak-to-peak, RMS, and average values. Now let's look at two ratios that characterize waveform shape:
 
 ### Crest Factor
 
 **Crest factor** (or peak factor) is the ratio of peak value to RMS value:
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
+
 \[CF = \frac{V_{peak}}{V_{RMS}}\]
 
+</div>
+
 For a pure sinusoid:
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
+
 \[CF = \frac{V_m}{V_m/\sqrt{2}} = \sqrt{2} \approx 1.414\]
+
+</div>
 
 Crest factor tells you how "peaky" a waveform is:
 
@@ -638,10 +762,20 @@ Crest factor tells you how "peaky" a waveform is:
 ### Form Factor
 
 **Form factor** is the ratio of RMS value to average (rectified) value:
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
+
 \[FF = \frac{V_{RMS}}{V_{avg}}\]
 
+</div>
+
 For a pure sinusoid:
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
+
 \[FF = \frac{V_m/\sqrt{2}}{2V_m/\pi} = \frac{\pi}{2\sqrt{2}} \approx 1.111\]
+
+</div>
 
 | Waveform | Form Factor |
 |----------|-------------|
@@ -652,18 +786,35 @@ For a pure sinusoid:
 
 Form factor describes the "fullness" of a waveform. A square wave fills every moment at maximum, giving it a form factor of 1. A sine wave has "wasted" area near zero crossings.
 
-## Voltage Gain and Current Gain
+---
+
+## 8.8 Voltage Gain and Current Gain
 
 **Gain** measures how much a circuit amplifies (or attenuates) a signal:
 
 **Voltage gain:**
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
+
 \[A_V = \frac{V_{out}}{V_{in}}\]
 
+</div>
+
 **Current gain:**
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
+
 \[A_I = \frac{I_{out}}{I_{in}}\]
 
+</div>
+
 **Power gain:**
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
+
 \[A_P = \frac{P_{out}}{P_{in}} = A_V \times A_I\]
+
+</div>
 
 Gain can be:
 
@@ -677,8 +828,12 @@ Gain can be:
 - Large gain ranges become manageable numbers
 - Cascaded gains add instead of multiply
 
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
+
 \[A_V(dB) = 20\log_{10}|A_V|\]
 \[A_P(dB) = 10\log_{10}|A_P|\]
+
+</div>
 
 | Voltage Gain | Decibels | Description |
 |--------------|----------|-------------|
@@ -735,66 +890,132 @@ Canvas layout:
 Implementation: p5.js
 </details>
 
-## Worked Example: Characterizing an AC Signal
+---
+
+## 8.9 Worked Example: Characterizing an AC Signal
 
 Let's put it all together with a practical example.
 
 **Problem:** A voltage signal is measured as:
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
+
 \[v(t) = 3 + 5\sin(2\pi \cdot 60 \cdot t + 30°) \text{ V}\]
+
+</div>
 
 Find: DC component, AC amplitude, frequency, period, RMS value (total), peak value (total), and crest factor.
 
 **Solution:**
 
 **DC Component:**
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
+
 \[V_{DC} = 3 \text{ V}\]
 
+</div>
+
 **AC Amplitude (peak):**
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
+
 \[V_m = 5 \text{ V}\]
+
+</div>
 
 **Frequency:**
 The argument of sine is \(2\pi \cdot 60 \cdot t\), so \(\omega = 2\pi \cdot 60\) rad/s
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
+
 \[f = 60 \text{ Hz}\]
 
+</div>
+
 **Period:**
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
+
 \[T = \frac{1}{f} = \frac{1}{60} = 16.67 \text{ ms}\]
 
+</div>
+
 **RMS of AC component only:**
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
+
 \[V_{AC,rms} = \frac{V_m}{\sqrt{2}} = \frac{5}{\sqrt{2}} = 3.54 \text{ V}\]
 
+</div>
+
 **Total RMS value** (DC + AC):
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
+
 \[V_{rms,total} = \sqrt{V_{DC}^2 + V_{AC,rms}^2} = \sqrt{3^2 + 3.54^2} = \sqrt{9 + 12.5} = 4.64 \text{ V}\]
 
+</div>
+
 **Peak value (total):**
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
+
 \[V_{peak} = V_{DC} + V_m = 3 + 5 = 8 \text{ V}\]
 
+</div>
+
 **Minimum value:**
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
+
 \[V_{min} = V_{DC} - V_m = 3 - 5 = -2 \text{ V}\]
 
+</div>
+
 **Crest factor:**
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
+
 \[CF = \frac{V_{peak}}{V_{rms,total}} = \frac{8}{4.64} = 1.72\]
+
+</div>
 
 Note that the crest factor is higher than a pure sinusoid (1.414) because the DC offset pushes the peak higher relative to the RMS value.
 
-## Complex Number Operations: Practice
+---
+
+## 8.10 Complex Number Operations: Practice
 
 **Example 1: Addition (use rectangular form)**
 
 Add \(z_1 = 3 + j4\) and \(z_2 = 2 - j5\):
 
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
+
 \[z_1 + z_2 = (3 + 2) + j(4 - 5) = 5 - j1\]
+
+</div>
 
 **Example 2: Multiplication (use polar form)**
 
 Multiply \(z_1 = 5\angle 53.13°\) and \(z_2 = 3\angle -30°\):
 
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
+
 \[z_1 \times z_2 = (5 \times 3)\angle(53.13° - 30°) = 15\angle 23.13°\]
+
+</div>
 
 **Example 3: Division (use polar form)**
 
 Divide \(z_1 = 10\angle 60°\) by \(z_2 = 2\angle 15°\):
 
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
+
 \[\frac{z_1}{z_2} = \frac{10}{2}\angle(60° - 15°) = 5\angle 45°\]
+
+</div>
 
 **Example 4: Convert and multiply**
 
@@ -805,14 +1026,26 @@ First convert to polar:
 - \(z_2 = \sqrt{2}\angle 45°\)
 
 Then multiply:
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
+
 \[z_1 \times z_2 = 5\sqrt{2}\angle 98.13° = 7.07\angle 98.13°\]
 
+</div>
+
 Convert back to rectangular if needed:
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
+
 \[z = 7.07(\cos 98.13° + j\sin 98.13°) = -1 + j7\]
+
+</div>
 
 You can verify: \((3 + j4)(1 + j1) = 3 + j3 + j4 + j^2 4 = 3 + j7 - 4 = -1 + j7\) ✓
 
-## Self-Check Questions
+---
+
+## 8.11 Self-Check Questions
 
 ??? question "1. A sinusoidal voltage has a peak value of 170V and a frequency of 60 Hz. Write its time-domain expression (assuming zero phase) and calculate its RMS value."
     Time-domain expression:
@@ -856,7 +1089,9 @@ You can verify: \((3 + j4)(1 + j1) = 3 + j3 + j4 + j^2 4 = 3 + j7 - 4 = -1 + j7\
 
     The amplifier increases the signal by a factor of 100, turning a 10 mV signal into 1 V.
 
-## Summary
+---
+
+## 8.12 Summary
 
 This chapter introduced the mathematical language of AC circuits:
 

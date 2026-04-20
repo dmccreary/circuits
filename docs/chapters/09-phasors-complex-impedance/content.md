@@ -19,7 +19,7 @@ Phasors transform time-domain sinusoidal analysis into straightforward complex-n
 
 </details>
 
-## Introduction: Freezing the Dance
+## 9.1 Introduction: Freezing the Dance
 
 In the last chapter, you learned that AC signals are constantly in motion—sinusoids that rise and fall, shift and dance through time. Analyzing circuits with these moving signals seems like it should be complicated. And with differential equations, it *is* complicated.
 
@@ -27,22 +27,39 @@ But here's the secret that electrical engineers discovered over a century ago: i
 
 This chapter introduces the phasor transformation—one of the most powerful tools in circuit analysis. You'll learn that capacitors and inductors have a frequency-dependent "resistance" called impedance, and that Ohm's law works perfectly in the phasor domain. By the end, you'll be analyzing AC circuits with the same ease as DC circuits, just with complex numbers instead of real ones.
 
-## Phasors: Rotating Vectors Frozen in Time
+---
+
+## 9.2 Phasors: Rotating Vectors Frozen in Time
 
 A **phasor** is a complex number that represents the amplitude and phase of a sinusoidal signal. It captures the "personality" of a sinusoid—how big and where in its cycle—while stripping away the time variation.
 
 **The transformation:**
 
 For a sinusoidal voltage:
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
+
 \[v(t) = V_m \cos(\omega t + \phi)\]
 
+</div>
+
 The corresponding phasor is:
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
+
 \[\mathbf{V} = V_m \angle \phi = V_m e^{j\phi}\]
+
+</div>
 
 **Key insight:** The phasor contains all the information about the sinusoid *except* the frequency, which we track separately. Since all signals in a typical AC analysis share the same frequency, we can factor it out!
 
 To recover the time-domain signal from a phasor:
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
+
 \[v(t) = \text{Re}\{\mathbf{V} e^{j\omega t}\} = \text{Re}\{V_m e^{j(\omega t + \phi)}\}\]
+
+</div>
 
 **Notation conventions:**
 
@@ -58,7 +75,9 @@ To recover the time-domain signal from a phasor:
 
 #### Diagram: Phasor Transformation Visualizer
 
-<iframe src="../../../sims/phasor-transform/main.html" width="100%" height="500px" scrolling="no" style="overflow: hidden;"></iframe>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe src="../../../sims/phasor-transform/main.html" width="100%" height="500px" scrolling="no" style="border:none; border-radius:8px; overflow:hidden;"></iframe>
+</div>
 
 <details markdown="1">
 <summary>Phasor Transformation Visualizer</summary>
@@ -107,7 +126,9 @@ Canvas layout:
 Implementation: p5.js
 </details>
 
-## Phasor Diagrams: Seeing Phase Relationships
+---
+
+## 9.3 Phasor Diagrams: Seeing Phase Relationships
 
 A **phasor diagram** displays multiple phasors on the same complex plane, making phase relationships visually obvious. The lengths represent magnitudes, and the angles show relative phases.
 
@@ -134,27 +155,49 @@ In circuit analysis, we often choose one signal as the "reference" and assign it
 **Phasor addition** is how we add sinusoidal signals of the same frequency. Instead of wrestling with trigonometric identities, we simply add the complex numbers!
 
 **In rectangular form:**
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
+
 \[\mathbf{V}_1 + \mathbf{V}_2 = (a_1 + a_2) + j(b_1 + b_2)\]
+
+</div>
 
 **Graphically:** Place phasors head-to-tail like vector addition.
 
 **Example:** Add \(v_1(t) = 10\cos(\omega t)\) and \(v_2(t) = 10\cos(\omega t + 90°)\)
 
 Phasors:
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
+
 \[\mathbf{V}_1 = 10\angle 0° = 10 + j0\]
 \[\mathbf{V}_2 = 10\angle 90° = 0 + j10\]
 
+</div>
+
 Sum:
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
+
 \[\mathbf{V}_{total} = 10 + j10 = 14.14\angle 45°\]
 
+</div>
+
 Time domain result:
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
+
 \[v_{total}(t) = 14.14\cos(\omega t + 45°)\]
+
+</div>
 
 Try doing this with trig identities—phasors are *much* easier!
 
 #### Diagram: Phasor Addition Visualizer
 
-<iframe src="../../../sims/phasor-addition/main.html" width="100%" height="500px" scrolling="no" style="overflow: hidden;"></iframe>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe src="../../../sims/phasor-addition/main.html" width="100%" height="500px" scrolling="no" style="border:none; border-radius:8px; overflow:hidden;"></iframe>
+</div>
 
 <details markdown="1">
 <summary>Phasor Addition Visualizer</summary>
@@ -199,19 +242,33 @@ Canvas layout:
 Implementation: p5.js
 </details>
 
-## Impedance: AC's Generalized Resistance
+---
+
+## 9.4 Impedance: AC's Generalized Resistance
 
 **Impedance (\(Z\))** is the complex ratio of voltage phasor to current phasor:
 
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
+
 \[Z = \frac{\mathbf{V}}{\mathbf{I}}\]
+
+</div>
 
 Impedance plays the same role in AC circuits that resistance plays in DC circuits. In fact, Ohm's law works perfectly with impedance:
 
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
+
 \[\mathbf{V} = \mathbf{I} \cdot Z\]
+
+</div>
 
 But unlike resistance (which is just a real number), impedance is complex:
 
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
+
 \[Z = R + jX\]
+
+</div>
 
 Where:
 
@@ -231,14 +288,24 @@ Where:
 **Reactance (\(X\))** is the imaginary component of impedance. It represents opposition to current that *doesn't* dissipate power—instead, it stores energy temporarily and returns it to the circuit.
 
 **Inductive Reactance (\(X_L\)):**
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
+
 \[X_L = \omega L = 2\pi f L\]
+
+</div>
 
 - Positive reactance (current lags voltage by 90°)
 - Increases with frequency (inductors "resist" fast changes)
 - At DC (\(f = 0\)): \(X_L = 0\) (short circuit)
 
 **Capacitive Reactance (\(X_C\)):**
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
+
 \[X_C = \frac{1}{\omega C} = \frac{1}{2\pi f C}\]
+
+</div>
 
 - By convention, written as negative in impedance: \(Z_C = -jX_C\)
 - Current leads voltage by 90°
@@ -255,7 +322,9 @@ Where:
 
 #### Diagram: Reactance vs Frequency
 
-<iframe src="../../../sims/reactance-frequency/main.html" width="100%" height="450px" scrolling="no" style="overflow: hidden;"></iframe>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe src="../../../sims/reactance-frequency/main.html" width="100%" height="450px" scrolling="no" style="border:none; border-radius:8px; overflow:hidden;"></iframe>
+</div>
 
 <details markdown="1">
 <summary>Reactance vs Frequency</summary>
@@ -298,15 +367,25 @@ Canvas layout:
 Implementation: p5.js
 </details>
 
-## Complex Impedance and the Impedance Triangle
+---
+
+## 9.5 Complex Impedance and the Impedance Triangle
 
 When a circuit contains both resistance and reactance, the **complex impedance** is:
 
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
+
 \[Z = R + jX\]
+
+</div>
 
 **In polar form:**
 
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
+
 \[Z = |Z| \angle \theta\]
+
+</div>
 
 Where:
 
@@ -336,13 +415,19 @@ The **impedance triangle** is a right triangle showing the relationship:
 
 **Example:** Series R-L circuit with R = 30Ω and X_L = 40Ω
 
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
+
 \[Z = 30 + j40 = 50\angle 53.13°\]
+
+</div>
 
 The magnitude is 50Ω, and current lags voltage by 53.13°.
 
 #### Diagram: Impedance Triangle Explorer
 
-<iframe src="../../../sims/impedance-triangle/main.html" width="100%" height="500px" scrolling="no" style="overflow: hidden;"></iframe>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe src="../../../sims/impedance-triangle/main.html" width="100%" height="500px" scrolling="no" style="border:none; border-radius:8px; overflow:hidden;"></iframe>
+</div>
 
 <details markdown="1">
 <summary>Impedance Triangle Explorer</summary>
@@ -389,15 +474,25 @@ Canvas layout:
 Implementation: p5.js
 </details>
 
-## Admittance and Susceptance
+---
+
+## 9.6 Admittance and Susceptance
 
 **Admittance (\(Y\))** is the reciprocal of impedance—it measures how easily current flows:
 
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
+
 \[Y = \frac{1}{Z} = \frac{\mathbf{I}}{\mathbf{V}}\]
+
+</div>
 
 **Units:** Siemens (S), formerly called mhos (℧)
 
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
+
 \[Y = G + jB\]
+
+</div>
 
 Where:
 
@@ -430,13 +525,20 @@ Note the sign flip compared to reactance!
 **Converting between Z and Y:**
 
 If \(Z = R + jX\), then:
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
+
 \[Y = \frac{1}{R + jX} = \frac{R - jX}{R^2 + X^2}\]
+
+</div>
 
 So: \(G = \frac{R}{R^2 + X^2}\) and \(B = \frac{-X}{R^2 + X^2}\)
 
 Note: \(G \neq 1/R\) unless \(X = 0\)!
 
-## AC Resistance and Power Factor
+---
+
+## 9.7 AC Resistance and Power Factor
 
 In AC circuits, **AC resistance** (also called effective resistance) includes all power-dissipating effects, which may differ from DC resistance due to:
 
@@ -446,7 +548,11 @@ In AC circuits, **AC resistance** (also called effective resistance) includes al
 
 The **power factor** relates real power to apparent power:
 
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
+
 \[\text{Power Factor} = \cos\theta = \frac{R}{|Z|}\]
+
+</div>
 
 | Power Factor | θ | Circuit Type |
 |--------------|---|--------------|
@@ -457,7 +563,9 @@ The **power factor** relates real power to apparent power:
 
 We'll explore power factor in depth in the next chapter on AC power analysis.
 
-## Phasor Domain Analysis: The Method
+---
+
+## 9.8 Phasor Domain Analysis: The Method
 
 The **phasor domain** (or frequency domain) approach transforms time-domain differential equations into algebraic equations. Here's the systematic method:
 
@@ -498,30 +606,48 @@ The **phasor domain** (or frequency domain) approach transforms time-domain diff
 
 **Step 1: Calculate impedances at ω = 1000 rad/s**
 
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
+
 \[Z_R = 10 \text{ Ω}\]
 \[Z_L = j\omega L = j(1000)(0.02) = j20 \text{ Ω}\]
 \[Z_C = \frac{1}{j\omega C} = \frac{1}{j(1000)(50 \times 10^{-6})} = \frac{1}{j0.05} = -j20 \text{ Ω}\]
 
+</div>
+
 **Step 2: Find total impedance**
 
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
+
 \[Z_{total} = Z_R + Z_L + Z_C = 10 + j20 - j20 = 10 + j0 = 10 \text{ Ω}\]
+
+</div>
 
 Notice that \(Z_L\) and \(Z_C\) cancel! This is resonance.
 
 **Step 3: Find current phasor**
 
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
+
 \[\mathbf{V}_s = 100\angle 0°\]
 \[\mathbf{I} = \frac{\mathbf{V}_s}{Z_{total}} = \frac{100\angle 0°}{10\angle 0°} = 10\angle 0° \text{ A}\]
 
+</div>
+
 **Step 4: Convert to time domain**
 
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
+
 \[i(t) = 10\cos(1000t) \text{ A}\]
+
+</div>
 
 At resonance, the current is in phase with the voltage and limited only by the resistance!
 
 #### Diagram: Phasor Domain Circuit Solver
 
-<iframe src="../../../sims/phasor-circuit-solver/main.html" width="100%" height="550px" scrolling="no" style="overflow: hidden;"></iframe>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe src="../../../sims/phasor-circuit-solver/main.html" width="100%" height="550px" scrolling="no" style="border:none; border-radius:8px; overflow:hidden;"></iframe>
+</div>
 
 <details markdown="1">
 <summary>Phasor Domain Circuit Solver</summary>
@@ -574,15 +700,19 @@ Canvas layout:
 Implementation: p5.js
 </details>
 
-## Resonance in AC Circuits
+---
+
+## 9.9 Resonance in AC Circuits
 
 **Resonance** occurs when the inductive and capacitive reactances are equal, causing them to cancel. The resonant frequency is:
 
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
+
 \[f_0 = \frac{1}{2\pi\sqrt{LC}} \text{ Hz}\]
 
-Or in angular frequency:
-
 \[\omega_0 = \frac{1}{\sqrt{LC}} \text{ rad/s}\]
+
+</div>
 
 At resonance, the circuit behavior depends on whether components are in series or parallel.
 
@@ -596,7 +726,12 @@ In a **series resonant circuit**:
 - Voltage across L and C can exceed source voltage!
 
 **Voltage magnification:**
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
+
 \[Q = \frac{V_L}{V_s} = \frac{V_C}{V_s} = \frac{X_L}{R} = \frac{\omega_0 L}{R}\]
+
+</div>
 
 At resonance with Q = 100, the voltage across L or C is 100 times the source voltage! This is useful for selecting frequencies but requires care to avoid component damage.
 
@@ -618,7 +753,9 @@ In a **parallel resonant circuit** (also called a "tank" circuit):
 
 #### Diagram: Series vs Parallel Resonance
 
-<iframe src="../../../sims/resonance-comparison/main.html" width="100%" height="500px" scrolling="no" style="overflow: hidden;"></iframe>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe src="../../../sims/resonance-comparison/main.html" width="100%" height="500px" scrolling="no" style="border:none; border-radius:8px; overflow:hidden;"></iframe>
+</div>
 
 <details markdown="1">
 <summary>Series vs Parallel Resonance</summary>
@@ -661,11 +798,17 @@ Canvas layout:
 Implementation: p5.js
 </details>
 
-## Bandwidth, Selectivity, Passband, and Stopband
+---
+
+## 9.10 Bandwidth, Selectivity, Passband, and Stopband
 
 **Bandwidth (BW)** is the range of frequencies over which a circuit or filter passes signals effectively. For a resonant circuit:
 
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
+
 \[BW = \frac{f_0}{Q}\]
+
+</div>
 
 **Selectivity** describes how well a circuit discriminates between desired and undesired frequencies. Higher Q means better selectivity (narrower bandwidth).
 
@@ -680,8 +823,12 @@ Implementation: p5.js
 
 The bandwidth is typically measured between the frequencies where the response drops to 70.7% of its peak value (half power, or -3dB):
 
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
+
 \[f_1 = f_0\sqrt{1 + \frac{1}{4Q^2}} - \frac{f_0}{2Q} \approx f_0 - \frac{BW}{2}\]
 \[f_2 = f_0\sqrt{1 + \frac{1}{4Q^2}} + \frac{f_0}{2Q} \approx f_0 + \frac{BW}{2}\]
+
+</div>
 
 **Quality factor and bandwidth relationship:**
 
@@ -694,7 +841,9 @@ The bandwidth is typically measured between the frequencies where the response d
 
 #### Diagram: Bandwidth and Selectivity
 
-<iframe src="../../../sims/bandwidth-selectivity/main.html" width="100%" height="450px" scrolling="no" style="overflow: hidden;"></iframe>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe src="../../../sims/bandwidth-selectivity/main.html" width="100%" height="450px" scrolling="no" style="border:none; border-radius:8px; overflow:hidden;"></iframe>
+</div>
 
 <details markdown="1">
 <summary>Bandwidth and Selectivity</summary>
@@ -737,7 +886,9 @@ Canvas layout:
 Implementation: p5.js
 </details>
 
-## Component Impedances Summary
+---
+
+## 9.11 Component Impedances Summary
 
 Here's a comprehensive reference for working with component impedances:
 
@@ -748,19 +899,41 @@ Here's a comprehensive reference for working with component impedances:
 | Inductor | \(v = L\frac{di}{dt}\) | \(Z = j\omega L\) | \(Y = \frac{1}{j\omega L}\) |
 
 **Series combinations:** Add impedances
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
+
 \[Z_{series} = Z_1 + Z_2 + Z_3 + ...\]
 
+</div>
+
 **Parallel combinations:** Add admittances (or use product/sum)
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
+
 \[Y_{parallel} = Y_1 + Y_2 + Y_3 + ...\]
 \[Z_{parallel} = \frac{Z_1 Z_2}{Z_1 + Z_2}\] (for two impedances)
 
+</div>
+
 **Voltage divider (series):**
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
+
 \[\mathbf{V}_1 = \mathbf{V}_s \cdot \frac{Z_1}{Z_1 + Z_2}\]
 
+</div>
+
 **Current divider (parallel):**
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
+
 \[\mathbf{I}_1 = \mathbf{I}_s \cdot \frac{Z_2}{Z_1 + Z_2}\]
 
-## Self-Check Questions
+</div>
+
+---
+
+## 9.12 Self-Check Questions
 
 ??? question "1. A sinusoidal voltage v(t) = 20cos(500t + 30°) V is applied to a series RL circuit with R = 40Ω and L = 60mH. Find the impedance, current phasor, and time-domain current expression."
     **Find impedance:**
@@ -827,7 +1000,9 @@ Here's a comprehensive reference for working with component impedances:
 
     The passband extends from 9900 Hz to 10100 Hz (just 200 Hz wide). This high-Q circuit is very selective, passing only frequencies very close to 10 kHz.
 
-## Summary
+---
+
+## 9.13 Summary
 
 This chapter equipped you with the essential tools for AC circuit analysis:
 
