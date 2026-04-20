@@ -63,6 +63,12 @@ Solving this first-order differential equation with initial condition \(V_C(0) =
 
 The capacitor voltage starts at 0 and rises exponentially toward \(V_S\). The current starts at \(V_S/R\) (as if the capacitor were a short circuit) and decays to zero as the capacitor charges.
 
+#### Diagram: RC Charging
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe src="../../../sims/rc-charging/main.html" width="100%" height="550px" scrolling="no" style="border:none; border-radius:8px; overflow:hidden;"></iframe>
+</div>
+
 **Charging behavior at key moments:**
 
 | Time | \(V_C\) | \(i\) |
@@ -98,6 +104,12 @@ The time constant is the single most important parameter describing a first-orde
 
 The time constant applies equally to the discharging case.
 
+#### Diagram: Time Constant
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe src="../../../sims/time-constant/main.html" width="100%" height="550px" scrolling="no" style="border:none; border-radius:8px; overflow:hidden;"></iframe>
+</div>
+
 ---
 
 ## 6.4 The RC Circuit: Discharging
@@ -115,6 +127,12 @@ Applying KVL: \(V_C = -iR\) (current flows opposite to charging direction), whic
 </div>
 
 The capacitor voltage decays exponentially from \(V_0\) toward 0. The time constant \(\tau = RC\) governs the discharge rate just as it governs charging.
+
+#### Diagram: RC Discharging
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe src="../../../sims/rc-discharging/main.html" width="100%" height="550px" scrolling="no" style="border:none; border-radius:8px; overflow:hidden;"></iframe>
+</div>
 
 !!! tip "Finding τ in a Complex Circuit"
     When finding the time constant, reduce the circuit seen by the capacitor (or inductor) to its Thévenin equivalent. Then \(\tau = R_{Th} \cdot C\) or \(\tau = L / R_{Th}\).
@@ -160,6 +178,12 @@ where \(L\) is in henrys (H), \(R\) is in ohms (Ω), and \(\tau\) is in seconds 
 !!! warning "Inductor Voltage Spike"
     When you abruptly open a switch carrying inductor current, the inductor tries to maintain its current instantaneously, producing a very large voltage spike: \(v = L\,di/dt\) with \(di/dt \to \infty\). This can damage switches and semiconductors. In practice, a **freewheeling diode** or snubber circuit is placed across the inductor to provide a controlled discharge path.
 
+#### Diagram: RL Circuit Charging
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe src="../../../sims/rl-charging/main.html" width="100%" height="550px" scrolling="no" style="border:none; border-radius:8px; overflow:hidden;"></iframe>
+</div>
+
 **RC and RL duality:**
 
 | RC Circuit | RL Circuit |
@@ -191,6 +215,12 @@ The DC steady-state value as \(t \to \infty\). Analyze the circuit at DC steady 
 - Capacitor → open circuit
 - Inductor → short circuit
 
+#### Diagram: Initial and Final Conditions
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe src="../../../sims/initial-final-conditions/main.html" width="100%" height="550px" scrolling="no" style="border:none; border-radius:8px; overflow:hidden;"></iframe>
+</div>
+
 ---
 
 ## 6.7 Natural, Forced, and Complete Response
@@ -216,6 +246,12 @@ The complete response of a first-order circuit has two components:
 </div>
 
 This is the **universal step-response formula** — it solves *any* first-order DC transient. Once you know \(x(0)\), \(x(\infty)\), and \(\tau\), you're done.
+
+#### Diagram: Exponential Properties
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe src="../../../sims/exponential-properties/main.html" width="100%" height="550px" scrolling="no" style="border:none; border-radius:8px; overflow:hidden;"></iframe>
+</div>
 
 **Procedure for first-order transient analysis:**
 
