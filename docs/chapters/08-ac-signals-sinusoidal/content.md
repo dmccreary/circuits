@@ -151,6 +151,12 @@ Different applications require different ways of characterizing amplitude:
 !!! tip "Why RMS Matters"
     RMS (Root Mean Square) is the most important AC measurement because it directly relates to power. A 120V RMS AC source delivers the same heating power to a resistor as a 120V DC source. This is why your wall outlet is rated at 120V RMS—that's the effective voltage for power delivery.
 
+#### Diagram: RMS Calculation Visualizer
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe src="../../../sims/rms-calculation/main.html" width="100%" height="550px" scrolling="no" style="border:none; border-radius:8px; overflow:hidden;"></iframe>
+</div>
+
 ### Frequency and Period
 
 **Frequency (\(f\))** tells you how many complete cycles occur per second:
@@ -396,6 +402,18 @@ Instructional Rationale: Step-through helps students see the one-to-one correspo
 
 Implementation: p5.js
 </details>
+
+#### Diagram: Harmonic Explorer
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe src="../../../sims/harmonic-explorer/main.html" width="100%" height="550px" scrolling="no" style="border:none; border-radius:8px; overflow:hidden;"></iframe>
+</div>
+
+#### Diagram: Time-to-Frequency Domain Transformer
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe src="../../../sims/time-to-frequency/main.html" width="100%" height="550px" scrolling="no" style="border:none; border-radius:8px; overflow:hidden;"></iframe>
+</div>
 
 ## Complex Numbers: Your New Best Friend
 

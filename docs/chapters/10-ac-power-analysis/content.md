@@ -60,6 +60,12 @@ The factor \(\cos\theta\) is the **power factor** — it determines how much of 
 | 60° | 0.50 | Mostly reactive |
 | 90° | 0.00 | Pure reactive — zero real power |
 
+#### Diagram: RMS and Average Power Visualizer
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe src="../../../sims/rms-calculation/main.html" width="100%" height="550px" scrolling="no" style="border:none; border-radius:8px; overflow:hidden;"></iframe>
+</div>
+
 ---
 
 ## 10.3 Reactive Power
@@ -136,6 +142,12 @@ The power triangle shows the geometric relationship between P, Q, and S — they
 - **Angle θ:** Phase angle between voltage and current
 
 The power triangle is identical in shape to the impedance triangle (\(|Z|\), R, X).
+
+#### Diagram: Power Triangle Explorer
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe src="../../../sims/power-triangle/main.html" width="100%" height="550px" scrolling="no" style="border:none; border-radius:8px; overflow:hidden;"></iframe>
+</div>
 
 ---
 

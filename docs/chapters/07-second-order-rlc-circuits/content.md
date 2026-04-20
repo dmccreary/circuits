@@ -133,6 +133,12 @@ function drawRLC(){
 drawRLC();
 </script>
 
+#### Diagram: RLC Circuit Interactive Explorer
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe src="../../../sims/rlc-circuit/main.html" width="100%" height="550px" scrolling="no" style="border:none; border-radius:8px; overflow:hidden;"></iframe>
+</div>
+
 ---
 
 ## 7.4 The Characteristic Equation
@@ -227,6 +233,12 @@ function updateNF(){
 }
 updateNF();
 </script>
+
+#### Diagram: Natural Frequency Calculator
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe src="../../../sims/natural-frequency-calculator/main.html" width="100%" height="550px" scrolling="no" style="border:none; border-radius:8px; overflow:hidden;"></iframe>
+</div>
 
 ---
 
@@ -444,6 +456,12 @@ function drawRes(){
 }
 drawRes();
 </script>
+
+#### Diagram: Series vs Parallel Resonance Comparison
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe src="../../../sims/resonance-comparison/main.html" width="100%" height="550px" scrolling="no" style="border:none; border-radius:8px; overflow:hidden;"></iframe>
+</div>
 
 ---
 

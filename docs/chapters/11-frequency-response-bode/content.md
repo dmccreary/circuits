@@ -151,6 +151,12 @@ Roll-off rates are quoted in **dB/decade** (more common in the US) or **dB/octav
 
 \[-20\ \mathrm{dB/decade} = -6\ \mathrm{dB/octave}\]
 
+#### Diagram: Filter Frequency Response
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe src="../../../sims/filter-frequency-response/main.html" width="100%" height="550px" scrolling="no" style="border:none; border-radius:8px; overflow:hidden;"></iframe>
+</div>
+
 ## 11.5 Cutoff Frequency and the Half-Power Point
 
 The **cutoff frequency** \(f_c\) (also called the **corner frequency** or **break frequency**) is the frequency at which the magnitude response falls to \(1/\sqrt{2} \approx 0.707\) of its passband maximum — exactly \(-3\) dB:
@@ -218,6 +224,12 @@ Higher filter order means:
 | Chebyshev | Equiripple | Steeper than Butterworth | Sharp cutoff needed |
 | Bessel | Gentle roll-off | Gentle | Linear phase (pulse/data) |
 | Elliptic | Equiripple in both bands | Steepest possible | Maximum selectivity |
+
+#### Diagram: Bandwidth and Selectivity
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe src="../../../sims/bandwidth-selectivity/main.html" width="100%" height="550px" scrolling="no" style="border:none; border-radius:8px; overflow:hidden;"></iframe>
+</div>
 
 ## 11.7 Asymptotic Approximation
 
@@ -368,6 +380,12 @@ The **quality factor** \(Q\) measures selectivity: high \(Q\) means a narrow, se
 | Band-pass | \(f_L\) to \(f_H\) | Outside band | Zero | \(f_0 = \sqrt{f_L f_H}\) |
 | Band-reject | Outside band | \(f_L\) to \(f_H\) | Maximum | \(f_0 = 1/(2\pi\sqrt{LC})\) |
 
+#### Diagram: First-Order Filters
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe src="../../../sims/first-order-filters/main.html" width="100%" height="550px" scrolling="no" style="border:none; border-radius:8px; overflow:hidden;"></iframe>
+</div>
+
 ## 11.10 Practical Filter Circuits and Worked Examples
 
 ### First-Order RC Low-Pass Filter
@@ -448,6 +466,12 @@ For a second-order low-pass with natural frequency \(\omega_0\) and damping rati
 - \(\zeta > 0.707\): Overdamped — early roll-off begins before \(\omega_0\)
 - Roll-off: \(-40\) dB/decade above \(\omega_0\)
 - Maximum phase shift: \(-180°\)
+
+#### Diagram: Second-Order Filter Response
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe src="../../../sims/second-order-filter/main.html" width="100%" height="550px" scrolling="no" style="border:none; border-radius:8px; overflow:hidden;"></iframe>
+</div>
 
 ## 11.11 Chapter Summary
 
