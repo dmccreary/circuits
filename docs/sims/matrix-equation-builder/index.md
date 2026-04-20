@@ -6,7 +6,7 @@ description: Interactive tool that builds the conductance matrix (G) and source 
 # Matrix Equation Builder
 
 <iframe src="main.html" width="100%"
-    style="height:770px; display:block; border:none;"
+    style="height:790px; display:block; border:none;"
     scrolling="no"></iframe>
 
 [Run in fullscreen](main.html){ .md-button .md-button--primary }
