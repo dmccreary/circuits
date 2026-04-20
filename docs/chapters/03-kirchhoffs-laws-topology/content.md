@@ -595,7 +595,7 @@ For circuits containing only passive elements and independent sources, both matr
 #### Diagram: Matrix Equation Builder
 
 <div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
-<iframe src="../../../sims/matrix-equation-builder/main.html" width="100%" height="595px" scrolling="no" style="border:none; border-radius:8px; overflow:hidden;"></iframe>
+<iframe src="../../../sims/matrix-equation-builder/main.html" width="100%" height="790px" scrolling="no" style="border:none; border-radius:8px; overflow:hidden;"></iframe>
 </div>
 
 ---
