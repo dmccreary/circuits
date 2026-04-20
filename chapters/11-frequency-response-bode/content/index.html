@@ -5156,7 +5156,9 @@ Frequency response analysis reveals how a circuit treats signals of different fr
 </tbody>
 </table>
 <p>Roll-off rates are quoted in <strong>dB/decade</strong> (more common in the US) or <strong>dB/octave</strong> (common in audio engineering):</p>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
 <div class="arithmatex">\[-20\ \mathrm{dB/decade} = -6\ \mathrm{dB/octave}\]</div>
+</div>
 <h4 id="diagram-filter-frequency-response">Diagram: Filter Frequency Response</h4>
 <div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
 <iframe height="550px" scrolling="no" src="../../../sims/filter-frequency-response/main.html" style="border:none; border-radius:8px; overflow:hidden;" width="100%"></iframe>
@@ -5169,7 +5171,9 @@ Frequency response analysis reveals how a circuit treats signals of different fr
 
 </div>
 <p><strong>Why is this the "half-power" point?</strong> Power is proportional to voltage squared:</p>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
 <div class="arithmatex">\[P \propto |V|^2 \propto |H|^2\]</div>
+</div>
 <p>When <span class="arithmatex">\(|H|\)</span> drops to <span class="arithmatex">\(0.707\)</span>, power drops to <span class="arithmatex">\((0.707)^2 = 0.5\)</span> — exactly half. Hence the cutoff frequency is also called the <strong>half-power point</strong> or <strong><span class="arithmatex">\(-3\)</span> dB point</strong>.</p>
 <p><strong>For the first-order RC filter</strong>, the cutoff frequency is found by setting <span class="arithmatex">\(|H(j\omega_c)| = 1/\sqrt{2}\)</span>:</p>
 <div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 10px; padding: 16px 20px; margin: 1.2rem 0;">
@@ -5290,9 +5294,13 @@ where \(n\) is the filter order (number of poles).
 <h3 id="magnitude-asymptotes-for-a-first-order-low-pass-filter">Magnitude Asymptotes for a First-Order Low-Pass Filter</h3>
 <p>For <span class="arithmatex">\(H(j\omega) = \dfrac{1}{1 + j\omega/\omega_c}\)</span>:</p>
 <p><strong>Below cutoff</strong> (<span class="arithmatex">\(\omega \ll \omega_c\)</span>):</p>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
 <div class="arithmatex">\[\left|H\right| \approx 1 \quad \Rightarrow \quad 0\ \mathrm{dB}\ (\text{flat line})\]</div>
+</div>
 <p><strong>Above cutoff</strong> (<span class="arithmatex">\(\omega \gg \omega_c\)</span>):</p>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
 <div class="arithmatex">\[\left|H\right| \approx \frac{\omega_c}{\omega} \quad \Rightarrow \quad -20\ \mathrm{dB/decade\ slope}\]</div>
+</div>
 <p>The two asymptotes meet at <span class="arithmatex">\(\omega = \omega_c\)</span> (the corner frequency). The actual curve deviates from the asymptote by a maximum of <span class="arithmatex">\(-3\)</span> dB at the corner and <span class="arithmatex">\(-1\)</span> dB one decade away.</p>
 <h3 id="phase-asymptotes-for-a-first-order-low-pass-filter">Phase Asymptotes for a First-Order Low-Pass Filter</h3>
 <p>The phase transitions from <span class="arithmatex">\(0°\)</span> to <span class="arithmatex">\(-90°\)</span> across roughly two decades centered on <span class="arithmatex">\(\omega_c\)</span>:</p>
@@ -5426,14 +5434,18 @@ where \(n\) is the filter order (number of poles).
 
 </div>
 <p>For a series RLC band-pass filter:</p>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
 <div class="arithmatex">\[f_0 = \frac{1}{2\pi\sqrt{LC}} \qquad BW = \frac{R}{2\pi L} \qquad Q = \frac{f_0}{BW}\]</div>
+</div>
 <p>The <strong>quality factor</strong> <span class="arithmatex">\(Q\)</span> measures selectivity: high <span class="arithmatex">\(Q\)</span> means a narrow, selective passband.</p>
 <ul>
 <li><strong>Applications:</strong> Radio tuning (AM/FM), audio graphic equalizer bands, signal selection in communications</li>
 </ul>
 <h3 id="band-reject-filter-notch-filter">Band-Reject Filter / Notch Filter</h3>
 <p><strong>Blocks</strong> a narrow band of frequencies around a center frequency <span class="arithmatex">\(f_0\)</span>; <strong>passes</strong> all other frequencies. When the rejected band is extremely narrow, it is called a <strong>notch filter</strong>.</p>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
 <div class="arithmatex">\[f_0 = \frac{1}{2\pi\sqrt{LC}} \qquad Q = \frac{f_0}{BW}\]</div>
+</div>
 <ul>
 <li>A high-<span class="arithmatex">\(Q\)</span> band-reject filter is a notch filter.</li>
 <li><strong>Applications:</strong> 60 Hz hum removal from audio, interference rejection in instrumentation, acoustic feedback suppression</li>
@@ -5495,9 +5507,11 @@ where \(n\) is the filter order (number of poles).
 
 </div>
 <p><strong>Worked Example:</strong> Design an RC low-pass filter with <span class="arithmatex">\(f_c = 1\)</span> kHz using <span class="arithmatex">\(C = 10\)</span> nF.</p>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
 <div class="arithmatex">\[R = \frac{1}{2\pi f_c C} = \frac{1}{2\pi \times 1{,}000 \times 10 \times 10^{-9}} = 15{,}915\ \Omega \approx 15.9\ \mathrm{k\Omega}\]</div>
-<p>At <span class="arithmatex">\(f = 10\)</span> kHz (one decade above cutoff), the asymptotic approximation gives:
-[\left|H\right| \approx -20\ \mathrm{dB}]</p>
+<p>At <span class="arithmatex">\(f = 10\)</span> kHz (one decade above cutoff), the asymptotic approximation gives:</p>
+<div class="arithmatex">\[\left|H\right| \approx -20\ \mathrm{dB}\]</div>
+</div>
 <p>The exact value: <span class="arithmatex">\(|H| = 1/\sqrt{1+10^2} = 1/\sqrt{101} \approx 0.0995 = -20.04\ \mathrm{dB}\)</span> — nearly identical to the asymptote.</p>
 <hr />
 <h3 id="first-order-rc-high-pass-filter">First-Order RC High-Pass Filter</h3>
@@ -5521,9 +5535,11 @@ where \(n\) is the filter order (number of poles).
 
 </div>
 <p><strong>Worked Example:</strong> A series RLC circuit has <span class="arithmatex">\(L = 10\ \mu\mathrm{H}\)</span>, <span class="arithmatex">\(C = 100\ \mathrm{pF}\)</span>, <span class="arithmatex">\(R = 10\ \Omega\)</span>. Find center frequency, bandwidth, and Q.</p>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
 <div class="arithmatex">\[f_0 = \frac{1}{2\pi\sqrt{10\times10^{-6} \times 100\times10^{-12}}} = \frac{1}{2\pi\times10^{-8}} \approx 15.9\ \mathrm{MHz}\]</div>
 <div class="arithmatex">\[BW = \frac{10}{2\pi \times 10\times10^{-6}} \approx 159\ \mathrm{kHz}\]</div>
 <div class="arithmatex">\[Q = \frac{15.9\ \mathrm{MHz}}{159\ \mathrm{kHz}} = 100\]</div>
+</div>
 <p>This is a highly selective filter — useful for AM radio receiver tuning.</p>
 <hr />
 <h3 id="second-order-low-pass-filter">Second-Order Low-Pass Filter</h3>
