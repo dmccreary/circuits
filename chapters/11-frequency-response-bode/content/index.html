@@ -2883,6 +2883,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Decades and Octaves">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-filter-frequency-response" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Diagram: Filter Frequency Response
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
         
       </ul>
@@ -2909,6 +2926,23 @@
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="11.6 Roll-Off Rate and Filter Order">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-bandwidth-and-selectivity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Diagram: Bandwidth and Selectivity
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -3027,6 +3061,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Band-Reject Filter / Notch Filter">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-first-order-filters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Diagram: First-Order Filters
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
         
       </ul>
@@ -3087,6 +3138,23 @@
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Second-Order Low-Pass Filter">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diagram-second-order-filter-response" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Diagram: Second-Order Filter Response
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -5089,6 +5157,10 @@ Frequency response analysis reveals how a circuit treats signals of different fr
 </table>
 <p>Roll-off rates are quoted in <strong>dB/decade</strong> (more common in the US) or <strong>dB/octave</strong> (common in audio engineering):</p>
 <div class="arithmatex">\[-20\ \mathrm{dB/decade} = -6\ \mathrm{dB/octave}\]</div>
+<h4 id="diagram-filter-frequency-response">Diagram: Filter Frequency Response</h4>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe height="550px" scrolling="no" src="../../../sims/filter-frequency-response/main.html" style="border:none; border-radius:8px; overflow:hidden;" width="100%"></iframe>
+</div>
 <h2 id="115-cutoff-frequency-and-the-half-power-point">11.5 Cutoff Frequency and the Half-Power Point</h2>
 <p>The <strong>cutoff frequency</strong> <span class="arithmatex">\(f_c\)</span> (also called the <strong>corner frequency</strong> or <strong>break frequency</strong>) is the frequency at which the magnitude response falls to <span class="arithmatex">\(1/\sqrt{2} \approx 0.707\)</span> of its passband maximum — exactly <span class="arithmatex">\(-3\)</span> dB:</p>
 <div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 10px; padding: 16px 20px; margin: 1.2rem 0;">
@@ -5209,6 +5281,10 @@ where \(n\) is the filter order (number of poles).
 </tr>
 </tbody>
 </table>
+<h4 id="diagram-bandwidth-and-selectivity">Diagram: Bandwidth and Selectivity</h4>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe height="550px" scrolling="no" src="../../../sims/bandwidth-selectivity/main.html" style="border:none; border-radius:8px; overflow:hidden;" width="100%"></iframe>
+</div>
 <h2 id="117-asymptotic-approximation">11.7 Asymptotic Approximation</h2>
 <p><strong>Asymptotic approximation</strong> (also called the straight-line Bode approximation) replaces the smooth, curved frequency response with piecewise-linear segments. It makes Bode plots fast to sketch by hand and reveals key behavior at a glance.</p>
 <h3 id="magnitude-asymptotes-for-a-first-order-low-pass-filter">Magnitude Asymptotes for a First-Order Low-Pass Filter</h3>
@@ -5404,6 +5480,10 @@ where \(n\) is the filter order (number of poles).
 </tr>
 </tbody>
 </table>
+<h4 id="diagram-first-order-filters">Diagram: First-Order Filters</h4>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe height="550px" scrolling="no" src="../../../sims/first-order-filters/main.html" style="border:none; border-radius:8px; overflow:hidden;" width="100%"></iframe>
+</div>
 <h2 id="1110-practical-filter-circuits-and-worked-examples">11.10 Practical Filter Circuits and Worked Examples</h2>
 <h3 id="first-order-rc-low-pass-filter">First-Order RC Low-Pass Filter</h3>
 <p><strong>Circuit:</strong> Series <span class="arithmatex">\(R\)</span>, shunt <span class="arithmatex">\(C\)</span>, output across <span class="arithmatex">\(C\)</span>.</p>
@@ -5460,6 +5540,10 @@ where \(n\) is the filter order (number of poles).
 <li>Roll-off: <span class="arithmatex">\(-40\)</span> dB/decade above <span class="arithmatex">\(\omega_0\)</span></li>
 <li>Maximum phase shift: <span class="arithmatex">\(-180°\)</span></li>
 </ul>
+<h4 id="diagram-second-order-filter-response">Diagram: Second-Order Filter Response</h4>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe height="550px" scrolling="no" src="../../../sims/second-order-filter/main.html" style="border:none; border-radius:8px; overflow:hidden;" width="100%"></iframe>
+</div>
 <h2 id="1111-chapter-summary">11.11 Chapter Summary</h2>
 <p>Frequency response analysis is one of the most powerful and widely applied tools in electrical engineering. The key ideas of this chapter:</p>
 <ol>
