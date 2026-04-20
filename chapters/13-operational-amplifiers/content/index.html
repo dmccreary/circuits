@@ -5418,6 +5418,11 @@ The negative sign indicates <strong>phase inversion</strong> — a positive inpu
 <div class="arithmatex">\[R_{bias} = \frac{R_i \cdot R_f}{R_i + R_f} = \frac{10\ \text{k} \times 240\ \text{k}}{250\ \text{k}} \approx 9.6\ \text{k}\Omega \approx 10\ \text{k}\Omega\]</div>
 <p><strong>Final design:</strong> <span class="arithmatex">\(R_i = 10\ \text{k}\Omega\)</span>, <span class="arithmatex">\(R_f = 240\ \text{k}\Omega\)</span>, <span class="arithmatex">\(R_{bias} = 10\ \text{k}\Omega\)</span></p>
 </div>
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1.5rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<strong style="color:#5A3EED;">&#9655; MicroSim — Inverting Op-Amp Amplifier</strong>
+<p style="color:#555; margin: 0.5rem 0 0.8rem;">Adjust Rf and Rin to change the gain. Watch the output (red) invert phase relative to the input (blue). The red dot marks the virtual ground.</p>
+<iframe scrolling="no" src="../../../sims/opamp-inverting/main.html" style="height:560px; display:block; border:none; border-radius:8px;" width="100%"></iframe>
+</div>
 <h2 id="137-non-inverting-amplifier">13.7 Non-Inverting Amplifier</h2>
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 The <strong style="color: #333;">non-inverting amplifier</strong> connects the input signal to the non-inverting (+) input, with a resistor voltage divider providing feedback from the output to the inverting (−) input. The input and output are in phase.
