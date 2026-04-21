@@ -117,6 +117,7 @@ This chapter includes seven interactive simulations. Use them alongside the read
 | 12.3 | [Resonance Comparison](../../../sims/resonance-comparison/index.md) | Series vs parallel RLC resonance |
 | 12.3 | [Second-Order Filter](../../../sims/second-order-filter/index.md) | Butterworth, underdamped, overdamped responses |
 | 12.3 | [Bandwidth and Selectivity](../../../sims/bandwidth-selectivity/index.md) | Q factor, -3 dB bandwidth, selectivity |
+| 12.6 | [3-Band Equalizer](../../../sims/equalizer-demo/index.md) | Bass/mid/treble shelving and peak EQ curves |
 | 12.7 | [Decibel Scale](../../../sims/decibel-scale/index.md) | dB values, dBV, dBu conversions |
 | 12.10 | [Audio Signal Chain](../../../sims/audio-signal-chain/index.md) | Complete audio path from mic to speaker |
 

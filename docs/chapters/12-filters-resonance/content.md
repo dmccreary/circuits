@@ -380,6 +380,16 @@ where \(\omega_z\) and \(\omega_p\) are the zero and pole frequencies. For a low
 
 ---
 
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1.5rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<strong style="color:#5A3EED;">&#9655; MicroSim — 3-Band Graphic Equalizer</strong>
+<p style="color:#555; margin: 0.5rem 0 0.8rem;">Drag the Bass, Mid, and Treble sliders to shape the frequency response. Observe how each band affects the overall EQ curve.</p>
+<iframe src="../../../sims/equalizer-demo/main.html" width="100%"
+    style="height:540px; display:block; border:none; border-radius:8px;"
+    scrolling="no"></iframe>
+</div>
+
+---
+
 ## 12.7 Decibels in Audio: dBV and dBu
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">

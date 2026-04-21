@@ -237,6 +237,14 @@ A 100 dB SNR is professional quality. At maximum volume, the noise is 100,000 ti
 
 </div>
 
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1.5rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<strong style="color:#5A3EED;">&#9655; MicroSim — SNR and Noise Floor</strong>
+<p style="color:#555; margin: 0.5rem 0 0.8rem;">Set signal level and noise floor to see SNR. Add harmonics to simulate distortion. The green annotation shows the SNR gap between signal and noise.</p>
+<iframe src="../../../sims/snr-noise-floor/main.html" width="100%"
+    style="height:560px; display:block; border:none; border-radius:8px;"
+    scrolling="no"></iframe>
+</div>
+
 ## 15.6 Thermal Noise
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">

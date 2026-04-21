@@ -377,6 +377,14 @@ Spectral characteristics:</p>
 | Triangle | Odd only (\(n = 1, 3, 5, \ldots\)) | \(1/n^2\) | Smooth (no discontinuity in \(f\)) |
 | Sawtooth | All (\(n = 1, 2, 3, \ldots\)) | \(1/n\) | Sharp reset |
 
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1.5rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<strong style="color:#5A3EED;">&#9655; MicroSim — Fourier Series Builder</strong>
+<p style="color:#555; margin: 0.5rem 0 0.8rem;">Drag harmonic amplitude sliders or pick a preset waveform (Square, Sawtooth, Triangle). Watch the time-domain composite and frequency spectrum update in real time.</p>
+<iframe src="../../../sims/fourier-series-builder/main.html" width="100%"
+    style="height:580px; display:block; border:none; border-radius:8px;"
+    scrolling="no"></iframe>
+</div>
+
 ## 14.7 Applications
 
 ### Audio Timbre and Musical Instruments

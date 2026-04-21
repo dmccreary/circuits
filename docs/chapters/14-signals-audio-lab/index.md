@@ -107,6 +107,7 @@ This chapter includes two interactive simulations. Use them alongside the readin
 |---------|-----------|---------------|
 | 14.3 | [Harmonic Explorer](../../../sims/harmonic-explorer/index.md) | Harmonics and Fourier composition of waveforms |
 | 14.4 | [Signal Parameters](../../../sims/signal-parameters/index.md) | Amplitude, frequency, and phase spectrum visualization |
+| 14.6 | [Fourier Series Builder](../../../sims/fourier-series-builder/index.md) | Build square/sawtooth/triangle from harmonics |
 
 </div>
 

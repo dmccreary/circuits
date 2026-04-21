@@ -298,6 +298,14 @@ Or use 270 kΩ for \(A_V = -27\). If precise gain is required, use a trim pot in
 **Final design:** \(R_i = 10\ \text{k}\Omega\), \(R_f = 240\ \text{k}\Omega\), \(R_{bias} = 10\ \text{k}\Omega\)
 </div>
 
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1.5rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<strong style="color:#5A3EED;">&#9655; MicroSim — Inverting Op-Amp Amplifier</strong>
+<p style="color:#555; margin: 0.5rem 0 0.8rem;">Adjust Rf and Rin to change the gain. Watch the output (red) invert phase relative to the input (blue). The red dot marks the virtual ground.</p>
+<iframe src="../../../sims/opamp-inverting/main.html" width="100%"
+    style="height:560px; display:block; border:none; border-radius:8px;"
+    scrolling="no"></iframe>
+</div>
+
 ## 13.7 Non-Inverting Amplifier
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">

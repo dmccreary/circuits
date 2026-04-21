@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inverting Op-Amp Simulator</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+<style>
+  body { margin: 0; background: #f0f0f0; display: flex; justify-content: center; }
+</style>
+</head>
+<body>
+<script>
+const CW = 720, CH = 540;
+
+// Schematic area
+const SCH_X = 20, SCH_Y = 10, SCH_W = 340, SCH_H = 220;
+// Waveform area
+const WAV_X = 380, WAV_Y = 10, WAV_W = 320, WAV_H = 220;
+// Control area
+const CTRL_Y = 250;
+
+// Sliders
+let slRf, slRin, slFreq, slAmp;
+let rfVal = 100, rinVal = 10, freqVal = 1, ampVal = 1;
+let t = 0;
+
+function setup() {
+  createCanvas(CW, CH);
+  textFont('Arial');
+
+  // Rf slider: 10–1000 kΩ (log-ish mapped as 10..500)
+  slRf   = createSlider(10, 500, 100, 10);
+  slRin  = createSlider(5,  200, 10,  5);
+  slFreq = createSlider(1,  5,   1,   1);
+  slAmp  = createSlider(1,  5,   2,   1);
+
+  for (let sl of [slRf, slRin, slFreq, slAmp]) {
+    sl.style('width', '180px');
+    sl.position(-9999, -9999); // hide from DOM, drive manually
+    sl.hide();
+  }
+}
+
+// Canvas slider state
+let sliders = [
+  { label: "Rf (kΩ):", min: 10, max: 500, step: 10, val: 100, y: 0 },
+  { label: "Rin (kΩ):", min: 5,  max: 200, step: 5,  val: 10,  y: 0 },
+  { label: "Vin amp (V):", min: 1, max: 5, step: 1,  val: 2,   y: 0 },
+  { label: "Freq (Hz):", min: 1,  max: 5,  step: 1,  val: 1,   y: 0 },
+];
+const SL_X = 200, SL_W = 300;
+let draggingSlider = -1;
+
+function gain() { return -sliders[0].val / sliders[1].val; }
+
+function drawSchematic() {
+  let g = gain();
+
+  // Background
+  fill(255); stroke(200); strokeWeight(1);
+  rect(SCH_X, SCH_Y, SCH_W, SCH_H, 8);
+
+  let cx = SCH_X + SCH_W / 2 - 10;
+  let cy = SCH_Y + SCH_H / 2 + 10;
+
+  // Op-amp triangle
+  fill(245, 245, 220); stroke(80); strokeWeight(2);
+  triangle(cx - 30, cy - 40, cx - 30, cy + 40, cx + 40, cy);
+
+  // Labels inside
+  noStroke(); fill(60); textSize(10); textAlign(LEFT, CENTER);
+  text("–", cx - 25, cy - 20);
+  text("+", cx - 25, cy + 20);
+  textAlign(CENTER, CENTER); textSize(9);
+  text("op-amp", cx, cy);
+
+  // Output line
+  stroke(60); strokeWeight(2);
+  line(cx + 40, cy, cx + 70, cy);
+  // Output label
+  noStroke(); fill(60); textSize(10); textAlign(LEFT, CENTER);
+  text("Vout", cx + 72, cy);
+
+  // Inverting input node (–)
+  let invX = cx - 30, invY = cy - 20;
+  // Rin: from left to inv input
+  stroke(60); strokeWeight(2);
+  line(SCH_X + 20, invY, invX - 50, invY);
+  drawResistorH(invX - 50, invY, 30);
+  line(invX - 20, invY, invX, invY);
+  noStroke(); fill(60); textSize(9); textAlign(CENTER, BOTTOM);
+  text("Rin=" + sliders[1].val + "k", invX - 35, invY - 2);
+  // Vin label
+  stroke(60); strokeWeight(2);
+  line(SCH_X + 20, invY, SCH_X + 20, invY + 10);
+  noStroke(); fill(80, 80, 200); textSize(10); textAlign(CENTER, TOP);
+  text("Vin", SCH_X + 20, invY + 12);
+
+  // Non-inverting input (+) to GND
+  let ninY = cy + 20;
+  stroke(60); strokeWeight(2);
+  line(cx - 30, ninY, cx - 55, ninY);
+  line(cx - 55, ninY, cx - 55, ninY + 20);
+  // Ground symbol
+  drawGround(cx - 55, ninY + 20);
+  noStroke(); fill(100); textSize(9); textAlign(CENTER, TOP);
+  text("GND", cx - 55, ninY + 36);
+
+  // Feedback resistor Rf (curved above)
+  let fbY = cy - 58;
+  stroke(60); strokeWeight(2);
+  line(invX, invY, invX, fbY);
+  line(cx + 40, cy, cx + 40, fbY);
+  line(invX, fbY, invX + 15, fbY);
+  drawResistorH(invX + 15, fbY, 45);
+  line(invX + 60, fbY, cx + 40, fbY);
+  noStroke(); fill(60); textSize(9); textAlign(CENTER, BOTTOM);
+  text("Rf=" + sliders[0].val + "k", invX + 37, fbY - 2);
+
+  // Virtual ground dot at inverting input node
+  fill(220, 60, 60); noStroke();
+  circle(invX, invY, 7);
+  noStroke(); fill(180, 40, 40); textSize(8); textAlign(LEFT, BOTTOM);
+  text("V≈0", invX + 5, invY - 1);
+
+  // Gain display
+  noStroke(); fill(g < 0 ? color(180, 40, 40) : color(40, 140, 40));
+  textSize(13); textAlign(CENTER, TOP); textStyle(BOLD);
+  text("Gain = " + g.toFixed(1) + "×  (phase inverted)", SCH_X + SCH_W / 2, SCH_Y + SCH_H - 22);
+  textStyle(NORMAL);
+}
+
+function drawResistorH(x, y, w) {
+  // Zigzag resistor symbol
+  let n = 5, seg = w / (n + 1), h2 = 7;
+  stroke(60); strokeWeight(2); noFill();
+  beginShape();
+  vertex(x, y);
+  for (let i = 0; i < n; i++) {
+    vertex(x + seg * (i + 0.5), y + (i % 2 === 0 ? -h2 : h2));
+    vertex(x + seg * (i + 1), y);
+  }
+  vertex(x + w, y);
+  endShape();
+}
+
+function drawGround(x, y) {
+  stroke(60); strokeWeight(2);
+  line(x - 12, y, x + 12, y);
+  line(x - 8,  y + 5, x + 8,  y + 5);
+  line(x - 4,  y + 10, x + 4,  y + 10);
+}
+
+function drawWaveforms() {
+  fill(255); stroke(200); strokeWeight(1);
+  rect(WAV_X, WAV_Y, WAV_W, WAV_H, 8);
+
+  let g = gain();
+  let amp = sliders[2].val;
+  let freq = sliders[3].val;
+  let outAmp = constrain(abs(g) * amp, 0, 12);
+  let midY = WAV_Y + WAV_H / 2;
+  let scaleY = (WAV_H / 2 - 14) / 12; // 12V max
+
+  // Grid lines
+  stroke(230); strokeWeight(1);
+  line(WAV_X, midY, WAV_X + WAV_W, midY);
+  for (let v of [-10, -5, 5, 10]) {
+    let ly = midY - v * scaleY;
+    stroke(240); line(WAV_X + 4, ly, WAV_X + WAV_W - 4, ly);
+  }
+
+  // Time axis label
+  noStroke(); fill(100); textSize(9); textAlign(CENTER, BOTTOM);
+  text("Time →", WAV_X + WAV_W / 2, WAV_Y + WAV_H - 1);
+
+  // Input waveform (blue)
+  stroke(60, 100, 220); strokeWeight(2); noFill();
+  beginShape();
+  for (let px = 0; px < WAV_W - 8; px++) {
+    let tSec = t / 60 + px / (WAV_W - 8) * 2;
+    let v = amp * sin(TWO_PI * freq * tSec);
+    vertex(WAV_X + 4 + px, midY - v * scaleY);
+  }
+  endShape();
+
+  // Output waveform (red/inverted)
+  stroke(200, 60, 60); strokeWeight(2); noFill();
+  beginShape();
+  for (let px = 0; px < WAV_W - 8; px++) {
+    let tSec = t / 60 + px / (WAV_W - 8) * 2;
+    let vout = constrain(g * amp * sin(TWO_PI * freq * tSec), -12, 12);
+    vertex(WAV_X + 4 + px, midY - vout * scaleY);
+  }
+  endShape();
+
+  // Legend
+  noStroke(); textSize(10); textAlign(LEFT, TOP);
+  fill(60, 100, 220); rect(WAV_X + 8, WAV_Y + 8, 12, 3);
+  fill(60); text("Vin (" + amp + "V)", WAV_X + 24, WAV_Y + 4);
+  fill(200, 60, 60); rect(WAV_X + 8, WAV_Y + 21, 12, 3);
+  fill(60); text("Vout (" + outAmp.toFixed(1) + "V, inverted)", WAV_X + 24, WAV_Y + 17);
+
+  // Title
+  noStroke(); fill(50); textSize(11); textAlign(CENTER, TOP); textStyle(BOLD);
+  text("Input vs Output Waveforms", WAV_X + WAV_W / 2, WAV_Y + WAV_H - 18);
+  textStyle(NORMAL);
+}
+
+function drawControls() {
+  fill(245); stroke(210); strokeWeight(1);
+  rect(0, CTRL_Y - 8, CW, CH - CTRL_Y + 8);
+
+  noStroke(); fill(40); textSize(13); textAlign(CENTER, TOP); textStyle(BOLD);
+  text("Inverting Amplifier Controls", CW / 2, CTRL_Y + 4);
+  textStyle(NORMAL);
+
+  for (let i = 0; i < sliders.length; i++) {
+    let sl = sliders[i];
+    sl.y = CTRL_Y + 32 + i * 48;
+    let thumbX = SL_X + map(sl.val, sl.min, sl.max, 0, SL_W);
+
+    // Track
+    fill(210); noStroke(); rect(SL_X, sl.y - 3, SL_W, 6, 3);
+    // Fill
+    fill(90, 62, 237); rect(SL_X, sl.y - 3, thumbX - SL_X, 6, 3);
+    // Thumb
+    fill(255); stroke(160); strokeWeight(1.5); circle(thumbX, sl.y, 18);
+    // Label + value
+    noStroke(); fill(40); textSize(12); textAlign(RIGHT, CENTER);
+    text(sl.label + " " + sl.val, SL_X - 8, sl.y);
+  }
+}
+
+function draw() {
+  background(240);
+  t++;
+
+  // Title
+  fill(30); noStroke(); textAlign(CENTER, TOP); textSize(16); textStyle(BOLD);
+  text("Inverting Op-Amp Amplifier", CW / 2, SCH_Y + SCH_H + 8);
+  textStyle(NORMAL);
+
+  drawSchematic();
+  drawWaveforms();
+  drawControls();
+}
+
+function mousePressed() {
+  for (let i = 0; i < sliders.length; i++) {
+    let sl = sliders[i];
+    if (abs(mouseY - sl.y) < 16 && mouseX >= SL_X - 10 && mouseX <= SL_X + SL_W + 10) {
+      draggingSlider = i;
+    }
+  }
+}
+
+function mouseDragged() {
+  if (draggingSlider < 0) return;
+  let sl = sliders[draggingSlider];
+  let raw = map(mouseX, SL_X, SL_X + SL_W, sl.min, sl.max);
+  let steps = round((raw - sl.min) / sl.step);
+  sl.val = constrain(sl.min + steps * sl.step, sl.min, sl.max);
+}
+
+function mouseReleased() { draggingSlider = -1; }
+</script>
+</body>
+</html>

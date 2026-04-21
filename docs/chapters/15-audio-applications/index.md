@@ -100,12 +100,13 @@ Where k = 1.38 × 10⁻²³ J/K (Boltzmann's constant), T = temperature (K), B =
 
 <div markdown style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 20px 24px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
 
-This chapter includes three interactive simulations. Use them alongside the reading to explore concepts hands-on.
+This chapter includes four interactive simulations. Use them alongside the reading to explore concepts hands-on.
 
 | Section | Simulation | What it shows |
 |---------|-----------|---------------|
 | 15.2 | [Audio Signal Chain](../../../sims/audio-signal-chain/index.md) | Complete audio path from mic to speaker |
 | 15.4 | [Audio Amplifier Chain](../../../sims/audio-amp-chain/index.md) | Amplifier stages and gain budgeting |
+| 15.5 | [SNR and Noise Floor](../../../sims/snr-noise-floor/index.md) | Signal level, noise floor, SNR, and harmonics |
 | 15.7 | [Distortion Types](../../../sims/distortion-types/index.md) | Harmonic distortion, clipping, and nonlinear effects |
 
 </div>

@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fourier Series Builder</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+<style>
+  body { margin: 0; background: #f0f0f0; display: flex; justify-content: center; }
+</style>
+</head>
+<body>
+<script>
+const CW = 720, CH = 560;
+
+// Two plot areas side by side
+const PL_X = 30,  PL_Y = 48,  PL_W = 300, PL_H = 200; // time domain
+const PR_X = 380, PR_Y = 48,  PR_W = 310, PR_H = 200; // spectrum (bar chart)
+const CTRL_Y = 270;
+
+// Harmonics: fundamental + up to 7 overtones, each with amplitude slider
+// index 0 = fundamental (1×f), index 1 = 2nd harmonic, ...
+const N_HARM = 7;
+const FUND_FREQ = 1; // Hz (display unit)
+let amps = [1.0, 0.0, 0.33, 0.0, 0.2, 0.0, 0.14]; // default: square-ish
+let t = 0;
+
+// Slider layout
+const SL_X = 210, SL_W = 400;
+let draggingRow = -1;
+let sliderYs = [];
+
+// Waveform preset
+let presetMode = 0; // 0=custom,1=square,2=sawtooth,3=triangle
+const PRESETS = ["Custom", "Square", "Sawtooth", "Triangle"];
+
+function setup() {
+  createCanvas(CW, CH);
+  textFont('Arial');
+}
+
+function setPreset(p) {
+  presetMode = p;
+  if (p === 1) { // square: 1/n for odd harmonics
+    for (let i = 0; i < N_HARM; i++) amps[i] = (i % 2 === 0) ? 1 / (i + 1) : 0;
+  } else if (p === 2) { // sawtooth: 1/n for all
+    for (let i = 0; i < N_HARM; i++) amps[i] = 1 / (i + 1);
+  } else if (p === 3) { // triangle: 1/n² for odd
+    for (let i = 0; i < N_HARM; i++) amps[i] = (i % 2 === 0) ? 1 / ((i + 1) * (i + 1)) : 0;
+  }
+}
+
+function compositeSignal(tSec) {
+  let sum = 0;
+  for (let i = 0; i < N_HARM; i++) {
+    sum += amps[i] * sin(TWO_PI * (i + 1) * FUND_FREQ * tSec);
+  }
+  return sum;
+}
+
+function drawTimeDomain() {
+  fill(255); stroke(210); strokeWeight(1);
+  rect(PL_X, PL_Y, PL_W, PL_H, 6);
+
+  let midY = PL_Y + PL_H / 2;
+  let maxA = 0;
+  for (let a of amps) maxA += abs(a);
+  if (maxA < 0.01) maxA = 1;
+  let scaleY = (PL_H / 2 - 8) / maxA;
+
+  // Grid
+  stroke(235); strokeWeight(1);
+  line(PL_X, midY, PL_X + PL_W, midY);
+
+  // Individual harmonics (thin, colored)
+  let cols = [
+    color(255,100,100,140), color(255,165,0,130), color(200,200,0,130),
+    color(60,200,60,130),   color(0,180,200,130), color(100,100,255,130),
+    color(200,0,200,120)
+  ];
+  noFill();
+  for (let i = 0; i < N_HARM; i++) {
+    if (amps[i] < 0.01) continue;
+    stroke(cols[i]); strokeWeight(1);
+    beginShape();
+    for (let px = 0; px < PL_W - 4; px++) {
+      let tSec = t / 60 + px / (PL_W - 4) * 3;
+      let v = amps[i] * sin(TWO_PI * (i + 1) * FUND_FREQ * tSec);
+      vertex(PL_X + 2 + px, midY - v * scaleY);
+    }
+    endShape();
+  }
+
+  // Composite (purple, thick)
+  stroke(90, 62, 237); strokeWeight(2.5); noFill();
+  beginShape();
+  for (let px = 0; px < PL_W - 4; px++) {
+    let tSec = t / 60 + px / (PL_W - 4) * 3;
+    let v = compositeSignal(tSec);
+    vertex(PL_X + 2 + px, constrain(midY - v * scaleY, PL_Y + 2, PL_Y + PL_H - 2));
+  }
+  endShape();
+
+  // Labels
+  noStroke(); fill(50); textSize(11); textAlign(CENTER, TOP); textStyle(BOLD);
+  text("Time Domain (Composite)", PL_X + PL_W / 2, PL_Y + 3);
+  textStyle(NORMAL);
+  fill(90, 62, 237); textSize(9); textAlign(LEFT, TOP);
+  text("─ sum", PL_X + 5, PL_Y + PL_H - 14);
+  fill(120); text("─ harmonics", PL_X + 38, PL_Y + PL_H - 14);
+}
+
+function drawSpectrum() {
+  fill(255); stroke(210); strokeWeight(1);
+  rect(PR_X, PR_Y, PR_W, PR_H, 6);
+
+  let maxA = 0;
+  for (let a of amps) if (abs(a) > maxA) maxA = abs(a);
+  if (maxA < 0.01) maxA = 1;
+
+  let barW = PR_W / (N_HARM + 1);
+  let baseY = PR_Y + PR_H - 20;
+  let maxBarH = PR_H - 34;
+
+  let cols = [
+    color(255,100,100), color(255,165,0), color(200,200,0),
+    color(60,200,60),   color(0,180,200), color(100,100,255),
+    color(200,0,200)
+  ];
+
+  textSize(9); textAlign(CENTER, TOP);
+  for (let i = 0; i < N_HARM; i++) {
+    let bx = PR_X + barW * (i + 0.5);
+    let bh = abs(amps[i]) / maxA * maxBarH;
+    fill(cols[i]); noStroke();
+    rect(bx - barW * 0.35, baseY - bh, barW * 0.7, bh, 3);
+    // Frequency label
+    fill(80); text((i + 1) + "f", bx, baseY + 2);
+    // Amplitude value
+    if (amps[i] > 0.02) {
+      fill(cols[i]); text(amps[i].toFixed(2), bx, baseY - bh - 12);
+    }
+  }
+
+  // Baseline
+  stroke(180); strokeWeight(1);
+  line(PR_X + 4, baseY, PR_X + PR_W - 4, baseY);
+
+  noStroke(); fill(50); textSize(11); textAlign(CENTER, TOP); textStyle(BOLD);
+  text("Frequency Spectrum", PR_X + PR_W / 2, PR_Y + 3);
+  textStyle(NORMAL);
+  fill(80); textSize(9); textAlign(CENTER, BOTTOM);
+  text("Harmonic Number", PR_X + PR_W / 2, PR_Y + PR_H - 1);
+}
+
+function drawControls() {
+  fill(245); stroke(210); strokeWeight(1);
+  rect(0, CTRL_Y - 8, CW, CH - CTRL_Y + 8);
+
+  noStroke(); fill(40); textSize(13); textAlign(CENTER, TOP); textStyle(BOLD);
+  text("Harmonic Amplitudes", CW / 2, CTRL_Y + 4);
+  textStyle(NORMAL);
+
+  let cols = [
+    color(255,80,80), color(255,145,0), color(180,180,0),
+    color(40,180,40), color(0,160,180), color(80,80,220),
+    color(180,0,180)
+  ];
+
+  sliderYs = [];
+  for (let i = 0; i < N_HARM; i++) {
+    let y = CTRL_Y + 30 + i * 36;
+    sliderYs.push(y);
+    let thumbX = SL_X + map(amps[i], 0, 1, 0, SL_W);
+    let col = cols[i];
+
+    // Track
+    fill(210); noStroke(); rect(SL_X, y - 3, SL_W, 6, 3);
+    // Fill
+    fill(col); rect(SL_X, y - 3, thumbX - SL_X, 6, 3);
+    // Thumb
+    fill(255); stroke(140); strokeWeight(1.5); circle(thumbX, y, 16);
+    // Label
+    noStroke(); fill(col); textSize(11); textAlign(RIGHT, CENTER);
+    text("H" + (i+1) + " (" + (i+1) + "f)  " + amps[i].toFixed(2), SL_X - 6, y);
+  }
+
+  // Preset buttons
+  let btnY = CTRL_Y + 30 + N_HARM * 36 + 8;
+  noStroke(); fill(60); textSize(11); textAlign(LEFT, CENTER);
+  text("Presets:", SL_X, btnY);
+  for (let p = 0; p < PRESETS.length; p++) {
+    let bx = SL_X + 58 + p * 90;
+    let active = (presetMode === p);
+    fill(active ? color(90,62,237) : color(225)); stroke(180); strokeWeight(1);
+    rect(bx, btnY - 12, 84, 24, 5);
+    noStroke(); fill(active ? 255 : 60); textSize(11); textAlign(CENTER, CENTER);
+    text(PRESETS[p], bx + 42, btnY);
+  }
+}
+
+function draw() {
+  background(240);
+  t++;
+
+  fill(30); noStroke(); textAlign(CENTER, TOP); textSize(16); textStyle(BOLD);
+  text("Fourier Series Builder", CW / 2, 12);
+  textStyle(NORMAL);
+
+  drawTimeDomain();
+  drawSpectrum();
+  drawControls();
+}
+
+function mousePressed() {
+  // Check preset buttons
+  let btnY = CTRL_Y + 30 + N_HARM * 36 + 8;
+  for (let p = 0; p < PRESETS.length; p++) {
+    let bx = SL_X + 58 + p * 90;
+    if (mouseX >= bx && mouseX <= bx + 84 && abs(mouseY - btnY) < 12) {
+      setPreset(p);
+      return;
+    }
+  }
+  // Check sliders
+  for (let i = 0; i < N_HARM; i++) {
+    if (abs(mouseY - sliderYs[i]) < 16 && mouseX >= SL_X - 5 && mouseX <= SL_X + SL_W + 5) {
+      draggingRow = i;
+    }
+  }
+}
+
+function mouseDragged() {
+  if (draggingRow < 0) return;
+  let v = constrain(map(mouseX, SL_X, SL_X + SL_W, 0, 1), 0, 1);
+  amps[draggingRow] = round(v * 20) / 20; // step 0.05
+  presetMode = 0;
+}
+
+function mouseReleased() { draggingRow = -1; }
+</script>
+</body>
+</html>

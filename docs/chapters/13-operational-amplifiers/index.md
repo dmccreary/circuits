@@ -119,11 +119,12 @@ The chapter then systematically develops the fundamental configurations: the inv
 
 <div markdown style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 20px 24px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
 
-This chapter includes two interactive simulations. Use them alongside the reading to explore concepts hands-on.
+This chapter includes three interactive simulations. Use them alongside the reading to explore concepts hands-on.
 
 | Section | Simulation | What it shows |
 |---------|-----------|---------------|
 | 13.5 | [Op-Amp Golden Rules](../../../sims/opamp-golden-rules/index.md) | Virtual short and virtual ground principles |
+| 13.6 | [Inverting Op-Amp](../../../sims/opamp-inverting/index.md) | Gain = -Rf/Rin, phase inversion, virtual ground |
 | 13.9 | [Op-Amp Configurations](../../../sims/opamp-configurations/index.md) | Inverting, non-inverting, summing, and other circuits |
 
 </div>
