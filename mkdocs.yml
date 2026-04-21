@@ -114,6 +114,7 @@ nav:
 
   - MicroSims:
     - Introduction: sims/index.md
+    - Audio Amplifier Chain: sims/audio-amp-chain/index.md
     - Audio Signal Chain: sims/audio-signal-chain/index.md
     - Background Grid: sims/background-grid/index.md
     - Bandwidth and Selectivity: sims/bandwidth-selectivity/index.md
@@ -122,13 +123,18 @@ nav:
     - Circuit Symbol Flashcards: sims/circuit-symbol-flashcards/index.md
     - Current Meter: sims/current-meter/index.md
     - DC Circuit V2: sims/dc-circuit/circuits-v2.md
+    - Chapter 3 Concept Map: sims/concept-map-ch3/index.md
     - Decibel Scale: sims/decibel-scale/index.md
+    - Distortion Types: sims/distortion-types/index.md
     - Exponential Properties: sims/exponential-properties/index.md
     - Filter Frequency Response: sims/filter-frequency-response/index.md
     - First-Order Filters: sims/first-order-filters/index.md
+    - Fourier Series Builder: sims/fourier-series-builder/index.md
     - Ground Symbols: sims/ground-symbols/index.md
+    - Harmonic Content Explorer: sims/harmonic-explorer/index.md
     - I-V Characteristics: sims/iv-characteristics/index.md
     - Impedance Triangle: sims/impedance-triangle/index.md
+    - Inverting Op-Amp Amplifier: sims/opamp-inverting/index.md
     - Initial and Final Conditions: sims/initial-final-conditions/index.md
     - Kirchhoff's Laws: sims/kirchhoffs-law/index.md
     - Learning Graph: sims/learning-graph/index.md
@@ -146,6 +152,8 @@ nav:
     - Phasor Transformation: sims/phasor-transform/index.md
     - Power Triangle: sims/power-triangle/index.md
     - RC Charging: sims/rc-charging/index.md
+    - RC Discharging: sims/rc-discharging/index.md
+    - RC Time Constant: sims/time-constant/index.md
     - RC/RL Applications: sims/rc-rl-applications/index.md
     - Reactance vs Frequency: sims/reactance-frequency/index.md
     - Real Capacitor Model: sims/real-capacitor-model/index.md
@@ -158,10 +166,13 @@ nav:
     - Series-Parallel Circuit Analysis: sims/series-parallel-circuit/index.md
     - Signal Parameters: sims/signal-parameters/index.md
     - Simple DC Circuit: sims/dc-circuit/index.md
+    - SNR and Noise Floor: sims/snr-noise-floor/index.md
     - Thevenin Equivalent Circuit: sims/thevenin-concept/index.md
+    - Time Domain to Frequency Domain: sims/time-to-frequency/index.md
     - Voltage Divider Calculator: sims/voltage-divider/index.md
     - Water Flow Analogy: sims/water-flow-analogy/index.md
     - Circuit Node & Branch Identifier: sims/node-branch-trainer/index.md
+    - Nodal Analysis Step-Through: sims/nodal-analysis-steps/index.md
     - Power Dissipation Calculator: sims/power-dissipation-calc/index.md
     - Resistor Physical Structure: sims/resistor-physical-structure/index.md
     - Ohm's Law Calculator: sims/ohms-law-calculator/index.md
@@ -177,6 +188,7 @@ nav:
     - Delta-Wye Transform: sims/delta-wye-transform/index.md
     - Circuit Simplification: sims/circuit-simplification/index.md
     - Matrix Equation Builder: sims/matrix-equation-builder/index.md
+    - Mesh Analysis Step-Through: sims/mesh-analysis/index.md
     - prompts/circuit-similarity/index.md
     - prompts/top-100-circuits/top-100-circuits.md
     - sims/circuit-similarity/index.md

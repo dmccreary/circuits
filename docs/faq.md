@@ -148,7 +148,7 @@ The Fourier series expresses any periodic signal as a sum of sinusoids at harmon
 
 ### What is the difference between active and passive filters?
 
-**Passive filters** use only resistors, capacitors, and inductors. They cannot amplify signals, and their performance can be affected by loading. **Active filters** include op-amps and can provide gain, better isolation, and sharper cutoffs without inductors. Active filters are preferred in most audio applications. See [Chapter 12](chapters/12-filters-resonance/index.md#active-filters).
+**Passive filters** use only resistors, capacitors, and inductors. They cannot amplify signals, and their performance can be affected by loading. **Active filters** include op-amps and can provide gain, better isolation, and sharper cutoffs without inductors. Active filters are preferred in most audio applications. See [Chapter 12](chapters/12-filters-resonance/content.md#124-passive-vs-active-filters).
 
 ## Technical Details
 
@@ -188,11 +188,11 @@ For an RLC circuit, the resonant frequency is f₀ = 1/(2π√LC), where L is in
 
 ### What is the gain formula for an inverting amplifier?
 
-For an inverting op-amp amplifier, the voltage gain is Av = -Rf/Rin, where Rf is the feedback resistor and Rin is the input resistor. The negative sign indicates phase inversion. For example, Rf = 100 kΩ and Rin = 10 kΩ gives Av = -10 (gain of 10 with inversion). See [Chapter 13](chapters/13-operational-amplifiers/index.md#inverting-amplifier).
+For an inverting op-amp amplifier, the voltage gain is Av = -Rf/Rin, where Rf is the feedback resistor and Rin is the input resistor. The negative sign indicates phase inversion. For example, Rf = 100 kΩ and Rin = 10 kΩ gives Av = -10 (gain of 10 with inversion). See [Chapter 13](chapters/13-operational-amplifiers/content.md#136-inverting-amplifier).
 
 ### What is the gain formula for a non-inverting amplifier?
 
-For a non-inverting op-amp amplifier, the voltage gain is Av = 1 + Rf/Rin. There is no phase inversion. The minimum gain is 1 (when Rf = 0 or Rin = ∞), which gives a voltage follower. For example, Rf = 90 kΩ and Rin = 10 kΩ gives Av = 10. See [Chapter 13](chapters/13-operational-amplifiers/index.md#non-inverting-amplifier).
+For a non-inverting op-amp amplifier, the voltage gain is Av = 1 + Rf/Rin. There is no phase inversion. The minimum gain is 1 (when Rf = 0 or Rin = ∞), which gives a voltage follower. For example, Rf = 90 kΩ and Rin = 10 kΩ gives Av = 10. See [Chapter 13](chapters/13-operational-amplifiers/content.md#137-non-inverting-amplifier).
 
 ### How do I read resistor color codes?
 
@@ -209,7 +209,7 @@ The power triangle relates these: S² = P² + Q². See [Chapter 10](chapters/10-
 
 ### How do I calculate thermal noise?
 
-Thermal noise voltage is given by Vnoise,rms = √(4kBTRΔf), where kB is Boltzmann's constant (1.38 × 10⁻²³ J/K), T is temperature in Kelvin, R is resistance in ohms, and Δf is bandwidth in Hz. For a 10 kΩ resistor at room temperature over 20 kHz bandwidth, this gives approximately 1.8 μV. See [Chapter 15](chapters/15-audio-applications/index.md#thermal-noise).
+Thermal noise voltage is given by Vnoise,rms = √(4kBTRΔf), where kB is Boltzmann's constant (1.38 × 10⁻²³ J/K), T is temperature in Kelvin, R is resistance in ohms, and Δf is bandwidth in Hz. For a 10 kΩ resistor at room temperature over 20 kHz bandwidth, this gives approximately 1.8 μV. See [Chapter 15](chapters/15-audio-applications/content.md#156-thermal-noise).
 
 ### What is the formula for the time constant of an RC circuit?
 
@@ -263,7 +263,7 @@ Use 1% tolerance components for better accuracy. See [Chapter 12](chapters/12-fi
 
 ### Why do I measure different voltages with different multimeters?
 
-Multimeter input impedance matters! An older analog meter might have 20 kΩ/V, while a digital multimeter typically has 10 MΩ. When measuring high-impedance circuits, the meter's input resistance loads the circuit. Use a DMM with 10 MΩ input for most measurements. See [Chapter 16](chapters/16-laboratory-techniques/index.md#loading-error).
+Multimeter input impedance matters! An older analog meter might have 20 kΩ/V, while a digital multimeter typically has 10 MΩ. When measuring high-impedance circuits, the meter's input resistance loads the circuit. Use a DMM with 10 MΩ input for most measurements. See [Chapter 16](chapters/16-laboratory-techniques/content.md#1612-measurement-errors-and-loading).
 
 ### Why does my oscilloscope show a different waveform than expected?
 
@@ -275,7 +275,7 @@ Check these common issues:
 4. **AC coupling** - This removes DC components and distorts low frequencies
 5. **10X probe** - Remember the scope shows 1/10 of actual voltage with 10X probe
 
-See [Chapter 16](chapters/16-laboratory-techniques/index.md#oscilloscope) for complete troubleshooting.
+See [Chapter 16](chapters/16-laboratory-techniques/content.md#163-the-oscilloscope) for complete troubleshooting.
 
 ### Why is my circuit oscillating when it shouldn't be?
 
@@ -300,7 +300,7 @@ Systematic debugging approach:
 5. **Measure voltages** - Compare actual DC bias points to expected values
 6. **Check for shorts/opens** - Look for solder bridges or broken connections
 
-See [Chapter 16](chapters/16-laboratory-techniques/index.md#circuit-debugging) for complete methodology.
+See [Chapter 16](chapters/16-laboratory-techniques/content.md#1611-circuit-debugging) for complete methodology.
 
 ### Why is there noise in my audio circuit?
 
@@ -366,7 +366,7 @@ For most circuits, either works—choose the one with fewer equations. See [Chap
 - Less loading on circuit
 - Reduced noise pickup
 
-Use 1X only when signal amplitude is too small (< 10 mV range). Always compensate your probe and remember to adjust the scope's probe attenuation setting. See [Chapter 16](chapters/16-laboratory-techniques/index.md#oscilloscope-probes).
+Use 1X only when signal amplitude is too small (< 10 mV range). Always compensate your probe and remember to adjust the scope's probe attenuation setting. See [Chapter 16](chapters/16-laboratory-techniques/content.md#167-oscilloscope-probes-and-compensation).
 
 ### How do I select component values for a filter?
 
@@ -388,7 +388,7 @@ See [Chapter 12](chapters/12-filters-resonance/index.md) for detailed procedures
 5. **Use low-noise op-amps** - NE5532, OPA2134 for audio
 6. **Choose metal film resistors** - Lower noise than carbon composition
 
-See [Chapter 15](chapters/15-audio-applications/index.md#practical-design-considerations).
+See [Chapter 15](chapters/15-audio-applications/content.md#1510-practical-design-grounding-shielding-and-balanced-connections).
 
 ### How should I document my circuit measurements?
 
@@ -431,7 +431,7 @@ Intermodulation distortion (IMD) occurs when two or more input frequencies mix t
 
 ### What is gain-bandwidth product in op-amps?
 
-Gain-bandwidth product (GBW) is constant for a given op-amp: GBW = Av × bandwidth. A 741 op-amp with GBW = 1 MHz can provide gain of 100 up to 10 kHz, or gain of 10 up to 100 kHz. This limits high-gain applications at high frequencies. For audio, ensure GBW >> 20 kHz × desired gain. See [Chapter 13](chapters/13-operational-amplifiers/index.md#gain-bandwidth-product).
+Gain-bandwidth product (GBW) is constant for a given op-amp: GBW = Av × bandwidth. A 741 op-amp with GBW = 1 MHz can provide gain of 100 up to 10 kHz, or gain of 10 up to 100 kHz. This limits high-gain applications at high frequencies. For audio, ensure GBW >> 20 kHz × desired gain. See [Chapter 13](chapters/13-operational-amplifiers/content.md#1311-bandwidth-and-gain-bandwidth-product).
 
 ### How do I design a second-order filter?
 
@@ -461,7 +461,7 @@ Mutual inductance M couples two inductors through shared magnetic flux. The coup
 - Sign depends on winding direction (dot convention)
 - Forms the basis for transformers
 
-See [Chapter 5](chapters/05-passive-components/index.md#mutual-inductance).
+See [Chapter 5](chapters/05-passive-components/content.md#57-mutual-inductance).
 
 ### What determines the settling time of a second-order system?
 
@@ -480,7 +480,7 @@ Power factor correction adds capacitance (for inductive loads) or inductance (fo
 2. Calculate required capacitive VAR: Qc = Q
 3. Size capacitor: C = Qc/(ωV²)
 
-This reduces current draw and line losses. See [Chapter 10](chapters/10-ac-power-analysis/index.md#power-factor-correction).
+This reduces current draw and line losses. See [Chapter 10](chapters/10-ac-power-analysis/content.md#108-power-factor-correction).
 
 ### What is CMRR and why does it matter?
 
