@@ -104,15 +104,15 @@ This chapter includes two interactive simulations. Use them alongside the readin
 
 | Section | Simulation | What it shows |
 |---------|-----------|---------------|
-| 10.2 | [RMS Calculation](../../../sims/rms-calculation/index.md) | RMS vs peak vs average power relationships |
-| 10.6 | [Power Triangle](../../../sims/power-triangle/index.md) | P, Q, S, and power factor angle interactively |
+| 10.2 | [RMS Calculation](../../sims/rms-calculation/index.md) | RMS vs peak vs average power relationships |
+| 10.6 | [Power Triangle](../../sims/power-triangle/index.md) | P, Q, S, and power factor angle interactively |
 
 </div>
 
 ### Power Triangle — Interactive Walkthrough
 
 <div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
-<iframe src="../../../sims/power-triangle/main.html" width="100%"
+<iframe src="../../sims/power-triangle/main.html" width="100%"
     style="height:550px; display:block; border:none; border-radius:8px;"
     scrolling="no"></iframe>
 </div>

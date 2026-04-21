@@ -104,17 +104,17 @@ This chapter includes four interactive simulations. Use them alongside the readi
 
 | Section | Simulation | What it shows |
 |---------|-----------|---------------|
-| 15.2 | [Audio Signal Chain](../../../sims/audio-signal-chain/index.md) | Complete audio path from mic to speaker |
-| 15.4 | [Audio Amplifier Chain](../../../sims/audio-amp-chain/index.md) | Amplifier stages and gain budgeting |
-| 15.5 | [SNR and Noise Floor](../../../sims/snr-noise-floor/index.md) | Signal level, noise floor, SNR, and harmonics |
-| 15.7 | [Distortion Types](../../../sims/distortion-types/index.md) | Harmonic distortion, clipping, and nonlinear effects |
+| 15.2 | [Audio Signal Chain](../../sims/audio-signal-chain/index.md) | Complete audio path from mic to speaker |
+| 15.4 | [Audio Amplifier Chain](../../sims/audio-amp-chain/index.md) | Amplifier stages and gain budgeting |
+| 15.5 | [SNR and Noise Floor](../../sims/snr-noise-floor/index.md) | Signal level, noise floor, SNR, and harmonics |
+| 15.7 | [Distortion Types](../../sims/distortion-types/index.md) | Harmonic distortion, clipping, and nonlinear effects |
 
 </div>
 
 ### Audio Signal Chain — Interactive Walkthrough
 
 <div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
-<iframe src="../../../sims/audio-signal-chain/main.html" width="100%"
+<iframe src="../../sims/audio-signal-chain/main.html" width="100%"
     style="height:550px; display:block; border:none; border-radius:8px;"
     scrolling="no"></iframe>
 </div>

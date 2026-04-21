@@ -105,16 +105,16 @@ This chapter includes two interactive simulations. Use them alongside the readin
 
 | Section | Simulation | What it shows |
 |---------|-----------|---------------|
-| 14.3 | [Harmonic Explorer](../../../sims/harmonic-explorer/index.md) | Harmonics and Fourier composition of waveforms |
-| 14.4 | [Signal Parameters](../../../sims/signal-parameters/index.md) | Amplitude, frequency, and phase spectrum visualization |
-| 14.6 | [Fourier Series Builder](../../../sims/fourier-series-builder/index.md) | Build square/sawtooth/triangle from harmonics |
+| 14.3 | [Harmonic Explorer](../../sims/harmonic-explorer/index.md) | Harmonics and Fourier composition of waveforms |
+| 14.4 | [Signal Parameters](../../sims/signal-parameters/index.md) | Amplitude, frequency, and phase spectrum visualization |
+| 14.6 | [Fourier Series Builder](../../sims/fourier-series-builder/index.md) | Build square/sawtooth/triangle from harmonics |
 
 </div>
 
 ### Harmonic Explorer — Interactive Walkthrough
 
 <div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
-<iframe src="../../../sims/harmonic-explorer/main.html" width="100%"
+<iframe src="../../sims/harmonic-explorer/main.html" width="100%"
     style="height:550px; display:block; border:none; border-radius:8px;"
     scrolling="no"></iframe>
 </div>

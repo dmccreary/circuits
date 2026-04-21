@@ -97,22 +97,22 @@ This chapter includes nine interactive simulations. Use them alongside the readi
 
 | Section | Simulation | What it shows |
 |---------|-----------|---------------|
-| 3.1 | [KCL Node Visualization](../../../sims/kcl-node-viz/index.md) | Current sums at a node; sign conventions |
-| 3.2 | [KVL Loop Walkthrough](../../../sims/kvl-loop-walkthrough/index.md) | Voltage rises and drops around a loop |
-| 3.3 | [Circuit Topology Explorer](../../../sims/circuit-topology-explorer/index.md) | Nodes, branches, meshes, and the b = n−1+m formula |
-| 3.4 | [Supernode Analysis](../../../sims/supernode-analysis/index.md) | Node voltage method with a floating voltage source |
-| 3.5 | [Mesh vs. Supermesh](../../../sims/mesh-supermesh-compare/index.md) | Mesh current method; current-source handling |
-| 3.6 | [Superposition Demonstrator](../../../sims/superposition-demo/index.md) | Individual source contributions that sum to the full solution |
-| 3.8 | [Delta-Wye Transformation](../../../sims/delta-wye-transform/index.md) | Bidirectional Δ↔Y conversion with live formula evaluation |
-| 3.9 | [Circuit Simplification](../../../sims/circuit-simplification/index.md) | Step-by-step bridge-circuit reduction via Δ→Y and series/parallel rules |
-| 3.11 | [Matrix Equation Builder](../../../sims/matrix-equation-builder/index.md) | Build and solve the \(\mathbf{G}\mathbf{V}=\mathbf{I}\) or \(\mathbf{Z}\mathbf{I}=\mathbf{V}\) matrix interactively |
+| 3.1 | [KCL Node Visualization](../../sims/kcl-node-viz/index.md) | Current sums at a node; sign conventions |
+| 3.2 | [KVL Loop Walkthrough](../../sims/kvl-loop-walkthrough/index.md) | Voltage rises and drops around a loop |
+| 3.3 | [Circuit Topology Explorer](../../sims/circuit-topology-explorer/index.md) | Nodes, branches, meshes, and the b = n−1+m formula |
+| 3.4 | [Supernode Analysis](../../sims/supernode-analysis/index.md) | Node voltage method with a floating voltage source |
+| 3.5 | [Mesh vs. Supermesh](../../sims/mesh-supermesh-compare/index.md) | Mesh current method; current-source handling |
+| 3.6 | [Superposition Demonstrator](../../sims/superposition-demo/index.md) | Individual source contributions that sum to the full solution |
+| 3.8 | [Delta-Wye Transformation](../../sims/delta-wye-transform/index.md) | Bidirectional Δ↔Y conversion with live formula evaluation |
+| 3.9 | [Circuit Simplification](../../sims/circuit-simplification/index.md) | Step-by-step bridge-circuit reduction via Δ→Y and series/parallel rules |
+| 3.11 | [Matrix Equation Builder](../../sims/matrix-equation-builder/index.md) | Build and solve the \(\mathbf{G}\mathbf{V}=\mathbf{I}\) or \(\mathbf{Z}\mathbf{I}=\mathbf{V}\) matrix interactively |
 
 </div>
 
 ### Matrix Equation Builder — Interactive Walkthrough
 
 <div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
-<iframe src="../../../sims/matrix-equation-builder/main.html" width="100%"
+<iframe src="../../sims/matrix-equation-builder/main.html" width="100%"
     style="height:790px; display:block; border:none; border-radius:8px;"
     scrolling="no"></iframe>
 </div>

@@ -102,16 +102,16 @@ This chapter includes three interactive simulations. Use them alongside the read
 
 | Section | Simulation | What it shows |
 |---------|-----------|---------------|
-| 7.3 | [RLC Circuit Explorer](../../../sims/rlc-circuit/index.md) | Series and parallel RLC step response; adjustable R, L, C |
-| 7.5 | [Natural Frequency Calculator](../../../sims/natural-frequency-calculator/index.md) | ω₀ and f₀ from L and C; undamped oscillation visualized |
-| 7.10 | [Resonance Comparison](../../../sims/resonance-comparison/index.md) | Series vs parallel resonance: impedance and current vs frequency |
+| 7.3 | [RLC Circuit Explorer](../../sims/rlc-circuit/index.md) | Series and parallel RLC step response; adjustable R, L, C |
+| 7.5 | [Natural Frequency Calculator](../../sims/natural-frequency-calculator/index.md) | ω₀ and f₀ from L and C; undamped oscillation visualized |
+| 7.10 | [Resonance Comparison](../../sims/resonance-comparison/index.md) | Series vs parallel resonance: impedance and current vs frequency |
 
 </div>
 
 ### RLC Circuit Explorer — Interactive Walkthrough
 
 <div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
-<iframe src="../../../sims/rlc-circuit/main.html" width="100%"
+<iframe src="../../sims/rlc-circuit/main.html" width="100%"
     style="height:550px; display:block; border:none; border-radius:8px;"
     scrolling="no"></iframe>
 </div>

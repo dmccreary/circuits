@@ -112,21 +112,21 @@ This chapter includes seven interactive simulations. Use them alongside the read
 
 | Section | Simulation | What it shows |
 |---------|-----------|---------------|
-| 12.2 | [Filter Frequency Response](../../../sims/filter-frequency-response/index.md) | Bode magnitude and phase for RC filters |
-| 12.2 | [First-Order Filters](../../../sims/first-order-filters/index.md) | LP and HP filter responses and cutoff frequency |
-| 12.3 | [Resonance Comparison](../../../sims/resonance-comparison/index.md) | Series vs parallel RLC resonance |
-| 12.3 | [Second-Order Filter](../../../sims/second-order-filter/index.md) | Butterworth, underdamped, overdamped responses |
-| 12.3 | [Bandwidth and Selectivity](../../../sims/bandwidth-selectivity/index.md) | Q factor, -3 dB bandwidth, selectivity |
-| 12.6 | [3-Band Equalizer](../../../sims/equalizer-demo/index.md) | Bass/mid/treble shelving and peak EQ curves |
-| 12.7 | [Decibel Scale](../../../sims/decibel-scale/index.md) | dB values, dBV, dBu conversions |
-| 12.10 | [Audio Signal Chain](../../../sims/audio-signal-chain/index.md) | Complete audio path from mic to speaker |
+| 12.2 | [Filter Frequency Response](../../sims/filter-frequency-response/index.md) | Bode magnitude and phase for RC filters |
+| 12.2 | [First-Order Filters](../../sims/first-order-filters/index.md) | LP and HP filter responses and cutoff frequency |
+| 12.3 | [Resonance Comparison](../../sims/resonance-comparison/index.md) | Series vs parallel RLC resonance |
+| 12.3 | [Second-Order Filter](../../sims/second-order-filter/index.md) | Butterworth, underdamped, overdamped responses |
+| 12.3 | [Bandwidth and Selectivity](../../sims/bandwidth-selectivity/index.md) | Q factor, -3 dB bandwidth, selectivity |
+| 12.6 | [3-Band Equalizer](../../sims/equalizer-demo/index.md) | Bass/mid/treble shelving and peak EQ curves |
+| 12.7 | [Decibel Scale](../../sims/decibel-scale/index.md) | dB values, dBV, dBu conversions |
+| 12.10 | [Audio Signal Chain](../../sims/audio-signal-chain/index.md) | Complete audio path from mic to speaker |
 
 </div>
 
 ### Filter Frequency Response — Interactive Walkthrough
 
 <div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
-<iframe src="../../../sims/filter-frequency-response/main.html" width="100%"
+<iframe src="../../sims/filter-frequency-response/main.html" width="100%"
     style="height:550px; display:block; border:none; border-radius:8px;"
     scrolling="no"></iframe>
 </div>

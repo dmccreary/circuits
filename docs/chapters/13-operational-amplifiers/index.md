@@ -123,16 +123,16 @@ This chapter includes three interactive simulations. Use them alongside the read
 
 | Section | Simulation | What it shows |
 |---------|-----------|---------------|
-| 13.5 | [Op-Amp Golden Rules](../../../sims/opamp-golden-rules/index.md) | Virtual short and virtual ground principles |
-| 13.6 | [Inverting Op-Amp](../../../sims/opamp-inverting/index.md) | Gain = -Rf/Rin, phase inversion, virtual ground |
-| 13.9 | [Op-Amp Configurations](../../../sims/opamp-configurations/index.md) | Inverting, non-inverting, summing, and other circuits |
+| 13.5 | [Op-Amp Golden Rules](../../sims/opamp-golden-rules/index.md) | Virtual short and virtual ground principles |
+| 13.6 | [Inverting Op-Amp](../../sims/opamp-inverting/index.md) | Gain = -Rf/Rin, phase inversion, virtual ground |
+| 13.9 | [Op-Amp Configurations](../../sims/opamp-configurations/index.md) | Inverting, non-inverting, summing, and other circuits |
 
 </div>
 
 ### Op-Amp Golden Rules — Interactive Walkthrough
 
 <div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
-<iframe src="../../../sims/opamp-golden-rules/main.html" width="100%"
+<iframe src="../../sims/opamp-golden-rules/main.html" width="100%"
     style="height:550px; display:block; border:none; border-radius:8px;"
     scrolling="no"></iframe>
 </div>

@@ -108,17 +108,17 @@ This chapter includes four interactive simulations. Use them alongside the readi
 
 | Section | Simulation | What it shows |
 |---------|-----------|---------------|
-| 16.3 | [Oscilloscope Simulator](../../../sims/oscilloscope/index.md) | Virtual oscilloscope with adjustable timebase and trigger |
-| 16.6 | [RC/RL Applications](../../../sims/rc-rl-applications/index.md) | Practical RC and RL circuit measurements |
-| 16.6 | [I-V Characteristics](../../../sims/iv-characteristics/index.md) | Current-voltage curves for passive components |
-| 16.6 | [Linear vs Nonlinear](../../../sims/linear-vs-nonlinear/index.md) | Distinguishing linear and nonlinear component behavior |
+| 16.3 | [Oscilloscope Simulator](../../sims/oscilloscope/index.md) | Virtual oscilloscope with adjustable timebase and trigger |
+| 16.6 | [RC/RL Applications](../../sims/rc-rl-applications/index.md) | Practical RC and RL circuit measurements |
+| 16.6 | [I-V Characteristics](../../sims/iv-characteristics/index.md) | Current-voltage curves for passive components |
+| 16.6 | [Linear vs Nonlinear](../../sims/linear-vs-nonlinear/index.md) | Distinguishing linear and nonlinear component behavior |
 
 </div>
 
 ### Oscilloscope Simulator — Interactive Walkthrough
 
 <div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
-<iframe src="../../../sims/oscilloscope/main.html" width="100%"
+<iframe src="../../sims/oscilloscope/main.html" width="100%"
     style="height:550px; display:block; border:none; border-radius:8px;"
     scrolling="no"></iframe>
 </div>
