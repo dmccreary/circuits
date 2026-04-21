@@ -625,6 +625,10 @@
          <lastmod>2026-04-21</lastmod>
     </url>
     <url>
+         <loc>https://dmccreary.github.io/circuits/sims/audio-amp-chain/</loc>
+         <lastmod>2026-04-21</lastmod>
+    </url>
+    <url>
          <loc>https://dmccreary.github.io/circuits/sims/audio-signal-chain/</loc>
          <lastmod>2026-04-21</lastmod>
     </url>
@@ -677,6 +681,10 @@
          <lastmod>2026-04-21</lastmod>
     </url>
     <url>
+         <loc>https://dmccreary.github.io/circuits/sims/concept-map-ch3/</loc>
+         <lastmod>2026-04-21</lastmod>
+    </url>
+    <url>
          <loc>https://dmccreary.github.io/circuits/sims/current-meter/</loc>
          <lastmod>2026-04-21</lastmod>
     </url>
@@ -713,6 +721,10 @@
          <lastmod>2026-04-21</lastmod>
     </url>
     <url>
+         <loc>https://dmccreary.github.io/circuits/sims/distortion-types/</loc>
+         <lastmod>2026-04-21</lastmod>
+    </url>
+    <url>
          <loc>https://dmccreary.github.io/circuits/sims/equalizer-demo/</loc>
          <lastmod>2026-04-21</lastmod>
     </url>
@@ -742,6 +754,10 @@
     </url>
     <url>
          <loc>https://dmccreary.github.io/circuits/sims/ground-symbols/</loc>
+         <lastmod>2026-04-21</lastmod>
+    </url>
+    <url>
+         <loc>https://dmccreary.github.io/circuits/sims/harmonic-explorer/</loc>
          <lastmod>2026-04-21</lastmod>
     </url>
     <url>
@@ -793,6 +809,10 @@
          <lastmod>2026-04-21</lastmod>
     </url>
     <url>
+         <loc>https://dmccreary.github.io/circuits/sims/mesh-analysis/</loc>
+         <lastmod>2026-04-21</lastmod>
+    </url>
+    <url>
          <loc>https://dmccreary.github.io/circuits/sims/mesh-supermesh-compare/</loc>
          <lastmod>2026-04-21</lastmod>
     </url>
@@ -802,6 +822,10 @@
     </url>
     <url>
          <loc>https://dmccreary.github.io/circuits/sims/natural-frequency-calculator/</loc>
+         <lastmod>2026-04-21</lastmod>
+    </url>
+    <url>
+         <loc>https://dmccreary.github.io/circuits/sims/nodal-analysis-steps/</loc>
          <lastmod>2026-04-21</lastmod>
     </url>
     <url>
@@ -866,6 +890,10 @@
     </url>
     <url>
          <loc>https://dmccreary.github.io/circuits/sims/rc-charging/</loc>
+         <lastmod>2026-04-21</lastmod>
+    </url>
+    <url>
+         <loc>https://dmccreary.github.io/circuits/sims/rc-discharging/</loc>
          <lastmod>2026-04-21</lastmod>
     </url>
     <url>
@@ -946,6 +974,14 @@
     </url>
     <url>
          <loc>https://dmccreary.github.io/circuits/sims/thevenin-concept/</loc>
+         <lastmod>2026-04-21</lastmod>
+    </url>
+    <url>
+         <loc>https://dmccreary.github.io/circuits/sims/time-constant/</loc>
+         <lastmod>2026-04-21</lastmod>
+    </url>
+    <url>
+         <loc>https://dmccreary.github.io/circuits/sims/time-to-frequency/</loc>
          <lastmod>2026-04-21</lastmod>
     </url>
     <url>
