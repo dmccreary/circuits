@@ -196,6 +196,12 @@ This confirms: \(P = V_{rms}I_{rms}\cos\theta\) and \(Q = V_{rms}I_{rms}\sin\the
 | Apparent Power | \(S\) | VA | \(VI = \|\mathbf{S}\|\) |
 | Complex Power | \(\mathbf{S}\) | VA | \(P + jQ = \mathbf{V}\mathbf{I}^*\) |
 
+**Use the phasor circuit solver to compute complex power S = VI* for different load impedances.**
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe src="../../../sims/phasor-circuit-solver/main.html" width="100%" height="550px" scrolling="no" style="border:none; border-radius:8px; overflow:hidden;"></iframe>
+</div>
+
 ---
 
 ## 10.6 The Power Triangle
@@ -240,6 +246,12 @@ The power triangle is identical in shape to the impedance triangle (\(|Z|\), R, 
 | 0.85 lagging | Good | Typical industrial mix |
 | 0.70 lagging | Poor | Uncompensated motors |
 | 0.50 lagging | Very poor | Lightly loaded motors |
+
+**The impedance triangle below shows the geometric relationship between R, X, Z, and power factor angle θ.**
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe src="../../../sims/impedance-triangle/main.html" width="100%" height="550px" scrolling="no" style="border:none; border-radius:8px; overflow:hidden;"></iframe>
+</div>
 
 ---
 

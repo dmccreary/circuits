@@ -573,6 +573,12 @@ Division: \(\frac{r_1 \angle \theta_1}{r_2 \angle \theta_2} = \frac{r_1}{r_2} \a
 !!! tip "Choosing the Right Form"
     Use rectangular form for addition/subtraction, polar form for multiplication/division. Your calculator can switch between them, but understanding both builds intuition for what complex numbers represent.
 
+**Explore phasor addition geometrically — drag two phasors and watch the resultant update in real time.**
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe src="../../../sims/phasor-addition/main.html" width="100%" height="550px" scrolling="no" style="border:none; border-radius:8px; overflow:hidden;"></iframe>
+</div>
+
 #### Diagram: Complex Number Visualizer
 
 <details markdown="1">
@@ -675,6 +681,12 @@ This single equation connects five fundamental constants: \(e\), \(j\), \(\pi\),
 | Rectangular | \(a + jb\) | Addition, subtraction |
 | Polar | \(r \angle \theta\) | Multiplication, division |
 | Exponential | \(re^{j\theta}\) | Calculus, phasor analysis |
+
+**The phasor transform below converts between time-domain sinusoids and their phasor representations.**
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe src="../../../sims/phasor-transform/main.html" width="100%" height="550px" scrolling="no" style="border:none; border-radius:8px; overflow:hidden;"></iframe>
+</div>
 
 #### Diagram: Euler's Formula on the Unit Circle
 

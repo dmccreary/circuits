@@ -56,6 +56,12 @@ A current source \(I_N\) in parallel with \(R_P\) becomes a voltage source \(V_{
 
 Source transformation is most powerful when you chain multiple transformations to consolidate sources — turning a complex network into something you can solve by inspection.
 
+**Try the interactive Circuit Simplification tool below to explore how source transformation reduces complex networks step by step:**
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe src="../../../sims/circuit-simplification/main.html" width="100%" height="550px" scrolling="no" style="border:none; border-radius:8px; overflow:hidden;"></iframe>
+</div>
+
 ---
 
 ## 4.2 Thévenin's Theorem
@@ -161,6 +167,16 @@ The efficiency at maximum power transfer is exactly 50% — half the source powe
 
 **Example:** A source with \(V_{Th} = 10\) V and \(R_{Th} = 50\) Ω delivers maximum power when \(R_L = 50\) Ω. Maximum power: \(P_{max} = 100 / (4 \times 50) = 0.5\) W.
 
+### Superposition Theorem
+
+The **superposition theorem** states that in any linear circuit containing multiple independent sources, the voltage or current at any point can be found by considering each independent source separately — with all other independent sources killed (voltage sources replaced by shorts, current sources replaced by opens) — and then summing the individual contributions. This technique is especially valuable when sources operate at different frequencies or when you want to understand each source's contribution independently. Dependent sources are never killed during superposition; they remain active throughout every sub-circuit analysis. The total response is the algebraic sum of all individual responses.
+
+**Try the interactive Superposition Demo below to explore how each independent source contributes to the total circuit response:**
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe src="../../../sims/superposition-demo/main.html" width="100%" height="550px" scrolling="no" style="border:none; border-radius:8px; overflow:hidden;"></iframe>
+</div>
+
 ---
 
 ## 4.5 Advanced Nodal and Mesh Analysis
@@ -203,6 +219,12 @@ Similarly, write KVL around each mesh. Express any dependent source's control va
 
 <div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
 <iframe src="../../../sims/mesh-analysis/main.html" width="100%" height="550px" scrolling="no" style="border:none; border-radius:8px; overflow:hidden;"></iframe>
+</div>
+
+**Try the interactive Delta-Wye Transform below to explore how three-terminal resistor networks convert between delta (Δ) and wye (Y) configurations:**
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe src="../../../sims/delta-wye-transform/main.html" width="100%" height="550px" scrolling="no" style="border:none; border-radius:8px; overflow:hidden;"></iframe>
 </div>
 
 ---
