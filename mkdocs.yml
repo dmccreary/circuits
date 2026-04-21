@@ -16,30 +16,35 @@ nav:
       - Content: chapters/01-electric-charge-basic-quantities/content.md
       - Glossary: chapters/01-electric-charge-basic-quantities/glossary.md
       - Problems: chapters/01-electric-charge-basic-quantities/problems.md
+      - Practice Problems: chapters/01-electric-charge-basic-quantities/practice.md
       - Quiz: chapters/01-electric-charge-basic-quantities/quiz.md
     - 2. Ohm's Law and Configurations:
       - Overview: chapters/02-ohms-law-basic-configurations/index.md
       - Content: chapters/02-ohms-law-basic-configurations/content.md
       - Glossary: chapters/02-ohms-law-basic-configurations/glossary.md
       - Problems: chapters/02-ohms-law-basic-configurations/problems.md
+      - Practice Problems: chapters/02-ohms-law-basic-configurations/practice.md
       - Quiz: chapters/02-ohms-law-basic-configurations/quiz.md
     - 3. Kirchhoff's Laws and Topology:
       - Overview: chapters/03-kirchhoffs-laws-topology/index.md
       - Content: chapters/03-kirchhoffs-laws-topology/content.md
       - Glossary: chapters/03-kirchhoffs-laws-topology/glossary.md
       - Problems: chapters/03-kirchhoffs-laws-topology/problems.md
+      - Practice Problems: chapters/03-kirchhoffs-laws-topology/practice.md
       - Quiz: chapters/03-kirchhoffs-laws-topology/quiz.md
     - 4. DC Circuit Analysis:
       - Overview: chapters/04-dc-circuit-analysis/index.md
       - Content: chapters/04-dc-circuit-analysis/content.md
       - Glossary: chapters/04-dc-circuit-analysis/glossary.md
       - Problems: chapters/04-dc-circuit-analysis/problems.md
+      - Practice Problems: chapters/04-dc-circuit-analysis/practice.md
       - Quiz: chapters/04-dc-circuit-analysis/quiz.md
     - 5. Passive Components:
       - Overview: chapters/05-passive-components/index.md
       - Content: chapters/05-passive-components/content.md
       - Glossary: chapters/05-passive-components/glossary.md
       - Problems: chapters/05-passive-components/problems.md
+      - Practice Problems: chapters/05-passive-components/practice.md
       - Quiz: chapters/05-passive-components/quiz.md
     - 6. Transient Analysis RC/RL:
       - Overview: chapters/06-transient-analysis-rc-rl/index.md
@@ -53,18 +58,21 @@ nav:
       - Content: chapters/07-second-order-rlc-circuits/content.md
       - Glossary: chapters/07-second-order-rlc-circuits/glossary.md
       - Problems: chapters/07-second-order-rlc-circuits/problems.md
+      - Practice Problems: chapters/07-second-order-rlc-circuits/practice.md
       - Quiz: chapters/07-second-order-rlc-circuits/quiz.md
     - 8. AC Signals and Sinusoids:
       - Overview: chapters/08-ac-signals-sinusoidal/index.md
       - Content: chapters/08-ac-signals-sinusoidal/content.md
       - Glossary: chapters/08-ac-signals-sinusoidal/glossary.md
       - Problems: chapters/08-ac-signals-sinusoidal/problems.md
+      - Practice Problems: chapters/08-ac-signals-sinusoidal/practice.md
       - Quiz: chapters/08-ac-signals-sinusoidal/quiz.md
     - 9. Phasors and Impedance:
       - Overview: chapters/09-phasors-complex-impedance/index.md
       - Content: chapters/09-phasors-complex-impedance/content.md
       - Glossary: chapters/09-phasors-complex-impedance/glossary.md
       - Problems: chapters/09-phasors-complex-impedance/problems.md
+      - Practice Problems: chapters/09-phasors-complex-impedance/practice.md
       - Quiz: chapters/09-phasors-complex-impedance/quiz.md
     - 10. AC Power Analysis:
       - Overview: chapters/10-ac-power-analysis/index.md
@@ -92,24 +100,28 @@ nav:
       - Content: chapters/13-operational-amplifiers/content.md
       - Glossary: chapters/13-operational-amplifiers/glossary.md
       - Problems: chapters/13-operational-amplifiers/problems.md
+      - Practice Problems: chapters/13-operational-amplifiers/practice.md
       - Quiz: chapters/13-operational-amplifiers/quiz.md
     - 14. Signal Analysis and Fourier:
       - Overview: chapters/14-signals-audio-lab/index.md
       - Content: chapters/14-signals-audio-lab/content.md
       - Glossary: chapters/14-signals-audio-lab/glossary.md
       - Problems: chapters/14-signals-audio-lab/problems.md
+      - Practice Problems: chapters/14-signals-audio-lab/practice.md
       - Quiz: chapters/14-signals-audio-lab/quiz.md
     - 15. Audio Applications:
       - Overview: chapters/15-audio-applications/index.md
       - Content: chapters/15-audio-applications/content.md
       - Glossary: chapters/15-audio-applications/glossary.md
       - Problems: chapters/15-audio-applications/problems.md
+      - Practice Problems: chapters/15-audio-applications/practice.md
       - Quiz: chapters/15-audio-applications/quiz.md
     - 16. Laboratory Techniques:
       - Overview: chapters/16-laboratory-techniques/index.md
       - Content: chapters/16-laboratory-techniques/content.md
       - Glossary: chapters/16-laboratory-techniques/glossary.md
       - Problems: chapters/16-laboratory-techniques/problems.md
+      - Practice Problems: chapters/16-laboratory-techniques/practice.md
       - Quiz: chapters/16-laboratory-techniques/quiz.md
 
   - MicroSims:

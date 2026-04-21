@@ -395,6 +395,12 @@ Canvas layout:
 Implementation: p5.js
 </details>
 
+Use the interactive simulation below to explore how the key parameters of a signal — amplitude, frequency, period, and phase — relate to one another and to the waveform's RMS value:
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe src="../../../sims/signal-parameters/main.html" width="100%" height="550px" scrolling="no" style="border:none; border-radius:8px; overflow:hidden;"></iframe>
+</div>
+
 ---
 
 ## 8.5 Time Domain and Frequency Domain: Two Perspectives

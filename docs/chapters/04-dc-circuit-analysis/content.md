@@ -214,9 +214,11 @@ A **two-port network** is a circuit viewed from two pairs of terminals: an input
 At the input port: voltage \(V_1\), current \(I_1\) (entering).  
 At the output port: voltage \(V_2\), current \(I_2\) (entering).
 
-The two most common parameter sets are:
+The sign convention is that currents \(I_1\) and \(I_2\) both flow *into* the positive terminal of each port. This consistent convention is what makes the parameter matrices work.
 
-**Z-parameters (impedance parameters):**
+### Z-Parameters (Impedance Parameters)
+
+The **Z-parameters** (also called open-circuit impedance parameters) express port voltages in terms of port currents:
 
 <div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
 
@@ -224,13 +226,64 @@ The two most common parameter sets are:
 
 </div>
 
-**h-parameters (hybrid parameters):** Used for BJT transistor models.
+Each parameter is measured with one port open-circuited:
+
+| Parameter | Definition | Measurement |
+|-----------|-----------|-------------|
+| \(Z_{11}\) | \(V_1 / I_1\) with \(I_2 = 0\) | Input impedance, output open |
+| \(Z_{12}\) | \(V_1 / I_2\) with \(I_1 = 0\) | Reverse transfer impedance |
+| \(Z_{21}\) | \(V_2 / I_1\) with \(I_2 = 0\) | Forward transfer impedance |
+| \(Z_{22}\) | \(V_2 / I_2\) with \(I_1 = 0\) | Output impedance, input open |
+
+For a reciprocal (passive, no dependent sources) network: \(Z_{12} = Z_{21}\).
+
+### Y-Parameters (Admittance Parameters)
+
+The **Y-parameters** (short-circuit admittance parameters) are the inverse relationship — port currents expressed in terms of port voltages:
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
+
+\[\begin{bmatrix} I_1 \\ I_2 \end{bmatrix} = \begin{bmatrix} Y_{11} & Y_{12} \\ Y_{21} & Y_{22} \end{bmatrix} \begin{bmatrix} V_1 \\ V_2 \end{bmatrix}\]
+
+</div>
+
+Each Y-parameter is measured with one port short-circuited (\(V = 0\)):
+
+\[Y_{11} = \frac{I_1}{V_1}\bigg|_{V_2=0} \qquad Y_{21} = \frac{I_2}{V_1}\bigg|_{V_2=0}\]
+
+Y-parameters are particularly useful for circuits connected in parallel, since the combined Y-matrix is just the sum of the individual matrices.
+
+### h-Parameters (Hybrid Parameters)
+
+**h-parameters** (hybrid parameters) mix input current and output voltage as independent variables — a natural description of how BJT transistors behave:
 
 <div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
 
 \[\begin{bmatrix} V_1 \\ I_2 \end{bmatrix} = \begin{bmatrix} h_{11} & h_{12} \\ h_{21} & h_{22} \end{bmatrix} \begin{bmatrix} I_1 \\ V_2 \end{bmatrix}\]
 
 </div>
+
+| Parameter | Definition | Meaning |
+|-----------|-----------|---------|
+| \(h_{11}\) (or \(h_i\)) | \(V_1/I_1\) with \(V_2 = 0\) | Input resistance (Ω) |
+| \(h_{12}\) (or \(h_r\)) | \(V_1/V_2\) with \(I_1 = 0\) | Reverse voltage ratio (dimensionless) |
+| \(h_{21}\) (or \(h_f\)) | \(I_2/I_1\) with \(V_2 = 0\) | Forward current gain \(\beta\) (dimensionless) |
+| \(h_{22}\) (or \(h_o\)) | \(I_2/V_2\) with \(I_1 = 0\) | Output admittance (S) |
+
+**Worked Example — Z-parameters of a T-network:**
+
+A T-network has series impedances \(Z_A = 10\) Ω and \(Z_B = 20\) Ω, with shunt impedance \(Z_C = 30\) Ω between them.
+
+- \(Z_{11} = Z_A + Z_C = 10 + 30 = 40\) Ω (input resistance with output open)
+- \(Z_{22} = Z_B + Z_C = 20 + 30 = 50\) Ω (output resistance with input open)
+- \(Z_{12} = Z_{21} = Z_C = 30\) Ω (reciprocal network — only the shunt element contributes to transfer impedance)
+
+The Z-matrix is:
+
+\[\mathbf{Z} = \begin{bmatrix} 40 & 30 \\ 30 & 50 \end{bmatrix} \text{ Ω}\]
+
+!!! tip "Choosing a Parameter Set"
+    Use **Z-parameters** for series-connected networks (matrices add). Use **Y-parameters** for parallel-connected networks (matrices add). Use **h-parameters** for transistor small-signal models (BJT datasheets list \(h_{fe}\), \(h_{ie}\), etc.).
 
 ---
 
@@ -242,19 +295,65 @@ When you connect one circuit to another, they interact. This interaction — cal
 
 **Output resistance** (\(R_{out}\)) is the Thévenin resistance seen looking back into the output port. Measured with all independent sources killed (but dependent sources remain).
 
-**The loading effect in action:**
+### The General Loading Formula
 
-Suppose a source with Thévenin equivalent \(V_S = 10\) V, \(R_{out,source} = 1\) kΩ drives a load with \(R_{in,load} = 1\) kΩ. The voltage at the load is only 5 V — not 10 V — because the resistances form a voltage divider:
+Whenever a source drives a load through a series resistance, the delivered voltage is reduced by a voltage-divider ratio. Using the Thévenin equivalent of the source (\(V_{th}\), \(R_{th}\)) and the load resistance \(R_L\):
 
 <div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px 28px; margin: 1rem 0 1.2rem 0; text-align: center; box-shadow: 0 2px 8px rgba(90,61,237,0.07);" markdown>
 
-\[V_{load} = V_S \times \frac{R_{in,load}}{R_{out,source} + R_{in,load}}\]
+\[V_{out} = V_{th} \cdot \frac{R_L}{R_{th} + R_L}\]
 
 </div>
 
-**Design principle:** To minimize loading:
-- Make the source output resistance **much smaller** than the load input resistance: \(R_{out,source} \ll R_{in,load}\)
+This is the fundamental loading equation. When \(R_L \gg R_{th}\), the denominator approaches \(R_L\) and \(V_{out} \to V_{th}\) — no loading. When \(R_L = R_{th}\), the output drops to exactly half.
+
+**The loading effect in action:**
+
+Suppose a source with Thévenin equivalent \(V_{th} = 10\) V, \(R_{th} = 1\) kΩ drives a load with \(R_L = 1\) kΩ:
+
+\[V_{out} = 10 \times \frac{1{,}000}{1{,}000 + 1{,}000} = 10 \times 0.5 = 5 \text{ V}\]
+
+Half the voltage is lost inside the source resistance — a severe loading effect.
+
+Now suppose the load is increased to \(R_L = 10\) kΩ:
+
+\[V_{out} = 10 \times \frac{10{,}000}{1{,}000 + 10{,}000} = 10 \times \frac{10}{11} = 9.09 \text{ V}\]
+
+Only 9% loss — acceptable in most designs.
+
+### Worked Example: Voltage Divider Under Load
+
+**Problem:** A voltage divider uses R1 = 8 kΩ and R2 = 2 kΩ from a 15 V supply. An instrument with input resistance \(R_{in} = 5\) kΩ is connected across R2. Find the loaded output voltage.
+
+**Step 1 — Unloaded output (no instrument):**
+
+\[V_{out,no load} = 15 \times \frac{2\,000}{8\,000 + 2\,000} = 15 \times 0.2 = 3.0 \text{ V}\]
+
+**Step 2 — Thévenin resistance of the divider:**
+
+Kill the source (short); R1 and R2 appear in parallel:
+
+\[R_{th} = R1 \| R2 = \frac{8\,000 \times 2\,000}{8\,000 + 2\,000} = 1.6 \text{ k}\Omega\]
+
+**Step 3 — Loaded output:**
+
+\[V_{out,loaded} = V_{th} \cdot \frac{R_L}{R_{th} + R_L} = 3.0 \times \frac{5\,000}{1\,600 + 5\,000} = 3.0 \times 0.758 = 2.27 \text{ V}\]
+
+The instrument loading has reduced the output by 24% — a significant measurement error. The fix: use an instrument with higher input resistance (\(R_{in} \gg R_{th}\)).
+
+### Design Principle
+
+To minimize loading:
+- Make the source output resistance **much smaller** than the load input resistance: \(R_{th} \ll R_L\)
 - This is why ideal voltage amplifiers have \(R_{out} \to 0\) and \(R_{in} \to \infty\)
+- Rule of thumb: loading error is less than 10% when \(R_L > 9\, R_{th}\)
+
+| \(R_L / R_{th}\) ratio | Voltage loss to loading |
+|------------------------|------------------------|
+| 1 (equal) | 50% |
+| 9 | 10% |
+| 99 | 1% |
+| 999 | 0.1% |
 
 ---
 
@@ -262,24 +361,28 @@ Suppose a source with Thévenin equivalent \(V_S = 10\) V, \(R_{out,source} = 1\
 
 <div style="background: #F8F6FF; border: 2px solid #D4C8FF; border-radius: 12px; padding: 20px 28px; margin: 1rem 0;" markdown>
 
-**Core theorems:**
-- **Source transformation**: Voltage source + series R ↔ Current source + parallel R, with \(I_N = V_S / R\)
-- **Thévenin's theorem**: Any linear two-terminal circuit = \(V_{Th}\) in series with \(R_{Th}\)
-- **Norton's theorem**: Any linear two-terminal circuit = \(I_N\) in parallel with \(R_N\)
+**Complete reference table — all theorems and key formulas:**
+
+| Theorem / Technique | Purpose | Key Formula(s) |
+|---------------------|---------|----------------|
+| **Source Transformation** | Convert between voltage and current source models | \(I_N = V_S/R_S\); \(V_{Th} = I_N R_P\) |
+| **Thévenin's Theorem** | Replace any linear network with \(V_{Th}\) + \(R_{Th}\) | \(V_{Th} = V_{oc}\); \(R_{Th} = V_{oc}/I_{sc}\) |
+| **Norton's Theorem** | Replace any linear network with \(I_N\) ∥ \(R_N\) | \(I_N = I_{sc} = V_{Th}/R_{Th}\); \(R_N = R_{Th}\) |
+| **Maximum Power Transfer** | Find \(R_L\) for greatest load power | \(R_L = R_{Th}\); \(P_{max} = V_{Th}^2/(4R_{Th})\) |
+| **Nodal Analysis** | Systematic KCL-based solution | \(n-1\) equations for \(n\) nodes |
+| **Mesh Analysis** | Systematic KVL-based solution | \(b-n+1\) equations; \(b\) branches, \(n\) nodes |
+| **Superposition** | Handle multiple independent sources | \(x_{total} = x_1 + x_2 + \cdots\) (one source active at a time) |
+| **Two-Port Z-Parameters** | Model input/output port behavior | \(\mathbf{V} = \mathbf{Z}\,\mathbf{I}\) |
+| **Two-Port Y-Parameters** | Parallel network combination | \(\mathbf{I} = \mathbf{Y}\,\mathbf{V}\) |
+| **Two-Port h-Parameters** | BJT transistor small-signal model | \(h_{21} = \beta\) (forward current gain) |
+| **Loading Effect** | Voltage loss when source drives load | \(V_{out} = V_{th} \cdot R_L/(R_{th}+R_L)\) |
+
+**Key rules to remember:**
 - Thévenin and Norton are interconvertible: \(V_{Th} = I_N R_N\), \(R_{Th} = R_N\)
-
-**Maximum power transfer:**
-- Occurs when \(R_L = R_{Th}\)
-- Maximum power: \(P_{max} = V_{Th}^2 / (4 R_{Th})\)
-- Efficiency is exactly 50% at this condition
-
-**Dependent sources:**
-- Must be kept active when finding \(R_{Th}\) (use test-source method)
-- Express controlling variables in terms of node voltages or mesh currents
-
-**Loading effect:**
-- \(V_{load} = V_S \times R_{in,load} / (R_{out,source} + R_{in,load})\)
-- Minimize by ensuring \(R_{out,source} \ll R_{in,load}\)
+- Efficiency at maximum power transfer is exactly **50%** — acceptable for signals, not for power delivery
+- Dependent sources must be kept alive when finding \(R_{Th}\) — use the test-source method
+- Loading error < 10% when \(R_L > 9\,R_{th}\)
+- Z-parameters: open-circuit measurement. Y-parameters: short-circuit measurement. h-parameters: mixed.
 
 </div>
 
