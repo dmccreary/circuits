@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Phase Relationship Visualizer</title>
+<script src="https://cdn.jsdelivr.net/npm/p5@1.11.7/lib/p5.js"></script>
+<style>
+  body { margin: 0; padding: 0; background: #e8eaf0; }
+  canvas { display: block; }
+</style>
+</head>
+<body>
+<main></main>
+<script>
+// Phase Relationship Visualizer
+// Chapter 8: AC Signals and Sinusoidal Waveforms
+
+const CW = 680;
+const WAVE_H = 240;
+const PHASOR_H = 170;
+const CTRL_H = 110;
+const CH = WAVE_H + PHASOR_H + CTRL_H;
+
+// Wave plot margins
+const WPL = 55, WPR = 20, WPT = 28, WPB = 20;
+const WPW = CW - WPL - WPR;
+const WPH = WAVE_H - WPT - WPB;
+
+// Phasor area
+const PH_Y = WAVE_H;
+const PHASOR_CX1 = 130;
+const PHASOR_CX2 = 390;
+const PHASOR_CY  = WAVE_H + PHASOR_H / 2;
+const PHASOR_R   = 65;
+
+// Sliders / buttons
+const SL_X = 220;
+const SL_W = CW - SL_X - 20;
+const SL_Y1 = WAVE_H + PHASOR_H + 30;
+const SL_Y2 = WAVE_H + PHASOR_H + 58;
+
+const BTN_PRESETS = [
+  { label: '0°',   phi: 0,    x: 10,  y: WAVE_H + PHASOR_H + 78, w: 55, h: 24 },
+  { label: '+90°', phi: 90,   x: 72,  y: WAVE_H + PHASOR_H + 78, w: 55, h: 24 },
+  { label: '180°', phi: 180,  x: 134, y: WAVE_H + PHASOR_H + 78, w: 55, h: 24 },
+  { label: '-90°', phi: -90,  x: 196, y: WAVE_H + PHASOR_H + 78, w: 55, h: 24 },
+];
+const BTN_RST = { x: 260, y: WAVE_H + PHASOR_H + 78, w: 70, h: 24 };
+
+let phi = 45;   // phase difference -180 to +180
+let f   = 5;    // Hz
+let isAnimating = false;
+let animTime = 0;
+
+let dragSlider = null;
+
+function setup() {
+  createCanvas(CW, CH).parent(select('main').elt);
+  textFont('Arial');
+}
+
+function draw() {
+  if (isAnimating) animTime += deltaTime;
+  background(232, 234, 240);
+  drawWaves();
+  drawPhasors();
+  drawControls();
+}
+
+function drawWaves() {
+  fill(252, 252, 255); noStroke();
+  rect(0, 0, CW, WAVE_H, 0, 0, 0, 0);
+
+  // Title
+  fill(20, 30, 80); textSize(13); textStyle(BOLD); textAlign(CENTER, TOP);
+  text('Phase Relationship Visualizer', CW / 2, 6);
+  textStyle(NORMAL);
+
+  const ox = WPL;
+  const oy = WPT + WPH / 2;
+  const yscale = (WPH / 2) / 6;
+  const T = 1 / f;
+  const xscale = WPW / 4;
+  const phiRad = phi * PI / 180;
+  const omega = TWO_PI * f;
+
+  // Grid
+  stroke(210, 215, 230); strokeWeight(1);
+  for (let v = -5; v <= 5; v += 5) {
+    line(ox, oy - v * yscale, ox + WPW, oy - v * yscale);
+  }
+  for (let i = 0; i <= 4; i++) {
+    line(ox + i * xscale, WPT, ox + i * xscale, WPT + WPH);
+  }
+
+  // Axes
+  stroke(100, 110, 150); strokeWeight(1.5);
+  line(ox, WPT, ox, WPT + WPH);
+  line(ox, oy, ox + WPW, oy);
+
+  // Axis labels
+  fill(80, 90, 130); noStroke(); textSize(10); textAlign(RIGHT, CENTER);
+  text('5V', ox - 4, oy - 5 * yscale);
+  text('-5V', ox - 4, oy + 5 * yscale);
+  text('0', ox - 4, oy);
+
+  // v1 - blue (reference)
+  stroke(50, 100, 210); strokeWeight(2.5); noFill();
+  beginShape();
+  for (let px = 0; px <= WPW; px++) {
+    const t = (px / WPW) * (4 / f);
+    const v = 5 * sin(omega * t);
+    vertex(ox + px, oy - v * yscale);
+  }
+  endShape();
+
+  // v2 - red (phase shifted)
+  stroke(210, 60, 60); strokeWeight(2.5); noFill();
+  beginShape();
+  for (let px = 0; px <= WPW; px++) {
+    const t = (px / WPW) * (4 / f);
+    const v = 5 * sin(omega * t + phiRad);
+    vertex(ox + px, oy - v * yscale);
+  }
+  endShape();
+
+  // Animation cursor
+  if (isAnimating) {
+    const tCursor = (animTime / 1000) % (4 / f);
+    const xCursor = ox + (tCursor / (4 / f)) * WPW;
+    stroke(180, 180, 180); strokeWeight(1); setLineDash([4, 4]);
+    line(xCursor, WPT, xCursor, WPT + WPH);
+    setLineDash([]);
+  }
+
+  // Phase annotation
+  if (abs(phi) > 1) {
+    const xRef = ox + xscale * 0.2;
+    const xShift = xRef + (phi / 360) * xscale;
+    const arrowY = WPT + 10;
+    stroke(160, 50, 180); strokeWeight(1.5);
+    line(xRef, arrowY, xShift, arrowY);
+    fill(160, 50, 180); noStroke(); textSize(10); textAlign(CENTER, BOTTOM);
+    text('φ = ' + phi.toFixed(0) + '°', (xRef + xShift) / 2, arrowY - 2);
+  }
+
+  // Legend
+  noStroke(); fill(50, 100, 210); textSize(10); textAlign(LEFT, TOP);
+  text('v₁(t) = 5 sin(ωt)', ox + 4, WPT);
+  fill(210, 60, 60);
+  const phiStr = phi >= 0 ? '+' + phi.toFixed(0) : phi.toFixed(0);
+  text(`v₂(t) = 5 sin(ωt ${phiStr}°)`, ox + 4, WPT + 12);
+
+  // Phase relationship label
+  let relLabel, relColor;
+  if (abs(phi) < 2)       { relLabel = 'IN PHASE'; relColor = [0, 140, 0]; }
+  else if (abs(phi) > 178) { relLabel = 'ANTIPHASE (180°)'; relColor = [200, 0, 0]; }
+  else if (phi > 0)        { relLabel = `v₂ LEADS v₁ by ${phi.toFixed(0)}°`; relColor = [180, 80, 0]; }
+  else                      { relLabel = `v₂ LAGS v₁ by ${abs(phi).toFixed(0)}°`; relColor = [80, 0, 180]; }
+
+  fill(relColor[0], relColor[1], relColor[2]); textSize(12); textStyle(BOLD);
+  textAlign(CENTER, BOTTOM);
+  text(relLabel, CW / 2, WAVE_H - 2);
+  textStyle(NORMAL);
+}
+
+function drawPhasors() {
+  fill(238, 240, 252); noStroke();
+  rect(0, PH_Y, CW, PHASOR_H);
+
+  noStroke(); fill(60, 70, 140); textSize(11); textStyle(BOLD);
+  textAlign(CENTER, TOP); text('Phasor Diagram', CW * 0.22, PH_Y + 5);
+  text('v₁ reference', CW * 0.58, PH_Y + 5);
+  textStyle(NORMAL);
+
+  const phiRad = phi * PI / 180;
+  const tNow = isAnimating ? (animTime / 1000) * TWO_PI * f : 0;
+
+  // Phasor 1 - v1 (blue)
+  drawPhasor(PHASOR_CX1, PHASOR_CY, PHASOR_R, tNow, [50, 100, 210], 'v₁');
+  // Phasor 2 - v2 (red), phase shifted
+  drawPhasor(PHASOR_CX1, PHASOR_CY, PHASOR_R, tNow + phiRad, [210, 60, 60], 'v₂');
+
+  // Angle arc between them
+  if (abs(phi) > 2) {
+    noFill(); stroke(160, 50, 180); strokeWeight(1.5);
+    const arcR = PHASOR_R * 0.45;
+    arc(PHASOR_CX1, PHASOR_CY, arcR * 2, arcR * 2,
+        -tNow - HALF_PI, -tNow - phiRad - HALF_PI);
+    noStroke(); fill(160, 50, 180); textSize(9); textAlign(LEFT, CENTER);
+    text(phi.toFixed(0) + '°', PHASOR_CX1 + arcR + 4, PHASOR_CY - phi * 0.5);
+  }
+
+  // Static reference phasor on right panel
+  drawPhasor(PHASOR_CX2, PHASOR_CY, PHASOR_R, 0, [50, 100, 210], 'v₁');
+  drawPhasor(PHASOR_CX2, PHASOR_CY, PHASOR_R, phiRad, [210, 60, 60], 'v₂');
+
+  // Axes for both phasors
+  [PHASOR_CX1, PHASOR_CX2].forEach(cx => {
+    stroke(180, 185, 210); strokeWeight(1);
+    line(cx - PHASOR_R - 10, PHASOR_CY, cx + PHASOR_R + 10, PHASOR_CY);
+    line(cx, PHASOR_CY - PHASOR_R - 10, cx, PHASOR_CY + PHASOR_R + 10);
+    noStroke(); fill(120, 130, 170); textSize(9);
+    textAlign(LEFT, CENTER); text('Re', cx + PHASOR_R + 2, PHASOR_CY);
+    textAlign(CENTER, TOP); text('Im', cx, PHASOR_CY - PHASOR_R - 12);
+  });
+  noStroke(); fill(100, 110, 160); textSize(9);
+  textAlign(CENTER, TOP); text('(rotating)', PHASOR_CX1, PH_Y + PHASOR_H - 18);
+  text('(static reference)', PHASOR_CX2, PH_Y + PHASOR_H - 18);
+}
+
+function drawPhasor(cx, cy, r, angle, col, label) {
+  const ex = cx + r * cos(-angle - HALF_PI + HALF_PI);
+  const ey = cy - r * sin(-angle + HALF_PI - HALF_PI);
+  // Actually: unit circle => angle 0 = pointing right
+  const ex2 = cx + r * cos(angle);
+  const ey2 = cy - r * sin(angle);
+  stroke(col[0], col[1], col[2]); strokeWeight(2.5);
+  line(cx, cy, ex2, ey2);
+  fill(col[0], col[1], col[2]); noStroke();
+  // Arrow head
+  const a = atan2(ey2 - cy, ex2 - cx);
+  push(); translate(ex2, ey2); rotate(a);
+  triangle(-8, -4, -8, 4, 0, 0);
+  pop();
+  textSize(10); textStyle(BOLD); textAlign(CENTER, CENTER);
+  text(label, ex2 + cos(a) * 12, ey2 + sin(a) * 12);
+  textStyle(NORMAL);
+}
+
+function drawControls() {
+  fill(218, 224, 240); noStroke();
+  rect(0, WAVE_H + PHASOR_H, CW, CTRL_H, 0, 0, 8, 8);
+
+  drawSlider('Phase φ:', phi, -180, 180, SL_Y1, phi.toFixed(0) + '°');
+  drawSlider('Frequency f:', f, 1, 20, SL_Y2, f.toFixed(0) + ' Hz');
+
+  BTN_PRESETS.forEach(b => drawBtn(b, b.label, [70, 90, 175]));
+  drawBtn(BTN_RST, '↺ Reset', [100, 105, 135]);
+
+  // Animate label
+  const animBtnX = 340, animBtnY = WAVE_H + PHASOR_H + 78;
+  const animBtn = { x: animBtnX, y: animBtnY, w: 130, h: 24 };
+  drawBtn(animBtn, isAnimating ? '■ Stop' : '▶ Animate', isAnimating ? [150, 50, 50] : [50, 125, 55]);
+}
+
+function drawSlider(label, val, mn, mx, cy, dispVal) {
+  const t  = (val - mn) / (mx - mn);
+  const tx = SL_X + SL_W * t;
+  noStroke(); fill(35, 45, 100); textSize(11); textAlign(RIGHT, CENTER);
+  text(label + '  ' + dispVal, SL_X - 8, cy);
+  fill(178, 183, 210); noStroke(); rect(SL_X, cy - 4, SL_W, 8, 4);
+  fill(70, 110, 200); rect(SL_X, cy - 4, SL_W * t, 8, 4);
+  fill(255); stroke(75, 110, 200); strokeWeight(2); circle(tx, cy, 18);
+}
+
+function drawBtn(b, lbl, col) {
+  fill(col[0], col[1], col[2]); noStroke(); rect(b.x, b.y, b.w, b.h, 4);
+  fill(255); textSize(11); textStyle(BOLD); textAlign(CENTER, CENTER);
+  text(lbl, b.x + b.w / 2, b.y + b.h / 2); textStyle(NORMAL);
+}
+
+function setLineDash(list) { drawingContext.setLineDash(list); }
+
+const ANIM_BTN = { x: 340, y: WAVE_H + PHASOR_H + 78, w: 130, h: 24 };
+
+const SLIDERS = [
+  { key: 'phi', cy: SL_Y1, mn: -180, mx: 180 },
+  { key: 'f',   cy: SL_Y2, mn: 1,    mx: 20  },
+];
+
+function mousePressed() {
+  for (const b of BTN_PRESETS) {
+    if (inBtn(b)) { phi = b.phi; return; }
+  }
+  if (inBtn(BTN_RST))  { phi = 45; f = 5; isAnimating = false; animTime = 0; return; }
+  if (inBtn(ANIM_BTN)) { isAnimating = !isAnimating; return; }
+  startSliderDrag();
+}
+function mouseDragged() { if (dragSlider) applySliderDrag(); }
+function mouseReleased() { dragSlider = null; }
+
+function inBtn(b) {
+  return mouseX >= b.x && mouseX <= b.x + b.w && mouseY >= b.y && mouseY <= b.y + b.h;
+}
+function startSliderDrag() {
+  for (const s of SLIDERS) {
+    if (mouseX >= SL_X - 12 && mouseX <= SL_X + SL_W + 12 &&
+        mouseY >= s.cy - 14  && mouseY <= s.cy + 14) {
+      dragSlider = s.key; applySliderDrag(); return;
+    }
+  }
+}
+function applySliderDrag() {
+  const s = SLIDERS.find(d => d.key === dragSlider);
+  if (!s) return;
+  const t = constrain((mouseX - SL_X) / SL_W, 0, 1);
+  const raw = s.mn + t * (s.mx - s.mn);
+  if (s.key === 'phi') phi = constrain(round(raw / 5) * 5, s.mn, s.mx);
+  if (s.key === 'f')   f   = constrain(round(raw), s.mn, s.mx);
+}
+</script>
+</body>
+</html>

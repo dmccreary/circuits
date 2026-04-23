@@ -57,6 +57,10 @@
     
       <link rel="stylesheet" href="../../css/extra.css">
     
+      <link rel="stylesheet" href="../../css/mascots.css">
+    
+      <link rel="stylesheet" href="../../css/mascot.css">
+    
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
     
     <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
@@ -94,7 +98,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#_1" class="md-skip">
+        <a href="#faq-prompt" class="md-skip">
           Skip to content
         </a>
       
@@ -110,8 +114,7 @@
   <nav class="md-header__inner md-grid" aria-label="Header">
     <a href="../.." title="Circuits 1" class="md-header__button md-logo" aria-label="Circuits 1" data-md-component="logo">
       
-  
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6 4h12v1h3v2h-3v2h3v2h-3v2h3v2h-3v2h3v2h-3v1H6v-1H3v-2h3v-2H3v-2h3v-2H3V9h3V7H3V5h3zm5 11v3h1v-3zm2 0v3h1v-3zm2 0v3h1v-3z"/></svg>
+  <img src="../../img/mascots/neutral.png" alt="logo">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -417,8 +420,7 @@
   <label class="md-nav__title" for="__drawer">
     <a href="../.." title="Circuits 1" class="md-nav__button md-logo" aria-label="Circuits 1" data-md-component="logo">
       
-  
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6 4h12v1h3v2h-3v2h3v2h-3v2h3v2h-3v2h3v2h-3v1H6v-1H3v-2h3v-2H3v-2h3v-2H3V9h3V7H3V5h3zm5 11v3h1v-3zm2 0v3h1v-3zm2 0v3h1v-3z"/></svg>
+  <img src="../../img/mascots/neutral.png" alt="logo">
 
     </a>
     Circuits 1
@@ -717,16 +719,6 @@
       
         
       
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
     
     
     
@@ -784,6 +776,8 @@
       
         
           
+        
+      
         
       
         
@@ -861,6 +855,8 @@
       
         
           
+        
+      
         
       
         
@@ -1501,17 +1497,6 @@
       Table of contents
     </label>
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#prompt" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Prompt
-      
-    </span>
-  </a>
-  
-</li>
       
         <li class="md-nav__item">
   <a href="#response" class="md-nav__link">
@@ -3581,6 +3566,34 @@
   
   
   
+    <li class="md-nav__item">
+      <a href="../mascot-student-update-letter/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mascot Student Update Letter
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
     
     
       
@@ -3630,7 +3643,7 @@
         
           
         
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5_18" >
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5_19" >
         
           
           <div class="md-nav__link md-nav__container">
@@ -3652,14 +3665,14 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_5_18" id="__nav_5_18_label" tabindex="">
+              <label class="md-nav__link " for="__nav_5_19" id="__nav_5_19_label" tabindex="">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_18_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_5_18">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_19_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_19">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -4111,6 +4124,8 @@
       
         
       
+        
+      
     
     
     
@@ -4230,15 +4245,14 @@
   
 
 
-<h1 id="_1"></h1>
-<h2 id="prompt">Prompt</h2>
-<div class="highlight"><pre><span></span><code>You are an experience teacher of an undergraduate circuits course.  You have taught the course many times.  Each time you teach the course you see the same questions come up over and over.  Please generate a list of the 100 more common questions and order them from the most commonly occuring question to the least commonly occuring question.
-
-Only list the question, don&#39;t provide the answer.  Use a single sentence to describe the question.
-
-For each question, place it question text in a level four Markdown header.
-Return a single Markdown file that can be downloaded.
-</code></pre></div>
+<h1 id="faq-prompt">FAQ Prompt</h1>
+<div class="admonition prompt">
+<p class="admonition-title">Prompt</p>
+<p>You are an experience teacher of an undergraduate circuits course.  You have taught the course many times.  Each time you teach the course you see the same questions come up over and over.  Please generate a list of the 100 more common questions and order them from the most commonly occuring question to the least commonly occuring question.</p>
+<p>Only list the question, don't provide the answer.  Use a single sentence to describe the question.</p>
+<p>For each question, place it question text in a level four Markdown header.
+Return a single Markdown file that can be downloaded.</p>
+</div>
 <h2 id="response">Response</h2>
 <h3 id="top-10">Top 10</h3>
 <h4 id="how-do-i-apply-ohms-law-to-calculate-voltage-current-and-resistance-in-a-circuit">How do I apply Ohm's Law to calculate voltage, current, and resistance in a circuit?</h4>
@@ -4441,14 +4455,9 @@ Return a single Markdown file that can be downloaded.
       <div class="md-copyright">
   
     <div class="md-copyright__highlight">
-      Copyright &copy; 2024&ndash;2026 Dan McCreary and Circuits 1 Team. Licensed under <a href="license/">CC BY-NC-SA 4.0</a>.
+      Copyright &copy; 2024, 2025, 2026 Dan McCreary. Licensed under <a href="license/">CC BY-NC-SA 4.0</a> for non-commercial use.
     </div>
   
-  
-    Made with
-    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
-      Material for MkDocs
-    </a>
   
 </div>
       
@@ -4469,8 +4478,6 @@ Return a single Markdown file that can be downloaded.
     
     
       <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
-      
-        <script src="../../js/iframe-resize.js"></script>
       
         <script src="../../js/extra.js"></script>
       
