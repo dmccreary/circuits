@@ -1146,10 +1146,12 @@
 
 <style>
 /* ── Cover page ─────────────────────────────────────────────────────────── */
-.md-typeset .cover-page   { min-height: 92vh; }
+.md-typeset .cover-page   { min-height: 92vh; position: relative; overflow: hidden; }
 .md-typeset .cover-content {
   padding: 5.5rem 3rem 4.5rem;
   text-align: center;
+  position: relative;
+  z-index: 2;
 }
 .md-typeset .cover-stats   { margin: 2rem 0 1.2rem 0; }
 .md-typeset .cover-buttons { margin-top: 2rem; }
@@ -1164,6 +1166,13 @@
 @keyframes circuit-breathe {
   0%, 100% { opacity: 0.28; }
   50%       { opacity: 0.38; }
+}
+.md-typeset .cover-bg-circuit {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  z-index: 1;
+  pointer-events: none;
 }
 .md-typeset .cover-bg-circuit svg {
   animation: circuit-breathe 7s ease-in-out infinite;
