@@ -40,11 +40,16 @@ const SL_LEFT = 225;
 let sliderX, sliderWidth;
 let sy1, sy2;
 
-// ── Colour palette ────────────────────────────────────────────────────────────
-const COL_V = [255, 200, 0];          // amber  – voltage
-const COL_I = [70,  130, 220];        // blue   – current
-const COL_R = [50,  195, 90];         // green  – resistance
-const COL_P = [200, 80,  180];        // purple – power
+// ── Circuits 1 design-system palette ─────────────────────────────────────────
+const COL_BG_DRAW = '#eef1fb';        // light indigo tint – drawing area
+const COL_BG_CTRL = '#dde1f0';        // muted indigo – control area
+const COL_DEEP    = [26,  35, 126];   // dark indigo – titles
+const COL_PRIMARY = [57,  73, 171];   // indigo – buttons
+const COL_ACCENT  = [92, 107, 192];   // medium indigo
+const COL_V = [249, 168,  37];        // amber gold – voltage
+const COL_I = [57,  73,  171];        // indigo – current
+const COL_R = [46,  125,  50];        // green – resistance
+const COL_P = [92,  107, 192];        // medium indigo – power
 
 // ═════════════════════════════════════════════════════════════════════════════
 // SETUP
@@ -119,11 +124,18 @@ function solve() {
 // DRAW LOOP
 // ═════════════════════════════════════════════════════════════════════════════
 function draw() {
-    background(255);
+    // Drawing area
+    background(COL_BG_DRAW);
+    // Control area
+    noStroke(); fill(COL_BG_CTRL);
+    rect(0, drawHeight, containerWidth, controlHeight);
 
     // Title
-    fill(30); noStroke(); textSize(15); textAlign(CENTER, TOP);
+    fill(...COL_DEEP); noStroke(); textSize(16); textStyle(BOLD); textAlign(CENTER, TOP);
     text("Ohm's Law — Triangle & Calculator", containerWidth / 2, 8);
+    textStyle(NORMAL);
+    fill(...COL_ACCENT); textSize(11);
+    text('Click a section of the triangle to solve for that quantity.', containerWidth / 2, 30);
 
     drawTriangle();
     drawPanel();
@@ -212,14 +224,20 @@ function drawPanel() {
     const pH = drawHeight - pY - 10;
 
     // Panel background
-    fill(247, 249, 255); stroke(185); strokeWeight(1);
+    fill(238, 241, 255); stroke(...COL_PRIMARY, 60); strokeWeight(1.5);
     rect(px, pY, pw, pH, 8);
 
-    let ey = pY + 12;
+    // Panel header strip
+    noStroke(); fill(...COL_DEEP);
+    rect(px, pY, pw, 28, 8, 8, 0, 0);
+    fill(255); textSize(12); textStyle(BOLD); textAlign(CENTER, CENTER);
+    text('Values & Results', px + pw/2, pY + 14);
+    textStyle(NORMAL);
+
+    let ey = pY + 34;
     const lh = 54;
 
-    fill(30); noStroke(); textSize(13); textAlign(LEFT, TOP);
-    text('Calculator', px + 12, ey); ey += 22;
+    fill(...COL_ACCENT); noStroke(); textSize(11); textAlign(LEFT, TOP);
 
     valueRow(px+8, ey, pw-16, COL_V, 'V', 'Voltage',    fmtV(dispV), solving===0); ey += lh;
     valueRow(px+8, ey, pw-16, COL_I, 'I', 'Current',    fmtI(dispI), solving===1); ey += lh;
@@ -290,11 +308,10 @@ function fmtP(w)  {
 // CONTROLS
 // ═════════════════════════════════════════════════════════════════════════════
 function drawControls() {
-    fill(245); stroke(200); strokeWeight(1);
-    rect(0, drawHeight, containerWidth, controlHeight);
-
-    fill(80); noStroke(); textSize(10); textAlign(LEFT, CENTER);
+    // Background is already drawn in draw()
+    fill(...COL_DEEP); noStroke(); textSize(11); textStyle(BOLD); textAlign(LEFT, CENTER);
     text('Adjust the two known values:', 12, drawHeight + 13);
+    textStyle(NORMAL);
 
     if (solving === 0) {
         drawSlider('Current I:',    knownI, 1, 500,  sy1, ' mA', COL_I);

@@ -37,10 +37,6 @@
          <lastmod>2026-04-24</lastmod>
     </url>
     <url>
-         <loc>https://dmccreary.github.io/circuits/mascots/</loc>
-         <lastmod>2026-04-24</lastmod>
-    </url>
-    <url>
          <loc>https://dmccreary.github.io/circuits/references/</loc>
          <lastmod>2026-04-24</lastmod>
     </url>
@@ -58,6 +54,10 @@
     </url>
     <url>
          <loc>https://dmccreary.github.io/circuits/chapters/01-electric-charge-basic-quantities/glossary/</loc>
+         <lastmod>2026-04-24</lastmod>
+    </url>
+    <url>
+         <loc>https://dmccreary.github.io/circuits/chapters/01-electric-charge-basic-quantities/practice/</loc>
          <lastmod>2026-04-24</lastmod>
     </url>
     <url>
@@ -81,6 +81,10 @@
          <lastmod>2026-04-24</lastmod>
     </url>
     <url>
+         <loc>https://dmccreary.github.io/circuits/chapters/02-ohms-law-basic-configurations/practice/</loc>
+         <lastmod>2026-04-24</lastmod>
+    </url>
+    <url>
          <loc>https://dmccreary.github.io/circuits/chapters/02-ohms-law-basic-configurations/problems/</loc>
          <lastmod>2026-04-24</lastmod>
     </url>
@@ -98,6 +102,10 @@
     </url>
     <url>
          <loc>https://dmccreary.github.io/circuits/chapters/03-kirchhoffs-laws-topology/glossary/</loc>
+         <lastmod>2026-04-24</lastmod>
+    </url>
+    <url>
+         <loc>https://dmccreary.github.io/circuits/chapters/03-kirchhoffs-laws-topology/practice/</loc>
          <lastmod>2026-04-24</lastmod>
     </url>
     <url>
@@ -121,6 +129,10 @@
          <lastmod>2026-04-24</lastmod>
     </url>
     <url>
+         <loc>https://dmccreary.github.io/circuits/chapters/04-dc-circuit-analysis/practice/</loc>
+         <lastmod>2026-04-24</lastmod>
+    </url>
+    <url>
          <loc>https://dmccreary.github.io/circuits/chapters/04-dc-circuit-analysis/problems/</loc>
          <lastmod>2026-04-24</lastmod>
     </url>
@@ -138,6 +150,10 @@
     </url>
     <url>
          <loc>https://dmccreary.github.io/circuits/chapters/05-passive-components/glossary/</loc>
+         <lastmod>2026-04-24</lastmod>
+    </url>
+    <url>
+         <loc>https://dmccreary.github.io/circuits/chapters/05-passive-components/practice/</loc>
          <lastmod>2026-04-24</lastmod>
     </url>
     <url>
@@ -185,6 +201,10 @@
          <lastmod>2026-04-24</lastmod>
     </url>
     <url>
+         <loc>https://dmccreary.github.io/circuits/chapters/07-second-order-rlc-circuits/practice/</loc>
+         <lastmod>2026-04-24</lastmod>
+    </url>
+    <url>
          <loc>https://dmccreary.github.io/circuits/chapters/07-second-order-rlc-circuits/problems/</loc>
          <lastmod>2026-04-24</lastmod>
     </url>
@@ -205,6 +225,10 @@
          <lastmod>2026-04-24</lastmod>
     </url>
     <url>
+         <loc>https://dmccreary.github.io/circuits/chapters/08-ac-signals-sinusoidal/practice/</loc>
+         <lastmod>2026-04-24</lastmod>
+    </url>
+    <url>
          <loc>https://dmccreary.github.io/circuits/chapters/08-ac-signals-sinusoidal/problems/</loc>
          <lastmod>2026-04-24</lastmod>
     </url>
@@ -222,6 +246,10 @@
     </url>
     <url>
          <loc>https://dmccreary.github.io/circuits/chapters/09-phasors-complex-impedance/glossary/</loc>
+         <lastmod>2026-04-24</lastmod>
+    </url>
+    <url>
+         <loc>https://dmccreary.github.io/circuits/chapters/09-phasors-complex-impedance/practice/</loc>
          <lastmod>2026-04-24</lastmod>
     </url>
     <url>
@@ -317,6 +345,10 @@
          <lastmod>2026-04-24</lastmod>
     </url>
     <url>
+         <loc>https://dmccreary.github.io/circuits/chapters/13-operational-amplifiers/practice/</loc>
+         <lastmod>2026-04-24</lastmod>
+    </url>
+    <url>
          <loc>https://dmccreary.github.io/circuits/chapters/13-operational-amplifiers/problems/</loc>
          <lastmod>2026-04-24</lastmod>
     </url>
@@ -334,6 +366,10 @@
     </url>
     <url>
          <loc>https://dmccreary.github.io/circuits/chapters/14-signals-audio-lab/glossary/</loc>
+         <lastmod>2026-04-24</lastmod>
+    </url>
+    <url>
+         <loc>https://dmccreary.github.io/circuits/chapters/14-signals-audio-lab/practice/</loc>
          <lastmod>2026-04-24</lastmod>
     </url>
     <url>
@@ -357,6 +393,10 @@
          <lastmod>2026-04-24</lastmod>
     </url>
     <url>
+         <loc>https://dmccreary.github.io/circuits/chapters/15-audio-applications/practice/</loc>
+         <lastmod>2026-04-24</lastmod>
+    </url>
+    <url>
          <loc>https://dmccreary.github.io/circuits/chapters/15-audio-applications/problems/</loc>
          <lastmod>2026-04-24</lastmod>
     </url>
@@ -374,6 +414,10 @@
     </url>
     <url>
          <loc>https://dmccreary.github.io/circuits/chapters/16-laboratory-techniques/glossary/</loc>
+         <lastmod>2026-04-24</lastmod>
+    </url>
+    <url>
+         <loc>https://dmccreary.github.io/circuits/chapters/16-laboratory-techniques/practice/</loc>
          <lastmod>2026-04-24</lastmod>
     </url>
     <url>
@@ -409,10 +453,6 @@
          <lastmod>2026-04-24</lastmod>
     </url>
     <url>
-         <loc>https://dmccreary.github.io/circuits/img/mascots/sparky-prompts/</loc>
-         <lastmod>2026-04-24</lastmod>
-    </url>
-    <url>
          <loc>https://dmccreary.github.io/circuits/learning-graph/</loc>
          <lastmod>2026-04-24</lastmod>
     </url>
@@ -438,10 +478,6 @@
     </url>
     <url>
          <loc>https://dmccreary.github.io/circuits/learning-graph/faq-quality-report/</loc>
-         <lastmod>2026-04-24</lastmod>
-    </url>
-    <url>
-         <loc>https://dmccreary.github.io/circuits/learning-graph/mascot-test/</loc>
          <lastmod>2026-04-24</lastmod>
     </url>
     <url>
@@ -518,10 +554,6 @@
     </url>
     <url>
          <loc>https://dmccreary.github.io/circuits/prompts/learning-via-interactive-simulations/</loc>
-         <lastmod>2026-04-24</lastmod>
-    </url>
-    <url>
-         <loc>https://dmccreary.github.io/circuits/prompts/mascot-student-update-letter/</loc>
          <lastmod>2026-04-24</lastmod>
     </url>
     <url>
@@ -641,6 +673,10 @@
          <lastmod>2026-04-24</lastmod>
     </url>
     <url>
+         <loc>https://dmccreary.github.io/circuits/sims/audio-amp-chain/</loc>
+         <lastmod>2026-04-24</lastmod>
+    </url>
+    <url>
          <loc>https://dmccreary.github.io/circuits/sims/audio-signal-chain/</loc>
          <lastmod>2026-04-24</lastmod>
     </url>
@@ -693,7 +729,7 @@
          <lastmod>2026-04-24</lastmod>
     </url>
     <url>
-         <loc>https://dmccreary.github.io/circuits/sims/complex-number-viz/</loc>
+         <loc>https://dmccreary.github.io/circuits/sims/concept-map-ch3/</loc>
          <lastmod>2026-04-24</lastmod>
     </url>
     <url>
@@ -702,10 +738,6 @@
     </url>
     <url>
          <loc>https://dmccreary.github.io/circuits/sims/current-meter/TODO/</loc>
-         <lastmod>2026-04-24</lastmod>
-    </url>
-    <url>
-         <loc>https://dmccreary.github.io/circuits/sims/dc-ac-separator/</loc>
          <lastmod>2026-04-24</lastmod>
     </url>
     <url>
@@ -737,7 +769,11 @@
          <lastmod>2026-04-24</lastmod>
     </url>
     <url>
-         <loc>https://dmccreary.github.io/circuits/sims/euler-circle/</loc>
+         <loc>https://dmccreary.github.io/circuits/sims/distortion-types/</loc>
+         <lastmod>2026-04-24</lastmod>
+    </url>
+    <url>
+         <loc>https://dmccreary.github.io/circuits/sims/equalizer-demo/</loc>
          <lastmod>2026-04-24</lastmod>
     </url>
     <url>
@@ -757,7 +793,7 @@
          <lastmod>2026-04-24</lastmod>
     </url>
     <url>
-         <loc>https://dmccreary.github.io/circuits/sims/gain-db-converter/</loc>
+         <loc>https://dmccreary.github.io/circuits/sims/fourier-series-builder/</loc>
          <lastmod>2026-04-24</lastmod>
     </url>
     <url>
@@ -766,6 +802,10 @@
     </url>
     <url>
          <loc>https://dmccreary.github.io/circuits/sims/ground-symbols/</loc>
+         <lastmod>2026-04-24</lastmod>
+    </url>
+    <url>
+         <loc>https://dmccreary.github.io/circuits/sims/harmonic-explorer/</loc>
          <lastmod>2026-04-24</lastmod>
     </url>
     <url>
@@ -817,6 +857,10 @@
          <lastmod>2026-04-24</lastmod>
     </url>
     <url>
+         <loc>https://dmccreary.github.io/circuits/sims/mesh-analysis/</loc>
+         <lastmod>2026-04-24</lastmod>
+    </url>
+    <url>
          <loc>https://dmccreary.github.io/circuits/sims/mesh-supermesh-compare/</loc>
          <lastmod>2026-04-24</lastmod>
     </url>
@@ -826,6 +870,10 @@
     </url>
     <url>
          <loc>https://dmccreary.github.io/circuits/sims/natural-frequency-calculator/</loc>
+         <lastmod>2026-04-24</lastmod>
+    </url>
+    <url>
+         <loc>https://dmccreary.github.io/circuits/sims/nodal-analysis-steps/</loc>
          <lastmod>2026-04-24</lastmod>
     </url>
     <url>
@@ -849,6 +897,10 @@
          <lastmod>2026-04-24</lastmod>
     </url>
     <url>
+         <loc>https://dmccreary.github.io/circuits/sims/opamp-inverting/</loc>
+         <lastmod>2026-04-24</lastmod>
+    </url>
+    <url>
          <loc>https://dmccreary.github.io/circuits/sims/oscilloscope/</loc>
          <lastmod>2026-04-24</lastmod>
     </url>
@@ -858,10 +910,6 @@
     </url>
     <url>
          <loc>https://dmccreary.github.io/circuits/sims/parallel-plate-capacitor/</loc>
-         <lastmod>2026-04-24</lastmod>
-    </url>
-    <url>
-         <loc>https://dmccreary.github.io/circuits/sims/phase-relationship/</loc>
          <lastmod>2026-04-24</lastmod>
     </url>
     <url>
@@ -890,6 +938,10 @@
     </url>
     <url>
          <loc>https://dmccreary.github.io/circuits/sims/rc-charging/</loc>
+         <lastmod>2026-04-24</lastmod>
+    </url>
+    <url>
+         <loc>https://dmccreary.github.io/circuits/sims/rc-discharging/</loc>
          <lastmod>2026-04-24</lastmod>
     </url>
     <url>
@@ -949,7 +1001,7 @@
          <lastmod>2026-04-24</lastmod>
     </url>
     <url>
-         <loc>https://dmccreary.github.io/circuits/sims/sinusoid-anatomy/</loc>
+         <loc>https://dmccreary.github.io/circuits/sims/snr-noise-floor/</loc>
          <lastmod>2026-04-24</lastmod>
     </url>
     <url>
@@ -973,7 +1025,11 @@
          <lastmod>2026-04-24</lastmod>
     </url>
     <url>
-         <loc>https://dmccreary.github.io/circuits/sims/time-frequency-domain/</loc>
+         <loc>https://dmccreary.github.io/circuits/sims/time-constant/</loc>
+         <lastmod>2026-04-24</lastmod>
+    </url>
+    <url>
+         <loc>https://dmccreary.github.io/circuits/sims/time-to-frequency/</loc>
          <lastmod>2026-04-24</lastmod>
     </url>
     <url>

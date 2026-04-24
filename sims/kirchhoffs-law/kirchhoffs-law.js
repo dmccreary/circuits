@@ -27,6 +27,16 @@ let controlHeight = 152;
 let canvasHeight;
 let containerWidth;
 
+// ── Circuits 1 design-system palette ─────────────────────────────────────────
+const COL_BG_DRAW = '#eef1fb';        // light indigo tint – drawing area
+const COL_BG_CTRL = '#dde1f0';        // muted indigo – control area
+const COL_DEEP    = [26,  35, 126];   // dark indigo – titles, tab active
+const COL_PRIMARY = [57,  73, 171];   // indigo – buttons, active UI
+const COL_ACCENT  = [92, 107, 192];   // medium indigo
+const COL_GOLD    = [249, 168,  37];  // amber gold
+const COL_GREEN   = [46,  125,  50];  // green
+const COL_RED     = [198,  40,  40];  // red
+
 // ── Mode ──────────────────────────────────────────────────────────────────────
 let mode = 0;   // 0 = KVL/KCL   1 = Mesh   2 = Node
 
@@ -114,7 +124,10 @@ function solve() {
 
 // ── Draw loop ─────────────────────────────────────────────────────────────────
 function draw() {
-    background(255);
+    background(COL_BG_DRAW);
+    // Control area background
+    noStroke(); fill(COL_BG_CTRL);
+    rect(0, drawHeight, containerWidth, controlHeight);
     drawTabs();
     if      (mode === 0) drawKVLMode();
     else if (mode === 1) drawMeshMode();
@@ -127,16 +140,19 @@ function drawTabs() {
     for (let i = 0; i < 3; i++) {
         const t = tabBtns[i];
         const on = i === mode;
-        fill(on ? color(25, 75, 180) : 215);
-        stroke(on ? color(15, 55, 140) : 160);
+        // Drop shadow for active tab
+        if (on) { noStroke(); fill(0,0,0,18); rect(t.x+2, t.y+2, t.w, t.h, 5); }
+        fill(...(on ? COL_PRIMARY : [215,218,230]));
+        stroke(...(on ? COL_DEEP : [160,165,185]));
         strokeWeight(1);
         rect(t.x, t.y, t.w, t.h, 5);
-        fill(on ? 255 : 40);
+        fill(on ? 255 : 50);
         noStroke();
-        textSize(12); textAlign(CENTER, CENTER);
+        textSize(12); textStyle(on ? BOLD : NORMAL); textAlign(CENTER, CENTER);
         text(t.label, t.x + t.w/2, t.y + t.h/2);
+        textStyle(NORMAL);
     }
-    stroke(180); strokeWeight(1);
+    stroke(...COL_ACCENT); strokeWeight(1);
     line(0, TAB_H + 2, containerWidth, TAB_H + 2);
 }
 
