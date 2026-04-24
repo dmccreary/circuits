@@ -8,26 +8,89 @@ hide:
 
 <style>
 /* ── Cover page ─────────────────────────────────────────────────────────── */
-.md-typeset .cover-page   { min-height: 92vh; position: relative; overflow: hidden; }
+.md-typeset .cover-page {
+  min-height: 92vh;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, #0f0c29 0%, #1a1040 45%, #0d1b3e 100%);
+}
+
+/* All text on cover is light */
 .md-typeset .cover-content {
   padding: 5.5rem 3rem 4.5rem;
   text-align: center;
   position: relative;
   z-index: 2;
 }
-.md-typeset .cover-stats   { margin: 2rem 0 1.2rem 0; }
-.md-typeset .cover-buttons { margin-top: 2rem; }
+
+/* Title */
+.md-typeset .cover-page h1 {
+  font-size: 3.6rem !important;
+  font-weight: 800 !important;
+  color: #ffffff !important;
+  text-shadow: 0 2px 16px rgba(124,92,239,0.6);
+  letter-spacing: -0.02em;
+  margin-bottom: 0.4rem !important;
+}
 
 /* Subtitle */
 .md-typeset .cover-page h2 {
   font-weight: 500;
+  font-size: 1.4rem !important;
   color: #c4b5fd !important;
+  margin-top: 0.2rem !important;
+  text-shadow: none;
 }
 
-/* Background circuit breathing glow */
+/* Body text */
+.md-typeset .cover-page p,
+.md-typeset .cover-institution,
+.md-typeset .cover-description {
+  color: #cbd5e1 !important;
+  font-size: 1rem;
+  line-height: 1.7;
+}
+
+/* Bold inline */
+.md-typeset .cover-page strong {
+  color: #e2d9f3 !important;
+}
+
+/* Horizontal rule */
+.md-typeset .cover-page hr {
+  border-color: rgba(196,181,253,0.25) !important;
+  margin: 1.2rem auto !important;
+  width: 60%;
+}
+
+/* Stats row */
+.md-typeset .cover-stats {
+  display: flex;
+  justify-content: center;
+  gap: 2.5rem;
+  flex-wrap: wrap;
+  margin: 2rem 0 1.2rem 0;
+}
+.md-typeset .stat-item { text-align: center; }
+.md-typeset .stat-number {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #a78bfa !important;
+  line-height: 1.1;
+}
+.md-typeset .stat-label {
+  font-size: 0.8rem;
+  color: #94a3b8 !important;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.md-typeset .cover-buttons { margin-top: 2rem; }
+
+/* Background circuit art */
 @keyframes circuit-breathe {
-  0%, 100% { opacity: 0.28; }
-  50%       { opacity: 0.38; }
+  0%, 100% { opacity: 0.22; }
+  50%       { opacity: 0.32; }
 }
 .md-typeset .cover-bg-circuit {
   position: absolute;
@@ -40,7 +103,7 @@ hide:
   animation: circuit-breathe 7s ease-in-out infinite;
 }
 @media (prefers-reduced-motion: reduce) {
-  .md-typeset .cover-bg-circuit svg { animation: none; opacity: 0.30; }
+  .md-typeset .cover-bg-circuit svg { animation: none; opacity: 0.22; }
 }
 
 /* Button hover */
@@ -50,15 +113,17 @@ hide:
 }
 .md-typeset .cover-buttons .md-button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 18px rgba(90,62,237,.18);
+  box-shadow: 0 4px 18px rgba(90,62,237,.25);
 }
 .md-typeset .cover-buttons .md-button--primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 24px rgba(90,62,237,.45);
+  box-shadow: 0 6px 24px rgba(90,62,237,.50);
 }
 
 @media (max-width: 768px) {
   .md-typeset .cover-content { padding: 3rem 1rem 2.5rem; }
+  .md-typeset .cover-page h1 { font-size: 2.4rem !important; }
+  .md-typeset .cover-stats { gap: 1.5rem; }
 }
 </style>
 
