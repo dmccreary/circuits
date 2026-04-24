@@ -232,6 +232,12 @@ The inverting input node sits at exactly 0 V without being connected directly to
 **Corollary — Virtual Ground:** When \(V_+ = 0\), then \(V_- = 0\) as well
 </div>
 
+#### Diagram: Op-Amp Golden Rules
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe src="../../../sims/opamp-golden-rules/main.html" width="100%" height="360px" scrolling="no" style="border:none; border-radius:8px; overflow:hidden;"></iframe>
+</div>
+
 ## 13.6 Inverting Amplifier
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
@@ -369,6 +375,12 @@ The gain is exactly 1 — the output follows the input. But why use a circuit th
 | Inverting | \(-R_f/R_i\) | Negative | \(R_i\) | Precise inverting gain |
 | Non-inverting | \(1 + R_f/R_i\) | Positive | \(\approx \infty\) | Non-inverting gain |
 | Voltage follower | 1 | Positive | \(\approx \infty\) | Impedance buffering |
+
+#### Diagram: Op-Amp Configurations
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe src="../../../sims/opamp-configurations/main.html" width="100%" height="420px" scrolling="no" style="border:none; border-radius:8px; overflow:hidden;"></iframe>
+</div>
 
 ## 13.9 Arithmetic Circuits
 

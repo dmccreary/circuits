@@ -82,6 +82,12 @@ Noise added by the first stage is amplified by every stage that follows. A 2 μV
 Students often assume that since the preamp dominates, noise in later stages is irrelevant. In reality, every stage contributes noise **referred back to the input** divided by the gain preceding it. If a late-stage op-amp adds 10 μV of noise after 1000× of total preceding gain, its input-referred contribution is 10 nV — negligible. But if that late stage has only 10× preceding gain, its contribution is 1 μV — significant. Always compute noise contributions in terms of **input-referred noise** before dismissing any stage.
 </div>
 
+#### Diagram: Audio Signal Chain
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe src="../../../sims/audio-signal-chain/main.html" width="100%" height="360px" scrolling="no" style="border:none; border-radius:8px; overflow:hidden;"></iframe>
+</div>
+
 ## 15.3 Preamplifiers
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
@@ -180,6 +186,12 @@ In a <strong style="color: #333;">Class B</strong> amplifier, two complementary 
 <div class="mascot fusi" markdown>
 **Safety Warning: Power Amplifier High Voltages and Heat**
 Power amplifiers operate at supply rails of ±20 V to ±70 V and deliver amperes of current into speaker loads. Even brief contact with an energized output stage can cause serious electrical burns. Always discharge large filter capacitors before working inside a powered-down amplifier — a 10,000 μF capacitor charged to 70 V stores enough energy to cause injury. Heatsinks on Class A and AB amplifiers routinely reach 60–80 °C during operation; allow adequate cooling time before touching internal components.
+</div>
+
+#### Diagram: Audio Amplifier Chain
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe src="../../../sims/audio-amp-chain/main.html" width="100%" height="520px" scrolling="no" style="border:none; border-radius:8px; overflow:hidden;"></iframe>
 </div>
 
 ## 15.5 Signal-to-Noise Ratio and Noise Floor

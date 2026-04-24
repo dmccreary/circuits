@@ -52,6 +52,12 @@ where \(\varepsilon_0 = 8.854 \times 10^{-12}\) F/m is the permittivity of free 
 
 </div>
 
+#### Diagram: Parallel Plate Capacitor
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe src="../../../sims/parallel-plate-capacitor/main.html" width="100%" height="420px" scrolling="no" style="border:none; border-radius:8px; overflow:hidden;"></iframe>
+</div>
+
 The unit of capacitance is the **farad** (F), named after Michael Faraday. One farad is enormous in practice — most capacitors are measured in microfarads (μF, 10⁻⁶ F), nanofarads (nF, 10⁻⁹ F), or picofarads (pF, 10⁻¹² F).
 
 **The V-I relationship for a capacitor:**
@@ -75,6 +81,12 @@ This is the defining equation of a capacitor. Two immediate consequences:
 \[i_C = C\frac{dv_C}{dt} \qquad v_C(t) = \frac{1}{C}\int i_C\,dt + v_C(0)\]
 
 Current flows through a capacitor only when its voltage is **changing**. At DC steady state (\(dv/dt = 0\)), a capacitor carries zero current — it behaves as an **open circuit**.
+</div>
+
+#### Diagram: Capacitor I-V Characteristics
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe src="../../../sims/iv-characteristics/main.html" width="100%" height="420px" scrolling="no" style="border:none; border-radius:8px; overflow:hidden;"></iframe>
 </div>
 
 ---
@@ -130,6 +142,12 @@ The combination rules for capacitors are the **opposite** of resistors. Parallel
 
 Series combination increases the effective plate separation (lower capacitance, higher voltage rating). Parallel combination increases effective plate area (higher capacitance).
 
+#### Diagram: Capacitor Combinations
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe src="../../../sims/capacitor-combinations/main.html" width="100%" height="480px" scrolling="no" style="border:none; border-radius:8px; overflow:hidden;"></iframe>
+</div>
+
 ---
 
 ## 5.4 The Inductor
@@ -159,6 +177,12 @@ Two key consequences, perfectly dual to the capacitor:
 
 where \(N\) is the number of turns, \(A\) is the cross-sectional area, \(\ell\) is the coil length, and \(\mu_r\) is the relative permeability of the core.
 
+</div>
+
+#### Diagram: Inductor Explorer
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe src="../../../sims/inductor/main.html" width="100%" height="420px" scrolling="no" style="border:none; border-radius:8px; overflow:hidden;"></iframe>
 </div>
 
 ---
@@ -249,6 +273,12 @@ For inductors in series with mutual inductance:
 
 </div>
 
+#### Diagram: Mutual Inductance and Transformers
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe src="../../../sims/mutual-inductance/main.html" width="100%" height="480px" scrolling="no" style="border:none; border-radius:8px; overflow:hidden;"></iframe>
+</div>
+
 ---
 
 ## 5.8 Real vs. Ideal Components
@@ -269,6 +299,12 @@ The components you've been analyzing are **ideal**: a capacitor is purely capaci
 - For high-frequency bypass (decoupling), choose capacitors with low ESL — chip capacitors over lead-type.
 - For RF inductors, use air-core to avoid core losses.
 - Derate voltage and current ratings in design (typically to 80% of maximum).
+
+#### Diagram: Real Capacitor Model
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe src="../../../sims/real-capacitor-model/main.html" width="100%" height="480px" scrolling="no" style="border:none; border-radius:8px; overflow:hidden;"></iframe>
+</div>
 
 ---
 
@@ -347,6 +383,12 @@ The **decibel (dB)** is a logarithmic unit for expressing ratios of power, volta
 | -20 dB | ÷100 | ÷10 |
 
 The **human hearing range** spans approximately 20 Hz to 20,000 Hz (20 kHz). In amplitude, the ear can handle a power range of about 10¹² (120 dB) from threshold of hearing to threshold of pain.
+
+#### Diagram: Decibel Scale Explorer
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe src="../../../sims/decibel-scale/main.html" width="100%" height="480px" scrolling="no" style="border:none; border-radius:8px; overflow:hidden;"></iframe>
+</div>
 
 ---
 

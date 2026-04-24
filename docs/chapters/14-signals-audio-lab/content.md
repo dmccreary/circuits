@@ -176,6 +176,12 @@ Harmonics with \(n = 1, 3, 5, \ldots\) are called <strong>odd harmonics</strong>
 </p>
 </div>
 
+#### Diagram: Harmonic Explorer
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe src="../../../sims/harmonic-explorer/main.html" width="100%" height="260px" scrolling="no" style="border:none; border-radius:8px; overflow:hidden;"></iframe>
+</div>
+
 ## 14.4 Spectrum Representation
 
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
@@ -213,6 +219,12 @@ The total average power of a periodic signal equals the sum of the powers in its
 
 This means you can calculate total power either from the waveform directly or from the spectrum — both methods give the same answer.
 </p>
+</div>
+
+#### Diagram: Time to Frequency Domain
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe src="../../../sims/time-to-frequency/main.html" width="100%" height="320px" scrolling="no" style="border:none; border-radius:8px; overflow:hidden;"></iframe>
 </div>
 
 ## 14.5 Waveform Symmetry
@@ -417,6 +429,12 @@ A THD below 0.1 % is inaudible; high-fidelity audio amplifiers typically specify
 <p style="color: #555; line-height: 1.85; font-size: 1.02rem; margin-bottom: 1.2rem;">
 Because a low-pass filter attenuates high-frequency harmonics, it smooths sharp waveforms. A square wave passed through a low-pass filter with cutoff frequency between the 3rd and 5th harmonics loses its sharp corners and takes on a sinusoidal shape. Anti-aliasing filters in analogue-to-digital converters (ADCs) exploit this: by removing harmonics above the Nyquist frequency before sampling, they prevent aliasing artefacts. The Fourier series tells the designer exactly which harmonics fall above the cutoff and what their amplitudes are, allowing an accurate prediction of the filtered output.
 </p>
+
+#### Diagram: Signal Distortion Types
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe src="../../../sims/distortion-types/main.html" width="100%" height="260px" scrolling="no" style="border:none; border-radius:8px; overflow:hidden;"></iframe>
+</div>
 
 ### Power Systems — Harmonic Pollution
 
