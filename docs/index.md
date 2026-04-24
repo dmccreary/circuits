@@ -513,53 +513,51 @@ hide:
 </div>
 
 <!-- ════════════════════════════════════════════════════════════════════
-     COVER CONTENT — title, description, stats, buttons (z-index: 1)
+     COVER CONTENT — inline styles guarantee visibility
      ════════════════════════════════════════════════════════════════════ -->
-<div class="cover-content" markdown>
+<div style="position:relative; z-index:10; padding: 5rem 2rem 4rem; text-align:center;">
 
-# Circuits 1
+  <p style="font-size:1rem; font-weight:600; letter-spacing:0.2em; text-transform:uppercase; color:#a78bfa; margin-bottom:0.5rem;">EE Circuits — Analog and Signal Analysis</p>
 
-## An Intelligent Interactive Textbook
+  <h1 style="font-size:4rem; font-weight:900; color:#ffffff; text-shadow:0 2px 20px rgba(124,92,239,0.7); margin:0 0 0.4rem 0; line-height:1.1;">Circuits 1</h1>
 
-**EE Circuits — Analog and Signal Analysis**
+  <p style="font-size:1.4rem; font-weight:400; color:#c4b5fd; margin:0 0 1.5rem 0;">An Intelligent Interactive Textbook</p>
 
----
+  <hr style="border:none; border-top:1px solid rgba(196,181,253,0.3); width:50%; margin:1.2rem auto;"/>
 
-<p class="cover-institution">An AI-assisted course with interactive simulations,<br>chapter quizzes, and generative AI prompt libraries.</p>
+  <p style="color:#cbd5e1; font-size:1rem; line-height:1.7; margin-bottom:0.5rem;">
+    An AI-assisted course with interactive simulations, chapter quizzes, and generative AI prompt libraries.
+  </p>
+  <p style="color:#94a3b8; font-size:0.95rem; line-height:1.7; margin-bottom:2.5rem;">
+    Covers DC/AC analysis · phasors · filters · op-amps · Fourier series · audio applications
+  </p>
 
-<p class="cover-description">Covers DC/AC analysis, phasors, filters, op-amps, Fourier series,<br>and audio applications — from first principles to real-world design.</p>
+  <!-- Stats -->
+  <div style="display:flex; justify-content:center; gap:3rem; flex-wrap:wrap; margin-bottom:2.5rem;">
+    <div style="text-align:center;">
+      <div style="font-size:2.4rem; font-weight:800; color:#a78bfa; line-height:1;">16</div>
+      <div style="font-size:0.75rem; color:#94a3b8; text-transform:uppercase; letter-spacing:0.1em; margin-top:0.2rem;">Chapters</div>
+    </div>
+    <div style="text-align:center;">
+      <div style="font-size:2.4rem; font-weight:800; color:#a78bfa; line-height:1;">50+</div>
+      <div style="font-size:0.75rem; color:#94a3b8; text-transform:uppercase; letter-spacing:0.1em; margin-top:0.2rem;">MicroSims</div>
+    </div>
+    <div style="text-align:center;">
+      <div style="font-size:2.4rem; font-weight:800; color:#a78bfa; line-height:1;">160</div>
+      <div style="font-size:0.75rem; color:#94a3b8; text-transform:uppercase; letter-spacing:0.1em; margin-top:0.2rem;">Quiz Questions</div>
+    </div>
+    <div style="text-align:center;">
+      <div style="font-size:2.4rem; font-weight:800; color:#a78bfa; line-height:1;">64</div>
+      <div style="font-size:0.75rem; color:#94a3b8; text-transform:uppercase; letter-spacing:0.1em; margin-top:0.2rem;">Practice Problems</div>
+    </div>
+  </div>
 
-<div class="cover-stats" markdown>
-
-<div class="stat-item">
-<div class="stat-number">16</div>
-<div class="stat-label">Chapters</div>
-</div>
-
-<div class="stat-item">
-<div class="stat-number">50+</div>
-<div class="stat-label">MicroSims</div>
-</div>
-
-<div class="stat-item">
-<div class="stat-number">160</div>
-<div class="stat-label">Quiz Questions</div>
-</div>
-
-<div class="stat-item">
-<div class="stat-number">64</div>
-<div class="stat-label">Practice Problems</div>
-</div>
-
-</div>
-
-<div class="cover-buttons" markdown>
-
-[Enter Textbook :material-arrow-right:](chapters/index.md){ .md-button .md-button--primary }
-[View MicroSims :material-play-box:](sims/index.md){ .md-button }
-[Learning Graph :material-graph:](learning-graph/index.md){ .md-button }
-
-</div>
+  <!-- Buttons -->
+  <div style="display:flex; justify-content:center; gap:1rem; flex-wrap:wrap;">
+    <a href="chapters/index.md" class="md-button md-button--primary" style="font-size:1rem;">Enter Textbook →</a>
+    <a href="sims/index.md" class="md-button" style="font-size:1rem;">View MicroSims</a>
+    <a href="learning-graph/index.md" class="md-button" style="font-size:1rem;">Learning Graph</a>
+  </div>
 
 </div>
 
