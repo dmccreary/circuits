@@ -73,6 +73,12 @@ The capacitor voltage starts at 0 and rises exponentially toward \(V_S\). The cu
 | \(t = 5\tau\) | \(0.993\,V_S\) | \(0.007\,V_S/R\) |
 | \(t \to \infty\) | \(V_S\) | 0 |
 
+#### Diagram: RC Charging Circuit
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe src="../../../sims/rc-charging/main.html" width="100%" height="520px" scrolling="no" style="border:none; border-radius:8px; overflow:hidden;"></iframe>
+</div>
+
 ---
 
 ## 6.3 The Time Constant
@@ -103,6 +109,12 @@ The time constant \(\tau\) is the characteristic time that determines how quickl
 
 The time constant applies equally to the discharging case.
 
+#### Diagram: Time Constant Explorer
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe src="../../../sims/time-constant/main.html" width="100%" height="440px" scrolling="no" style="border:none; border-radius:8px; overflow:hidden;"></iframe>
+</div>
+
 ---
 
 ## 6.4 The RC Circuit: Discharging
@@ -127,6 +139,12 @@ The capacitor voltage decays exponentially from \(V_0\) toward 0. The time const
 <div class="mascot cappy" markdown>
 **Pro Tip: Find τ Using Thévenin Resistance**
 To find the time constant in any circuit, temporarily remove the capacitor (or inductor), kill all independent sources, and calculate the resistance looking into the two terminals where the component was connected. That is \(R_{Th}\), and \(\tau = R_{Th} \cdot C\) (or \(L/R_{Th}\) for RL). This Thévenin approach works for any circuit complexity and is far easier than solving the differential equation from scratch.
+</div>
+
+#### Diagram: RC Discharging Circuit
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe src="../../../sims/rc-discharging/main.html" width="100%" height="520px" scrolling="no" style="border:none; border-radius:8px; overflow:hidden;"></iframe>
 </div>
 
 ---
@@ -184,6 +202,12 @@ Never abruptly disconnect an inductor carrying current — the resulting voltage
 | \(V_C\) charges toward \(V_S\) | \(I_L\) energizes toward \(V_S/R\) |
 | At steady state: open circuit | At steady state: short circuit |
 
+#### Diagram: RL Circuit Charging
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe src="../../../sims/rl-charging/main.html" width="100%" height="520px" scrolling="no" style="border:none; border-radius:8px; overflow:hidden;"></iframe>
+</div>
+
 ---
 
 ## 6.6 Initial and Final Conditions
@@ -205,6 +229,12 @@ To find the initial condition, analyze the circuit at \(t = 0^-\) (DC steady sta
 The DC steady-state value as \(t \to \infty\). Analyze the circuit at DC steady state with the new switch configuration:
 - Capacitor → open circuit
 - Inductor → short circuit
+
+#### Diagram: Initial and Final Conditions
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe src="../../../sims/initial-final-conditions/main.html" width="100%" height="480px" scrolling="no" style="border:none; border-radius:8px; overflow:hidden;"></iframe>
+</div>
 
 ---
 
@@ -246,6 +276,12 @@ This single formula solves **any** first-order DC transient — RC or RL, chargi
 2. Find \(x(\infty)\): analyze circuit at DC steady state after switching (C → open, L → short)
 3. Find \(\tau\): find Thévenin resistance seen by the energy storage element; \(\tau = R_{Th}C\) or \(\tau = L/R_{Th}\)
 4. Write the solution: \(x(t) = x(\infty) + [x(0) - x(\infty)]e^{-t/\tau}\)
+
+#### Diagram: RC and RL Circuit Applications
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe src="../../../sims/rc-rl-applications/main.html" width="100%" height="520px" scrolling="no" style="border:none; border-radius:8px; overflow:hidden;"></iframe>
+</div>
 
 ---
 

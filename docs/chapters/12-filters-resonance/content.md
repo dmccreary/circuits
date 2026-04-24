@@ -156,6 +156,12 @@ At audio frequencies, inductors needed for low cutoff frequencies would need to 
 | RL Low-Pass | \(R/(2\pi L)\) | Power supply chokes |
 | RL High-Pass | \(R/(2\pi L)\) | Switching power circuits |
 
+#### Diagram: First-Order Filter Explorer
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe src="../../../sims/first-order-filters/main.html" width="100%" height="360px" scrolling="no" style="border:none; border-radius:8px; overflow:hidden;"></iframe>
+</div>
+
 ---
 
 ## 12.3 Second-Order Filters and Resonance
@@ -240,6 +246,18 @@ Given specifications \(f_0\) and Q (or equivalently \(f_0\) and BW), the design 
 \[R = \frac{2\pi \times 10{,}000 \times 10 \times 10^{-3}}{10} = \frac{628.3}{10} = 62.8\ \Omega\quad(\text{use } 62\ \Omega)\]
 
 <p style="color: #555; line-height: 1.75; margin-bottom: 0;"><strong>Result:</strong> \(BW = R/(2\pi L) = 62.8/(2\pi \times 0.01) = 1{,}000\) Hz. The filter passes 9.5 kHz to 10.5 kHz.</p>
+</div>
+
+#### Diagram: Second-Order Filter Explorer
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe src="../../../sims/second-order-filter/main.html" width="100%" height="340px" scrolling="no" style="border:none; border-radius:8px; overflow:hidden;"></iframe>
+</div>
+
+#### Diagram: RLC Circuit Simulator
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe src="../../../sims/rlc-circuit/main.html" width="100%" height="520px" scrolling="no" style="border:none; border-radius:8px; overflow:hidden;"></iframe>
 </div>
 
 ---

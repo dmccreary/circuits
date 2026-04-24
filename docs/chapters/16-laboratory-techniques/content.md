@@ -412,6 +412,12 @@ Breadboards introduce parasitic effects that limit their usefulness at higher fr
 - Connect power supply bypass capacitors (0.1 µF ceramic) directly at IC power pins.
 - Verify connections with a continuity test or ohmmeter before applying power.
 
+#### Diagram: Animated Switch Types
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe src="../../../sims/animated-switches/main.html" width="100%" height="440px" scrolling="no" style="border:none; border-radius:8px; overflow:hidden;"></iframe>
+</div>
+
 ---
 
 ## 16.10 Soldering

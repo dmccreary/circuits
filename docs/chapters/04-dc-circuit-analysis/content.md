@@ -111,6 +111,12 @@ Kill the source (short): \(R_{Th} = 6 \| 4 \) ... wait, R2 is between A and B, s
 
 The Thévenin equivalent is 12 V in series with 6 Ω.
 
+#### Diagram: Thévenin's Theorem Explorer
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe src="../../../sims/thevenin-concept/main.html" width="100%" height="520px" scrolling="no" style="border:none; border-radius:8px; overflow:hidden;"></iframe>
+</div>
+
 ---
 
 ## 4.3 Norton's Theorem
@@ -203,9 +209,21 @@ Treat the dependent source exactly like an independent source when writing KCL e
 3. If a dependent source appears, express its controlling variable in terms of node voltages.
 4. Solve the resulting system of equations.
 
+#### Diagram: Nodal Analysis Steps
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe src="../../../sims/nodal-analysis-steps/main.html" width="100%" height="520px" scrolling="no" style="border:none; border-radius:8px; overflow:hidden;"></iframe>
+</div>
+
 **Mesh analysis with dependent sources:**
 
 Similarly, write KVL around each mesh. Express any dependent source's control variable in terms of mesh currents. Solve the resulting system.
+
+#### Diagram: Mesh Analysis
+
+<div style="background: #EEF4FF; border: 2px solid #A8C8FF; border-radius: 12px; padding: 18px; margin: 1rem 0; box-shadow: 0 2px 8px rgba(90,61,237,0.07);">
+<iframe src="../../../sims/mesh-analysis/main.html" width="100%" height="520px" scrolling="no" style="border:none; border-radius:8px; overflow:hidden;"></iframe>
+</div>
 
 !!! tip "Counting Equations"
     Nodal analysis gives \(n-1\) equations for \(n\) nodes. Mesh analysis gives \(b - n + 1\) equations for \(b\) branches and \(n\) nodes. Choose whichever produces fewer equations for the circuit at hand.
