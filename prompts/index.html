@@ -15,7 +15,7 @@
         <link rel="canonical" href="https://dmccreary.github.io/circuits/prompts/">
       
       
-        <link rel="prev" href="../learning-graph/faq-quality-report/">
+        <link rel="prev" href="../learning-graph/mascot-test/">
       
       
         <link rel="next" href="learning-via-interactive-simulations/">
@@ -56,6 +56,10 @@
     
     
       <link rel="stylesheet" href="../css/extra.css">
+    
+      <link rel="stylesheet" href="../css/mascots.css">
+    
+      <link rel="stylesheet" href="../css/mascot.css">
     
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
     
@@ -110,8 +114,7 @@
   <nav class="md-header__inner md-grid" aria-label="Header">
     <a href=".." title="Circuits 1" class="md-header__button md-logo" aria-label="Circuits 1" data-md-component="logo">
       
-  
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6 4h12v1h3v2h-3v2h3v2h-3v2h3v2h-3v2h3v2h-3v1H6v-1H3v-2h3v-2H3v-2h3v-2H3V9h3V7H3V5h3zm5 11v3h1v-3zm2 0v3h1v-3zm2 0v3h1v-3z"/></svg>
+  <img src="../img/mascots/neutral.png" alt="logo">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -417,8 +420,7 @@
   <label class="md-nav__title" for="__drawer">
     <a href=".." title="Circuits 1" class="md-nav__button md-logo" aria-label="Circuits 1" data-md-component="logo">
       
-  
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6 4h12v1h3v2h-3v2h3v2h-3v2h3v2h-3v2h3v2h-3v1H6v-1H3v-2h3v-2H3v-2h3v-2H3V9h3V7H3V5h3zm5 11v3h1v-3zm2 0v3h1v-3zm2 0v3h1v-3z"/></svg>
+  <img src="../img/mascots/neutral.png" alt="logo">
 
     </a>
     Circuits 1
@@ -717,16 +719,6 @@
       
         
       
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
     
     
     
@@ -784,6 +776,8 @@
       
         
           
+        
+      
         
       
         
@@ -861,6 +855,8 @@
       
         
           
+        
+      
         
       
         
@@ -2070,6 +2066,34 @@
   
   
   
+    <li class="md-nav__item">
+      <a href="mascot-student-update-letter/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mascot Student Update Letter
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
     
     
       
@@ -2119,7 +2143,7 @@
         
           
         
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5_18" >
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5_19" >
         
           
           <div class="md-nav__link md-nav__container">
@@ -2141,14 +2165,14 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_5_18" id="__nav_5_18_label" tabindex="">
+              <label class="md-nav__link " for="__nav_5_19" id="__nav_5_19_label" tabindex="">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_18_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_5_18">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_19_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_19">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -2600,6 +2624,8 @@
       
         
       
+        
+      
     
     
     
@@ -2720,18 +2746,69 @@
 
 
 <h1 id="generative-ai-sample-prompts">Generative AI Sample Prompts</h1>
-<h2 id="generating-circuit-diagrams">Generating Circuit Diagrams</h2>
-<p><a href="circuit-diagrams/">Introduction to Using GenAI to Generate Circuit Diagrams</a></p>
-<h2 id="generating-equations">Generating Equations</h2>
-<p><a href="adding-latex-equations/">Generating LateX Questions</a></p>
-<h2 id="generating-current-voltage-plots">Generating Current-Voltage Plots</h2>
-<p><a href="current-voltage-plots/">Basic IV Prompt</a></p>
-<h2 id="generating-concept-knowledge-graphs">Generating Concept Knowledge Graphs</h2>
-<p><a href="knowledge-graph/">Introduction to Generating Knowledge Graphs</a></p>
-<h2 id="generating-faqs">Generating FAQs</h2>
-<p><a href="frequently-asked-questions/">Generating Frequently Asked Questions</a></p>
-<h2 id="generating-glossary-terms">Generating Glossary Terms</h2>
-<p><a href="glossary-terms/">Generating Glossary Terms</a></p>
+<p>This index lists every prompt under <code>docs/prompts/</code>. Dates are the original
+git commit date (when the prompt first landed on <code>main</code>).</p>
+<h2 id="chapter-and-course-content">Chapter and Course Content</h2>
+<ul>
+<li><a href="generate-chapter-content/">Generate Chapter Content</a> — 2026-01-30</li>
+<li><a href="lesson-plan/">Lesson Plan Prompt</a> — 2024-10-07</li>
+<li><a href="lesson-plan/circuit-lesson-plan-template/">Lesson Plan Template for a Named Circuit</a> — 2024-10-07</li>
+<li><a href="lesson-plan/spoiler-test/">Showing Answers After Click (Spoiler Test)</a> — 2024-10-07</li>
+<li><a href="learning-via-interactive-simulations/">Learning Via Interactive Simulations</a> — 2024-10-01</li>
+<li><a href="metaphors-and-stories/">Stories and Metaphors</a> — 2024-10-03</li>
+</ul>
+<h2 id="circuit-diagrams">Circuit Diagrams</h2>
+<ul>
+<li><a href="circuit-diagrams/">Generating Circuit Diagrams With LaTeX and CircuiTikZ</a> — 2024-10-06</li>
+<li><a href="circuit-diagrams/circuitikz-templates/">CircuiTikZ Templates</a> — 2024-10-06</li>
+<li><a href="circuit-diagrams/gen-circuit-diagrams-mermaid/">Circuit Generation with Mermaid</a> — 2024-10-06</li>
+<li><a href="circuit-diagram-skill/">Circuit Diagram Skill Plan (RLC grid layout)</a> — 2026-01-30</li>
+</ul>
+<h2 id="equations-and-formulas">Equations and Formulas</h2>
+<ul>
+<li><a href="adding-latex-equations/">Adding LaTeX Equations</a> — 2024-10-02</li>
+<li><a href="formulas/">Rendering Equations in MkDocs</a> — 2024-11-22</li>
+<li><a href="formulas/full/">Full List of Formulas</a> — 2024-11-22</li>
+</ul>
+<h2 id="current-voltage-plots">Current-Voltage Plots</h2>
+<ul>
+<li><a href="current-voltage-plots/">Basic Current-Voltage Plot Prompt</a> — 2024-10-03</li>
+</ul>
+<h2 id="knowledge-graphs">Knowledge Graphs</h2>
+<ul>
+<li><a href="knowledge-graph/">Concept Dependency Graph (Overview)</a> — 2024-10-06</li>
+<li><a href="knowledge-graph/concept-enumeration/">Concept Enumeration</a> — 2024-10-06</li>
+<li><a href="knowledge-graph/concept-taxonomy/">Concept Taxonomy</a> — 2024-10-06</li>
+<li><a href="knowledge-graph/add-categories-to-concepts/">Add Categories to Concepts</a> — 2024-10-06</li>
+<li><a href="knowledge-graph/concept-dependency-graph/">Concept Dependency Graph</a> — 2024-10-06</li>
+<li><a href="knowledge-graph/graph/">Circuits Course Concept Dependency Graph</a> — 2024-10-06</li>
+<li><a href="knowledge-graph/three-graphs/">Three Education Graph Types</a> — 2024-10-08</li>
+</ul>
+<h2 id="glossary-and-faq">Glossary and FAQ</h2>
+<ul>
+<li><a href="glossary-terms/">Glossary Terms Prompt</a> — 2024-10-01</li>
+<li><a href="frequently-asked-questions/">FAQ Prompt</a> — 2024-10-02</li>
+</ul>
+<h2 id="circuit-similarity-and-embeddings">Circuit Similarity and Embeddings</h2>
+<ul>
+<li><a href="circuit-similarity/">Circuit Embeddings</a> — 2025-06-11</li>
+<li><a href="similarity-plot/">Creating a Similarity Plot</a> — 2024-10-06</li>
+</ul>
+<h2 id="top-100-circuits-research">Top 100 Circuits Research</h2>
+<ul>
+<li><a href="top-100-circuits/">Research on the Top 100 Circuits</a> — 2025-06-07</li>
+<li><a href="top-100-circuits/top-100-circuits/">Top 100 Circuits</a> — 2025-06-09</li>
+<li><a href="top-100-circuits/top-100-claude/">Top 100 Circuits from Claude</a> — 2025-06-07</li>
+<li><a href="top-100-circuits/open-ai-deep-research/">OpenAI Top 100 Circuits (Deep Research)</a> — 2025-06-07</li>
+</ul>
+<h2 id="chatbot">Chatbot</h2>
+<ul>
+<li><a href="chatbot/">Chatbot</a> — 2024-10-02</li>
+</ul>
+<h2 id="mascot-and-communication">Mascot and Communication</h2>
+<ul>
+<li><a href="mascot-student-update-letter/">Mascot Student Update Prompt</a> — 2026-04-17</li>
+</ul>
 
 
 
@@ -2769,7 +2846,7 @@
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../learning-graph/faq-quality-report/" class="md-footer__link md-footer__link--prev" aria-label="Previous: FAQ Quality Report">
+          <a href="../learning-graph/mascot-test/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Mascot Style Guide">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
@@ -2779,7 +2856,7 @@
                 Previous
               </span>
               <div class="md-ellipsis">
-                FAQ Quality Report
+                Mascot Style Guide
               </div>
             </div>
           </a>
@@ -2809,14 +2886,9 @@
       <div class="md-copyright">
   
     <div class="md-copyright__highlight">
-      Copyright &copy; 2024&ndash;2026 Dan McCreary and Circuits 1 Team. Licensed under <a href="license/">CC BY-NC-SA 4.0</a>.
+      Copyright &copy; 2024, 2025, 2026 Dan McCreary. Licensed under <a href="license/">CC BY-NC-SA 4.0</a> for non-commercial use.
     </div>
   
-  
-    Made with
-    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
-      Material for MkDocs
-    </a>
   
 </div>
       
@@ -2837,8 +2909,6 @@
     
     
       <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
-      
-        <script src="../js/iframe-resize.js"></script>
       
         <script src="../js/extra.js"></script>
       

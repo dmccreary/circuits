@@ -1,3 +1,14 @@
+/* ── Header Logo Sizing ─────────────────────────────────────────────────── */
+.md-header__button.md-logo {
+    margin: 0;
+    padding: 0;
+}
+.md-header__button.md-logo img,
+.md-header__button.md-logo svg {
+    height: 50px;
+    width: 40px;
+}
+
 /* ── Brand Colors — match Intelligent Textbook header style ──────────────── */
 :root {
     --md-primary-fg-color:              #5A3EED;
@@ -216,25 +227,16 @@ details.video-overview[open] > summary {
   border-radius: 12px;
   overflow: hidden;
   margin: -0.8rem -1.6rem 0;
-  position: relative;
-  min-height: 92vh;
+  position: relative;  /* needed for absolute-positioned circuit overlay */
 }
 
 /* Full-cover background circuit art overlay */
 .cover-bg-circuit {
   position: absolute;
-  top: 0; left: 0;
-  width: 100%;
-  height: 100%;
+  top: 0; left: 0; right: 0; bottom: 0;
   pointer-events: none;
   z-index: 0;
   overflow: hidden;
-}
-
-.cover-bg-circuit svg {
-  display: block;
-  width: 100%;
-  height: 100%;
 }
 
 /* Lift content layers above the background overlay */

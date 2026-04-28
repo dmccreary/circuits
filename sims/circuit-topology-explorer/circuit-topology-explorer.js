@@ -1,11 +1,12 @@
-// Circuit Topology Explorer MicroSim — Redesigned
+// Circuit Topology Explorer MicroSim
+// Shows circuit schematics with nodes, branches, loops, and meshes
 
 let canvasWidth;
-const canvasHeight = 620;
-const margin = 12;
+const canvasHeight = 550;
+const margin = 20;
 
 // Circuit selection
-let selectedCircuit = 0;
+let selectedCircuit = 0; // 0: Simple Loop, 1: Two-Mesh, 2: Bridge
 const circuitNames = ['Simple Loop', 'Two-Mesh', 'Bridge Circuit'];
 
 // Toggle states
@@ -14,714 +15,673 @@ let showBranches = true;
 let showLoops = false;
 let showMeshes = false;
 
-// What was last focused (for explanation panel)
-let lastFocus = 'overview'; // 'nodes' | 'branches' | 'loops' | 'meshes' | 'overview'
-
-// Dropdown
+// Dropdown state
 let dropdownOpen = false;
 let dropdownX, dropdownY, dropdownW, dropdownH;
 
-// Toggle pill buttons
-let toggleButtons = [];
+// Checkbox positions (set in setup)
+let checkboxes = [];
 
-// Layout regions (computed in buildLayout)
-let diagramX, diagramY, diagramW, diagramH;
-let explX, explY, explW, explH;
-let cardY, cardH;
+// Colors
+const colBg = [248, 250, 252];
+const colNode = [59, 130, 246];       // blue
+const colBranch = [51, 65, 85];       // dark slate
+const colMesh1 = [147, 197, 253, 50]; // light blue
+const colMesh2 = [253, 186, 116, 50]; // light orange
+const colMesh3 = [167, 243, 208, 50]; // light green
+const colLoop = [99, 102, 241];       // indigo
+const colSource = [239, 68, 68];      // red
+const colResistor = [107, 114, 128];  // gray
+const colText = [30, 41, 59];
+const colPanel = [255, 255, 255];
+const colBorder = [203, 213, 225];
+const colAccent = [59, 130, 246];
+const colHover = [241, 245, 249];
 
-// ── Colors ──────────────────────────────────────────────────────────────────
-const colBg         = [245, 247, 250];
-const colNode       = [37,  99,  235];        // blue-600
-const colBranch     = [51,  65,  85];         // slate-700
-const colMesh1      = [147, 197, 253, 65];    // blue tint
-const colMesh2      = [253, 186, 116, 65];    // orange tint
-const colMesh3      = [167, 243, 208, 65];    // green tint
-const colLoop       = [99,  102, 241];        // indigo-500
-const colSource     = [220,  38,  38];        // red-600
-const colResistor   = [71,   85, 105];        // slate-600
-const colText       = [15,   23,  42];
-const colMuted      = [100, 116, 139];        // slate-500
-const colPanel      = [255, 255, 255];
-const colBorder     = [203, 213, 225];
-const colAccent     = [37,   99, 235];
-const colHover      = [241, 245, 249];
-const colCardBg     = [239, 246, 255];
-const colCardBorder = [147, 197, 253];
-const colGreenBg    = [220, 252, 231];
-const colGreenText  = [22,  163,  74];
-
+// Circuit data: nodes, branches, meshes
 let circuits = [];
 
-// ── Definitions for explanation panel ───────────────────────────────────────
-const definitions = {
-    overview: {
-        title: 'Circuit Topology',
-        body: 'Topology describes the structure of a circuit — how nodes, branches, and meshes connect. Use the toggles above to highlight each element and explore how they relate.',
-        formula: 'b = n \u2212 1 + m',
-        formulaNote: 'This formula links branches, nodes, and meshes for any planar circuit.'
-    },
-    nodes: {
-        title: 'Nodes',
-        body: 'A node is a junction where two or more branches meet. Nodes are where KCL (Kirchhoff\u2019s Current Law) is applied — the sum of currents entering equals the sum leaving.',
-        formula: 'KCL: \u03a3 I\u1d62\u2099 = \u03a3 I\u2092\u1d64\u209c',
-        formulaNote: 'n \u2212 1 independent node equations needed.'
-    },
-    branches: {
-        title: 'Branches',
-        body: 'A branch is a single two-terminal element (resistor, source, or wire) connecting two nodes. Each branch carries one current, so b branches give b unknowns.',
-        formula: 'KVL + KCL = b equations',
-        formulaNote: 'b = n \u2212 1 + m'
-    },
-    loops: {
-        title: 'Loops',
-        body: 'A loop is any closed path through the circuit. KVL (Kirchhoff\u2019s Voltage Law) states the sum of voltages around any closed loop equals zero.',
-        formula: 'KVL: \u03a3 V = 0',
-        formulaNote: 'Each mesh provides one independent KVL equation.'
-    },
-    meshes: {
-        title: 'Meshes',
-        body: 'A mesh is a loop that contains no smaller loops inside it (a "window" of the circuit). The number of independent KVL equations equals the number of meshes.',
-        formula: 'm = b \u2212 n + 1',
-        formulaNote: 'Meshes are the smallest independent loops.'
-    }
-};
-
-// ── Setup & Resize ───────────────────────────────────────────────────────────
 function setup() {
-    canvasWidth = min(floor(document.querySelector('main').getBoundingClientRect().width), 820);
+    canvasWidth = min(floor(document.querySelector('main').getBoundingClientRect().width), 800);
     const canvas = createCanvas(canvasWidth, canvasHeight);
     canvas.parent(document.querySelector('main'));
     textFont('Arial');
-    buildLayout();
     buildCircuits();
     setupControls();
 }
 
 function windowResized() {
-    canvasWidth = min(floor(document.querySelector('main').getBoundingClientRect().width), 820);
+    canvasWidth = min(floor(document.querySelector('main').getBoundingClientRect().width), 800);
     resizeCanvas(canvasWidth, canvasHeight);
-    buildLayout();
     buildCircuits();
     setupControls();
 }
 
-function buildLayout() {
-    const ctrlH = 52;
-    const bottomH = 118;
-    const gutter = 10;
-    const mainTop = ctrlH + gutter;
-    const mainBot = canvasHeight - bottomH - gutter;
-    const mainH = mainBot - mainTop;
-
-    // Diagram occupies left ~57%
-    diagramW = floor(canvasWidth * 0.56) - margin;
-    diagramX = margin;
-    diagramY = mainTop;
-    diagramH = mainH;
-
-    // Explanation panel: right remainder
-    explX = diagramX + diagramW + gutter;
-    explY = mainTop;
-    explW = canvasWidth - explX - margin;
-    explH = mainH;
-
-    // Bottom topology card
-    cardY = mainBot + gutter;
-    cardH = bottomH;
-}
-
-// ── Circuit Data ─────────────────────────────────────────────────────────────
 function buildCircuits() {
-    const cx = diagramX + diagramW / 2;
-    const cy = diagramY + diagramH / 2 - 10;
-    const w  = min(diagramW - 40, 340);
-    const h  = min(diagramH - 60, 200);
-    const hw = w / 2;
-    const hh = h / 2;
+    let cx = canvasWidth / 2;
+    let cy = 310;
+    let w = min(canvasWidth - 120, 500);
+    let h = 200;
+    let hw = w / 2;
+    let hh = h / 2;
+
+    // Simple Loop: 3 nodes, 3 branches, 1 mesh
+    // A(top-left) -- B(top-right) -- C(bottom-right) -- A(bottom-left same as A)
+    // Actually: rectangle with source on left, R1 on top, R2 on right
+    let sl_A = { x: cx - hw, y: cy - hh, label: 'A' };
+    let sl_B = { x: cx + hw, y: cy - hh, label: 'B' };
+    let sl_C = { x: cx + hw, y: cy + hh, label: 'C' };
+    // Actually for simple loop with 3 nodes we need a triangular or 3-node arrangement
+    // Let's do: A(top-left), B(top-right), C(bottom-center) with source A-C, R1 A-B, R2 B-C
+    // Better: rectangular with A(top-left), B(top-right), and wire along bottom
+    // Simple Loop: A -- R1 -- B -- R2 -- C -- Vs -- A (but that's actually still a single loop)
+    // Let me do: 3 nodes in a triangle-like arrangement
+    // Simplest: A(left), B(top-right), C(bottom-right)
+
+    // Reconsider: Simple Loop with 1 source + 2 resistors = 3 components, 3 nodes
+    // A --[Vs]--> B --[R1]--> C --[R2]--> A  (series circuit, single mesh)
+    let sA = { x: cx - hw, y: cy - hh, label: 'A' };
+    let sB = { x: cx + hw, y: cy - hh, label: 'B' };
+    let sC = { x: cx + hw, y: cy + hh, label: 'C' };
+    // Connect: A-bottom to C via wire, C to B via R2, B to A via R1...
+    // Better layout: rectangular
+    let sD_pos = { x: cx - hw, y: cy + hh }; // this is same node as A (wire from A bottom to A top)
+
+    // Let me just use a clean rectangular layout:
+    // A(top-left) - R1 - B(top-right)
+    // |                    |
+    // Vs                  R2
+    // |                    |
+    // C(bot-left) ------- D(bot-right)  where C and D are connected by wire
+    // But that's 4 nodes... For 3 nodes: merge C and D
+    // A(top-left) - R1 - B(top-right)
+    // |                    |
+    // Vs                  R2
+    // |                    |
+    // C(bottom, spans full width)
 
     circuits = [];
 
-    // ── SIMPLE LOOP: 3 nodes, 3 branches, 1 mesh ──
+    // === SIMPLE LOOP ===
+    let s_nodes = [
+        { x: cx - hw, y: cy - hh, label: 'A' },
+        { x: cx + hw, y: cy - hh, label: 'B' },
+        { x: cx, y: cy + hh, label: 'C' }
+    ];
+    let s_branches = [
+        { from: 0, to: 1, type: 'resistor', label: 'R1', mid: null },
+        { from: 1, to: 2, type: 'resistor', label: 'R2', mid: null },
+        { from: 2, to: 0, type: 'source', label: 'Vs', mid: null }
+    ];
+    let s_meshes = [
+        { nodeIndices: [0, 1, 2], color: colMesh1 }
+    ];
     circuits.push({
-        nodes: [
-            { x: cx - hw, y: cy - hh, label: 'A' },
-            { x: cx + hw, y: cy - hh, label: 'B' },
-            { x: cx,      y: cy + hh, label: 'C' }
-        ],
-        branches: [
-            { from: 0, to: 1, type: 'resistor', label: 'R1', mid: null },
-            { from: 1, to: 2, type: 'resistor', label: 'R2', mid: null },
-            { from: 2, to: 0, type: 'source',   label: 'Vs', mid: null }
-        ],
-        meshes: [
-            { nodeIndices: [0, 1, 2], extraPoints: null, color: colMesh1 }
-        ],
+        nodes: s_nodes, branches: s_branches, meshes: s_meshes,
         n: 3, b: 3, m: 1
     });
 
-    // ── TWO-MESH: 4 nodes, 5 branches, 2 meshes ──
-    const tm = hw * 0.92;
+    // === TWO-MESH ===
+    // 4 nodes, 5 branches, 2 meshes
+    // A --- R1 --- B --- R2 --- C
+    // |           |            |
+    // Vs          R3          R4... no, spec says 1 source + 3 resistors, 5 branches
+    // Wait: 4 nodes, 5 branches: b = n-1+m => 5 = 4-1+2 = 5. Check.
+    // 1 source + 3 resistors = 4 components. But 5 branches...
+    // Branches are connections between nodes. We can have wire branches.
+    // Layout:
+    // A(top-left) --R1-- B(top-right)
+    // |                   |
+    // Vs                 R2
+    // |                   |
+    // D(bot-left) --R3-- C(bot-right)
+    // That's 4 nodes, 4 branches, and b=n-1+m => 4=3+m => m=1. Only 1 mesh.
+    // For 2 meshes we need 5 branches. Add a branch B-D or A-C.
+    // Better:
+    // A --R1-- B --R2-- C
+    // |        |        |
+    // Vs      R3       (wire)
+    // |        |        |
+    // D ------wire----- (D connects bottom)
+    // Nodes: A(tl), B(tm), C(tr), D(bottom spanning)
+    // Branches: A-B(R1), B-C(R2), A-D(Vs), B-D(R3), C-D(wire)
+    // That's 5 branches, 4 nodes, 2 meshes.
+
+    let tm_hw = hw * 0.9;
+    let t_nodes = [
+        { x: cx - tm_hw, y: cy - hh, label: 'A' },
+        { x: cx, y: cy - hh, label: 'B' },
+        { x: cx + tm_hw, y: cy - hh, label: 'C' },
+        { x: cx, y: cy + hh, label: 'D' }
+    ];
+    let t_branches = [
+        { from: 0, to: 1, type: 'resistor', label: 'R1', mid: null },
+        { from: 1, to: 2, type: 'resistor', label: 'R2', mid: null },
+        { from: 0, to: 3, type: 'source', label: 'Vs', mid: { x: cx - tm_hw, y: cy + hh } },
+        { from: 1, to: 3, type: 'resistor', label: 'R3', mid: null },
+        { from: 2, to: 3, type: 'wire', label: '', mid: { x: cx + tm_hw, y: cy + hh } }
+    ];
+    let t_meshes = [
+        { nodeIndices: [0, 1, 3], color: colMesh1, extraPoints: [{ x: cx - tm_hw, y: cy + hh }] },
+        { nodeIndices: [1, 2, 3], color: colMesh2, extraPoints: [{ x: cx + tm_hw, y: cy + hh }] }
+    ];
     circuits.push({
-        nodes: [
-            { x: cx - tm, y: cy - hh, label: 'A' },
-            { x: cx,      y: cy - hh, label: 'B' },
-            { x: cx + tm, y: cy - hh, label: 'C' },
-            { x: cx,      y: cy + hh, label: 'D' }
-        ],
-        branches: [
-            { from: 0, to: 1, type: 'resistor', label: 'R1', mid: null },
-            { from: 1, to: 2, type: 'resistor', label: 'R2', mid: null },
-            { from: 0, to: 3, type: 'source',   label: 'Vs', mid: { x: cx - tm, y: cy + hh } },
-            { from: 1, to: 3, type: 'resistor', label: 'R3', mid: null },
-            { from: 2, to: 3, type: 'wire',     label: '',   mid: { x: cx + tm, y: cy + hh } }
-        ],
-        meshes: [
-            { nodeIndices: [0, 1, 3], extraPoints: [{ x: cx - tm, y: cy + hh }], color: colMesh1 },
-            { nodeIndices: [1, 2, 3], extraPoints: [{ x: cx + tm, y: cy + hh }], color: colMesh2 }
-        ],
+        nodes: t_nodes, branches: t_branches, meshes: t_meshes,
         n: 4, b: 5, m: 2
     });
 
-    // ── BRIDGE: 4 nodes, 6 branches, 3 meshes ──
-    const bh2 = hh * 0.95;
-    const bw2 = hw * 0.72;
+    // === BRIDGE (Wheatstone) ===
+    // 4 nodes, 6 branches, 3 meshes
+    // Classic diamond shape:
+    //       A (top)
+    //      / \
+    //    R1   R2
+    //    /     \
+    //   B -R5- C
+    //    \     /
+    //    R3   R4
+    //      \ /
+    //       D (bottom, with Vs from D to A)
+    // Nodes: A, B, C, D
+    // Branches: A-B(R1), A-C(R2), B-C(R5), B-D(R3), C-D(R4), D-A(Vs)
+    // 6 branches, 4 nodes. b=n-1+m => 6=3+m => m=3.
+
+    let bh = hh * 0.95;
+    let bw2 = hw * 0.75;
+    let b_nodes = [
+        { x: cx, y: cy - bh, label: 'A' },
+        { x: cx - bw2, y: cy, label: 'B' },
+        { x: cx + bw2, y: cy, label: 'C' },
+        { x: cx, y: cy + bh, label: 'D' }
+    ];
+    let b_branches = [
+        { from: 0, to: 1, type: 'resistor', label: 'R1', mid: null },
+        { from: 0, to: 2, type: 'resistor', label: 'R2', mid: null },
+        { from: 1, to: 2, type: 'resistor', label: 'R5', mid: null },
+        { from: 1, to: 3, type: 'resistor', label: 'R3', mid: null },
+        { from: 2, to: 3, type: 'resistor', label: 'R4', mid: null },
+        { from: 3, to: 0, type: 'source', label: 'Vs', mid: null }
+    ];
+    // For the bridge source, draw it on the left side as a vertical branch
+    // Actually let's route it: D to A directly (vertical)
+    let b_meshes = [
+        { nodeIndices: [0, 1, 2], color: colMesh1 },      // top triangle
+        { nodeIndices: [1, 2, 3], color: colMesh2 },      // bottom triangle
+        { nodeIndices: [0, 1, 3], color: colMesh3 }       // left outer
+    ];
     circuits.push({
-        nodes: [
-            { x: cx,       y: cy - bh2, label: 'A' },
-            { x: cx - bw2, y: cy,       label: 'B' },
-            { x: cx + bw2, y: cy,       label: 'C' },
-            { x: cx,       y: cy + bh2, label: 'D' }
-        ],
-        branches: [
-            { from: 0, to: 1, type: 'resistor', label: 'R1', mid: null },
-            { from: 0, to: 2, type: 'resistor', label: 'R2', mid: null },
-            { from: 1, to: 2, type: 'resistor', label: 'R5', mid: null },
-            { from: 1, to: 3, type: 'resistor', label: 'R3', mid: null },
-            { from: 2, to: 3, type: 'resistor', label: 'R4', mid: null },
-            { from: 3, to: 0, type: 'source',   label: 'Vs', mid: null }
-        ],
-        meshes: [
-            { nodeIndices: [0, 1, 2], extraPoints: null, color: colMesh1 },
-            { nodeIndices: [1, 2, 3], extraPoints: null, color: colMesh2 },
-            { nodeIndices: [0, 1, 3], extraPoints: null, color: colMesh3 }
-        ],
+        nodes: b_nodes, branches: b_branches, meshes: b_meshes,
         n: 4, b: 6, m: 3
     });
 }
 
-// ── Controls ─────────────────────────────────────────────────────────────────
 function setupControls() {
     dropdownX = margin;
     dropdownY = 10;
-    dropdownW = 175;
+    dropdownW = 180;
     dropdownH = 32;
 
-    // Toggle pill buttons: [label, getter, setter, focusKey, activeColor]
-    const btnDefs = [
-        { label: 'Nodes',    get: () => showNodes,    set: () => { showNodes    = !showNodes;    lastFocus = 'nodes'; },    key: 'nodes',    col: colNode },
-        { label: 'Branches', get: () => showBranches, set: () => { showBranches = !showBranches; lastFocus = 'branches'; }, key: 'branches', col: colBranch },
-        { label: 'Loops',    get: () => showLoops,    set: () => { showLoops    = !showLoops;    lastFocus = 'loops'; },    key: 'loops',    col: colLoop },
-        { label: 'Meshes',   get: () => showMeshes,   set: () => { showMeshes   = !showMeshes;   lastFocus = 'meshes'; },   key: 'meshes',   col: colMesh1 }
+    let cbX = dropdownX + dropdownW + 30;
+    let cbGap = 100;
+    checkboxes = [
+        { x: cbX, y: dropdownY + 6, label: 'Nodes', state: () => showNodes, toggle: () => { showNodes = !showNodes; } },
+        { x: cbX + cbGap, y: dropdownY + 6, label: 'Branches', state: () => showBranches, toggle: () => { showBranches = !showBranches; } },
+        { x: cbX + cbGap * 2, y: dropdownY + 6, label: 'Loops', state: () => showLoops, toggle: () => { showLoops = !showLoops; } },
+        { x: cbX + cbGap * 3, y: dropdownY + 6, label: 'Meshes', state: () => showMeshes, toggle: () => { showMeshes = !showMeshes; } }
     ];
-
-    // Lay out pills starting after dropdown + label
-    const labelW  = 120; // "Display Options:"
-    let bx = dropdownX + dropdownW + labelW + 8;
-    const bGap = 8;
-    const bH  = 28;
-    toggleButtons = [];
-
-    for (let def of btnDefs) {
-        // Measure approx width: label + padding
-        const bW = def.label.length * 7 + 24;
-        toggleButtons.push({ x: bx, y: 12, w: bW, h: bH, ...def });
-        bx += bW + bGap;
-    }
 }
 
-// ── Main Draw ─────────────────────────────────────────────────────────────────
 function draw() {
-    background(colBg[0], colBg[1], colBg[2]);
-    drawControlBar();
-    drawDiagramPanel();
-    drawExplPanel();
-    drawTopologyCard();
-    if (dropdownOpen) drawDropdownMenu();
+    background(colBg);
+
+    drawControlPanel();
+    drawCircuit();
+    drawInfoPanel();
 }
 
-// ── Control Bar ───────────────────────────────────────────────────────────────
-function drawControlBar() {
-    // Panel
-    fill(colPanel[0], colPanel[1], colPanel[2]);
-    stroke(colBorder[0], colBorder[1], colBorder[2]);
+function drawControlPanel() {
+    // Panel background
+    fill(colPanel);
+    stroke(colBorder);
     strokeWeight(1);
-    rect(margin, 5, canvasWidth - 2 * margin, 42, 8);
+    rect(margin - 5, 2, canvasWidth - 2 * margin + 10, 44, 8);
 
-    // Circuit dropdown
-    const hov = mouseInRect(dropdownX, dropdownY, dropdownW, dropdownH);
-    fill(hov ? colHover[0] : colPanel[0], hov ? colHover[1] : colPanel[1], hov ? colHover[2] : colPanel[2]);
-    stroke(colBorder[0], colBorder[1], colBorder[2]);
+    // Dropdown button
+    let hovering = mouseInRect(dropdownX, dropdownY, dropdownW, dropdownH);
+    fill(hovering ? colHover : colPanel);
+    stroke(colBorder);
     strokeWeight(1.5);
     rect(dropdownX, dropdownY, dropdownW, dropdownH, 6);
-    fill(colText[0], colText[1], colText[2]);
+    fill(colText);
     noStroke();
     textSize(13);
     textAlign(LEFT, CENTER);
     text(circuitNames[selectedCircuit], dropdownX + 10, dropdownY + dropdownH / 2);
     // Arrow
-    const ax = dropdownX + dropdownW - 20;
-    const ay = dropdownY + dropdownH / 2;
-    fill(colMuted[0], colMuted[1], colMuted[2]);
-    triangle(ax, ay - 4, ax + 10, ay - 4, ax + 5, ay + 4);
+    let ax = dropdownX + dropdownW - 22;
+    let ay = dropdownY + dropdownH / 2;
+    fill(colText);
+    triangle(ax, ay - 3, ax + 10, ay - 3, ax + 5, ay + 4);
 
-    // "Display Options:" label
-    fill(colMuted[0], colMuted[1], colMuted[2]);
+    // Checkboxes
+    for (let cb of checkboxes) {
+        drawCheckbox(cb);
+    }
+
+    // Dropdown menu (drawn last/on top in draw order handled later)
+}
+
+function drawCheckbox(cb) {
+    let size = 16;
+    let hovering = mouseInRect(cb.x, cb.y, size, size);
+    stroke(colBorder);
+    strokeWeight(1.5);
+    fill(cb.state() ? colAccent : (hovering ? colHover : colPanel));
+    rect(cb.x, cb.y, size, size, 3);
+    if (cb.state()) {
+        stroke(255);
+        strokeWeight(2);
+        noFill();
+        line(cb.x + 3, cb.y + 8, cb.x + 7, cb.y + 12);
+        line(cb.x + 7, cb.y + 12, cb.x + 13, cb.y + 4);
+    }
+    noStroke();
+    fill(colText);
     textSize(12);
     textAlign(LEFT, CENTER);
-    text('Display Options:', dropdownX + dropdownW + 10, dropdownY + dropdownH / 2);
-
-    // Toggle pill buttons
-    for (const btn of toggleButtons) {
-        drawPillToggle(btn);
-    }
-}
-
-function drawPillToggle(btn) {
-    const on  = btn.get();
-    const hov = mouseInRect(btn.x, btn.y, btn.w, btn.h);
-    const c   = btn.col;
-
-    noStroke();
-    if (on) {
-        fill(c[0], c[1], c[2]);
-        rect(btn.x, btn.y, btn.w, btn.h, btn.h / 2);
-        fill(255, 255, 255);
-    } else {
-        stroke(colBorder[0], colBorder[1], colBorder[2]);
-        strokeWeight(1.5);
-        fill(hov ? colHover[0] : colPanel[0], hov ? colHover[1] : colPanel[1], hov ? colHover[2] : colPanel[2]);
-        rect(btn.x, btn.y, btn.w, btn.h, btn.h / 2);
-        noStroke();
-        fill(colMuted[0], colMuted[1], colMuted[2]);
-    }
-    noStroke();
-    textSize(12);
-    textAlign(CENTER, CENTER);
-    text(btn.label, btn.x + btn.w / 2, btn.y + btn.h / 2);
-}
-
-// ── Diagram Panel ─────────────────────────────────────────────────────────────
-function drawDiagramPanel() {
-    // Panel background
-    fill(colPanel[0], colPanel[1], colPanel[2]);
-    stroke(colBorder[0], colBorder[1], colBorder[2]);
-    strokeWeight(1);
-    rect(diagramX, diagramY, diagramW, diagramH, 10);
-
-    // Title
-    fill(colText[0], colText[1], colText[2]);
-    noStroke();
-    textSize(13);
-    textAlign(CENTER, TOP);
-    textStyle(BOLD);
-    text(circuitNames[selectedCircuit], diagramX + diagramW / 2, diagramY + 10);
-    textStyle(NORMAL);
-
-    // Clip drawing to panel
-    drawingContext.save();
-    drawingContext.beginPath();
-    drawingContext.roundRect(diagramX + 1, diagramY + 1, diagramW - 2, diagramH - 2, 9);
-    drawingContext.clip();
-
-    drawCircuit();
-
-    drawingContext.restore();
+    text(cb.label, cb.x + size + 5, cb.y + size / 2);
 }
 
 function drawCircuit() {
-    const c = circuits[selectedCircuit];
+    let c = circuits[selectedCircuit];
 
+    // Draw meshes (filled regions)
     if (showMeshes) {
-        for (const mesh of c.meshes) drawMeshRegion(c, mesh);
+        for (let mesh of c.meshes) {
+            drawMeshRegion(c, mesh);
+        }
     }
+
+    // Draw branches
     if (showBranches) {
-        for (const br of c.branches) drawBranch(c, br);
+        for (let br of c.branches) {
+            drawBranch(c, br);
+        }
     }
+
+    // Draw loop arrows
     if (showLoops) {
-        for (let i = 0; i < c.meshes.length; i++) drawLoopArrow(c, c.meshes[i], i);
+        for (let i = 0; i < c.meshes.length; i++) {
+            drawLoopArrow(c, c.meshes[i], i);
+        }
     }
+
+    // Draw nodes
     if (showNodes) {
-        for (const nd of c.nodes) drawNode(nd);
+        for (let nd of c.nodes) {
+            drawNode(nd);
+        }
+    }
+
+    // Draw dropdown overlay if open
+    if (dropdownOpen) {
+        drawDropdownMenu();
     }
 }
 
 function drawMeshRegion(c, mesh) {
-    const col = mesh.color;
+    let col = mesh.color;
     fill(col[0], col[1], col[2], col[3]);
-    stroke(col[0], col[1], col[2], 110);
-    strokeWeight(1.5);
+    stroke(col[0], col[1], col[2], 100);
+    strokeWeight(1);
     beginShape();
-    for (const idx of mesh.nodeIndices) vertex(c.nodes[idx].x, c.nodes[idx].y);
-    if (mesh.extraPoints) for (const pt of mesh.extraPoints) vertex(pt.x, pt.y);
+    for (let idx of mesh.nodeIndices) {
+        vertex(c.nodes[idx].x, c.nodes[idx].y);
+    }
+    if (mesh.extraPoints) {
+        for (let pt of mesh.extraPoints) {
+            vertex(pt.x, pt.y);
+        }
+    }
     endShape(CLOSE);
 }
 
 function drawBranch(c, br) {
-    const n1 = c.nodes[br.from];
-    const n2 = c.nodes[br.to];
+    let n1 = c.nodes[br.from];
+    let n2 = c.nodes[br.to];
+    let mx, my;
 
     if (br.mid) {
-        const mx = br.mid.x, my = br.mid.y;
+        mx = br.mid.x;
+        my = br.mid.y;
+        // Draw two-segment branch
         if (br.type === 'source') {
-            // Determine which segment is longer — put source there
-            const d1 = dist(n1.x, n1.y, mx, my);
-            const d2 = dist(mx, my, n2.x, n2.y);
-            if (d1 >= d2) {
-                drawSourceOnLine(n1.x, n1.y, mx, my, br.label);
-                drawWireSeg(mx, my, n2.x, n2.y);
+            drawWireSeg(n1.x, n1.y, mx, my);
+            drawWireSeg(mx, my, n2.x, n2.y);
+            let smx = (n1.x + mx) / 2;
+            let smy = (n1.y + my) / 2;
+            // Check if vertical or horizontal for better placement
+            if (abs(n1.x - mx) < 5) {
+                // vertical segment - put source symbol here
+                drawSourceSymbol(n1.x, (n1.y + my) / 2, br.label, true);
             } else {
-                drawWireSeg(n1.x, n1.y, mx, my);
-                drawSourceOnLine(mx, my, n2.x, n2.y, br.label);
+                drawSourceSymbol((n1.x + mx) / 2, n1.y, br.label, false);
             }
+        } else if (br.type === 'wire') {
+            drawWireSeg(n1.x, n1.y, mx, my);
+            drawWireSeg(mx, my, n2.x, n2.y);
         } else {
             drawWireSeg(n1.x, n1.y, mx, my);
             drawWireSeg(mx, my, n2.x, n2.y);
         }
     } else {
-        if (br.type === 'resistor')      drawResistorOnLine(n1.x, n1.y, n2.x, n2.y, br.label);
-        else if (br.type === 'source')   drawSourceOnLine(n1.x, n1.y, n2.x, n2.y, br.label);
-        else                             drawWireSeg(n1.x, n1.y, n2.x, n2.y);
+        mx = (n1.x + n2.x) / 2;
+        my = (n1.y + n2.y) / 2;
+        if (br.type === 'resistor') {
+            drawResistorOnLine(n1.x, n1.y, n2.x, n2.y, br.label);
+        } else if (br.type === 'source') {
+            drawSourceOnLine(n1.x, n1.y, n2.x, n2.y, br.label);
+        } else {
+            drawWireSeg(n1.x, n1.y, n2.x, n2.y);
+        }
     }
 }
 
 function drawWireSeg(x1, y1, x2, y2) {
-    stroke(colBranch[0], colBranch[1], colBranch[2]);
+    stroke(colBranch);
     strokeWeight(2.5);
     line(x1, y1, x2, y2);
 }
 
 function drawResistorOnLine(x1, y1, x2, y2, label) {
-    const dx = x2 - x1, dy = y2 - y1;
-    const len = sqrt(dx * dx + dy * dy);
-    const ux = dx / len, uy = dy / len;
-    const px = -uy,      py = ux;
-    const rLen = 44;
-    const sf = 0.5 - rLen / (2 * len);
-    const ef = 0.5 + rLen / (2 * len);
-    const sx = x1 + dx * sf, sy = y1 + dy * sf;
-    const ex = x1 + dx * ef, ey = y1 + dy * ef;
+    let dx = x2 - x1;
+    let dy = y2 - y1;
+    let len = sqrt(dx * dx + dy * dy);
+    let ux = dx / len;
+    let uy = dy / len;
+    let px = -uy; // perpendicular
+    let py = ux;
 
-    stroke(colBranch[0], colBranch[1], colBranch[2]); strokeWeight(2.5);
+    // Wire segments before and after resistor
+    let rLen = 40; // resistor zigzag length
+    let startFrac = 0.5 - rLen / (2 * len);
+    let endFrac = 0.5 + rLen / (2 * len);
+
+    let sx = x1 + dx * startFrac;
+    let sy = y1 + dy * startFrac;
+    let ex = x1 + dx * endFrac;
+    let ey = y1 + dy * endFrac;
+
+    // Wires
+    stroke(colBranch);
+    strokeWeight(2.5);
     line(x1, y1, sx, sy);
     line(ex, ey, x2, y2);
 
-    const numZags = 6, zagAmp = 8;
-    stroke(colResistor[0], colResistor[1], colResistor[2]); strokeWeight(2); noFill();
+    // Zigzag resistor
+    let numZags = 6;
+    let zagAmp = 7;
+    stroke(colResistor);
+    strokeWeight(2);
+    noFill();
     beginShape();
     vertex(sx, sy);
     for (let i = 1; i < numZags; i++) {
-        const t = i / numZags;
-        const side = (i % 2 === 0) ? 1 : -1;
-        vertex(sx + (ex - sx) * t + px * zagAmp * side,
-               sy + (ey - sy) * t + py * zagAmp * side);
+        let t = i / numZags;
+        let zx = sx + (ex - sx) * t;
+        let zy = sy + (ey - sy) * t;
+        let side = (i % 2 === 0) ? 1 : -1;
+        vertex(zx + px * zagAmp * side, zy + py * zagAmp * side);
     }
     vertex(ex, ey);
     endShape();
 
     // Label
-    noStroke(); fill(colResistor[0], colResistor[1], colResistor[2]); textSize(12); textAlign(CENTER, CENTER); textStyle(BOLD);
-    text(label, (sx + ex) / 2 + px * 20, (sy + ey) / 2 + py * 20);
+    let lx = (sx + ex) / 2 + px * 18;
+    let ly = (sy + ey) / 2 + py * 18;
+    noStroke();
+    fill(colResistor);
+    textSize(13);
+    textAlign(CENTER, CENTER);
+    textStyle(BOLD);
+    text(label, lx, ly);
     textStyle(NORMAL);
 }
 
 function drawSourceOnLine(x1, y1, x2, y2, label) {
-    const dx = x2 - x1, dy = y2 - y1;
-    const len = sqrt(dx * dx + dy * dy);
-    const ux = dx / len, uy = dy / len;
-    const px = -uy, py = ux;
-    const cx2 = (x1 + x2) / 2, cy2 = (y1 + y2) / 2;
-    const r = 18;
+    let dx = x2 - x1;
+    let dy = y2 - y1;
+    let len = sqrt(dx * dx + dy * dy);
+    let ux = dx / len;
+    let uy = dy / len;
+    let px = -uy;
+    let py = ux;
 
-    stroke(colBranch[0], colBranch[1], colBranch[2]); strokeWeight(2.5);
-    line(x1, y1, cx2 - ux * r, cy2 - uy * r);
-    line(cx2 + ux * r, cy2 + uy * r, x2, y2);
+    let cx = (x1 + x2) / 2;
+    let cy2 = (y1 + y2) / 2;
+    let r = 18;
 
-    stroke(colSource[0], colSource[1], colSource[2]); strokeWeight(2); noFill();
-    ellipse(cx2, cy2, r * 2, r * 2);
+    // Wires to circle
+    stroke(colBranch);
+    strokeWeight(2.5);
+    line(x1, y1, cx - ux * r, cy2 - uy * r);
+    line(cx + ux * r, cy2 + uy * r, x2, y2);
 
-    fill(colSource[0], colSource[1], colSource[2]); noStroke(); textAlign(CENTER, CENTER);
-    textSize(14); text('+', cx2 - ux * 7, cy2 - uy * 7);
-    textSize(16); text('\u2212', cx2 + ux * 7, cy2 + uy * 7);
+    // Circle
+    stroke(colSource);
+    strokeWeight(2);
+    noFill();
+    ellipse(cx, cy2, r * 2, r * 2);
 
-    textSize(12); textStyle(BOLD);
-    text(label, cx2 + px * (r + 16), cy2 + py * (r + 16));
+    // Plus and minus
+    fill(colSource);
+    noStroke();
+    textSize(16);
+    textAlign(CENTER, CENTER);
+    text('+', cx - ux * 8 + px * 0, cy2 - uy * 8 + py * 0);
+    textSize(18);
+    text('-', cx + ux * 8, cy2 + uy * 8);
+
+    // Label
+    let lx = cx + px * (r + 16);
+    let ly = cy2 + py * (r + 16);
+    textSize(13);
+    fill(colSource);
+    textStyle(BOLD);
+    text(label, lx, ly);
+    textStyle(NORMAL);
+}
+
+function drawSourceSymbol(cx, cy, label, vertical) {
+    let r = 18;
+    stroke(colSource);
+    strokeWeight(2);
+    noFill();
+    ellipse(cx, cy, r * 2, r * 2);
+
+    fill(colSource);
+    noStroke();
+    textSize(16);
+    textAlign(CENTER, CENTER);
+    if (vertical) {
+        text('+', cx, cy - 7);
+        textSize(18);
+        text('-', cx, cy + 7);
+        textSize(13);
+        textStyle(BOLD);
+        text(label, cx - r - 16, cy);
+    } else {
+        text('+', cx - 7, cy);
+        textSize(18);
+        text('-', cx + 7, cy);
+        textSize(13);
+        textStyle(BOLD);
+        text(label, cx, cy - r - 12);
+    }
     textStyle(NORMAL);
 }
 
 function drawNode(nd) {
-    // Glow ring
+    // Filled circle
+    fill(colNode);
     noStroke();
-    fill(colNode[0], colNode[1], colNode[2], 50);
-    ellipse(nd.x, nd.y, 32, 32);
-    // Solid dot
-    fill(colNode[0], colNode[1], colNode[2]);
     ellipse(nd.x, nd.y, 22, 22);
     // Label
-    fill(255); textSize(12); textAlign(CENTER, CENTER); textStyle(BOLD);
+    fill(255);
+    textSize(13);
+    textAlign(CENTER, CENTER);
+    textStyle(BOLD);
     text(nd.label, nd.x, nd.y);
     textStyle(NORMAL);
 }
 
 function drawLoopArrow(c, mesh, idx) {
+    // Compute centroid
     let cx2 = 0, cy2 = 0;
-    let total = mesh.nodeIndices.length;
-    for (const i of mesh.nodeIndices) { cx2 += c.nodes[i].x; cy2 += c.nodes[i].y; }
-    if (mesh.extraPoints) {
-        for (const pt of mesh.extraPoints) { cx2 += pt.x; cy2 += pt.y; total++; }
+    for (let i of mesh.nodeIndices) {
+        cx2 += c.nodes[i].x;
+        cy2 += c.nodes[i].y;
     }
-    cx2 /= total; cy2 /= total;
+    if (mesh.extraPoints) {
+        for (let pt of mesh.extraPoints) {
+            cx2 += pt.x;
+            cy2 += pt.y;
+        }
+        let total = mesh.nodeIndices.length + mesh.extraPoints.length;
+        cx2 /= total;
+        cy2 /= total;
+    } else {
+        cx2 /= mesh.nodeIndices.length;
+        cy2 /= mesh.nodeIndices.length;
+    }
 
-    const r = 22;
-    noFill(); stroke(colLoop[0], colLoop[1], colLoop[2]); strokeWeight(2.5);
-    arc(cx2, cy2, r * 2, r * 2, -PI * 0.75, PI * 0.55);
-
+    // Draw circular arrow
+    let r = 20;
+    noFill();
+    stroke(colLoop);
+    strokeWeight(2);
+    arc(cx2, cy2, r * 2, r * 2, -PI * 0.8, PI * 0.5);
     // Arrowhead
-    const ax2 = cx2 + r * cos(PI * 0.55);
-    const ay2 = cy2 + r * sin(PI * 0.55);
-    fill(colLoop[0], colLoop[1], colLoop[2]); noStroke();
-    const aSize = 6;
+    let ax2 = cx2 + r * cos(PI * 0.5);
+    let ay2 = cy2 + r * sin(PI * 0.5);
+    fill(colLoop);
+    noStroke();
+    let aSize = 6;
     triangle(ax2 - aSize, ay2 - aSize / 2, ax2 + aSize / 2, ay2, ax2 - aSize, ay2 + aSize / 2);
 
-    noStroke(); fill(colLoop[0], colLoop[1], colLoop[2]); textSize(11); textAlign(CENTER, CENTER); textStyle(BOLD);
+    // Label
+    textSize(12);
+    textAlign(CENTER, CENTER);
+    fill(colLoop);
+    textStyle(BOLD);
     text('I' + (idx + 1), cx2, cy2);
     textStyle(NORMAL);
 }
 
-// ── Explanation Panel ─────────────────────────────────────────────────────────
-function drawExplPanel() {
-    // Panel background
-    fill(colPanel[0], colPanel[1], colPanel[2]);
-    stroke(colBorder[0], colBorder[1], colBorder[2]);
+function drawInfoPanel() {
+    let c = circuits[selectedCircuit];
+    let panelY = canvasHeight - 100;
+    let panelH = 85;
+
+    fill(colPanel);
+    stroke(colBorder);
     strokeWeight(1);
-    rect(explX, explY, explW, explH, 10);
+    rect(margin, panelY, canvasWidth - 2 * margin, panelH, 8);
 
-    const def = definitions[lastFocus] || definitions['overview'];
-    const c   = circuits[selectedCircuit];
-    const pad = 16;
-    let ty = explY + pad;
-
-    // Header strip
+    // Counters
+    fill(colText);
     noStroke();
-    fill(colCardBg[0], colCardBg[1], colCardBg[2]);
-    rect(explX + 1, explY + 1, explW - 2, 38, 9, 9, 0, 0);
+    textSize(15);
+    textAlign(LEFT, TOP);
+    let tx = margin + 15;
+    let ty = panelY + 12;
 
-    // Title
-    fill(colAccent[0], colAccent[1], colAccent[2]); textSize(14); textStyle(BOLD); textAlign(LEFT, TOP);
-    text(def.title, explX + pad, ty + 4);
+    textStyle(BOLD);
+    text('Topology Counts', tx, ty);
     textStyle(NORMAL);
 
-    ty += 48;
+    ty += 24;
+    textSize(14);
 
-    // Body text (word-wrapped)
-    fill(colText[0], colText[1], colText[2]); textSize(12); textAlign(LEFT, TOP);
-    const bodyLines = wrapText(def.body, explW - pad * 2);
-    for (const line of bodyLines) {
-        text(line, explX + pad, ty);
-        ty += 18;
+    // Node count
+    fill(colNode);
+    text('Nodes (n): ' + c.n, tx, ty);
+
+    // Branch count
+    fill(colBranch);
+    text('Branches (b): ' + c.b, tx + 150, ty);
+
+    // Mesh count
+    fill(colLoop);
+    text('Meshes (m): ' + c.m, tx + 330, ty);
+
+    // Formula
+    ty += 26;
+    let bCalc = c.n - 1 + c.m;
+    let verified = (bCalc === c.b);
+    fill(colText);
+    textSize(14);
+    textStyle(BOLD);
+    let formula = 'b = n - 1 + m  =>  ' + c.b + ' = ' + c.n + ' - 1 + ' + c.m + ' = ' + bCalc;
+    text(formula, tx, ty);
+
+    // Verification badge
+    let fw = textWidth(formula);
+    if (verified) {
+        fill(34, 197, 94);
+        textSize(13);
+        text('  Verified', tx + fw + 5, ty);
+    } else {
+        fill(239, 68, 68);
+        textSize(13);
+        text('  Mismatch!', tx + fw + 5, ty);
     }
-
-    ty += 10;
-
-    // Formula box
-    fill(colCardBg[0], colCardBg[1], colCardBg[2]); stroke(colCardBorder[0], colCardBorder[1], colCardBorder[2]); strokeWeight(1);
-    const fboxH = 52;
-    rect(explX + pad, ty, explW - pad * 2, fboxH, 6);
-
-    fill(colAccent[0], colAccent[1], colAccent[2]); noStroke(); textSize(15); textStyle(BOLD); textAlign(CENTER, CENTER);
-    text(def.formula, explX + explW / 2, ty + 18);
-    textStyle(NORMAL);
-
-    fill(colMuted[0], colMuted[1], colMuted[2]); textSize(10); textAlign(CENTER, TOP);
-    text(def.formulaNote, explX + explW / 2, ty + 34);
-
-    ty += fboxH + 14;
-
-    // Context summary (what's currently shown)
-    fill(colMuted[0], colMuted[1], colMuted[2]); textSize(11); textAlign(LEFT, TOP);
-    const ctx = buildContextSummary(c);
-    const ctxLines = wrapText(ctx, explW - pad * 2);
-    for (const line of ctxLines) {
-        text(line, explX + pad, ty);
-        ty += 16;
-    }
-
-    // Active element legend dots
-    ty += 8;
-    const activeItems = [];
-    if (showNodes)    activeItems.push({ label: 'Nodes',    col: colNode });
-    if (showBranches) activeItems.push({ label: 'Branches', col: colBranch });
-    if (showLoops)    activeItems.push({ label: 'Loops',    col: colLoop });
-    if (showMeshes)   activeItems.push({ label: 'Meshes',   col: [colMesh1[0], colMesh1[1], colMesh1[2]] });
-
-    for (const item of activeItems) {
-        if (ty + 16 > explY + explH - pad) break;
-        noStroke(); fill(item.col[0], item.col[1], item.col[2]);
-        ellipse(explX + pad + 5, ty + 6, 10, 10);
-        fill(colText[0], colText[1], colText[2]); textSize(11); textAlign(LEFT, CENTER);
-        text(item.label, explX + pad + 16, ty + 6);
-        ty += 18;
-    }
-
-    if (activeItems.length === 0) {
-        fill(colMuted[0], colMuted[1], colMuted[2]); textSize(11); textAlign(LEFT, TOP);
-        text('No elements shown — toggle buttons above.', explX + pad, ty);
-    }
-}
-
-function buildContextSummary(c) {
-    switch (lastFocus) {
-        case 'nodes':
-            return 'Showing ' + c.n + ' node' + (c.n > 1 ? 's' : '') + ' in ' + circuitNames[selectedCircuit] + '. Nodes are the junctions where current paths meet.';
-        case 'branches':
-            return 'Showing ' + c.b + ' branch' + (c.b > 1 ? 'es' : '') + ' in ' + circuitNames[selectedCircuit] + '. Each branch is one element carrying one unknown current.';
-        case 'loops':
-            return 'Showing ' + c.m + ' mesh loop' + (c.m > 1 ? 's' : '') + ' in ' + circuitNames[selectedCircuit] + '. KVL applies to every closed path.';
-        case 'meshes':
-            return 'Showing ' + c.m + ' mesh' + (c.m > 1 ? 'es' : '') + ' (shaded regions) in ' + circuitNames[selectedCircuit] + '. Each mesh window gives one independent KVL equation.';
-        default:
-            return 'Select a circuit from the dropdown. Toggle elements to explore how nodes, branches, and meshes relate to each other.';
-    }
-}
-
-function wrapText(str, maxW) {
-    const words = str.split(' ');
-    const lines = [];
-    let current = '';
-    for (const word of words) {
-        const test = current ? current + ' ' + word : word;
-        if (textWidth(test) > maxW && current) {
-            lines.push(current);
-            current = word;
-        } else {
-            current = test;
-        }
-    }
-    if (current) lines.push(current);
-    return lines;
-}
-
-// ── Topology Card (bottom) ────────────────────────────────────────────────────
-function drawTopologyCard() {
-    const c = circuits[selectedCircuit];
-    const x = margin, y = cardY, w = canvasWidth - 2 * margin, h = cardH;
-
-    // Card background
-    fill(colCardBg[0], colCardBg[1], colCardBg[2]); stroke(colCardBorder[0], colCardBorder[1], colCardBorder[2]); strokeWeight(1.5);
-    rect(x, y, w, h, 10);
-
-    // Section label
-    noStroke(); fill(colAccent[0], colAccent[1], colAccent[2]); textSize(12); textStyle(BOLD); textAlign(LEFT, TOP);
-    text('Topology Counts', x + 16, y + 10);
-    textStyle(NORMAL);
-
-    // Count badges
-    const badges = [
-        { label: 'Nodes (n)', value: c.n, col: colNode },
-        { label: 'Branches (b)', value: c.b, col: colBranch },
-        { label: 'Meshes (m)', value: c.m, col: [colLoop[0], colLoop[1], colLoop[2]] }
-    ];
-
-    const badgeW = 100, badgeH = 50, badgeGap = 14;
-    const totalBW = badges.length * badgeW + (badges.length - 1) * badgeGap;
-    let bx = x + 16;
-    const by = y + 30;
-
-    for (const badge of badges) {
-        // Badge box
-        fill(badge.col[0], badge.col[1], badge.col[2], 22);
-        stroke(badge.col[0], badge.col[1], badge.col[2], 80);
-        strokeWeight(1);
-        rect(bx, by, badgeW, badgeH, 8);
-
-        // Value (large)
-        fill(badge.col[0], badge.col[1], badge.col[2]);
-        noStroke(); textSize(22); textStyle(BOLD); textAlign(CENTER, CENTER);
-        text(badge.value, bx + badgeW / 2, by + 18);
-        textStyle(NORMAL);
-
-        // Label (small)
-        fill(colMuted[0], colMuted[1], colMuted[2]); textSize(10); textAlign(CENTER, TOP);
-        text(badge.label, bx + badgeW / 2, by + 34);
-
-        bx += badgeW + badgeGap;
-    }
-
-    // Formula line
-    const bCalc  = c.n - 1 + c.m;
-    const verified = (bCalc === c.b);
-    const fmtStr = 'b = n \u2212 1 + m    \u27F9    ' + c.b + ' = ' + c.n + ' \u2212 1 + ' + c.m + ' = ' + bCalc;
-
-    const fLineX = bx + 16;
-    const fLineY = by + 8;
-
-    // Formula label
-    fill(colMuted[0], colMuted[1], colMuted[2]); textSize(11); textAlign(LEFT, TOP); noStroke();
-    text('Key Formula:', fLineX, fLineY);
-
-    fill(colText[0], colText[1], colText[2]); textSize(14); textStyle(BOLD); textAlign(LEFT, TOP);
-    text(fmtStr, fLineX, fLineY + 15);
-    textStyle(NORMAL);
-
-    // Verified badge
-    const badgeTxt = verified ? '\u2713 Verified' : '\u2717 Mismatch';
-    const badgeC   = verified ? colGreenBg : [254, 226, 226];
-    const textC    = verified ? colGreenText : [185, 28, 28];
-
-    const vbW = 80, vbH = 24;
-    fill(badgeC[0], badgeC[1], badgeC[2]); stroke(textC[0], textC[1], textC[2], 80); strokeWeight(1);
-    rect(fLineX, fLineY + 38, vbW, vbH, 12);
-    fill(textC[0], textC[1], textC[2]); noStroke(); textSize(12); textStyle(BOLD); textAlign(CENTER, CENTER);
-    text(badgeTxt, fLineX + vbW / 2, fLineY + 38 + vbH / 2);
     textStyle(NORMAL);
 }
 
-// ── Dropdown ──────────────────────────────────────────────────────────────────
 function drawDropdownMenu() {
-    const x = dropdownX, y = dropdownY + dropdownH + 2;
-    const w = dropdownW, itemH = 32;
+    let x = dropdownX;
+    let y = dropdownY + dropdownH + 2;
+    let w = dropdownW;
+    let itemH = 32;
 
     // Shadow
-    noStroke(); fill(0, 0, 0, 18);
+    noStroke();
+    fill(0, 0, 0, 20);
     rect(x + 3, y + 3, w, itemH * circuitNames.length, 6);
 
-    fill(colPanel[0], colPanel[1], colPanel[2]); stroke(colBorder[0], colBorder[1], colBorder[2]); strokeWeight(1);
+    // Menu background
+    fill(colPanel);
+    stroke(colBorder);
+    strokeWeight(1);
     rect(x, y, w, itemH * circuitNames.length, 6);
 
     for (let i = 0; i < circuitNames.length; i++) {
-        const iy = y + i * itemH;
-        const hov = mouseInRect(x, iy, w, itemH);
-        if (hov) {
-            fill(colHover[0], colHover[1], colHover[2]); noStroke();
-            rect(x + 1, iy + 1, w - 2, itemH - 2,
-                i === 0 ? 5 : 0, i === 0 ? 5 : 0,
-                i === circuitNames.length - 1 ? 5 : 0,
-                i === circuitNames.length - 1 ? 5 : 0);
+        let iy = y + i * itemH;
+        let hovering = mouseInRect(x, iy, w, itemH);
+        if (hovering) {
+            fill(colHover);
+            noStroke();
+            rect(x + 1, iy + 1, w - 2, itemH - 2, i === 0 ? 5 : 0, i === 0 ? 5 : 0,
+                i === circuitNames.length - 1 ? 5 : 0, i === circuitNames.length - 1 ? 5 : 0);
         }
-        const fc = (i === selectedCircuit) ? colAccent : colText;
-        fill(fc[0], fc[1], fc[2]);
-        noStroke(); textSize(13); textAlign(LEFT, CENTER);
+        fill(i === selectedCircuit ? colAccent : colText);
+        noStroke();
+        textSize(13);
+        textAlign(LEFT, CENTER);
         text(circuitNames[i], x + 12, iy + itemH / 2);
     }
 }
 
-// ── Interaction ───────────────────────────────────────────────────────────────
 function mousePressed() {
+    // Check dropdown
     if (dropdownOpen) {
-        const x = dropdownX, y = dropdownY + dropdownH + 2, itemH = 32;
+        let x = dropdownX;
+        let y = dropdownY + dropdownH + 2;
+        let itemH = 32;
         for (let i = 0; i < circuitNames.length; i++) {
             if (mouseInRect(x, y + i * itemH, dropdownW, itemH)) {
                 selectedCircuit = i;
-                buildCircuits();
                 dropdownOpen = false;
                 return;
             }
@@ -730,14 +690,16 @@ function mousePressed() {
         return;
     }
 
+    // Check dropdown button
     if (mouseInRect(dropdownX, dropdownY, dropdownW, dropdownH)) {
         dropdownOpen = !dropdownOpen;
         return;
     }
 
-    for (const btn of toggleButtons) {
-        if (mouseInRect(btn.x, btn.y, btn.w, btn.h)) {
-            btn.set();
+    // Check checkboxes
+    for (let cb of checkboxes) {
+        if (mouseInRect(cb.x, cb.y, 16, 16)) {
+            cb.toggle();
             return;
         }
     }

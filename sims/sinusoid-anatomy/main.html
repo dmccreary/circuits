@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Sinusoidal Waveform Anatomy</title>
+<script src="https://cdn.jsdelivr.net/npm/p5@1.11.7/lib/p5.js"></script>
+<style>
+  body { margin: 0; padding: 0; background: #e8eaf0; }
+  canvas { display: block; }
+</style>
+</head>
+<body>
+<main></main>
+<script>
+// Sinusoidal Waveform Anatomy MicroSim
+// Chapter 8: AC Signals and Sinusoidal Waveforms
+// Shows amplitude markers, period, phase, formula
+
+const CW = 680;
+const PLOT_H = 340;
+const CTRL_H = 160;
+const CH = PLOT_H + CTRL_H;
+
+// Margins for plot area
+const PL = 60, PR = 20, PT = 30, PB = 30;
+const PW = CW - PL - PR;
+const PH = PLOT_H - PT - PB;
+
+// Circuit parameters
+let Vm = 5;      // 1–10 V
+let f  = 10;     // 1–100 Hz
+let phi = 0;     // -180 to +180 deg
+let showRMS = true;
+
+// Slider layout
+const SL_X = 220;
+const SL_W = CW - SL_X - 20;
+const SL_Y1 = PLOT_H + 30;
+const SL_Y2 = PLOT_H + 58;
+const SL_Y3 = PLOT_H + 86;
+
+// Buttons
+const BTN_RMS  = { x: 10, y: PLOT_H + 120, w: 110, h: 26 };
+const BTN_RST  = { x: 130, y: PLOT_H + 120, w: 80, h: 26 };
+
+let dragSlider = null;
+
+function setup() {
+  createCanvas(CW, CH).parent(select('main').elt);
+  textFont('Arial');
+}
+
+function draw() {
+  background(232, 234, 240);
+  drawPlot();
+  drawControls();
+}
+
+function drawPlot() {
+  // Plot background
+  fill(252, 252, 255); noStroke();
+  rect(0, 0, CW, PLOT_H, 0, 0, 8, 8);
+
+  // Title
+  fill(20, 30, 80); textSize(13); textStyle(BOLD);
+  textAlign(CENTER, TOP);
+  text('Sinusoidal Waveform Anatomy', CW / 2, 6);
+  textStyle(NORMAL);
+
+  const ox = PL;
+  const oy = PT + PH / 2;  // y=0 axis
+  const yscale = (PH / 2) / 11;  // 11V headroom
+  const xscale = PW / 3;         // show ~3 cycles
+
+  // Grid lines
+  stroke(210, 215, 230); strokeWeight(1);
+  for (let v = -10; v <= 10; v += 5) {
+    const yp = oy - v * yscale;
+    line(ox, yp, ox + PW, yp);
+  }
+  for (let i = 0; i <= 3; i++) {
+    const xp = ox + i * xscale;
+    line(xp, PT, xp, PT + PH);
+  }
+
+  // Axes
+  stroke(100, 110, 150); strokeWeight(1.5);
+  line(ox, PT, ox, PT + PH);
+  line(ox, oy, ox + PW, oy);
+
+  // Axis labels
+  fill(80, 90, 130); noStroke(); textSize(10); textAlign(RIGHT, CENTER);
+  for (let v = -10; v <= 10; v += 5) {
+    if (v === 0) continue;
+    text(v + 'V', ox - 4, oy - v * yscale);
+  }
+  text('0', ox - 4, oy);
+  textAlign(CENTER, TOP);
+  const T = 1 / f;
+  for (let i = 0; i <= 3; i++) {
+    text((i * T * 1000).toFixed(1) + 'ms', ox + i * xscale, PT + PH + 3);
+  }
+  // y-axis label
+  push(); translate(14, PLOT_H / 2); rotate(-HALF_PI);
+  textAlign(CENTER, CENTER); textSize(10);
+  text('Voltage (V)', 0, 0);
+  pop();
+
+  // Draw waveform
+  const phiRad = phi * PI / 180;
+  const omega = TWO_PI * f;
+  stroke(60, 100, 200); strokeWeight(2.5); noFill();
+  beginShape();
+  for (let px = 0; px <= PW; px++) {
+    const t = (px / PW) * (3 / f);
+    const v = Vm * sin(omega * t + phiRad);
+    vertex(ox + px, oy - v * yscale);
+  }
+  endShape();
+
+  // RMS line
+  if (showRMS) {
+    const rms = Vm / sqrt(2);
+    const yRms = oy - rms * yscale;
+    const yRmsN = oy + rms * yscale;
+    stroke(220, 60, 60); strokeWeight(1.5); setLineDash([6, 4]);
+    line(ox, yRms, ox + PW, yRms);
+    line(ox, yRmsN, ox + PW, yRmsN);
+    setLineDash([]);
+    noStroke(); fill(220, 60, 60); textSize(10); textAlign(LEFT, BOTTOM);
+    text('RMS = ' + rms.toFixed(2) + 'V', ox + 4, yRms - 2);
+  }
+
+  // Peak amplitude markers
+  const yPeak = oy - Vm * yscale;
+  const yTrough = oy + Vm * yscale;
+  stroke(0, 150, 80); strokeWeight(1.5); setLineDash([4, 4]);
+  line(ox, yPeak, ox + PW * 0.9, yPeak);
+  line(ox, yTrough, ox + PW * 0.9, yTrough);
+  setLineDash([]);
+  // Vm arrow
+  stroke(0, 150, 80); strokeWeight(1.5);
+  const arrowX = ox + PW * 0.85;
+  line(arrowX, oy, arrowX, yPeak);
+  triangle(arrowX - 4, yPeak + 8, arrowX + 4, yPeak + 8, arrowX, yPeak);
+  noStroke(); fill(0, 150, 80); textSize(10); textAlign(LEFT, CENTER);
+  text('Vm = ' + Vm.toFixed(1) + 'V', arrowX + 6, (oy + yPeak) / 2);
+
+  // Period marker
+  const T_px = xscale;
+  const yPeriod = oy + Vm * yscale + 18;
+  const x0 = ox;
+  stroke(180, 100, 10); strokeWeight(1.5);
+  line(x0, yPeriod - 4, x0, yPeriod + 4);
+  line(x0 + T_px, yPeriod - 4, x0 + T_px, yPeriod + 4);
+  line(x0, yPeriod, x0 + T_px, yPeriod);
+  // Arrow heads
+  triangle(x0 + 6, yPeriod - 3, x0 + 6, yPeriod + 3, x0, yPeriod);
+  triangle(x0 + T_px - 6, yPeriod - 3, x0 + T_px - 6, yPeriod + 3, x0 + T_px, yPeriod);
+  noStroke(); fill(180, 100, 10); textSize(10); textAlign(CENTER, TOP);
+  text('T = ' + (T * 1000).toFixed(2) + ' ms', x0 + T_px / 2, yPeriod + 3);
+
+  // Phase marker line at t=0
+  if (abs(phi) > 1) {
+    stroke(160, 50, 180); strokeWeight(1.5); setLineDash([5, 5]);
+    line(ox, PT, ox, PT + PH);
+    setLineDash([]);
+    noStroke(); fill(160, 50, 180); textSize(10); textAlign(LEFT, TOP);
+    text('φ = ' + phi.toFixed(0) + '°', ox + 4, PT + 2);
+  }
+
+  // Formula
+  noStroke(); fill(20, 30, 80); textSize(11); textAlign(LEFT, TOP);
+  const phiStr = phi >= 0 ? '+' + phi.toFixed(0) + '°' : phi.toFixed(0) + '°';
+  const fStr = phi === 0 ? `v(t) = ${Vm.toFixed(1)} sin(2π·${f.toFixed(0)}·t)` :
+                           `v(t) = ${Vm.toFixed(1)} sin(2π·${f.toFixed(0)}·t ${phiStr})`;
+  text(fStr, PL, 10);
+}
+
+function setLineDash(list) {
+  drawingContext.setLineDash(list);
+}
+
+function drawControls() {
+  fill(218, 224, 240); noStroke();
+  rect(0, PLOT_H, CW, CTRL_H, 0, 0, 8, 8);
+
+  drawSlider('Amplitude Vm:', Vm, 1, 10, SL_Y1, Vm.toFixed(1) + ' V');
+  drawSlider('Frequency f:', f, 1, 100, SL_Y2, f.toFixed(0) + ' Hz');
+  drawSlider('Phase φ:', phi, -180, 180, SL_Y3, phi.toFixed(0) + '°');
+
+  drawBtn(BTN_RMS, showRMS ? '■ Hide RMS' : '▶ Show RMS', showRMS ? [150, 50, 50] : [50, 125, 55]);
+  drawBtn(BTN_RST, '↺ Reset', [100, 105, 135]);
+}
+
+function drawSlider(label, val, mn, mx, cy, dispVal) {
+  const t  = (val - mn) / (mx - mn);
+  const tx = SL_X + SL_W * t;
+  noStroke(); fill(35, 45, 100); textSize(11); textAlign(RIGHT, CENTER);
+  text(label + '  ' + dispVal, SL_X - 8, cy);
+  fill(178, 183, 210); noStroke(); rect(SL_X, cy - 4, SL_W, 8, 4);
+  fill(70, 110, 200); rect(SL_X, cy - 4, SL_W * t, 8, 4);
+  fill(255); stroke(75, 110, 200); strokeWeight(2); circle(tx, cy, 18);
+}
+
+function drawBtn(b, lbl, col) {
+  fill(col[0], col[1], col[2]); noStroke(); rect(b.x, b.y, b.w, b.h, 5);
+  fill(255); textSize(11); textStyle(BOLD); textAlign(CENTER, CENTER);
+  text(lbl, b.x + b.w / 2, b.y + b.h / 2); textStyle(NORMAL);
+}
+
+function mousePressed() {
+  if (inBtn(BTN_RMS)) { showRMS = !showRMS; return; }
+  if (inBtn(BTN_RST)) { Vm = 5; f = 10; phi = 0; showRMS = true; return; }
+  startSliderDrag();
+}
+function mouseDragged() { if (dragSlider) applySliderDrag(); }
+function mouseReleased() { dragSlider = null; }
+
+function inBtn(b) {
+  return mouseX >= b.x && mouseX <= b.x + b.w && mouseY >= b.y && mouseY <= b.y + b.h;
+}
+
+const SLIDERS = [
+  { key: 'vm',  cy: SL_Y1, mn: 1,    mx: 10  },
+  { key: 'f',   cy: SL_Y2, mn: 1,    mx: 100 },
+  { key: 'phi', cy: SL_Y3, mn: -180, mx: 180 },
+];
+function startSliderDrag() {
+  for (const s of SLIDERS) {
+    if (mouseX >= SL_X - 12 && mouseX <= SL_X + SL_W + 12 &&
+        mouseY >= s.cy - 14 && mouseY <= s.cy + 14) {
+      dragSlider = s.key; applySliderDrag(); return;
+    }
+  }
+}
+function applySliderDrag() {
+  const s = SLIDERS.find(d => d.key === dragSlider);
+  if (!s) return;
+  const t = constrain((mouseX - SL_X) / SL_W, 0, 1);
+  const raw = s.mn + t * (s.mx - s.mn);
+  if (s.key === 'vm')  Vm  = constrain(round(raw * 10) / 10, s.mn, s.mx);
+  if (s.key === 'f')   f   = constrain(round(raw), s.mn, s.mx);
+  if (s.key === 'phi') phi = constrain(round(raw / 5) * 5, s.mn, s.mx);
+}
+</script>
+</body>
+</html>
