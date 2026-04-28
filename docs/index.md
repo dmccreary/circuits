@@ -12,118 +12,187 @@ hide:
   min-height: 92vh;
   position: relative;
   overflow: hidden;
-  background: linear-gradient(135deg, #0f0c29 0%, #1a1040 45%, #0d1b3e 100%);
 }
 
-/* All text on cover is light */
-.md-typeset .cover-content {
-  padding: 5.5rem 3rem 4.5rem;
-  text-align: center;
-  position: relative;
-  z-index: 2;
-}
-
-/* Title */
-.md-typeset .cover-page h1 {
-  font-size: 3.6rem !important;
-  font-weight: 800 !important;
-  color: #ffffff !important;
-  text-shadow: 0 2px 16px rgba(124,92,239,0.6);
-  letter-spacing: -0.02em;
-  margin-bottom: 0.4rem !important;
-}
-
-/* Subtitle */
-.md-typeset .cover-page h2 {
-  font-weight: 500;
-  font-size: 1.4rem !important;
-  color: #c4b5fd !important;
-  margin-top: 0.2rem !important;
-  text-shadow: none;
-}
-
-/* Body text */
-.md-typeset .cover-page p,
-.md-typeset .cover-institution,
-.md-typeset .cover-description {
-  color: #cbd5e1 !important;
-  font-size: 1rem;
-  line-height: 1.7;
-}
-
-/* Bold inline */
-.md-typeset .cover-page strong {
-  color: #e2d9f3 !important;
-}
-
-/* Horizontal rule */
-.md-typeset .cover-page hr {
-  border-color: rgba(196,181,253,0.25) !important;
-  margin: 1.2rem auto !important;
-  width: 60%;
-}
-
-/* Stats row */
-.md-typeset .cover-stats {
-  display: flex;
-  justify-content: center;
-  gap: 2.5rem;
-  flex-wrap: wrap;
-  margin: 2rem 0 1.2rem 0;
-}
-.md-typeset .stat-item { text-align: center; }
-.md-typeset .stat-number {
-  font-size: 2.2rem;
-  font-weight: 700;
-  color: #a78bfa !important;
-  line-height: 1.1;
-}
-.md-typeset .stat-label {
-  font-size: 0.8rem;
-  color: #94a3b8 !important;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-}
-
-.md-typeset .cover-buttons { margin-top: 2rem; }
-
-/* Background circuit art */
-@keyframes circuit-breathe {
-  0%, 100% { opacity: 0.22; }
-  50%       { opacity: 0.32; }
-}
+/* Background circuit art — absolute fill behind card */
 .md-typeset .cover-bg-circuit {
   position: absolute;
   top: 0; left: 0;
   width: 100%; height: 100%;
-  z-index: 1;
+  z-index: 0;
   pointer-events: none;
 }
+
+/* Center content card with dark overlay for readability */
+.md-typeset .cover-content {
+  position: relative;
+  z-index: 1;
+  padding: 4rem 3.5rem;
+  text-align: center;
+  max-width: 860px;
+  margin: 3rem auto 0;
+  background: rgba(4, 0, 20, 0.70);
+  border-radius: 20px;
+  box-shadow: 0 8px 48px rgba(0, 0, 0, 0.45);
+}
+
+/* Title: "Circuits I" large + "Interactive Textbook" lighter below */
+.md-typeset .cover-title-block { margin-bottom: 1.2rem; }
+
+.md-typeset .cover-title-main {
+  display: block;
+  font-size: clamp(3.2rem, 8vw, 5.5rem);
+  font-weight: 900;
+  color: #ffffff !important;
+  letter-spacing: -0.02em;
+  text-shadow: 0 2px 24px rgba(124, 92, 239, 0.7);
+  line-height: 1.0;
+}
+.md-typeset .cover-title-tagline {
+  display: block;
+  font-size: clamp(0.95rem, 2.5vw, 1.35rem);
+  font-weight: 400;
+  color: #c4b5fd !important;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin-top: 0.5rem;
+}
+
+/* Subtitle h2 — gold accent */
+.md-typeset .cover-page h2 {
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: #D4A017 !important;
+  margin-top: 0.2rem;
+  margin-bottom: 0.5rem;
+  border-bottom: none !important;
+}
+
+/* Circuit art animation */
+@keyframes circuit-breathe {
+  0%, 100% { opacity: 0.20; }
+  50%       { opacity: 0.27; }
+}
 .md-typeset .cover-bg-circuit svg {
-  animation: circuit-breathe 7s ease-in-out infinite;
+  animation: circuit-breathe 8s ease-in-out infinite;
 }
 @media (prefers-reduced-motion: reduce) {
   .md-typeset .cover-bg-circuit svg { animation: none; opacity: 0.22; }
 }
 
-/* Button hover */
-.md-typeset .cover-buttons .md-button {
-  transition: transform .25s ease, box-shadow .25s ease,
-              background .25s ease, color .25s ease, border-color .25s ease;
+/* Description text */
+.md-typeset .cover-description-text {
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 1rem;
+  line-height: 1.7;
+  margin: 0.8rem 0 0.3rem;
 }
-.md-typeset .cover-buttons .md-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 18px rgba(90,62,237,.25);
-}
-.md-typeset .cover-buttons .md-button--primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 24px rgba(90,62,237,.50);
+.md-typeset .cover-subcopy {
+  color: rgba(255, 255, 255, 0.52);
+  font-size: 0.88rem;
+  line-height: 1.65;
+  margin: 0 0 0.5rem;
 }
 
-@media (max-width: 768px) {
-  .md-typeset .cover-content { padding: 3rem 1rem 2.5rem; }
-  .md-typeset .cover-page h1 { font-size: 2.4rem !important; }
-  .md-typeset .cover-stats { gap: 1.5rem; }
+/* Stats — evenly divided with dividers, bright gold numbers */
+.md-typeset .cover-stats {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0;
+  margin: 2rem 0 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 1.2rem 0;
+}
+.md-typeset .stat-item {
+  flex: 1 1 25%;
+  min-width: 100px;
+  text-align: center;
+  padding: 0.4rem 0.5rem;
+  border-right: 1px solid rgba(255, 255, 255, 0.12);
+}
+.md-typeset .stat-item:last-child { border-right: none; }
+.md-typeset .stat-number {
+  font-size: 2.4rem;
+  font-weight: 900;
+  color: #FFD54F !important;
+  line-height: 1;
+  text-shadow: 0 0 16px rgba(255, 213, 79, 0.45);
+}
+.md-typeset .stat-label {
+  font-size: 0.70rem;
+  color: rgba(255, 255, 255, 0.58);
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  margin-top: 0.35rem;
+}
+
+/* Buttons */
+.md-typeset .cover-buttons {
+  margin-top: 2rem;
+  display: flex;
+  gap: 0.8rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.md-typeset .cover-buttons .md-button {
+  min-width: 155px;
+  transition: transform .22s ease, box-shadow .22s ease,
+              background .22s ease, color .22s ease, border-color .22s ease;
+}
+.md-typeset .cover-buttons .md-button:not(.md-button--primary) {
+  color: rgba(255, 255, 255, 0.88) !important;
+  border: 1.5px solid rgba(255, 255, 255, 0.38) !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+}
+.md-typeset .cover-buttons .md-button:not(.md-button--primary):hover {
+  background: rgba(255, 255, 255, 0.12) !important;
+  border-color: rgba(255, 255, 255, 0.65) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(90, 62, 237, 0.22);
+}
+.md-typeset .cover-buttons .md-button--primary {
+  background: #5A3EED !important;
+  border-color: #5A3EED !important;
+  color: #fff !important;
+}
+.md-typeset .cover-buttons .md-button--primary:hover {
+  background: #4527A0 !important;
+  border-color: #4527A0 !important;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 24px rgba(90, 62, 237, 0.55);
+}
+
+/* Project info footer strip */
+.md-typeset .cover-project-info {
+  margin-top: 2rem;
+  padding-top: 1.2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+  color: rgba(255, 255, 255, 0.50);
+  font-size: 0.82rem;
+  line-height: 1.8;
+}
+.md-typeset .cover-project-info strong {
+  color: rgba(255, 255, 255, 0.75);
+  font-weight: 600;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .md-typeset .cover-content {
+    margin: 2rem 1rem 0;
+    padding: 3rem 2rem;
+    border-radius: 14px;
+  }
+}
+@media (max-width: 600px) {
+  .md-typeset .cover-content { padding: 2.5rem 1.2rem; margin: 1.5rem 0.5rem 0; border-radius: 10px; }
+  .md-typeset .cover-title-main { font-size: clamp(2.2rem, 11vw, 3rem); }
+  .md-typeset .stat-item { flex: 1 1 48%; border-right: none; }
+  .md-typeset .stat-item:nth-child(odd) { border-right: 1px solid rgba(255,255,255,0.12); }
+  .md-typeset .cover-buttons { flex-direction: column; align-items: center; }
+  .md-typeset .cover-buttons .md-button { width: 100%; max-width: 260px; text-align: center; }
 }
 </style>
 
@@ -136,8 +205,8 @@ hide:
      ════════════════════════════════════════════════════════════════════════ -->
 <div class="cover-bg-circuit" aria-hidden="true">
 <svg viewBox="0 0 1200 700" xmlns="http://www.w3.org/2000/svg"
-     preserveAspectRatio="xMidYMid slice"
-     style="width:100%;height:100%;opacity:0.32;">
+     preserveAspectRatio="none"
+     style="width:100%;height:100%;opacity:0.22;">
 
   <!-- ── Subtle PCB grid ──────────────────────────────────────────────── -->
   <line x1="0" y1="140" x2="1200" y2="140" stroke="rgba(90,62,237,0.18)" stroke-width="0.55"/>
@@ -513,51 +582,52 @@ hide:
 </div>
 
 <!-- ════════════════════════════════════════════════════════════════════
-     COVER CONTENT — inline styles guarantee visibility
+     COVER CONTENT — centered dark card
      ════════════════════════════════════════════════════════════════════ -->
-<div style="position:relative; z-index:10; padding: 5rem 2rem 4rem; text-align:center;">
+<div class="cover-content">
 
-  <p style="font-size:1rem; font-weight:600; letter-spacing:0.2em; text-transform:uppercase; color:#a78bfa; margin-bottom:0.5rem;">EE Circuits — Analog and Signal Analysis</p>
+<div class="cover-title-block">
+  <span class="cover-title-main">Circuits I</span>
+  <span class="cover-title-tagline">Interactive Textbook</span>
+</div>
 
-  <h1 style="font-size:4rem; font-weight:900; color:#ffffff; text-shadow:0 2px 20px rgba(124,92,239,0.7); margin:0 0 0.4rem 0; line-height:1.1;">Circuits 1</h1>
+## Analog and Signal Analysis
 
-  <p style="font-size:1.4rem; font-weight:400; color:#c4b5fd; margin:0 0 1.5rem 0;">An Intelligent Interactive Textbook</p>
+<p class="cover-description-text">An interactive EE textbook with simulations, quizzes, and structured learning tools.</p>
+<p class="cover-subcopy">Covers DC/AC analysis, phasors, filters, op-amps, Fourier series,<br>and audio applications — from first principles to real-world design.</p>
 
-  <hr style="border:none; border-top:1px solid rgba(196,181,253,0.3); width:50%; margin:1.2rem auto;"/>
+<div class="cover-stats">
+<div class="stat-item">
+<div class="stat-number">16</div>
+<div class="stat-label">Chapters</div>
+</div>
+<div class="stat-item">
+<div class="stat-number">50+</div>
+<div class="stat-label">MicroSims</div>
+</div>
+<div class="stat-item">
+<div class="stat-number">160</div>
+<div class="stat-label">Quiz Questions</div>
+</div>
+<div class="stat-item">
+<div class="stat-number">64</div>
+<div class="stat-label">Practice Problems</div>
+</div>
+</div>
 
-  <p style="color:#cbd5e1; font-size:1rem; line-height:1.7; margin-bottom:0.5rem;">
-    An AI-assisted course with interactive simulations, chapter quizzes, and generative AI prompt libraries.
-  </p>
-  <p style="color:#94a3b8; font-size:0.95rem; line-height:1.7; margin-bottom:2.5rem;">
-    Covers DC/AC analysis · phasors · filters · op-amps · Fourier series · audio applications
-  </p>
+<div class="cover-buttons" markdown>
 
-  <!-- Stats -->
-  <div style="display:flex; justify-content:center; gap:3rem; flex-wrap:wrap; margin-bottom:2.5rem;">
-    <div style="text-align:center;">
-      <div style="font-size:2.4rem; font-weight:800; color:#a78bfa; line-height:1;">16</div>
-      <div style="font-size:0.75rem; color:#94a3b8; text-transform:uppercase; letter-spacing:0.1em; margin-top:0.2rem;">Chapters</div>
-    </div>
-    <div style="text-align:center;">
-      <div style="font-size:2.4rem; font-weight:800; color:#a78bfa; line-height:1;">50+</div>
-      <div style="font-size:0.75rem; color:#94a3b8; text-transform:uppercase; letter-spacing:0.1em; margin-top:0.2rem;">MicroSims</div>
-    </div>
-    <div style="text-align:center;">
-      <div style="font-size:2.4rem; font-weight:800; color:#a78bfa; line-height:1;">160</div>
-      <div style="font-size:0.75rem; color:#94a3b8; text-transform:uppercase; letter-spacing:0.1em; margin-top:0.2rem;">Quiz Questions</div>
-    </div>
-    <div style="text-align:center;">
-      <div style="font-size:2.4rem; font-weight:800; color:#a78bfa; line-height:1;">64</div>
-      <div style="font-size:0.75rem; color:#94a3b8; text-transform:uppercase; letter-spacing:0.1em; margin-top:0.2rem;">Practice Problems</div>
-    </div>
-  </div>
+[Enter Textbook →](chapters/){ .md-button .md-button--primary }
+[View MicroSims](sims/){ .md-button }
+[Learning Graph](learning-graph/){ .md-button }
 
-  <!-- Buttons -->
-  <div style="display:flex; justify-content:center; gap:1rem; flex-wrap:wrap;">
-    <a href="chapters/index.md" class="md-button md-button--primary" style="font-size:1rem;">Enter Textbook →</a>
-    <a href="sims/index.md" class="md-button" style="font-size:1rem;">View MicroSims</a>
-    <a href="learning-graph/index.md" class="md-button" style="font-size:1rem;">Learning Graph</a>
-  </div>
+</div>
+
+<div class="cover-project-info">
+
+**Senior Design Project – University of Minnesota**
+
+</div>
 
 </div>
 
