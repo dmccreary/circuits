@@ -45,7 +45,7 @@ Use polar form for multiplication, rectangular form for addition.
 
 ---
 
-## Sparky the Electron — Warnings & Cautions
+## Sparky the Lightbulb — Warnings & Cautions
 
 <div class="mascot sparky" markdown>
 **Watch Out!**

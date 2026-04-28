@@ -2,7 +2,7 @@
 
 ## Character Overview
 
-**Name:** Sparky the Free Electron
+**Name:** Sparky the Lightbulb
 **Role:** Warnings & Cautions
 **Color:** Orange (#EA580C)
 **Catchphrase:** "Zap! Watch out!"

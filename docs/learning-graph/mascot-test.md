@@ -3,7 +3,7 @@ title: Mascot Style Guide
 description: Preview page for all Sparky mascot pose variants
 ---
 
-# Sparky the Circuit Explorer - Mascot Test
+# Sparky the Lightbulb - Mascot Test
 
 This page shows all Sparky mascot images and admonition styles for reference.
 Check that all images have a transparent background and do not have excessive

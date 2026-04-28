@@ -193,6 +193,11 @@ where \(L\) is in henrys (H), \(R\) is in ohms (Ω), and \(\tau\) is in seconds 
 Never abruptly disconnect an inductor carrying current — the resulting voltage spike can reach hundreds or thousands of volts, destroying transistors, MOSFETs, and control ICs in microseconds. Always include a **freewheeling diode** (flyback diode) across any inductive load — motors, solenoids, relay coils — when driven by a semiconductor switch. The diode provides a safe discharge path and clamps the spike. This is not optional in a real circuit design.
 </div>
 
+<div class="mascot sparky" markdown>
+**Common Mistake: RL Time Constant Behaves Opposite to RC**
+In an RC circuit, \(\tau = RC\) — increasing resistance *slows* the response. In an RL circuit, \(\tau = L/R\) — increasing resistance *speeds up* the response because higher R dissipates the inductor's stored energy faster. Students often apply RC intuition to RL circuits and get the direction of change backwards. Keep the formula visible: τ and R are in the same direction for RC, and opposite directions for RL.
+</div>
+
 **RC and RL duality:**
 
 | RC Circuit | RL Circuit |
@@ -229,6 +234,11 @@ To find the initial condition, analyze the circuit at \(t = 0^-\) (DC steady sta
 The DC steady-state value as \(t \to \infty\). Analyze the circuit at DC steady state with the new switch configuration:
 - Capacitor → open circuit
 - Inductor → short circuit
+
+<div class="mascot sparky" markdown>
+**Common Mistake: Continuity Applies Only to V_C and I_L — Not to Everything**
+Continuity at a switching instant means capacitor voltage and inductor current cannot jump. Other quantities — resistor voltages, resistor currents, inductor voltage, capacitor current — *can* jump instantaneously. A classic error is writing \(i_R(0^+) = i_R(0^-)\) for a resistor in series with a capacitor; in fact, \(i_R(0^+)\) equals \(V_S / R\) (the initial surge), which can be far from its pre-switch value.
+</div>
 
 #### Diagram: Initial and Final Conditions
 
