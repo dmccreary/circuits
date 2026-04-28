@@ -343,6 +343,7 @@ extra_css:
 
 extra_javascript:
   - js/extra.js
+  - js/microsim-fullscreen.js
   - js/tts-reader.js
   # configure KaTeX for rendering LaTeX math using backslash delimiters
   - js/katex.js
