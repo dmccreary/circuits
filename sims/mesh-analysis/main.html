@@ -2,14 +2,17 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
   <title>Mesh Analysis Step-Through</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.11.7/p5.min.js"></script>
   <script src="../circuit-lib/circuit-lib.js"></script>
-  <style>
-    body { margin: 0; background: #f0f0f0; display: flex; justify-content: center; }
-    canvas { display: block; }
-  </style>
+      <style>
+        html, body { margin: 0; padding: 0; height: 100%; overflow: hidden; }
+        body { font-family: Arial, Helvetica, sans-serif; background: #e8eaf0; }
+        main { display: block; }
+        canvas { display: block; }
+    </style>
 </head>
 <body>
 <main></main>
@@ -657,5 +660,6 @@ function inBtn(b) {
          mouseY >= b.y && mouseY <= b.y + b.h;
 }
 </script>
+<script src="../../js/microsim-controls.js"></script>
 </body>
 </html>

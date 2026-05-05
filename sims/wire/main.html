@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
+  <title>Wire Types in Circuit Diagrams</title>
+  <script src="https://cdn.jsdelivr.net/npm/p5@1.11.7/lib/p5.js"></script>
+  <style>
+    html, body { margin: 0; padding: 0; overflow: hidden; }
+    body { font-family: Arial, Helvetica, sans-serif; background: #e8eaf0; }
+    canvas { display: block; }
+  </style>
+</head>
+<body>
+<main></main>
+<script>
+// Wire Types in Circuit Diagrams MicroSim
+// Shows 6 wire type examples used in schematics, plus a complete circuit.
+// Click any wire type card to highlight it and read its description.
+// Bloom Level: Remember / Understand
+
+const CW       = 640;
+const DRAW_H   = 420;
+const CTRL_H   = 80;
+const CH       = DRAW_H + CTRL_H;
+
+let containerWidth = CW;
+let selectedCard   = -1;   // index of clicked card, -1 = none
+
+// ── Wire type definitions ─────────────────────────────────────────────────
+const CARDS = [
+  {
+    label: "Straight Wire",
+    draw: drawStraight,
+    desc: "A straight line connecting two points. The most common wire in schematics.",
+  },
+  {
+    label: "Corner / Bend",
+    draw: drawCorner,
+    desc: "Two straight segments meeting at 90°. Used to route wires around the schematic.",
+  },
+  {
+    label: "T-Junction (Node)",
+    draw: drawTJunction,
+    desc: "Three wires meeting at one point. A filled dot marks the electrical connection.",
+  },
+  {
+    label: "X-Crossing (No Connection)",
+    draw: drawXCrossing,
+    desc: "Two wires crossing without connecting. No dot means the wires do NOT touch.",
+  },
+  {
+    label: "X-Junction (Connected)",
+    draw: drawXJunction,
+    desc: "Four wires meeting at one point. A filled dot shows all four are connected.",
+  },
+  {
+    label: "Bus / Thick Wire",
+    draw: drawBus,
+    desc: "A thicker line representing a bus — multiple signals sharing one path.",
+  },
+];
+
+// ── Layout constants ──────────────────────────────────────────────────────
+const COLS       = 3;
+const ROWS       = 2;
+const CARD_PAD   = 10;
+let cardW, cardH;
+let gridX, gridY;
+
+// ── p5 setup ──────────────────────────────────────────────────────────────
+function setup() {
+  updateSize();
+  const cnv = createCanvas(containerWidth, CH);
+  cnv.parent(document.querySelector('main'));
+  computeLayout();
+  noLoop();
+}
+
+function computeLayout() {
+  const availW = containerWidth - 20;
+  const availH = DRAW_H - 50;  // leave room for title
+  cardW = floor(availW / COLS) - CARD_PAD;
+  cardH = floor(availH / ROWS) - CARD_PAD;
+  gridX = 10;
+  gridY = 44;
+}
+
+function draw() {
+  // ── Background ────────────────────────────────────────────────────────
+  fill('#e8eaf0');
+  noStroke();
+  rect(0, 0, containerWidth, DRAW_H);
+
+  // ── Controls area ─────────────────────────────────────────────────────
+  fill(245);
+  stroke(200);
+  strokeWeight(1);
+  rect(0, DRAW_H, containerWidth, CTRL_H);
+
+  // ── Title ─────────────────────────────────────────────────────────────
+  noStroke();
+  fill(30);
+  textAlign(CENTER, TOP);
+  textSize(17);
+  textStyle(BOLD);
+  text("Wire Types in Circuit Diagrams", containerWidth / 2, 10);
+  textStyle(NORMAL);
+
+  // ── Draw cards ────────────────────────────────────────────────────────
+  for (let i = 0; i < CARDS.length; i++) {
+    const col = i % COLS;
+    const row = floor(i / COLS);
+    const cx  = gridX + col * (cardW + CARD_PAD);
+    const cy  = gridY + row * (cardH + CARD_PAD);
+    drawCard(i, cx, cy);
+  }
+
+  // ── Description panel ─────────────────────────────────────────────────
+  drawDescPanel();
+}
+
+function drawCard(i, x, y) {
+  const c = CARDS[i];
+  const isSelected = i === selectedCard;
+
+  // Card background
+  fill(isSelected ? '#5A3EED' : 255);
+  stroke(isSelected ? '#3d28c4' : '#bbb');
+  strokeWeight(isSelected ? 2.5 : 1.5);
+  rect(x, y, cardW, cardH, 8);
+
+  // Wire drawing area (top 65% of card)
+  const drawAreaH = cardH * 0.62;
+  push();
+    clip(() => rect(x + 4, y + 4, cardW - 8, drawAreaH - 4, 6));
+    fill(isSelected ? '#ede9ff' : '#f7f8ff');
+    noStroke();
+    rect(x + 4, y + 4, cardW - 8, drawAreaH - 4);
+    // call the specific draw function centred in the draw area
+    c.draw(x + 4, y + 4, cardW - 8, drawAreaH - 4);
+  pop();
+
+  // Label (bottom 35% of card)
+  const labelY = y + drawAreaH + 4;
+  noStroke();
+  fill(isSelected ? 255 : 30);
+  textAlign(CENTER, CENTER);
+  textSize(12);
+  textStyle(BOLD);
+  text(c.label, x + cardW / 2, labelY + (cardH - drawAreaH) / 2 - 4);
+  textStyle(NORMAL);
+}
+
+function drawDescPanel() {
+  const px = 10;
+  const py = DRAW_H + 8;
+  const pw = containerWidth - 20;
+  const ph = CTRL_H - 16;
+
+  fill(255);
+  stroke('#bbb');
+  strokeWeight(1);
+  rect(px, py, pw, ph, 6);
+
+  noStroke();
+  textAlign(LEFT, CENTER);
+  textSize(13);
+
+  if (selectedCard === -1) {
+    fill(130);
+    textStyle(ITALIC);
+    text("Click any wire type above to learn about it.", px + 12, py + ph / 2);
+    textStyle(NORMAL);
+  } else {
+    fill('#5A3EED');
+    textStyle(BOLD);
+    text(CARDS[selectedCard].label + ": ", px + 12, py + ph / 2);
+    textStyle(NORMAL);
+
+    // Measure label width to offset description text
+    const labelTxt = CARDS[selectedCard].label + ": ";
+    const lw = textWidth(labelTxt);
+    fill(40);
+    text(CARDS[selectedCard].desc, px + 12 + lw, py + ph / 2);
+  }
+}
+
+// ── Individual wire type drawing functions ────────────────────────────────
+// Each receives (x, y, w, h) of the drawing area and draws centred within it.
+
+function drawStraight(x, y, w, h) {
+  const mx  = x + w / 2;
+  const cy  = y + h / 2;
+  const len = w * 0.65;
+  stroke(30); strokeWeight(3); noFill();
+  line(mx - len / 2, cy, mx + len / 2, cy);
+  // terminals
+  fill(80); noStroke();
+  circle(mx - len / 2, cy, 7);
+  circle(mx + len / 2, cy, 7);
+}
+
+function drawCorner(x, y, w, h) {
+  const seg = min(w, h) * 0.38;
+  const ox  = x + w * 0.25;
+  const oy  = y + h * 0.72;
+  stroke(30); strokeWeight(3); noFill();
+  line(ox, oy, ox, oy - seg);          // vertical
+  line(ox, oy - seg, ox + seg, oy - seg); // horizontal
+  fill(80); noStroke();
+  circle(ox, oy, 7);
+  circle(ox + seg, oy - seg, 7);
+}
+
+function drawTJunction(x, y, w, h) {
+  const cx   = x + w / 2;
+  const cy   = y + h / 2;
+  const half = min(w, h) * 0.33;
+  stroke(30); strokeWeight(3); noFill();
+  line(cx - half, cy, cx + half, cy);  // horizontal
+  line(cx, cy, cx, cy + half);         // down stem
+  fill(30); noStroke();
+  circle(cx, cy, 10);                  // junction dot
+  fill(80);
+  circle(cx - half, cy, 7);
+  circle(cx + half, cy, 7);
+  circle(cx, cy + half, 7);
+}
+
+function drawXCrossing(x, y, w, h) {
+  const cx   = x + w / 2;
+  const cy   = y + h / 2;
+  const half = min(w, h) * 0.33;
+  stroke(30); strokeWeight(3); noFill();
+  // horizontal
+  line(cx - half, cy, cx - 6, cy);
+  line(cx + 6, cy, cx + half, cy);
+  // vertical (continuous — passes behind horizontal)
+  line(cx, cy - half, cx, cy + half);
+  // small arc over crossing to show no connection
+  noFill(); stroke(30); strokeWeight(2.5);
+  arc(cx, cy, 12, 12, PI, TWO_PI);
+  fill(80); noStroke();
+  circle(cx - half, cy, 7);
+  circle(cx + half, cy, 7);
+  circle(cx, cy - half, 7);
+  circle(cx, cy + half, 7);
+}
+
+function drawXJunction(x, y, w, h) {
+  const cx   = x + w / 2;
+  const cy   = y + h / 2;
+  const half = min(w, h) * 0.33;
+  stroke(30); strokeWeight(3); noFill();
+  line(cx - half, cy, cx + half, cy);
+  line(cx, cy - half, cx, cy + half);
+  fill(30); noStroke();
+  circle(cx, cy, 10);                  // junction dot
+  fill(80);
+  circle(cx - half, cy, 7);
+  circle(cx + half, cy, 7);
+  circle(cx, cy - half, 7);
+  circle(cx, cy + half, 7);
+}
+
+function drawBus(x, y, w, h) {
+  const mx  = x + w / 2;
+  const cy  = y + h / 2;
+  const len = w * 0.65;
+  // thick bus line
+  stroke(30); strokeWeight(7); noFill();
+  line(mx - len / 2, cy, mx + len / 2, cy);
+  // tap lines
+  stroke(30); strokeWeight(2.5);
+  for (let i = 0; i < 3; i++) {
+    const tx = mx - len / 4 + i * (len / 4);
+    line(tx, cy - 14, tx, cy);
+  }
+  fill(80); noStroke();
+  circle(mx - len / 2, cy, 7);
+  circle(mx + len / 2, cy, 7);
+}
+
+// ── Interaction ───────────────────────────────────────────────────────────
+function mousePressed() {
+  for (let i = 0; i < CARDS.length; i++) {
+    const col = i % COLS;
+    const row = floor(i / COLS);
+    const cx  = gridX + col * (cardW + CARD_PAD);
+    const cy  = gridY + row * (cardH + CARD_PAD);
+    if (mouseX >= cx && mouseX <= cx + cardW &&
+        mouseY >= cy && mouseY <= cy + cardH) {
+      selectedCard = (selectedCard === i) ? -1 : i;
+      redraw();
+      return;
+    }
+  }
+}
+
+// ── Responsive resize ─────────────────────────────────────────────────────
+function windowResized() {
+  updateSize();
+  resizeCanvas(containerWidth, CH);
+  computeLayout();
+  redraw();
+}
+
+function updateSize() {
+  const el = document.querySelector('main');
+  if (el) {
+    const w = el.getBoundingClientRect().width;
+    if (w > 0) containerWidth = floor(w);
+  }
+}
+</script>
+</body>
+</html>

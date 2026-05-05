@@ -7,6 +7,16 @@
 //
 // animationTime and lineWidth are globals declared in circuit-lib.js
 
+// ── Circuits 1 design-system palette ──────────────────────────────────────────
+const COL_BG_DRAW = '#eef1fb';        // light indigo – drawing area
+const COL_BG_CTRL = '#dde1f0';        // muted indigo – control area
+const COL_DEEP    = [26,  35, 126];   // dark indigo – titles
+const COL_PRIMARY = [57,  73, 171];   // indigo – buttons
+const COL_ACCENT  = [92, 107, 192];   // medium indigo
+const COL_GOLD    = [249, 168,  37];  // amber gold – Vc trace
+const COL_GREEN   = [46,  125,  50];  // green – current trace
+const COL_RED     = [198,  40,  40];  // red
+
 // ── Canvas dimensions ──────────────────────────────────────────────────────
 let canvasWidth   = 580;
 let circuitHeight = 280;
@@ -97,7 +107,11 @@ function computeLayout() {
 // ══════════════════════════════════════════════════════════════════════════
 
 function draw() {
-    background(255);
+    // Drawing area background
+    background(COL_BG_DRAW);
+    // Control area
+    noStroke(); fill(COL_BG_CTRL);
+    rect(0, drawHeight, containerWidth, controlHeight);
 
     if (isAnimating) {
         const tau_cur = switchPos === 'A' ? tau1 : tau2;
@@ -406,9 +420,10 @@ function drawGraphs() {
     const Imax   = max(vs / max(r1Val, 0.001), 0.001);
 
     // ── Voltage graph ──────────────────────────────────────────────────────
-    fill(0); noStroke(); textSize(11); textAlign(CENTER, TOP);
+    fill(...COL_DEEP); noStroke(); textSize(11); textStyle(BOLD); textAlign(CENTER, TOP);
     text('Capacitor Voltage  Vc(t)', (g1Left + g1Right) / 2, gTop - 15);
-    stroke(0); strokeWeight(1);
+    textStyle(NORMAL);
+    stroke(...COL_ACCENT); strokeWeight(1);
     line(g1Left, gTop, g1Left, gBottom);
     line(g1Left, gBottom, g1Right, gBottom);
 
@@ -434,7 +449,7 @@ function drawGraphs() {
             const gx = constrain(map(pt.t, 0, totalT, g1Left, g1Right), g1Left, g1Right);
             const gy = constrain(map(pt.vc, 0, vs, gBottom, gTop), gTop, gBottom);
             if (prev) {
-                stroke(pt.phase === 'A' ? color(0, 100, 220) : color(210, 70, 0));
+                stroke(pt.phase === 'A' ? color(...COL_PRIMARY) : color(...COL_GOLD));
                 strokeWeight(2.5);
                 line(prev.x, prev.y, gx, gy);
             }
@@ -443,9 +458,10 @@ function drawGraphs() {
     }
 
     // ── Current graph ──────────────────────────────────────────────────────
-    fill(0); noStroke(); textSize(11); textAlign(CENTER, TOP);
+    fill(...COL_DEEP); noStroke(); textSize(11); textStyle(BOLD); textAlign(CENTER, TOP);
     text('Circuit Current  |I(t)|', (g2Left + g2Right) / 2, gTop - 15);
-    stroke(0); strokeWeight(1);
+    textStyle(NORMAL);
+    stroke(...COL_ACCENT); strokeWeight(1);
     line(g2Left, gTop, g2Left, gBottom);
     line(g2Left, gBottom, g2Right, gBottom);
 
@@ -471,7 +487,7 @@ function drawGraphs() {
             const gx = constrain(map(pt.t, 0, totalT, g2Left, g2Right), g2Left, g2Right);
             const gy = constrain(map(abs(pt.i), 0, Imax, gBottom, gTop), gTop, gBottom);
             if (prev) {
-                stroke(pt.phase === 'A' ? color(0, 100, 220) : color(210, 70, 0));
+                stroke(pt.phase === 'A' ? color(...COL_PRIMARY) : color(...COL_GOLD));
                 strokeWeight(2.5);
                 line(prev.x, prev.y, gx, gy);
             }
@@ -481,8 +497,8 @@ function drawGraphs() {
 
     // Legend
     noStroke(); textSize(9); textAlign(LEFT, TOP);
-    fill(0, 100, 220);  text('─ charging (A)',    g2Left + 4,  gTop - 13);
-    fill(210, 70, 0);   text('─ discharging (B)', g2Left + 90, gTop - 13);
+    fill(...COL_PRIMARY); text('─ charging (A)',    g2Left + 4,  gTop - 13);
+    fill(...COL_GOLD);    text('─ discharging (B)', g2Left + 90, gTop - 13);
 
     pop();
 }
@@ -492,24 +508,24 @@ function drawGraphs() {
 // ══════════════════════════════════════════════════════════════════════════
 
 function drawControls() {
-    fill(245); stroke(200); strokeWeight(1);
-    rect(0, drawHeight, containerWidth, controlHeight);
+    // Background already drawn in draw()
 
     drawBtn(isAnimating ? 'Stop' : 'Start',
             startBtnX, startBtnY, startBtnW, startBtnH,
-            color(70, 130, 180));
+            color(...COL_PRIMARY));
 
     drawBtn('Reset',
             resetBtnX, resetBtnY, resetBtnW, resetBtnH,
-            color(100, 100, 130));
+            color(...COL_ACCENT));
 
     const swLabel = switchPos === 'A' ? '→ Discharge (B)' : '← Charge (A)';
-    const swColor = switchPos === 'A' ? color(0, 80, 200) : color(0, 130, 60);
+    const swColor = switchPos === 'A' ? color(...COL_DEEP) : color(...COL_GREEN);
     drawBtn(swLabel, swBtnX, swBtnY, swBtnW, swBtnH, swColor);
 
-    fill(60); noStroke(); textSize(11); textAlign(RIGHT, CENTER);
+    fill(...COL_DEEP); noStroke(); textSize(11); textStyle(BOLD); textAlign(RIGHT, CENTER);
     text('τ₁ = ' + formatTau(tau1) + '   τ₂ = ' + formatTau(tau2),
          containerWidth - 15, drawHeight + 25);
+    textStyle(NORMAL);
 
     drawSlider('Source Voltage Vs:', vs,   1, 20,  sliderX, sy1, sliderWidth, ' V');
     drawSlider('Charge R₁:',         r1Val, 1, 100, sliderX, sy2, sliderWidth, ' kΩ');
@@ -517,29 +533,32 @@ function drawControls() {
     drawSlider('Capacitance C:',     cVal,  1, 100, sliderX, sy4, sliderWidth, ' µF');
 
     if (!isAnimating) {
-        fill(120, 50, 150); noStroke(); textSize(10); textAlign(LEFT, CENTER);
-        text("Press 'Start', then flip the switch to charge (A) or discharge (B).",
+        fill(...COL_ACCENT); noStroke(); textSize(10); textStyle(ITALIC); textAlign(LEFT, CENTER);
+        text("💡 Press 'Start', then flip the switch to charge (A) or discharge (B).",
              15, drawHeight + 45);
+        textStyle(NORMAL);
     }
 }
 
 function drawSlider(label, value, minVal, maxVal, x, y, w, suffix) {
-    fill(0); noStroke(); textSize(11); textAlign(RIGHT, CENTER);
+    fill(...COL_DEEP); noStroke(); textSize(11); textAlign(RIGHT, CENTER);
     text(label + ' ' + value + suffix, x - 8, y);
-    fill(200); stroke(150); strokeWeight(1);
+    fill(200); stroke(170); strokeWeight(1);
     rect(x, y - 4, w, 8, 4);
     const fw = map(value, minVal, maxVal, 0, w);
-    fill(70, 130, 180); noStroke();
+    fill(...COL_PRIMARY); noStroke();
     rect(x, y - 4, fw, 8, 4);
-    fill(255); stroke(70, 130, 180); strokeWeight(2);
-    ellipse(x + fw, y, 14, 14);
+    fill(255); stroke(...COL_PRIMARY); strokeWeight(2);
+    ellipse(x + fw, y, 16, 16);
 }
 
 function drawBtn(label, x, y, w, h, col) {
-    fill(col); stroke(50, 80, 120); strokeWeight(1);
+    noStroke(); fill(0,0,0,18); rect(x+2, y+2, w, h, 4);   // shadow
+    fill(col); stroke(...COL_DEEP); strokeWeight(1);
     rect(x, y, w, h, 4);
-    fill(255); noStroke(); textSize(12); textAlign(CENTER, CENTER);
+    fill(255); noStroke(); textSize(12); textStyle(BOLD); textAlign(CENTER, CENTER);
     text(label, x + w / 2, y + h / 2);
+    textStyle(NORMAL);
 }
 
 // ══════════════════════════════════════════════════════════════════════════

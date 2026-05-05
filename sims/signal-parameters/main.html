@@ -5,8 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Signal Parameters</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
-    <style>
-        body { margin: 0; padding: 0; background: #f0f0f0; display: flex; justify-content: center; }
+        <style>
+        html, body { margin: 0; padding: 0; height: 100%; overflow: hidden; }
+        body { font-family: Arial, Helvetica, sans-serif; background: #e8eaf0; }
+        main { display: block; }
         canvas { display: block; }
     </style>
 </head>
@@ -245,5 +247,6 @@ function formatTime(t) {
     return (t*1e6).toFixed(2) + " µs";
 }
 </script>
+<script src="../../js/microsim-controls.js"></script>
 </body>
 </html>

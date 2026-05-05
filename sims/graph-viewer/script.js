@@ -218,17 +218,23 @@ function updateVisibility() {
     const nodes = network.body.data.nodes;
     const edges = network.body.data.edges;
 
-    // Batch update nodes — single call, one redraw (not one per node)
-    nodes.update(allNodes.map(node => ({
-        id: node.id,
-        hidden: !visibleGroups.has(node.group)
-    })));
+    // Update node visibility
+    allNodes.forEach(node => {
+        const isVisible = visibleGroups.has(node.group);
+        nodes.update({
+            id: node.id,
+            hidden: !isVisible
+        });
+    });
 
-    // Batch update edges — single call, one redraw (not one per edge)
-    edges.update(allEdges.map(edge => ({
-        id: edge.id || `${edge.from}-${edge.to}`,
-        hidden: !(visibleNodeIds.has(edge.from) && visibleNodeIds.has(edge.to))
-    })));
+    // Update edge visibility (hide if either endpoint is hidden)
+    allEdges.forEach(edge => {
+        const isVisible = visibleNodeIds.has(edge.from) && visibleNodeIds.has(edge.to);
+        edges.update({
+            id: edge.id || `${edge.from}-${edge.to}`,
+            hidden: !isVisible
+        });
+    });
 
     updateStats();
 }
@@ -327,17 +333,24 @@ function highlightNode(nodeId) {
     const connectedNodes = network.getConnectedNodes(nodeId);
     const allConnected = [nodeId, ...connectedNodes];
 
-    // Batch update opacity — Set lookup O(1) instead of Array.includes O(n)
+    // Reset all nodes to normal opacity
     const nodes = network.body.data.nodes;
-    const connectedSet = new Set(allConnected);
-    nodes.update(allNodes.map(node => ({
-        id: node.id,
-        opacity: connectedSet.has(node.id) ? 1 : 0.3
-    })));
+    allNodes.forEach(node => {
+        const isConnected = allConnected.includes(node.id);
+        nodes.update({
+            id: node.id,
+            opacity: isConnected ? 1 : 0.3
+        });
+    });
 
-    // Reset opacity after a delay — batched for performance
+    // Reset opacity after a delay
     setTimeout(() => {
-        nodes.update(allNodes.map(node => ({ id: node.id, opacity: 1 })));
+        allNodes.forEach(node => {
+            nodes.update({
+                id: node.id,
+                opacity: 1
+            });
+        });
     }, 3000);
 }
 

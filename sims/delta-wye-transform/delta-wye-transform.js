@@ -1,632 +1,583 @@
-// Delta-Wye Transform MicroSim
-//
-// Interactive visualization of Delta (triangle) to Wye (Y) and
-// Wye to Delta resistor network transformations.
-// Three sliders control input resistor values, a toggle switches
-// direction, and the Transform button triggers an animated calculation.
-
 'use strict';
 
-// -- Canvas layout --
-let containerWidth;
-const canvasH = 520;
-const drawAreaH = 520;
+// ── Palette ──────────────────────────────────────────────────────────────────
+const COL_BG      = [245, 248, 252];
+const COL_PANEL   = [255, 255, 255];
+const COL_WIRE    = [50,  55,  70];
+const COL_NODE    = [40, 100, 200];
+const COL_DELTA   = [210,  65,  45];   // red-orange for Δ
+const COL_WYE     = [25,  150,  75];   // green for Y
+const COL_RESULT  = [25,  100, 195];
+const COL_SEG_BG  = [215, 220, 232];
+const COL_SEG_ACT = [50,  110, 220];
 
-// -- Colour palette --
-const BG        = [245, 248, 252];
-const WIRE      = [50,  55,  70];
-const NODE_COL  = [40, 100, 200];
-const RES_DELTA = [220, 80,  60];
-const RES_WYE   = [40, 160,  80];
-const BTN_COL   = [50, 110, 220];
-const BTN_HOVER = [35,  85, 190];
-const HIGHLIGHT  = [255, 200, 40];
-const PANEL_BG   = [255, 255, 255];
+// ── State ─────────────────────────────────────────────────────────────────────
+let mode    = 0;                   // 0 = Δ→Y, 1 = Y→Δ
+let inVals  = [30, 60, 90];        // Ra/Rb/Rc  or  R1/R2/R3
+let outVals = [null, null, null];
+const R_MIN = 1, R_MAX = 200;
 
-// -- Mode --
-let deltaToWye = true;   // true = Delta->Wye, false = Wye->Delta
+// ── Canvas ────────────────────────────────────────────────────────────────────
+let cw;
+const canvasH = 740;
 
-// -- Slider values --
-let sliderVals = [30, 60, 90];  // Ra/Rb/Rc or R1/R2/R3
-const SLIDER_MIN = 1;
-const SLIDER_MAX = 100;
+// ── Layout constants ──────────────────────────────────────────────────────────
+const LABEL_W      = 52;
+const INPUT_W      = 68;
+const UNIT_W       = 24;
+const TRACK_PAD_L  = 20;
+const TRACK_OFFS   = LABEL_W + INPUT_W + UNIT_W + 12;   // 156
+const TRACK_PAD_R  = 82;
 
-// -- Slider geometry (computed in computeLayout) --
-let sliders = [];  // [{x, y, w, val, dragging, label}]
-let sliderTrackH = 6;
-let sliderKnobR  = 9;
+let trackStart, trackEnd, trackLen;
 
-// -- Buttons --
-let toggleBtn = {};
-let transformBtn = {};
+const SEG_W = 210, SEG_H = 32;
+let segX;
+const SEG_Y = 60;
 
-// -- Output values --
-let outputVals = [null, null, null];
+const DIAG_Y      = 232;          // vertical centre of both diagrams
+const PAN_TOP     = 98;
+const PAN_H       = 265;
+const SLIDER_PAN_Y = 371;
+const SLOT_BASE   = SLIDER_PAN_Y + 30;   // 401
+const SLOT_GAP    = 38;
 
-// -- Animation state --
-let animState = 'idle';  // idle, highlight, formula, result
-let animTimer = 0;
-const ANIM_HIGHLIGHT_MS = 500;
-const ANIM_FORMULA_MS   = 800;
-const ANIM_RESULT_MS    = 600;
-let animStartTime = 0;
+// ── DOM sliders + inputs ──────────────────────────────────────────────────────
+let sliders  = [];
+let inpElems = [];
 
-// -- Diagram positions (computed in computeLayout) --
-let deltaCenter, wyeCenter;
-let deltaScale, wyeScale;
+// ── Helpers ───────────────────────────────────────────────────────────────────
+function fillA(col, a) { fill(col[0], col[1], col[2], a); }
 
-// =====================================================================
-function setup() {
-    updateCanvasSize();
-    let cnv = createCanvas(containerWidth, canvasH);
-    cnv.parent(document.querySelector('main'));
-    computeLayout();
-    textFont('Arial');
-    noLoop();
-    redraw();
+function fmtRU(v) {
+    if (v === null || v === undefined) return '\u2014';
+    if (v >= 1000) return nf(v / 1000, 0, 2) + 'k\u03A9';
+    if (v >= 100)  return nf(v, 0, 1) + '\u03A9';
+    if (v >= 10)   return nf(v, 0, 1) + '\u03A9';
+    return nf(v, 0, 2) + '\u03A9';
 }
 
-function updateCanvasSize() {
-    containerWidth = min(floor(document.querySelector('main').getBoundingClientRect().width), 900);
-    containerWidth = max(containerWidth, 480);
+// ── Setup ─────────────────────────────────────────────────────────────────────
+function setup() {
+    cw = min(floor(document.querySelector('main').getBoundingClientRect().width), 900);
+    cw = max(cw, 500);
+    let cnv = createCanvas(cw, canvasH);
+    cnv.parent(document.querySelector('main'));
+    textFont('Arial');
+    buildLayout();
+    makeInputElems();
+    solve();
+    noLoop();
+    setTimeout(reportHeight, 150);
 }
 
 function windowResized() {
-    updateCanvasSize();
-    resizeCanvas(containerWidth, canvasH);
-    computeLayout();
+    cw = min(floor(document.querySelector('main').getBoundingClientRect().width), 900);
+    cw = max(cw, 500);
+    buildLayout();
+    repositionInputs();
+    resizeCanvas(cw, canvasH);
     redraw();
 }
 
-function computeLayout() {
-    let cw = containerWidth;
+function buildLayout() {
+    segX       = cw / 2 - SEG_W / 2;
+    trackStart = TRACK_PAD_L + TRACK_OFFS;
+    trackEnd   = cw - TRACK_PAD_R;
+    trackLen   = trackEnd - trackStart;
+}
 
-    // Diagram centers
-    deltaCenter = { x: cw * 0.22, y: 175 };
-    wyeCenter   = { x: cw * 0.78, y: 175 };
-    deltaScale  = min(cw * 0.18, 110);
-    wyeScale    = min(cw * 0.15, 90);
+function reportHeight() {
+    try { window.parent.postMessage({ type: 'microsim-height', height: canvasH }, '*'); } catch(e) {}
+}
 
-    // Sliders
-    let sliderW = min(cw * 0.35, 260);
-    let sliderX = (cw - sliderW) / 2;
-    let sliderY0 = 330;
-    let sliderGap = 36;
-
-    let labels = deltaToWye
-        ? ['Ra', 'Rb', 'Rc']
-        : ['R1', 'R2', 'R3'];
-
-    sliders = [];
+// ── HTML input elements ───────────────────────────────────────────────────────
+function makeInputElems() {
     for (let i = 0; i < 3; i++) {
-        sliders.push({
-            x: sliderX, y: sliderY0 + i * sliderGap,
-            w: sliderW, val: sliderVals[i],
-            dragging: false, label: labels[i]
-        });
-    }
-
-    // Toggle button
-    let btnW = 80;
-    let btnH = 30;
-    toggleBtn = {
-        x: cw / 2 - btnW / 2, y: 285,
-        w: btnW, h: btnH
-    };
-
-    // Transform button
-    let tbW = 120;
-    let tbH = 34;
-    transformBtn = {
-        x: cw / 2 - tbW / 2, y: 440,
-        w: tbW, h: tbH
-    };
-}
-
-// =====================================================================
-// DRAW
-// =====================================================================
-function draw() {
-    background(BG);
-
-    drawTitle();
-    drawDeltaDiagram();
-    drawArrow();
-    drawWyeDiagram();
-    drawToggleButton();
-    drawSliders();
-    drawTransformButton();
-    drawFormulas();
-    drawOutputValues();
-
-    // Animation
-    if (animState !== 'idle') {
-        let elapsed = millis() - animStartTime;
-        if (animState === 'highlight' && elapsed > ANIM_HIGHLIGHT_MS) {
-            animState = 'formula';
-            animStartTime = millis();
-        } else if (animState === 'formula' && elapsed > ANIM_FORMULA_MS) {
-            animState = 'result';
-            animStartTime = millis();
-            calculateOutput();
-        } else if (animState === 'result' && elapsed > ANIM_RESULT_MS) {
-            animState = 'idle';
+        let inp = createInput(str(inVals[i]));
+        inp.parent(document.querySelector('main'));
+        inp.style('width',        (INPUT_W - 6) + 'px');
+        inp.style('font-size',    '13px');
+        inp.style('padding',      '3px 5px');
+        inp.style('border',       '1px solid #bbb');
+        inp.style('border-radius','4px');
+        inp.style('text-align',   'right');
+        inp.style('position',     'absolute');
+        inp.style('box-sizing',   'border-box');
+        const idx = i;
+        function handler() {
+            let v = parseFloat(this.value);
+            if (!isNaN(v) && v > 0) {
+                inVals[idx] = constrain(v, 0.1, 9999);
+                solve();
+                redraw();
+            }
         }
-        redraw();
+        inp.elt.addEventListener('change', handler);
+        inp.elt.addEventListener('input',  handler);
+        inpElems.push(inp);
+    }
+    repositionInputs();
+}
+
+function repositionInputs() {
+    let canvas = document.querySelector('canvas');
+    if (!canvas) return;
+    let rect = canvas.getBoundingClientRect();
+    for (let i = 0; i < 3; i++) {
+        let sy = SLOT_BASE + i * SLOT_GAP;
+        inpElems[i].style('left', (rect.left + TRACK_PAD_L + LABEL_W + 4) + 'px');
+        inpElems[i].style('top',  (rect.top  + sy - 13) + 'px');
     }
 }
 
+// ── Solve ─────────────────────────────────────────────────────────────────────
+function solve() {
+    let a = inVals[0], b = inVals[1], c = inVals[2];
+    if (mode === 0) {
+        let sum = a + b + c;
+        outVals = [(a * b) / sum, (b * c) / sum, (a * c) / sum];
+    } else {
+        let P = a * b + b * c + c * a;
+        outVals = [P / b, P / c, P / a];
+    }
+}
+
+// ── Draw ──────────────────────────────────────────────────────────────────────
+function draw() {
+    background(COL_BG);
+    drawTitle();
+    drawSegControl();
+    drawDiagramPanels();
+    drawArrow();
+    drawSlidersPanel();
+    drawFormulaSection();
+    drawResultsCard();
+    drawExplanation();
+}
+
+// ── Title ─────────────────────────────────────────────────────────────────────
 function drawTitle() {
-    fill(30);
     noStroke();
     textAlign(CENTER, TOP);
-    textSize(18);
-    textStyle(BOLD);
-    text('Delta-Wye Transform', containerWidth / 2, 12);
+    textSize(20); textStyle(BOLD); fill(30);
+    text('Delta\u2013Wye Transformation', cw / 2, 10);
     textStyle(NORMAL);
-    textSize(12);
-    fill(100);
-    text('Resistor network conversion calculator', containerWidth / 2, 36);
+    textSize(12); fill(110);
+    text('Interactive resistor network converter  \u00B7  \u0394\u2194Y', cw / 2, 37);
 }
 
-// -- Delta diagram --
-function drawDeltaDiagram() {
-    let cx = deltaCenter.x, cy = deltaCenter.y;
-    let s = deltaScale;
+// ── Segmented control ─────────────────────────────────────────────────────────
+function drawSegControl() {
+    let hw = SEG_W / 2;
+    let labels = ['\u0394 \u2192 Y', 'Y \u2192 \u0394'];
 
-    // Triangle vertices (A=top, B=bottom-left, C=bottom-right)
-    let ax = cx, ay = cy - s * 0.75;
-    let bx = cx - s, by = cy + s * 0.55;
-    let cxp = cx + s, cyp = cy + s * 0.55;
+    noStroke(); fill(COL_SEG_BG);
+    rect(segX, SEG_Y, SEG_W, SEG_H, 8);
 
-    let isInput = deltaToWye;
-    let resCol = isInput ? (animState === 'highlight' ? HIGHLIGHT : RES_DELTA) : [180, 180, 180];
-    let wireCol = isInput ? WIRE : [170, 170, 170];
-    let nodeCol = isInput ? NODE_COL : [150, 150, 150];
-    let labelCol = isInput ? [30, 30, 30] : [150, 150, 150];
-
-    // Draw resistor edges
-    strokeWeight(2.5);
-    stroke(wireCol);
-
-    drawResistorLine(ax, ay, bx, by, resCol);  // Ra: A-B
-    drawResistorLine(bx, by, cxp, cyp, resCol); // Rb: B-C
-    drawResistorLine(cxp, cyp, ax, ay, resCol);  // Rc: C-A
-
-    // Node dots
-    fill(nodeCol);
-    noStroke();
-    circle(ax, ay, 12);
-    circle(bx, by, 12);
-    circle(cxp, cyp, 12);
-
-    // Node labels
-    fill(labelCol);
-    textSize(14);
-    textStyle(BOLD);
-    textAlign(CENTER, BOTTOM);
-    text('A', ax, ay - 10);
-    textAlign(RIGHT, CENTER);
-    text('B', bx - 10, by);
-    textAlign(LEFT, CENTER);
-    text('C', cxp + 10, cyp);
-
-    // Resistor labels
-    textSize(12);
-    textStyle(NORMAL);
-    let raCol = isInput ? RES_DELTA : [180, 180, 180];
-    fill(raCol);
-    textAlign(RIGHT, CENTER);
-    let raMx = (ax + bx) / 2 - 10, raMy = (ay + by) / 2;
-    text(getInputLabel(0) + '=' + nf(sliderVals[0], 0, 0) + (isInput ? 'Ω' : ''), raMx - 2, raMy);
-
-    textAlign(CENTER, TOP);
-    let rbMx = (bx + cxp) / 2, rbMy = (by + cyp) / 2 + 10;
-    text(getInputLabel(1) + '=' + nf(sliderVals[1], 0, 0) + (isInput ? 'Ω' : ''), rbMx, rbMy);
-
-    textAlign(LEFT, CENTER);
-    let rcMx = (cxp + ax) / 2 + 10, rcMy = (cyp + ay) / 2;
-    text(getInputLabel(2) + '=' + nf(sliderVals[2], 0, 0) + (isInput ? 'Ω' : ''), rcMx + 2, rcMy);
-
-    // Delta label
-    textSize(13);
-    textAlign(CENTER, CENTER);
-    fill(labelCol);
-    textStyle(BOLD);
-    text('Delta (Δ)', cx, cy + s * 0.55 + 32);
-    textStyle(NORMAL);
-
-    // Show output values on delta side if Y->Delta
-    if (!deltaToWye && outputVals[0] !== null && (animState === 'result' || animState === 'idle')) {
-        fill(RES_DELTA);
-        textSize(11);
-        textStyle(BOLD);
-        textAlign(RIGHT, CENTER);
-        text('Ra=' + nf(outputVals[0], 0, 1) + 'Ω', raMx - 2, raMy + 14);
-        textAlign(CENTER, TOP);
-        text('Rb=' + nf(outputVals[1], 0, 1) + 'Ω', rbMx, rbMy + 14);
-        textAlign(LEFT, CENTER);
-        text('Rc=' + nf(outputVals[2], 0, 1) + 'Ω', rcMx + 2, rcMy + 14);
+    for (let i = 0; i < 2; i++) {
+        let x = segX + i * hw;
+        let active = (mode === i);
+        if (active) {
+            fill(COL_SEG_ACT);
+            if (i === 0) rect(x, SEG_Y, hw, SEG_H, 8, 0, 0, 8);
+            else         rect(x, SEG_Y, hw, SEG_H, 0, 8, 8, 0);
+        }
+        fill(active ? 255 : 70);
+        textSize(14); textStyle(BOLD); textAlign(CENTER, CENTER);
+        text(labels[i], x + hw / 2, SEG_Y + SEG_H / 2);
         textStyle(NORMAL);
     }
+
+    stroke(175); strokeWeight(1); noFill();
+    rect(segX, SEG_Y, SEG_W, SEG_H, 8);
+    stroke(175);
+    line(segX + hw, SEG_Y, segX + hw, SEG_Y + SEG_H);
 }
 
-// -- Wye diagram --
-function drawWyeDiagram() {
-    let cx = wyeCenter.x, cy = wyeCenter.y;
-    let s = wyeScale;
+// ── Diagram panels ────────────────────────────────────────────────────────────
+function drawDiagramPanels() {
+    let lcx = cw * 0.22;
+    let rcx = cw * 0.78;
+    let lCol = mode === 0 ? COL_DELTA : COL_WYE;
+    let rCol = mode === 0 ? COL_WYE   : COL_DELTA;
 
-    // Center node N
-    let nx = cx, ny = cy;
-    // Branch endpoints (A=top, B=bottom-left, C=bottom-right)
-    let ax = cx, ay = cy - s * 1.1;
-    let bx = cx - s * 1.0, by = cy + s * 0.7;
-    let cxp = cx + s * 1.0, cyp = cy + s * 0.7;
-
-    let isInput = !deltaToWye;
-    let resCol = isInput ? (animState === 'highlight' ? HIGHLIGHT : RES_WYE) : [180, 180, 180];
-    let wireCol = isInput ? WIRE : [170, 170, 170];
-    let nodeCol = isInput ? NODE_COL : [150, 150, 150];
-    let labelCol = isInput ? [30, 30, 30] : [150, 150, 150];
-
-    // Draw resistor branches
-    strokeWeight(2.5);
-    stroke(wireCol);
-
-    drawResistorLine(nx, ny, ax, ay, resCol);   // R1: N-A
-    drawResistorLine(nx, ny, bx, by, resCol);   // R2: N-B
-    drawResistorLine(nx, ny, cxp, cyp, resCol);  // R3: N-C
-
-    // Center node
-    fill(nodeCol);
+    // Tinted backgrounds
     noStroke();
-    circle(nx, ny, 10);
+    fillA(lCol, 18); rect(4, PAN_TOP, cw / 2 - 8, PAN_H, 8);
+    fillA(rCol, 18); rect(cw / 2 + 4, PAN_TOP, cw / 2 - 8, PAN_H, 8);
 
-    // Outer nodes
-    circle(ax, ay, 12);
-    circle(bx, by, 12);
-    circle(cxp, cyp, 12);
+    // Accent top border
+    fill(lCol); noStroke(); rect(4,           PAN_TOP, cw / 2 - 8, 4, 8, 8, 0, 0);
+    fill(rCol);              rect(cw / 2 + 4, PAN_TOP, cw / 2 - 8, 4, 8, 8, 0, 0);
 
-    // Node labels
-    fill(labelCol);
-    textSize(14);
-    textStyle(BOLD);
-    textAlign(CENTER, BOTTOM);
-    text('A', ax, ay - 10);
-    textAlign(RIGHT, CENTER);
-    text('B', bx - 10, by);
-    textAlign(LEFT, CENTER);
-    text('C', cxp + 10, cyp);
-    textAlign(CENTER, CENTER);
-    textSize(10);
-    text('N', nx + 12, ny - 10);
+    // Networks
+    if (mode === 0) {
+        drawDeltaNet(lcx, DIAG_Y, inVals,  true);
+        drawWyeNet  (rcx, DIAG_Y, outVals, false);
+    } else {
+        drawWyeNet  (lcx, DIAG_Y, inVals,  true);
+        drawDeltaNet(rcx, DIAG_Y, outVals, false);
+    }
 
-    // Resistor labels
-    textSize(12);
-    textStyle(NORMAL);
-    let rCol = isInput ? RES_WYE : [180, 180, 180];
+    // Panel footer labels
+    let lLabel = mode === 0 ? 'Input  \u0394  Network' : 'Input  Y  Network';
+    let rLabel = mode === 0 ? 'Output  Y  Network' : 'Output  \u0394  Network';
+    noStroke();
+    fill(lCol); textSize(12); textStyle(BOLD); textAlign(CENTER, BOTTOM);
+    text(lLabel, lcx, PAN_TOP + PAN_H - 6);
     fill(rCol);
+    text(rLabel, rcx, PAN_TOP + PAN_H - 6);
+    textStyle(NORMAL);
+}
 
-    textAlign(LEFT, CENTER);
-    let r1Mx = (nx + ax) / 2 + 8, r1My = (ny + ay) / 2;
-    text(getOutputLabel(0) + (isInput ? '=' + nf(sliderVals[0], 0, 0) + 'Ω' : ''), r1Mx, r1My);
+// ── Delta network ─────────────────────────────────────────────────────────────
+function drawDeltaNet(cx, cy, vals, isInput) {
+    let s      = min(cw * 0.145, 90);
+    let rCol   = isInput ? COL_DELTA : [185, 185, 185];
+    let wCol   = isInput ? COL_WIRE  : [185, 185, 185];
+    let nCol   = isInput ? COL_NODE  : [160, 160, 160];
+    let tFill  = isInput ? 30        : 160;
 
-    textAlign(RIGHT, CENTER);
-    let r2Mx = (nx + bx) / 2 - 8, r2My = (ny + by) / 2;
-    text(getOutputLabel(1) + (isInput ? '=' + nf(sliderVals[1], 0, 0) + 'Ω' : ''), r2Mx, r2My);
+    // Vertices A (top), B (bottom-left), C (bottom-right)
+    let ax = cx,      ay = cy - s * 0.82;
+    let bx = cx - s,  by = cy + s * 0.56;
+    let ex = cx + s,  ey = cy + s * 0.56;   // 'e' avoids conflict with Math.E... use ex/ey
 
-    textAlign(LEFT, CENTER);
-    let r3Mx = (nx + cxp) / 2 + 8, r3My = (ny + cyp) / 2;
-    text(getOutputLabel(2) + (isInput ? '=' + nf(sliderVals[2], 0, 0) + 'Ω' : ''), r3Mx, r3My);
+    drawResEdge(ax, ay, bx,  by,  rCol, wCol);
+    drawResEdge(bx, by, ex,  ey,  rCol, wCol);
+    drawResEdge(ex, ey, ax,  ay,  rCol, wCol);
 
-    // Wye label
-    textSize(13);
-    textAlign(CENTER, CENTER);
-    fill(labelCol);
-    textStyle(BOLD);
-    text('Wye (Y)', cx, max(by, cyp) + 32);
+    fill(nCol); noStroke();
+    circle(ax, ay, 13); circle(bx, by, 13); circle(ex, ey, 13);
+
+    fill(tFill); textSize(14); textStyle(BOLD);
+    textAlign(CENTER, BOTTOM); text('A', ax, ay - 10);
+    textAlign(RIGHT,  CENTER); text('B', bx - 10, by);
+    textAlign(LEFT,   CENTER); text('C', ex + 10, ey);
     textStyle(NORMAL);
 
-    // Show output values on wye side if Delta->Wye
-    if (deltaToWye && outputVals[0] !== null && (animState === 'result' || animState === 'idle')) {
-        fill(RES_WYE);
-        textSize(11);
-        textStyle(BOLD);
-        textAlign(LEFT, CENTER);
-        text('R1=' + nf(outputVals[0], 0, 1) + 'Ω', r1Mx, r1My + 14);
-        textAlign(RIGHT, CENTER);
-        text('R2=' + nf(outputVals[1], 0, 1) + 'Ω', r2Mx, r2My + 14);
-        textAlign(LEFT, CENTER);
-        text('R3=' + nf(outputVals[2], 0, 1) + 'Ω', r3Mx, r3My + 14);
-        textStyle(NORMAL);
-    }
+    fill(rCol); textSize(11);
+
+    // Ra label (A-B edge, offset outward)
+    let raMx = (ax + bx) / 2, raMy = (ay + by) / 2;
+    let raNx = -(by - ay),    raNy =  (bx - ax);
+    let raNL = sqrt(raNx * raNx + raNy * raNy);
+    let off = 18;
+    textAlign(CENTER, CENTER);
+    if (vals[0] !== null)
+        text('Ra=' + fmtRU(vals[0]), raMx + raNx / raNL * off, raMy + raNy / raNL * off);
+
+    // Rb label (B-C edge, below)
+    textAlign(CENTER, TOP);
+    if (vals[1] !== null)
+        text('Rb=' + fmtRU(vals[1]), (bx + ex) / 2, max(by, ey) + 10);
+
+    // Rc label (C-A edge, offset outward)
+    let rcMx = (ex + ax) / 2, rcMy = (ey + ay) / 2;
+    let rcNx = -(ay - ey),    rcNy =  (ax - ex);
+    let rcNL = sqrt(rcNx * rcNx + rcNy * rcNy);
+    textAlign(CENTER, CENTER);
+    if (vals[2] !== null)
+        text('Rc=' + fmtRU(vals[2]), rcMx + rcNx / rcNL * off, rcMy + rcNy / rcNL * off);
 }
 
-function getInputLabel(i) {
-    if (deltaToWye) return ['Ra', 'Rb', 'Rc'][i];
-    return ['R1', 'R2', 'R3'][i];
+// ── Wye network ───────────────────────────────────────────────────────────────
+function drawWyeNet(cx, cy, vals, isInput) {
+    let s     = min(cw * 0.115, 74);
+    let rCol  = isInput ? COL_WYE   : [185, 185, 185];
+    let wCol  = isInput ? COL_WIRE  : [185, 185, 185];
+    let nCol  = isInput ? COL_NODE  : [160, 160, 160];
+    let tFill = isInput ? 30        : 160;
+
+    let nx = cx, ny = cy;
+    let ax = cx,      ay = cy - s * 1.15;
+    let bx = cx - s,  by = cy + s * 0.72;
+    let fx = cx + s,  fy = cy + s * 0.72;
+
+    drawResEdge(nx, ny, ax, ay, rCol, wCol);
+    drawResEdge(nx, ny, bx, by, rCol, wCol);
+    drawResEdge(nx, ny, fx, fy, rCol, wCol);
+
+    fill(nCol); noStroke();
+    circle(nx, ny, 10);
+    circle(ax, ay, 13); circle(bx, by, 13); circle(fx, fy, 13);
+
+    fill(tFill); textSize(14); textStyle(BOLD);
+    textAlign(CENTER, BOTTOM); text('A', ax, ay - 10);
+    textAlign(RIGHT,  CENTER); text('B', bx - 10, by);
+    textAlign(LEFT,   CENTER); text('C', fx + 10, fy);
+    fill(isInput ? 80 : 155);
+    textSize(10); textAlign(CENTER, CENTER); text('N', nx + 13, ny);
+    textStyle(NORMAL);
+
+    fill(rCol); textSize(11);
+    textAlign(LEFT,  CENTER);
+    if (vals[0] !== null) text('R1=' + fmtRU(vals[0]), (nx + ax) / 2 + 8, (ny + ay) / 2);
+    textAlign(RIGHT, CENTER);
+    if (vals[1] !== null) text('R2=' + fmtRU(vals[1]), (nx + bx) / 2 - 8, (ny + by) / 2);
+    textAlign(LEFT,  CENTER);
+    if (vals[2] !== null) text('R3=' + fmtRU(vals[2]), (nx + fx) / 2 + 8, (ny + fy) / 2);
 }
 
-function getOutputLabel(i) {
-    if (deltaToWye) return ['R1', 'R2', 'R3'][i];
-    return ['Ra', 'Rb', 'Rc'][i];
-}
-
-// -- Draw a resistor zigzag along a line --
-function drawResistorLine(x1, y1, x2, y2, col) {
+// ── Resistor zigzag edge ──────────────────────────────────────────────────────
+function drawResEdge(x1, y1, x2, y2, rCol, wCol) {
     let dx = x2 - x1, dy = y2 - y1;
     let len = sqrt(dx * dx + dy * dy);
+    if (len < 1) return;
     let ux = dx / len, uy = dy / len;
-    let px = -uy, py = ux;  // perpendicular
+    let px = -uy,      py =  ux;
 
-    let resLen = len * 0.45;
-    let startFrac = 0.5 - resLen / (2 * len);
-    let endFrac = 0.5 + resLen / (2 * len);
+    const sf = 0.275, ef = 0.725;
 
-    // Wire segments
-    stroke(WIRE);
-    strokeWeight(2);
-    line(x1, y1, x1 + dx * startFrac, y1 + dy * startFrac);
-    line(x1 + dx * endFrac, y1 + dy * endFrac, x2, y2);
+    stroke(wCol); strokeWeight(2);
+    line(x1, y1, x1 + dx * sf, y1 + dy * sf);
+    line(x1 + dx * ef, y1 + dy * ef, x2, y2);
 
-    // Zigzag resistor body
-    stroke(col);
-    strokeWeight(2.5);
-    noFill();
-    let zigN = 6;
-    let zigAmp = 6;
-    let sx = x1 + dx * startFrac;
-    let sy = y1 + dy * startFrac;
-    let segDx = (dx * (endFrac - startFrac)) / zigN;
-    let segDy = (dy * (endFrac - startFrac)) / zigN;
-
+    stroke(rCol); strokeWeight(2.5); noFill();
+    let n = 6, amp = 5.5;
+    let sx = x1 + dx * sf, sy = y1 + dy * sf;
+    let sdx = dx * (ef - sf) / n, sdy = dy * (ef - sf) / n;
     beginShape();
     vertex(sx, sy);
-    for (let j = 0; j < zigN; j++) {
+    for (let j = 0; j < n; j++) {
         let sign = (j % 2 === 0) ? 1 : -1;
-        let mx = sx + segDx * (j + 0.5) + px * zigAmp * sign;
-        let my = sy + segDy * (j + 0.5) + py * zigAmp * sign;
-        vertex(mx, my);
+        vertex(sx + sdx * (j + 0.5) + px * amp * sign,
+               sy + sdy * (j + 0.5) + py * amp * sign);
     }
-    vertex(x1 + dx * endFrac, y1 + dy * endFrac);
+    vertex(x1 + dx * ef, y1 + dy * ef);
     endShape();
 }
 
-// -- Direction arrow --
+// ── Arrow ─────────────────────────────────────────────────────────────────────
 function drawArrow() {
-    let midX = containerWidth / 2;
-    let midY = 175;
-    let arrowLen = 40;
-
-    let dir = deltaToWye ? 1 : -1;
-    let ax1 = midX - arrowLen * dir / 2;
-    let ax2 = midX + arrowLen * dir / 2;
-
-    stroke(BTN_COL);
-    strokeWeight(3);
-    line(ax1, midY, ax2, midY);
-    // Arrowhead
-    let headSize = 10;
-    line(ax2, midY, ax2 - headSize * dir, midY - headSize * 0.5);
-    line(ax2, midY, ax2 - headSize * dir, midY + headSize * 0.5);
-
-    // Label
-    noStroke();
-    fill(BTN_COL);
-    textSize(13);
-    textAlign(CENTER, CENTER);
-    textStyle(BOLD);
-    text(deltaToWye ? 'Δ → Y' : 'Y → Δ', midX, midY - 20);
-    textStyle(NORMAL);
+    let midX = cw / 2, midY = DIAG_Y;
+    let hl = 30;
+    stroke(COL_SEG_ACT); strokeWeight(3);
+    line(midX - hl, midY, midX + hl, midY);
+    line(midX + hl, midY, midX + hl - 10, midY - 6);
+    line(midX + hl, midY, midX + hl - 10, midY + 6);
+    noStroke(); fill(COL_SEG_ACT);
+    textSize(11); textAlign(CENTER, BOTTOM);
+    text(mode === 0 ? '\u0394 \u2192 Y' : 'Y \u2192 \u0394', midX, midY - 8);
 }
 
-// -- Toggle button --
-function drawToggleButton() {
-    let b = toggleBtn;
-    let hover = isInsideRect(mouseX, mouseY, b.x, b.y, b.w, b.h);
+// ── Sliders panel ─────────────────────────────────────────────────────────────
+function drawSlidersPanel() {
+    const panH = 130;
+    noStroke(); fill(COL_PANEL);
+    rect(0, SLIDER_PAN_Y, cw, panH);
 
-    fill(hover ? BTN_HOVER : BTN_COL);
-    noStroke();
-    rect(b.x, b.y, b.w, b.h, 6);
+    // Section header
+    noStroke(); fill(100); textSize(11); textAlign(LEFT, TOP);
+    text('Input resistors:', TRACK_PAD_L, SLIDER_PAN_Y + 8);
 
-    fill(255);
-    textSize(13);
-    textAlign(CENTER, CENTER);
-    textStyle(BOLD);
-    text(deltaToWye ? 'Δ → Y' : 'Y → Δ', b.x + b.w / 2, b.y + b.h / 2);
-    textStyle(NORMAL);
-}
+    let labels = mode === 0 ? ['Ra', 'Rb', 'Rc'] : ['R1', 'R2', 'R3'];
+    let tCol   = mode === 0 ? COL_DELTA : COL_WYE;
 
-// -- Sliders --
-function drawSliders() {
-    let labels = deltaToWye
-        ? ['Ra', 'Rb', 'Rc']
-        : ['R1', 'R2', 'R3'];
-    let cols = deltaToWye ? RES_DELTA : RES_WYE;
-
+    sliders = [];
     for (let i = 0; i < 3; i++) {
-        let s = sliders[i];
-        s.label = labels[i];
-        let trackY = s.y;
+        let sy = SLOT_BASE + i * SLOT_GAP;
+        sliders.push({ x: trackStart, y: sy, w: trackLen, dragging: false });
 
         // Label
-        fill(60);
-        noStroke();
-        textSize(13);
-        textAlign(RIGHT, CENTER);
-        textStyle(BOLD);
-        text(s.label + ':', s.x - 8, trackY);
+        noStroke(); fill(55);
+        textSize(13); textStyle(BOLD); textAlign(RIGHT, CENTER);
+        text(labels[i] + ':', TRACK_PAD_L + LABEL_W, sy);
         textStyle(NORMAL);
 
-        // Track
-        stroke(200);
-        strokeWeight(sliderTrackH);
-        strokeCap(ROUND);
-        line(s.x, trackY, s.x + s.w, trackY);
+        // Unit (Ω after input box)
+        fill(90); textSize(12); textAlign(LEFT, CENTER);
+        text('\u03A9', TRACK_PAD_L + LABEL_W + INPUT_W + 6, sy);
 
-        // Filled portion
-        let frac = (s.val - SLIDER_MIN) / (SLIDER_MAX - SLIDER_MIN);
-        stroke(cols);
-        strokeWeight(sliderTrackH);
-        line(s.x, trackY, s.x + s.w * frac, trackY);
+        // Track background
+        stroke(210); strokeWeight(6); strokeCap(ROUND);
+        line(trackStart, sy, trackEnd, sy);
+
+        // Track fill
+        let frac = constrain((inVals[i] - R_MIN) / (R_MAX - R_MIN), 0, 1);
+        stroke(tCol); strokeWeight(6);
+        line(trackStart, sy, trackStart + trackLen * frac, sy);
 
         // Knob
-        let kx = s.x + s.w * frac;
-        noStroke();
-        fill(255);
-        stroke(cols);
-        strokeWeight(2);
-        circle(kx, trackY, sliderKnobR * 2);
+        let kx = trackStart + trackLen * frac;
+        noStroke(); fill(255); stroke(tCol); strokeWeight(2);
+        circle(kx, sy, 18);
 
-        // Value
-        noStroke();
-        fill(60);
-        textSize(12);
-        textAlign(LEFT, CENTER);
-        text(nf(s.val, 0, 0) + 'Ω', s.x + s.w + 10, trackY);
+        // Value right of track
+        noStroke(); fill(60); textSize(12); textAlign(LEFT, CENTER);
+        text(fmtRU(inVals[i]), trackEnd + 6, sy);
     }
 }
 
-// -- Transform button --
-function drawTransformButton() {
-    let b = transformBtn;
-    let hover = isInsideRect(mouseX, mouseY, b.x, b.y, b.w, b.h);
-    let active = animState !== 'idle';
+// ── Formula section ───────────────────────────────────────────────────────────
+function drawFormulaSection() {
+    const y0 = 508;
+    const cardH = 112;
+    const gap = 8;
+    let cardW = (cw - 40 - gap * 2) / 3;
 
-    fill(active ? [100, 100, 100] : (hover ? BTN_HOVER : BTN_COL));
-    noStroke();
-    rect(b.x, b.y, b.w, b.h, 8);
+    // Header
+    noStroke(); fill(80); textSize(11); textStyle(BOLD); textAlign(LEFT, TOP);
+    text('Conversion Formulas:', 20, y0 - 14);
+    textStyle(NORMAL);
 
-    fill(255);
-    textSize(14);
-    textAlign(CENTER, CENTER);
-    textStyle(BOLD);
-    text('Transform', b.x + b.w / 2, b.y + b.h / 2);
+    let outLbls = mode === 0 ? ['R1', 'R2', 'R3'] : ['Ra', 'Rb', 'Rc'];
+    let accent   = mode === 0 ? COL_WYE : COL_DELTA;
+    let a = inVals[0], b = inVals[1], c = inVals[2];
+
+    let numTops, numBots, subs;
+    if (mode === 0) {
+        let sum = a + b + c;
+        numTops = ['Ra \u00B7 Rb', 'Rb \u00B7 Rc', 'Ra \u00B7 Rc'];
+        numBots = ['Ra + Rb + Rc', 'Ra + Rb + Rc', 'Ra + Rb + Rc'];
+        subs    = [
+            fmtRU(a) + '\u00B7' + fmtRU(b) + ' / ' + fmtRU(sum),
+            fmtRU(b) + '\u00B7' + fmtRU(c) + ' / ' + fmtRU(sum),
+            fmtRU(a) + '\u00B7' + fmtRU(c) + ' / ' + fmtRU(sum)
+        ];
+    } else {
+        let P = a * b + b * c + c * a;
+        numTops = ['R1R2+R2R3+R3R1', 'R1R2+R2R3+R3R1', 'R1R2+R2R3+R3R1'];
+        numBots = ['R2', 'R3', 'R1'];
+        subs    = [
+            fmtRU(P) + ' / ' + fmtRU(b),
+            fmtRU(P) + ' / ' + fmtRU(c),
+            fmtRU(P) + ' / ' + fmtRU(a)
+        ];
+    }
+
+    for (let i = 0; i < 3; i++) {
+        let cx = 20 + i * (cardW + gap);
+        let res = outVals[i] !== null ? outLbls[i] + ' = ' + fmtRU(outVals[i]) : '\u2014';
+        drawFormulaCard(cx, y0, cardW, cardH,
+            outLbls[i], numTops[i], numBots[i], subs[i], res, accent);
+    }
+}
+
+function drawFormulaCard(x, y, w, h, title, numTop, numBot, subText, result, accent) {
+    // Shadow
+    noStroke(); fill(0, 0, 0, 8);
+    rect(x + 2, y + 2, w, h, 6);
+
+    // Card bg
+    fill(COL_PANEL);
+    rect(x, y, w, h, 6);
+
+    // Accent bar
+    fill(accent);
+    rect(x, y, 5, h, 6, 0, 0, 6);
+
+    let tx = x + 14;
+
+    // Title
+    fill(accent); textSize(13); textStyle(BOLD); textAlign(LEFT, TOP);
+    text(title + ' =', tx, y + 8);
+    textStyle(NORMAL);
+
+    // Fraction display
+    let fracCX = x + w / 2 + 4;
+    let numY  = y + 33;
+    let lineY = y + 45;
+    let denY  = y + 57;
+
+    fill(55); textSize(10); textAlign(CENTER, CENTER);
+    text(numTop, fracCX, numY);
+
+    textSize(10);
+    let lw = max(textWidth(numTop), textWidth(numBot)) + 18;
+    stroke(100); strokeWeight(1);
+    line(fracCX - lw / 2, lineY, fracCX + lw / 2, lineY);
+
+    noStroke(); fill(55); textSize(10); textAlign(CENTER, CENTER);
+    text(numBot, fracCX, denY);
+
+    // Substitution
+    fill(125); textSize(9.5); textAlign(LEFT, TOP);
+    text('= ' + subText, tx, y + 68);
+
+    // Result — prominent
+    fill(COL_RESULT); textSize(14); textStyle(BOLD); textAlign(LEFT, TOP);
+    text(result, tx, y + 86);
     textStyle(NORMAL);
 }
 
-// -- Formulas --
-function drawFormulas() {
-    let y0 = 486;
-    let showFormula = (animState === 'formula' || animState === 'result' || (animState === 'idle' && outputVals[0] !== null));
+// ── Results card ──────────────────────────────────────────────────────────────
+function drawResultsCard() {
+    if (outVals[0] === null) return;
+    const y0 = 633, h = 52;
+    let outLbls = mode === 0 ? ['R1', 'R2', 'R3'] : ['Ra', 'Rb', 'Rc'];
+    let accent   = mode === 0 ? COL_WYE : COL_DELTA;
 
-    fill(80);
-    noStroke();
-    textSize(11);
-    textAlign(CENTER, TOP);
+    noStroke(); fill(0, 0, 0, 6);
+    rect(22, y0 + 2, cw - 44, h, 6);
+    fill(COL_PANEL);
+    rect(20, y0, cw - 40, h, 6);
+    fill(accent);
+    rect(20, y0, 5, h, 6, 0, 0, 6);
 
-    if (deltaToWye) {
-        if (showFormula) {
-            fill(60);
-            textStyle(NORMAL);
-            text(
-                'R1 = Ra*Rb/(Ra+Rb+Rc)    R2 = Rb*Rc/(Ra+Rb+Rc)    R3 = Ra*Rc/(Ra+Rb+Rc)',
-                containerWidth / 2, y0
-            );
-            let sum = sliderVals[0] + sliderVals[1] + sliderVals[2];
-            fill(100);
-            textSize(10);
-            text(
-                'Sum = ' + nf(sum, 0, 0) + 'Ω',
-                containerWidth / 2, y0 + 16
-            );
-        }
-    } else {
-        if (showFormula) {
-            fill(60);
-            textStyle(NORMAL);
-            text(
-                'Ra = (R1*R2+R2*R3+R3*R1)/R2    Rb = .../R3    Rc = .../R1',
-                containerWidth / 2, y0
-            );
-            let p = sliderVals[0] * sliderVals[1] + sliderVals[1] * sliderVals[2] + sliderVals[2] * sliderVals[0];
-            fill(100);
-            textSize(10);
-            text(
-                'Product sum = ' + nf(p, 0, 0),
-                containerWidth / 2, y0 + 16
-            );
-        }
+    fill(accent); textSize(12); textStyle(BOLD); textAlign(LEFT, CENTER);
+    text('Results:', 32, y0 + h / 2);
+    textStyle(NORMAL);
+
+    fill(COL_RESULT); textSize(17); textStyle(BOLD);
+    let spacing = (cw - 130) / 3;
+    for (let i = 0; i < 3; i++) {
+        textAlign(CENTER, CENTER);
+        text(outLbls[i] + ' = ' + fmtRU(outVals[i]), 110 + i * spacing + spacing / 2, y0 + h / 2);
     }
+    textStyle(NORMAL);
 }
 
-// -- Output values --
-function drawOutputValues() {
-    if (outputVals[0] === null) return;
-    if (animState === 'highlight' || animState === 'formula') return;
+// ── Explanation panel ─────────────────────────────────────────────────────────
+function drawExplanation() {
+    const y0 = 698, h = 34;
+    let msg = mode === 0
+        ? '\u0394\u2192Y: Each Wye resistor = product of its two adjacent Delta resistors \u00F7 sum of all three Delta resistors.'
+        : 'Y\u2192\u0394: Each Delta resistor = (R\u2081R\u2082+R\u2082R\u2083+R\u2083R\u2081) \u00F7 the opposite Wye resistor.  Both networks are electrically identical at terminals A, B, C.';
+    let col = mode === 0 ? COL_DELTA : COL_WYE;
 
-    // The output values are drawn on the respective diagrams (see drawWyeDiagram / drawDeltaDiagram)
+    noStroke(); fillA(col, 22);
+    rect(20, y0, cw - 40, h, 6);
+    stroke(col); strokeWeight(1.5); noFill();
+    rect(20, y0, cw - 40, h, 6);
+
+    fill(50); noStroke(); textSize(11); textAlign(LEFT, CENTER);
+    text(msg, 30, y0 + h / 2, cw - 60);
 }
 
-// =====================================================================
-// CALCULATION
-// =====================================================================
-function calculateOutput() {
-    let a = sliderVals[0], b = sliderVals[1], c = sliderVals[2];
-
-    if (deltaToWye) {
-        // Delta to Wye: Ra, Rb, Rc -> R1, R2, R3
-        let sum = a + b + c;
-        outputVals[0] = (a * b) / sum;  // R1 = Ra*Rb / (Ra+Rb+Rc)
-        outputVals[1] = (b * c) / sum;  // R2 = Rb*Rc / (Ra+Rb+Rc)
-        outputVals[2] = (a * c) / sum;  // R3 = Ra*Rc / (Ra+Rb+Rc)
-    } else {
-        // Wye to Delta: R1, R2, R3 -> Ra, Rb, Rc
-        let prod = a * b + b * c + c * a;
-        outputVals[0] = prod / b;  // Ra = prod / R2
-        outputVals[1] = prod / c;  // Rb = prod / R3
-        outputVals[2] = prod / a;  // Rc = prod / R1
-    }
-}
-
-function startAnimation() {
-    if (animState !== 'idle') return;
-    animState = 'highlight';
-    animStartTime = millis();
-    outputVals = [null, null, null];
-    loop();
-}
-
-// =====================================================================
-// INPUT HANDLING
-// =====================================================================
+// ── Input handling ─────────────────────────────────────────────────────────────
 function mousePressed() {
-    // Toggle button
-    if (isInsideRect(mouseX, mouseY, toggleBtn.x, toggleBtn.y, toggleBtn.w, toggleBtn.h)) {
-        deltaToWye = !deltaToWye;
-        outputVals = [null, null, null];
-        animState = 'idle';
-        computeLayout();
-        redraw();
-        return;
-    }
-
-    // Transform button
-    if (isInsideRect(mouseX, mouseY, transformBtn.x, transformBtn.y, transformBtn.w, transformBtn.h)) {
-        startAnimation();
-        return;
+    // Segmented control
+    let hw = SEG_W / 2;
+    if (mouseY >= SEG_Y && mouseY <= SEG_Y + SEG_H) {
+        for (let i = 0; i < 2; i++) {
+            if (mouseX >= segX + i * hw && mouseX <= segX + (i + 1) * hw) {
+                if (mode !== i) {
+                    mode = i;
+                    solve();
+                    for (let j = 0; j < 3; j++) inpElems[j].value(str(inVals[j]));
+                    redraw();
+                }
+                return;
+            }
+        }
     }
 
     // Sliders
     for (let i = 0; i < sliders.length; i++) {
         let s = sliders[i];
-        let frac = (s.val - SLIDER_MIN) / (SLIDER_MAX - SLIDER_MIN);
+        if (!s) continue;
+        let frac = constrain((inVals[i] - R_MIN) / (R_MAX - R_MIN), 0, 1);
         let kx = s.x + s.w * frac;
-        if (dist(mouseX, mouseY, kx, s.y) < sliderKnobR + 5) {
-            s.dragging = true;
-            loop();
-            return;
+        if (dist(mouseX, mouseY, kx, s.y) < 14) {
+            s.dragging = true; loop(); return;
         }
-        // Click on track
-        if (mouseX >= s.x - 5 && mouseX <= s.x + s.w + 5 &&
-            mouseY >= s.y - 12 && mouseY <= s.y + 12) {
+        if (mouseX >= s.x && mouseX <= s.x + s.w && abs(mouseY - s.y) < 14) {
             let newFrac = constrain((mouseX - s.x) / s.w, 0, 1);
-            s.val = round(SLIDER_MIN + newFrac * (SLIDER_MAX - SLIDER_MIN));
-            sliderVals[i] = s.val;
-            s.dragging = true;
-            outputVals = [null, null, null];
-            loop();
-            return;
+            inVals[i] = round(R_MIN + newFrac * (R_MAX - R_MIN));
+            inpElems[i].value(str(inVals[i]));
+            solve(); s.dragging = true; loop(); return;
         }
     }
 }
@@ -634,32 +585,16 @@ function mousePressed() {
 function mouseDragged() {
     for (let i = 0; i < sliders.length; i++) {
         let s = sliders[i];
-        if (s.dragging) {
-            let newFrac = constrain((mouseX - s.x) / s.w, 0, 1);
-            s.val = round(SLIDER_MIN + newFrac * (SLIDER_MAX - SLIDER_MIN));
-            sliderVals[i] = s.val;
-            outputVals = [null, null, null];
-            redraw();
-            return;
-        }
+        if (!s || !s.dragging) continue;
+        let newFrac = constrain((mouseX - s.x) / s.w, 0, 1);
+        inVals[i] = round(R_MIN + newFrac * (R_MAX - R_MIN));
+        inpElems[i].value(str(inVals[i]));
+        solve(); redraw(); return;
     }
 }
 
 function mouseReleased() {
-    for (let i = 0; i < sliders.length; i++) {
-        sliders[i].dragging = false;
-    }
-    if (animState === 'idle') noLoop();
+    for (let s of sliders) if (s) s.dragging = false;
+    noLoop();
     redraw();
-}
-
-function mouseMoved() {
-    redraw();
-}
-
-// =====================================================================
-// UTILITY
-// =====================================================================
-function isInsideRect(mx, my, rx, ry, rw, rh) {
-    return mx >= rx && mx <= rx + rw && my >= ry && my <= ry + rh;
 }

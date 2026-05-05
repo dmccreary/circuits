@@ -1,48 +1,101 @@
-// KCL Node Visualization MicroSim
-// Interactive demonstration of Kirchhoff's Current Law
-// Four branches meet at a central node with animated current flow
-
+// KCL Node Visualization MicroSim — Chapter 3
+// Animated KCL demo with numeric inputs + sliders, real-time ΣI check
 'use strict';
 
-let canvasW, canvasH = 500;
-let cx, cy;  // node center
+// ── Canvas & Layout ───────────────────────────────────────────────────────────
+let canvasW;
+const DRAW_H   = 340;
+const STATUS_H = 60;
+const CTRL_H   = 190;           // extra 42 px for Start/Stop + Reset button row
+const canvasH  = DRAW_H + STATUS_H + CTRL_H;
 
-// Branch data: angle, current value, particles
-const ANGLES = [ -Math.PI/2, 0, Math.PI/2, Math.PI ]; // top, right, bottom, left
-const LABELS = ['I₁','I₂','I₃','I₄'];
-const DEFAULTS = [3, 2, -4, -1];
-let currents = [...DEFAULTS];
+let cx, cy;
 
-// Slider state
-const SL_W = 160, SL_H = 6, KNOB_R = 9;
+// ── Design palette (Circuits 1 system) ───────────────────────────────────────
+const C_BG_DRAW = '#eef1fb';
+const C_BG_CTRL = '#dde1f0';
+const C_DEEP    = [26,  35, 126];
+const C_PRIMARY = [57,  73, 171];
+const C_ACCENT  = [92, 107, 192];
+const C_GREEN   = [27, 153,  80];
+const C_GREEN_D = [27,  94,  32];
+const C_RED     = [211,  47,  47];
+const C_RED_D   = [183,  28,  28];
+const C_NODE_BG = [26,   35, 126];
+
+// ── Branch config ─────────────────────────────────────────────────────────────
+const BRANCH_LEN = 120;
+const ANGLES     = [-Math.PI / 2, 0, Math.PI / 2, Math.PI];
+const LABELS     = ['I₁', 'I₂', 'I₃', 'I₄'];
+const DEFAULTS   = [3, 2, -4, -1];
+let   currents   = [...DEFAULTS];
+
+const LBL_CFG = [
+    { dx: 0,                dy: -BRANCH_LEN - 16 },
+    { dx:  BRANCH_LEN + 26, dy: 0                },
+    { dx: 0,                dy:  BRANCH_LEN + 14 },
+    { dx: -BRANCH_LEN - 26, dy: 0                },
+];
+
+// ── Slider + input layout ─────────────────────────────────────────────────────
+const INPUT_W    = 60;
+const INPUT_GAP  = 10;
+const SL_LABEL_W = 52;
+const SL_VAL_W   = 58;
+const SL_H       = 7;
+const KNOB_R     = 9;
+
+let sliderX, sliderW;
 let sliders = [];
+let inputs  = [];
 
-// Particles
+// ── Animation state ───────────────────────────────────────────────────────────
+let isAnimating = false;    // default: stopped so students observe initial state
+
+// ── Button geometry (computed in buildButtons) ────────────────────────────────
+let btnStart = {}, btnReset = {};
+const BTN_H = 30;
+
+// ── Particles ─────────────────────────────────────────────────────────────────
 let dots = [];
 const DOTS_PER = 8;
 
-// Layout
-const BRANCH_LEN = 100;
-const DRAW_TOP = 60;
-let nodeY;
-
+// ── Setup ─────────────────────────────────────────────────────────────────────
 function setup() {
-    canvasW = max(400, min(floor(document.querySelector('main').getBoundingClientRect().width), 680));
+    updateSize();
     createCanvas(canvasW, canvasH).parent(document.querySelector('main'));
     textFont('Arial');
-    nodeY = DRAW_TOP + 120;
-    cx = canvasW / 2;
-    cy = nodeY;
+    buildLayout();
     buildSliders();
     buildDots();
+    buildInputs();
+}
+
+function updateSize() {
+    const w = document.querySelector('main').getBoundingClientRect().width;
+    canvasW = max(420, min(floor(w), 680));
+}
+
+function buildLayout() {
+    cx = canvasW / 2;
+    cy = 192;
+    sliderX = SL_LABEL_W + 8 + INPUT_W + INPUT_GAP;
+    sliderW = canvasW - sliderX - SL_VAL_W - 16;
+    buildButtons();
+}
+
+function buildButtons() {
+    // Centered below slider rows; 46 px from canvas bottom
+    const bY = canvasH - 46;
+    btnStart = { x: cx - 96, y: bY, w: 90, h: BTN_H };
+    btnReset = { x: cx +  8, y: bY, w: 80, h: BTN_H };
 }
 
 function buildSliders() {
     sliders = [];
-    let left = cx - SL_W / 2 + 30;
-    let top = 365;
+    const firstY = DRAW_H + STATUS_H + 30;
     for (let i = 0; i < 4; i++) {
-        sliders.push({ x: left, y: top + i * 30, val: currents[i], drag: false });
+        sliders.push({ x: sliderX, y: firstY + i * 28, val: DEFAULTS[i], drag: false });
     }
 }
 
@@ -50,281 +103,300 @@ function buildDots() {
     dots = [];
     for (let b = 0; b < 4; b++) {
         for (let j = 0; j < DOTS_PER; j++) {
-            dots.push({ b: b, t: j / DOTS_PER });
+            dots.push({ b, t: j / DOTS_PER });
         }
     }
 }
 
+// ── Numeric inputs ────────────────────────────────────────────────────────────
+function buildInputs() {
+    for (const inp of inputs) inp.remove();
+    inputs = [];
+    for (let i = 0; i < 4; i++) {
+        const idx = i;
+        const inp = createInput(nf(DEFAULTS[idx], 1, 1));
+        inp.attribute('type', 'number');
+        inp.attribute('step', '0.5');
+        inp.attribute('min', '-5');
+        inp.attribute('max', '5');
+        inp.addClass('kcl-input');
+        inp.input(() => {
+            const v = parseFloat(inp.value());
+            if (isFinite(v) && !isNaN(v)) sliders[idx].val = constrain(v, -5, 5);
+        });
+        inputs.push(inp);
+    }
+    positionInputs();
+}
+
+function positionInputs() {
+    if (inputs.length === 0) return;
+    const cvs = document.querySelector('canvas');
+    if (!cvs) return;
+    const rect = cvs.getBoundingClientRect();
+    for (let i = 0; i < 4; i++) {
+        const s = sliders[i];
+        inputs[i].position(
+            rect.left + s.x - INPUT_W - INPUT_GAP,
+            rect.top  + s.y - 12
+        );
+    }
+}
+
+// ── Draw loop ─────────────────────────────────────────────────────────────────
 function draw() {
-    background(248, 249, 252);
+    background(C_BG_DRAW);
+    noStroke(); fill(C_BG_CTRL);
+    rect(0, DRAW_H, canvasW, STATUS_H + CTRL_H);
 
-    // Title
-    noStroke();
-    fill(40);
-    textAlign(CENTER, TOP);
-    textSize(17);
-    textStyle(BOLD);
-    text("Kirchhoff's Current Law (KCL)", cx, 10);
-    textStyle(NORMAL);
-    textSize(12);
-    fill(100);
-    text('The algebraic sum of all currents at a node equals zero', cx, 32);
-
-    // Read slider values
     for (let i = 0; i < 4; i++) currents[i] = sliders[i].val;
 
+    drawTitle();
     drawBranches();
     animateDots();
     drawNode();
-    drawStatus();
-    drawPanel();
+    drawStatusBar();
+    drawControlPanel();
 }
 
-// ── Branches with arrows ────────────────────────────────────────────────
+// ── Title ─────────────────────────────────────────────────────────────────────
+function drawTitle() {
+    noStroke();
+    fill(...C_DEEP);
+    textAlign(CENTER, TOP); textSize(15); textStyle(BOLD);
+    text("Kirchhoff's Current Law (KCL)", cx, 10);
+    textStyle(NORMAL);
+    fill(...C_ACCENT);
+    textSize(11);
+    text('Algebraic sum of currents at any node = 0    ΣI = 0', cx, 30);
+}
 
+// ── Branches ──────────────────────────────────────────────────────────────────
 function drawBranches() {
     for (let i = 0; i < 4; i++) {
-        let a = ANGLES[i];
-        let ex = cx + cos(a) * BRANCH_LEN;
-        let ey = cy + sin(a) * BRANCH_LEN;
-        let v = currents[i];
-        let col = v >= 0 ? color(39, 174, 96) : color(231, 76, 60);
+        const a   = ANGLES[i];
+        const ex  = cx + cos(a) * BRANCH_LEN;
+        const ey  = cy + sin(a) * BRANCH_LEN;
+        const v   = currents[i];
+        const col = v >= 0 ? color(...C_GREEN) : color(...C_RED);
 
-        // Wire
-        stroke(100);
-        strokeWeight(2.5);
+        stroke(70); strokeWeight(3.5);
         line(cx, cy, ex, ey);
 
-        // Endpoint dot
-        noStroke();
-        fill(col);
-        ellipse(ex, ey, 12, 12);
+        noStroke(); fill(col);
+        ellipse(ex, ey, 13, 13);
 
-        // Arrow at midpoint
         if (abs(v) > 0.05) {
-            let mid = 0.55;
-            let ax = cx + cos(a) * BRANCH_LEN * mid;
-            let ay = cy + sin(a) * BRANCH_LEN * mid;
-            let arrAngle = v > 0 ? a + PI : a; // toward node if positive
-            let sz = map(abs(v), 0, 5, 5, 12);
+            const ax = cx + cos(a) * BRANCH_LEN * 0.52;
+            const ay = cy + sin(a) * BRANCH_LEN * 0.52;
+            const sz = map(abs(v), 0, 5, 7, 14);
             push();
             translate(ax, ay);
-            rotate(arrAngle);
-            fill(col);
-            noStroke();
-            triangle(0, 0, -sz * 1.8, -sz * 0.6, -sz * 1.8, sz * 0.6);
+            rotate(v > 0 ? a + Math.PI : a);
+            fill(col); noStroke();
+            triangle(0, 0, -sz * 1.7, -sz * 0.55, -sz * 1.7, sz * 0.55);
             pop();
         }
 
-        // Label
-        let ld = BRANCH_LEN + 26;
-        let lx = cx + cos(a) * ld;
-        let ly = cy + sin(a) * ld;
-        noStroke();
-        fill(40);
-        textAlign(CENTER, CENTER);
-        textSize(13);
-        textStyle(BOLD);
-        let sign = v >= 0 ? '+' : '';
-        text(LABELS[i] + ' = ' + sign + nf(v, 1, 1) + ' A', lx, ly);
+        const lx = cx + LBL_CFG[i].dx;
+        const ly = cy + LBL_CFG[i].dy;
+        noStroke(); fill(255, 255, 255, 210);
+        rect(lx - 39, ly - 10, 78, 20, 5);
+        fill(v >= 0 ? color(...C_GREEN_D) : color(...C_RED_D));
+        textAlign(CENTER, CENTER); textSize(12); textStyle(BOLD);
+        text(LABELS[i] + ' = ' + (v >= 0 ? '+' : '') + nf(v, 1, 1) + ' A', lx, ly);
         textStyle(NORMAL);
     }
 }
 
-// ── Animated dots ───────────────────────────────────────────────────────
-
+// ── Animated dots (only move when isAnimating) ────────────────────────────────
 function animateDots() {
-    for (let d of dots) {
-        let v = currents[d.b];
+    for (const d of dots) {
+        const v = currents[d.b];
         if (abs(v) < 0.1) continue;
 
-        // Move: positive = toward node
-        d.t -= v * 0.003;
-        if (d.t > 1) d.t -= 1;
-        if (d.t < 0) d.t += 1;
+        if (isAnimating) {
+            d.t -= v * 0.0028;
+            if (d.t > 1) d.t -= 1;
+            if (d.t < 0) d.t += 1;
+        }
 
-        let a = ANGLES[d.b];
-        let r = lerp(BRANCH_LEN - 5, 14, d.t);
-        let px = cx + cos(a) * r;
-        let py = cy + sin(a) * r;
-
-        let c = v > 0 ? color(39, 174, 96, 200) : color(231, 76, 60, 200);
+        const a  = ANGLES[d.b];
+        const r  = lerp(BRANCH_LEN - 6, 16, d.t);
         noStroke();
-        fill(c);
-        ellipse(px, py, 7, 7);
+        fill(v > 0 ? color(...C_GREEN, 210) : color(...C_RED, 210));
+        ellipse(cx + cos(a) * r, cy + sin(a) * r, 8, 8);
     }
 }
 
-// ── Central node ────────────────────────────────────────────────────────
-
+// ── Central node ──────────────────────────────────────────────────────────────
 function drawNode() {
-    // Glow
     noStroke();
-    fill(44, 62, 80, 40);
-    ellipse(cx, cy, 30, 30);
-    // Node
-    fill(44, 62, 80);
-    ellipse(cx, cy, 22, 22);
-    // Label
+    fill(...C_PRIMARY, 30);  ellipse(cx, cy, 52, 52);
+    fill(...C_PRIMARY, 55);  ellipse(cx, cy, 38, 38);
+    fill(...C_NODE_BG);      ellipse(cx, cy, 26, 26);
     fill(255);
-    textAlign(CENTER, CENTER);
-    textSize(11);
-    textStyle(BOLD);
+    textAlign(CENTER, CENTER); textSize(12); textStyle(BOLD);
     text('N', cx, cy);
     textStyle(NORMAL);
 }
 
-// ── KCL status ──────────────────────────────────────────────────────────
+// ── Status bar ────────────────────────────────────────────────────────────────
+function drawStatusBar() {
+    const sum = currents.reduce((a, b) => a + b, 0);
+    const ok  = abs(sum) < 0.05;
+    const sy  = DRAW_H + 4;
+    const ph  = STATUS_H - 10;
 
-function drawStatus() {
-    let sum = currents.reduce((a, b) => a + b, 0);
-    let ok = abs(sum) < 0.05;
-
-    let sy = cy + BRANCH_LEN + 48;
-
-    // Background pill
-    let pw = 260, ph = 44;
     noStroke();
     fill(ok ? color(232, 245, 233) : color(253, 237, 237));
-    rect(cx - pw / 2, sy - ph / 2, pw, ph, 22);
-
-    // Border
+    rect(10, sy, canvasW - 20, ph, 10);
     stroke(ok ? color(76, 175, 80) : color(229, 57, 53));
-    strokeWeight(2);
-    noFill();
-    rect(cx - pw / 2, sy - ph / 2, pw, ph, 22);
+    strokeWeight(1.5); noFill();
+    rect(10, sy, canvasW - 20, ph, 10);
 
-    // Text
+    const midY = sy + ph / 2;
     noStroke();
-    textAlign(CENTER, CENTER);
-
-    textSize(15);
-    textStyle(BOLD);
-    fill(40);
-    text('ΣI = ' + (sum >= 0 ? '+' : '') + nf(sum, 1, 1) + ' A', cx, sy - 8);
-
-    textSize(13);
+    fill(30);
+    textAlign(LEFT, CENTER); textSize(14); textStyle(BOLD);
+    text('ΣI = ' + (sum >= 0 ? '+' : '') + nf(sum, 1, 2) + ' A', 22, midY);
+    fill(...C_ACCENT);
+    textAlign(CENTER, CENTER); textSize(12); textStyle(NORMAL);
+    text('( must equal 0 for KCL )', cx, midY);
+    textAlign(RIGHT, CENTER); textSize(13); textStyle(BOLD);
     if (ok) {
-        fill(46, 125, 50);
-        text('✓ KCL Satisfied', cx, sy + 10);
+        fill(...C_GREEN);
+        text('✓ KCL Satisfied', canvasW - 22, midY);
     } else {
-        let pulse = map(sin(millis() * 0.006), -1, 1, 0.6, 1.0);
-        fill(229, 57, 53, pulse * 255);
-        text('✗ KCL Violated!', cx, sy + 10);
+        fill(211, 47, 47, map(sin(millis() * 0.006), -1, 1, 0.65, 1.0) * 255);
+        text('✗ KCL Violated', canvasW - 22, midY);
     }
     textStyle(NORMAL);
 }
 
-// ── Control panel ───────────────────────────────────────────────────────
+// ── Control panel ─────────────────────────────────────────────────────────────
+function drawControlPanel() {
+    const panelY = DRAW_H + STATUS_H;
 
-function drawPanel() {
-    let py = 345;
-    let ph = canvasH - py - 6;
-
-    // Panel bg
-    noStroke();
-    fill(238, 242, 247);
-    rect(8, py, canvasW - 16, ph, 10);
-
-    // Title
-    fill(60);
-    textAlign(CENTER, TOP);
-    textSize(11);
-    textStyle(BOLD);
-    text('Adjust Currents  (+ entering  |  − leaving)', cx, py + 5);
+    noStroke(); fill(...C_DEEP);
+    textAlign(CENTER, TOP); textSize(11); textStyle(BOLD);
+    text('Adjust Currents    ( + = entering node   |   − = leaving node )', cx, panelY + 6);
     textStyle(NORMAL);
 
     for (let i = 0; i < 4; i++) {
-        let s = sliders[i];
-        let v = s.val;
-        let col = v >= 0 ? color(39, 174, 96) : color(231, 76, 60);
-        let knobX = map(v, -5, 5, s.x, s.x + SL_W);
-        let zeroX = map(0, -5, 5, s.x, s.x + SL_W);
+        const s     = sliders[i];
+        const v     = s.val;
+        const col   = v >= 0 ? color(...C_GREEN) : color(...C_RED);
+        const knobX = map(v, -5, 5, s.x, s.x + sliderW);
+        const zeroX = map(0,  -5, 5, s.x, s.x + sliderW);
 
-        // Label
-        noStroke();
-        fill(40);
-        textAlign(RIGHT, CENTER);
-        textSize(12);
-        textStyle(BOLD);
-        text(LABELS[i] + ':', s.x - 10, s.y);
+        noStroke(); fill(30);
+        textAlign(RIGHT, CENTER); textSize(12); textStyle(BOLD);
+        text(LABELS[i] + ':', s.x - INPUT_W - INPUT_GAP - 6, s.y);
         textStyle(NORMAL);
 
-        // Track
-        stroke(200);
-        strokeWeight(SL_H);
-        strokeCap(ROUND);
-        line(s.x, s.y, s.x + SL_W, s.y);
+        fill(80);
+        textAlign(CENTER, CENTER); textSize(11);
+        text('A', s.x - INPUT_GAP / 2, s.y);
 
-        // Fill from zero to knob
-        stroke(col);
-        strokeWeight(SL_H);
+        stroke(195); strokeWeight(SL_H); strokeCap(ROUND);
+        line(s.x, s.y, s.x + sliderW, s.y);
+        stroke(col); strokeWeight(SL_H - 1);
         line(zeroX, s.y, knobX, s.y);
+        stroke(120); strokeWeight(1.5);
+        line(zeroX, s.y - 8, zeroX, s.y + 8);
 
-        // Zero tick
-        stroke(150);
-        strokeWeight(1);
-        line(zeroX, s.y - 7, zeroX, s.y + 7);
-
-        // Knob
-        noStroke();
-        fill(255);
-        ellipse(knobX, s.y, KNOB_R * 2 + 4, KNOB_R * 2 + 4);
+        noStroke(); fill(255);
+        ellipse(knobX, s.y, KNOB_R * 2 + 6, KNOB_R * 2 + 6);
         fill(col);
         ellipse(knobX, s.y, KNOB_R * 2, KNOB_R * 2);
 
-        // Value text
-        fill(col);
-        textAlign(LEFT, CENTER);
-        textSize(11);
-        textStyle(BOLD);
-        let sg = v >= 0 ? '+' : '';
-        text(sg + nf(v, 1, 1) + ' A', s.x + SL_W + 8, s.y);
+        noStroke();
+        fill(v >= 0 ? color(...C_GREEN_D) : color(...C_RED_D));
+        textAlign(LEFT, CENTER); textSize(11); textStyle(BOLD);
+        text((v >= 0 ? '+' : '') + nf(v, 1, 1) + ' A', s.x + sliderW + 8, s.y);
         textStyle(NORMAL);
     }
+
+    drawButtons();
 }
 
-// ── Mouse interaction ───────────────────────────────────────────────────
+// ── Buttons ───────────────────────────────────────────────────────────────────
+function drawButtons() {
+    // Start / Stop
+    const sCol = isAnimating ? [...C_PRIMARY] : [...C_GREEN];
+    fill(...sCol); stroke(...sCol.map(c => floor(c * 0.75)));
+    strokeWeight(1);
+    rect(btnStart.x, btnStart.y, btnStart.w, btnStart.h, 6);
+    fill(255); noStroke();
+    textAlign(CENTER, CENTER); textSize(12); textStyle(BOLD);
+    text(isAnimating ? '■  Stop' : '▶  Start',
+         btnStart.x + btnStart.w / 2, btnStart.y + btnStart.h / 2);
 
+    // Reset
+    fill(210, 212, 225); stroke(170, 172, 190); strokeWeight(1);
+    rect(btnReset.x, btnReset.y, btnReset.w, btnReset.h, 6);
+    fill(50); noStroke();
+    text('↺  Reset', btnReset.x + btnReset.w / 2, btnReset.y + btnReset.h / 2);
+
+    textStyle(NORMAL);
+}
+
+// ── Hit-test helper ───────────────────────────────────────────────────────────
+function hitBtn(btn) {
+    return mouseX >= btn.x && mouseX <= btn.x + btn.w &&
+           mouseY >= btn.y && mouseY <= btn.y + btn.h;
+}
+
+// ── Mouse / touch interaction ─────────────────────────────────────────────────
 function mousePressed() {
-    for (let s of sliders) {
-        let kx = map(s.val, -5, 5, s.x, s.x + SL_W);
-        if (dist(mouseX, mouseY, kx, s.y) < KNOB_R + 6) {
-            s.drag = true;
+    if (hitBtn(btnStart)) {
+        isAnimating = !isAnimating;
+        return;
+    }
+    if (hitBtn(btnReset)) {
+        isAnimating = false;
+        for (let i = 0; i < 4; i++) {
+            sliders[i].val = DEFAULTS[i];
+            if (inputs[i] && document.activeElement !== inputs[i].elt) {
+                inputs[i].value(nf(DEFAULTS[i], 1, 1));
+            }
         }
+        buildDots();
+        return;
+    }
+    for (const s of sliders) {
+        const kx = map(s.val, -5, 5, s.x, s.x + sliderW);
+        if (dist(mouseX, mouseY, kx, s.y) < KNOB_R + 8) s.drag = true;
     }
 }
 
 function mouseDragged() {
-    for (let s of sliders) {
-        if (s.drag) {
-            let nv = map(mouseX, s.x, s.x + SL_W, -5, 5);
-            nv = round(nv * 2) / 2; // snap 0.5
-            s.val = constrain(nv, -5, 5);
+    for (let i = 0; i < sliders.length; i++) {
+        const s = sliders[i];
+        if (!s.drag) continue;
+        let nv = map(mouseX, s.x, s.x + sliderW, -5, 5);
+        nv = round(nv * 2) / 2;
+        s.val = constrain(nv, -5, 5);
+        if (inputs[i] && document.activeElement !== inputs[i].elt) {
+            inputs[i].value(nf(s.val, 1, 1));
         }
     }
 }
 
 function mouseReleased() {
-    for (let s of sliders) s.drag = false;
+    for (const s of sliders) s.drag = false;
 }
 
-function touchStarted() {
-    mousePressed();
-    return false;
-}
-function touchMoved() {
-    mouseDragged();
-    return false;
-}
-function touchEnded() {
-    mouseReleased();
-    return false;
-}
+function touchStarted() { mousePressed(); return false; }
+function touchMoved()   { mouseDragged(); return false; }
+function touchEnded()   { mouseReleased(); return false; }
 
+// ── Responsive ────────────────────────────────────────────────────────────────
 function windowResized() {
-    canvasW = max(400, min(floor(document.querySelector('main').getBoundingClientRect().width), 680));
+    updateSize();
     resizeCanvas(canvasW, canvasH);
-    cx = canvasW / 2;
+    buildLayout();
     buildSliders();
+    positionInputs();
 }
