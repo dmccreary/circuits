@@ -2,17 +2,13 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
 <title>Series Circuit Analysis</title>
 <script src="https://cdn.jsdelivr.net/npm/p5@1.11.7/lib/p5.js"></script>
-<script src="../circuit-lib/circuit-lib.js"></script>
-    <style>
-        html, body { margin: 0; padding: 0; height: 100%; overflow: hidden; }
-        body { font-family: Arial, Helvetica, sans-serif; background: #e8eaf0; }
-        main { display: block; }
-        canvas { display: block; }
-    </style>
+<style>
+  body { margin: 0; padding: 0; background: #e8eaf0; }
+  canvas { display: block; }
+</style>
 </head>
 <body>
 <main></main>
@@ -20,48 +16,40 @@
 // ============================================================
 // Series Circuit Analysis MicroSim
 // Chapter 2: Ohm's Law and Basic Circuit Configurations
-// Bloom L2 (Understand) – explain current continuity and
-//   voltage division in series circuits
-// Step-through analysis: 5 staged reveals
+// Self-contained: inline resistor and battery drawing
 // ============================================================
 
-// ── Canvas & layout ────────────────────────────────────────
-const CW        = 680;
-const circuitH  = 370;   // schematic + info panel height
-const controlH  = 130;   // slider & button area
-const CH        = circuitH + controlH;  // 500
-const PANEL_X   = 420;   // schematic | info panel divider
+const CW       = 720;
+const circuitH = 400;
+const controlH = 140;
+const CH       = circuitH + controlH;
+const PANEL_X  = 440;
 
-// lineWidth is used by circuit-lib.js drawing functions
-lineWidth = 3;
+let LW = 3;  // line width for schematic elements
 
-// ── Circuit loop corners ───────────────────────────────────
-const CX1 = 88,  CY1 = 68;   // top-left
-const CX2 = 370, CY2 = 68;   // top-right
-const CX3 = 370, CY3 = 305;  // bottom-right
-const CX4 = 88,  CY4 = 305;  // bottom-left
+// ── Circuit loop corners ──────────────────────────────────
+const CX1 = 100, CY1 = 70;   // top-left
+const CX2 = 390, CY2 = 70;   // top-right
+const CX3 = 390, CY3 = 330;  // bottom-right
+const CX4 = 100, CY4 = 330;  // bottom-left
 
-// Voltage source (schematic circle) on left wire
-const BAT_X = CX1;
-const BAT_Y = (CY1 + CY4) / 2;  // 186.5
-const BAT_R = 28;
+// Battery on left wire — centred vertically
+const BAT_CX = CX1;
+const BAT_CY = (CY1 + CY4) / 2;  // 200
+const BAT_H  = 70;  // total height of battery symbol
 
-// ── Resistor bounding boxes ────────────────────────────────
-// drawResistor(x, y, w, h, ...) centers component at y+h/2 (H) or x+w/2 (V)
-// R1 horizontal on top:   centre y = CY1 = 68
-const R1B = { x: 152, y: 50, w: 140, h: 36 };  // y+h/2 = 68 ✓
-// R2 vertical on right:   centre x = CX2 = 370
-const R2B = { x: 350, y: 115, w: 40, h: 115 }; // x+w/2 = 370 ✓; spans 115–230
-// R3 horizontal on bottom: centre y = CY4 = 305
-const R3B = { x: 152, y: 287, w: 140, h: 36 }; // y+h/2 = 305 ✓
+// R1: horizontal on top wire
+const R1 = { x: 165, y: 52, w: 150, h: 36 };
+// R2: vertical on right wire
+const R2 = { x: 370, y: 120, w: 40,  h: 120 };
+// R3: horizontal on bottom wire
+const R3 = { x: 165, y: 312, w: 150, h: 36 };
 
-// ── Circuit parameters ─────────────────────────────────────
-let Vs  = 12;     // source voltage  1–20 V
-let R1v = 1000;   // R1 resistance   100–2000 Ω
-let R2v = 2000;   // R2 resistance   100–2000 Ω
-let R3v = 1000;   // R3 resistance   100–2000 Ω
-
-// Derived (computed by recalculate())
+// ── Circuit values ────────────────────────────────────────
+let Vs  = 12;
+let R1v = 1000;
+let R2v = 2000;
+let R3v = 1000;
 let Rtot, I_amp, V1, V2, V3;
 
 function recalculate() {
@@ -72,36 +60,44 @@ function recalculate() {
     V3    = I_amp * R3v;
 }
 
-// ── Stage control ──────────────────────────────────────────
-let stage    = 1;
-const NSTAGE = 5;
+// ── Stage & animation ─────────────────────────────────────
+let stage      = 1;
+const NSTAGE   = 5;
+let isAnimating = false;
+let animTime   = 0;
 
-// ── Animation ─────────────────────────────────────────────
-// animationTime declared in circuit-lib.js; increment when animating
-let isAnimating = false;  // default: stopped per MicroSim UI standards
+// ── Slider layout ─────────────────────────────────────────
+const SL_LM = 280;
+const SL_X  = SL_LM;
+const SL_W  = CW - SL_LM - 20;
+const SL_VS = circuitH + 42;
+const SL_R1 = circuitH + 70;
+const SL_R2 = circuitH + 98;
+const SL_R3 = circuitH + 126;
 
-// ── Slider layout ──────────────────────────────────────────
-const SL_LM = 260;             // left-margin width (label + value text)
-const SL_X  = SL_LM;          // slider track start
-const SL_W  = CW - SL_LM - 18;  // slider track width
-const SL_VS = circuitH + 40;   // Vs slider centre y
-const SL_R1 = circuitH + 64;
-const SL_R2 = circuitH + 88;
-const SL_R3 = circuitH + 112;  // thumb bottom: 482+9 = 491 < 500 ✓
-
-// ── Buttons (y = top edge) ─────────────────────────────────
+// ── Buttons ───────────────────────────────────────────────
 const BY = circuitH + 8;
-const PREV_B = { x: 10,  y: BY, w: 85,  h: 26 };
-const NEXT_B = { x: 160, y: BY, w: 85,  h: 26 };
-const ANIM_B = { x: 380, y: BY, w: 120, h: 26 };
-const RSET_B = { x: 510, y: BY, w: 75,  h: 26 };
+const PREV_B = { x: 10,  y: BY, w: 90,  h: 26 };
+const NEXT_B = { x: 165, y: BY, w: 90,  h: 26 };
+const ANIM_B = { x: 390, y: BY, w: 130, h: 26 };
+const RSET_B = { x: 530, y: BY, w: 80,  h: 26 };
 
-// ── Drag state ─────────────────────────────────────────────
-let dragSlider = null;   // 'vs' | 'r1' | 'r2' | 'r3' | null
+let dragSlider = null;
+const SLIDER_DEFS = [
+    { key: 'vs', cy: SL_VS, mn: 1,   mx: 20   },
+    { key: 'r1', cy: SL_R1, mn: 100, mx: 3000 },
+    { key: 'r2', cy: SL_R2, mn: 100, mx: 3000 },
+    { key: 'r3', cy: SL_R3, mn: 100, mx: 3000 },
+];
 
-// ══════════════════════════════════════════════════════════
-// SETUP
-// ══════════════════════════════════════════════════════════
+// ── Format helpers ────────────────────────────────────────
+function fmtV(v)  { return v.toFixed(2) + ' V'; }
+function fmtImA() { return (I_amp * 1000).toFixed(2) + ' mA'; }
+function fmtR(v)  { return v >= 1000 ? (v / 1000).toFixed(2).replace(/\.?0+$/, '') + ' kΩ' : v.toFixed(0) + ' Ω'; }
+
+// ============================================================
+// SETUP & DRAW
+// ============================================================
 function setup() {
     const canvas = createCanvas(CW, CH);
     canvas.parent(select('main').elt);
@@ -109,122 +105,235 @@ function setup() {
     recalculate();
 }
 
-// ══════════════════════════════════════════════════════════
-// DRAW
-// ══════════════════════════════════════════════════════════
 function draw() {
-    if (isAnimating) animationTime += deltaTime;
-    background(238, 241, 251);   // #eef1fb — Circuits 1 drawing-area tint
+    if (isAnimating) animTime += deltaTime;
+    background(232, 234, 240);
     drawSchematic();
     drawInfoPanel();
     drawControls();
 }
 
-// ──────────────────────────────────────────────────────────
-// FORMAT HELPERS
-// ──────────────────────────────────────────────────────────
-function fmtV(v)   { return v.toFixed(2) + ' V'; }
-function fmtI_mA() { return (I_amp * 1000).toFixed(2) + ' mA'; }
-function fmtR(v) {
-    if (v >= 1000) return (v / 1000).toFixed(1) + ' kΩ';
-    return v.toFixed(0) + ' Ω';
-}
-
-// ══════════════════════════════════════════════════════════
-// SCHEMATIC
-// ══════════════════════════════════════════════════════════
+// ============================================================
+// SCHEMATIC DRAWING
+// ============================================================
 function drawSchematic() {
-    // Background
     fill(252, 252, 255);
     noStroke();
     rect(0, 0, PANEL_X, circuitH, 8, 0, 0, 8);
 
     // Title
     fill(20, 30, 80);
-    textSize(13);
+    textSize(14);
     textStyle(BOLD);
     textAlign(CENTER, TOP);
     text('Series Circuit', PANEL_X / 2, 8);
     textStyle(NORMAL);
 
-    // ── Circuit wires ─────────────────────────────────────
-    // Animation speed proportional to current magnitude
-    const spd = constrain(I_amp * 14, 0.003, 0.6);
+    const spd = constrain(I_amp * 12, 0.003, 0.5);
+
+    // ── Wires ────────────────────────────────────────────
+    stroke(30, 30, 30);
+    strokeWeight(LW);
 
     if (isAnimating) {
-        // Clockwise current: top L→R, right T→B, bottom R→L, left B→T
-        drawAnimatedWire(CX1, CY1, CX2, CY2, spd, 0.85);
-        drawAnimatedWire(CX2, CY2, CX3, CY3, spd, 0.85);
-        drawAnimatedWire(CX3, CY3, CX4, CY4, spd, 0.85);
-        drawAnimatedWire(CX4, CY4, CX1, CY1, spd, 0.85);
+        drawAnimatedWire(CX1, CY1, CX2, CY2, spd);
+        drawAnimatedWire(CX2, CY2, CX3, CY3, spd);
+        drawAnimatedWire(CX3, CY3, CX4, CY4, spd);
+        drawAnimatedWire(CX4, CY4, CX1, CY1, spd);
     } else {
-        stroke(0);
-        strokeWeight(lineWidth);
         line(CX1, CY1, CX2, CY2);
         line(CX2, CY2, CX3, CY3);
         line(CX3, CY3, CX4, CY4);
         line(CX4, CY4, CX1, CY1);
     }
 
-    // ── Resistors (drawn over wires) ──────────────────────
-    stroke(0);
-    noFill();
-    drawResistor(R1B.x, R1B.y, R1B.w, R1B.h, lineWidth, HORIZONTAL,
-        'R1=' + fmtR(R1v), TOP);
-    drawResistor(R2B.x, R2B.y, R2B.w, R2B.h, lineWidth, VERTICAL,
-        'R2=' + fmtR(R2v), LEFT);
-    drawResistor(R3B.x, R3B.y, R3B.w, R3B.h, lineWidth, HORIZONTAL,
-        'R3=' + fmtR(R3v), BOTTOM);
+    // ── Resistors (drawn over wires) ─────────────────────
+    drawResistorH(R1.x, R1.y, R1.w, R1.h, 'R1 = ' + fmtR(R1v), true);
+    drawResistorV(R2.x, R2.y, R2.w, R2.h, 'R2 = ' + fmtR(R2v));
+    drawResistorH(R3.x, R3.y, R3.w, R3.h, 'R3 = ' + fmtR(R3v), false);
 
-    // ── Voltage source ────────────────────────────────────
-    // White patch covers left wire in battery zone so circle looks clean
-    fill(252, 252, 255);
-    noStroke();
-    rect(CX1 - BAT_R - 4, BAT_Y - BAT_R - 4, (BAT_R + 4) * 2, (BAT_R + 4) * 2);
-
-    // Source circle
-    fill(252, 252, 255);
-    stroke(0);
-    strokeWeight(lineWidth);
-    circle(BAT_X, BAT_Y, BAT_R * 2);
-
-    // + and - marks inside circle
-    strokeWeight(2);
-    stroke(40, 120, 40);
-    // + (upper half)
-    line(BAT_X - 7, BAT_Y - 10, BAT_X + 7, BAT_Y - 10);
-    line(BAT_X, BAT_Y - 16, BAT_X, BAT_Y - 4);
-    // - (lower half)
-    line(BAT_X - 7, BAT_Y + 10, BAT_X + 7, BAT_Y + 10);
-
-    // Reconnect lead wires cut by white patch
-    stroke(0);
-    strokeWeight(lineWidth);
-    line(CX1, CY1, CX1, BAT_Y - BAT_R);  // top lead
-    line(CX1, BAT_Y + BAT_R, CX1, CY4);  // bottom lead
-
-    // Vs label left of source
-    noStroke();
-    fill(20, 60, 160);
-    textSize(13);
-    textStyle(BOLD);
-    textAlign(RIGHT, CENTER);
-    text('Vs', CX1 - BAT_R - 8, BAT_Y - 7);
-    textStyle(NORMAL);
-    textSize(12);
-    text(fmtV(Vs), CX1 - BAT_R - 8, BAT_Y + 11);
+    // ── Battery (voltage source) ──────────────────────────
+    drawBatterySchematic(BAT_CX, BAT_CY, BAT_H);
 
     // ── Stage overlays ────────────────────────────────────
     if (stage >= 3) drawAmmeter();
-    if (stage >= 4) drawVoltageLabels();
     if (stage >= 3) drawCurrentArrow();
+    if (stage >= 4) drawVoltageLabels();
+}
+
+// ── Schematic battery symbol (standard two-plate symbol) ──
+function drawBatterySchematic(cx, cy, h) {
+    const nCells = 3;
+    const cellH  = h / nCells;
+    const longL  = 22;   // long plate (positive)
+    const shortL = 13;   // short plate (negative)
+    const gap    = cellH * 0.45;
+
+    // White patch to erase wire behind battery
+    fill(252, 252, 255);
+    noStroke();
+    rect(cx - longL - 4, cy - h / 2 - 4, longL * 2 + 8, h + 8);
+
+    // Draw each cell: alternating long (positive) and short (negative) plates
+    stroke(40, 40, 40);
+    strokeWeight(LW);
+    for (let i = 0; i < nCells; i++) {
+        const plateY = cy - h / 2 + i * cellH + cellH / 4;
+        const plateY2 = plateY + gap;
+        // Long plate
+        strokeWeight(LW + 1);
+        line(cx - longL, plateY, cx + longL, plateY);
+        // Short plate
+        strokeWeight(LW - 1);
+        line(cx - shortL, plateY2, cx + shortL, plateY2);
+    }
+
+    // Lead wires reconnecting to circuit loop
+    stroke(30, 30, 30);
+    strokeWeight(LW);
+    line(cx, CY1, cx, cy - h / 2);   // top lead to top corner
+    line(cx, cy + h / 2, cx, CY4);   // bottom lead to bottom corner
+
+    // + and − labels
+    noStroke();
+    fill(0, 130, 0);
+    textSize(14);
+    textStyle(BOLD);
+    textAlign(CENTER, CENTER);
+    text('+', cx, cy - h / 2 - 12);
+    text('−', cx, cy + h / 2 + 12);
+    textStyle(NORMAL);
+
+    // Vs label
+    fill(20, 60, 160);
+    textSize(12);
+    textStyle(BOLD);
+    textAlign(RIGHT, CENTER);
+    text('Vs =', cx - longL - 10, cy - 8);
+    textSize(12);
+    textStyle(NORMAL);
+    text(fmtV(Vs), cx - longL - 10, cy + 10);
+}
+
+// ── Horizontal zigzag resistor ─────────────────────────────
+function drawResistorH(x, y, w, h, label, labelAbove) {
+    const cy      = y + h / 2;
+    const peaks   = 6;
+    const wireEnd = w * 0.15;
+    const zigW    = (w - 2 * wireEnd) / peaks;
+    const zigH    = h * 0.38;
+
+    // White background to erase wire behind resistor body
+    fill(252, 252, 255);
+    noStroke();
+    rect(x + wireEnd, cy - zigH - 1, w - 2 * wireEnd, zigH * 2 + 2);
+
+    stroke(30, 30, 30);
+    strokeWeight(LW);
+    noFill();
+
+    // Left wire
+    line(x, cy, x + wireEnd, cy);
+    // Right wire
+    line(x + w - wireEnd, cy, x + w, cy);
+
+    // Zigzag
+    beginShape();
+    noFill();
+    vertex(x + wireEnd, cy);
+    for (let i = 0; i < peaks; i++) {
+        const xBase = x + wireEnd + i * zigW;
+        vertex(xBase + zigW / 2, cy - zigH);
+        vertex(xBase + zigW,     cy + zigH);
+    }
+    // Final point back to centre
+    endShape();
+    // Fix: last vertex ends low, draw back to centre
+    stroke(30, 30, 30);
+    line(x + wireEnd + peaks * zigW, cy + zigH, x + w - wireEnd, cy);
+
+    // Label
+    noStroke();
+    fill(160, 30, 30);
+    textSize(11);
+    textStyle(BOLD);
+    textAlign(CENTER, labelAbove ? BOTTOM : TOP);
+    text(label, x + w / 2, labelAbove ? cy - zigH - 3 : cy + zigH + 3);
+    textStyle(NORMAL);
+}
+
+// ── Vertical zigzag resistor ───────────────────────────────
+function drawResistorV(x, y, w, h, label) {
+    const cx      = x + w / 2;
+    const peaks   = 6;
+    const wireEnd = h * 0.12;
+    const zigH    = (h - 2 * wireEnd) / peaks;
+    const zigW    = w * 0.38;
+
+    // White background
+    fill(252, 252, 255);
+    noStroke();
+    rect(cx - zigW - 1, y + wireEnd, zigW * 2 + 2, h - 2 * wireEnd);
+
+    stroke(30, 30, 30);
+    strokeWeight(LW);
+    noFill();
+
+    // Top wire
+    line(cx, y, cx, y + wireEnd);
+    // Bottom wire
+    line(cx, y + h - wireEnd, cx, y + h);
+
+    // Zigzag
+    beginShape();
+    noFill();
+    vertex(cx, y + wireEnd);
+    for (let i = 0; i < peaks; i++) {
+        const yBase = y + wireEnd + i * zigH;
+        vertex(cx - zigW, yBase + zigH / 2);
+        vertex(cx + zigW, yBase + zigH);
+    }
+    endShape();
+    line(cx + zigW, y + wireEnd + peaks * zigH, cx, y + h - wireEnd);
+
+    // Label (left of resistor)
+    noStroke();
+    fill(160, 30, 30);
+    textSize(11);
+    textStyle(BOLD);
+    textAlign(RIGHT, CENTER);
+    text(label, cx - zigW - 6, y + h / 2);
+    textStyle(NORMAL);
+}
+
+// ── Animated wire (moving dots) ───────────────────────────
+function drawAnimatedWire(x1, y1, x2, y2, spd) {
+    stroke(30, 30, 30);
+    strokeWeight(LW);
+    line(x1, y1, x2, y2);
+
+    const dist = dist2d(x1, y1, x2, y2);
+    const spacing = 25;
+    const count   = floor(dist / spacing);
+    const t       = (animTime * spd * 0.001) % 1;
+
+    fill(220, 50, 20);
+    noStroke();
+    for (let i = 0; i < count; i++) {
+        const frac = ((i / count) + t) % 1;
+        const px = lerp(x1, x2, frac);
+        const py = lerp(y1, y2, frac);
+        circle(px, py, 7);
+    }
+}
+function dist2d(x1, y1, x2, y2) {
+    return sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2);
 }
 
 function drawAmmeter() {
-    // Ammeter symbol on bottom wire near left corner
-    const ax = CX4 + 40, ay = CY4;
-    const r  = 13;
-    fill(235, 255, 235);
+    const ax = CX4 + 50, ay = CY4;
+    const r  = 14;
+    fill(230, 255, 230);
     stroke(0, 130, 0);
     strokeWeight(1.5);
     circle(ax, ay, r * 2);
@@ -235,314 +344,209 @@ function drawAmmeter() {
     textAlign(CENTER, CENTER);
     text('A', ax, ay);
     textStyle(NORMAL);
-    // Current readout
     fill(0, 110, 0);
     textSize(11);
     textAlign(LEFT, CENTER);
-    text('I = ' + fmtI_mA(), ax + r + 5, ay);
+    text('I = ' + fmtImA(), ax + r + 5, ay);
 }
 
 function drawCurrentArrow() {
-    // Small arrow on top wire showing current direction →
-    const ax = (CX1 + CX2) / 2 + 30;
-    const ay = CY1 - 10;
+    const ax = (CX1 + CX2) / 2 + 20;
+    const ay = CY1 - 11;
     fill(190, 70, 10);
     noStroke();
-    triangle(ax - 10, ay - 4, ax + 2, ay, ax - 10, ay + 4);
-    noStroke();
-    fill(190, 70, 10);
+    triangle(ax - 10, ay - 4, ax + 4, ay, ax - 10, ay + 4);
     textSize(10);
     textStyle(ITALIC);
     textAlign(LEFT, CENTER);
-    text('I', ax + 5, ay);
+    text('I', ax + 7, ay);
     textStyle(NORMAL);
 }
 
 function drawVoltageLabels() {
     noStroke();
     textSize(11);
+    textStyle(BOLD);
 
-    // V1 across R1 – label inside loop below top wire
     fill(50, 50, 190);
     textAlign(CENTER, TOP);
-    text('V1 = ' + fmtV(V1), (CX1 + CX2) / 2, CY1 + 6);
+    text('V₁ = ' + fmtV(V1), (CX1 + CX2) / 2, CY1 + 7);
 
-    // V2 across R2 – label inside loop, upper portion of right wire
     textAlign(RIGHT, CENTER);
-    text('V2 = ' + fmtV(V2), CX2 - 15, CY2 + (CY3 - CY2) * 0.32);
+    text('V₂ = ' + fmtV(V2), CX2 - 8, (CY2 + CY3) / 2 - 20);
 
-    // V3 across R3 – label inside loop above bottom wire
     textAlign(CENTER, BOTTOM);
-    text('V3 = ' + fmtV(V3), (CX3 + CX4) / 2, CY4 - 6);
+    text('V₃ = ' + fmtV(V3), (CX3 + CX4) / 2, CY4 - 7);
+
+    textStyle(NORMAL);
 }
 
-// ══════════════════════════════════════════════════════════
-// INFO PANEL (cumulative stage reveals)
-// ══════════════════════════════════════════════════════════
+// ============================================================
+// INFO PANEL
+// ============================================================
 function drawInfoPanel() {
     const pw = CW - PANEL_X;
-    const lx = PANEL_X + 9;
-    const lw = pw - 14;
+    const lx = PANEL_X + 10;
+    const lw = pw - 16;
 
-    // Background
     fill(233, 237, 252);
     noStroke();
     rect(PANEL_X, 0, pw, circuitH, 0, 8, 8, 0);
 
-    // Title bar
     fill(50, 70, 160);
     noStroke();
-    rect(PANEL_X, 0, pw, 24, 0, 8, 0, 0);
+    rect(PANEL_X, 0, pw, 26, 0, 8, 0, 0);
     fill(255);
     textSize(11);
     textStyle(BOLD);
     textAlign(CENTER, CENTER);
-    text('ANALYSIS  –  Stage ' + stage + ' of ' + NSTAGE, PANEL_X + pw / 2, 12);
+    text('ANALYSIS — Stage ' + stage + ' / ' + NSTAGE, PANEL_X + pw / 2, 13);
     textStyle(NORMAL);
 
-    let y = 32;
+    let y = 34;
 
-    // ── Stage 1: Given Values ─────────────────────────────
-    panelLabel('GIVEN VALUES', lx, y);
-    y += 13;
-    panelRow('Vs = ' + fmtV(Vs),  lx, y, [20, 60, 160]);  y += 13;
-    panelRow('R1 = ' + fmtR(R1v), lx, y, [150, 40, 40]);  y += 13;
-    panelRow('R2 = ' + fmtR(R2v), lx, y, [150, 90, 10]);  y += 13;
-    panelRow('R3 = ' + fmtR(R3v), lx, y, [110, 30, 130]); y += 17;
+    pLabel('GIVEN VALUES', lx, y); y += 14;
+    pRow('Vs = ' + fmtV(Vs),  lx, y, [20, 60, 160]);  y += 14;
+    pRow('R1 = ' + fmtR(R1v), lx, y, [150, 40, 40]);  y += 14;
+    pRow('R2 = ' + fmtR(R2v), lx, y, [160, 90, 10]);  y += 14;
+    pRow('R3 = ' + fmtR(R3v), lx, y, [110, 30, 130]); y += 18;
 
     if (stage < 2) return;
-    panelDivider(lx, y, lw); y += 8;
-
-    // ── Stage 2: Total Resistance ─────────────────────────
-    panelLabel('TOTAL RESISTANCE', lx, y);
-    y += 13;
-    panelRow('Rtot = R1 + R2 + R3', lx, y, [50, 50, 50]); y += 13;
-    panelRow('= ' + fmtR(R1v) + ' + ' + fmtR(R2v) + ' + ' + fmtR(R3v),
-             lx + 4, y, [50, 50, 50]);
-    y += 13;
-    // Bold result
-    noStroke(); fill(0, 120, 0);
-    textSize(11); textStyle(BOLD); textAlign(LEFT, TOP);
-    text('= ' + fmtR(Rtot), lx + 4, y);
-    textStyle(NORMAL);
-    y += 17;
+    pDiv(lx, y, lw); y += 10;
+    pLabel('TOTAL RESISTANCE', lx, y); y += 14;
+    pRow('Rtot = R1 + R2 + R3', lx, y, [50, 50, 50]);  y += 14;
+    pRow('= ' + fmtR(R1v) + ' + ' + fmtR(R2v), lx + 4, y, [50, 50, 50]); y += 14;
+    pRow('    + ' + fmtR(R3v), lx + 4, y, [50, 50, 50]); y += 14;
+    noStroke(); fill(0, 120, 0); textSize(11); textStyle(BOLD); textAlign(LEFT, TOP);
+    text('= ' + fmtR(Rtot), lx + 4, y); textStyle(NORMAL); y += 18;
 
     if (stage < 3) return;
-    panelDivider(lx, y, lw); y += 8;
-
-    // ── Stage 3: Current ──────────────────────────────────
-    panelLabel("CURRENT  (Ohm's Law)", lx, y);
-    y += 13;
-    panelRow('I = Vs / Rtot', lx, y, [50, 50, 50]); y += 13;
-    panelRow('= ' + fmtV(Vs) + ' / ' + fmtR(Rtot), lx + 4, y, [50, 50, 50]); y += 13;
-    // Highlighted result box
+    pDiv(lx, y, lw); y += 10;
+    pLabel("CURRENT  (Ohm's Law)", lx, y); y += 14;
+    pRow('I = Vs / Rtot', lx, y, [50, 50, 50]); y += 14;
+    pRow('= ' + fmtV(Vs) + ' / ' + fmtR(Rtot), lx + 4, y, [50, 50, 50]); y += 14;
     fill(190, 55, 10); noStroke();
-    rect(lx, y, lw, 17, 3);
+    rect(lx, y, lw, 18, 3);
     fill(255); textSize(11); textStyle(BOLD); textAlign(LEFT, TOP);
-    text('I = ' + fmtI_mA() + '  (constant everywhere!)', lx + 4, y + 2);
-    textStyle(NORMAL);
-    y += 21;
+    text('I = ' + fmtImA() + '  (same everywhere!)', lx + 4, y + 2);
+    textStyle(NORMAL); y += 22;
 
     if (stage < 4) return;
-    panelDivider(lx, y, lw); y += 8;
-
-    // ── Stage 4: Voltage Drops ────────────────────────────
-    panelLabel('VOLTAGE DROPS', lx, y);
-    y += 13;
-    panelRow('V1 = I·R1 = ' + fmtV(V1), lx, y, [50, 50, 190]); y += 13;
-    panelRow('V2 = I·R2 = ' + fmtV(V2), lx, y, [50, 50, 190]); y += 13;
-    panelRow('V3 = I·R3 = ' + fmtV(V3), lx, y, [50, 50, 190]); y += 17;
+    pDiv(lx, y, lw); y += 10;
+    pLabel('VOLTAGE DROPS  (V = I·R)', lx, y); y += 14;
+    pRow('V₁ = I·R1 = ' + fmtV(V1), lx, y, [50, 50, 190]); y += 14;
+    pRow('V₂ = I·R2 = ' + fmtV(V2), lx, y, [50, 50, 190]); y += 14;
+    pRow('V₃ = I·R3 = ' + fmtV(V3), lx, y, [50, 50, 190]); y += 18;
 
     if (stage < 5) return;
-    panelDivider(lx, y, lw); y += 8;
-
-    // ── Stage 5: KVL Verification ─────────────────────────
-    panelLabel('KVL VERIFICATION', lx, y);
-    y += 13;
-    panelRow('V1 + V2 + V3  =  Vs ?', lx, y, [50, 50, 50]); y += 13;
+    pDiv(lx, y, lw); y += 10;
+    pLabel('KVL VERIFICATION', lx, y); y += 14;
+    pRow('V₁ + V₂ + V₃ = Vs ?', lx, y, [50, 50, 50]); y += 14;
     const vsum = V1 + V2 + V3;
-    panelRow(fmtV(V1) + ' + ' + fmtV(V2) + ' + ' + fmtV(V3),
-             lx, y, [50, 50, 50]); y += 13;
-    // Result box
-    const ok = Math.abs(vsum - Vs) < 0.001;
+    pRow(fmtV(V1) + '+' + fmtV(V2) + '+' + fmtV(V3), lx, y, [50, 50, 50]); y += 14;
+    const ok = abs(vsum - Vs) < 0.001;
     fill(ok ? color(0, 140, 0) : color(200, 0, 0));
     noStroke();
-    rect(lx, y, lw, 17, 3);
+    rect(lx, y, lw, 18, 3);
     fill(255); textSize(11); textStyle(BOLD); textAlign(LEFT, TOP);
-    text((ok ? '= ' : '≠ ') + fmtV(vsum) + ' = Vs  ' + (ok ? '✓' : '✗'),
-         lx + 4, y + 2);
+    text('= ' + fmtV(vsum) + ' = Vs  ' + (ok ? '✓' : '✗'), lx + 4, y + 2);
     textStyle(NORMAL);
 }
 
-function panelLabel(txt, x, y) {
-    noStroke();
-    fill(0, 100, 0);
-    textSize(10);
-    textStyle(BOLD);
-    textAlign(LEFT, TOP);
-    text(txt, x, y);
-    textStyle(NORMAL);
+function pLabel(t, x, y) {
+    noStroke(); fill(0, 100, 0); textSize(10); textStyle(BOLD); textAlign(LEFT, TOP);
+    text(t, x, y); textStyle(NORMAL);
+}
+function pRow(t, x, y, c) {
+    noStroke(); fill(c[0], c[1], c[2]); textSize(11); textAlign(LEFT, TOP); text(t, x, y);
+}
+function pDiv(x, y, w) {
+    stroke(175, 180, 215); strokeWeight(1); line(x, y, x + w, y);
 }
 
-function panelRow(txt, x, y, col) {
-    noStroke();
-    fill(col[0], col[1], col[2]);
-    textSize(11);
-    textAlign(LEFT, TOP);
-    text(txt, x, y);
-}
-
-function panelDivider(x, y, w) {
-    stroke(175, 180, 215);
-    strokeWeight(1);
-    line(x, y, x + w, y);
-}
-
-// ══════════════════════════════════════════════════════════
+// ============================================================
 // CONTROLS
-// ══════════════════════════════════════════════════════════
+// ============================================================
 function drawControls() {
-    // Control area background — Circuits 1 muted indigo
-    fill(221, 225, 240);   // #dde1f0
+    fill(218, 224, 240);
     noStroke();
     rect(0, circuitH, CW, controlH, 0, 0, 8, 8);
 
-    // ── Stage nav buttons ─────────────────────────────────
-    drawBtn(PREV_B, '◀ Prev Stage',
-        stage > 1 ? [70, 90, 175] : [150, 155, 180]);
-    // Stage text between buttons
-    noStroke(); fill(25, 35, 100);
-    textSize(12); textStyle(BOLD); textAlign(CENTER, CENTER);
-    text('Stage ' + stage + '/' + NSTAGE,
-         (PREV_B.x + PREV_B.w + NEXT_B.x) / 2, BY + PREV_B.h / 2);
+    drawBtn(PREV_B, '◀ Prev', stage > 1 ? [70, 90, 175] : [150, 155, 180]);
+    noStroke(); fill(25, 35, 100); textSize(12); textStyle(BOLD); textAlign(CENTER, CENTER);
+    text('Stage ' + stage + '/' + NSTAGE, (PREV_B.x + PREV_B.w + NEXT_B.x) / 2, BY + PREV_B.h / 2);
     textStyle(NORMAL);
-    drawBtn(NEXT_B, 'Next Stage ▶',
-        stage < NSTAGE ? [70, 90, 175] : [150, 155, 180]);
-
-    // ── Animation + reset buttons ─────────────────────────
-    drawBtn(ANIM_B,
-        isAnimating ? '■ Stop Animation' : '▶ Animate Current',
-        isAnimating ? [150, 50, 50] : [50, 125, 55]);
+    drawBtn(NEXT_B, 'Next ▶', stage < NSTAGE ? [70, 90, 175] : [150, 155, 180]);
+    drawBtn(ANIM_B, isAnimating ? '■ Stop' : '▶ Animate Current', isAnimating ? [150, 50, 50] : [50, 125, 55]);
     drawBtn(RSET_B, '↺ Reset', [100, 105, 135]);
 
-    // ── Sliders ───────────────────────────────────────────
-    drawSlider('Source Voltage (Vs):', Vs,  1,   20,   SL_VS, fmtV(Vs));
-    drawSlider('R1 (Ω):',             R1v, 100, 2000, SL_R1, fmtR(R1v));
-    drawSlider('R2 (Ω):',             R2v, 100, 2000, SL_R2, fmtR(R2v));
-    drawSlider('R3 (Ω):',             R3v, 100, 2000, SL_R3, fmtR(R3v));
+    drawSliderCtrl('Source Vs:', Vs,  SL_VS, fmtV(Vs));
+    drawSliderCtrl('R1:',       R1v, SL_R1, fmtR(R1v));
+    drawSliderCtrl('R2:',       R2v, SL_R2, fmtR(R2v));
+    drawSliderCtrl('R3:',       R3v, SL_R3, fmtR(R3v));
 }
 
 function drawBtn(b, lbl, col) {
-    fill(col[0], col[1], col[2]);
-    noStroke();
-    rect(b.x, b.y, b.w, b.h, 5);
-    fill(255);
-    textSize(11);
-    textStyle(BOLD);
-    textAlign(CENTER, CENTER);
-    text(lbl, b.x + b.w / 2, b.y + b.h / 2);
-    textStyle(NORMAL);
+    fill(col[0], col[1], col[2]); noStroke(); rect(b.x, b.y, b.w, b.h, 5);
+    fill(255); textSize(11); textStyle(BOLD); textAlign(CENTER, CENTER);
+    text(lbl, b.x + b.w / 2, b.y + b.h / 2); textStyle(NORMAL);
 }
 
-function drawSlider(label, val, mn, mx, cy, dispVal) {
-    const t  = (val - mn) / (mx - mn);
+function drawSliderCtrl(label, val, cy, dispVal) {
+    const s = SLIDER_DEFS.find(d => d.cy === cy);
+    const t  = (val - s.mn) / (s.mx - s.mn);
     const tx = SL_X + SL_W * t;
-
-    // Label + value, right-aligned before slider track
-    noStroke();
-    fill(35, 45, 100);
-    textSize(11);
-    textAlign(RIGHT, CENTER);
+    noStroke(); fill(35, 45, 100); textSize(11); textAlign(RIGHT, CENTER);
     text(label + '  ' + dispVal, SL_X - 8, cy);
-
-    // Track (full)
-    fill(178, 183, 210);
-    noStroke();
-    rect(SL_X, cy - 4, SL_W, 8, 4);
-
-    // Track (filled portion) — Circuits 1 indigo
-    fill(57, 73, 171);    // #3949ab
-    rect(SL_X, cy - 4, SL_W * t, 8, 4);
-
-    // Thumb
-    fill(255);
-    stroke(57, 73, 171);
-    strokeWeight(2);
-    circle(tx, cy, 18);
+    fill(178, 183, 210); noStroke(); rect(SL_X, cy - 4, SL_W, 8, 4);
+    fill(70, 110, 200); rect(SL_X, cy - 4, SL_W * t, 8, 4);
+    fill(255); stroke(75, 110, 200); strokeWeight(2); circle(tx, cy, 18);
 }
 
-// ══════════════════════════════════════════════════════════
+// ============================================================
 // INPUT
-// ══════════════════════════════════════════════════════════
+// ============================================================
 function mousePressed() {
-    // Stage navigation
-    if (inBtn(PREV_B) && stage > 1)       { stage--; return; }
-    if (inBtn(NEXT_B) && stage < NSTAGE)  { stage++; return; }
-
-    // Animation toggle
+    if (inBtn(PREV_B) && stage > 1)      { stage--; return; }
+    if (inBtn(NEXT_B) && stage < NSTAGE) { stage++; return; }
     if (inBtn(ANIM_B)) { isAnimating = !isAnimating; return; }
-
-    // Reset everything
     if (inBtn(RSET_B)) {
         Vs = 12; R1v = 1000; R2v = 2000; R3v = 1000;
-        stage = 1; isAnimating = false; animationTime = 0;
-        recalculate();
-        return;
+        stage = 1; isAnimating = false; animTime = 0;
+        recalculate(); return;
     }
-
-    // Check sliders
-    startSliderDrag();
+    startDrag();
 }
+function mouseDragged() { if (dragSlider) applyDrag(); }
+function mouseReleased() { dragSlider = null; }
 
-function mouseDragged() {
-    if (dragSlider) applySliderDrag();
-}
-
-function mouseReleased() {
-    dragSlider = null;
-}
-
-// ── Button hit-test ────────────────────────────────────────
 function inBtn(b) {
     return mouseX >= b.x && mouseX <= b.x + b.w &&
            mouseY >= b.y && mouseY <= b.y + b.h;
 }
-
-// ── Slider drag helpers ────────────────────────────────────
-const SLIDER_DEFS = [
-    { key: 'vs', cy: SL_VS, mn: 1,   mx: 20   },
-    { key: 'r1', cy: SL_R1, mn: 100, mx: 2000 },
-    { key: 'r2', cy: SL_R2, mn: 100, mx: 2000 },
-    { key: 'r3', cy: SL_R3, mn: 100, mx: 2000 },
-];
-
-function startSliderDrag() {
+function startDrag() {
     for (const s of SLIDER_DEFS) {
         if (mouseX >= SL_X - 12 && mouseX <= SL_X + SL_W + 12 &&
             mouseY >= s.cy - 14 && mouseY <= s.cy + 14) {
-            dragSlider = s.key;
-            applySliderDrag();
-            return;
+            dragSlider = s.key; applyDrag(); return;
         }
     }
 }
-
-function applySliderDrag() {
+function applyDrag() {
     const s = SLIDER_DEFS.find(d => d.key === dragSlider);
     if (!s) return;
     const t   = constrain((mouseX - SL_X) / SL_W, 0, 1);
     const raw = s.mn + t * (s.mx - s.mn);
     if (s.key === 'vs') {
-        Vs  = round(raw * 10) / 10;           // 0.1 V steps
+        Vs = round(raw * 10) / 10;
     } else {
-        const r = round(raw / 50) * 50;       // 50 Ω steps
-        if (s.key === 'r1') R1v = constrain(r, s.mn, s.mx);
-        if (s.key === 'r2') R2v = constrain(r, s.mn, s.mx);
-        if (s.key === 'r3') R3v = constrain(r, s.mn, s.mx);
+        const r = constrain(round(raw / 50) * 50, s.mn, s.mx);
+        if (s.key === 'r1') R1v = r;
+        if (s.key === 'r2') R2v = r;
+        if (s.key === 'r3') R3v = r;
     }
     recalculate();
 }
 </script>
-<script src="../../js/microsim-controls.js"></script>
 </body>
 </html>

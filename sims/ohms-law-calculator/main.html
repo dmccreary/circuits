@@ -3,299 +3,371 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="schema" content="https://dmccreary.github.io/intelligent-textbooks/ns/microsim/v1">
-  <title>Ohm's Law Interactive Calculator — Circuits 1</title>
-  <script src="https://cdn.jsdelivr.net/npm/p5@1.11.7/lib/p5.js"></script>
+  <title>Ohm's Law Calculator</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
   <style>
-    html, body { margin: 0; padding: 0; height: 100%; overflow: hidden; }
-    body { font-family: Arial, Helvetica, sans-serif; background: #e8eaf0; }
-    main { display: block; }
+    body { margin: 0; padding: 0; background: #e8eaf0; display: flex; justify-content: center; }
     canvas { display: block; }
   </style>
 </head>
 <body>
-<main></main>
 <script>
-// ═══════════════════════════════════════════════════════════════════
-// Ohm's Law Interactive Calculator — Circuits 1 MicroSim
-// Chapter 2: Ohm's Law and Basic Circuit Configurations
-// Bloom L2 (Understand) — manipulate V, I, R; observe dependencies
-//
-// Three panels (V, I, R).  Exactly one is "RESULT" (calculated);
-// the other two are "CONTROL" (slider-driven).
-// Click the ● RESULT / ● CONTROL badge on any panel to swap roles.
-//
-// Circuits 1 design-system palette
-//   C_DRAW   #eef1fb  drawing-area background (light indigo tint)
-//   C_CTRL   #dde1f0  control-area background
-//   C_DEEP   [26,35,126]   dark-indigo  (titles)
-//   C_PRIMARY [57,73,171]  indigo       (buttons, sliders)
-//   C_ACCENT  [92,107,192] medium indigo
-//   C_GOLD    [249,168,37] amber gold   (voltage)
-//   C_GREEN   [46,125,50]  green        (resistance)
-//   C_RED     [198,40,40]  red          (calculated / warning)
-// ═══════════════════════════════════════════════════════════════════
-new p5(function (p) {
+new p5(function(p) {
+  // State: which variable is calculated (0=V, 1=I, 2=R)
+  // Default: V and R locked, I calculated
+  let locked = [true, false, true];  // V locked, I calculated, R locked
 
-  // ── Circuits 1 palette ───────────────────────────────────────────
-  const C_DRAW    = '#eef1fb';
-  const C_CTRL    = '#dde1f0';
-  const C_DEEP    = [26,  35, 126];
-  const C_PRIMARY = [57,  73, 171];
-  const C_ACCENT  = [92, 107, 192];
-  const C_GOLD    = [249, 168,  37];
-  const C_GREEN   = [46,  125,  50];
-  const C_RED     = [198,  40,  40];
+  let vals = { V: 5, I: 0.005, R: 1000 };  // SI units
 
-  // Per-quantity colour identity
-  const QC = {
-    V: { h: C_GOLD,    t: [255,255,255] },
-    I: { h: C_PRIMARY, t: [255,255,255] },
-    R: { h: C_GREEN,   t: [255,255,255] },
+  // Slider objects (canvas-based)
+  let sliders = {
+    V: { x: 0, y: 0, w: 0, val: 5,    min: 0.1,  max: 50,    step: 0.1  },
+    I: { x: 0, y: 0, w: 0, val: 5,    min: 0.1,  max: 1000,  step: 0.1  }, // mA
+    R: { x: 0, y: 0, w: 0, val: 1000, min: 1,    max: 100000,step: 1    }
   };
 
-  // ── Layout ───────────────────────────────────────────────────────
-  const DRAW_H  = 360;
-  const CTRL_H  = 80;
-  const PW      = 230;   // panel width
-  const PH      = 190;   // panel height
-  const PGAP    = 14;
-  const PY      = 78;
-  let CW, CH, FIRST_X;
+  let dragging = null;  // 'V', 'I', or 'R'
+  let panelW = 240;
+  let panelH = 200;
+  let panelY = 100;
+  let panelGap = 15;
+  let firstPanelX;
 
-  // ── State ────────────────────────────────────────────────────────
-  let locked = [true, false, true];   // V=ctrl, I=calc, R=ctrl
-  let vals   = { V: 5, I: 0.005, R: 1000 };   // SI: V, A, Ω
-
-  const SL = {
-    V: { val: 5,    min: 0.1,  max: 50,     gx:0, gy:0, gw:0 },
-    I: { val: 5,    min: 0.1,  max: 1000,   gx:0, gy:0, gw:0 },   // mA
-    R: { val: 1000, min: 1,    max: 100000, gx:0, gy:0, gw:0 },
-  };
-  let dragging  = null;
-  let badgeBtns = [];
-
-  // ── Setup ────────────────────────────────────────────────────────
-  p.setup = function () {
-    const cont = document.querySelector('main');
-    CW     = Math.max(700, Math.floor(cont.getBoundingClientRect().width || 720));
-    CH     = DRAW_H + CTRL_H;
-    FIRST_X = (CW - 3 * PW - 2 * PGAP) / 2;
-    p.createCanvas(CW, CH).parent(cont);
-    recalc();
+  p.setup = function() {
+    p.createCanvas(820, 500);
+    firstPanelX = (820 - 3 * panelW - 2 * panelGap) / 2;
+    updateSliderPositions();
+    recalculate();
   };
 
-  // ── Draw ─────────────────────────────────────────────────────────
-  p.draw = function () {
-    p.background(C_DRAW);
-    p.noStroke(); p.fill(C_CTRL);
-    p.rect(0, DRAW_H, CW, CTRL_H);
-
-    header();
-    formulaBanner();
-    panels();
-    triangle();
-    hint();
-    powerBar();
-  };
-
-  function header() {
-    p.noStroke();
-    p.fill(...C_DEEP);
-    p.textAlign(p.CENTER, p.TOP);
-    p.textSize(20); p.textStyle(p.BOLD);
-    p.text("Ohm's Law Interactive Calculator", CW / 2, 10);
-    p.textStyle(p.NORMAL);
-    p.fill(...C_ACCENT); p.textSize(12);
-    p.text('Adjust any two quantities — the third updates automatically.', CW / 2, 36);
-  }
-
-  function formulaBanner() {
-    const bx = CW/2 - 155, by = 55, bw = 310, bh = 22;
-    p.fill(...C_PRIMARY); p.noStroke(); p.rect(bx, by, bw, bh, 5);
-    p.fill(255); p.textSize(14); p.textAlign(p.CENTER, p.CENTER);
-    p.textStyle(p.BOLD);
-    p.text('V  =  I  ×  R       P  =  V  ×  I', CW/2, by + bh/2);
-    p.textStyle(p.NORMAL);
-  }
-
-  function panels() {
-    badgeBtns = [];
-    const keys   = ['V','I','R'];
-    const labels = ['Voltage','Current','Resistance'];
-    const units  = ['V','mA','Ω'];
-
+  function updateSliderPositions() {
+    let keys = ['V', 'I', 'R'];
     for (let i = 0; i < 3; i++) {
-      const k    = keys[i];
-      const px   = FIRST_X + i * (PW + PGAP);
-      const py   = PY;
-      const calc = !locked[i];
-      const qc   = QC[k];
-
-      // Drop shadow
-      p.noStroke(); p.fill(0, 0, 0, 20);
-      p.rect(px+3, py+3, PW, PH, 10);
-
-      // Panel body
-      p.fill(calc ? [255,255,255] : [238,241,255]);
-      p.stroke(...qc.h, calc ? 210 : 90);
-      p.strokeWeight(calc ? 3 : 1.5);
-      p.rect(px, py, PW, PH, 10);
-
-      // Header bar
-      p.fill(...qc.h); p.noStroke();
-      p.rect(px, py, PW, 34, 10, 10, 0, 0);
-      p.fill(...qc.t); p.textSize(13); p.textStyle(p.BOLD);
-      p.textAlign(p.CENTER, p.CENTER);
-      p.text(labels[i] + '  (' + k + ')', px + PW/2, py + 17);
-      p.textStyle(p.NORMAL);
-
-      // RESULT / CONTROL badge
-      const bw = 80, bh = 20;
-      const bx = px + PW - bw - 8, by2 = py + 38;
-      p.fill(...(calc ? C_RED : C_GREEN)); p.noStroke(); p.rect(bx, by2, bw, bh, 4);
-      p.fill(255); p.textSize(10); p.textStyle(p.BOLD); p.textAlign(p.CENTER, p.CENTER);
-      p.text(calc ? '● RESULT' : '● CONTROL', bx + bw/2, by2 + bh/2);
-      p.textStyle(p.NORMAL);
-      badgeBtns.push({ i, x: bx, y: by2, w: bw, h: bh });
-
-      // Big value
-      p.fill(...(calc ? C_RED : C_DEEP));
-      p.textSize(34); p.textStyle(p.BOLD); p.textAlign(p.CENTER, p.CENTER);
-      p.text(fmtVal(k) + ' ' + units[i], px + PW/2, py + 100);
-      p.textStyle(p.NORMAL);
-
-      // Slider or hint
-      if (!calc) {
-        slider(k, px + 14, py + PH - 44, PW - 28, qc.h);
-      } else {
-        p.fill(...C_ACCENT); p.textSize(10); p.textAlign(p.CENTER, p.CENTER);
-        p.text('click ● RESULT to control this', px + PW/2, py + PH - 22);
-      }
+      let px = firstPanelX + i * (panelW + panelGap);
+      sliders[keys[i]].x = px + 20;
+      sliders[keys[i]].y = panelY + panelH - 55;
+      sliders[keys[i]].w = panelW - 40;
     }
   }
 
-  function slider(key, sx, sy, sw, trackColor) {
-    const sl = SL[key];
-    const t  = (sl.val - sl.min) / (sl.max - sl.min);
-    const tx = sx + t * sw;
-    p.stroke(200); p.strokeWeight(5); p.line(sx, sy, sx+sw, sy);
-    p.stroke(...trackColor); p.strokeWeight(5); p.line(sx, sy, tx, sy);
-    p.noStroke(); p.fill(...trackColor); p.circle(tx, sy, 18);
-    sl.gx = sx; sl.gy = sy; sl.gw = sw;
+  function recalculate() {
+    let calcIdx = locked.indexOf(false);
+    if (calcIdx === -1) return;
+    if (calcIdx === 0) {
+      vals.V = vals.I * vals.R;
+      sliders.V.val = vals.V;
+    } else if (calcIdx === 1) {
+      vals.I = vals.V / vals.R;
+      sliders.I.val = vals.I * 1000;  // store as mA
+    } else {
+      vals.R = vals.V / vals.I;
+      sliders.R.val = vals.R;
+    }
+    clampSliderVals();
   }
 
-  function triangle() {
-    const tx = 28, ty = PY + 8, tw = 114, th = 82;
-    p.stroke(...C_ACCENT); p.strokeWeight(2);
-    p.fill([244, 246, 255]);
-    p.triangle(tx+tw/2, ty, tx, ty+th, tx+tw, ty+th);
-    p.stroke(...C_PRIMARY); p.strokeWeight(1.5);
-    p.line(tx+tw/2, ty+th, tx+tw/2, ty+30);
-    p.line(tx, ty+th, tx+tw, ty+th);
-    [
-      { t:'V', x:tx+tw/2,     y:ty+22,    c:C_GOLD    },
-      { t:'I', x:tx+tw/4,     y:ty+th-14, c:C_PRIMARY },
-      { t:'R', x:tx+3*tw/4,   y:ty+th-14, c:C_GREEN   },
-    ].forEach(({t,x,y,c}) => {
-      p.fill(...c); p.noStroke(); p.textSize(18);
-      p.textStyle(p.BOLD); p.textAlign(p.CENTER, p.CENTER);
-      p.text(t, x, y);
-    });
-    p.textStyle(p.NORMAL);
-    p.fill(...C_ACCENT); p.textSize(10); p.textAlign(p.CENTER, p.TOP);
-    p.text('Ohm\'s Law Triangle', tx+tw/2, ty+th+6);
+  function clampSliderVals() {
+    sliders.V.val = p.constrain(sliders.V.val, sliders.V.min, sliders.V.max);
+    sliders.I.val = p.constrain(sliders.I.val, sliders.I.min, sliders.I.max);
+    sliders.R.val = p.constrain(sliders.R.val, sliders.R.min, sliders.R.max);
   }
 
-  function hint() {
-    const hx = CW - 265, hy = PY + 8;
-    p.fill(...C_ACCENT); p.noStroke(); p.textSize(11);
-    p.textAlign(p.LEFT, p.TOP); p.textStyle(p.ITALIC);
-    p.text(
-      '💡 Try: increase R — watch I drop.\n' +
-      '    Try: double V — what happens to I?\n' +
-      '    Cover one cell in the triangle:\n' +
-      '    the formula appears automatically.',
-      hx, hy
-    );
+  p.draw = function() {
+    p.background('#e8eaf0');
+    drawTitle();
+    drawFormula();
+    drawPanels();
+    drawTriangle();
+    drawPowerDisplay();
+  };
+
+  function drawTitle() {
+    p.fill(30);
+    p.noStroke();
+    p.textSize(22);
+    p.textAlign(p.CENTER, p.TOP);
+    p.textStyle(p.BOLD);
+    p.text("Ohm's Law Interactive Calculator", 410, 10);
     p.textStyle(p.NORMAL);
   }
 
-  function powerBar() {
-    const pw = vals.V * vals.I;
-    const by = DRAW_H + 16, bw = 480;
-    p.fill(...C_DEEP); p.noStroke(); p.rect(CW/2 - bw/2, by, bw, 34, 8);
-    p.fill(255); p.textSize(14); p.textAlign(p.CENTER, p.CENTER); p.textStyle(p.BOLD);
-    p.text(
-      'P = V × I  =  ' + fmtVal('V') + ' V  ×  ' + fmtVal('I') + ' mA  =  ' + fmtPow(pw),
-      CW/2, by + 17
-    );
+  function drawFormula() {
+    p.fill(40);
+    p.noStroke();
+    p.textSize(28);
+    p.textAlign(p.CENTER, p.CENTER);
+    p.textStyle(p.BOLD);
+    p.text('V  =  I  ×  R', 410, 70);
     p.textStyle(p.NORMAL);
   }
 
-  // ── Formatters ───────────────────────────────────────────────────
-  function fmtVal(k) {
-    if (k === 'V') return vals.V.toFixed(vals.V < 10 ? 2 : 1);
-    if (k === 'I') { const mA = vals.I*1000; return mA.toFixed(mA < 10 ? 2 : 1); }
-    if (k === 'R') {
-      if (vals.R >= 1000) return (vals.R/1000).toFixed(vals.R < 10000 ? 2 : 1) + 'k';
+  function drawPanels() {
+    let keys    = ['V', 'I', 'R'];
+    let labels  = ['Voltage (V)', 'Current (I)', 'Resistance (R)'];
+    let colors  = [[50, 100, 200], [200, 100, 20], [30, 140, 60]];
+    let units   = ['V', 'mA', 'Ω'];
+
+    for (let i = 0; i < 3; i++) {
+      let px = firstPanelX + i * (panelW + panelGap);
+      let py = panelY;
+      let key = keys[i];
+      let isLocked = locked[i];
+      let isCalc   = !isLocked;
+
+      // Panel background
+      p.fill(isCalc ? 255 : 245);
+      p.stroke(colors[i][0], colors[i][1], colors[i][2]);
+      p.strokeWeight(3);
+      p.rect(px, py, panelW, panelH, 10);
+
+      // Header
+      p.fill(colors[i][0], colors[i][1], colors[i][2]);
+      p.noStroke();
+      p.rect(px, py, panelW, 36, 10, 10, 0, 0);
+      p.fill(255);
+      p.textSize(14);
+      p.textAlign(p.CENTER, p.CENTER);
+      p.textStyle(p.BOLD);
+      p.text(labels[i], px + panelW / 2, py + 18);
+      p.textStyle(p.NORMAL);
+
+      // Value display
+      let displayVal = getDisplayVal(key);
+      let dispColor = isCalc ? p.color(180, 0, 0) : p.color(20, 20, 20);
+      p.fill(dispColor);
+      p.textSize(30);
+      p.textAlign(p.CENTER, p.CENTER);
+      p.textStyle(p.BOLD);
+      p.text(formatVal(key) + ' ' + units[i], px + panelW / 2, py + 80);
+      p.textStyle(p.NORMAL);
+
+      // Calculated badge
+      if (isCalc) {
+        p.fill(220, 0, 0, 200);
+        p.noStroke();
+        p.rect(px + panelW - 85, py + 44, 78, 22, 4);
+        p.fill(255);
+        p.textSize(11);
+        p.textAlign(p.CENTER, p.CENTER);
+        p.text('CALCULATED', px + panelW - 46, py + 55);
+      }
+
+      // Slider (only if locked)
+      if (isLocked) {
+        drawSlider(key, px, py);
+      } else {
+        p.fill(160);
+        p.textSize(12);
+        p.textAlign(p.CENTER, p.CENTER);
+        p.text('(unlock to adjust)', px + panelW / 2, py + panelH - 35);
+      }
+
+      // Lock button
+      drawLockButton(i, px + panelW / 2, py + panelH + 12);
+    }
+  }
+
+  function getDisplayVal(key) {
+    if (key === 'V') return vals.V;
+    if (key === 'I') return vals.I * 1000;
+    if (key === 'R') return vals.R;
+  }
+
+  function formatVal(key) {
+    if (key === 'V') {
+      return vals.V.toFixed(vals.V < 10 ? 2 : 1);
+    }
+    if (key === 'I') {
+      let mA = vals.I * 1000;
+      return mA.toFixed(mA < 10 ? 2 : 1);
+    }
+    if (key === 'R') {
+      if (vals.R >= 1000) return (vals.R / 1000).toFixed(vals.R < 10000 ? 2 : 1) + ' k';
       return vals.R.toFixed(0);
     }
   }
-  function fmtPow(pw) {
-    if (pw < 0.001) return (pw*1e6).toFixed(1)+' μW';
-    if (pw < 1)     return (pw*1000).toFixed(2)+' mW';
-    if (pw < 1000)  return pw.toFixed(3)+' W';
-    return (pw/1000).toFixed(2)+' kW';
+
+  // lockBtnY is below panel
+  let lockBtns = [];
+  function drawLockButton(idx, cx, cy) {
+    lockBtns[idx] = { cx, cy, w: 80, h: 26 };
+    let isLocked = locked[idx];
+    p.fill(isLocked ? [60, 60, 200] : [180, 180, 180]);
+    p.stroke(isLocked ? [30, 30, 150] : [120, 120, 120]);
+    p.strokeWeight(1.5);
+    p.rect(cx - 40, cy - 13, 80, 26, 6);
+    p.fill(255);
+    p.noStroke();
+    p.textSize(13);
+    p.textAlign(p.CENTER, p.CENTER);
+    p.text(isLocked ? '🔒 Locked' : '🔓 Unlocked', cx, cy);
   }
 
-  // ── Recalculate ──────────────────────────────────────────────────
-  function recalc() {
-    const ci = locked.indexOf(false);
-    if (ci < 0) return;
-    if (ci===0) { vals.V = vals.I*vals.R;  SL.V.val = vals.V; }
-    if (ci===1) { vals.I = vals.V/vals.R;  SL.I.val = vals.I*1000; }
-    if (ci===2) { vals.R = vals.V/vals.I;  SL.R.val = vals.R; }
-    ['V','I','R'].forEach(k => { SL[k].val = p.constrain(SL[k].val, SL[k].min, SL[k].max); });
+  function drawSlider(key, px, py) {
+    let sl = sliders[key];
+    let sx = px + 20;
+    let sy = py + panelH - 40;
+    let sw = panelW - 40;
+
+    // Track
+    p.stroke(200);
+    p.strokeWeight(4);
+    p.line(sx, sy, sx + sw, sy);
+
+    // Fill
+    let t = (sl.val - sl.min) / (sl.max - sl.min);
+    let tx = sx + t * sw;
+    p.stroke(100, 140, 220);
+    p.strokeWeight(4);
+    p.line(sx, sy, tx, sy);
+
+    // Thumb
+    p.fill(60, 80, 200);
+    p.noStroke();
+    p.circle(tx, sy, 16);
+
+    // Store for interaction
+    sl.x = sx; sl.y = sy; sl.w = sw;
   }
 
-  // ── Mouse ────────────────────────────────────────────────────────
-  p.mousePressed = function () {
-    for (const b of badgeBtns) {
-      if (p.mouseX>=b.x && p.mouseX<=b.x+b.w && p.mouseY>=b.y && p.mouseY<=b.y+b.h) {
-        if (locked[b.i]) {             // currently a control — make it the result
-          const prev = locked.indexOf(false);
-          if (prev >= 0) locked[prev] = true;
-          locked[b.i] = false;
-          recalc();
+  function drawTriangle() {
+    let tx = 310;
+    let ty = 370;
+    let tw = 200;
+    let th = 80;
+
+    // Triangle outline
+    p.stroke(80);
+    p.strokeWeight(2);
+    p.fill(255, 255, 220);
+    p.triangle(tx + tw / 2, ty, tx, ty + th, tx + tw, ty + th);
+
+    // Dividing line
+    p.stroke(80);
+    p.strokeWeight(1.5);
+    p.line(tx + tw / 2, ty + th, tx + tw / 2, ty + 30);
+
+    // V label
+    p.fill(50, 100, 200);
+    p.noStroke();
+    p.textSize(20);
+    p.textStyle(p.BOLD);
+    p.textAlign(p.CENTER, p.CENTER);
+    p.text('V', tx + tw / 2, ty + 30);
+
+    // I label
+    p.fill(200, 100, 20);
+    p.text('I', tx + tw / 4, ty + th - 18);
+
+    // R label
+    p.fill(30, 140, 60);
+    p.text('R', tx + 3 * tw / 4, ty + th - 18);
+
+    p.textStyle(p.NORMAL);
+
+    // Highlight calculated
+    let calcIdx = locked.indexOf(false);
+    if (calcIdx === 0) {
+      // V is calculated — highlight top
+      p.noFill();
+      p.stroke(180, 0, 0);
+      p.strokeWeight(3);
+      p.triangle(tx + tw / 2, ty + 2, tx + 4, ty + th - 2, tx + tw - 4, ty + th - 2);
+    }
+
+    p.noStroke();
+    p.fill(60);
+    p.textSize(13);
+    p.textAlign(p.LEFT, p.CENTER);
+    p.text('Ohm\'s Law Triangle: cover the unknown, read the formula', 530, ty + th / 2);
+  }
+
+  function drawPowerDisplay() {
+    let pw = vals.V * vals.I;
+    let pwStr;
+    if (pw < 0.001)      pwStr = (pw * 1000000).toFixed(2) + ' μW';
+    else if (pw < 1)     pwStr = (pw * 1000).toFixed(2) + ' mW';
+    else if (pw < 1000)  pwStr = pw.toFixed(3) + ' W';
+    else                 pwStr = (pw / 1000).toFixed(3) + ' kW';
+
+    let bx = 180, by = 455, bw = 460, bh = 34;
+    p.fill(50, 50, 50, 220);
+    p.noStroke();
+    p.rect(bx, by, bw, bh, 8);
+    p.fill(255, 220, 50);
+    p.textSize(15);
+    p.textAlign(p.CENTER, p.CENTER);
+    p.textStyle(p.BOLD);
+    p.text('Power: P = V × I = ' + formatVal('V') + ' V × ' +
+      formatVal('I') + ' mA = ' + pwStr, bx + bw / 2, by + bh / 2);
+    p.textStyle(p.NORMAL);
+  }
+
+  // ── Interaction ────────────────────────────────────────────────────────
+
+  p.mousePressed = function() {
+    // Check lock buttons
+    for (let i = 0; i < 3; i++) {
+      let b = lockBtns[i];
+      if (!b) continue;
+      if (p.mouseX >= b.cx - 40 && p.mouseX <= b.cx + 40 &&
+          p.mouseY >= b.cy - 13 && p.mouseY <= b.cy + 13) {
+        // Toggle lock — but always keep exactly one unlocked
+        let numLocked = locked.filter(Boolean).length;
+        if (locked[i] && numLocked <= 2) {
+          // Unlock this, lock whichever is currently unlocked
+          let prevUnlocked = locked.indexOf(false);
+          if (prevUnlocked !== -1) locked[prevUnlocked] = true;
+          locked[i] = false;
+          recalculate();
+        } else if (!locked[i]) {
+          // Can't unlock if already unlocked — do nothing or toggle adjacent
+        } else {
+          locked[i] = false;
+          recalculate();
         }
         return;
       }
     }
-    ['V','I','R'].forEach((k, i) => {
-      if (!locked[i]) return;
-      const sl = SL[k];
-      if (!sl.gx) return;
-      if (Math.abs(p.mouseY - sl.gy) < 14 &&
-          p.mouseX >= sl.gx-10 && p.mouseX <= sl.gx+sl.gw+10) {
-        dragging = k; updateSl(k);
-      }
-    });
-  };
-  p.mouseDragged = function () { if (dragging) updateSl(dragging); };
-  p.mouseReleased = function () { dragging = null; };
 
-  function updateSl(k) {
-    const sl = SL[k];
-    const t  = p.constrain((p.mouseX - sl.gx) / sl.gw, 0, 1);
-    sl.val   = sl.min + t*(sl.max - sl.min);
-    if (k==='V') vals.V = sl.val;
-    if (k==='I') vals.I = sl.val / 1000;
-    if (k==='R') vals.R = sl.val;
-    recalc();
+    // Check sliders
+    let keys = ['V', 'I', 'R'];
+    for (let i = 0; i < 3; i++) {
+      if (!locked[i]) continue;
+      let key = keys[i];
+      let sl = sliders[key];
+      if (!sl.x) continue;
+      let dist = Math.abs(p.mouseY - sl.y);
+      if (dist < 15 && p.mouseX >= sl.x - 10 && p.mouseX <= sl.x + sl.w + 10) {
+        dragging = key;
+        updateSliderVal(key);
+        return;
+      }
+    }
+  };
+
+  p.mouseDragged = function() {
+    if (dragging) {
+      updateSliderVal(dragging);
+    }
+  };
+
+  p.mouseReleased = function() {
+    dragging = null;
+  };
+
+  function updateSliderVal(key) {
+    let sl = sliders[key];
+    if (!sl.x) return;
+    let t = p.constrain((p.mouseX - sl.x) / sl.w, 0, 1);
+    sl.val = sl.min + t * (sl.max - sl.min);
+    // Update vals from slider
+    if (key === 'V') vals.V = sl.val;
+    if (key === 'I') vals.I = sl.val / 1000;
+    if (key === 'R') vals.R = sl.val;
+    recalculate();
   }
 });
 </script>
-<script src="../../js/microsim-controls.js"></script>
 </body>
 </html>

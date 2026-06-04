@@ -1,668 +1,640 @@
-// Superposition Principle Demonstrator MicroSim — v2
+// Superposition Theorem Demo MicroSim
+//
+// Circuit topology:
+//   +--[R1]--A--[R2]--+
+//   |        |        |
+//  Vs       [R3]      Is
+//   |        |        |
+//   +--------B--------+  (GND)
+//
+// Views:
+//   0 = Original (both sources active)
+//   1 = V-source only (Is -> open circuit)
+//   2 = I-source only (Vs -> short circuit)
+//   3 = Combined (show superposition result)
+
 'use strict';
 
-let canvasWidth;
-let canvasHeight = 500;
-const margin    = 14;
-const controlsY = 438;  // divider between circuit+chart area and controls
+// Canvas
+let drawHeight = 320;
+let chartHeight = 160;
+let controlHeight = 170;
+let canvasHeight;
+let containerWidth;
 
-// View mode: 0=Original, 1=V-only, 2=I-only, 3=Combined
-let viewMode = 0;
+// View mode
+let viewMode = 0; // 0=Original, 1=V-only, 2=I-only, 3=Combined
 
 // Circuit parameters
-let Vs = 12, Is = 2, R1 = 2, R2 = 4, R3 = 3;
+let Vs = 12;     // V
+let Is = 2;      // A (displayed as mA for the bar chart context)
+let R1 = 2;      // kOhm
+let R2 = 4;      // kOhm
+let R3 = 3;      // kOhm
 
-// Solved currents (mA through R1)
-let I_v = 0, I_i = 0, I_total = 0;
+// Solved quantities (currents in mA through R1)
+let I_v = 0;     // contribution from Vs alone
+let I_i = 0;     // contribution from Is alone
+let I_total = 0; // superposition result
 
-let sliders      = [];
-let activeSlider = -1;
-let segBtns      = [];
-let leftPanelX, leftPanelW, rightPanelX, rightPanelW;
-let np = {};   // circuit geometry
+// Colors
+const COL_BG = [248, 250, 252];
+const COL_WIRE = [40, 40, 40];
+const COL_R = [70, 130, 200];
+const COL_VS = [220, 60, 60];
+const COL_IS = [40, 160, 80];
+const COL_IV = [220, 80, 50];
+const COL_II = [40, 140, 200];
+const COL_ITOT = [140, 60, 180];
+const COL_BTN = [55, 90, 160];
+const COL_BTN_HOVER = [75, 110, 180];
+const COL_BTN_ACTIVE = [35, 65, 130];
+const COL_DEAD = [180, 180, 180];
 
-// ── Column widths ─────────────────────────────────────────────────────────────
-const LABEL_W      = 40;
-const INPUT_W      = 62;
-const UNIT_W       = 28;
-const TRACK_OFFSET = LABEL_W + INPUT_W + UNIT_W + 8;
-
-// ── Colors ────────────────────────────────────────────────────────────────────
-const colBg          = [245, 247, 250];
-const colPanel       = [255, 255, 255];
-const colPanelHead   = [241, 245, 249];
-const colBorder      = [203, 213, 225];
-const colText        = [30,  41,  59];
-const colTextLight   = [100, 116, 139];
-const colBtnBg       = [59,  130, 246];
-const colBtnHover    = [37,  99,  235];
-const colHover       = [241, 245, 249];
-const colSliderTrack = [203, 213, 225];
-const colGround      = [90,  105, 120];
-
-const COL_WIRE = [51,  65,  85];
-const COL_R    = [70,  130, 200];
-const COL_VS   = [210, 45,  45];
-const COL_IS   = [22,  163, 74];
-const COL_IV   = [210, 80,  40];   // I' contribution
-const COL_II   = [50,  110, 200];  // I'' contribution
-const COL_ITOT = [147, 51,  234];  // I total
-const COL_DEAD = [175, 185, 195];
-
-const colBlueBg  = [239, 246, 255];
-const colAccent  = [59,  130, 246];
-const colGreenBg = [240, 253, 244];
-const colGreen   = [22,  163, 74];
-const colPurpleBg= [250, 245, 255];
-const colPurple  = [147, 51,  234];
-const colRedBg   = [254, 242, 242];
-
-// Segmented control: one accent color per mode
-const SEG_COLS = [colBtnBg, COL_VS, COL_IS, COL_ITOT];
-
-// ── Setup ─────────────────────────────────────────────────────────────────────
+// Layout
+let viewBtns = [];
+let sliders = [];
+let draggingSlider = -1;
 
 function setup() {
-    canvasWidth = min(floor(document.querySelector('main').getBoundingClientRect().width), 800);
-    createCanvas(canvasWidth, canvasHeight).parent(document.querySelector('main'));
+    updateCanvasSize();
+    canvasHeight = drawHeight + chartHeight + controlHeight;
+    createCanvas(containerWidth, canvasHeight).parent(document.querySelector('main'));
     textFont('Arial');
-    initSliders();
-    buildLayout();
+    initLayout();
     solve();
-    window.addEventListener('message', e => {
-        if (e.data && e.data.type === 'microsim-height-request') postHeightToParent();
-    });
 }
 
-function windowResized() {
-    canvasWidth = min(floor(document.querySelector('main').getBoundingClientRect().width), 800);
-    buildLayout();
+function updateCanvasSize() {
+    containerWidth = max(560, floor(
+        document.querySelector('main').getBoundingClientRect().width
+    ));
 }
 
-function postHeightToParent() {
-    if (window.parent !== window)
-        window.parent.postMessage({ type:'microsim-height', height:canvasHeight }, '*');
-}
-
-// ── Sliders + inputs ──────────────────────────────────────────────────────────
-
-function initSliders() {
-    const configs = [
-        { label:'Vs', unit:'V',       min:0,   max:24, val:Vs,
-          fmt:v=>v.toFixed(1), toRaw:s=>parseFloat(s), setter:v=>{Vs=v;} },
-        { label:'Is', unit:'mA',      min:0,   max:5,  val:Is,
-          fmt:v=>v.toFixed(1), toRaw:s=>parseFloat(s), setter:v=>{Is=v;} },
-        { label:'R1', unit:'k\u03A9', min:0.1, max:10, val:R1,
-          fmt:v=>v.toFixed(1), toRaw:s=>parseFloat(s), setter:v=>{R1=v;} },
-        { label:'R2', unit:'k\u03A9', min:0.1, max:10, val:R2,
-          fmt:v=>v.toFixed(1), toRaw:s=>parseFloat(s), setter:v=>{R2=v;} },
-        { label:'R3', unit:'k\u03A9', min:0.1, max:10, val:R3,
-          fmt:v=>v.toFixed(1), toRaw:s=>parseFloat(s), setter:v=>{R3=v;} },
-    ];
-    sliders = configs.map(c => {
-        const inp = createInput(c.fmt(c.val));
-        styleInp(inp);
-        const s = { label:c.label, unit:c.unit, min:c.min, max:c.max,
-                    val:c.val, fmt:c.fmt, setter:c.setter, inp, trackX:0, trackW:0, y:0 };
-        inp.input(() => {
-            const raw = c.toRaw(inp.value());
-            if (isNaN(raw)) return;
-            s.val = constrain(raw, c.min, c.max);
-            c.setter(s.val);
-            solve();
-        });
-        inp.elt.addEventListener('blur', () => inp.value(c.fmt(s.val)));
-        return s;
-    });
-}
-
-function styleInp(inp) {
-    inp.style('font-size',    '12px');
-    inp.style('font-family',  'Arial,sans-serif');
-    inp.style('padding',      '3px 6px');
-    inp.style('border',       '1.5px solid #94a3b8');
-    inp.style('border-radius','4px');
-    inp.style('text-align',   'right');
-    inp.style('color',        '#1e293b');
-    inp.style('background',   '#f8fafc');
-    inp.style('box-sizing',   'border-box');
-    inp.style('outline',      'none');
-    inp.style('position',     'absolute');
-    inp.size(INPUT_W);
-}
-
-// ── Layout ────────────────────────────────────────────────────────────────────
-
-function buildLayout() {
-    const pGap = 10;
-    leftPanelX  = margin;
-    leftPanelW  = floor(canvasWidth / 2) - margin - floor(pGap / 2);
-    rightPanelX = floor(canvasWidth / 2) + floor(pGap / 2);
-    rightPanelW = canvasWidth - rightPanelX - margin;
-
-    // Circuit geometry
-    const cx = canvasWidth / 2;
-    const hw = min(155, floor(canvasWidth * 0.195));
-    np = { cx, hw, lx:cx-hw, rx:cx+hw, mx:cx,
-           circTop:165, circBot:295, circCy:230 };
-
-    // Segmented control buttons
-    const ctrlW = min(canvasWidth - 2*margin, 520);
-    const segW  = floor(ctrlW / 4);
-    const ctrlX = floor((canvasWidth - ctrlW) / 2);
-    segBtns = [
-        { x:ctrlX,           y:52, w:segW,         h:32, label:'Original',     mode:0 },
-        { x:ctrlX+segW,      y:52, w:segW,         h:32, label:'V-source Only', mode:1 },
-        { x:ctrlX+segW*2,    y:52, w:segW,         h:32, label:'I-source Only', mode:2 },
-        { x:ctrlX+segW*3,    y:52, w:ctrlW-segW*3, h:32, label:'Combined',      mode:3 },
+function initLayout() {
+    // View buttons
+    let bw = min(130, (containerWidth - 40) / 4);
+    let bx = (containerWidth - bw * 4 - 12) / 2;
+    let by = 30;
+    viewBtns = [
+        { x: bx, y: by, w: bw, h: 28, label: 'Original', mode: 0 },
+        { x: bx + bw + 4, y: by, w: bw, h: 28, label: 'V-source Only', mode: 1 },
+        { x: bx + (bw + 4) * 2, y: by, w: bw, h: 28, label: 'I-source Only', mode: 2 },
+        { x: bx + (bw + 4) * 3, y: by, w: bw, h: 28, label: 'Combined', mode: 3 },
     ];
 
-    // Slider track geometry (left panel)
-    const sliderTrackX = leftPanelX + TRACK_OFFSET;
-    const sliderTrackW = leftPanelW - TRACK_OFFSET - 10;
-    const sliderStartY = controlsY + 50;
-    const sliderGap    = 36;
-    const inputH       = 24;
-
-    sliders.forEach((s, i) => {
-        s.y      = sliderStartY + i * sliderGap;
-        s.trackX = sliderTrackX;
-        s.trackW = sliderTrackW;
-    });
-
-    const minH = sliders[4].y + inputH / 2 + 22;
-    if (minH !== canvasHeight) {
-        canvasHeight = minH;
-        resizeCanvas(canvasWidth, canvasHeight);
-    }
-    postHeightToParent();
-
-    const cr   = document.querySelector('canvas').getBoundingClientRect();
-    const offX = cr.left + window.scrollX;
-    const offY = cr.top  + window.scrollY;
-    sliders.forEach(s => {
-        s.inp.position(offX + leftPanelX + LABEL_W + 4, offY + s.y - inputH / 2);
-        s.inp.size(INPUT_W);
-    });
+    // Sliders
+    let sx = 70;
+    let sw = containerWidth - sx - 80;
+    let sy = drawHeight + chartHeight + 12;
+    let gap = 28;
+    sliders = [
+        { label: 'Vs', min: 0, max: 20, val: Vs, unit: 'V', x: sx, y: sy, w: sw },
+        { label: 'Is', min: 0, max: 5, val: Is, unit: 'A', x: sx, y: sy + gap, w: sw },
+        { label: 'R1', min: 0.1, max: 10, val: R1, unit: 'k\u03A9', x: sx, y: sy + gap * 2, w: sw },
+        { label: 'R2', min: 0.1, max: 10, val: R2, unit: 'k\u03A9', x: sx, y: sy + gap * 3, w: sw },
+        { label: 'R3', min: 0.1, max: 10, val: R3, unit: 'k\u03A9', x: sx, y: sy + gap * 4, w: sw },
+    ];
 }
-
-// ── Solve ─────────────────────────────────────────────────────────────────────
 
 function solve() {
-    // V-source only (Is → open): R1 and R3 in series, R2 floats
-    I_v = (R1 + R3 > 0) ? Vs / (R1 + R3) : 0;
-    // I-source only (Vs → short): Is current divides through R1 and R3 to GND
-    I_i = (R1 + R3 > 0) ? Is * R3 / (R1 + R3) : 0;
-    // Superposition sum
+    // V-source only (Is replaced with open circuit)
+    // Circuit: Vs -> R1 -> R3 in series (R2 branch is open since Is is removed)
+    // Wait - if Is is open, then R2 is disconnected (no current path through R2)
+    // Current through R1 and R3: I' = Vs / (R1 + R3)
+    // Node A voltage: VA = Vs * R3 / (R1 + R3)
+    // R2 has no current (open on far end)
+    I_v = Vs / (R1 + R3); // mA (since R in kOhm, V in V -> mA)
+
+    // I-source only (Vs replaced with short circuit)
+    // Circuit: Short where Vs was (left branch is wire)
+    // R1 is connected from top-left to A, left branch is shorted (wire from A-bottom to top-left)
+    // Actually: with Vs shorted, left branch is a wire.
+    // So R1 connects node A to GND (via the short).
+    // R3 connects node A to GND.
+    // R2 connects node A to the Is terminal.
+    // Is flows upward into node A's right side.
+    //
+    // At node A: R1 and R3 are both to GND, R2 goes to Is terminal (top-right).
+    // Network from Is perspective: Is in series with R2, connected to R1 || R3 to ground.
+    //
+    // Wait let me reconsider. The topology:
+    //   +--[R1]--A--[R2]--+
+    //   |        |        |
+    //  short    [R3]      Is (up)
+    //   |        |        |
+    //   +--------B--------+  (GND)
+    //
+    // With the short on the left: top-left and bottom-left are same node = GND.
+    // So R1 goes from GND to A. R3 goes from A to GND. R2 goes from A to top-right.
+    // Is goes from GND (bottom-right) to top-right (upward).
+    //
+    // Let's call the top-right node C.
+    // At node C: Is comes in, R2 goes to A.
+    // At node A: R1 to GND, R3 to GND, R2 to C.
+    //
+    // R1||R3 from A to GND = (R1*R3)/(R1+R3)
+    // Total from C: R2 + R1||R3
+    // Voltage at C: Vc = Is * (R2 + R1*R3/(R1+R3))
+    // Voltage at A: Va = Vc * (R1||R3) / (R2 + R1||R3) = Is * R1*R3/(R1+R3)
+    //
+    // Current through R1 (from A to GND, i.e., rightward then down):
+    // I_R1'' = Va / R1 = Is * R3 / (R1 + R3)
+
+    let R13 = (R1 * R3) / (R1 + R3);
+    I_i = Is * R3 / (R1 + R3); // mA
+
+    // Total by superposition
     I_total = I_v + I_i;
 }
 
-// ── Draw ──────────────────────────────────────────────────────────────────────
-
 function draw() {
-    background(colBg);
-    drawTitleBar();
-    drawSegControl();
-    drawPill();
-    drawCircuitArea();
-    drawChartSection();
-    drawSectionDivider();
-    drawLeftPanel();
-    drawRightPanel();
-}
+    background(COL_BG);
 
-// ── Title bar ─────────────────────────────────────────────────────────────────
+    // Title
+    fill(30);
+    noStroke();
+    textSize(16);
+    textAlign(CENTER, TOP);
+    text('Superposition Theorem', containerWidth / 2, 8);
 
-function drawTitleBar() {
-    noStroke(); fill(colText);
-    textSize(17); textAlign(LEFT, TOP); textStyle(BOLD);
-    text('Superposition Principle Demonstrator', margin, 9);
-    textStyle(NORMAL);
-    fill(colTextLight); textSize(11);
-    text('Linear circuits: total response = sum of each source\u2019s contribution acting alone', margin, 31);
-}
-
-// ── Segmented mode control ────────────────────────────────────────────────────
-
-function drawSegControl() {
-    const first = segBtns[0];
-    const totalW = segBtns.reduce((s,b) => s+b.w, 0);
-
-    // Outer container
-    fill(colPanelHead); stroke(colBorder); strokeWeight(1.5);
-    rect(first.x, first.y, totalW, first.h, 6);
-
-    for (let i = 0; i < segBtns.length; i++) {
-        const b = segBtns[i];
-        const active = viewMode === b.mode;
-        const hover  = !active && mouseX>=b.x && mouseX<=b.x+b.w
-                                && mouseY>=b.y && mouseY<=b.y+b.h;
-        noStroke();
+    // View buttons
+    for (let b of viewBtns) {
+        let hover = isOver(b);
+        let active = (viewMode === b.mode);
         if (active) {
-            fill(SEG_COLS[i]);
-            const tl = i===0 ? 5 : 0, tr = i===segBtns.length-1 ? 5 : 0;
-            rect(b.x, b.y, b.w, b.h, [tl, tr, tr, tl]);
+            fill(COL_BTN_ACTIVE);
         } else if (hover) {
-            fill(colHover);
-            rect(b.x, b.y, b.w, b.h);
+            fill(COL_BTN_HOVER);
+        } else {
+            fill(COL_BTN);
         }
-        // Divider
-        if (i < segBtns.length-1) {
-            stroke(colBorder); strokeWeight(1);
-            line(b.x+b.w, b.y+5, b.x+b.w, b.y+b.h-5);
-        }
-        // Label
-        noStroke(); fill(active ? 255 : colText);
-        textSize(11); textAlign(CENTER, CENTER);
-        textStyle(active ? BOLD : NORMAL);
-        text(b.label, b.x+b.w/2, b.y+b.h/2);
-        textStyle(NORMAL);
-    }
-}
-
-// ── Explanation pill ──────────────────────────────────────────────────────────
-
-const PILL_MSGS = [
-    'Both sources active simultaneously \u2014 full circuit with Vs and Is driving current through R1.',
-    'Is \u2192 open circuit (removed). Only Vs drives the circuit.  I\u2032 = Vs / (R1 + R3)',
-    'Vs \u2192 short circuit (wire). Only Is drives the circuit.  I\u2033 = Is \u00B7 R3 / (R1 + R3)',
-    'Superposition: I_total = I\u2032 + I\u2033 \u2014 individual contributions add linearly.',
-];
-const PILL_BGCOL  = [colBlueBg, colRedBg,  colGreenBg, colPurpleBg];
-const PILL_ACCCOL = [colAccent, COL_VS,    COL_IS,     COL_ITOT];
-
-function drawPill() {
-    const py = 90, ph = 28, pw = canvasWidth - 2*margin;
-    fill(PILL_BGCOL[viewMode]);
-    stroke(PILL_ACCCOL[viewMode]); strokeWeight(1);
-    rect(margin, py, pw, ph, 4);
-    noStroke(); fill(PILL_ACCCOL[viewMode]);
-    textSize(10.5); textAlign(LEFT, CENTER); textStyle(ITALIC);
-    text(PILL_MSGS[viewMode], margin+10, py+ph/2);
-    textStyle(NORMAL);
-}
-
-// ── Circuit drawing ───────────────────────────────────────────────────────────
-
-function drawCircuitArea() {
-    const { lx, rx, mx, circTop, circBot, circCy } = np;
-    const r1cx = (lx+mx)/2;
-    const r2cx = (mx+rx)/2;
-
-    // Current arrow above R1 (at circTop-20)
-    const arrowY = circTop - 22;
-    if (viewMode === 0 || viewMode === 3) {
-        drawCurrentArrow(r1cx, arrowY, I_total, 'I = '+nf(I_total,1,2)+' mA', COL_ITOT);
-    } else if (viewMode === 1) {
-        drawCurrentArrow(r1cx, arrowY, I_v,    "I\u2032 = "+nf(I_v,1,2)+' mA', COL_IV);
-    } else {
-        drawCurrentArrow(r1cx, arrowY, I_i,    "I\u2033 = "+nf(I_i,1,2)+' mA', COL_II);
+        noStroke();
+        rect(b.x, b.y, b.w, b.h, 5);
+        fill(255);
+        textSize(11);
+        textAlign(CENTER, CENTER);
+        text(b.label, b.x + b.w / 2, b.y + b.h / 2);
     }
 
-    // Wires
-    stroke(COL_WIRE); strokeWeight(2.5); noFill();
-    line(lx, circTop, r1cx-32, circTop);
-    line(r1cx+32, circTop, mx, circTop);
-    line(mx, circTop, r2cx-32, circTop);
-    line(r2cx+32, circTop, rx, circTop);
-    line(lx, circBot, rx, circBot);
-    line(mx, circTop, mx, circCy-30);
-    line(mx, circCy+30, mx, circBot);
+    // Circuit drawing area
+    let cx = containerWidth / 2;
+    let cy = 170;
+    drawCircuit(cx, cy, containerWidth * 0.65);
 
-    // Left vertical (Vs branch)
+    // Separator before chart
+    stroke(200);
+    strokeWeight(1);
+    line(10, drawHeight, containerWidth - 10, drawHeight);
+
+    // Bar chart
+    drawBarChart(containerWidth / 2, drawHeight + 10, containerWidth - 60, chartHeight - 20);
+
+    // Separator before sliders
+    stroke(200);
+    strokeWeight(1);
+    line(10, drawHeight + chartHeight, containerWidth - 10, drawHeight + chartHeight);
+
+    // Sliders
+    drawSliders();
+}
+
+function drawCircuit(cx, cy, w) {
+    let hw = w * 0.38;
+    let hh = 70;
+
+    let lx = cx - hw;
+    let rx = cx + hw;
+    let ty = cy - hh;
+    let by = cy + hh;
+    let mx = cx;
+
+    stroke(COL_WIRE);
+    strokeWeight(2.5);
+    noFill();
+
+    // Top wires
+    line(lx, ty, mx - 28, ty);
+    line(mx + 28, ty, rx, ty);
+
+    // Bottom wire
+    line(lx, by, rx, by);
+
+    // Middle vertical (R3)
+    line(mx, ty, mx, cy - 28);
+    line(mx, cy + 28, mx, by);
+
+    // Left vertical
     if (viewMode === 2) {
-        stroke(COL_DEAD); strokeWeight(3);
-        line(lx, circTop, lx, circBot);
-        noStroke(); fill(COL_DEAD); textSize(9); textAlign(RIGHT, CENTER); textStyle(ITALIC);
-        text('short', lx-5, circCy);
-        textStyle(NORMAL);
+        // Vs is shorted - draw as wire
+        stroke(COL_DEAD);
+        strokeWeight(3);
+        line(lx, ty, lx, by);
+        // Label
+        noStroke();
+        fill(COL_DEAD);
+        textSize(9);
+        textAlign(RIGHT, CENTER);
+        text('(short)', lx - 6, cy);
+        stroke(COL_WIRE);
+        strokeWeight(2.5);
     } else {
-        stroke(COL_WIRE); strokeWeight(2.5);
-        line(lx, circTop, lx, circCy-15);
-        line(lx, circCy+15, lx, circBot);
+        line(lx, ty, lx, cy - 16);
+        line(lx, cy + 16, lx, by);
     }
 
-    // Right vertical (Is branch)
+    // Right vertical
     if (viewMode === 1) {
-        stroke(COL_WIRE); strokeWeight(2.5);
-        line(rx, circTop, rx, circCy-16);
-        line(rx, circCy+16, rx, circBot);
-        stroke(COL_DEAD); strokeWeight(2);
-        line(rx-6, circCy-16, rx+6, circCy-16);
-        line(rx-6, circCy+16, rx+6, circCy+16);
-        noStroke(); fill(COL_DEAD); textSize(9); textAlign(LEFT, CENTER); textStyle(ITALIC);
-        text('open', rx+8, circCy);
-        textStyle(NORMAL);
+        // Is is open - draw gap
+        line(rx, ty, rx, cy - 18);
+        line(rx, cy + 18, rx, by);
+        // Gap marks
+        stroke(COL_DEAD);
+        strokeWeight(2);
+        line(rx - 5, cy - 18, rx + 5, cy - 18);
+        line(rx - 5, cy + 18, rx + 5, cy + 18);
+        noStroke();
+        fill(COL_DEAD);
+        textSize(9);
+        textAlign(LEFT, CENTER);
+        text('(open)', rx + 8, cy);
+        stroke(COL_WIRE);
+        strokeWeight(2.5);
     } else {
-        stroke(COL_WIRE); strokeWeight(2.5);
-        line(rx, circTop, rx, circCy-15);
-        line(rx, circCy+15, rx, circBot);
+        line(rx, ty, rx, cy - 16);
+        line(rx, cy + 16, rx, by);
     }
 
-    // Components
-    drawResistorH(r1cx, circTop, 'R1', R1.toFixed(1)+' k\u03A9');
-    drawResistorH(r2cx, circTop, 'R2', R2.toFixed(1)+' k\u03A9');
-    drawResistorV(mx, circCy, 'R3', R3.toFixed(1)+' k\u03A9');
+    // R1
+    drawResistor((lx + mx) / 2, ty, 'R1', R1 + 'k\u03A9', true);
 
-    if (viewMode !== 2) drawVsSource(lx, circCy);
-    if (viewMode !== 1) drawIsSource(rx, circCy);
+    // R2
+    drawResistor((mx + rx) / 2, ty, 'R2', R2 + 'k\u03A9', true);
 
-    // Node A — highlighted dot
-    const nodeR = 9;
-    fill(colAccent); stroke(255); strokeWeight(2);
-    ellipse(mx, circTop, nodeR*2, nodeR*2);
-    fill(255); noStroke(); textSize(9); textStyle(BOLD);
-    textAlign(CENTER, CENTER); text('A', mx, circTop);
-    textStyle(NORMAL);
+    // R3
+    drawResistorV(mx, cy, 'R3', R3 + 'k\u03A9');
 
-    // GND
-    drawGround(mx, circBot);
+    // Vs (left)
+    if (viewMode !== 2) {
+        drawVoltageSource(lx, cy, Vs + 'V', false);
+    }
+
+    // Is (right)
+    if (viewMode !== 1) {
+        drawCurrentSource(rx, cy, Is + 'A', false);
+    }
+
+    // GND symbol
+    drawGround((lx + rx) / 2, by);
+
+    // Node labels
+    fill(60);
+    noStroke();
+    textSize(10);
+    textAlign(CENTER, BOTTOM);
+    text('A', mx, ty - 5);
+
+    // Current arrows based on view
+    if (viewMode === 0 || viewMode === 3) {
+        // Show total current through R1
+        drawCurrentArrow((lx + mx) / 2, ty - 22, I_total, 'I = ' + nf(I_total, 1, 2) + ' mA', COL_ITOT);
+    } else if (viewMode === 1) {
+        drawCurrentArrow((lx + mx) / 2, ty - 22, I_v, "I' = " + nf(I_v, 1, 2) + ' mA', COL_IV);
+    } else if (viewMode === 2) {
+        drawCurrentArrow((lx + mx) / 2, ty - 22, I_i, "I'' = " + nf(I_i, 1, 2) + ' mA', COL_II);
+    }
+
+    // View description
+    noStroke();
+    fill(80);
+    textSize(11);
+    textAlign(CENTER, TOP);
+    let desc = '';
+    if (viewMode === 0) desc = 'Original circuit with both sources active';
+    else if (viewMode === 1) desc = 'Current source replaced with OPEN circuit';
+    else if (viewMode === 2) desc = 'Voltage source replaced with SHORT circuit';
+    else desc = 'Superposition: I = I\' + I\'\'';
+    text(desc, cx, by + 20);
 }
 
 function drawCurrentArrow(x, y, current, label, col) {
-    push(); translate(x, y);
-    const len = 28;
-    stroke(col[0], col[1], col[2]); strokeWeight(2.5);
-    line(-len, 0, len, 0);
-    fill(col[0], col[1], col[2]); noStroke();
-    triangle(len, 0, len-8, -5, len-8, 5);
-    noStroke(); fill(col[0], col[1], col[2]);
-    textSize(11); textStyle(BOLD); textAlign(CENTER, BOTTOM);
+    push();
+    translate(x, y);
+
+    let dir = current >= 0 ? 1 : -1;
+    let len = 30;
+
+    stroke(col);
+    strokeWeight(2.5);
+    line(-len * dir, 0, len * dir, 0);
+
+    // Arrowhead
+    fill(col);
+    noStroke();
+    let ax = len * dir;
+    triangle(ax, 0, ax - 7 * dir, -4, ax - 7 * dir, 4);
+
+    // Label
+    noStroke();
+    fill(col);
+    textSize(11);
+    textAlign(CENTER, BOTTOM);
     text(label, 0, -6);
-    textStyle(NORMAL);
+
     pop();
 }
 
-function drawResistorH(x, y, label, valStr) {
-    push(); translate(x, y);
-    stroke(COL_R); strokeWeight(2.5); noFill();
-    const half=24, amp=7, segs=5;
+function drawResistor(x, y, label, valStr, horiz) {
+    push();
+    translate(x, y);
+
+    stroke(COL_R);
+    strokeWeight(2.5);
+    noFill();
+
+    let len = 44;
+    let amp = 7;
+    let segs = 5;
+    let half = len / 2;
+
+    line(-half - 8, 0, -half, 0);
     beginShape();
     vertex(-half, 0);
-    for (let i=0; i<segs; i++) {
-        vertex(map(i+0.25, 0, segs, -half, half), i%2===0 ? -amp : amp);
-        vertex(map(i+0.75, 0, segs, -half, half), i%2===0 ? amp : -amp);
+    for (let i = 0; i < segs; i++) {
+        let px1 = map(i + 0.25, 0, segs, -half, half);
+        vertex(px1, (i % 2 === 0 ? -amp : amp));
+        let px2 = map(i + 0.75, 0, segs, -half, half);
+        vertex(px2, (i % 2 === 0 ? amp : -amp));
     }
     vertex(half, 0);
     endShape();
-    noStroke(); fill(COL_R); textSize(11); textStyle(BOLD); textAlign(CENTER, TOP);
-    text(label, 0, amp+3);
-    textStyle(NORMAL); fill(colTextLight); textSize(9);
-    text(valStr, 0, amp+15);
+    line(half, 0, half + 8, 0);
+
+    noStroke();
+    fill(COL_R);
+    textSize(11);
+    textAlign(CENTER, TOP);
+    text(label, 0, amp + 3);
+    textSize(9);
+    fill(100);
+    text(valStr, 0, amp + 16);
+
     pop();
 }
 
 function drawResistorV(x, y, label, valStr) {
-    push(); translate(x, y);
-    stroke(COL_R); strokeWeight(2.5); noFill();
-    const half=24, amp=7, segs=5;
+    push();
+    translate(x, y);
+
+    stroke(COL_R);
+    strokeWeight(2.5);
+    noFill();
+
+    let len = 44;
+    let amp = 7;
+    let segs = 5;
+    let half = len / 2;
+
+    line(0, -half - 8, 0, -half);
     beginShape();
     vertex(0, -half);
-    for (let i=0; i<segs; i++) {
-        vertex(i%2===0 ? -amp : amp, map(i+0.25, 0, segs, -half, half));
-        vertex(i%2===0 ? amp : -amp, map(i+0.75, 0, segs, -half, half));
+    for (let i = 0; i < segs; i++) {
+        let py1 = map(i + 0.25, 0, segs, -half, half);
+        vertex((i % 2 === 0 ? -amp : amp), py1);
+        let py2 = map(i + 0.75, 0, segs, -half, half);
+        vertex((i % 2 === 0 ? amp : -amp), py2);
     }
     vertex(0, half);
     endShape();
-    noStroke(); fill(COL_R); textSize(11); textStyle(BOLD); textAlign(LEFT, CENTER);
-    text(label, amp+5, -5);
-    textStyle(NORMAL); fill(colTextLight); textSize(9);
-    text(valStr, amp+5, 9);
+    line(0, half, 0, half + 8);
+
+    noStroke();
+    fill(COL_R);
+    textSize(11);
+    textAlign(LEFT, CENTER);
+    text(label, amp + 5, -4);
+    textSize(9);
+    fill(100);
+    text(valStr, amp + 5, 10);
+
     pop();
 }
 
-function drawVsSource(x, y) {
-    stroke(COL_VS); strokeWeight(2); noFill();
-    ellipse(x, y, 28, 28);
-    noStroke(); fill(COL_VS);
-    textSize(13); textAlign(CENTER, CENTER);
-    text('+', x, y-8); textSize(15); text('\u2013', x, y+7);
-    textSize(11); textStyle(BOLD); text('Vs', x-22, y-8);
-    textStyle(NORMAL); fill(colTextLight); textSize(9);
-    text(Vs.toFixed(1)+' V', x-22, y+6);
+function drawVoltageSource(x, y, valStr, dead) {
+    push();
+    translate(x, y);
+
+    stroke(dead ? COL_DEAD : COL_VS);
+    strokeWeight(2);
+    noFill();
+    ellipse(0, 0, 26, 26);
+
+    textSize(13);
+    fill(dead ? COL_DEAD : COL_VS);
+    noStroke();
+    textAlign(CENTER, CENTER);
+    text('+', 0, -8);
+    text('\u2013', 0, 7);
+
+    textSize(10);
+    textAlign(RIGHT, CENTER);
+    text('Vs', -18, -9);
+    textSize(9);
+    fill(100);
+    text(valStr, -18, 5);
+
+    pop();
 }
 
-function drawIsSource(x, y) {
-    stroke(COL_IS); strokeWeight(2); noFill();
-    ellipse(x, y, 28, 28);
-    stroke(COL_IS); strokeWeight(1.5);
-    line(x, y+8, x, y-8);
-    fill(COL_IS); noStroke();
-    triangle(x, y-9, x-4, y-3, x+4, y-3);
-    textSize(11); textStyle(BOLD); fill(COL_IS);
-    text('Is', x+20, y-8);
-    textStyle(NORMAL); fill(colTextLight); textSize(9);
-    text(Is.toFixed(1)+' mA', x+20, y+6);
+function drawCurrentSource(x, y, valStr, dead) {
+    push();
+    translate(x, y);
+
+    stroke(dead ? COL_DEAD : COL_IS);
+    strokeWeight(2);
+    noFill();
+    ellipse(0, 0, 26, 26);
+
+    stroke(dead ? COL_DEAD : COL_IS);
+    strokeWeight(2);
+    line(0, 7, 0, -7);
+    line(0, -7, -3.5, -1.5);
+    line(0, -7, 3.5, -1.5);
+
+    noStroke();
+    fill(dead ? COL_DEAD : COL_IS);
+    textSize(10);
+    textAlign(LEFT, CENTER);
+    text('Is', 18, -9);
+    textSize(9);
+    fill(100);
+    text(valStr, 18, 5);
+
+    pop();
 }
 
 function drawGround(x, y) {
-    stroke(colGround); strokeWeight(2);
-    line(x-15, y+4, x+15, y+4);
-    line(x-9,  y+8, x+9,  y+8);
-    line(x-4,  y+12, x+4, y+12);
-    noStroke(); fill(colGround); textSize(9); textAlign(CENTER, TOP);
-    text('GND', x, y+15);
+    stroke(COL_WIRE);
+    strokeWeight(2);
+    let w1 = 16, w2 = 10, w3 = 4;
+    line(x - w1, y, x + w1, y);
+    line(x - w2, y + 5, x + w2, y + 5);
+    line(x - w3, y + 10, x + w3, y + 10);
 }
 
-// ── Bar chart ─────────────────────────────────────────────────────────────────
-
-function drawChartSection() {
-    const chartTop = np.circBot + 10;
-    const chartBot = controlsY - 8;
-    const chartH   = chartBot - chartTop;
-    const cx = canvasWidth / 2;
-
-    // Section background
-    fill(colPanel); stroke(colBorder); strokeWeight(1);
-    rect(margin, chartTop, canvasWidth-2*margin, chartH, 5);
+function drawBarChart(cx, topY, totalW, totalH) {
+    let barW = min(60, totalW / 6);
+    let gap = barW * 0.6;
+    let groupW = barW * 3 + gap * 2;
+    let startX = cx - groupW / 2;
+    let baseY = topY + totalH - 25;
 
     // Title
-    noStroke(); fill(colText); textSize(12); textStyle(BOLD);
+    fill(40);
+    noStroke();
+    textSize(13);
     textAlign(CENTER, TOP);
-    text('Current through R1 — Superposition Breakdown', cx, chartTop+8);
-    textStyle(NORMAL);
-
-    // Equation line
-    noStroke(); fill(COL_ITOT); textSize(11); textStyle(BOLD);
-    textAlign(CENTER, TOP);
-    text('I_total = I\u2032 + I\u2033', cx, chartTop+24);
-    textStyle(NORMAL);
-
-    const baseY    = chartBot - 28;
-    const axisTop  = chartTop + 44;
-    const drawH    = baseY - axisTop;
-    const maxVal   = max(abs(I_v), abs(I_i), abs(I_total), 0.1);
-    const scale    = drawH / (maxVal * 1.15);
-    const barW     = min(52, (canvasWidth-2*margin-80) / 5);
-    const gap      = barW * 0.55;
-    const groupW   = barW * 3 + gap * 2;
-    const startX   = cx - groupW / 2;
+    text('Current through R1 by Superposition', cx, topY);
 
     // Axis
-    stroke(colBorder); strokeWeight(1);
-    line(startX-14, baseY, startX+groupW+14, baseY);
+    stroke(150);
+    strokeWeight(1);
+    line(startX - 10, baseY, startX + groupW + 10, baseY);
 
-    const bars = [
-        { val:I_v,     label:"I\u2032",    sub:'(Vs only)',  col:COL_IV   },
-        { val:I_i,     label:"I\u2033",    sub:'(Is only)',  col:COL_II   },
-        { val:I_total, label:'I_total',    sub:"= I\u2032+I\u2033", col:COL_ITOT, highlight:true },
+    // Scale
+    let maxVal = max(abs(I_v), abs(I_i), abs(I_total), 0.5);
+    let scale = (totalH - 50) / maxVal;
+
+    // Bars
+    let bars = [
+        { val: I_v, label: "I'", sub: '(Vs only)', col: COL_IV },
+        { val: I_i, label: "I''", sub: '(Is only)', col: COL_II },
+        { val: I_total, label: 'I total', sub: "I'+I''", col: COL_ITOT },
     ];
 
-    for (let i=0; i<bars.length; i++) {
-        const b  = bars[i];
-        const bx = startX + i*(barW+gap);
-        const bh = max(b.val * scale, 2);
-
-        // Highlighted total bar gets a subtle glow ring
-        if (b.highlight) {
-            fill(b.col[0], b.col[1], b.col[2], 30);
-            noStroke();
-            rect(bx-4, baseY-bh-4, barW+8, bh+4, 4);
-        }
+    for (let i = 0; i < bars.length; i++) {
+        let b = bars[i];
+        let bx = startX + i * (barW + gap);
+        let bh = b.val * scale;
 
         // Bar
-        fill(b.col); noStroke();
-        rect(bx, baseY-bh, barW, bh, [3,3,0,0]);
+        fill(b.col);
+        noStroke();
+        if (bh >= 0) {
+            rect(bx, baseY - bh, barW, bh, 3, 3, 0, 0);
+        } else {
+            rect(bx, baseY, barW, -bh, 0, 0, 3, 3);
+        }
 
-        // Value above bar
-        fill(b.col); textSize(11); textStyle(BOLD); textAlign(CENTER, BOTTOM);
-        text(nf(b.val,1,2)+' mA', bx+barW/2, baseY-bh-4);
-        textStyle(NORMAL);
+        // Value on bar
+        fill(40);
+        textSize(11);
+        textAlign(CENTER, BOTTOM);
+        let vy = bh >= 0 ? baseY - bh - 3 : baseY - bh + 14;
+        text(nf(b.val, 1, 2) + ' mA', bx + barW / 2, vy);
 
-        // Label below axis
-        fill(b.col); textSize(11); textStyle(BOLD); textAlign(CENTER, TOP);
-        text(b.label, bx+barW/2, baseY+4);
-        textStyle(NORMAL);
-        fill(colTextLight); textSize(9); textAlign(CENTER, TOP);
-        text(b.sub, bx+barW/2, baseY+17);
+        // Label below
+        fill(60);
+        textSize(10);
+        textAlign(CENTER, TOP);
+        text(b.label, bx + barW / 2, baseY + 3);
+        fill(120);
+        textSize(8);
+        text(b.sub, bx + barW / 2, baseY + 15);
     }
 
-    // Plus and equals signs between bars
-    fill(colText); textSize(16); textAlign(CENTER, CENTER);
-    const midY = baseY - max(I_v, I_i, I_total)*scale/2 - 4;
-    text('+', startX+barW+gap/2,   midY);
-    text('=', startX+barW*2+gap*1.5, midY);
+    // Plus and equals signs
+    fill(80);
+    textSize(18);
+    textAlign(CENTER, CENTER);
+    text('+', startX + barW + gap / 2, baseY - totalH / 3);
+    text('=', startX + barW * 2 + gap * 1.5, baseY - totalH / 3);
 }
 
-// ── Section divider ───────────────────────────────────────────────────────────
+function drawSliders() {
+    for (let i = 0; i < sliders.length; i++) {
+        let s = sliders[i];
+        let y = s.y;
 
-function drawSectionDivider() {
-    stroke(colBorder); strokeWeight(1);
-    line(0, controlsY, canvasWidth, controlsY);
-}
+        noStroke();
+        fill(40);
+        textSize(12);
+        textAlign(RIGHT, CENTER);
+        text(s.label + ':', s.x - 8, y);
 
-// ── Left panel (sliders) ──────────────────────────────────────────────────────
+        stroke(180);
+        strokeWeight(2);
+        line(s.x, y, s.x + s.w, y);
 
-function drawLeftPanel() {
-    const panelH = canvasHeight - controlsY - margin;
-    const py     = controlsY + floor(margin/2);
-    fill(colPanel); stroke(colBorder); strokeWeight(1);
-    rect(leftPanelX, py, leftPanelW, panelH-floor(margin/2), 6);
-    fill(colPanelHead); noStroke();
-    rect(leftPanelX, py, leftPanelW, 28, [6,6,0,0]);
-    fill(colText); textSize(12); textStyle(BOLD); textAlign(LEFT, CENTER);
-    text('Parameters', leftPanelX+10, py+14);
-    textStyle(NORMAL);
+        let t = (s.val - s.min) / (s.max - s.min);
+        let tx = s.x + t * s.w;
 
-    sliders.forEach(s => drawOneSlider(s));
-}
+        stroke(COL_BTN);
+        strokeWeight(3);
+        line(s.x, y, tx, y);
 
-function drawOneSlider(s) {
-    const trackY = s.y + 10;
-    const frac   = (s.val-s.min) / (s.max-s.min);
-    const thumbX = s.trackX + frac*s.trackW;
+        fill(COL_BTN);
+        noStroke();
+        ellipse(tx, y, 14, 14);
 
-    noStroke(); fill(colText);
-    textSize(12); textStyle(BOLD); textAlign(LEFT, CENTER);
-    text(s.label, leftPanelX+8, s.y);
-    textStyle(NORMAL);
-    fill(colTextLight); textSize(10); textAlign(LEFT, CENTER);
-    text(s.unit, leftPanelX+LABEL_W+INPUT_W+6, s.y);
-    stroke(colSliderTrack); strokeWeight(3);
-    line(s.trackX, trackY, s.trackX+s.trackW, trackY);
-    fill(colBtnBg); noStroke();
-    ellipse(thumbX, trackY, 14, 14);
-}
-
-// ── Right panel (explanation) ─────────────────────────────────────────────────
-
-function drawRightPanel() {
-    const panelH = canvasHeight - controlsY - margin;
-    const py     = controlsY + floor(margin/2);
-    fill(colPanel); stroke(colBorder); strokeWeight(1);
-    rect(rightPanelX, py, rightPanelW, panelH-floor(margin/2), 6);
-    fill(colPanelHead); noStroke();
-    rect(rightPanelX, py, rightPanelW, 28, [6,6,0,0]);
-    fill(colText); textSize(12); textStyle(BOLD); textAlign(LEFT, CENTER);
-    text('Superposition', rightPanelX+10, py+14);
-    textStyle(NORMAL);
-
-    const cx = rightPanelX + 10;
-    const cw = rightPanelW - 20;
-    let y    = py + 36;
-
-    // Principle card
-    drawExpCard(cx, y, cw, 52,
-        'Principle',
-        'Total response = \u03A3 (individual responses)',
-        'Applies to any linear circuit with multiple independent sources.',
-        colBlueBg, colAccent);
-    y += 60;
-
-    // Mode-specific card
-    if (viewMode === 0) {
-        drawExpCard(cx, y, cw, 52,
-            'Current Mode: Both sources active',
-            'I = Vs/(R1+R3) + Is\u00B7R3/(R1+R3)',
-            'Both Vs and Is contribute simultaneously.',
-            colBlueBg, colAccent);
-    } else if (viewMode === 1) {
-        drawExpCard(cx, y, cw, 66,
-            'Step 1: V-source only (Is \u2192 open)',
-            "I\u2032 = Vs / (R1 + R3)",
-            "I\u2032 = "+Vs.toFixed(1)+" / ("
-                +R1.toFixed(1)+" + "+R3.toFixed(1)+") = "
-                +nf(I_v,1,3)+" mA",
-            'R2 carries no current; Is is open-circuited.',
-            colRedBg, COL_VS);
-    } else if (viewMode === 2) {
-        drawExpCard(cx, y, cw, 66,
-            'Step 2: I-source only (Vs \u2192 short)',
-            "I\u2033 = Is \u00B7 R3 / (R1 + R3)",
-            "I\u2033 = "+Is.toFixed(1)+"\u00B7"+R3.toFixed(1)
-                +" / ("+R1.toFixed(1)+"+"+R3.toFixed(1)+") = "
-                +nf(I_i,1,3)+" mA",
-            'Vs short-circuits: R1 and R3 share Is via a current divider.',
-            colGreenBg, COL_IS);
-    } else {
-        drawExpCard(cx, y, cw, 66,
-            'Combined: Superposition sum',
-            "I_total = I\u2032 + I\u2033",
-            nf(I_v,1,3)+" + "+nf(I_i,1,3)+" = "+nf(I_total,1,3)+" mA",
-            'Note: R2 does not affect I through R1 in this topology.',
-            colPurpleBg, COL_ITOT);
+        fill(80);
+        textSize(10);
+        textAlign(LEFT, CENTER);
+        text(nf(s.val, 1, 1) + ' ' + s.unit, s.x + s.w + 6, y);
     }
 }
 
-function drawExpCard(x, y, w, h, title, formula, detail, bgCol, accCol, extra) {
-    fill(bgCol); stroke(colBorder); strokeWeight(1);
-    rect(x, y, w, h, 5);
-    noStroke(); fill(accCol[0], accCol[1], accCol[2]);
-    rect(x, y, 4, h, [5,0,0,5]);
-    fill(accCol); textSize(9.5); textStyle(BOLD); textAlign(LEFT, TOP);
-    text(title, x+10, y+6);
-    fill(colText); textSize(11); textStyle(BOLD);
-    text(formula, x+10, y+20);
-    fill(colTextLight); textSize(9.5); textStyle(NORMAL);
-    text(detail, x+10, y+35);
-    if (extra) { fill(colTextLight); textSize(9); textStyle(ITALIC); text(extra, x+10, y+49); }
-    textStyle(NORMAL);
+function isOver(btn) {
+    return mouseX >= btn.x && mouseX <= btn.x + btn.w &&
+           mouseY >= btn.y && mouseY <= btn.y + btn.h;
 }
-
-// ── Interaction ───────────────────────────────────────────────────────────────
 
 function mousePressed() {
-    for (const b of segBtns) {
-        if (mouseX>=b.x && mouseX<=b.x+b.w && mouseY>=b.y && mouseY<=b.y+b.h) {
-            viewMode = b.mode; return;
+    // View buttons
+    for (let b of viewBtns) {
+        if (isOver(b)) {
+            viewMode = b.mode;
+            return;
         }
     }
-    for (let i=0; i<sliders.length; i++) {
-        const s = sliders[i];
-        const tx = s.trackX + (s.val-s.min)/(s.max-s.min)*s.trackW;
-        if (dist(mouseX, mouseY, tx, s.y+10) < 14) { activeSlider=i; return; }
+
+    // Sliders
+    for (let i = 0; i < sliders.length; i++) {
+        let s = sliders[i];
+        let t = (s.val - s.min) / (s.max - s.min);
+        let tx = s.x + t * s.w;
+        if (dist(mouseX, mouseY, tx, s.y) < 12) {
+            draggingSlider = i;
+            return;
+        }
     }
 }
 
 function mouseDragged() {
-    if (activeSlider < 0) return;
-    const s = sliders[activeSlider];
-    const frac = constrain((mouseX-s.trackX)/s.trackW, 0, 1);
-    s.val = Math.round((s.min + frac*(s.max-s.min))*10)/10;
-    s.val = constrain(s.val, s.min, s.max);
-    s.setter(s.val);
-    s.inp.value(s.fmt(s.val));
-    solve();
+    if (draggingSlider >= 0) {
+        let s = sliders[draggingSlider];
+        let t = constrain((mouseX - s.x) / s.w, 0, 1);
+        let step = 0.1;
+        s.val = round((s.min + t * (s.max - s.min)) / step) * step;
+        s.val = constrain(s.val, s.min, s.max);
+
+        Vs = sliders[0].val;
+        Is = sliders[1].val;
+        R1 = sliders[2].val;
+        R2 = sliders[3].val;
+        R3 = sliders[4].val;
+
+        solve();
+    }
 }
 
-function mouseReleased() { activeSlider = -1; }
+function mouseReleased() {
+    draggingSlider = -1;
+}
+
+function windowResized() {
+    updateCanvasSize();
+    canvasHeight = drawHeight + chartHeight + controlHeight;
+    resizeCanvas(containerWidth, canvasHeight);
+    initLayout();
+}

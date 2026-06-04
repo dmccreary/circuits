@@ -18,14 +18,11 @@
         <link rel="prev" href="../chapters/16-laboratory-techniques/quiz/">
       
       
-        <link rel="next" href="audio-amp-chain/">
-      
-      
-        
+        <link rel="next" href="audio-signal-chain/">
       
       
       <link rel="icon" href="../img/favicon.ico">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.43">
     
     
       
@@ -33,10 +30,10 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.0253249f.min.css">
       
         
-        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
       
       
 
@@ -57,6 +54,10 @@
     
       <link rel="stylesheet" href="../css/extra.css">
     
+      <link rel="stylesheet" href="../css/mascots.css">
+    
+      <link rel="stylesheet" href="../css/mascot.css">
+    
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
     
     <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
@@ -73,6 +74,7 @@
     <script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
   
 
+    
     
     
   </head>
@@ -110,8 +112,7 @@
   <nav class="md-header__inner md-grid" aria-label="Header">
     <a href=".." title="Circuits 1" class="md-header__button md-logo" aria-label="Circuits 1" data-md-component="logo">
       
-  
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6 4h12v1h3v2h-3v2h3v2h-3v2h3v2h-3v2h3v2h-3v1H6v-1H3v-2h3v-2H3v-2h3v-2H3V9h3V7H3V5h3zm5 11v3h1v-3zm2 0v3h1v-3zm2 0v3h1v-3z"/></svg>
+  <img src="../img/mascots/neutral.png" alt="logo">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -152,13 +153,11 @@
     
     
     
-      
-      
-        <label class="md-header__button md-icon" for="__search">
-          
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
-        </label>
-        <div class="md-search" data-md-component="search" role="dialog">
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
   <label class="md-search__overlay" for="__search"></label>
   <div class="md-search__inner" role="search">
     <form class="md-search__form" name="search">
@@ -190,14 +189,13 @@
     </div>
   </div>
 </div>
-      
     
     
       <div class="md-header__source">
         <a href="https://github.com/dmccreary/circuits" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
   </div>
   <div class="md-source__repository">
     GitHub Repo
@@ -223,11 +221,9 @@
   
   
   
-  
     <li class="md-tabs__item">
       <a href=".." class="md-tabs__link">
         
-  
   
     
   
@@ -242,32 +238,11 @@
   
   
   
-  
-    <li class="md-tabs__item">
-      <a href="../ai-tutor/" class="md-tabs__link">
-        
-  
-  
-    
-  
-  AI Tutor
-
-      </a>
-    </li>
-  
-
-      
-        
-  
-  
-  
-  
     
     
       <li class="md-tabs__item">
         <a href="../chapters/" class="md-tabs__link">
           
-  
   
     
   
@@ -282,7 +257,6 @@
         
   
   
-  
     
   
   
@@ -291,7 +265,6 @@
       <li class="md-tabs__item md-tabs__item--active">
         <a href="./" class="md-tabs__link">
           
-  
   
     
   
@@ -307,13 +280,11 @@
   
   
   
-  
     
     
       <li class="md-tabs__item">
         <a href="../learning-graph/" class="md-tabs__link">
           
-  
   
     
   
@@ -329,13 +300,11 @@
   
   
   
-  
     
     
       <li class="md-tabs__item">
         <a href="../prompts/" class="md-tabs__link">
           
-  
   
     
   
@@ -351,13 +320,11 @@
   
   
   
-  
     
     
       <li class="md-tabs__item">
         <a href="../faq/" class="md-tabs__link">
           
-  
   
     
   
@@ -373,11 +340,9 @@
   
   
   
-  
     <li class="md-tabs__item">
       <a href="../glossary/" class="md-tabs__link">
         
-  
   
     
   
@@ -392,13 +357,11 @@
   
   
   
-  
     
     
       <li class="md-tabs__item">
         <a href="../about/" class="md-tabs__link">
           
-  
   
     
   
@@ -438,8 +401,7 @@
   <label class="md-nav__title" for="__drawer">
     <a href=".." title="Circuits 1" class="md-nav__button md-logo" aria-label="Circuits 1" data-md-component="logo">
       
-  
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6 4h12v1h3v2h-3v2h3v2h-3v2h3v2h-3v2h3v2h-3v1H6v-1H3v-2h3v-2H3v-2h3v-2H3V9h3V7H3V5h3zm5 11v3h1v-3zm2 0v3h1v-3zm2 0v3h1v-3z"/></svg>
+  <img src="../img/mascots/neutral.png" alt="logo">
 
     </a>
     Circuits 1
@@ -449,7 +411,7 @@
       <a href="https://github.com/dmccreary/circuits" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
   </div>
   <div class="md-source__repository">
     GitHub Repo
@@ -469,43 +431,9 @@
       <a href=".." class="md-nav__link">
         
   
-  
   <span class="md-ellipsis">
-    
-  
     Cover
-  
-
-    
   </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../ai-tutor/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    AI Tutor
-  
-
-    
-  </span>
-  
   
 
       </a>
@@ -560,7 +488,6 @@
       
     
     
-    
       
       
         
@@ -577,20 +504,12 @@
         
   
   
-  
     <a href="../chapters/" class="md-nav__link">
       
   
-  
   <span class="md-ellipsis">
-    
-  
     Chapters
-  
-
-    
   </span>
-  
   
 
       
@@ -620,99 +539,173 @@
         
       
         
-      
+          
         
       
         
-      
+          
         
       
         
-      
+          
         
       
         
-      
+          
         
       
         
-      
+          
         
       
+        
+          
         
       
         
+          
+        
       
         
       
+        
+          
         
       
         
+          
+        
       
+        
+          
         
       
         
+          
+        
       
+        
+          
         
       
         
+          
+        
       
+        
+          
         
       
         
+          
+        
       
+        
+          
         
       
         
+          
+        
       
+        
+          
         
       
         
+          
+        
       
+        
+          
         
       
         
+          
+        
       
+        
+          
         
       
         
+          
+        
       
+        
+          
         
       
         
+          
+        
       
+        
+          
         
       
         
+          
+        
       
+        
+          
         
       
         
+          
+        
       
+        
+          
         
       
         
+          
+        
       
+        
+          
         
       
         
+          
+        
       
+        
+          
         
       
         
+          
+        
       
+        
+          
         
       
         
+          
+        
       
+        
+          
         
       
         
+          
+        
       
+        
+          
         
       
         
+          
+        
       
+        
+          
         
       
         
@@ -730,54 +723,99 @@
         
       
         
+          
+        
       
+        
+          
         
       
         
+          
+        
       
+        
+          
         
       
         
+          
+        
       
+        
+          
         
       
         
+          
+        
       
+        
+          
         
       
         
+          
+        
       
+        
+          
         
       
         
+          
+        
       
+        
+          
         
       
         
+          
+        
       
+        
+          
         
       
         
+          
+        
       
+        
+          
         
       
         
+          
+        
       
+        
+          
         
       
         
+          
+        
       
+        
+          
         
       
         
+          
+        
       
         
       
         
+          
+        
       
+        
+          
         
       
-    
     
     
       
@@ -795,42 +833,32 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
         
+          
           
           <div class="md-nav__link md-nav__container">
             <a href="./" class="md-nav__link md-nav__link--active">
               
   
-  
   <span class="md-ellipsis">
-    
-  
     MicroSims
-  
-
-    
   </span>
-  
   
 
             </a>
             
               
-              <label class="md-nav__link md-nav__link--active" for="__nav_4" id="__nav_4_label" tabindex="">
+              <label class="md-nav__link md-nav__link--active" for="__nav_3" id="__nav_3_label" tabindex="">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_4">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
             <span class="md-nav__icon md-icon"></span>
-            
-  
-    MicroSims
-  
-
+            MicroSims
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
             
@@ -843,47 +871,12 @@
   
   
     <li class="md-nav__item">
-      <a href="audio-amp-chain/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Audio Amplifier Chain
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="audio-signal-chain/" class="md-nav__link">
         
   
-  
   <span class="md-ellipsis">
-    
-  
     Audio Signal Chain
-  
-
-    
   </span>
-  
   
 
       </a>
@@ -902,16 +895,9 @@
       <a href="background-grid/" class="md-nav__link">
         
   
-  
   <span class="md-ellipsis">
-    
-  
     Background Grid
-  
-
-    
   </span>
-  
   
 
       </a>
@@ -930,16 +916,9 @@
       <a href="bandwidth-selectivity/" class="md-nav__link">
         
   
-  
   <span class="md-ellipsis">
-    
-  
     Bandwidth and Selectivity
-  
-
-    
   </span>
-  
   
 
       </a>
@@ -958,16 +937,9 @@
       <a href="capacitor-charging/" class="md-nav__link">
         
   
-  
   <span class="md-ellipsis">
-    
-  
     Capacitor Charging
-  
-
-    
   </span>
-  
   
 
       </a>
@@ -986,16 +958,9 @@
       <a href="capacitor-combinations/" class="md-nav__link">
         
   
-  
   <span class="md-ellipsis">
-    
-  
     Capacitor Combinations
-  
-
-    
   </span>
-  
   
 
       </a>
@@ -1014,16 +979,9 @@
       <a href="circuit-symbol-flashcards/" class="md-nav__link">
         
   
-  
   <span class="md-ellipsis">
-    
-  
     Circuit Symbol Flashcards
-  
-
-    
   </span>
-  
   
 
       </a>
@@ -1042,16 +1000,9 @@
       <a href="current-meter/" class="md-nav__link">
         
   
-  
   <span class="md-ellipsis">
-    
-  
     Current Meter
-  
-
-    
   </span>
-  
   
 
       </a>
@@ -1070,44 +1021,9 @@
       <a href="dc-circuit/circuits-v2/" class="md-nav__link">
         
   
-  
   <span class="md-ellipsis">
-    
-  
     DC Circuit V2
-  
-
-    
   </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="concept-map-ch3/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Chapter 3 Concept Map
-  
-
-    
-  </span>
-  
   
 
       </a>
@@ -1126,44 +1042,9 @@
       <a href="decibel-scale/" class="md-nav__link">
         
   
-  
   <span class="md-ellipsis">
-    
-  
     Decibel Scale
-  
-
-    
   </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="distortion-types/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Distortion Types
-  
-
-    
-  </span>
-  
   
 
       </a>
@@ -1182,16 +1063,9 @@
       <a href="exponential-properties/" class="md-nav__link">
         
   
-  
   <span class="md-ellipsis">
-    
-  
     Exponential Properties
-  
-
-    
   </span>
-  
   
 
       </a>
@@ -1210,16 +1084,9 @@
       <a href="filter-frequency-response/" class="md-nav__link">
         
   
-  
   <span class="md-ellipsis">
-    
-  
     Filter Frequency Response
-  
-
-    
   </span>
-  
   
 
       </a>
@@ -1238,44 +1105,9 @@
       <a href="first-order-filters/" class="md-nav__link">
         
   
-  
   <span class="md-ellipsis">
-    
-  
     First-Order Filters
-  
-
-    
   </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="fourier-series-builder/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Fourier Series Builder
-  
-
-    
-  </span>
-  
   
 
       </a>
@@ -1294,44 +1126,9 @@
       <a href="ground-symbols/" class="md-nav__link">
         
   
-  
   <span class="md-ellipsis">
-    
-  
     Ground Symbols
-  
-
-    
   </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="harmonic-explorer/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Harmonic Content Explorer
-  
-
-    
-  </span>
-  
   
 
       </a>
@@ -1350,16 +1147,9 @@
       <a href="iv-characteristics/" class="md-nav__link">
         
   
-  
   <span class="md-ellipsis">
-    
-  
     I-V Characteristics
-  
-
-    
   </span>
-  
   
 
       </a>
@@ -1378,44 +1168,9 @@
       <a href="impedance-triangle/" class="md-nav__link">
         
   
-  
   <span class="md-ellipsis">
-    
-  
     Impedance Triangle
-  
-
-    
   </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="opamp-inverting/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Inverting Op-Amp Amplifier
-  
-
-    
-  </span>
-  
   
 
       </a>
@@ -1434,16 +1189,9 @@
       <a href="initial-final-conditions/" class="md-nav__link">
         
   
-  
   <span class="md-ellipsis">
-    
-  
     Initial and Final Conditions
-  
-
-    
   </span>
-  
   
 
       </a>
@@ -1462,16 +1210,9 @@
       <a href="kirchhoffs-law/" class="md-nav__link">
         
   
-  
   <span class="md-ellipsis">
-    
-  
     Kirchhoff's Laws
-  
-
-    
   </span>
-  
   
 
       </a>
@@ -1490,16 +1231,9 @@
       <a href="learning-graph/" class="md-nav__link">
         
   
-  
   <span class="md-ellipsis">
-    
-  
     Learning Graph
-  
-
-    
   </span>
-  
   
 
       </a>
@@ -1518,16 +1252,9 @@
       <a href="graph-viewer/" class="md-nav__link">
         
   
-  
   <span class="md-ellipsis">
-    
-  
     Learning Graph Viewer
-  
-
-    
   </span>
-  
   
 
       </a>
@@ -1546,16 +1273,9 @@
       <a href="mutual-inductance/" class="md-nav__link">
         
   
-  
   <span class="md-ellipsis">
-    
-  
     Mutual Inductance
-  
-
-    
   </span>
-  
   
 
       </a>
@@ -1574,16 +1294,9 @@
       <a href="natural-frequency-calculator/" class="md-nav__link">
         
   
-  
   <span class="md-ellipsis">
-    
-  
     Natural Frequency Calculator
-  
-
-    
   </span>
-  
   
 
       </a>
@@ -1602,16 +1315,9 @@
       <a href="ohms-triangle/" class="md-nav__link">
         
   
-  
   <span class="md-ellipsis">
-    
-  
     Ohm's Law Triangle
-  
-
-    
   </span>
-  
   
 
       </a>
@@ -1630,16 +1336,9 @@
       <a href="opamp-configurations/" class="md-nav__link">
         
   
-  
   <span class="md-ellipsis">
-    
-  
     Op-Amp Configurations
-  
-
-    
   </span>
-  
   
 
       </a>
@@ -1658,16 +1357,9 @@
       <a href="opamp-golden-rules/" class="md-nav__link">
         
   
-  
   <span class="md-ellipsis">
-    
-  
     Op-Amp Golden Rules
-  
-
-    
   </span>
-  
   
 
       </a>
@@ -1686,16 +1378,9 @@
       <a href="oscilloscope/" class="md-nav__link">
         
   
-  
   <span class="md-ellipsis">
-    
-  
     Oscilloscope Guide
-  
-
-    
   </span>
-  
   
 
       </a>
@@ -1714,16 +1399,9 @@
       <a href="parallel-circuit/" class="md-nav__link">
         
   
-  
   <span class="md-ellipsis">
-    
-  
     Parallel Circuit Analysis
-  
-
-    
   </span>
-  
   
 
       </a>
@@ -1742,16 +1420,9 @@
       <a href="parallel-plate-capacitor/" class="md-nav__link">
         
   
-  
   <span class="md-ellipsis">
-    
-  
     Parallel Plate Capacitor
-  
-
-    
   </span>
-  
   
 
       </a>
@@ -1770,16 +1441,9 @@
       <a href="phasor-addition/" class="md-nav__link">
         
   
-  
   <span class="md-ellipsis">
-    
-  
     Phasor Addition
-  
-
-    
   </span>
-  
   
 
       </a>
@@ -1798,16 +1462,9 @@
       <a href="phasor-circuit-solver/" class="md-nav__link">
         
   
-  
   <span class="md-ellipsis">
-    
-  
     Phasor Circuit Solver
-  
-
-    
   </span>
-  
   
 
       </a>
@@ -1826,16 +1483,9 @@
       <a href="phasor-transform/" class="md-nav__link">
         
   
-  
   <span class="md-ellipsis">
-    
-  
     Phasor Transformation
-  
-
-    
   </span>
-  
   
 
       </a>
@@ -1854,16 +1504,9 @@
       <a href="power-triangle/" class="md-nav__link">
         
   
-  
   <span class="md-ellipsis">
-    
-  
     Power Triangle
-  
-
-    
   </span>
-  
   
 
       </a>
@@ -1882,72 +1525,9 @@
       <a href="rc-charging/" class="md-nav__link">
         
   
-  
   <span class="md-ellipsis">
-    
-  
     RC Charging
-  
-
-    
   </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="rc-discharging/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    RC Discharging
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="time-constant/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    RC Time Constant
-  
-
-    
-  </span>
-  
   
 
       </a>
@@ -1966,16 +1546,9 @@
       <a href="rc-rl-applications/" class="md-nav__link">
         
   
-  
   <span class="md-ellipsis">
-    
-  
     RC/RL Applications
-  
-
-    
   </span>
-  
   
 
       </a>
@@ -1994,16 +1567,9 @@
       <a href="reactance-frequency/" class="md-nav__link">
         
   
-  
   <span class="md-ellipsis">
-    
-  
     Reactance vs Frequency
-  
-
-    
   </span>
-  
   
 
       </a>
@@ -2022,16 +1588,9 @@
       <a href="real-capacitor-model/" class="md-nav__link">
         
   
-  
   <span class="md-ellipsis">
-    
-  
     Real Capacitor Model
-  
-
-    
   </span>
-  
   
 
       </a>
@@ -2050,16 +1609,9 @@
       <a href="resonance-comparison/" class="md-nav__link">
         
   
-  
   <span class="md-ellipsis">
-    
-  
     Resonance Comparison
-  
-
-    
   </span>
-  
   
 
       </a>
@@ -2078,16 +1630,9 @@
       <a href="rl-charging/" class="md-nav__link">
         
   
-  
   <span class="md-ellipsis">
-    
-  
     RL Energizing
-  
-
-    
   </span>
-  
   
 
       </a>
@@ -2106,16 +1651,9 @@
       <a href="rlc-circuit/" class="md-nav__link">
         
   
-  
   <span class="md-ellipsis">
-    
-  
     RLC Transient Response
-  
-
-    
   </span>
-  
   
 
       </a>
@@ -2134,16 +1672,9 @@
       <a href="rms-calculation/" class="md-nav__link">
         
   
-  
   <span class="md-ellipsis">
-    
-  
     RMS Calculation
-  
-
-    
   </span>
-  
   
 
       </a>
@@ -2162,16 +1693,9 @@
       <a href="second-order-filter/" class="md-nav__link">
         
   
-  
   <span class="md-ellipsis">
-    
-  
     Second-Order Filter Designer
-  
-
-    
   </span>
-  
   
 
       </a>
@@ -2190,16 +1714,9 @@
       <a href="series-circuit/" class="md-nav__link">
         
   
-  
   <span class="md-ellipsis">
-    
-  
     Series Circuit Analysis
-  
-
-    
   </span>
-  
   
 
       </a>
@@ -2218,16 +1735,9 @@
       <a href="series-parallel-circuit/" class="md-nav__link">
         
   
-  
   <span class="md-ellipsis">
-    
-  
     Series-Parallel Circuit Analysis
-  
-
-    
   </span>
-  
   
 
       </a>
@@ -2246,16 +1756,156 @@
       <a href="signal-parameters/" class="md-nav__link">
         
   
-  
   <span class="md-ellipsis">
-    
-  
     Signal Parameters
-  
-
-    
   </span>
   
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="sinusoid-anatomy/index.md" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Sinusoidal Waveform Anatomy
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="phase-relationship/index.md" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Phase Relationship Visualizer
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="dc-ac-separator/index.md" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    DC and AC Component Separator
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="time-frequency-domain/index.md" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Time Domain vs Frequency Domain
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="complex-number-viz/index.md" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Complex Number Visualizer
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="euler-circle/index.md" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Euler's Formula Unit Circle
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="gain-db-converter/index.md" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Gain and Decibel Converter
+  </span>
   
 
       </a>
@@ -2274,44 +1924,9 @@
       <a href="dc-circuit/" class="md-nav__link">
         
   
-  
   <span class="md-ellipsis">
-    
-  
     Simple DC Circuit
-  
-
-    
   </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="snr-noise-floor/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    SNR and Noise Floor
-  
-
-    
-  </span>
-  
   
 
       </a>
@@ -2330,44 +1945,9 @@
       <a href="thevenin-concept/" class="md-nav__link">
         
   
-  
   <span class="md-ellipsis">
-    
-  
     Thevenin Equivalent Circuit
-  
-
-    
   </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="time-to-frequency/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Time Domain to Frequency Domain
-  
-
-    
-  </span>
-  
   
 
       </a>
@@ -2386,16 +1966,9 @@
       <a href="voltage-divider/" class="md-nav__link">
         
   
-  
   <span class="md-ellipsis">
-    
-  
     Voltage Divider Calculator
-  
-
-    
   </span>
-  
   
 
       </a>
@@ -2414,16 +1987,9 @@
       <a href="water-flow-analogy/" class="md-nav__link">
         
   
-  
   <span class="md-ellipsis">
-    
-  
     Water Flow Analogy
-  
-
-    
   </span>
-  
   
 
       </a>
@@ -2442,44 +2008,9 @@
       <a href="node-branch-trainer/" class="md-nav__link">
         
   
-  
   <span class="md-ellipsis">
-    
-  
     Circuit Node & Branch Identifier
-  
-
-    
   </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="nodal-analysis-steps/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Nodal Analysis Step-Through
-  
-
-    
-  </span>
-  
   
 
       </a>
@@ -2498,16 +2029,9 @@
       <a href="power-dissipation-calc/" class="md-nav__link">
         
   
-  
   <span class="md-ellipsis">
-    
-  
     Power Dissipation Calculator
-  
-
-    
   </span>
-  
   
 
       </a>
@@ -2526,16 +2050,9 @@
       <a href="resistor-physical-structure/" class="md-nav__link">
         
   
-  
   <span class="md-ellipsis">
-    
-  
     Resistor Physical Structure
-  
-
-    
   </span>
-  
   
 
       </a>
@@ -2554,16 +2071,9 @@
       <a href="ohms-law-calculator/" class="md-nav__link">
         
   
-  
   <span class="md-ellipsis">
-    
-  
     Ohm's Law Calculator
-  
-
-    
   </span>
-  
   
 
       </a>
@@ -2582,16 +2092,9 @@
       <a href="resistor-color-code/" class="md-nav__link">
         
   
-  
   <span class="md-ellipsis">
-    
-  
     Resistor Color Code Reader
-  
-
-    
   </span>
-  
   
 
       </a>
@@ -2610,16 +2113,9 @@
       <a href="potentiometer/" class="md-nav__link">
         
   
-  
   <span class="md-ellipsis">
-    
-  
     Potentiometer Voltage Divider
-  
-
-    
   </span>
-  
   
 
       </a>
@@ -2638,16 +2134,9 @@
       <a href="linear-vs-nonlinear/" class="md-nav__link">
         
   
-  
   <span class="md-ellipsis">
-    
-  
     Linear vs Nonlinear I-V
-  
-
-    
   </span>
-  
   
 
       </a>
@@ -2666,16 +2155,9 @@
       <a href="kcl-node-viz/" class="md-nav__link">
         
   
-  
   <span class="md-ellipsis">
-    
-  
     KCL Node Visualization
-  
-
-    
   </span>
-  
   
 
       </a>
@@ -2694,16 +2176,9 @@
       <a href="kvl-loop-walkthrough/" class="md-nav__link">
         
   
-  
   <span class="md-ellipsis">
-    
-  
     KVL Loop Walkthrough
-  
-
-    
   </span>
-  
   
 
       </a>
@@ -2722,16 +2197,9 @@
       <a href="circuit-topology-explorer/" class="md-nav__link">
         
   
-  
   <span class="md-ellipsis">
-    
-  
     Circuit Topology Explorer
-  
-
-    
   </span>
-  
   
 
       </a>
@@ -2750,16 +2218,9 @@
       <a href="supernode-analysis/" class="md-nav__link">
         
   
-  
   <span class="md-ellipsis">
-    
-  
     Supernode Analysis
-  
-
-    
   </span>
-  
   
 
       </a>
@@ -2778,16 +2239,9 @@
       <a href="mesh-supermesh-compare/" class="md-nav__link">
         
   
-  
   <span class="md-ellipsis">
-    
-  
     Mesh vs Supermesh
-  
-
-    
   </span>
-  
   
 
       </a>
@@ -2806,16 +2260,9 @@
       <a href="superposition-demo/" class="md-nav__link">
         
   
-  
   <span class="md-ellipsis">
-    
-  
     Superposition Demonstrator
-  
-
-    
   </span>
-  
   
 
       </a>
@@ -2834,16 +2281,9 @@
       <a href="delta-wye-transform/" class="md-nav__link">
         
   
-  
   <span class="md-ellipsis">
-    
-  
     Delta-Wye Transform
-  
-
-    
   </span>
-  
   
 
       </a>
@@ -2862,16 +2302,9 @@
       <a href="circuit-simplification/" class="md-nav__link">
         
   
-  
   <span class="md-ellipsis">
-    
-  
     Circuit Simplification
-  
-
-    
   </span>
-  
   
 
       </a>
@@ -2890,44 +2323,9 @@
       <a href="matrix-equation-builder/" class="md-nav__link">
         
   
-  
   <span class="md-ellipsis">
-    
-  
     Matrix Equation Builder
-  
-
-    
   </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="mesh-analysis/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Mesh Analysis Step-Through
-  
-
-    
-  </span>
-  
   
 
       </a>
@@ -2946,16 +2344,9 @@
       <a href="../prompts/circuit-similarity/" class="md-nav__link">
         
   
-  
   <span class="md-ellipsis">
-    
-  
     Circuit Embeddings
-  
-
-    
   </span>
-  
   
 
       </a>
@@ -2974,16 +2365,9 @@
       <a href="../prompts/top-100-circuits/top-100-circuits/" class="md-nav__link">
         
   
-  
   <span class="md-ellipsis">
-    
-  
     Top 100 Circuits
-  
-
-    
   </span>
-  
   
 
       </a>
@@ -3002,16 +2386,9 @@
       <a href="circuit-similarity/" class="md-nav__link">
         
   
-  
   <span class="md-ellipsis">
-    
-  
     Circuit Similarity Map
-  
-
-    
   </span>
-  
   
 
       </a>
@@ -3030,16 +2407,9 @@
       <a href="templates/" class="md-nav__link">
         
   
-  
   <span class="md-ellipsis">
-    
-  
     A title under 60 characters.
-  
-
-    
   </span>
-  
   
 
       </a>
@@ -3084,7 +2454,8 @@
       
         
       
-    
+        
+      
     
     
       
@@ -3101,22 +2472,14 @@
     <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
       
         
-  
   
   
     <a href="../learning-graph/" class="md-nav__link">
       
   
-  
   <span class="md-ellipsis">
-    
-  
     Learning Graph
-  
-
-    
   </span>
-  
   
 
       
@@ -3150,7 +2513,7 @@
         
       
         
-      
+          
         
       
         
@@ -3162,7 +2525,21 @@
         
       
         
+          
+        
       
+        
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+          
         
       
         
@@ -3173,11 +2550,6 @@
       
         
       
-        
-      
-        
-      
-    
     
     
       
@@ -3194,22 +2566,14 @@
     <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
       
         
-  
   
   
     <a href="../prompts/" class="md-nav__link">
       
   
-  
   <span class="md-ellipsis">
-    
-  
     Prompts
-  
-
-    
   </span>
-  
   
 
       
@@ -3239,8 +2603,9 @@
         
       
         
+          
+        
       
-    
     
     
       
@@ -3259,20 +2624,12 @@
         
   
   
-  
     <a href="../faq/" class="md-nav__link">
       
   
-  
   <span class="md-ellipsis">
-    
-  
     FAQ
-  
-
-    
   </span>
-  
   
 
       
@@ -3296,16 +2653,9 @@
       <a href="../glossary/" class="md-nav__link">
         
   
-  
   <span class="md-ellipsis">
-    
-  
     Glossary
-  
-
-    
   </span>
-  
   
 
       </a>
@@ -3344,7 +2694,6 @@
       
     
     
-    
       
       
         
@@ -3361,20 +2710,12 @@
         
   
   
-  
     <a href="../about/" class="md-nav__link">
       
   
-  
   <span class="md-ellipsis">
-    
-  
     About
-  
-
-    
   </span>
-  
   
 
       
@@ -3398,66 +2739,12 @@
           
           
             <div class="md-content" data-md-component="content">
-              
-                
-
-  
-
-
-
-  
-
-
-  <nav class="md-path" aria-label="Navigation" >
-    <ol class="md-path__list">
-      
-        
-  
-  
-    <li class="md-path__item">
-      <a href=".." class="md-path__link">
-        
-  <span class="md-ellipsis">
-    Cover
-  </span>
-
-      </a>
-    </li>
-  
-
-      
-      
-        
-  
-  
-    
-    
-      <li class="md-path__item">
-        <a href="./" class="md-path__link">
-          
-  <span class="md-ellipsis">
-    MicroSims
-  </span>
-
-        </a>
-      </li>
-    
-  
-
-      
-    </ol>
-  </nav>
-
-              
               <article class="md-content__inner md-typeset">
                 
                   
-  
-
-
 
   
-    <a href="https://github.com/dmccreary/circuits/blob/master/docs/sims/index.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+    <a href="https://github.com/dmccreary/circuits/blob/master/docs/sims/index.md" title="Edit this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
     </a>
@@ -3471,277 +2758,277 @@
 <ul>
 <li>
 <p><strong><a href="animated-switches/">Animated Switches</a></strong></p>
-<p><img alt="Animated Switches" src="animated-switches/animated-switches.png" /></p>
+<p><img alt="Animated Switches" src="./animated-switches/animated-switches.png" /></p>
 <p>Interactive circuit simulation with horizontal and vertical switches controlling animated current flow.</p>
 </li>
 <li>
 <p><strong><a href="animated-wire/">Animated Wire</a></strong></p>
-<p><img alt="Animated Wire" src="animated-wire/animated-wire.png" /></p>
+<p><img alt="Animated Wire" src="./animated-wire/animated-wire.png" /></p>
 <p>Interactive simulation showing electron flow through a wire circuit with adjustable speed and spacing.</p>
 </li>
 <li>
 <p><strong><a href="audio-signal-chain/">Audio Signal Chain</a></strong></p>
-<p><img alt="Audio Signal Chain" src="audio-signal-chain/audio-signal-chain.png" /></p>
+<p><img alt="Audio Signal Chain" src="./audio-signal-chain/audio-signal-chain.png" /></p>
 <p>Interactive audio signal chain from microphone to speaker with adjustable preamp gain, tone controls, and volume. Color-coded meters show bass, mid, and treble levels with clipping indicators.</p>
 </li>
 <li>
 <p><strong><a href="background-grid/">Background Grid</a></strong></p>
-<p><img alt="Background Grid" src="background-grid/background-grid.png" /></p>
+<p><img alt="Background Grid" src="./background-grid/background-grid.png" /></p>
 <p>Reference demonstration of the background grid layout used in MicroSims, showing the plot region and controls region.</p>
 </li>
 <li>
 <p><strong><a href="bandwidth-selectivity/">Bandwidth and Selectivity</a></strong></p>
-<p><img alt="Bandwidth and Selectivity" src="bandwidth-selectivity/bandwidth-selectivity.png" /></p>
+<p><img alt="Bandwidth and Selectivity" src="./bandwidth-selectivity/bandwidth-selectivity.png" /></p>
 <p>Explore how the Q factor controls bandwidth and frequency selectivity by observing the bandpass frequency response curve, -3dB points, and passband shading.</p>
 </li>
 <li>
 <p><strong><a href="battery/">Battery</a></strong></p>
-<p><img alt="Battery" src="battery/battery.png" /></p>
+<p><img alt="Battery" src="./battery/battery.png" /></p>
 <p>Interactive simulation demonstrating battery symbols in horizontal and vertical orientations.</p>
 </li>
 <li>
 <p><strong><a href="dc-circuit/">Battery Circuit</a></strong></p>
-<p><img alt="Battery Circuit" src="dc-circuit/dc-circuit.png" /></p>
+<p><img alt="Battery Circuit" src="./dc-circuit/dc-circuit.png" /></p>
 <p>Simple animated DC circuit showing current flow when a switch is closed.</p>
 </li>
 <li>
 <p><strong><a href="capacitor/">Capacitor</a></strong></p>
-<p><img alt="Capacitor" src="capacitor/capacitor.png" /></p>
+<p><img alt="Capacitor" src="./capacitor/capacitor.png" /></p>
 <p>Interactive simulation showing capacitor symbols with different values in horizontal and vertical orientations.</p>
 </li>
 <li>
 <p><strong><a href="capacitor-charging/">Capacitor Charging</a></strong></p>
-<p><img alt="Capacitor Charging" src="capacitor-charging/capacitor-charging.png" /></p>
+<p><img alt="Capacitor Charging" src="./capacitor-charging/capacitor-charging.png" /></p>
 <p>Animate charge flow and observe voltage, current, and energy graphs during RC circuit charging and discharging.</p>
 </li>
 <li>
 <p><strong><a href="capacitor-combinations/">Capacitor Combinations</a></strong></p>
-<p><img alt="Capacitor Combinations" src="capacitor-combinations/capacitor-combinations.png" /></p>
+<p><img alt="Capacitor Combinations" src="./capacitor-combinations/capacitor-combinations.png" /></p>
 <p>Compare series and parallel capacitor combinations side-by-side with real-time equivalent capacitance calculation.</p>
 </li>
 <li>
 <p><strong><a href="circuit-lib/">Circuit Component Library</a></strong></p>
-<p><img alt="Circuit Component Library" src="circuit-lib/circuit-lib.png" /></p>
+<p><img alt="Circuit Component Library" src="./circuit-lib/circuit-lib.png" /></p>
 <p>Interactive test demonstration of the p5.js circuit component drawing library, showing all available symbols.</p>
 </li>
 <li>
 <p><strong><a href="circuit-similarity/">Circuit Similarity Map</a></strong></p>
-<p><img alt="Circuit Similarity Map" src="circuit-similarity/circuit-similarity.png" /></p>
+<p><img alt="Circuit Similarity Map" src="./circuit-similarity/circuit-similarity.png" /></p>
 <p>Interactive 2D visualization of electrical circuits based on content similarity using D3.js force-directed layout.</p>
 </li>
 <li>
 <p><strong><a href="circuit-symbol-flashcards/">Circuit Symbol Flashcards</a></strong></p>
-<p><img alt="Circuit Symbol Flashcards" src="circuit-symbol-flashcards/circuit-symbol-flashcards.png" /></p>
+<p><img alt="Circuit Symbol Flashcards" src="./circuit-symbol-flashcards/circuit-symbol-flashcards.png" /></p>
 <p>Interactive flashcard trainer for learning circuit schematic symbols with flip animation and quiz mode.</p>
 </li>
 <li>
 <p><strong><a href="current-meter/">Current Meter</a></strong></p>
-<p><img alt="Current Meter" src="current-meter/current-meter.png" /></p>
+<p><img alt="Current Meter" src="./current-meter/current-meter.png" /></p>
 <p>Animated current meter showing how current is measured in a simple circuit.</p>
 </li>
 <li>
 <p><strong><a href="decibel-scale/">Decibel Scale</a></strong></p>
-<p><img alt="Decibel Scale" src="decibel-scale/decibel-scale.png" /></p>
+<p><img alt="Decibel Scale" src="./decibel-scale/decibel-scale.png" /></p>
 <p>Interactive dB calculator converting between linear ratios and decibels, with a vertical audio SPL reference scale.</p>
 </li>
 <li>
 <p><strong><a href="diode/">Diode</a></strong></p>
-<p><img alt="Diode" src="diode/diode.png" /></p>
+<p><img alt="Diode" src="./diode/diode.png" /></p>
 <p>Demonstration of diode schematic symbol drawing in a circuit context.</p>
 </li>
 <li>
 <p><strong><a href="exponential-properties/">Exponential Properties</a></strong></p>
-<p><img alt="Exponential Properties" src="exponential-properties/exponential-properties.png" /></p>
+<p><img alt="Exponential Properties" src="./exponential-properties/exponential-properties.png" /></p>
 <p>Interactive MicroSim examining the tangent-line property, constant-ratio property, and derivative relationship of the exponential response.</p>
 </li>
 <li>
 <p><strong><a href="filter-frequency-response/">Filter Frequency Response</a></strong></p>
-<p><img alt="Filter Frequency Response" src="filter-frequency-response/filter-frequency-response.png" /></p>
+<p><img alt="Filter Frequency Response" src="./filter-frequency-response/filter-frequency-response.png" /></p>
 <p>Interactive Bode plot for RC low-pass and high-pass filters. Adjust R and C with sliders to see the cutoff frequency and magnitude response update in real time.</p>
 </li>
 <li>
 <p><strong><a href="first-order-filters/">First-Order Filters</a></strong></p>
-<p><img alt="First-Order Filters" src="first-order-filters/first-order-filters.png" /></p>
+<p><img alt="First-Order Filters" src="./first-order-filters/first-order-filters.png" /></p>
 <p>Compare RC and RL implementations of low-pass and high-pass first-order filters with adjustable cutoff frequency and resistance.</p>
 </li>
 <li>
 <p><strong><a href="ground-symbols/">Ground Symbols</a></strong></p>
-<p><img alt="Ground Symbols" src="ground-symbols/ground-symbols.png" /></p>
+<p><img alt="Ground Symbols" src="./ground-symbols/ground-symbols.png" /></p>
 <p>Interactive reference guide for identifying and distinguishing between different ground symbols used in circuit schematics.</p>
 </li>
 <li>
 <p><strong><a href="iv-characteristics/">I-V Characteristics</a></strong></p>
-<p><img alt="I-V Characteristics" src="iv-characteristics/iv-characteristics.png" /></p>
+<p><img alt="I-V Characteristics" src="./iv-characteristics/iv-characteristics.png" /></p>
 <p>Interactive chart comparing the linear I-V characteristic of a resistor with the nonlinear exponential characteristic of a diode.</p>
 </li>
 <li>
 <p><strong><a href="impedance-triangle/">Impedance Triangle</a></strong></p>
-<p><img alt="Impedance Triangle" src="impedance-triangle/impedance-triangle.png" /></p>
+<p><img alt="Impedance Triangle" src="./impedance-triangle/impedance-triangle.png" /></p>
 <p>Visualize the relationship between resistance, reactance, and impedance magnitude using an interactive right-triangle diagram with real-time calculations.</p>
 </li>
 <li>
 <p><strong><a href="inductor/">Inductor</a></strong></p>
-<p><img alt="Inductor" src="inductor/inductor.png" /></p>
+<p><img alt="Inductor" src="./inductor/inductor.png" /></p>
 <p>Interactive simulation showing inductor symbols with different values in horizontal and vertical orientations.</p>
 </li>
 <li>
 <p><strong><a href="initial-final-conditions/">Initial and Final Conditions</a></strong></p>
-<p><img alt="Initial and Final Conditions" src="initial-final-conditions/initial-final-conditions.png" /></p>
+<p><img alt="Initial and Final Conditions" src="./initial-final-conditions/initial-final-conditions.png" /></p>
 <p>Step-through MicroSim for finding V(0-), V(0+), V(∞), and τ in RC and RL switching circuits.</p>
 </li>
 <li>
 <p><strong><a href="kirchhoffs-law/">Kirchhoff's Laws</a></strong></p>
-<p><img alt="Kirchhoff's Laws" src="kirchhoffs-law/kirchhoffs-law.png" /></p>
+<p><img alt="Kirchhoff's Laws" src="./kirchhoffs-law/kirchhoffs-law.png" /></p>
 <p>Interactive MicroSim teaching KVL, KCL, mesh current method, and node voltage method using a live two-mesh circuit with adjustable components.</p>
 </li>
 <li>
 <p><strong><a href="learning-graph/">Learning Graph</a></strong></p>
-<p><img alt="Learning Graph" src="learning-graph/learning-graph.png" /></p>
+<p><img alt="Learning Graph" src="./learning-graph/learning-graph.png" /></p>
 <p>Interactive visualization of the Circuits 1 course learning graph showing concept dependencies.</p>
 </li>
 <li>
 <p><strong><a href="graph-viewer/">Learning Graph Viewer</a></strong></p>
-<p><img alt="Learning Graph Viewer" src="graph-viewer/graph-viewer.png" /></p>
+<p><img alt="Learning Graph Viewer" src="./graph-viewer/graph-viewer.png" /></p>
 <p>Open learning graph viewer for exploring concept relationships and dependencies across the course.</p>
 </li>
 <li>
 <p><strong><a href="light-bulb/">Light Bulb</a></strong></p>
-<p><img alt="Light Bulb" src="light-bulb/light-bulb.png" /></p>
+<p><img alt="Light Bulb" src="./light-bulb/light-bulb.png" /></p>
 <p>Interactive circuit simulation with a switch-controlled light bulb showing animated current flow.</p>
 </li>
 <li>
 <p><strong><a href="mutual-inductance/">Mutual Inductance</a></strong></p>
-<p><img alt="Mutual Inductance" src="mutual-inductance/mutual-inductance.png" /></p>
+<p><img alt="Mutual Inductance" src="./mutual-inductance/mutual-inductance.png" /></p>
 <p>Visualize magnetic field coupling between two inductors with animated field lines, coupling coefficient, and induced voltage.</p>
 </li>
 <li>
 <p><strong><a href="natural-frequency-calculator/">Natural Frequency Calculator</a></strong></p>
-<p><img alt="Natural Frequency Calculator" src="natural-frequency-calculator/natural-frequency-calculator.png" /></p>
+<p><img alt="Natural Frequency Calculator" src="./natural-frequency-calculator/natural-frequency-calculator.png" /></p>
 <p>Interactive calculator for the natural frequency of an LC circuit, showing the inverse square root relationship on a log-log plot.</p>
 </li>
 <li>
 <p><strong><a href="ohms-triangle/">Ohm's Law Triangle</a></strong></p>
-<p><img alt="Ohm's Law Triangle" src="ohms-triangle/ohms-triangle.png" /></p>
+<p><img alt="Ohm's Law Triangle" src="./ohms-triangle/ohms-triangle.png" /></p>
 <p>Interactive Ohm's Law triangle — click any section to solve for voltage, current, or resistance, with instant power calculation.</p>
 </li>
 <li>
 <p><strong><a href="opamp-configurations/">Op-Amp Configurations</a></strong></p>
-<p><img alt="Op-Amp Configurations" src="opamp-configurations/opamp-configurations.png" /></p>
+<p><img alt="Op-Amp Configurations" src="./opamp-configurations/opamp-configurations.png" /></p>
 <p>Interactive comparison of inverting amplifier, non-inverting amplifier, and voltage follower with real-time gain and waveform display.</p>
 </li>
 <li>
 <p><strong><a href="opamp-golden-rules/">Op-Amp Golden Rules</a></strong></p>
-<p><img alt="Op-Amp Golden Rules" src="opamp-golden-rules/opamp-golden-rules.png" /></p>
+<p><img alt="Op-Amp Golden Rules" src="./opamp-golden-rules/opamp-golden-rules.png" /></p>
 <p>Step through how negative feedback creates the two golden rules — virtual short and zero input current — in an inverting amplifier.</p>
 </li>
 <li>
 <p><strong><a href="oscilloscope/">Oscilloscope Guide</a></strong></p>
-<p><img alt="Oscilloscope Guide" src="oscilloscope/oscilloscope.png" /></p>
+<p><img alt="Oscilloscope Guide" src="./oscilloscope/oscilloscope.png" /></p>
 <p>Interactive oscilloscope simulator with graticule, triggered waveform display, V/div, T/div, trigger controls, and automatic measurements.</p>
 </li>
 <li>
 <p><strong><a href="parallel-plate-capacitor/">Parallel Plate Capacitor</a></strong></p>
-<p><img alt="Parallel Plate Capacitor" src="parallel-plate-capacitor/parallel-plate-capacitor.png" /></p>
+<p><img alt="Parallel Plate Capacitor" src="./parallel-plate-capacitor/parallel-plate-capacitor.png" /></p>
 <p>Interactive visualization of how plate area, separation, and dielectric material affect capacitance.</p>
 </li>
 <li>
 <p><strong><a href="phasor-addition/">Phasor Addition</a></strong></p>
-<p><img alt="Phasor Addition" src="phasor-addition/phasor-addition.png" /></p>
+<p><img alt="Phasor Addition" src="./phasor-addition/phasor-addition.png" /></p>
 <p>Add two sinusoidal signals graphically using phasor head-to-tail construction and verify the result against time-domain waveforms.</p>
 </li>
 <li>
 <p><strong><a href="phasor-circuit-solver/">Phasor Circuit Solver</a></strong></p>
-<p><img alt="Phasor Circuit Solver" src="phasor-circuit-solver/phasor-circuit-solver.png" /></p>
+<p><img alt="Phasor Circuit Solver" src="./phasor-circuit-solver/phasor-circuit-solver.png" /></p>
 <p>Solve a series RLC circuit step-by-step in the phasor domain, computing impedances, current, and component voltages with a live phasor diagram.</p>
 </li>
 <li>
 <p><strong><a href="phasor-transform/">Phasor Transformation</a></strong></p>
-<p><img alt="Phasor Transformation" src="phasor-transform/phasor-transform.png" /></p>
+<p><img alt="Phasor Transformation" src="./phasor-transform/phasor-transform.png" /></p>
 <p>Animate a rotating phasor on the complex plane and observe how its real-axis projection generates a time-domain sinusoid.</p>
 </li>
 <li>
 <p><strong><a href="power-triangle/">Power Triangle</a></strong></p>
-<p><img alt="Power Triangle" src="power-triangle/power-triangle.png" /></p>
+<p><img alt="Power Triangle" src="./power-triangle/power-triangle.png" /></p>
 <p>Interactive power triangle for learning power, voltage, current, and resistance relationships using P=VI and Ohm's Law.</p>
 </li>
 <li>
 <p><strong><a href="rc-charging/">RC Charging</a></strong></p>
-<p><img alt="RC Charging" src="rc-charging/rc-charging.png" /></p>
+<p><img alt="RC Charging" src="./rc-charging/rc-charging.png" /></p>
 <p>Interactive simulation of an RC charging circuit with animated electron flow and real-time voltage and current graphs.</p>
 </li>
 <li>
 <p><strong><a href="rc-rl-applications/">RC/RL Applications</a></strong></p>
-<p><img alt="RC/RL Applications" src="rc-rl-applications/rc-rl-applications.png" /></p>
+<p><img alt="RC/RL Applications" src="./rc-rl-applications/rc-rl-applications.png" /></p>
 <p>Interactive MicroSim exploring four practical RC/RL timing circuits — camera flash, 555 timer, relay protection, and audio coupling.</p>
 </li>
 <li>
 <p><strong><a href="reactance-frequency/">Reactance vs Frequency</a></strong></p>
-<p><img alt="Reactance vs Frequency" src="reactance-frequency/reactance-frequency.png" /></p>
+<p><img alt="Reactance vs Frequency" src="./reactance-frequency/reactance-frequency.png" /></p>
 <p>Explore how inductive and capacitive reactance vary with frequency on a log-log plot, and identify the resonant crossover point where XL equals XC.</p>
 </li>
 <li>
 <p><strong><a href="real-capacitor-model/">Real Capacitor Model</a></strong></p>
-<p><img alt="Real Capacitor Model" src="real-capacitor-model/real-capacitor-model.png" /></p>
+<p><img alt="Real Capacitor Model" src="./real-capacitor-model/real-capacitor-model.png" /></p>
 <p>Compare ideal vs real capacitor impedance across frequency, with ESR and ESL parasitics and self-resonant frequency marker.</p>
 </li>
 <li>
 <p><strong><a href="resistor/">Resistor</a></strong></p>
-<p><img alt="Resistor" src="resistor/resistor.png" /></p>
+<p><img alt="Resistor" src="./resistor/resistor.png" /></p>
 <p>Interactive simulation showing resistor symbols with different values in horizontal and vertical orientations.</p>
 </li>
 <li>
 <p><strong><a href="resonance-comparison/">Resonance Comparison</a></strong></p>
-<p><img alt="Resonance Comparison" src="resonance-comparison/resonance-comparison.png" /></p>
+<p><img alt="Resonance Comparison" src="./resonance-comparison/resonance-comparison.png" /></p>
 <p>Compare impedance and current behavior of series and parallel RLC circuits as frequency sweeps through resonance, highlighting their opposite responses.</p>
 </li>
 <li>
 <p><strong><a href="rl-charging/">RL Energizing</a></strong></p>
-<p><img alt="RL Energizing" src="rl-charging/rl-charging.png" /></p>
+<p><img alt="RL Energizing" src="./rl-charging/rl-charging.png" /></p>
 <p>Interactive simulation of an RL circuit showing inductor energizing and de-energizing with animated current flow and real-time graphs.</p>
 </li>
 <li>
 <p><strong><a href="rlc-circuit/">RLC Transient Response</a></strong></p>
-<p><img alt="RLC Transient Response" src="rlc-circuit/rlc-circuit.png" /></p>
+<p><img alt="RLC Transient Response" src="./rlc-circuit/rlc-circuit.png" /></p>
 <p>Interactive simulation of a series RLC circuit showing overdamped, critically damped, and underdamped step responses with real-time Vc and IL graphs.</p>
 </li>
 <li>
 <p><strong><a href="rms-calculation/">RMS Calculation</a></strong></p>
-<p><img alt="RMS Calculation" src="rms-calculation/rms-calculation.png" /></p>
+<p><img alt="RMS Calculation" src="./rms-calculation/rms-calculation.png" /></p>
 <p>Side-by-side AC and DC circuits demonstrating that Vrms delivers the same average power as an equivalent DC voltage.</p>
 </li>
 <li>
 <p><strong><a href="second-order-filter/">Second-Order Filter Designer</a></strong></p>
-<p><img alt="Second-Order Filter Designer" src="second-order-filter/second-order-filter.png" /></p>
+<p><img alt="Second-Order Filter Designer" src="./second-order-filter/second-order-filter.png" /></p>
 <p>Design second-order RLC filters by adjusting center frequency and Q factor across Low-Pass, High-Pass, and Band-Pass configurations.</p>
 </li>
 <li>
 <p><strong><a href="signal-parameters/">Signal Parameters</a></strong></p>
-<p><img alt="Signal Parameters" src="signal-parameters/signal-parameters.png" /></p>
+<p><img alt="Signal Parameters" src="./signal-parameters/signal-parameters.png" /></p>
 <p>Interactive sinusoidal waveform with labeled amplitude, period, frequency, phase, and optional reference signal overlay.</p>
 </li>
 <li>
 <p><strong><a href="switch/">Switch</a></strong></p>
-<p><img alt="Switch" src="switch/switch.png" /></p>
+<p><img alt="Switch" src="./switch/switch.png" /></p>
 <p>Interactive simulation demonstrating on/off switch symbols in horizontal and vertical orientations.</p>
 </li>
 <li>
 <p><strong><a href="thevenin-concept/">Thévenin Equivalent Circuit</a></strong></p>
-<p><img alt="Thévenin Equivalent Circuit" src="thevenin-concept/thevenin-concept.png" /></p>
+<p><img alt="Thévenin Equivalent Circuit" src="./thevenin-concept/thevenin-concept.png" /></p>
 <p>A 5-stage interactive MicroSim demonstrating how any linear circuit can be replaced by a Thévenin equivalent voltage source in series with resistance.</p>
 </li>
 <li>
 <p><strong><a href="voltage-divider/">Voltage Divider Calculator</a></strong></p>
-<p><img alt="Voltage Divider Calculator" src="voltage-divider/voltage-divider.png" /></p>
+<p><img alt="Voltage Divider Calculator" src="./voltage-divider/voltage-divider.png" /></p>
 <p>Interactive dual-mode calculator for designing voltage divider circuits to produce specific output voltages.</p>
 </li>
 <li>
 <p><strong><a href="water-flow-analogy/">Water Flow Analogy</a></strong></p>
-<p><img alt="Water Flow Analogy" src="water-flow-analogy/water-flow-analogy.png" /></p>
+<p><img alt="Water Flow Analogy" src="./water-flow-analogy/water-flow-analogy.png" /></p>
 <p>Interactive simulation comparing water flow in pipes to electric current in wires, demonstrating voltage-pressure and current-flow rate analogies.</p>
 </li>
 <li>
 <p><strong><a href="wire/">Wire</a></strong></p>
-<p><img alt="Wire" src="wire/wire.png" /></p>
+<p><img alt="Wire" src="./wire/wire.png" /></p>
 <p>Basic wire visualization demonstration for circuit simulations.</p>
 </li>
 </ul>
@@ -3807,13 +3094,13 @@
         
         
           
-          <a href="audio-amp-chain/" class="md-footer__link md-footer__link--next" aria-label="Next: Audio Amplifier Chain">
+          <a href="audio-signal-chain/" class="md-footer__link md-footer__link--next" aria-label="Next: Audio Signal Chain">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Audio Amplifier Chain
+                Audio Signal Chain
               </div>
             </div>
             <div class="md-footer__button md-icon">
@@ -3830,14 +3117,9 @@
       <div class="md-copyright">
   
     <div class="md-copyright__highlight">
-      Copyright &copy; 2024&ndash;2026 Dan McCreary and Circuits 1 Team. Licensed under <a href="license/">CC BY-NC-SA 4.0</a>.
+      Copyright &copy; 2024, 2025, 2026 Dan McCreary. Licensed under <a href="license/">CC BY-NC-SA 4.0</a> for non-commercial use.
     </div>
   
-  
-    Made with
-    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
-      Material for MkDocs
-    </a>
   
 </div>
       
@@ -3851,17 +3133,14 @@
     </div>
     
     
-    
-      
-      
-      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["content.code.copy", "navigation.tabs", "navigation.sections", "navigation.expand", "navigation.path", "navigation.prune", "navigation.indexes", "toc.integrate", "navigation.top", "navigation.footer", "content.action.edit"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": ["content.code.copy", "navigation.tabs", "navigation.sections", "navigation.expand", "navigation.path", "navigation.prune", "navigation.indexes", "toc.integrate", "navigation.top", "navigation.footer", "content.action.edit"], "search": "../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
-      
-        <script src="../js/iframe-resize.js"></script>
+      <script src="../assets/javascripts/bundle.83f73b43.min.js"></script>
       
         <script src="../js/extra.js"></script>
+      
+        <script src="../js/microsim-fullscreen.js"></script>
       
         <script src="../js/tts-reader.js"></script>
       

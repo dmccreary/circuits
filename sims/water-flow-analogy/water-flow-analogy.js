@@ -1,17 +1,7 @@
 // Water Flow Analogy MicroSim
-// Chapter 1: Electric Charge and Basic Quantities
 // Demonstrates how electric current flow is analogous to water flow in pipes
 // Split screen: water system (top) and electrical circuit (bottom)
-//
-// Circuits 1 design palette applied throughout.
-
-// ── Circuits 1 design palette ─────────────────────────────────────────────────
-const COL_BG_DRAW = '#eef1fb';        // light indigo – drawing area
-const COL_BG_CTRL = '#dde1f0';        // muted indigo – control area
-const COL_DEEP    = [26,  35, 126];   // dark indigo – titles
-const COL_PRIMARY = [57,  73, 171];   // indigo – buttons
-const COL_ACCENT  = [92, 107, 192];   // medium indigo
-const COL_GOLD    = [249, 168,  37];  // amber gold
+// Uses drawAnimatedWire pattern from p5-circuit-lib.js
 
 // Canvas dimensions following standard MicroSim layout
 let canvasWidth = 400;
@@ -58,24 +48,12 @@ function setup() {
 }
 
 function draw() {
-    // Drawing area background
-    background(COL_BG_DRAW);
-    // Control area
-    noStroke(); fill(COL_BG_CTRL);
-    rect(0, drawHeight, containerWidth, controlHeight);
+    background(255);
 
     // Update animation if running
     if (isAnimating) {
         animationTime += deltaTime;
     }
-
-    // Header
-    noStroke(); fill(...COL_DEEP);
-    textSize(16); textStyle(BOLD); textAlign(CENTER, TOP);
-    text('Water Flow Analogy — Current & Voltage', containerWidth / 2, 6);
-    textStyle(NORMAL);
-    fill(...COL_ACCENT); textSize(11);
-    text('Water pressure ↔ Voltage   ·   Flow rate ↔ Current   ·   Pipe width ↔ Conductor size', containerWidth / 2, 26);
 
     // Calculate flow rate based on pressure and diameter
     let flowRate = calculateFlowRate();
@@ -84,7 +62,8 @@ function draw() {
     drawWaterSystem(flowRate);
 
     // Draw divider line
-    stroke(...COL_PRIMARY); strokeWeight(2);
+    stroke(100);
+    strokeWeight(2);
     line(0, drawHeight / 2, containerWidth, drawHeight / 2);
 
     // Draw bottom half: Electrical circuit
@@ -172,16 +151,16 @@ function drawAnimatedWire(x1, y1, x2, y2, speed, spacing, wireWidth) {
 }
 
 function drawWaterSystem(flowRate) {
-    let topY = 44;   // push down to leave room for global header
-    let bottomY = drawHeight / 2 - 6;
+    let topY = 10;
+    let bottomY = drawHeight / 2 - 10;
     let centerY = (topY + bottomY) / 2;
 
-    // Section label (indigo pill)
-    noStroke(); fill(...COL_PRIMARY);
-    rect(8, topY, 130, 18, 4);
-    fill(255); textSize(11); textStyle(BOLD); textAlign(LEFT, CENTER);
-    text('  Water System', 8, topY + 9);
-    textStyle(NORMAL);
+    // Title
+    fill(0);
+    noStroke();
+    textSize(16);
+    textAlign(CENTER, TOP);
+    text("Water System", containerWidth / 2, topY);
 
     // Calculate pipe thickness based on diameter setting
     // Narrow=8, Medium=18, Wide=28 - very noticeable difference
@@ -282,12 +261,12 @@ function drawElectricalCircuit(flowRate) {
     let bottomY = drawHeight - 10;
     let centerY = (topY + bottomY) / 2;
 
-    // Section label (gold pill)
-    noStroke(); fill(...COL_GOLD);
-    rect(8, topY + 2, 140, 18, 4);
-    fill(...COL_DEEP); textSize(11); textStyle(BOLD); textAlign(LEFT, CENTER);
-    text('  Electrical Circuit', 8, topY + 11);
-    textStyle(NORMAL);
+    // Title
+    fill(0);
+    noStroke();
+    textSize(16);
+    textAlign(CENTER, TOP);
+    text("Electrical Circuit", containerWidth / 2, topY);
 
     // Calculate wire thickness based on diameter setting
     // Narrow=4, Medium=10, Wide=16 - very noticeable difference
@@ -381,7 +360,11 @@ function drawElectricalCircuit(flowRate) {
 }
 
 function drawControls(flowRate) {
-    // Background drawn in draw()
+    // Control area background
+    fill(245);
+    stroke(200);
+    strokeWeight(1);
+    rect(0, drawHeight, containerWidth, controlHeight);
 
     // Slider 1: Pressure/Voltage
     drawSlider("Pump Pressure / Voltage:", pressureVoltage, 1, 12, sliderX, sliderY1, sliderWidth, " units");
@@ -425,13 +408,16 @@ function drawSlider(label, value, minVal, maxVal, x, y, w, suffix) {
 
     // Slider fill
     let fillWidth = map(value, minVal, maxVal, 0, w);
-    fill(...COL_PRIMARY); noStroke();
+    fill(70, 130, 180);
+    noStroke();
     rect(x, y - 4, fillWidth, 8, 4);
 
     // Slider handle
     let handleX = x + fillWidth;
-    fill(255); stroke(...COL_PRIMARY); strokeWeight(2);
-    ellipse(handleX, y, 16, 16);
+    fill(255);
+    stroke(70, 130, 180);
+    strokeWeight(2);
+    ellipse(handleX, y, 14, 14);
 }
 
 function drawSliderTicks(x, y, w, labels) {
@@ -457,16 +443,18 @@ function drawSliderTicks(x, y, w, labels) {
 }
 
 function drawButton(label, x, y, w, h) {
-    // Drop shadow
-    noStroke(); fill(0, 0, 0, 20);
-    rect(x+2, y+2, w, h, 4);
     // Button background
-    fill(...COL_PRIMARY); stroke(...COL_DEEP); strokeWeight(1);
+    fill(70, 130, 180);
+    stroke(50, 100, 150);
+    strokeWeight(1);
     rect(x, y, w, h, 4);
+
     // Button text
-    fill(255); noStroke(); textSize(12); textStyle(BOLD); textAlign(CENTER, CENTER);
+    fill(255);
+    noStroke();
+    textSize(12);
+    textAlign(CENTER, CENTER);
     text(label, x + w / 2, y + h / 2);
-    textStyle(NORMAL);
 }
 
 function mousePressed() {
