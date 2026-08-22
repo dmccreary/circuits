@@ -4,7 +4,7 @@ site_author: 'Dan McCreary'
 repo_name: 'GitHub Repo'
 site_url: 'https://dmccreary.github.io/circuits/'
 repo_url: 'https://github.com/dmccreary/circuits'
-edit_uri: 'blob/master/docs'
+edit_uri: 'blob/main/docs'
 
 nav:
   - Cover: index.md
