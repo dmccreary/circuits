@@ -48,18 +48,16 @@
     "simulation"
   ],
   "learningObjectives": [
-    "Understand the key concepts of circuit component library test",
-    "Explore circuit component library test through interactive visualization",
-    "Apply knowledge of circuit component library test to solve problems",
-    "Experiment with parameters to observe their effects on circuit component library test"
+    "Identify the standard schematic symbols for resistors, capacitors, inductors, batteries, and switches by their distinguishing shapes",
+    "Explain how a reusable p5.js drawing library separates component geometry from circuit layout so symbols can be reused across sketches",
+    "Trace how position, size, line width, orientation, and label parameters passed to drawResistor() or drawCapacitor() change the rendered symbol",
+    "Compare the horizontal and vertical rendering of each component and explain why orientation must not alter the symbol's meaning",
+    "Design a new component drawing function that follows the library's existing parameter conventions"
   ],
   "bloomsTaxonomy": [
-    "Remember",
     "Understand",
     "Apply",
-    "Analyze",
-    "Evaluate",
-    "Create"
+    "Analyze"
   ],
   "pedagogical": {
     "pattern": "assessment",

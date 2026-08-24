@@ -42,17 +42,15 @@
     "simulation"
   ],
   "learningObjectives": [
-    "Understand the key concepts of switch drawing",
-    "Explore switch drawing through interactive visualization",
-    "Apply knowledge of switch drawing to solve problems",
-    "Experiment with parameters to observe their effects on switch drawing"
+    "Distinguish the open (OFF) switch symbol, with its lever lifted away from the contact, from the closed (ON) symbol that bridges the gap",
+    "Explain how closing a switch completes a conducting path so current can flow, and how opening it breaks the circuit",
+    "Predict for each switch pair shown whether current can flow, given the state of its lever",
+    "Draw switch symbols in both open and closed positions in horizontal and vertical orientations within a circuit diagram"
   ],
   "bloomsTaxonomy": [
     "Remember",
     "Understand",
-    "Apply",
-    "Evaluate",
-    "Create"
+    "Apply"
   ],
   "pedagogical": {
     "pattern": "assessment",
