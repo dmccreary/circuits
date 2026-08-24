@@ -100,1505 +100,1805 @@
       "id": 1,
       "label": "Electric Charge",
       "group": "FOUND",
-      "shape": "box"
+      "shape": "box",
+      "cis": 18581
     },
     {
       "id": 2,
       "label": "Voltage",
-      "group": "FOUND"
+      "group": "FOUND",
+      "cis": 7063
     },
     {
       "id": 3,
       "label": "Current",
-      "group": "FOUND"
+      "group": "FOUND",
+      "cis": 9760
     },
     {
       "id": 4,
       "label": "Electrical Energy",
-      "group": "FOUND"
+      "group": "FOUND",
+      "cis": 420
     },
     {
       "id": 5,
       "label": "Power",
-      "group": "FOUND"
+      "group": "FOUND",
+      "cis": 392
     },
     {
       "id": 6,
       "label": "Resistance",
-      "group": "FOUND"
+      "group": "FOUND",
+      "cis": 2537
     },
     {
       "id": 7,
       "label": "Ohm's Law",
-      "group": "FOUND"
+      "group": "FOUND",
+      "cis": 946
     },
     {
       "id": 8,
       "label": "Conductance",
-      "group": "FOUND"
+      "group": "FOUND",
+      "cis": 3
     },
     {
       "id": 9,
       "label": "Electrical Ground",
-      "group": "FOUND"
+      "group": "FOUND",
+      "cis": 16
     },
     {
       "id": 10,
       "label": "Circuit Schematic Symbols",
       "group": "FOUND",
-      "shape": "box"
+      "shape": "box",
+      "cis": 3753
     },
     {
       "id": 11,
       "label": "Voltage Source",
-      "group": "FOUND"
+      "group": "FOUND",
+      "cis": 46
     },
     {
       "id": 12,
       "label": "Current Source",
-      "group": "FOUND"
+      "group": "FOUND",
+      "cis": 9
     },
     {
       "id": 13,
       "label": "Dependent Sources",
-      "group": "FOUND"
+      "group": "FOUND",
+      "cis": 1
     },
     {
       "id": 14,
       "label": "Series Circuits",
-      "group": "FOUND"
+      "group": "FOUND",
+      "cis": 312
     },
     {
       "id": 15,
       "label": "Parallel Circuits",
-      "group": "FOUND"
+      "group": "FOUND",
+      "cis": 309
     },
     {
       "id": 16,
       "label": "Series-Parallel Circuits",
-      "group": "FOUND"
+      "group": "FOUND",
+      "cis": 1
     },
     {
       "id": 17,
       "label": "Voltage Divider",
-      "group": "FOUND"
+      "group": "FOUND",
+      "cis": 1
     },
     {
       "id": 18,
       "label": "Current Divider",
-      "group": "FOUND"
+      "group": "FOUND",
+      "cis": 1
     },
     {
       "id": 19,
       "label": "Kirchhoff's Voltage Law",
-      "group": "FOUND"
+      "group": "FOUND",
+      "cis": 301
     },
     {
       "id": 20,
       "label": "Kirchhoff's Current Law",
-      "group": "FOUND"
+      "group": "FOUND",
+      "cis": 297
     },
     {
       "id": 21,
       "label": "Node",
-      "group": "FOUND"
+      "group": "FOUND",
+      "cis": 621
     },
     {
       "id": 22,
       "label": "Branch",
-      "group": "FOUND"
+      "group": "FOUND",
+      "cis": 622
     },
     {
       "id": 23,
       "label": "Loop",
-      "group": "FOUND"
+      "group": "FOUND",
+      "cis": 307
     },
     {
       "id": 24,
       "label": "Mesh",
-      "group": "FOUND"
+      "group": "FOUND",
+      "cis": 5
     },
     {
       "id": 25,
       "label": "Open Circuit",
-      "group": "FOUND"
+      "group": "FOUND",
+      "cis": 1
     },
     {
       "id": 26,
       "label": "Short Circuit",
-      "group": "FOUND"
+      "group": "FOUND",
+      "cis": 1
     },
     {
       "id": 27,
       "label": "Power Dissipation",
-      "group": "FOUND"
+      "group": "FOUND",
+      "cis": 4
     },
     {
       "id": 28,
       "label": "Energy Conservation",
-      "group": "FOUND"
+      "group": "FOUND",
+      "cis": 1
     },
     {
       "id": 29,
       "label": "SI Units for Circuits",
-      "group": "FOUND"
+      "group": "FOUND",
+      "cis": 1
     },
     {
       "id": 30,
       "label": "Circuit Topology",
-      "group": "FOUND"
+      "group": "FOUND",
+      "cis": 314
     },
     {
       "id": 31,
       "label": "Node Voltage Method",
-      "group": "ANLYS"
+      "group": "ANLYS",
+      "cis": 4
     },
     {
       "id": 32,
       "label": "Reference Node",
-      "group": "ANLYS"
+      "group": "ANLYS",
+      "cis": 5
     },
     {
       "id": 33,
       "label": "Supernode",
-      "group": "ANLYS"
+      "group": "ANLYS",
+      "cis": 2
     },
     {
       "id": 34,
       "label": "Mesh Current Method",
-      "group": "ANLYS"
+      "group": "ANLYS",
+      "cis": 4
     },
     {
       "id": 35,
       "label": "Supermesh",
-      "group": "ANLYS"
+      "group": "ANLYS",
+      "cis": 2
     },
     {
       "id": 36,
       "label": "Linearity",
-      "group": "ANLYS"
+      "group": "ANLYS",
+      "cis": 3
     },
     {
       "id": 37,
       "label": "Superposition Principle",
-      "group": "ANLYS"
+      "group": "ANLYS",
+      "cis": 2
     },
     {
       "id": 38,
       "label": "Source Transformation",
-      "group": "ANLYS"
+      "group": "ANLYS",
+      "cis": 1
     },
     {
       "id": 39,
       "label": "Thevenin's Theorem",
-      "group": "ANLYS"
+      "group": "ANLYS",
+      "cis": 28
     },
     {
       "id": 40,
       "label": "Thevenin Equivalent",
-      "group": "ANLYS"
+      "group": "ANLYS",
+      "cis": 26
     },
     {
       "id": 41,
       "label": "Norton's Theorem",
-      "group": "ANLYS"
+      "group": "ANLYS",
+      "cis": 2
     },
     {
       "id": 42,
       "label": "Norton Equivalent",
-      "group": "ANLYS"
+      "group": "ANLYS",
+      "cis": 1
     },
     {
       "id": 43,
       "label": "Maximum Power Transfer",
-      "group": "ANLYS"
+      "group": "ANLYS",
+      "cis": 2
     },
     {
       "id": 44,
       "label": "Load Resistance",
-      "group": "ANLYS"
+      "group": "ANLYS",
+      "cis": 7
     },
     {
       "id": 45,
       "label": "Equivalent Resistance",
-      "group": "ANLYS"
+      "group": "ANLYS",
+      "cis": 2
     },
     {
       "id": 46,
       "label": "Delta Configuration",
-      "group": "ANLYS"
+      "group": "ANLYS",
+      "cis": 3
     },
     {
       "id": 47,
       "label": "Wye Configuration",
-      "group": "ANLYS"
+      "group": "ANLYS",
+      "cis": 3
     },
     {
       "id": 48,
       "label": "Delta-Wye Transformation",
-      "group": "ANLYS"
+      "group": "ANLYS",
+      "cis": 2
     },
     {
       "id": 49,
       "label": "Circuit Simplification",
-      "group": "ANLYS"
+      "group": "ANLYS",
+      "cis": 1
     },
     {
       "id": 50,
       "label": "Nodal Analysis",
-      "group": "ANLYS"
+      "group": "ANLYS",
+      "cis": 1
     },
     {
       "id": 51,
       "label": "Mesh Analysis",
-      "group": "ANLYS"
+      "group": "ANLYS",
+      "cis": 1
     },
     {
       "id": 52,
       "label": "Two-Port Networks",
-      "group": "ANLYS"
+      "group": "ANLYS",
+      "cis": 1
     },
     {
       "id": 53,
       "label": "Input Resistance",
-      "group": "ANLYS"
+      "group": "ANLYS",
+      "cis": 8
     },
     {
       "id": 54,
       "label": "Output Resistance",
-      "group": "ANLYS"
+      "group": "ANLYS",
+      "cis": 8
     },
     {
       "id": 55,
       "label": "Loading Effect",
-      "group": "ANLYS"
+      "group": "ANLYS",
+      "cis": 4
     },
     {
       "id": 56,
       "label": "Resistor",
-      "group": "PASV"
+      "group": "PASV",
+      "cis": 395
     },
     {
       "id": 57,
       "label": "Resistor Color Code",
-      "group": "PASV"
+      "group": "PASV",
+      "cis": 2
     },
     {
       "id": 58,
       "label": "Resistor Tolerance",
-      "group": "PASV"
+      "group": "PASV",
+      "cis": 1
     },
     {
       "id": 59,
       "label": "Potentiometer",
-      "group": "PASV"
+      "group": "PASV",
+      "cis": 1
     },
     {
       "id": 60,
       "label": "Capacitor",
-      "group": "PASV"
+      "group": "PASV",
+      "cis": 1337
     },
     {
       "id": 61,
       "label": "Capacitance",
-      "group": "PASV"
+      "group": "PASV",
+      "cis": 1108
     },
     {
       "id": 62,
       "label": "Parallel Plate Capacitor",
-      "group": "PASV"
+      "group": "PASV",
+      "cis": 1
     },
     {
       "id": 63,
       "label": "Dielectric Material",
-      "group": "PASV"
+      "group": "PASV",
+      "cis": 2
     },
     {
       "id": 64,
       "label": "Capacitor Energy Storage",
-      "group": "PASV"
+      "group": "PASV",
+      "cis": 13
     },
     {
       "id": 65,
       "label": "Capacitors in Series",
-      "group": "PASV"
+      "group": "PASV",
+      "cis": 1
     },
     {
       "id": 66,
       "label": "Capacitors in Parallel",
-      "group": "PASV"
+      "group": "PASV",
+      "cis": 2
     },
     {
       "id": 67,
       "label": "Inductor",
-      "group": "PASV"
+      "group": "PASV",
+      "cis": 1329
     },
     {
       "id": 68,
       "label": "Inductance",
-      "group": "PASV"
+      "group": "PASV",
+      "cis": 1106
     },
     {
       "id": 69,
       "label": "Magnetic Field",
-      "group": "PASV"
+      "group": "PASV",
+      "cis": 1332
     },
     {
       "id": 70,
       "label": "Inductor Energy Storage",
-      "group": "PASV"
+      "group": "PASV",
+      "cis": 13
     },
     {
       "id": 71,
       "label": "Inductors in Series",
-      "group": "PASV"
+      "group": "PASV",
+      "cis": 1
     },
     {
       "id": 72,
       "label": "Inductors in Parallel",
-      "group": "PASV"
+      "group": "PASV",
+      "cis": 1
     },
     {
       "id": 73,
       "label": "Mutual Inductance",
-      "group": "PASV"
+      "group": "PASV",
+      "cis": 2
     },
     {
       "id": 74,
       "label": "Coupling Coefficient",
-      "group": "PASV"
+      "group": "PASV",
+      "cis": 1
     },
     {
       "id": 75,
       "label": "Wire Resistance",
-      "group": "PASV"
+      "group": "PASV",
+      "cis": 1
     },
     {
       "id": 76,
       "label": "Parasitic Capacitance",
-      "group": "PASV"
+      "group": "PASV",
+      "cis": 1
     },
     {
       "id": 77,
       "label": "Parasitic Inductance",
-      "group": "PASV"
+      "group": "PASV",
+      "cis": 1
     },
     {
       "id": 78,
       "label": "Component Power Rating",
-      "group": "PASV"
+      "group": "PASV",
+      "cis": 2
     },
     {
       "id": 79,
       "label": "Component Derating",
-      "group": "PASV"
+      "group": "PASV",
+      "cis": 1
     },
     {
       "id": 80,
       "label": "Real vs Ideal Components",
-      "group": "PASV"
+      "group": "PASV",
+      "cis": 3
     },
     {
       "id": 81,
       "label": "Transient Response",
-      "group": "TRANS"
+      "group": "TRANS",
+      "cis": 1
     },
     {
       "id": 82,
       "label": "Steady-State Response",
-      "group": "TRANS"
+      "group": "TRANS",
+      "cis": 7
     },
     {
       "id": 83,
       "label": "Time Constant",
-      "group": "TRANS"
+      "group": "TRANS",
+      "cis": 14
     },
     {
       "id": 84,
       "label": "RC Circuit",
-      "group": "TRANS"
+      "group": "TRANS",
+      "cis": 142
     },
     {
       "id": 85,
       "label": "RC Charging",
-      "group": "TRANS"
+      "group": "TRANS",
+      "cis": 6
     },
     {
       "id": 86,
       "label": "RC Discharging",
-      "group": "TRANS"
+      "group": "TRANS",
+      "cis": 6
     },
     {
       "id": 87,
       "label": "RL Circuit",
-      "group": "TRANS"
+      "group": "TRANS",
+      "cis": 140
     },
     {
       "id": 88,
       "label": "RL Energizing",
-      "group": "TRANS"
+      "group": "TRANS",
+      "cis": 6
     },
     {
       "id": 89,
       "label": "RL De-energizing",
-      "group": "TRANS"
+      "group": "TRANS",
+      "cis": 6
     },
     {
       "id": 90,
       "label": "Exponential Response",
-      "group": "TRANS"
+      "group": "TRANS",
+      "cis": 5
     },
     {
       "id": 91,
       "label": "Initial Conditions",
-      "group": "TRANS"
+      "group": "TRANS",
+      "cis": 29
     },
     {
       "id": 92,
       "label": "Final Conditions",
-      "group": "TRANS"
+      "group": "TRANS",
+      "cis": 1
     },
     {
       "id": 93,
       "label": "Natural Response",
-      "group": "TRANS"
+      "group": "TRANS",
+      "cis": 4
     },
     {
       "id": 94,
       "label": "Forced Response",
-      "group": "TRANS"
+      "group": "TRANS",
+      "cis": 4
     },
     {
       "id": 95,
       "label": "Complete Response",
-      "group": "TRANS"
+      "group": "TRANS",
+      "cis": 3
     },
     {
       "id": 96,
       "label": "First-Order Circuits",
-      "group": "TRANS"
+      "group": "TRANS",
+      "cis": 8
     },
     {
       "id": 97,
       "label": "Second-Order Circuits",
-      "group": "TRANS"
+      "group": "TRANS",
+      "cis": 9
     },
     {
       "id": 98,
       "label": "RLC Circuit",
-      "group": "TRANS"
+      "group": "TRANS",
+      "cis": 73
     },
     {
       "id": 99,
       "label": "Overdamped Response",
-      "group": "TRANS"
+      "group": "TRANS",
+      "cis": 1
     },
     {
       "id": 100,
       "label": "Underdamped Response",
-      "group": "TRANS"
+      "group": "TRANS",
+      "cis": 1
     },
     {
       "id": 101,
       "label": "Critically Damped Response",
-      "group": "TRANS"
+      "group": "TRANS",
+      "cis": 1
     },
     {
       "id": 102,
       "label": "Damping Ratio",
-      "group": "TRANS"
+      "group": "TRANS",
+      "cis": 13
     },
     {
       "id": 103,
       "label": "Natural Frequency",
-      "group": "TRANS"
+      "group": "TRANS",
+      "cis": 47
     },
     {
       "id": 104,
       "label": "Step Response",
-      "group": "TRANS"
+      "group": "TRANS",
+      "cis": 2
     },
     {
       "id": 105,
       "label": "Pulse Response",
-      "group": "TRANS"
+      "group": "TRANS",
+      "cis": 1
     },
     {
       "id": 106,
       "label": "Alternating Current",
-      "group": "ACFND"
+      "group": "ACFND",
+      "cis": 6
     },
     {
       "id": 107,
       "label": "Sinusoidal Waveform",
-      "group": "ACFND"
+      "group": "ACFND",
+      "cis": 407
     },
     {
       "id": 108,
       "label": "Amplitude",
-      "group": "ACFND"
+      "group": "ACFND",
+      "cis": 637
     },
     {
       "id": 109,
       "label": "Frequency",
-      "group": "ACFND"
+      "group": "ACFND",
+      "cis": 3610
     },
     {
       "id": 110,
       "label": "Period",
       "group": "ACFND",
-      "shape": "box"
+      "shape": "box",
+      "cis": 3683
     },
     {
       "id": 111,
       "label": "Angular Frequency",
-      "group": "ACFND"
+      "group": "ACFND",
+      "cis": 2857
     },
     {
       "id": 112,
       "label": "Phase Angle",
-      "group": "ACFND"
+      "group": "ACFND",
+      "cis": 414
     },
     {
       "id": 113,
       "label": "Phase Shift",
-      "group": "ACFND"
+      "group": "ACFND",
+      "cis": 1
     },
     {
       "id": 114,
       "label": "Peak Value",
-      "group": "ACFND"
+      "group": "ACFND",
+      "cis": 227
     },
     {
       "id": 115,
       "label": "Peak-to-Peak Value",
-      "group": "ACFND"
+      "group": "ACFND",
+      "cis": 1
     },
     {
       "id": 116,
       "label": "RMS Value",
-      "group": "ACFND"
+      "group": "ACFND",
+      "cis": 110
     },
     {
       "id": 117,
       "label": "Average Value",
-      "group": "ACFND"
+      "group": "ACFND",
+      "cis": 114
     },
     {
       "id": 118,
       "label": "Complex Numbers",
       "group": "ACFND",
-      "shape": "box"
+      "shape": "box",
+      "cis": 1059
     },
     {
       "id": 119,
       "label": "Rectangular Form",
-      "group": "ACFND"
+      "group": "ACFND",
+      "cis": 1
     },
     {
       "id": 120,
       "label": "Polar Form",
-      "group": "ACFND"
+      "group": "ACFND",
+      "cis": 268
     },
     {
       "id": 121,
       "label": "Euler's Formula",
-      "group": "ACFND"
+      "group": "ACFND",
+      "cis": 268
     },
     {
       "id": 122,
       "label": "Phasor",
-      "group": "ACFND"
+      "group": "ACFND",
+      "cis": 267
     },
     {
       "id": 123,
       "label": "Phasor Diagram",
-      "group": "ACFND"
+      "group": "ACFND",
+      "cis": 2
     },
     {
       "id": 124,
       "label": "Phasor Addition",
-      "group": "ACFND"
+      "group": "ACFND",
+      "cis": 1
     },
     {
       "id": 125,
       "label": "Impedance",
-      "group": "ACFND"
+      "group": "ACFND",
+      "cis": 518
     },
     {
       "id": 126,
       "label": "Reactance",
-      "group": "ACFND"
+      "group": "ACFND",
+      "cis": 1059
     },
     {
       "id": 127,
       "label": "Capacitive Reactance",
-      "group": "ACFND"
+      "group": "ACFND",
+      "cis": 1087
     },
     {
       "id": 128,
       "label": "Inductive Reactance",
-      "group": "ACFND"
+      "group": "ACFND",
+      "cis": 1087
     },
     {
       "id": 129,
       "label": "Admittance",
-      "group": "ACFND"
+      "group": "ACFND",
+      "cis": 2
     },
     {
       "id": 130,
       "label": "Susceptance",
-      "group": "ACFND"
+      "group": "ACFND",
+      "cis": 1
     },
     {
       "id": 131,
       "label": "AC Resistance",
-      "group": "ACFND"
+      "group": "ACFND",
+      "cis": 3
     },
     {
       "id": 132,
       "label": "Impedance Triangle",
-      "group": "ACFND"
+      "group": "ACFND",
+      "cis": 1
     },
     {
       "id": 133,
       "label": "Complex Impedance",
-      "group": "ACFND"
+      "group": "ACFND",
+      "cis": 519
     },
     {
       "id": 134,
       "label": "AC Circuit Analysis",
-      "group": "ACFND"
+      "group": "ACFND",
+      "cis": 262
     },
     {
       "id": 135,
       "label": "Phasor Domain",
-      "group": "ACFND"
+      "group": "ACFND",
+      "cis": 1
     },
     {
       "id": 136,
       "label": "Instantaneous Power",
-      "group": "POWER"
+      "group": "POWER",
+      "cis": 107
     },
     {
       "id": 137,
       "label": "Average Power",
-      "group": "POWER"
+      "group": "POWER",
+      "cis": 106
     },
     {
       "id": 138,
       "label": "Real Power",
-      "group": "POWER"
+      "group": "POWER",
+      "cis": 5
     },
     {
       "id": 139,
       "label": "Reactive Power",
-      "group": "POWER"
+      "group": "POWER",
+      "cis": 20
     },
     {
       "id": 140,
       "label": "Apparent Power",
-      "group": "POWER"
+      "group": "POWER",
+      "cis": 14
     },
     {
       "id": 141,
       "label": "Complex Power",
-      "group": "POWER"
+      "group": "POWER",
+      "cis": 1
     },
     {
       "id": 142,
       "label": "Power Triangle",
-      "group": "POWER"
+      "group": "POWER",
+      "cis": 1
     },
     {
       "id": 143,
       "label": "Power Factor",
-      "group": "POWER"
+      "group": "POWER",
+      "cis": 11
     },
     {
       "id": 144,
       "label": "Leading Power Factor",
-      "group": "POWER"
+      "group": "POWER",
+      "cis": 2
     },
     {
       "id": 145,
       "label": "Lagging Power Factor",
-      "group": "POWER"
+      "group": "POWER",
+      "cis": 2
     },
     {
       "id": 146,
       "label": "Power Factor Correction",
-      "group": "POWER"
+      "group": "POWER",
+      "cis": 1
     },
     {
       "id": 147,
       "label": "VAR",
-      "group": "POWER"
+      "group": "POWER",
+      "cis": 1
     },
     {
       "id": 148,
       "label": "Watt",
-      "group": "POWER"
+      "group": "POWER",
+      "cis": 1
     },
     {
       "id": 149,
       "label": "Volt-Ampere",
-      "group": "POWER"
+      "group": "POWER",
+      "cis": 1
     },
     {
       "id": 150,
       "label": "Maximum Power in AC",
-      "group": "POWER"
+      "group": "POWER",
+      "cis": 1
     },
     {
       "id": 151,
       "label": "RMS Power Calculation",
-      "group": "POWER"
+      "group": "POWER",
+      "cis": 1
     },
     {
       "id": 152,
       "label": "Power in Resistors",
-      "group": "POWER"
+      "group": "POWER",
+      "cis": 1
     },
     {
       "id": 153,
       "label": "Power in Capacitors",
-      "group": "POWER"
+      "group": "POWER",
+      "cis": 1
     },
     {
       "id": 154,
       "label": "Power in Inductors",
-      "group": "POWER"
+      "group": "POWER",
+      "cis": 1
     },
     {
       "id": 155,
       "label": "Efficiency",
-      "group": "POWER"
+      "group": "POWER",
+      "cis": 1
     },
     {
       "id": 156,
       "label": "Frequency Response",
-      "group": "FREQ"
+      "group": "FREQ",
+      "cis": 250
     },
     {
       "id": 157,
       "label": "Transfer Function",
-      "group": "FREQ"
+      "group": "FREQ",
+      "cis": 252
     },
     {
       "id": 158,
       "label": "Magnitude Response",
-      "group": "FREQ"
+      "group": "FREQ",
+      "cis": 5
     },
     {
       "id": 159,
       "label": "Phase Response",
-      "group": "FREQ"
+      "group": "FREQ",
+      "cis": 4
     },
     {
       "id": 160,
       "label": "Bode Plot",
-      "group": "FREQ"
+      "group": "FREQ",
+      "cis": 2
     },
     {
       "id": 161,
       "label": "Bode Magnitude Plot",
-      "group": "FREQ"
+      "group": "FREQ",
+      "cis": 4
     },
     {
       "id": 162,
       "label": "Bode Phase Plot",
-      "group": "FREQ"
+      "group": "FREQ",
+      "cis": 3
     },
     {
       "id": 163,
       "label": "Decibel",
-      "group": "FREQ"
+      "group": "FREQ",
+      "cis": 221
     },
     {
       "id": 164,
       "label": "Decade",
-      "group": "FREQ"
+      "group": "FREQ",
+      "cis": 8
     },
     {
       "id": 165,
       "label": "Octave",
-      "group": "FREQ"
+      "group": "FREQ",
+      "cis": 1
     },
     {
       "id": 166,
       "label": "Cutoff Frequency",
-      "group": "FREQ"
+      "group": "FREQ",
+      "cis": 53
     },
     {
       "id": 167,
       "label": "Corner Frequency",
-      "group": "FREQ"
+      "group": "FREQ",
+      "cis": 1
     },
     {
       "id": 168,
       "label": "Half-Power Point",
-      "group": "FREQ"
+      "group": "FREQ",
+      "cis": 54
     },
     {
       "id": 169,
       "label": "Bandwidth",
-      "group": "FREQ"
+      "group": "FREQ",
+      "cis": 31
     },
     {
       "id": 170,
       "label": "Passband",
-      "group": "FREQ"
+      "group": "FREQ",
+      "cis": 73
     },
     {
       "id": 171,
       "label": "Stopband",
-      "group": "FREQ"
+      "group": "FREQ",
+      "cis": 73
     },
     {
       "id": 172,
       "label": "Roll-Off Rate",
-      "group": "FREQ"
+      "group": "FREQ",
+      "cis": 1
     },
     {
       "id": 173,
       "label": "Asymptotic Approximation",
-      "group": "FREQ"
+      "group": "FREQ",
+      "cis": 1
     },
     {
       "id": 174,
       "label": "Poles and Zeros",
-      "group": "FREQ"
+      "group": "FREQ",
+      "cis": 1
     },
     {
       "id": 175,
       "label": "Resonance",
-      "group": "FREQ"
+      "group": "FREQ",
+      "cis": 10
     },
     {
       "id": 176,
       "label": "Resonant Frequency",
-      "group": "FREQ"
+      "group": "FREQ",
+      "cis": 24
     },
     {
       "id": 177,
       "label": "Quality Factor",
-      "group": "FREQ"
+      "group": "FREQ",
+      "cis": 12
     },
     {
       "id": 178,
       "label": "Selectivity",
-      "group": "FREQ"
+      "group": "FREQ",
+      "cis": 1
     },
     {
       "id": 179,
       "label": "Series Resonance",
-      "group": "FREQ"
+      "group": "FREQ",
+      "cis": 1
     },
     {
       "id": 180,
       "label": "Parallel Resonance",
-      "group": "FREQ"
+      "group": "FREQ",
+      "cis": 1
     },
     {
       "id": 181,
       "label": "Filter",
-      "group": "FILT"
+      "group": "FILT",
+      "cis": 41
     },
     {
       "id": 182,
       "label": "Low-Pass Filter",
-      "group": "FILT"
+      "group": "FILT",
+      "cis": 10
     },
     {
       "id": 183,
       "label": "High-Pass Filter",
-      "group": "FILT"
+      "group": "FILT",
+      "cis": 10
     },
     {
       "id": 184,
       "label": "Band-Pass Filter",
-      "group": "FILT"
+      "group": "FILT",
+      "cis": 7
     },
     {
       "id": 185,
       "label": "Band-Reject Filter",
-      "group": "FILT"
+      "group": "FILT",
+      "cis": 7
     },
     {
       "id": 186,
       "label": "Notch Filter",
-      "group": "FILT"
+      "group": "FILT",
+      "cis": 1
     },
     {
       "id": 187,
       "label": "First-Order Filter",
-      "group": "FILT"
+      "group": "FILT",
+      "cis": 5
     },
     {
       "id": 188,
       "label": "Second-Order Filter",
-      "group": "FILT"
+      "group": "FILT",
+      "cis": 5
     },
     {
       "id": 189,
       "label": "Filter Order",
-      "group": "FILT"
+      "group": "FILT",
+      "cis": 4
     },
     {
       "id": 190,
       "label": "RC Low-Pass Filter",
-      "group": "FILT"
+      "group": "FILT",
+      "cis": 1
     },
     {
       "id": 191,
       "label": "RC High-Pass Filter",
-      "group": "FILT"
+      "group": "FILT",
+      "cis": 1
     },
     {
       "id": 192,
       "label": "RL Low-Pass Filter",
-      "group": "FILT"
+      "group": "FILT",
+      "cis": 1
     },
     {
       "id": 193,
       "label": "RL High-Pass Filter",
-      "group": "FILT"
+      "group": "FILT",
+      "cis": 1
     },
     {
       "id": 194,
       "label": "RLC Band-Pass Filter",
-      "group": "FILT"
+      "group": "FILT",
+      "cis": 1
     },
     {
       "id": 195,
       "label": "Passive Filter",
-      "group": "FILT"
+      "group": "FILT",
+      "cis": 3
     },
     {
       "id": 196,
       "label": "Active Filter",
-      "group": "FILT"
+      "group": "FILT",
+      "cis": 3
     },
     {
       "id": 197,
       "label": "Filter Design",
-      "group": "FILT"
+      "group": "FILT",
+      "cis": 2
     },
     {
       "id": 198,
       "label": "Audio Tone Control",
-      "group": "FILT"
+      "group": "FILT",
+      "cis": 1
     },
     {
       "id": 199,
       "label": "Bass Filter",
-      "group": "FILT"
+      "group": "FILT",
+      "cis": 2
     },
     {
       "id": 200,
       "label": "Treble Filter",
-      "group": "FILT"
+      "group": "FILT",
+      "cis": 2
     },
     {
       "id": 201,
       "label": "Operational Amplifier",
-      "group": "OPAMP"
+      "group": "OPAMP",
+      "cis": 261
     },
     {
       "id": 202,
       "label": "Ideal Op-Amp",
-      "group": "OPAMP"
+      "group": "OPAMP",
+      "cis": 39
     },
     {
       "id": 203,
       "label": "Op-Amp Symbol",
-      "group": "OPAMP"
+      "group": "OPAMP",
+      "cis": 58
     },
     {
       "id": 204,
       "label": "Inverting Input",
-      "group": "OPAMP"
+      "group": "OPAMP",
+      "cis": 3
     },
     {
       "id": 205,
       "label": "Non-Inverting Input",
-      "group": "OPAMP"
+      "group": "OPAMP",
+      "cis": 3
     },
     {
       "id": 206,
       "label": "Op-Amp Output",
-      "group": "OPAMP"
+      "group": "OPAMP",
+      "cis": 51
     },
     {
       "id": 207,
       "label": "Open-Loop Gain",
-      "group": "OPAMP"
+      "group": "OPAMP",
+      "cis": 45
     },
     {
       "id": 208,
       "label": "Closed-Loop Gain",
-      "group": "OPAMP"
+      "group": "OPAMP",
+      "cis": 5
     },
     {
       "id": 209,
       "label": "Negative Feedback",
-      "group": "OPAMP"
+      "group": "OPAMP",
+      "cis": 44
     },
     {
       "id": 210,
       "label": "Positive Feedback",
-      "group": "OPAMP"
+      "group": "OPAMP",
+      "cis": 1
     },
     {
       "id": 211,
       "label": "Virtual Short",
-      "group": "OPAMP"
+      "group": "OPAMP",
+      "cis": 20
     },
     {
       "id": 212,
       "label": "Virtual Ground",
-      "group": "OPAMP"
+      "group": "OPAMP",
+      "cis": 10
     },
     {
       "id": 213,
       "label": "Inverting Amplifier",
-      "group": "OPAMP"
+      "group": "OPAMP",
+      "cis": 9
     },
     {
       "id": 214,
       "label": "Non-Inverting Amplifier",
-      "group": "OPAMP"
+      "group": "OPAMP",
+      "cis": 9
     },
     {
       "id": 215,
       "label": "Voltage Follower",
-      "group": "OPAMP"
+      "group": "OPAMP",
+      "cis": 3
     },
     {
       "id": 216,
       "label": "Buffer Amplifier",
-      "group": "OPAMP"
+      "group": "OPAMP",
+      "cis": 2
     },
     {
       "id": 217,
       "label": "Summing Amplifier",
-      "group": "OPAMP"
+      "group": "OPAMP",
+      "cis": 1
     },
     {
       "id": 218,
       "label": "Difference Amplifier",
-      "group": "OPAMP"
+      "group": "OPAMP",
+      "cis": 5
     },
     {
       "id": 219,
       "label": "Instrumentation Amplifier",
-      "group": "OPAMP"
+      "group": "OPAMP",
+      "cis": 1
     },
     {
       "id": 220,
       "label": "Integrator Circuit",
-      "group": "OPAMP"
+      "group": "OPAMP",
+      "cis": 1
     },
     {
       "id": 221,
       "label": "Differentiator Circuit",
-      "group": "OPAMP"
+      "group": "OPAMP",
+      "cis": 1
     },
     {
       "id": 222,
       "label": "Op-Amp Bandwidth",
-      "group": "OPAMP"
+      "group": "OPAMP",
+      "cis": 2
     },
     {
       "id": 223,
       "label": "Gain-Bandwidth Product",
-      "group": "OPAMP"
+      "group": "OPAMP",
+      "cis": 1
     },
     {
       "id": 224,
       "label": "Slew Rate",
-      "group": "OPAMP"
+      "group": "OPAMP",
+      "cis": 1
     },
     {
       "id": 225,
       "label": "Input Offset Voltage",
-      "group": "OPAMP"
+      "group": "OPAMP",
+      "cis": 1
     },
     {
       "id": 226,
       "label": "Input Bias Current",
-      "group": "OPAMP"
+      "group": "OPAMP",
+      "cis": 1
     },
     {
       "id": 227,
       "label": "Common Mode Rejection",
-      "group": "OPAMP"
+      "group": "OPAMP",
+      "cis": 1
     },
     {
       "id": 228,
       "label": "CMRR",
-      "group": "OPAMP"
+      "group": "OPAMP",
+      "cis": 2
     },
     {
       "id": 229,
       "label": "Op-Amp Saturation",
-      "group": "OPAMP"
+      "group": "OPAMP",
+      "cis": 4
     },
     {
       "id": 230,
       "label": "Rail-to-Rail Op-Amp",
-      "group": "OPAMP"
+      "group": "OPAMP",
+      "cis": 1
     },
     {
       "id": 231,
       "label": "Signal",
-      "group": "SIGNAL"
+      "group": "SIGNAL",
+      "cis": 84
     },
     {
       "id": 232,
       "label": "Periodic Signal",
-      "group": "SIGNAL"
+      "group": "SIGNAL",
+      "cis": 52
     },
     {
       "id": 233,
       "label": "Aperiodic Signal",
-      "group": "SIGNAL"
+      "group": "SIGNAL",
+      "cis": 1
     },
     {
       "id": 234,
       "label": "Fourier Series",
-      "group": "SIGNAL"
+      "group": "SIGNAL",
+      "cis": 13
     },
     {
       "id": 235,
       "label": "Fundamental Frequency",
-      "group": "SIGNAL"
+      "group": "SIGNAL",
+      "cis": 38
     },
     {
       "id": 236,
       "label": "Harmonics",
-      "group": "SIGNAL"
+      "group": "SIGNAL",
+      "cis": 24
     },
     {
       "id": 237,
       "label": "Harmonic Content",
-      "group": "SIGNAL"
+      "group": "SIGNAL",
+      "cis": 6
     },
     {
       "id": 238,
       "label": "Spectrum",
-      "group": "SIGNAL"
+      "group": "SIGNAL",
+      "cis": 1
     },
     {
       "id": 239,
       "label": "Frequency Spectrum",
-      "group": "SIGNAL"
+      "group": "SIGNAL",
+      "cis": 4
     },
     {
       "id": 240,
       "label": "Time Domain",
-      "group": "SIGNAL"
+      "group": "SIGNAL",
+      "cis": 1
     },
     {
       "id": 241,
       "label": "Frequency Domain",
-      "group": "SIGNAL"
+      "group": "SIGNAL",
+      "cis": 1
     },
     {
       "id": 242,
       "label": "Waveform Symmetry",
-      "group": "SIGNAL"
+      "group": "SIGNAL",
+      "cis": 1
     },
     {
       "id": 243,
       "label": "Even Symmetry",
-      "group": "SIGNAL"
+      "group": "SIGNAL",
+      "cis": 2
     },
     {
       "id": 244,
       "label": "Odd Symmetry",
-      "group": "SIGNAL"
+      "group": "SIGNAL",
+      "cis": 2
     },
     {
       "id": 245,
       "label": "Half-Wave Symmetry",
-      "group": "SIGNAL"
+      "group": "SIGNAL",
+      "cis": 2
     },
     {
       "id": 246,
       "label": "DC Component",
-      "group": "SIGNAL"
+      "group": "SIGNAL",
+      "cis": 2
     },
     {
       "id": 247,
       "label": "AC Component",
-      "group": "SIGNAL"
+      "group": "SIGNAL",
+      "cis": 2
     },
     {
       "id": 248,
       "label": "Signal Amplitude",
-      "group": "SIGNAL"
+      "group": "SIGNAL",
+      "cis": 1
     },
     {
       "id": 249,
       "label": "Crest Factor",
-      "group": "SIGNAL"
+      "group": "SIGNAL",
+      "cis": 1
     },
     {
       "id": 250,
       "label": "Form Factor",
-      "group": "SIGNAL"
+      "group": "SIGNAL",
+      "cis": 1
     },
     {
       "id": 251,
       "label": "Audio Signal",
-      "group": "AUDIO"
+      "group": "AUDIO",
+      "cis": 18
     },
     {
       "id": 252,
       "label": "Audio Frequency Range",
-      "group": "AUDIO"
+      "group": "AUDIO",
+      "cis": 19
     },
     {
       "id": 253,
       "label": "Human Hearing Range",
-      "group": "AUDIO"
+      "group": "AUDIO",
+      "cis": 20
     },
     {
       "id": 254,
       "label": "Microphone",
-      "group": "AUDIO"
+      "group": "AUDIO",
+      "cis": 1
     },
     {
       "id": 255,
       "label": "Speaker",
-      "group": "AUDIO"
+      "group": "AUDIO",
+      "cis": 1
     },
     {
       "id": 256,
       "label": "Audio Amplifier",
-      "group": "AUDIO"
+      "group": "AUDIO",
+      "cis": 3
     },
     {
       "id": 257,
       "label": "Preamplifier",
-      "group": "AUDIO"
+      "group": "AUDIO",
+      "cis": 1
     },
     {
       "id": 258,
       "label": "Power Amplifier",
-      "group": "AUDIO"
+      "group": "AUDIO",
+      "cis": 1
     },
     {
       "id": 259,
       "label": "Amplifier Gain",
-      "group": "AUDIO"
+      "group": "AUDIO",
+      "cis": 49
     },
     {
       "id": 260,
       "label": "Voltage Gain",
-      "group": "AUDIO"
+      "group": "AUDIO",
+      "cis": 50
     },
     {
       "id": 261,
       "label": "Current Gain",
-      "group": "AUDIO"
+      "group": "AUDIO",
+      "cis": 50
     },
     {
       "id": 262,
       "label": "Power Gain",
-      "group": "AUDIO"
+      "group": "AUDIO",
+      "cis": 51
     },
     {
       "id": 263,
       "label": "Decibels in Audio",
-      "group": "AUDIO"
+      "group": "AUDIO",
+      "cis": 3
     },
     {
       "id": 264,
       "label": "dBV",
-      "group": "AUDIO"
+      "group": "AUDIO",
+      "cis": 1
     },
     {
       "id": 265,
       "label": "dBu",
-      "group": "AUDIO"
+      "group": "AUDIO",
+      "cis": 1
     },
     {
       "id": 266,
       "label": "Headroom",
-      "group": "AUDIO"
+      "group": "AUDIO",
+      "cis": 1
     },
     {
       "id": 267,
       "label": "Dynamic Range",
-      "group": "AUDIO"
+      "group": "AUDIO",
+      "cis": 2
     },
     {
       "id": 268,
       "label": "Signal-to-Noise Ratio",
-      "group": "AUDIO"
+      "group": "AUDIO",
+      "cis": 3
     },
     {
       "id": 269,
       "label": "Noise Floor",
-      "group": "AUDIO"
+      "group": "AUDIO",
+      "cis": 6
     },
     {
       "id": 270,
       "label": "Thermal Noise",
-      "group": "AUDIO"
+      "group": "AUDIO",
+      "cis": 7
     },
     {
       "id": 271,
       "label": "Audio Distortion",
-      "group": "AUDIO"
+      "group": "AUDIO",
+      "cis": 2
     },
     {
       "id": 272,
       "label": "Harmonic Distortion",
-      "group": "AUDIO"
+      "group": "AUDIO",
+      "cis": 4
     },
     {
       "id": 273,
       "label": "THD",
-      "group": "AUDIO"
+      "group": "AUDIO",
+      "cis": 1
     },
     {
       "id": 274,
       "label": "Intermodulation Distortion",
-      "group": "AUDIO"
+      "group": "AUDIO",
+      "cis": 3
     },
     {
       "id": 275,
       "label": "Clipping",
-      "group": "AUDIO"
+      "group": "AUDIO",
+      "cis": 1
     },
     {
       "id": 276,
       "label": "Multimeter",
-      "group": "LAB"
+      "group": "LAB",
+      "cis": 11
     },
     {
       "id": 277,
       "label": "Oscilloscope",
-      "group": "LAB"
+      "group": "LAB",
+      "cis": 18
     },
     {
       "id": 278,
       "label": "Function Generator",
-      "group": "LAB"
+      "group": "LAB",
+      "cis": 1
     },
     {
       "id": 279,
       "label": "DC Power Supply",
-      "group": "LAB"
+      "group": "LAB",
+      "cis": 2
     },
     {
       "id": 280,
       "label": "Spectrum Analyzer",
-      "group": "LAB"
+      "group": "LAB",
+      "cis": 1
     },
     {
       "id": 281,
       "label": "Voltage Measurement",
-      "group": "LAB"
+      "group": "LAB",
+      "cis": 1
     },
     {
       "id": 282,
       "label": "Current Measurement",
-      "group": "LAB"
+      "group": "LAB",
+      "cis": 1
     },
     {
       "id": 283,
       "label": "Resistance Measurement",
-      "group": "LAB"
+      "group": "LAB",
+      "cis": 1
     },
     {
       "id": 284,
       "label": "Frequency Measurement",
-      "group": "LAB"
+      "group": "LAB",
+      "cis": 1
     },
     {
       "id": 285,
       "label": "Phase Measurement",
-      "group": "LAB"
+      "group": "LAB",
+      "cis": 1
     },
     {
       "id": 286,
       "label": "Oscilloscope Probe",
-      "group": "LAB"
+      "group": "LAB",
+      "cis": 2
     },
     {
       "id": 287,
       "label": "Probe Compensation",
-      "group": "LAB"
+      "group": "LAB",
+      "cis": 1
     },
     {
       "id": 288,
       "label": "Triggering",
-      "group": "LAB"
+      "group": "LAB",
+      "cis": 1
     },
     {
       "id": 289,
       "label": "Time Base",
-      "group": "LAB"
+      "group": "LAB",
+      "cis": 1
     },
     {
       "id": 290,
       "label": "Vertical Sensitivity",
-      "group": "LAB"
+      "group": "LAB",
+      "cis": 1
     },
     {
       "id": 291,
       "label": "AC Coupling",
-      "group": "LAB"
+      "group": "LAB",
+      "cis": 1
     },
     {
       "id": 292,
       "label": "DC Coupling",
-      "group": "LAB"
+      "group": "LAB",
+      "cis": 1
     },
     {
       "id": 293,
       "label": "Breadboard",
-      "group": "LAB"
+      "group": "LAB",
+      "cis": 1
     },
     {
       "id": 294,
       "label": "Prototyping",
-      "group": "LAB"
+      "group": "LAB",
+      "cis": 3
     },
     {
       "id": 295,
       "label": "Soldering",
-      "group": "LAB"
+      "group": "LAB",
+      "cis": 1
     },
     {
       "id": 296,
       "label": "Circuit Debugging",
-      "group": "LAB"
+      "group": "LAB",
+      "cis": 1
     },
     {
       "id": 297,
       "label": "Measurement Error",
-      "group": "LAB"
+      "group": "LAB",
+      "cis": 2
     },
     {
       "id": 298,
       "label": "Loading Error",
-      "group": "LAB"
+      "group": "LAB",
+      "cis": 3
     },
     {
       "id": 299,
       "label": "Calibration",
-      "group": "LAB"
+      "group": "LAB",
+      "cis": 3
     },
     {
       "id": 300,
       "label": "Safety Practices",
-      "group": "LAB"
+      "group": "LAB",
+      "cis": 1
     }
   ],
   "edges": [
