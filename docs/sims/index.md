@@ -89,11 +89,23 @@ Interactive Micro Simulations to help students learn electronic circuits fundame
 
     Interactive flashcard trainer for learning circuit schematic symbols with flip animation and quiz mode.
 
+-   **[Complex Number Visualizer](./complex-number-viz/index.md)**
+
+    ![Complex Number Visualizer](./complex-number-viz/complex-number-viz.png)
+
+    Plot a complex number on the complex plane and follow the worked conversion between rectangular form a + jb and polar form, with a quiz mode for practice.
+
 -   **[Current Meter](./current-meter/index.md)**
 
     ![Current Meter](./current-meter/current-meter.png)
 
     Animated current meter showing how current is measured in a simple circuit.
+
+-   **[DC and AC Component Separator](./dc-ac-separator/index.md)**
+
+    ![DC and AC Component Separator](./dc-ac-separator/dc-ac-separator.png)
+
+    Split a composite signal into its constant DC component and its oscillating AC component on three stacked plots that share one voltage scale.
 
 -   **[Decibel Scale](./decibel-scale/index.md)**
 
@@ -106,6 +118,12 @@ Interactive Micro Simulations to help students learn electronic circuits fundame
     ![Diode](./diode/diode.png)
 
     Demonstration of diode schematic symbol drawing in a circuit context.
+
+-   **[Euler's Formula on the Unit Circle](./euler-circle/index.md)**
+
+    ![Euler's Formula on the Unit Circle](./euler-circle/euler-circle.png)
+
+    Step or rotate a unit phasor around the complex plane and watch its real and imaginary projections trace the cosine and sine waveforms.
 
 -   **[Exponential Properties](./exponential-properties/index.md)**
 
@@ -124,6 +142,12 @@ Interactive Micro Simulations to help students learn electronic circuits fundame
     ![First-Order Filters](./first-order-filters/first-order-filters.png)
 
     Compare RC and RL implementations of low-pass and high-pass first-order filters with adjustable cutoff frequency and resistance.
+
+-   **[Gain and Decibel Converter](./gain-db-converter/index.md)**
+
+    ![Gain and Decibel Converter](./gain-db-converter/gain-db-converter.png)
+
+    Convert between linear gain and decibels for voltage and power gains, with input and output signals and a logarithmic scale.
 
 -   **[Ground Symbols](./ground-symbols/index.md)**
 
@@ -221,6 +245,12 @@ Interactive Micro Simulations to help students learn electronic circuits fundame
 
     Interactive visualization of how plate area, separation, and dielectric material affect capacitance.
 
+-   **[Phase Relationship Visualizer](./phase-relationship/index.md)**
+
+    ![Phase Relationship Visualizer](./phase-relationship/phase-relationship.png)
+
+    Compare two sinusoids of the same frequency on a waveform plot and a phasor diagram to see which one leads and which one lags.
+
 -   **[Phasor Addition](./phasor-addition/index.md)**
 
     ![Phasor Addition](./phasor-addition/phasor-addition.png)
@@ -310,6 +340,12 @@ Interactive Micro Simulations to help students learn electronic circuits fundame
     ![Signal Parameters](./signal-parameters/signal-parameters.png)
 
     Interactive sinusoidal waveform with labeled amplitude, period, frequency, phase, and optional reference signal overlay.
+
+-   **[Sinusoidal Waveform Anatomy](./sinusoid-anatomy/index.md)**
+
+    ![Sinusoidal Waveform Anatomy](./sinusoid-anatomy/sinusoid-anatomy.png)
+
+    Label the peak, peak-to-peak, RMS level, period, zero crossings and phase shift of a sinusoid while sliders change amplitude, frequency and phase.
 
 -   **[Switch](./switch/index.md)**
 
