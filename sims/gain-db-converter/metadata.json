@@ -1,0 +1,76 @@
+{
+  "title": "Gain and Decibel Converter",
+  "creator": "Dan McCreary",
+  "subject": ["gain", "decibel", "voltage gain", "power gain", "logarithmic scale", "amplification and attenuation", "electrical engineering"],
+  "description": "Interactive MicroSim that converts between linear gain and decibels for voltage gain (20 log10) and power gain (10 log10) in both directions, shows a 1 V input signal beside the output scaled by the gain, marks the gain on a logarithmic scale from x0.001 to x1000, and lists a quick reference of common values.",
+  "date": "2026-10-01",
+  "type": "Interactive Simulation",
+  "format": "text/html",
+  "language": "en",
+  "rights": "CC BY-NC-SA 4.0",
+  "educational": {
+    "gradeLevel": ["Undergraduate"],
+    "subjectArea": "Electrical Engineering",
+    "topic": "Voltage Gain, Power Gain and Decibels",
+    "learningObjectives": [
+      "Calculate conversions between linear gain and decibel notation for voltage and power gains"
+    ],
+    "bloomsTaxonomy": "Apply",
+    "bloomVerb": "calculate",
+    "duration": "10-15 minutes",
+    "prerequisites": ["base-10 logarithms", "voltage gain and power gain as ratios", "peak amplitude of a sinusoid"],
+    "standards": []
+  },
+  "technical": {
+    "framework": "p5.js",
+    "version": "1.11.10",
+    "canvasDimensions": {
+      "width": "responsive",
+      "height": 510
+    },
+    "responsive": true,
+    "dependencies": ["p5.js 1.11.10 (CDN)"],
+    "accessibility": {
+      "hasAltText": true,
+      "keyboardNavigable": false
+    }
+  },
+  "userInterface": {
+    "controls": [
+      {"type": "slider", "label": "Linear gain", "min": 0.001, "max": 1000, "scale": "logarithmic", "default": 10, "mode": "linear entry"},
+      {"type": "slider", "label": "Gain in dB", "min": "-60 dB (voltage) or -30 dB (power)", "max": "+60 dB (voltage) or +30 dB (power)", "step": 1, "default": 20, "mode": "decibel entry"},
+      {"type": "button", "label": "Enter as: Linear gain / Decibels", "description": "Choose which form the slider sets"},
+      {"type": "button", "label": "Mode: Voltage gain / Power gain", "description": "Choose the 20 log10 or 10 log10 formula"},
+      {"type": "button", "label": "Reset", "description": "Restore the default voltage gain of 10"}
+    ]
+  },
+  "simulation": {
+    "modelType": "mathematical",
+    "equations": [
+      "Av(dB) = 20 log10(Av)",
+      "Av = 10^(dB/20)",
+      "Ap(dB) = 10 log10(Ap)",
+      "Ap = 10^(dB/10)",
+      "amplitude ratio = sqrt(Ap) for equal resistances"
+    ],
+    "assumptions": ["Gain is positive (no signal inversion)", "Input and output resistances are equal when a power gain is shown as an amplitude ratio"]
+  },
+  "pedagogical": {
+    "pattern": "bidirectional calculator with worked formulas",
+    "teachingStrategy": "Calculate by hand first, then check; compare voltage and power formulas for the same number",
+    "keyQuestions": [
+      "Why is the factor 20 for voltage gain but 10 for power gain?",
+      "What linear gain corresponds to 0 dB? To a negative number of decibels?",
+      "Why do cascaded gains add when they are expressed in decibels?"
+    ],
+    "commonMisconceptions": [
+      "Doubling the voltage is +3 dB",
+      "0 dB means no output signal",
+      "A negative decibel value means a negative (inverted) gain"
+    ],
+    "assessmentOpportunities": [
+      "Convert given linear gains to decibels and given decibel values to linear gains for both voltage and power"
+    ]
+  },
+  "chapter": "08-ac-signals-sinusoidal"
+}

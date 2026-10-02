@@ -1,0 +1,74 @@
+{
+  "title": "Phase Relationship Visualizer",
+  "creator": "Dan McCreary",
+  "subject": ["phase difference", "leading and lagging", "sinusoidal waveform", "phasor diagram", "AC signals", "electrical engineering"],
+  "description": "Interactive MicroSim comparing a reference sinusoid v1(t) = Vm sin(wt) with a phase-shifted sinusoid v2(t) = Vm sin(wt + phi) on a waveform plot and a phasor diagram, with a statement of whether v2 leads or lags v1.",
+  "date": "2026-10-01",
+  "type": "Interactive Simulation",
+  "format": "text/html",
+  "language": "en",
+  "rights": "CC BY-NC-SA 4.0",
+  "educational": {
+    "gradeLevel": ["Undergraduate"],
+    "subjectArea": "Electrical Engineering",
+    "topic": "AC Signals and Sinusoidal Waveforms",
+    "learningObjectives": [
+      "Compare two sinusoidal signals with different phase relationships and interpret leading/lagging terminology"
+    ],
+    "bloomsTaxonomy": "Understand",
+    "bloomVerb": "compare",
+    "duration": "10-15 minutes",
+    "prerequisites": ["amplitude, frequency and period of a sinusoid", "phase angle", "angles on the unit circle"],
+    "standards": []
+  },
+  "technical": {
+    "framework": "p5.js",
+    "version": "1.11.10",
+    "canvasDimensions": {
+      "width": "responsive",
+      "height": 515
+    },
+    "responsive": true,
+    "dependencies": ["p5.js 1.11.10 (CDN)"],
+    "accessibility": {
+      "hasAltText": true,
+      "keyboardNavigable": false
+    }
+  },
+  "userInterface": {
+    "controls": [
+      {"type": "slider", "label": "Phase difference", "min": -180, "max": 180, "step": 1, "default": 45, "units": "degrees"},
+      {"type": "button", "label": "Start / Stop", "description": "Rotate the phasors in slow motion; starts stopped"},
+      {"type": "button", "label": "Reset", "description": "Stop the animation and restore the default phase of 45 degrees"},
+      {"type": "button", "label": "Phasor Diagram", "description": "Show or hide the phasor diagram"},
+      {"type": "button", "label": "Quick select", "description": "Jump to 0, 90, 180 or -90 degrees"}
+    ]
+  },
+  "simulation": {
+    "modelType": "mathematical",
+    "equations": [
+      "v1(t) = Vm sin(w t)",
+      "v2(t) = Vm sin(w t + phi)",
+      "delta_t = (|phi| / 360 degrees) * T",
+      "f = 5 Hz, T = 200 ms"
+    ],
+    "assumptions": ["Both signals have the same amplitude and frequency", "Animation runs in slow motion: one 200 ms cycle takes 6 seconds"]
+  },
+  "pedagogical": {
+    "pattern": "side-by-side comparison of two representations",
+    "teachingStrategy": "Compare waveform and phasor views of the same phase difference",
+    "keyQuestions": [
+      "If v2 leads v1, is the v2 curve shifted to the left or to the right?",
+      "How does the angle between the phasors relate to the time between the peaks?",
+      "Why do +180 degrees and -180 degrees look identical?"
+    ],
+    "commonMisconceptions": [
+      "The leading signal is the one drawn further to the right on the time axis",
+      "Phase difference depends on amplitude"
+    ],
+    "assessmentOpportunities": [
+      "State the lead/lag relationship and the time shift for a given pair of sinusoids"
+    ]
+  },
+  "chapter": "08-ac-signals-sinusoidal"
+}

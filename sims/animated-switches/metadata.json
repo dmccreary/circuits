@@ -44,11 +44,10 @@
     "simulation"
   ],
   "learningObjectives": [
-    "Explain how opening a switch breaks the conducting path and halts electron flow around the loop",
-    "Predict whether current flows for each of the four on/off combinations of the horizontal and vertical switches",
-    "Explain why two switches wired in series both must be closed for current to flow",
-    "Compare the electron animation at different speed and spacing settings to relate electron movement to current magnitude",
-    "Distinguish an open circuit from a closed circuit by observing whether electrons continue around the loop"
+    "Understand the key concepts of animated switches",
+    "Explore animated switches through interactive visualization",
+    "Apply knowledge of animated switches to solve problems",
+    "Experiment with parameters to observe their effects on animated switches"
   ],
   "bloomsTaxonomy": [
     "Remember",

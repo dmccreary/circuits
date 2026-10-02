@@ -45,16 +45,18 @@
     "simulation"
   ],
   "learningObjectives": [
-    "Explain why electrons must travel a complete closed loop for current to flow through a conductor",
-    "Predict how increasing the speed slider changes the current the animation represents",
-    "Distinguish electron spacing from electron speed as two independent contributors to the rate of charge flow",
-    "Explain what the moving red circles represent and how the animation relates to electron drift velocity",
-    "Compare electron flow in a wire with water flowing through a pipe, identifying where the analogy holds and where it breaks down"
+    "Understand the key concepts of animated wire",
+    "Explore animated wire through interactive visualization",
+    "Apply knowledge of animated wire to solve problems",
+    "Experiment with parameters to observe their effects on animated wire"
   ],
   "bloomsTaxonomy": [
+    "Remember",
     "Understand",
     "Apply",
-    "Analyze"
+    "Analyze",
+    "Evaluate",
+    "Create"
   ],
   "pedagogical": {
     "pattern": "demonstration",

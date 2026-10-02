@@ -42,15 +42,17 @@
     "simulation"
   ],
   "learningObjectives": [
-    "Identify the capacitor symbol by its two parallel plates separated by a gap, and distinguish it from the battery symbol",
-    "Explain how the parallel-plate structure lets a capacitor store energy in an electric field between the plates",
-    "Compare capacitor values written in microfarads, nanofarads, and picofarads and order 10uF, 100nF, 1000pF, and 47uF by capacitance",
-    "Draw correctly proportioned capacitor symbols in both horizontal and vertical orientations within a circuit diagram"
+    "Understand the key concepts of capacitor drawing",
+    "Explore capacitor drawing through interactive visualization",
+    "Apply knowledge of capacitor drawing to solve problems",
+    "Experiment with parameters to observe their effects on capacitor drawing"
   ],
   "bloomsTaxonomy": [
     "Remember",
     "Understand",
-    "Apply"
+    "Apply",
+    "Evaluate",
+    "Create"
   ],
   "pedagogical": {
     "pattern": "assessment",

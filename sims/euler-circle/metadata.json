@@ -1,0 +1,75 @@
+{
+  "title": "Euler's Formula on the Unit Circle",
+  "creator": "Dan McCreary",
+  "subject": ["Euler's formula", "unit circle", "complex exponential", "phasor", "sine and cosine", "electrical engineering"],
+  "description": "Interactive MicroSim showing the unit phasor e^(j*theta) on the complex plane. Its projection on the real axis is cos(theta) and its projection on the imaginary axis is sin(theta); two side plots trace both waveforms as the angle steps through key angles or rotates continuously.",
+  "date": "2026-10-01",
+  "type": "Interactive Simulation",
+  "format": "text/html",
+  "language": "en",
+  "rights": "CC BY-NC-SA 4.0",
+  "educational": {
+    "gradeLevel": ["Undergraduate"],
+    "subjectArea": "Electrical Engineering",
+    "topic": "Complex Numbers for AC Circuit Analysis",
+    "learningObjectives": [
+      "Explain how Euler's formula relates rotating phasors to sinusoidal projections by observing the unit circle animation"
+    ],
+    "bloomsTaxonomy": "Understand",
+    "bloomVerb": "explain",
+    "duration": "10-15 minutes",
+    "prerequisites": ["complex numbers in rectangular and polar form", "sine and cosine of standard angles", "degrees and radians"],
+    "standards": []
+  },
+  "technical": {
+    "framework": "p5.js",
+    "version": "1.11.10",
+    "canvasDimensions": {
+      "width": "responsive",
+      "height": 530
+    },
+    "responsive": true,
+    "dependencies": ["p5.js 1.11.10 (CDN)"],
+    "accessibility": {
+      "hasAltText": true,
+      "keyboardNavigable": false
+    }
+  },
+  "userInterface": {
+    "controls": [
+      {"type": "button", "label": "Step", "description": "Advance to the next key angle: 0, 30, 45, 60, 90, 180, 270, 360 degrees"},
+      {"type": "button", "label": "Back", "description": "Return to the previous key angle"},
+      {"type": "button", "label": "Start / Stop", "description": "Rotate the phasor continuously; starts stopped"},
+      {"type": "button", "label": "Reset", "description": "Stop and return to 0 degrees"},
+      {"type": "button", "label": "Waveforms", "description": "Show or hide the cosine and sine plots"},
+      {"type": "slider", "label": "Rotation speed", "min": 10, "max": 120, "step": 5, "default": 40, "units": "degrees per second"}
+    ]
+  },
+  "simulation": {
+    "modelType": "mathematical",
+    "equations": [
+      "e^(j*theta) = cos(theta) + j sin(theta)",
+      "Re{e^(j*theta)} = cos(theta)",
+      "Im{e^(j*theta)} = sin(theta)",
+      "e^(j*pi) + 1 = 0"
+    ],
+    "assumptions": ["Unit magnitude (r = 1)", "Angle shown from 0 to 360 degrees"]
+  },
+  "pedagogical": {
+    "pattern": "step-through with optional animation",
+    "teachingStrategy": "Predict the projections at each key angle, then observe continuous rotation tracing the waveforms",
+    "keyQuestions": [
+      "Which projection is the real part and which is the imaginary part?",
+      "Why does the cosine trace start at 1 while the sine trace starts at 0?",
+      "What does the picture show at 180 degrees, and how does that give Euler's identity?"
+    ],
+    "commonMisconceptions": [
+      "e raised to an imaginary power grows like an ordinary exponential",
+      "Sine is the horizontal projection and cosine is the vertical projection"
+    ],
+    "assessmentOpportunities": [
+      "Write e^(j*theta) in rectangular form for a given angle and sketch it on the unit circle"
+    ]
+  },
+  "chapter": "08-ac-signals-sinusoidal"
+}

@@ -1,0 +1,76 @@
+{
+  "title": "Sinusoidal Waveform Anatomy",
+  "creator": "Dan McCreary",
+  "subject": ["sinusoidal waveform", "amplitude", "frequency", "period", "phase", "RMS value", "AC signals", "electrical engineering"],
+  "description": "Interactive MicroSim that labels the peak, peak-to-peak, RMS level, period, zero crossings and phase shift of a sinusoidal voltage v(t) = Vm sin(2*pi*f*t + phi) while sliders change amplitude, frequency and phase on fixed axes.",
+  "date": "2026-10-01",
+  "type": "Interactive Simulation",
+  "format": "text/html",
+  "language": "en",
+  "rights": "CC BY-NC-SA 4.0",
+  "educational": {
+    "gradeLevel": ["Undergraduate"],
+    "subjectArea": "Electrical Engineering",
+    "topic": "AC Signals and Sinusoidal Waveforms",
+    "learningObjectives": [
+      "Explain the relationship between sinusoidal parameters (amplitude, frequency, phase) and the resulting waveform shape"
+    ],
+    "bloomsTaxonomy": "Understand",
+    "bloomVerb": "explain",
+    "duration": "10-15 minutes",
+    "prerequisites": ["sine and cosine functions", "radian measure", "time-varying voltage"],
+    "standards": []
+  },
+  "technical": {
+    "framework": "p5.js",
+    "version": "1.11.10",
+    "canvasDimensions": {
+      "width": "responsive",
+      "height": 575
+    },
+    "responsive": true,
+    "dependencies": ["p5.js 1.11.10 (CDN)"],
+    "accessibility": {
+      "hasAltText": true,
+      "keyboardNavigable": false
+    }
+  },
+  "userInterface": {
+    "controls": [
+      {"type": "slider", "label": "Amplitude Vm", "min": 1, "max": 10, "step": 0.1, "default": 5, "units": "V"},
+      {"type": "slider", "label": "Frequency f", "min": 1, "max": 100, "step": 1, "default": 10, "units": "Hz"},
+      {"type": "slider", "label": "Phase", "min": -180, "max": 180, "step": 1, "default": 0, "units": "degrees"},
+      {"type": "button", "label": "RMS Level", "description": "Show or hide the RMS level line"},
+      {"type": "button", "label": "Reference", "description": "Switch between the sine form and the cosine form"},
+      {"type": "button", "label": "Reset", "description": "Restore the default values"}
+    ]
+  },
+  "simulation": {
+    "modelType": "mathematical",
+    "equations": [
+      "v(t) = Vm sin(2*pi*f*t + phi)",
+      "omega = 2*pi*f",
+      "T = 1/f",
+      "Vrms = Vm / sqrt(2)",
+      "Vpp = 2*Vm"
+    ],
+    "assumptions": ["Ideal sinusoid with no DC offset, noise or distortion"]
+  },
+  "pedagogical": {
+    "pattern": "parameter exploration with labeled anatomy",
+    "teachingStrategy": "Predict-observe-explain using sliders on fixed axes",
+    "keyQuestions": [
+      "What changes on the screen when the amplitude doubles? When the frequency doubles?",
+      "Why does a positive phase angle move the waveform to the left?",
+      "Why is the RMS level always about 71% of the peak?"
+    ],
+    "commonMisconceptions": [
+      "A positive phase shift moves the waveform to the right (later in time)",
+      "RMS is the same as the average value of the waveform"
+    ],
+    "assessmentOpportunities": [
+      "Compute Vrms, Vpp, omega and T by hand for chosen slider settings and compare with the labels"
+    ]
+  },
+  "chapter": "08-ac-signals-sinusoidal"
+}

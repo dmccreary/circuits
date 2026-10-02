@@ -44,15 +44,17 @@
     "simulation"
   ],
   "learningObjectives": [
-    "Identify the US-style resistor symbol by its six-peak zig-zag pattern and distinguish it from the inductor's coil and the capacitor's plates",
-    "Explain how a resistor limits current, and use Ohm's law to predict which of 220 ohms, 1K, 10K, or 100K passes the most current at a fixed voltage",
-    "Compare resistance values expressed in ohms, kilohms, and megohms and convert between the three units",
-    "Draw correctly proportioned resistor symbols with value labels in both horizontal and vertical orientations"
+    "Understand the key concepts of resistor drawing",
+    "Explore resistor drawing through interactive visualization",
+    "Apply knowledge of resistor drawing to solve problems",
+    "Experiment with parameters to observe their effects on resistor drawing"
   ],
   "bloomsTaxonomy": [
     "Remember",
     "Understand",
-    "Apply"
+    "Apply",
+    "Evaluate",
+    "Create"
   ],
   "pedagogical": {
     "pattern": "assessment",

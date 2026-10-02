@@ -1,41 +1,24 @@
 {
-  "title": "Th\u00e9venin Equivalent Circuit",
-  "description": "5-stage interactive MicroSim demonstrating Th\u00e9venin's theorem: replacing a complex circuit with a voltage source in series with a resistance that behaves identically at output terminals.",
+  "title": "Thévenin Equivalent Circuit",
+  "description": "5-stage interactive MicroSim demonstrating Thévenin's theorem: replacing a complex circuit with a voltage source in series with a resistance that behaves identically at output terminals.",
   "subject": "Electrical Engineering / Circuit Analysis",
-  "topic": "Th\u00e9venin's Theorem, Network Theorems",
+  "topic": "Thévenin's Theorem, Network Theorems",
   "bloomLevel": "Understand",
   "bloomVerb": "explain",
-  "learningObjective": "Students will explain how any linear circuit can be represented by a simple Th\u00e9venin equivalent (Vth in series with Rth) that produces identical terminal behavior for any load.",
+  "learningObjective": "Students will explain how any linear circuit can be represented by a simple Thévenin equivalent (Vth in series with Rth) that produces identical terminal behavior for any load.",
   "gradeLevel": "Undergraduate",
   "duration": "10-15 minutes",
-  "prerequisites": [
-    "Ohm's Law",
-    "voltage divider rule",
-    "series-parallel resistor combinations"
-  ],
+  "prerequisites": ["Ohm's Law", "voltage divider rule", "series-parallel resistor combinations"],
   "interactiveControls": {
-    "buttons": [
-      "Find Vth",
-      "Find Rth",
-      "Show Equiv",
-      "Connect Load",
-      "Reset"
-    ],
-    "sliders": [
-      {
-        "label": "Load RL",
-        "min": 1,
-        "max": 100,
-        "unit": "\u03a9"
-      }
-    ]
+    "buttons": ["Find Vth", "Find Rth", "Show Equiv", "Connect Load", "Reset"],
+    "sliders": [{"label": "Load RL", "min": 1, "max": 100, "unit": "Ω"}]
   },
   "circuitValues": {
     "Vs": "12 V",
-    "R1": "4 \u03a9",
-    "R2": "8 \u03a9",
+    "R1": "4 Ω",
+    "R2": "8 Ω",
     "Vth": "8 V",
-    "Rth": "2.67 \u03a9"
+    "Rth": "2.67 Ω"
   },
   "library": "p5.js",
   "version": "1.0",
@@ -43,7 +26,7 @@
   "dateCreated": "2026-04-02",
   "language": "en",
   "format": "HTML/JavaScript",
-  "identifier": "https://dmccreary.github.io/circuits/sims/thevenin-concept/",
+  "identifier": "thevenin-equivalent",
   "relation": "Chapter 4: Network Theorems",
   "coverage": "Linear DC circuits"
 }
