@@ -40,10 +40,10 @@
     "simulation"
   ],
   "learningObjectives": [
-    "Understand the key concepts of wire",
-    "Explore wire through interactive visualization",
-    "Apply knowledge of wire to solve problems",
-    "Test understanding of wire through interactive exercises"
+    "Explain that wires are conductors providing a path for current to flow between circuit components",
+    "Identify how wires are drawn as simple lines connecting component symbols in circuit diagrams",
+    "Explain why conductive metals such as copper and aluminum are used for wires instead of insulating materials",
+    "Predict what happens to current flow in a circuit when a wire is broken or disconnected"
   ],
   "bloomsTaxonomy": [
     "Remember",
