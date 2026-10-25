@@ -97,8 +97,6 @@ Interactive Micro Simulations to help students learn electronic circuits fundame
 
 -   **[Current Meter](./current-meter/index.md)**
 
-    ![Current Meter](./current-meter/current-meter.png)
-
     Animated current meter showing how current is measured in a simple circuit.
 
 -   **[DC and AC Component Separator](./dc-ac-separator/index.md)**
@@ -114,8 +112,6 @@ Interactive Micro Simulations to help students learn electronic circuits fundame
     Interactive dB calculator converting between linear ratios and decibels, with a vertical audio SPL reference scale.
 
 -   **[Diode](./diode/index.md)**
-
-    ![Diode](./diode/diode.png)
 
     Demonstration of diode schematic symbol drawing in a circuit context.
 
@@ -186,8 +182,6 @@ Interactive Micro Simulations to help students learn electronic circuits fundame
     Interactive MicroSim teaching KVL, KCL, mesh current method, and node voltage method using a live two-mesh circuit with adjustable components.
 
 -   **[Learning Graph](./learning-graph/index.md)**
-
-    ![Learning Graph](./learning-graph/learning-graph.png)
 
     Interactive visualization of the Circuits 1 course learning graph showing concept dependencies.
 

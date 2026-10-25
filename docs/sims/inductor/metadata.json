@@ -43,17 +43,15 @@
     "simulation"
   ],
   "learningObjectives": [
-    "Understand the key concepts of inductor drawing",
-    "Explore inductor drawing through interactive visualization",
-    "Apply knowledge of inductor drawing to solve problems",
-    "Experiment with parameters to observe their effects on inductor drawing"
+    "Identify the inductor symbol by its series of coil loops and distinguish it from the resistor's zig-zag and the capacitor's parallel plates",
+    "Explain why the inductor symbol is drawn as a coil, and how current through that coil stores energy in a magnetic field",
+    "Compare inductance values written in henrys, millihenrys, and microhenrys and order 10mH, 1H, 100uH, and 47mH by inductance",
+    "Draw correctly proportioned inductor symbols in both horizontal and vertical orientations within a circuit diagram"
   ],
   "bloomsTaxonomy": [
     "Remember",
     "Understand",
-    "Apply",
-    "Evaluate",
-    "Create"
+    "Apply"
   ],
   "pedagogical": {
     "pattern": "assessment",

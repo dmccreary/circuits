@@ -300,17 +300,18 @@ theme:
   include_sidebar: true
   features:
     - content.code.copy
-    - navigation.tabs
-    - navigation.sections
+    - content.action.edit
     - navigation.expand
     - navigation.path
     - navigation.prune
     - navigation.indexes
-    - toc.integrate
     - navigation.top
     # this adds the prev and next icons in the footer
     - navigation.footer
-    - content.action.edit
+    - toc.follow
+    - search.suggest
+    - search.highlight
+    - search.share
 plugins:
   - search
   # leave these commented out until we figure out the watcher bug that prevents live rebuilds

@@ -34,9 +34,10 @@
     "interactive-demo"
   ],
   "learningObjectives": [
-    "Understand the mathematical concept of a title under 60 characters.",
-    "Apply a title under 60 characters. to solve problems",
-    "Visualize and interpret a title under 60 characters. relationships"
+    "Identify the files that make up a MicroSim package: main.html, a p5.js sketch file, an index.md lesson page, and metadata.json",
+    "Explain how main.html loads the p5.js library from a CDN and links the sketch file with a script tag",
+    "Modify the template's createCanvas() and canvas.parent() calls in setup() to attach a sketch to the page's main element",
+    "Design a new MicroSim by copying the template and replacing the placeholder title, description, and sketch code"
   ],
   "pedagogical": {
     "pattern": "exploration",
