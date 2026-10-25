@@ -1,0 +1,76 @@
+{
+  "title": "Complex Number Visualizer",
+  "creator": "Dan McCreary",
+  "subject": ["complex numbers", "rectangular form", "polar form", "complex plane", "magnitude and angle", "electrical engineering"],
+  "description": "Interactive MicroSim that plots a complex number on the complex plane with its real part, imaginary part, magnitude vector and angle arc, shows the number in rectangular and polar form, and writes out the conversion calculation including the quadrant adjustment for the inverse tangent. A quiz mode hides the converted form for practice.",
+  "date": "2026-10-01",
+  "type": "Interactive Simulation",
+  "format": "text/html",
+  "language": "en",
+  "rights": "CC BY-NC-SA 4.0",
+  "educational": {
+    "gradeLevel": ["Undergraduate"],
+    "subjectArea": "Electrical Engineering",
+    "topic": "Complex Numbers for AC Circuit Analysis",
+    "learningObjectives": [
+      "Calculate complex number conversions between rectangular and polar forms using the complex plane visualization"
+    ],
+    "bloomsTaxonomy": "Apply",
+    "bloomVerb": "calculate",
+    "duration": "15-20 minutes",
+    "prerequisites": ["Pythagorean theorem", "sine, cosine and inverse tangent", "definition of j as the square root of -1"],
+    "standards": []
+  },
+  "technical": {
+    "framework": "p5.js",
+    "version": "1.11.10",
+    "canvasDimensions": {
+      "width": "responsive",
+      "height": 560
+    },
+    "responsive": true,
+    "dependencies": ["p5.js 1.11.10 (CDN)"],
+    "accessibility": {
+      "hasAltText": true,
+      "keyboardNavigable": false
+    }
+  },
+  "userInterface": {
+    "controls": [
+      {"type": "slider", "label": "Real part a", "min": -5, "max": 5, "step": 0.1, "default": 3, "mode": "rectangular entry"},
+      {"type": "slider", "label": "Imaginary part b", "min": -5, "max": 5, "step": 0.1, "default": 4, "mode": "rectangular entry"},
+      {"type": "slider", "label": "Magnitude r", "min": 0, "max": 7, "step": 0.1, "default": 5, "mode": "polar entry"},
+      {"type": "slider", "label": "Angle theta", "min": -180, "max": 180, "step": 1, "default": 53, "units": "degrees", "mode": "polar entry"},
+      {"type": "button", "label": "Enter: Rectangular / Polar", "description": "Switch the entry form while keeping the same number"},
+      {"type": "button", "label": "New Problem", "description": "Random number in the current entry form with the converted form hidden"},
+      {"type": "button", "label": "Show Answer / Hide Answer", "description": "Reveal or hide the converted form"}
+    ]
+  },
+  "simulation": {
+    "modelType": "mathematical",
+    "equations": [
+      "r = sqrt(a^2 + b^2)",
+      "theta = atan2(b, a)",
+      "a = r cos(theta)",
+      "b = r sin(theta)"
+    ],
+    "assumptions": ["Angles are reported in degrees in the range -180 to 180"]
+  },
+  "pedagogical": {
+    "pattern": "calculator with worked steps and quiz mode",
+    "teachingStrategy": "Worked example with substituted values, then self-check practice problems",
+    "keyQuestions": [
+      "Why does the inverse tangent need a quadrant adjustment when the real part is negative?",
+      "Which sides of the right triangle are a, b and r?",
+      "What are the signs of a and b in each quadrant?"
+    ],
+    "commonMisconceptions": [
+      "The calculator's inverse tangent always gives the correct angle",
+      "The magnitude is a + b"
+    ],
+    "assessmentOpportunities": [
+      "Convert randomly generated numbers by hand and check with Show Answer"
+    ]
+  },
+  "chapter": "08-ac-signals-sinusoidal"
+}

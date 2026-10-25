@@ -1,0 +1,74 @@
+{
+  "title": "DC and AC Component Separator",
+  "creator": "Dan McCreary",
+  "subject": ["DC component", "AC component", "DC offset", "coupling capacitor", "RMS value", "AC signals", "electrical engineering"],
+  "description": "Interactive MicroSim that separates a composite signal v(t) = VDC + Vm sin(2*pi*f*t) into its DC component (the average value) and its AC component (the oscillation around the average) on three stacked plots with a shared voltage scale, and reports the DC value, AC RMS and total RMS.",
+  "date": "2026-10-01",
+  "type": "Interactive Simulation",
+  "format": "text/html",
+  "language": "en",
+  "rights": "CC BY-NC-SA 4.0",
+  "educational": {
+    "gradeLevel": ["Undergraduate"],
+    "subjectArea": "Electrical Engineering",
+    "topic": "AC Signals and Sinusoidal Waveforms",
+    "learningObjectives": [
+      "Classify signal components as DC or AC by observing how a composite signal can be separated into its constant and varying parts"
+    ],
+    "bloomsTaxonomy": "Understand",
+    "bloomVerb": "classify",
+    "duration": "10-15 minutes",
+    "prerequisites": ["sinusoidal waveforms", "average value", "RMS value of a sinusoid"],
+    "standards": []
+  },
+  "technical": {
+    "framework": "p5.js",
+    "version": "1.11.10",
+    "canvasDimensions": {
+      "width": "responsive",
+      "height": 620
+    },
+    "responsive": true,
+    "dependencies": ["p5.js 1.11.10 (CDN)"],
+    "accessibility": {
+      "hasAltText": true,
+      "keyboardNavigable": false
+    }
+  },
+  "userInterface": {
+    "controls": [
+      {"type": "slider", "label": "DC offset VDC", "min": 0, "max": 5, "step": 0.1, "default": 2.5, "units": "V"},
+      {"type": "slider", "label": "AC amplitude Vm", "min": 0, "max": 5, "step": 0.1, "default": 2, "units": "V"},
+      {"type": "slider", "label": "Frequency f", "min": 1, "max": 20, "step": 1, "default": 5, "units": "Hz"},
+      {"type": "button", "label": "Component Labels", "description": "Show or hide the average line and annotations"},
+      {"type": "button", "label": "Reset", "description": "Restore the default values"}
+    ]
+  },
+  "simulation": {
+    "modelType": "mathematical",
+    "equations": [
+      "v(t) = VDC + Vm sin(2*pi*f*t)",
+      "vAC(t) = v(t) - VDC",
+      "AC RMS = Vm / sqrt(2)",
+      "Total RMS = sqrt(VDC^2 + (AC RMS)^2)"
+    ],
+    "assumptions": ["The AC component is a single sinusoid", "The coupling capacitor and averaging stage are ideal"]
+  },
+  "pedagogical": {
+    "pattern": "decomposition into stacked plots",
+    "teachingStrategy": "Predict which plot each slider changes, then observe",
+    "keyQuestions": [
+      "Which plot changes when only the DC offset changes?",
+      "What is the average value of the AC component?",
+      "Why does a coupling capacitor remove the DC offset but not the oscillation?"
+    ],
+    "commonMisconceptions": [
+      "A signal that never goes negative has no AC component",
+      "Total RMS is the sum of the DC value and the AC RMS value"
+    ],
+    "assessmentOpportunities": [
+      "Identify the DC component, AC amplitude, AC RMS and total RMS of a given composite signal"
+    ]
+  },
+  "chapter": "08-ac-signals-sinusoidal"
+}
